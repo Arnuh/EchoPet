@@ -20,10 +20,10 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -42,7 +42,7 @@ import com.dsh105.echopet.compat.nms.v1_12_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.ai.PetGoalLookAtPlayer;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 public abstract class EntityPet extends EntityCreature implements IAnimal, IEntityPet{
 

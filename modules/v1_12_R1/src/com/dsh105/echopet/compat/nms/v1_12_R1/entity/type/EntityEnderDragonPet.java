@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.util.Vector;
 
 import com.dsh105.echopet.compat.api.entity.*;
@@ -31,7 +31,7 @@ import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityNoClipPet;
 import com.google.common.collect.Lists;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 @EntitySize(width = 16.0F, height = 8.0F)
 @EntityPetType(petType = PetType.ENDERDRAGON)

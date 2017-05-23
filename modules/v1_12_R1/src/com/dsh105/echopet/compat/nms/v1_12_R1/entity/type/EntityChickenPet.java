@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityChickenPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityAgeablePet;
 
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.World;
 
 @EntitySize(width = 0.3F, height = 0.7F)
 @EntityPetType(petType = PetType.CHICKEN)

@@ -20,10 +20,10 @@ import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_11_R1.DataWatcher;
-import net.minecraft.server.v1_11_R1.DataWatcherObject;
-import net.minecraft.server.v1_11_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.DataWatcher;
+import net.minecraft.server.v1_12_R1.DataWatcherObject;
+import net.minecraft.server.v1_12_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_12_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.7F)
 @EntityPetType(petType = PetType.BLAZE)

@@ -10,7 +10,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityAgeablePet;
 import com.google.common.base.Optional;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 /**
  * @Author Borlea

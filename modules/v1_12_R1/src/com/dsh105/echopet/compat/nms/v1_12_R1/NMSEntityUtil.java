@@ -22,7 +22,7 @@ import static com.captainbern.reflection.matcher.Matchers.withType;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
@@ -33,7 +33,7 @@ import com.captainbern.reflection.SafeMethod;
 import com.captainbern.reflection.accessor.FieldAccessor;
 import com.captainbern.reflection.accessor.MethodAccessor;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 /*
  * From EntityAPI :)

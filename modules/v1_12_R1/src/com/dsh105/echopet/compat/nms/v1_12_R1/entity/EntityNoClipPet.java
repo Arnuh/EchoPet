@@ -18,7 +18,7 @@ package com.dsh105.echopet.compat.nms.v1_12_R1.entity;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.World;
 
 public abstract class EntityNoClipPet extends EntityPet{
 

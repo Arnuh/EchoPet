@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 import com.google.common.base.Optional;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 @EntitySize(width = 0.6F, height = 2.9F)
 @EntityPetType(petType = PetType.ENDERMAN)

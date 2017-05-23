@@ -20,8 +20,8 @@ import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_11_R1.Entity;
-import net.minecraft.server.v1_11_R1.EntityHuman;
+import net.minecraft.server.v1_12_R1.Entity;
+import net.minecraft.server.v1_12_R1.EntityHuman;
 
 @SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{

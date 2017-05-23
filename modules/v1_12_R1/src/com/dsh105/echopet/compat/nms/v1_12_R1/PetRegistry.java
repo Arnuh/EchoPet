@@ -26,12 +26,12 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
-import com.dsh105.echopet.compat.nms.v1_11_R1.entity.EntityPet;
+import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 import com.google.common.base.Preconditions;
 
-import net.minecraft.server.v1_11_R1.Entity;
-import net.minecraft.server.v1_11_R1.EntityTypes;
-import net.minecraft.server.v1_11_R1.MinecraftKey;
+import net.minecraft.server.v1_12_R1.Entity;
+import net.minecraft.server.v1_12_R1.EntityTypes;
+import net.minecraft.server.v1_12_R1.MinecraftKey;
 
 /**
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings

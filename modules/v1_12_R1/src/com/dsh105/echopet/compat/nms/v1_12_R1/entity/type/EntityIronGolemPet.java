@@ -20,7 +20,7 @@ import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIronGolemPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 @EntitySize(width = 1.4F, height = 2.9F)
 @EntityPetType(petType = PetType.IRONGOLEM)

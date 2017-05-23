@@ -5,10 +5,10 @@ import org.bukkit.DyeColor;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 
-import net.minecraft.server.v1_11_R1.DataWatcher;
-import net.minecraft.server.v1_11_R1.DataWatcherObject;
-import net.minecraft.server.v1_11_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.DataWatcher;
+import net.minecraft.server.v1_12_R1.DataWatcherObject;
+import net.minecraft.server.v1_12_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_12_R1.World;
 
 /**
  * @Author Borlea

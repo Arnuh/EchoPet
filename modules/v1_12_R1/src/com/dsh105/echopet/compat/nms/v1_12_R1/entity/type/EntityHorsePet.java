@@ -21,7 +21,7 @@ import org.bukkit.entity.Horse;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
 
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.server.v1_12_R1.*;
 
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.HORSE)

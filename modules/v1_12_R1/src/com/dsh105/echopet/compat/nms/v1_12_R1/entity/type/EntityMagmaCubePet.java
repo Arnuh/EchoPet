@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
 
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.MAGMACUBE)

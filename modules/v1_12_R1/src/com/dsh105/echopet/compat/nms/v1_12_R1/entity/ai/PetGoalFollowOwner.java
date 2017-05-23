@@ -16,7 +16,7 @@
  */
 package com.dsh105.echopet.compat.nms.v1_12_R1.entity.ai;
 
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
@@ -27,10 +27,10 @@ import com.dsh105.echopet.compat.nms.v1_12_R1.entity.type.EntityEnderDragonPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.type.EntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.type.EntityVexPet;
 
-import net.minecraft.server.v1_11_R1.EntityPlayer;
-import net.minecraft.server.v1_11_R1.GenericAttributes;
-import net.minecraft.server.v1_11_R1.Navigation;
-import net.minecraft.server.v1_11_R1.PathEntity;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.Navigation;
+import net.minecraft.server.v1_12_R1.PathEntity;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 
