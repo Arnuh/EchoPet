@@ -57,7 +57,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) this.g;
 			if(!jumpController.c()){
 				if(this.delay == 0){
-					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().k();// Gets path towards the player.
+					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().l();// Gets path towards the player.
 					if(pathentity != null && pathentity.e() < pathentity.d()){
 						Vec3D vec3d = pathentity.a(this);
 						a(vec3d.x, vec3d.z);
@@ -79,8 +79,8 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		}
 	}
 
-	protected void cm(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
-		super.cm();
+	protected void cs(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
+		super.cs();
 		this.world.broadcastEntityEffect(this, (byte) 1);// Does leg jump animation I think
 	}
 
@@ -90,11 +90,11 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	}
 
 	private void resetDelay(){
-		if(moveController.b() < 2.2D) delay = 10;
+		if(moveController.c() < 2.2D) delay = 10;
 		else delay = 1;
 	}
 
-	public void de(){// Above datawatcher register
+	public void dj(){// Above datawatcher register
 		l(true);// Plays ambient sound if true, does super.l(flag);
 	}
 

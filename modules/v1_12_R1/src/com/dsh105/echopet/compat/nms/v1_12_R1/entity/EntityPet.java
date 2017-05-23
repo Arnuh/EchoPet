@@ -69,7 +69,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		this.fireProof = true;
 		if(this.FIELD_JUMP == null){
 			try{
-				this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bd");// Usually right below lastDamage float. Has 3 floats after it.
+				this.FIELD_JUMP = EntityLiving.class.getDeclaredField("aU");// Usually right below lastDamage float. Has 3 floats after it. EntityLiving
 				this.FIELD_JUMP.setAccessible(true);
 			}catch(NoSuchFieldException e){
 				e.printStackTrace();
@@ -315,20 +315,18 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	}
 
 	// EntityInsentient
-	public void g(float sideMot, float forwMot){// Look at EntityHorseAbstract for shit
-		// bx() is passenger shit. Minecraft changed it from 1 passenger to a list
-		if(bx().isEmpty()){
+	public float g(float sideMot, float forwMot){// Look at EntityHorseAbstract for shit
+		// bD() is passenger shit. Minecraft changed it from 1 passenger to a list
+		if(bD().isEmpty()){// search for passengers.isEmpty() in Entity
 			this.P = 0.5F;// Above noclip
 			this.aR = 0.02F;
-			super.g(sideMot, forwMot);
-			return;
+			return super.g(sideMot, forwMot);
 		}
-		Entity passenger = this.bx().get(0);
+		Entity passenger = this.bD().get(0);
 		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
 			this.P = 0.5F;
 			this.aR = 0.02F;
-			super.g(sideMot, forwMot);
-			return;
+			return super.g(sideMot, forwMot);
 		}
 		this.yaw = passenger.yaw;
 		this.lastYaw = this.yaw;
@@ -346,18 +344,17 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		sideMot *= 0.75F;
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
-		if(moveEvent.isCancelled()) return;
+		if(moveEvent.isCancelled()) return 0F;
 		/*
 		 * Search for 'getBoolean("NoAI")'. few methods down
-		    public void l(float f){
-			    super.l(f);
-			    o(f);
-			}
+		  public void m(float f) {
+		    super.m(f);
+		    p(f);
+		  }
 		 */
-		this.l(this.rideSpeed);
-		super.g(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+		this.m(this.rideSpeed);
 		PetType pt = this.getPet().getPetType();
-		if(FIELD_JUMP != null && !bx().isEmpty()){
+		if(FIELD_JUMP != null && !bD().isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
 				// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 				try{
@@ -397,21 +394,22 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 				}
 			}
 		}
+		return super.g(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 	}
 
-	protected SoundEffect G(){
+	protected SoundEffect F(){
 		return getSoundFromString(getIdleSound());
 	}
 
-	protected SoundEffect bW(){
+	protected SoundEffect d(DamageSource damageSource){
 		return getSoundFromString(getHurtSound());
 	}
 
-	protected SoundEffect bX(){
+	protected SoundEffect cd(){
 		return getSoundFromString(getDeathSound());
 	}
 
-	protected SoundEffect di(){
+	protected SoundEffect dk(){// EntityRabbit has this
 		return getSoundFromString(getStepSound());
 	}
 
@@ -453,8 +451,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	public abstract SizeCategory getSizeCategory();
 
 	// Entity
-	public void U(){// Search for "entityBaseTick" the method calling the method its in uses it
-		super.U();
+	public void Y(){// Search for "entityBaseTick". The method its in.
+		super.Y();
 		onLive();
 		if(this.petGoalSelector == null){
 			this.remove(false);

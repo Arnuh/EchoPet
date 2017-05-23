@@ -99,7 +99,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 
 	@Override
 	public void finish(){
-		this.nav.n();
+		this.nav.o();
 	}
 
 	@Override

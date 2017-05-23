@@ -47,10 +47,10 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	}
 
 	public boolean isPowered(){
-		return b(1);
+		return c(1);
 	}
 
-	private boolean b(int i){
+	private boolean c(int i){// just check EntityVex
 		byte b0 = ((Byte) this.datawatcher.get(DATA)).byteValue();
 		return (b0 & i) != 0;
 	}

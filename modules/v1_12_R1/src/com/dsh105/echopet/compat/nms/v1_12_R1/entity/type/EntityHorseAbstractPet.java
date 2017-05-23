@@ -68,11 +68,12 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	}
 
 	@Override
-	public void g(float sideMot, float forwMot){
-		super.g(sideMot, forwMot);
+	public float g(float sideMot, float forwMot){
+		float f = super.g(sideMot, forwMot);
 		if(forwMot <= 0.0F){
 			this.stepSoundCount = 0;
 		}
+		return f;
 	}
 
 	@Override

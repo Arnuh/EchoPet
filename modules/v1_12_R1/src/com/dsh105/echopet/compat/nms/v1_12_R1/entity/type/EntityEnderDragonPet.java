@@ -102,7 +102,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 	public void n(){
 		float f;
 		float f1;
-		Entity passenger = this.bx().size() > 0 ? this.bx().get(0) : null;
+		Entity passenger = this.bD().size() > 0 ? this.bD().get(0) : null;
 		if(passenger != null && (passenger instanceof EntityHuman)){
 			EntityHuman human = (EntityHuman) passenger;
 			if(human.getBukkitEntity() == this.getPlayerOwner().getPlayer()){
@@ -160,7 +160,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			f = MathHelper.cos(this.bv * 3.1415927F * 2.0F);
 			f1 = MathHelper.cos(this.bu * 3.1415927F * 2.0F);
 			if(f1 <= -0.3F && f >= -0.3F && !this.isSilent()){
-				this.world.a(this.locX, this.locY, this.locZ, getSoundFromString("entity.enderdragon.flap"), bC(), 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
+				this.world.a(this.locX, this.locY, this.locZ, getSoundFromString("entity.enderdragon.flap"), bI(), 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
 			}
 		}
 		this.bu = this.bv;
@@ -181,7 +181,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				this.bv += f;
 			}
 			this.yaw = MathHelper.g(this.yaw);
-			if(hasAI()){
+			if(isNoAI()){
 				this.bv = 0.5F;
 			}else{
 				if(this.bl < 0){
@@ -312,11 +312,11 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			float f10 = this.yaw * 3.1415927F / 180.0F;
 			float f11 = MathHelper.sin(f10);
 			float f12 = MathHelper.cos(f10);
-			this.body.A_();
+			this.body.B_();
 			this.body.setPositionRotation(this.locX + f11 * 0.5F, this.locY, this.locZ - f12 * 0.5F, 0.0F, 0.0F);
-			this.wing1.A_();
+			this.wing1.B_();
 			this.wing1.setPositionRotation(this.locX + f12 * 4.5F, this.locY + 2.0D, this.locZ + f11 * 4.5F, 0.0F, 0.0F);
-			this.wing2.A_();
+			this.wing2.B_();
 			this.wing2.setPositionRotation(this.locX - f12 * 4.5F, this.locY + 2.0D, this.locZ - f11 * 4.5F, 0.0F, 0.0F);
 			/*if ((!this.world.isClientSide) && (this.hurtTicks == 0)) {
 			    launchEntities(this.world.getEntities(this, this.wing1.getBoundingBox().grow(4.0D, 2.0D, 4.0D).c(0.0D, -2.0D, 0.0D)));
@@ -327,7 +327,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			double[] adouble1 = b(0, 1.0F);
 			float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bf * 0.01F);
 			float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bf * 0.01F);
-			this.head.A_();
+			this.head.B_();
 			this.head.setPositionRotation(this.locX + f3 * 5.5F * f2, this.locY + (adouble1[1] - adouble[1]) * 1.0D + f9 * 5.5F, this.locZ - f13 * 5.5F * f2, 0.0F, 0.0F);
 			for(int j = 0; j < 3; j++){
 				EntityComplexPart entitycomplexpart = null;
@@ -346,7 +346,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				float f16 = MathHelper.cos(f14);
 				float f17 = 1.5F;
 				float f18 = (j + 1) * 2.0F;
-				entitycomplexpart.A_();// near setPositionRotations
+				entitycomplexpart.B_();// near setPositionRotations
 				entitycomplexpart.setPositionRotation(this.locX - (f11 * f17 + f15 * f18) * f2, this.locY + (adouble2[1] - adouble[1]) * 1.0D - (f18 + f17) * f9 + 1.5D, this.locZ + (f12 * f17 + f16 * f18) * f2, 0.0F, 0.0F);
 			}
 		}

@@ -54,7 +54,7 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 			this.i = entityghast;
 		}
 
-		public void c(){
+		public void a(){
 			if(this.h == ControllerMove.Operation.MOVE_TO){
 				double d0 = this.b - this.i.locX;
 				double d1 = this.c - this.i.locY;

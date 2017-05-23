@@ -88,7 +88,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		}else if((this.wet || this.shaking) && this.shaking){
 			if(this.shakeCount == 0.0F){
 				// After sounds
-				makeSound("entity.wolf.shake", ci(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);// just search for '0.2F + 1.0F'
+				makeSound("entity.wolf.shake", co(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);// just search for '0.2F + 1.0F'
 			}
 			this.shakeCount += 0.05F;
 			if(this.shakeCount - 0.05F >= 2.0F){
