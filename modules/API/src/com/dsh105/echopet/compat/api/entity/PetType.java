@@ -58,6 +58,7 @@ public enum PetType {
 	WITHER("Wither", 64, "Wither Pet", 300D, 8D, "wither", "WitherBoss", PetData.SHIELD),
 	ZOMBIE("Zombie", 54, "Zombie Pet", 20D, 5D, "zombie", "Zombie", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST, PetData.HUSK),
 	HUSK("Husk", 23, "Husk Pet", 20D, 5D, "husk", "Husk", new Version("1.11-R1"), PetData.BABY),
+	ILLUSIONER("Illusioner", 37, "Illusioner Pet", 32D, 5D, "illusion_illager", "IllusionIllager", new Version("1.12-R1")),
 	ZOMBIEVILLAGER("ZombieVillager", 27, "Zombie Villager Pet", 20D, 5D, "zombie_villager", "ZombieVillager", new Version("1.11-R1"), PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
 	VEX("Vex", 35, "Vex Pet", 14D, 5D, "vex", "Vex", new Version("1.11-R1"), PetData.POWER),
 	VINDICATOR("Vindicator", 36, "Vindicator Pet", 24D, 7D, "vindication_illager", "Vindicator", new Version("1.11-R1")),

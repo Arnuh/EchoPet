@@ -4,18 +4,18 @@ import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.pet.IEvokerPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IIllusionerPet;
 
 /**
  * @Author Borlea
  * @Github https://github.com/borlea/
  * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
+ * @since May 23, 2017
  */
-@EntityPetType(petType = PetType.EVOKER)
-public class EvokerPet extends IllagerAbstractPet implements IEvokerPet{
+@EntityPetType(petType = PetType.ILLUSIONER)
+public class IllusionerPet extends IllagerAbstractPet implements IIllusionerPet{
 
-	public EvokerPet(Player owner){
+	public IllusionerPet(Player owner){
 		super(owner);
 	}
 }

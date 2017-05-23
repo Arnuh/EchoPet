@@ -71,7 +71,8 @@ public enum PetItem {
 	HUSK(PetType.HUSK, Material.MONSTER_EGG, "Husk Pet", "husk"),
 	ZOMBIEVILLAGER(PetType.ZOMBIEVILLAGER, Material.MONSTER_EGG, "Zombie Villager Pet", "zombievillager"),
 	VEX(PetType.VEX, Material.MONSTER_EGG, "Vex Pet", "vex"),
-	VINDICATOR(PetType.VINDICATOR, Material.MONSTER_EGG, "Vindicator Pet", "vindicator");
+	VINDICATOR(PetType.VINDICATOR, Material.MONSTER_EGG, "Vindicator Pet", "vindicator"),
+	ILLUSIONER(PetType.ILLUSIONER, Material.MONSTER_EGG, "Illusioner Pet", "illusioner");
 
     private String cmd;
     public PetType petType;
