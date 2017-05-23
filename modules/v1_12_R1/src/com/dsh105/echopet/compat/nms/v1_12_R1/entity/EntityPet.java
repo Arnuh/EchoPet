@@ -69,7 +69,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		this.fireProof = true;
 		if(this.FIELD_JUMP == null){
 			try{
-				this.FIELD_JUMP = EntityLiving.class.getDeclaredField("aU");// Usually right below lastDamage float. Has 3 floats after it. EntityLiving
+				this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bd");// Usually right below lastDamage float. Has 3 floats after it. EntityLiving
 				this.FIELD_JUMP.setAccessible(true);
 			}catch(NoSuchFieldException e){
 				e.printStackTrace();
@@ -315,18 +315,20 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	}
 
 	// EntityInsentient
-	public float g(float sideMot, float forwMot){// Look at EntityHorseAbstract for shit
+	public void a(float sideMot, float forwMot, float upMot){// ITS IN ENTITY LIVING
 		// bD() is passenger shit. Minecraft changed it from 1 passenger to a list
 		if(bD().isEmpty()){// search for passengers.isEmpty() in Entity
 			this.P = 0.5F;// Above noclip
 			this.aR = 0.02F;
-			return super.g(sideMot, forwMot);
+			super.a(sideMot, forwMot, upMot);
+			return;
 		}
 		Entity passenger = this.bD().get(0);
 		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
 			this.P = 0.5F;
 			this.aR = 0.02F;
-			return super.g(sideMot, forwMot);
+			super.a(sideMot, forwMot, upMot);
+			return;
 		}
 		this.yaw = passenger.yaw;
 		this.lastYaw = this.yaw;
@@ -338,13 +340,14 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		this.P = 1.0F;
 		sideMot = ((EntityLiving) passenger).be * 0.5F;// 1 below lastDamage in EntityLiving
 		forwMot = ((EntityLiving) passenger).bf;// After ^
-		if(forwMot <= 0.0F){
+		upMot = ((EntityLiving) passenger).bg;
+		if(forwMot <= 0.0F){// ?
 			forwMot *= 0.25F;
 		}
 		sideMot *= 0.75F;
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
-		if(moveEvent.isCancelled()) return 0F;
+		if(moveEvent.isCancelled()) return;
 		/*
 		 * Search for 'getBoolean("NoAI")'. few methods down
 		  public void m(float f) {
@@ -353,6 +356,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		  }
 		 */
 		this.m(this.rideSpeed);
+		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
 		if(FIELD_JUMP != null && !bD().isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
@@ -394,7 +398,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 				}
 			}
 		}
-		return super.g(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 	}
 
 	protected SoundEffect F(){
