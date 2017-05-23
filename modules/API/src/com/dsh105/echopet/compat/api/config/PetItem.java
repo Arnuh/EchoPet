@@ -48,6 +48,7 @@ public enum PetItem {
 	MAGMACUBE(PetType.MAGMACUBE, Material.MONSTER_EGG, "Magma Cube Pet", "magmacube"),
 	MUSHROOMCOW(PetType.MUSHROOMCOW, Material.MONSTER_EGG, "Mushroom Cow Pet", "mushroomcow"),
 	OCELOT(PetType.OCELOT, Material.MONSTER_EGG, "Ocelot Pet", "ocelot"),
+	PARROT(PetType.PARROT, Material.MONSTER_EGG, "Parrot Pet", "parrot"),
 	PIG(PetType.PIG, Material.MONSTER_EGG, "Pig Pet", "pig"),
 	PIGZOMBIE(PetType.PIGZOMBIE, Material.MONSTER_EGG, "PigZombie Pet", "pigzombie"),
 	POLARBEAR(PetType.POLARBEAR, Material.MONSTER_EGG, "Polar Bear pet", "polarbear"),

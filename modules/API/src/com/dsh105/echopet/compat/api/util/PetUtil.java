@@ -351,6 +351,9 @@ public class PetUtil {
 				info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(((IShulkerPet) pt).getColor().toString().replace("_", " ")));
 			}
         }
+		if(pt.getPetType() == PetType.PARROT){
+			info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(((IParrotPet) pt).getVariant().toString().replace("_", " ")));
+		}
         return info;
     }
 

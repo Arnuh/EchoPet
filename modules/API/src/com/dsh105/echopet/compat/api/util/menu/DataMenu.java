@@ -97,7 +97,8 @@ public class DataMenu {
 		RABBIT_TYPE,
 		SKELETON_TYPE,
 		LLAMA_VARIANT(new Version("1.11-R1")),
-		LLAMA_COLOR(new Version("1.11-R1"));
+		LLAMA_COLOR(new Version("1.11-R1")),
+		PARROT_VARIANT;
 
 		private Version version;
 

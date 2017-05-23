@@ -526,6 +526,16 @@ public class PetManager implements IPetManager {
 						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to DyeColor.", e, true);
 					}
 				}
+				if(pd.isType(DataMenuType.PARROT_VARIANT) && petType == PetType.PARROT){
+					try{
+						ParrotVariant pv = ParrotVariant.valueOf(pd.toString());
+						if(pv != null){
+							((IParrotPet) pet).setVariant(pv);
+						}
+					}catch(Exception e){
+						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to ParrotVariant.", e, true);
+					}
+				}
 				if(pd.isType(DataMenuType.SKELETON_TYPE)){
 					SkeletonType skeletonType = SkeletonType.valueOf(pd.toString());
 					((ISkeletonPet) pet).setSkeletonType(skeletonType);
