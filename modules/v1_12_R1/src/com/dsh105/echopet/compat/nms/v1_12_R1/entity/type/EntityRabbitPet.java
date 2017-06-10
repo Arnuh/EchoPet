@@ -79,8 +79,8 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		}
 	}
 
-	protected void cs(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
-		super.cs();
+	protected void cu(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
+		super.cu();
 		this.world.broadcastEntityEffect(this, (byte) 1);// Does leg jump animation I think
 	}
 
@@ -94,7 +94,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		else delay = 1;
 	}
 
-	public void dj(){// Above datawatcher register
+	public void dl(){// Above datawatcher register
 		l(true);// Plays ambient sound if true, does super.l(flag);
 	}
 

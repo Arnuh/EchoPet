@@ -316,14 +316,14 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
 	// EntityInsentient
 	public void a(float sideMot, float forwMot, float upMot){// ITS IN ENTITY LIVING
-		// bD() is passenger shit. Minecraft changed it from 1 passenger to a list
-		if(bD().isEmpty()){// search for passengers.isEmpty() in Entity
+		// bF() is passenger shit. Minecraft changed it from 1 passenger to a list
+		if(bF().isEmpty()){// search for passengers.isEmpty() in Entity
 			this.P = 0.5F;// Above noclip
 			this.aR = 0.02F;
 			super.a(sideMot, forwMot, upMot);
 			return;
 		}
-		Entity passenger = this.bD().get(0);
+		Entity passenger = this.bF().get(0);
 		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
 			this.P = 0.5F;
 			this.aR = 0.02F;
@@ -349,16 +349,16 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
 		/*
-		 * Search for 'getBoolean("NoAI")'. few methods down
-		  public void m(float f) {
-		    super.m(f);
-		    p(f);
+		 * Search for 'getBoolean("NoAI")'. in EntityInsentient few methods down
+		  public void k(float f) {
+		    super.k(f);
+		    n(f);
 		  }
 		 */
-		this.m(this.rideSpeed);
+		this.k(this.rideSpeed);
 		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
-		if(FIELD_JUMP != null && !bD().isEmpty()){
+		if(FIELD_JUMP != null && !bF().isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
 				// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 				try{
@@ -412,7 +412,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		return getSoundFromString(getDeathSound());
 	}
 
-	protected SoundEffect dk(){// EntityRabbit has this
+	protected SoundEffect dm(){// EntityRabbit has this, but it goes to jump?
 		return getSoundFromString(getStepSound());
 	}
 

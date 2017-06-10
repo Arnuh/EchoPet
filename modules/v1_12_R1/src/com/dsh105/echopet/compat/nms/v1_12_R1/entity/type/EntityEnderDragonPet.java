@@ -102,7 +102,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 	public void n(){
 		float f;
 		float f1;
-		Entity passenger = this.bD().size() > 0 ? this.bD().get(0) : null;
+		Entity passenger = this.bF().size() > 0 ? this.bF().get(0) : null;
 		if(passenger != null && (passenger instanceof EntityHuman)){
 			EntityHuman human = (EntityHuman) passenger;
 			if(human.getBukkitEntity() == this.getPlayerOwner().getPlayer()){
@@ -160,7 +160,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			f = MathHelper.cos(this.bv * 3.1415927F * 2.0F);
 			f1 = MathHelper.cos(this.bu * 3.1415927F * 2.0F);
 			if(f1 <= -0.3F && f >= -0.3F && !this.isSilent()){
-				this.world.a(this.locX, this.locY, this.locZ, getSoundFromString("entity.enderdragon.flap"), bI(), 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
+				this.world.a(this.locX, this.locY, this.locZ, getSoundFromString("entity.enderdragon.flap"), bK(), 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
 			}
 		}
 		this.bu = this.bv;
