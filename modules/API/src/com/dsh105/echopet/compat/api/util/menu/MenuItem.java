@@ -56,6 +56,7 @@ public enum MenuItem{
 	LLAMA_VARIANT("LEATHER", 1, (short) 0, DataMenuType.LLAMA_VARIANT, "Llama Variant", "Llama"),
 	LLAMA_COLOR("WOOL", 1, (short) 0, DataMenuType.LLAMA_COLOR, "Color", "Llama"),
 	OPEN("TRAP_DOOR", 1, (short) 0, DataMenuType.BOOLEAN, "Open", "Shulker"),
+	PARROT_VARIANT("WOOL", 1, (short) 4, DataMenuType.PARROT_VARIANT, "Variant", "Parrot"),
 	RIDE("CARROT_STICK", 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet."),
 	HAT("IRON_HELMET", 1, (short) 0, DataMenuType.BOOLEAN, "Hat Pet", "Wear your pet on your head.");
 

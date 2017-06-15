@@ -48,6 +48,7 @@ public enum PetItem {
 	MAGMACUBE(PetType.MAGMACUBE, Material.MONSTER_EGG, "Magma Cube Pet", "magmacube"),
 	MUSHROOMCOW(PetType.MUSHROOMCOW, Material.MONSTER_EGG, "Mushroom Cow Pet", "mushroomcow"),
 	OCELOT(PetType.OCELOT, Material.MONSTER_EGG, "Ocelot Pet", "ocelot"),
+	PARROT(PetType.PARROT, Material.MONSTER_EGG, "Parrot Pet", "parrot"),
 	PIG(PetType.PIG, Material.MONSTER_EGG, "Pig Pet", "pig"),
 	PIGZOMBIE(PetType.PIGZOMBIE, Material.MONSTER_EGG, "PigZombie Pet", "pigzombie"),
 	POLARBEAR(PetType.POLARBEAR, Material.MONSTER_EGG, "Polar Bear pet", "polarbear"),
@@ -70,7 +71,8 @@ public enum PetItem {
 	HUSK(PetType.HUSK, Material.MONSTER_EGG, "Husk Pet", "husk"),
 	ZOMBIEVILLAGER(PetType.ZOMBIEVILLAGER, Material.MONSTER_EGG, "Zombie Villager Pet", "zombievillager"),
 	VEX(PetType.VEX, Material.MONSTER_EGG, "Vex Pet", "vex"),
-	VINDICATOR(PetType.VINDICATOR, Material.MONSTER_EGG, "Vindicator Pet", "vindicator");
+	VINDICATOR(PetType.VINDICATOR, Material.MONSTER_EGG, "Vindicator Pet", "vindicator"),
+	ILLUSIONER(PetType.ILLUSIONER, Material.MONSTER_EGG, "Illusioner Pet", "illusioner");
 
     private String cmd;
     public PetType petType;
