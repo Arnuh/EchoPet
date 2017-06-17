@@ -22,7 +22,7 @@ import org.bukkit.DyeColor;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
-import com.dsh105.echopet.compat.nms.v1_8_R3.entity.EntityAgeablePet;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.EntityTameablePet;
 
 import net.minecraft.server.v1_8_R3.EnumColor;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -31,7 +31,7 @@ import net.minecraft.server.v1_8_R3.World;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.WOLF)
-public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
+public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 
     private boolean wet;
     private boolean shaking;
@@ -45,24 +45,13 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
         super(world, pet);
     }
 
-    public boolean isTamed() {
-        return (this.datawatcher.getByte(16) & 4) != 0;
-    }
-
     @Override
     public void setTamed(boolean flag) {
         if (isAngry() && flag) {
             this.getPet().getPetData().remove(PetData.ANGRY);
             setAngry(false);
         }
-
-        byte b0 = this.datawatcher.getByte(16);
-
-        if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 4)));
-        } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -5)));
-        }
+		super.setTamed(flag);
     }
 
     @Override
@@ -139,8 +128,6 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(17, "");
-        this.datawatcher.a(16, new Byte((byte) 0));
         this.datawatcher.a(18, new Float(this.getHealth()));
         this.datawatcher.a(19, new Byte((byte) 0));
         this.datawatcher.a(20, new Byte((byte) EnumColor.RED.getColorIndex()));

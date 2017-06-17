@@ -37,7 +37,7 @@ import net.minecraft.server.v1_12_R1.World;
 public class EntityTameablePet extends EntityAgeablePet implements IEntityTameablePet{
 
 	protected static final DataWatcherObject<Byte> bv = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
-	protected static final DataWatcherObject<Optional<UUID>> bw = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.m);// Owner
+	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.m);// Owner
 
 	public EntityTameablePet(World world){
 		super(world);
@@ -49,17 +49,17 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(bv, Byte.valueOf((byte) 0));
-		this.datawatcher.register(bw, Optional.absent());
+		this.datawatcher.register(bv, (byte) 0);
+		this.datawatcher.register(OWNER, Optional.absent());
 	}
 
 	// These are all useless
 	public boolean isTamed(){
-		return (((Byte) this.datawatcher.get(bv)).byteValue() & 0x4) != 0;
+		return (this.datawatcher.get(bv) & 0x4) != 0;
 	}
 
 	public void setTamed(boolean paramBoolean){
-		int i = ((Byte) this.datawatcher.get(bv)).byteValue();
+		int i = this.datawatcher.get(bv);
 		if(paramBoolean){
 			this.datawatcher.set(bv, Byte.valueOf((byte) (i | 0x4)));
 		}else{
@@ -68,11 +68,11 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	}
 
 	public boolean isSitting(){
-		return (((Byte) this.datawatcher.get(bv)).byteValue() & 0x1) != 0;
+		return (this.datawatcher.get(bv) & 0x1) != 0;
 	}
 
 	public void setSitting(boolean paramBoolean){
-		int i = ((Byte) this.datawatcher.get(bv)).byteValue();
+		int i = this.datawatcher.get(bv);
 		if(paramBoolean){
 			this.datawatcher.set(bv, Byte.valueOf((byte) (i | 0x1)));
 		}else{
@@ -81,10 +81,10 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	}
 
 	public UUID getOwnerUUID(){
-		return (UUID) ((Optional<UUID>) this.datawatcher.get(bw)).orNull();
+		return this.datawatcher.get(OWNER).orNull();
 	}
 
 	public void setOwnerUUID(UUID paramUUID){
-		this.datawatcher.set(bw, Optional.fromNullable(paramUUID));
+		this.datawatcher.set(OWNER, Optional.fromNullable(paramUUID));
 	}
 }

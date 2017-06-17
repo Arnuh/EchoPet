@@ -16,6 +16,7 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.UUID;
 
 /**
  * @Author Borlea
@@ -26,4 +27,8 @@ package com.dsh105.echopet.compat.api.entity;
 public interface IEntityTameablePet extends IEntityAgeablePet{
 
 	public void setTamed(boolean flag);
+
+	public void setSitting(boolean sitting);
+
+	public void setOwnerUUID(UUID owner);
 }

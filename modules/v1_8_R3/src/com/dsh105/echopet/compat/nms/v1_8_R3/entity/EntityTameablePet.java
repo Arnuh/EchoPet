@@ -16,6 +16,8 @@
  */
 package com.dsh105.echopet.compat.nms.v1_8_R3.entity;
 
+import java.util.UUID;
+
 import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 
@@ -71,4 +73,7 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & 0xFFFFFFFE)));
 		}
 	}
+
+	@Override
+	public void setOwnerUUID(UUID owner){}
 }
