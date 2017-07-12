@@ -150,6 +150,8 @@ public class MenuUtil {
 		}
 		if(pt == PetType.PARROT){
 			options.add(new MenuOption(i++, MenuItem.PARROT_VARIANT));
+			options.add(new MenuOption(i++, MenuItem.LEFT_SHOULDER));
+			options.add(new MenuOption(i++, MenuItem.RIGHT_SHOULDER));
 		}
         return options;
     }

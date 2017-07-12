@@ -85,7 +85,7 @@ public enum PetType {
 	        PetData.CREAMY, PetData.BROWN_LLAMA, PetData.GRAY_LLAMA, PetData.WHITE_LLAMA),
 	MUSHROOMCOW("MushroomCow", 96, "Mushroom Cow Pet", 10D, 3D, "mooshroom", "MushroomCow", PetData.BABY),
 	OCELOT("Ocelot", 98, "Ocelot Pet", 10D, 4D, "ocelot", "Ozelot", PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
-	PARROT("Parrot", 105, "Parrot Pet", 6D, 1D, "parrot", "Parrot", new Version("1.12-R1"), PetData.GRAY, PetData.GREEN, PetData.CYAN, PetData.BLUE, PetData.RED),
+	PARROT("Parrot", 105, "Parrot Pet", 6D, 1D, "parrot", "Parrot", new Version("1.12-R1"), PetData.GRAY, PetData.GREEN, PetData.CYAN, PetData.BLUE, PetData.RED, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER),
 	PIG("Pig", 90, "Pig Pet", 10D, 3D, "pig", "Pig", PetData.BABY, PetData.SADDLE),
 	POLARBEAR("PolarBear", 102, "Polar Bear Pet", 30D, 9D, "polar_bear", "PolarBear", new Version("1.10-R1"), PetData.BABY, PetData.STANDING_UP),
 	RABBIT("Rabbit", 101, "Rabbit Pet", 8D, 3D, "rabbit", "Rabbit", PetData.BABY, PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.THE_KILLER_BUNNY),
@@ -135,11 +135,11 @@ public enum PetType {
 	PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, String minecraftEntityName, String entityTypeFixedName, Version version, PetData... allowedData){
 		this.classIdentifier = classIdentifier;
 		try{
-            this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
+		    this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-        } catch (ClassNotFoundException e) {
-            // do nothing
-        }
+		} catch (ClassNotFoundException e) {
+		    // do nothing
+		}
         this.id = registrationId;
         this.allowedDataArray = allowedData;
         this.allowedData = ImmutableList.copyOf(allowedData);

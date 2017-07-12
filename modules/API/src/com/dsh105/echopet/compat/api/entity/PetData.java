@@ -91,6 +91,8 @@ public enum PetData {
 	NORMAL("normal", DataMenuType.SKELETON_TYPE),
 	WITHER("wither", DataMenuType.SKELETON_TYPE),
 	STRAY("stray", new Version("1.10-R1"), 0, DataMenuType.SKELETON_TYPE),
+	LEFT_SHOULDER("leftshoulder", new Version("1.12-R1"), 0, DataMenuType.BOOLEAN),
+	RIGHT_SHOULDER("rightshoulder", new Version("1.12-R1"), 0, DataMenuType.BOOLEAN),
 	OPEN("open", DataMenuType.BOOLEAN);
 
 

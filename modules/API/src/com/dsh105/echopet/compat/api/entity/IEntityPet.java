@@ -43,6 +43,10 @@ public interface IEntityPet {
 
     public LivingEntity getTarget();
 
+	public void setOwnerShoulderEntityLeft();
+
+	public void setOwnerShoulderEntityRight();
+
     void resetEntitySize();
     
     void setEntitySize(float width, float height);

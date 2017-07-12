@@ -19,6 +19,8 @@ package com.dsh105.echopet.compat.nms.v1_12_R1.entity;
 import java.lang.reflect.Field;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftCreature;
@@ -151,6 +153,54 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
 	public LivingEntity getTarget(){
 		return (LivingEntity) this.getGoalTarget().getBukkitEntity();
+	}
+
+	public void setOwnerShoulderEntityLeft(){// Spigot has the worst naming for this
+		releaseLeftShoulderEntity();
+		NBTTagCompound nbt = new NBTTagCompound();// figure out why entities that aren't parrots don't show.
+		nbt.setString("id", "minecraft:parrot");// getSaveID();
+		nbt.setBoolean("echopet", true);
+		save(nbt);
+		((CraftPlayer) this.getPlayerOwner()).getHandle().setShoulderEntityLeft(nbt);
+	}
+
+	public void setOwnerShoulderEntityRight(){
+		releaseRightShoulderEntity();
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setString("id", "minecraft:parrot");// getSaveID();
+		nbt.setBoolean("echopet", true);
+		save(nbt);
+		((CraftPlayer) this.getPlayerOwner()).getHandle().setShoulderEntityRight(nbt);
+	}
+
+	private void releaseLeftShoulderEntity(){
+		EntityPlayer player = ((CraftPlayer) this.getPlayerOwner()).getHandle();
+		NBTTagCompound nbt = player.getShoulderEntityLeft();
+		if(nbt != null && !nbt.isEmpty()){
+			if(!nbt.hasKey("echopet")) spawnEntityFromShoulder(nbt);
+			player.setShoulderEntityLeft(new NBTTagCompound());
+		}
+	}
+
+	private void releaseRightShoulderEntity(){
+		EntityPlayer player = ((CraftPlayer) this.getPlayerOwner()).getHandle();
+		NBTTagCompound nbt = player.getShoulderEntityRight();
+		if(nbt != null){
+			if(!nbt.hasKey("echopet")) spawnEntityFromShoulder(nbt);
+			player.setShoulderEntityRight(null);
+		}
+	}
+	
+	private boolean spawnEntityFromShoulder(@Nullable NBTTagCompound nbttagcompound){// copied from EntityHuman
+		if((!this.world.isClientSide) && (!nbttagcompound.isEmpty())){
+			Entity entity = EntityTypes.a(nbttagcompound, this.world);
+			if((entity instanceof EntityTameableAnimal)){
+				((EntityTameableAnimal) entity).setOwnerUUID(this.uniqueID);
+			}
+			entity.setPosition(this.locX, this.locY + 0.699999988079071D, this.locZ);
+			return this.world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SHOULDER_ENTITY);
+		}
+		return true;
 	}
 
 	public boolean attack(Entity entity){
@@ -478,6 +528,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	public boolean startRiding(Entity entity){
 		return false;
 	}
+
 
 	public void a(NBTTagCompound nbttagcompound){
 		// Do nothing with NBT

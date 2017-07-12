@@ -649,6 +649,11 @@ public class PetManager implements IPetManager {
 					LlamaSkin skin = LlamaSkin.valueOf(pd.toString().split("_")[0]);
 					((ILlamaPet) pet).setSkinColor(skin);
 				}
+				if(pd.equals(PetData.LEFT_SHOULDER)){
+					pet.getEntityPet().setOwnerShoulderEntityLeft();
+				}else if(pd.equals(PetData.RIGHT_SHOULDER)){
+					pet.getEntityPet().setOwnerShoulderEntityRight();
+				}
 			}
 		}
             
