@@ -18,7 +18,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 
 	private static final DataWatcherObject<Integer> TYPE = DataWatcher.a(EntityRabbitPet.class, DataWatcherRegistry.b);
 	private boolean onGroundLastTick = false;
-	private int delay = 0;
+	private int delay = 0;// bC
 
 	public EntityRabbitPet(World world){
 		super(world);
@@ -49,47 +49,56 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	@Override
 	public void onLive(){
 		super.onLive();
+		if(this.delay > 0){
+			this.delay -= 1;
+		}
 		if(this.onGround){
 			if(!this.onGroundLastTick){
 				l(false);
-				reset();// do_ in 1.10
+				reset();// dv
 			}
 			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) this.g;
 			if(!jumpController.c()){
-				if(this.delay == 0){
+				if(this.moveController.b() && this.delay == 0){
 					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().l();// Gets path towards the player.
-					if(pathentity != null && pathentity.e() < pathentity.d()){
-						Vec3D vec3d = pathentity.a(this);
-						a(vec3d.x, vec3d.z);
-						de();
+					// if(pathentity != null && pathentity.e() < pathentity.d()){
+					// Vec3D vec3d = pathentity.a(this);
+					// a(vec3d.x, vec3d.z);
+					// dl();
+					// }
+					Vec3D vec3d = new Vec3D(this.moveController.d(), this.moveController.e(), this.moveController.f());
+					if((pathentity != null) && (pathentity.e() < pathentity.d())){
+						vec3d = pathentity.a(this);
 					}
+					a(vec3d.x, vec3d.z);
+					dl();
 				}
 			}else if(!jumpController.d()){
+				// dp();
 				((ControllerJumpRabbit) this.g).a(true);
 			}
 		}
 		this.onGroundLastTick = this.onGround;
 	}
 
-	public void M(){// Should we use m()? Idk difference.. M() is called on doTick in EntityInsentient
-		// Under datawatcher register
-		super.M();
-		if(this.delay > 0){
-			this.delay -= 1;
-		}
-	}
-
 	protected void cu(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
 		super.cu();
+		double d0 = this.moveController.c();
+		if(d0 > 0.0D){
+			double d1 = this.motX * this.motX + this.motZ * this.motZ;
+			if(d1 < 0.010000000000000002D){
+				b(0.0F, 0.0F, 1.0F, 0.1F);
+			}
+		}
 		this.world.broadcastEntityEffect(this, (byte) 1);// Does leg jump animation I think
 	}
 
 	private void reset(){
-		resetDelay();// dn method
-		((ControllerJumpRabbit) g).a(false);// dm() method
+		resetDelay();// du method
+		((ControllerJumpRabbit) g).a(false);// dt()
 	}
 
-	private void resetDelay(){
+	private void resetDelay(){// du()
 		if(moveController.c() < 2.2D) delay = 10;
 		else delay = 1;
 	}
@@ -122,7 +131,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 
 		public void b(){
 			if(this.a){
-				this.c.de();
+				this.c.dl();// this is the method above ^
 				this.a = false;
 			}
 		}
