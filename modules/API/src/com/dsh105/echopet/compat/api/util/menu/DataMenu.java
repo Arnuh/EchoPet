@@ -27,6 +27,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Version;
+import com.dsh105.echopet.compat.api.util.VersionCheckType;
 
 public class DataMenu {
 
@@ -56,7 +57,7 @@ public class DataMenu {
 	private int countItems(DataMenuType type){
 		int i = 0;
 		for(DataMenuItem mi : DataMenuItem.values()){
-			if(mi.getTypes().contains(type) && type.isCompatible()){
+			if(mi.getTypes().contains(type) && type.isValid()){
 				if(mi.getDataLink().isCompatible()){
 					i++;
 				}
@@ -72,7 +73,7 @@ public class DataMenu {
     public void setItems(DataMenuType type, int size) {
         int i = 0;
         for (DataMenuItem mi : DataMenuItem.values()) {
-			if(mi.getTypes().contains(type) && type.isCompatible()){
+			if(mi.getTypes().contains(type) && type.isValid()){
 				if(mi.getDataLink().isCompatible()){
 					this.inv.setItem(i, mi.getItem());
 					i++;
@@ -96,26 +97,32 @@ public class DataMenu {
 		HORSE_ARMOUR,
 		RABBIT_TYPE,
 		SKELETON_TYPE,
-		LLAMA_VARIANT(new Version("1.11-R1")),
-		LLAMA_COLOR(new Version("1.11-R1")),
+		LLAMA_VARIANT(VersionCheckType.COMPATIBLE, new Version("1.11-R1")),
+		LLAMA_COLOR(VersionCheckType.COMPATIBLE, new Version("1.11-R1")),
 		PARROT_VARIANT;
 
 		private Version version;
+		private VersionCheckType checkType;
 
 		private DataMenuType(){
 			version = new Version();
+			checkType = VersionCheckType.COMPATIBLE;
 		}
 
-		private DataMenuType(Version version){
+		private DataMenuType(VersionCheckType checkType, Version version){
 			this.version = version;
+			this.checkType = checkType;
 		}
 
-		public boolean isCompatible(){
-			return version.isCompatible(new Version());
-		}
-
-		public boolean isSupported(){
-			return version.isSupported(new Version());
+		public boolean isValid(){
+			switch (checkType){
+				case COMPATIBLE:
+					return version.isCompatible(new Version());
+				case SUPPORTED:
+					return version.isSupported(new Version());
+				default:
+					return version.isIdentical(new Version());
+			}
 		}
     }
 }

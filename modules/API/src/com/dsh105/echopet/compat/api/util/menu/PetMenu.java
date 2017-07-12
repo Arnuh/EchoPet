@@ -44,7 +44,7 @@ public class PetMenu{
 		int incompatible = 0;
 		for(MenuOption o : this.options){
 			MenuItem mi = o.item;
-			if(mi.getMenuType().isSupported()){
+			if(mi.getMenuType().isValid()){
 				if(mi.isSupported()){
 					if(mi.getMenuType() == DataMenu.DataMenuType.BOOLEAN){
 						if(GeneralUtil.isEnumType(PetData.class, mi.toString())){
