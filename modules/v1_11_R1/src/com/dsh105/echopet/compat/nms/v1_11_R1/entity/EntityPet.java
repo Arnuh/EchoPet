@@ -153,6 +153,12 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		return (LivingEntity) this.getGoalTarget().getBukkitEntity();
 	}
 
+	@Override
+	public void setOwnerShoulderEntityLeft(){}
+
+	@Override
+	public void setOwnerShoulderEntityRight(){}
+
 	public boolean attack(Entity entity){
 		return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
 	}
