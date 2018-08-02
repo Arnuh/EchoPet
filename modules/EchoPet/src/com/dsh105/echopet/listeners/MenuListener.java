@@ -28,7 +28,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -103,11 +102,13 @@ public class MenuListener implements Listener {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
                                             inv.setItem(slot, mi.getBoolean(true));
-                                            Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
+											// pet.getLocation().getWorld().spawnParticle(Particle.SMOKE_NORMAL, pet.getLocation(), 1);
+											// Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
                                             inv.setItem(slot, mi.getBoolean(false));
-                                            Particle.SPARKLE.builder().at(pet.getLocation()).show();
+											// pet.getLocation().getWorld().spawnParticle(Particle.FIREWORKS_SPARK, pet.getLocation(), 1);
+											// Particle.SPARKLE.builder().at(pet.getLocation()).show();
                                         }
                                     }
                                 } else {
