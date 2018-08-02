@@ -24,12 +24,13 @@
   <modules>
 	<module>./modules/API</module>
 	<module>./modules/EchoPet</module>
-	<module>./modules/v1_8_R3</module>
+	<!--<module>./modules/v1_8_R3</module>
 	<module>./modules/v1_9_R1</module>
 	<module>./modules/v1_9_R2</module>
 	<module>./modules/v1_10_R1</module>
-	<module>./modules/v1_11_R1</module>
+	<module>./modules/v1_11_R1</module>-->
     <module>./modules/v1_12_R1</module>
+    <module>./modules/v1_13_R1</module>
   </modules>
   
     <dependencies>
@@ -43,7 +44,7 @@
             <artifactId>Minecraft-Reflection</artifactId>
             <version>1.0.2-SNAPSHOT</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>VanishNoPacket</artifactId>
             <version>3.20</version>
@@ -54,13 +55,11 @@
             		<artifactId>Vault</artifactId>
             	</exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         <dependency>
-            <!--<groupId>net.milkbowl.vault</groupId>-->
-            <groupId>com.scarsz</groupId>
+            <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <!--<version>1.5.6</version>-->
-            <version>1.5</version>
+            <version>1.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -77,29 +76,27 @@
         	<groupId>com.sk89q</groupId>
         	<artifactId>worldguard</artifactId>
         	<version>6.1.1-SNAPSHOT</version>
+			<exclusions>
+			  <exclusion>
+				<artifactId>bukkit</artifactId>
+				<groupId>org.bukkit</groupId>
+			  </exclusion>
+	        </exclusions>
         </dependency>
         <dependency>
         	<groupId>com.codingforcookies</groupId>
         	<artifactId>robert</artifactId>
-        	<version>1.11-SNAPSHOT</version>
+        	<version>1.0</version>
 			<exclusions>
 			  <exclusion>
-				<artifactId>spigot</artifactId>
+				<artifactId>spigot-api</artifactId>
 				<groupId>org.spigotmc</groupId>
-			</exclusion>
-	      </exclusions>
+			  </exclusion>
+	        </exclusions>
         </dependency>
     </dependencies>
 
     <repositories>
-    	<repository>
-    		<id>codingforcookies-releases</id>
-    		<url>http://repo.codingforcookies.com/artifactory/releases</url>
-    	</repository>
-    	<repository>
-    		<id>codingforcookies-snapshots</id>
-    		<url>http://repo.codingforcookies.com/artifactory/snapshots</url>
-    	</repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -108,14 +105,10 @@
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
         </repository>
-        <!--<repository>
+        <repository>
             <id>vault-repo</id>
-            <url>http://nexus.theyeticave.net/content/repositories/pub_releases/</url>
-        </repository>-->
-		<repository>
-		    <id>vault-repo-temp</id>
-		    <url>https://dl.bintray.com/scarsz/maven</url>
-		</repository>
+            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+        </repository>
         <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/repositories/snapshots/</url>
@@ -124,10 +117,6 @@
         	<id>sk89q-repo</id>
         	<url>http://maven.sk89q.com/artifactory/repo/</url>
         </repository>
-		<!--<repository>fuckyou
-			<id>kitteh-repo</id>
-			<url>http://repo.kitteh.org/content/groups/public</url>
-		</repository>-->
     </repositories>
 
     <build>
@@ -157,7 +146,7 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
-            <version>1.4</version>
+            <version>3.1.1</version>
             <executions>
                 <execution>
                     <phase>package</phase>

@@ -24,6 +24,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -32,7 +33,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.particle.Trail;
@@ -86,7 +86,7 @@ public abstract class Pet implements IPet{
 	public IEntityPet spawnPet(Player owner, boolean ignoreHidden){
 		if(entityPet != null) return entityPet;
 		if(owner != null){
-			if(!EchoPet.getPlugin().getVanishProvider().isVanished(owner)){// We don't spawn pets at all if the player is vanished due to bounding boxes.
+			// if(!EchoPet.getPlugin().getVanishProvider().isVanished(owner)){// We don't spawn pets at all if the player is vanished due to bounding boxes.
 				if(isHidden && !ignoreHidden) return null;
 				this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
 				if(this.entityPet != null){
@@ -101,7 +101,7 @@ public abstract class Pet implements IPet{
 						setLastRider(null);
 					}
 				}
-			}
+			// }
 		}else{
 			EchoPet.getManager().saveFileData("autosave", this);
 			EchoPet.getSqlManager().saveToDatabase(this, false);
@@ -260,8 +260,8 @@ public abstract class Pet implements IPet{
 	@Override
 	public void removePet(boolean makeSound, boolean makeParticles){
 		if(getEntityPet() != null && this.getCraftPet() != null && makeParticles){
-			Particle.CLOUD.builder().at(getLocation()).show();
-			Particle.LAVA_SPARK.builder().at(getLocation()).show();
+			getLocation().getWorld().spawnParticle(Particle.CLOUD, getLocation(), 1);
+			getLocation().getWorld().spawnParticle(Particle.LAVA, getLocation(), 1);
 		}
 		removeRider(makeSound, makeParticles);
 		for(com.dsh105.echopet.compat.api.particle.Trail trail : trails){
@@ -373,10 +373,11 @@ public abstract class Pet implements IPet{
 		this.teleportToOwner();
 		this.getEntityPet().resizeBoundingBox(flag);
 		this.ownerRiding = flag;
-		Particle.PORTAL.builder().at(getLocation()).show();
+		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		Location l = this.getLocation().clone();
 		l.setY(l.getY() - 1D);
-		Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
+		// getLocation().getWorld().spawnParticle(Particle.BLOCK_DUST, getLocation(), 1);
+		// Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
 	}
 
 	@Override
@@ -405,10 +406,12 @@ public abstract class Pet implements IPet{
 		PlayerUtil.sendPacket(getOwner(), packet.getHandle());
 		this.getEntityPet().resizeBoundingBox(flag);
 		this.isHat = flag;
-		Particle.PORTAL.builder().at(getLocation()).show();
+		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		// Particle.PORTAL.builder().at(getLocation()).show();
 		Location l = this.getLocation().clone();
 		l.setY(l.getY() - 1D);
-		Particle.PORTAL.builder().at(getLocation()).show();
+		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		// Particle.PORTAL.builder().at(getLocation()).show();
 	}
 
 	@Override

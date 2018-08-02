@@ -7,4 +7,4 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
  * @Website http://codingforcookies.com/
  * @since Nov 19, 2016
  */
-public interface IEntityWitherSkeletonPet extends IEntitySkeletonPet{}
+public interface IEntityWitherSkeletonPet extends IEntitySkeletonAbstractPet{}

@@ -18,7 +18,7 @@ package com.dsh105.echopet.compat.nms.v1_12_R1.entity.type;
 
 
 import com.dsh105.echopet.compat.api.entity.*;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_12_R1.entity.EntityPet;
 
 import net.minecraft.server.v1_12_R1.DataWatcher;
@@ -28,7 +28,7 @@ import net.minecraft.server.v1_12_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.SKELETON)
-public class EntitySkeletonPet extends EntityPet implements IEntitySkeletonPet{
+public class EntitySkeletonPet extends EntityPet implements IEntitySkeletonAbstractPet{
 
 	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntitySkeletonPet.class, DataWatcherRegistry.h);// Something for PathfinderGoalMeleeAttack
 

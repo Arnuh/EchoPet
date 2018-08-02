@@ -18,13 +18,13 @@ package com.dsh105.echopet.compat.nms.v1_12_R1;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
@@ -40,7 +40,7 @@ public class SpawnUtil implements ISpawnUtil{
 
 	public IEntityPet spawn(IPet pet, Player owner){
 		Location l = owner.getLocation();
-		if(EchoPet.getPlugin().getVanishProvider().isVanished(owner)) return null;
+		// if(EchoPet.getPlugin().getVanishProvider().isVanished(owner)) return null;
 		PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, l);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(spawnEvent);
 		if(spawnEvent.isCancelled()){
@@ -60,7 +60,7 @@ public class SpawnUtil implements ISpawnUtil{
 			owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
 			EchoPet.getManager().removePet(pet, true);
 		}else{
-			Particle.MAGIC_RUNES.builder().at(l).show();
+			owner.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 1);
 		}
 		EchoPet.getPetRegistry().disablePets();
 		return entityPet;

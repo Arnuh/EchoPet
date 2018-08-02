@@ -22,7 +22,6 @@ import org.bukkit.plugin.Plugin;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.particle.Trails;
-import com.dsh105.echopet.compat.api.plugin.hook.IVanishProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
@@ -46,7 +45,7 @@ public interface IEchoPetPlugin extends Plugin {
 
     public BoneCP getDbPool();
 
-    public IVanishProvider getVanishProvider();
+	// public IVanishProvider getVanishProvider();
 
     public IWorldGuardProvider getWorldGuardProvider();
 

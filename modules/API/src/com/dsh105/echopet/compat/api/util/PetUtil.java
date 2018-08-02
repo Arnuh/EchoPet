@@ -309,7 +309,7 @@ public class PetUtil {
         }
 
 		if(pt.getPetType() == PetType.SKELETON || pt.getPetType() == PetType.STRAY || pt.getPetType() == PetType.WITHERSKELETON){
-			info.add(ChatColor.GOLD + " - Skeleton Type: " + ChatColor.YELLOW + StringUtil.capitalise(((ISkeletonPet) pt).getSkeletonType().toString().replace("_", " ")));
+			info.add(ChatColor.GOLD + " - Skeleton Type: " + ChatColor.YELLOW + StringUtil.capitalise(((ISkeletonAbstractPet) pt).getSkeletonType().toString().replace("_", " ")));
         }
 
         if (pt.getPetType() == PetType.WITHER) {

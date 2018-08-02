@@ -7,4 +7,4 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
  * @Website http://codingforcookies.com/
  * @since Nov 19, 2016
  */
-public interface IWitherSkeletonPet extends ISkeletonPet{}
+public interface IWitherSkeletonPet extends ISkeletonAbstractPet{}

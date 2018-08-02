@@ -56,7 +56,7 @@ public class PetCommand implements CommandExecutor {
         for (HelpEntry he : HelpEntry.values()) {
             helpMessages.add(he.getPowerMessage(sender));
         }
-        return new Paginator<PowerMessage>(helpMessages, 5);
+		return new Paginator<PowerMessage>(helpMessages, 5);
     }
 
     @Override

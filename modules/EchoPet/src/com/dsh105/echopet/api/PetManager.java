@@ -538,7 +538,7 @@ public class PetManager implements IPetManager {
 				}
 				if(pd.isType(DataMenuType.SKELETON_TYPE)){
 					SkeletonType skeletonType = SkeletonType.valueOf(pd.toString());
-					((ISkeletonPet) pet).setSkeletonType(skeletonType);
+					((ISkeletonAbstractPet) pet).setSkeletonType(skeletonType);
 				}
 				if(pd == PetData.FIRE){
 					((IBlazePet) pet).setOnFire(b);

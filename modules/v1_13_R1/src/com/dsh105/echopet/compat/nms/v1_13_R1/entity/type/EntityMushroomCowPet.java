@@ -14,27 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.dsh105.echopet.compat.nms.v1_13_R1.entity.type;
 
-package com.dsh105.echopet.listeners;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.kitteh.vanish.event.VanishStatusChangeEvent;
-
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 
+import net.minecraft.server.v1_13_R1.World;
 
-public class VanishListener implements Listener {
+@EntitySize(width = 0.9F, height = 1.3F)
+@EntityPetType(petType = PetType.MUSHROOMCOW)
+public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
 
-    @EventHandler
-    public void onVanish(VanishStatusChangeEvent event) {
-        Player p = event.getPlayer();
-        IPet pet = EchoPet.getManager().getPet(p);
-        if (pet != null) {
-			if(!event.isVanishing()) pet.spawnPet(p, false);
-			else pet.removePet(false, false);
-        }
-    }
+	public EntityMushroomCowPet(World world){
+		super(world);
+	}
+
+	public EntityMushroomCowPet(World world, IPet pet){
+		super(world, pet);
+	}
 }

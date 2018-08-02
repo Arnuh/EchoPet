@@ -49,7 +49,6 @@ import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.*;
-import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
@@ -79,7 +78,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
     private YAMLConfig langConfig;
     private BoneCP dbPool;
 
-    private VanishProvider vanishProvider;
+	// private VanishProvider vanishProvider;
     private WorldGuardProvider worldGuardProvider;
 
     public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
@@ -154,7 +153,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         manager.registerEvents(new PetOwnerListener(), this);
         //manager.registerEvents(new ChunkListener(), this);
 
-        this.vanishProvider = new VanishProvider(this);
+		// this.vanishProvider = new VanishProvider(this);
         this.worldGuardProvider = new WorldGuardProvider(this);
 
         try {
@@ -371,11 +370,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
     @Override
     public ISpawnUtil getSpawnUtil() {
         return SPAWN_UTIL;
-    }
-
-    @Override
-    public VanishProvider getVanishProvider() {
-        return vanishProvider;
     }
 
     @Override

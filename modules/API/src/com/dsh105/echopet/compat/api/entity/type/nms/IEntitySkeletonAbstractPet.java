@@ -15,12 +15,13 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.plugin.hook;
+package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import org.bukkit.entity.Player;
-import org.kitteh.vanish.VanishPlugin;
 
-public interface IVanishProvider extends IPluginDependencyProvider<VanishPlugin> {
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.SkeletonType;
 
-    public boolean isVanished(Player player);
+public interface IEntitySkeletonAbstractPet extends IEntityPet {
+
+	public void setSkeletonType(SkeletonType type);
 }

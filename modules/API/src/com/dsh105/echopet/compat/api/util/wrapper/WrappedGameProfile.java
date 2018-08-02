@@ -17,15 +17,15 @@
 
 package com.dsh105.echopet.compat.api.util.wrapper;
 
-import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+
 public class WrappedGameProfile extends AbstractWrapper {
 
-    private WrappedGameProfile(Object ident, String name) {
+	private WrappedGameProfile(Object ident, String name){
         Class<?> gameProfileClass = null;
         try {
             gameProfileClass = Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
@@ -55,15 +55,15 @@ public class WrappedGameProfile extends AbstractWrapper {
     }
 
     public WrappedGameProfile(UUID uuid, String name) {
-        this((Object) uuid, name);
+		this((Object) uuid, name);
     }
 
     public WrappedGameProfile(String ident, String name) {
-        this((Object) ident, name);
+		this((Object) ident, name);
     }
 
     public static WrappedGameProfile getNewProfile(WrappedGameProfile old, String newName) {
-        return new WrappedGameProfile(old.getId(), newName);
+		return new WrappedGameProfile(old.getUniqueId(), newName);
     }
 
     public UUID getUniqueId() {

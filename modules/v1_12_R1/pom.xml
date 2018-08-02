@@ -38,12 +38,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
             <version>1.0.0</version>
@@ -55,8 +49,14 @@
             </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.bukkit</groupId>
-        	<artifactId>craftbukkit</artifactId>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+        	<groupId>org.spigotmc</groupId>
+        	<artifactId>spigot</artifactId>
         	<version>1.12-R0.1-SNAPSHOT</version>
         	<scope>provided</scope>
         </dependency>
