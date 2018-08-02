@@ -160,7 +160,7 @@ public class ConfigOptions extends Options {
 			set("trails.test.yOffset", 0);
 			set("trails.test.zOffset", 0);
 			//
-			set("trails.test2.particleName", "splash");
+			set("trails.test2.particleName", "WATER_SPLASH");
 			set("trails.test2.permission", "echopet.pet.trail.test2");
 			set("trails.test2.canToggle", false);
 			set("trails.test2.interval", 2);

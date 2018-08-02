@@ -43,7 +43,7 @@ import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 
 public class PetManager implements IPetManager {
 
-    private ArrayList<IPet> pets = new ArrayList<IPet>();
+	private ArrayList<IPet> pets = new ArrayList<>();
 
     @Override
     public ArrayList<IPet> getPets() {
@@ -512,7 +512,7 @@ public class PetManager implements IPetManager {
 				}
 				if(pd.isType(DataMenuType.COLOR) && (petType == PetType.SHEEP || petType == PetType.WOLF || petType == PetType.SHULKER)){
 					try{
-						DyeColor dc = pd.toString().equalsIgnoreCase("LIGHT_GRAY") ? DyeColor.SILVER : DyeColor.valueOf(pd.toString());
+						DyeColor dc = DyeColor.valueOf(pd.toString());
 						if(dc != null){
 							if(petType == PetType.SHEEP){
 								((ISheepPet) pet).setDyeColor(dc);
@@ -637,7 +637,7 @@ public class PetManager implements IPetManager {
 				}
 				if(pd.isType(DataMenuType.LLAMA_COLOR) && petType == PetType.LLAMA){
 					try{
-						DyeColor dc = pd.toString().equalsIgnoreCase("LIGHT_GRAY") ? DyeColor.SILVER : DyeColor.valueOf(pd.toString());
+						DyeColor dc = DyeColor.valueOf(pd.toString());
 						if(dc != null){
 							((ILlamaPet) pet).setCarpetColor(dc);
 						}

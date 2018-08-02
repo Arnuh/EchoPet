@@ -90,13 +90,7 @@ public class SelectorLayout {
 				if (petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())) {
 					pt = PetType.valueOf(petType.toUpperCase());
 				}
-				Material material = null;
-				int materialID = config.getInt(s + ".page-" + page + "." + slot + ".materialId", -1);
-				if(materialID >= 0){
-					material = Material.getMaterial(materialID);
-				}else{
-					material = Material.getMaterial(config.getString(s + ".page-" + page + "." + slot + ".material"));
-				}
+				Material material = Material.getMaterial(config.getString(s + ".page-" + page + "." + slot + ".material"));
 				int data = config.getInt(s + ".page-" + page + "." + slot + ".materialData", -1);// Support old configs
 				String entityTag = "Pig";
 				if(data > 0){
@@ -113,16 +107,16 @@ public class SelectorLayout {
 				}
 				List<String> lore = config.config().getStringList(s + ".page-" + page + "." + slot + ".lore");
 				if (lore == null) {
-					lore = new ArrayList<String>();
+					lore = new ArrayList<>();
 				}
-				ArrayList<String> loreList = new ArrayList<String>();
+				ArrayList<String> loreList = new ArrayList<>();
 				if (lore.size() > 0) {
 					for (String part : lore) {
 						loreList.add(ChatColor.translateAlternateColorCodes('&', part));
 					}
 				}
 				if(material == null) return;
-				if(material.equals(Material.MONSTER_EGG)) selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList.toArray(new String[0])));
+				if(material.name().equalsIgnoreCase("MONSTER_EGG") || material.name().endsWith("SPAWN_EGG")) selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList.toArray(new String[0])));
 				else selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, data, name, loreList.toArray(new String[0])));
 			}
 		}

@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.particle.Trails;
-import com.dsh105.echopet.compat.api.util.ParticleEffect;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -30,7 +30,7 @@ public class TrailManager implements Trails{
 			ConfigurationSection cs = config.getConfigurationSection("trails");
 			for(String key : cs.getKeys(false)){
 				String particleName = config.getString("trails." + key + ".particleName").toUpperCase();
-				if(ParticleEffect.fromName(particleName) == null){
+				if(Particle.valueOf(particleName) == null){
 					System.out.println("Unknown particle effect: " + particleName);
 					return;
 				}

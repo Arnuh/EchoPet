@@ -31,6 +31,7 @@ public class WrappedMaterial {
         try {
             return Material.valueOf(this.materialName);
         } catch (Exception exception) {
+			System.out.println("Invalid material: " + materialName);
             return null;
         }
     }

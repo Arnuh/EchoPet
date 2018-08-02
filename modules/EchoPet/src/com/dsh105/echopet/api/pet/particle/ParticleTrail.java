@@ -2,13 +2,13 @@ package com.dsh105.echopet.api.pet.particle;
 
 import java.util.*;
 
+import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.ParticleEffect;
 
 /**
  * @Author Borlea
@@ -18,6 +18,7 @@ import com.dsh105.echopet.compat.api.util.ParticleEffect;
  */
 public class ParticleTrail implements Trail{
 
+	private final Particle particle;
 	private final String name, particleType, permission;
 	private boolean canToggle;
 	private int tickDelay;
@@ -35,6 +36,7 @@ public class ParticleTrail implements Trail{
 	public ParticleTrail(String name, String particleType, String permission, boolean canToggle, Collection<String> subTrailNames, int tickDelay, float speed, int count, double x, double y, double z, float xOffset, float yOffset, float zOffset){
 		this.subTrails = new HashSet<>();
 		this.name = name;
+		this.particle = Particle.valueOf(particleType);
 		this.particleType = particleType;
 		this.permission = permission;
 		this.canToggle = canToggle;
@@ -187,7 +189,8 @@ public class ParticleTrail implements Trail{
 
 	@Override
 	public void displayTrail(final IPet pet){
-		ParticleEffect.fromName(particleType).display(xOffset, yOffset, zOffset, speed, count, pet.getLocation().add(x, y, z), 256D);
+		pet.getLocation().getWorld().spawnParticle(particle, pet.getLocation().add(x, y, z), count, xOffset, yOffset, zOffset, speed);
+		// ParticleEffect.fromName(particleType).display(xOffset, yOffset, zOffset, speed, count, pet.getLocation().add(x, y, z), 256D);
 	}
 
 	@Override

@@ -16,6 +16,7 @@
  */
 package com.dsh105.echopet.compat.nms.v1_12_R1.entity;
 
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 
@@ -24,7 +25,7 @@ import net.minecraft.server.v1_12_R1.DataWatcherObject;
 import net.minecraft.server.v1_12_R1.DataWatcherRegistry;
 import net.minecraft.server.v1_12_R1.World;
 
-public abstract class EntityAgeablePet extends EntityPet{
+public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeablePet{
 
 	private static final DataWatcherObject<Boolean> bv = DataWatcher.a(EntityAgeablePet.class, DataWatcherRegistry.h);
 	protected int age;

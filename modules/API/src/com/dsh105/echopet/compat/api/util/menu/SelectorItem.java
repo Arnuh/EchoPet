@@ -28,10 +28,10 @@ public enum SelectorItem {
     SELECTOR(Material.BONE, 1, (short) 0, ChatColor.GREEN + "Pets", ""),
     TOGGLE(Material.BONE, 1, (short) 0, ChatColor.YELLOW + "Toggle Pet", "toggle"),
     CALL(Material.ENDER_PEARL, 1, (short) 0, ChatColor.YELLOW + "Call Pet", "call"),
-    RIDE(Material.CARROT_STICK, 1, (short) 0, ChatColor.YELLOW + "Ride Pet", "ride"),
+    RIDE(Material.CARROT_ON_A_STICK, 1, (short) 0, ChatColor.YELLOW + "Ride Pet", "ride"),
     HAT(Material.IRON_HELMET, 1, (short) 0, ChatColor.YELLOW + "Hat Pet", "hat"),
     NAME(Material.NAME_TAG, 1, (short) 0, ChatColor.YELLOW + "Name Your Pet", "name"),
-    MENU(Material.WORKBENCH, 1, (short) 0, ChatColor.YELLOW + "Open PetMenu", "menu"),
+    MENU(Material.CRAFTING_TABLE, 1, (short) 0, ChatColor.YELLOW + "Open PetMenu", "menu"),
 	CLOSE(Material.BOOK, 1, (short) 0, ChatColor.YELLOW + "Close", "select"),
 	BACK(Material.SLIME_BALL, 1, (short) 0, ChatColor.YELLOW + "< Page", ""),
 	NEXT(Material.SLIME_BALL, 1, (short) 0, ChatColor.YELLOW + "Page > ", "");
