@@ -368,15 +368,15 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	public void a(float sideMot, float forwMot, float upMot){// ITS IN ENTITY LIVING
 		// bF() is passenger shit. Minecraft changed it from 1 passenger to a list
 		if(passengers.isEmpty()){// search for passengers.isEmpty() in Entity
-			this.P = 0.5F;// Above noclip
-			this.aR = 0.02F;
+			this.Q = 0.5F;// Above noclip
+			this.aU = 0.02F;// above killer in entity living
 			super.a(sideMot, forwMot, upMot);
 			return;
 		}
 		Entity passenger = passengers.get(0);
 		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
-			this.P = 0.5F;
-			this.aR = 0.02F;
+			this.Q = 0.5F;
+			this.aU = 0.02F;
 			super.a(sideMot, forwMot, upMot);
 			return;
 		}
@@ -384,13 +384,13 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		this.lastYaw = this.yaw;
 		this.pitch = passenger.pitch * 0.5F;
 		this.setYawPitch(this.yaw, this.pitch);
-		// aM look for 009999999776482582D in EntityLiving.
-		// aO look for tickPotionEffects(). Middle one
-		this.aO = this.aM = this.yaw;
+		// aP look for 009999999776482582D in EntityLiving.
+		// aR look for tickPotionEffects(). Middle one
+		this.aR = this.aP = this.yaw;
 		this.P = 1.0F;
 		sideMot = ((EntityLiving) passenger).bh * 0.5F;// 1 below lastDamage in EntityLiving
 		forwMot = ((EntityLiving) passenger).bi;// After ^
-		upMot = ((EntityLiving) passenger).bk;
+		upMot = ((EntityLiving) passenger).bj;
 		if(forwMot <= 0.0F){// ?
 			forwMot *= 0.25F;
 		}
@@ -405,7 +405,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		    n(f);
 		  }
 		 */
-		this.k(this.rideSpeed);
+		this.o(this.rideSpeed);// before "looting" methodProfiler
 		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
