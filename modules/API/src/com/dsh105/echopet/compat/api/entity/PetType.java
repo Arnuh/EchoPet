@@ -33,6 +33,7 @@ public enum PetType {
 	BLAZE("Blaze", 61, "Blaze Pet", 20D, 6D, "blaze", "Blaze", PetData.FIRE),
 	CAVESPIDER("CaveSpider", 59, "Cave Spider Pet", 12D, 5D, "cave_spider", "CaveSpider"),
 	CREEPER("Creeper", 50, "Creeper Pet", 20D, 6D, "creeper", "Creeper", PetData.POWER),
+	DROWNED("Drowned", 0, "Drowned Pet", 20D, 4D, "drowned", "Drowned"),
 	ENDERDRAGON("EnderDragon", 63, "EnderDragon Pet", 200D, 0D, "ender_dragon", "EnderDragon"),
 	ENDERMAN("Enderman", 58, "Enderman Pet", 40D, 6D, "enderman", "Enderman", PetData.SCREAMING),
 	ENDERMITE("Endermite", 67, "Endermite Pet", 2D, 2D, "endermite", "Endermite"),
@@ -65,7 +66,9 @@ public enum PetType {
     // Passive mobs
 	BAT("Bat", 65, "Bat Pet", 6D, 3D, "bat", "Bat"),
 	CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, "chicken", "Chicken", PetData.BABY),
+	COD("Cod", 00, "Cod Pet", 3D, 2D, "cod", "Cod"),
 	COW("Cow", 92, "Cow Pet", 10D, 4D, "cow", "Cow", PetData.BABY),
+	DOLPHIN("Dolphin", 0, "Dolphin Pet", 10D, 4D, "dolphin", "Dolphin"),
 	HORSE("Horse", 100, "Horse Pet", 30D, 4D, "horse", "EntityHorse", PetData.BABY, PetData.CHESTED, PetData.SADDLE,
 	        PetData.HORSE, PetData.DONKEY, PetData.MULE, PetData.SKELETON_HORSE, PetData.UNDEAD_HORSE, PetData.WHITE,
 	        PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK, PetData.WHITE_SOCKS,
