@@ -43,6 +43,7 @@ public enum PetType {
 	ELDERGUARDIAN("ElderGuardian", 4, "Elder Guardian Pet", 80D, 12D, "elder_guardian", "ElderGuardian", new Version("1.11-R1")),
 	EVOKER("Evoker", 34, "Evoker Pet", 24D, 6D, "evocation_illager", "Evoker", new Version("1.11-R1")),
 	MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, "magma_cube", "LavaSlime", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
+	PHANTOM("Phantom", 0, "Phantom Pet", 20D, 9D, "phantom", "Phantom"),
 	PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, "zombie_pigman", "PigZombie", PetData.BABY),
 	SHULKER("Shulker", 69, "Shulker Pet", 30D, 4D, "shulker", "Shulker", new Version("1.9-R1"), PetData.OPEN, PetData.BLACK, PetData.BLUE, PetData.BROWN,
 	          PetData.CYAN, PetData.GRAY, PetData.GREEN,
