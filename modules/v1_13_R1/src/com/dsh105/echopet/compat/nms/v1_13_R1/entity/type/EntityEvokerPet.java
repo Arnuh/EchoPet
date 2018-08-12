@@ -15,6 +15,7 @@ import net.minecraft.server.v1_13_R1.*;
 @EntityPetType(petType = PetType.EVOKER)
 public class EntityEvokerPet extends EntityIllagerAbstractPet implements IEntityEvokerPet{
 
+	// EntityIllagerWizard
 	private static final DataWatcherObject<Byte> c = DataWatcher.a(EntityEvokerPet.class, DataWatcherRegistry.a);// some sorta spell shit
 
 	public EntityEvokerPet(EntityTypes<? extends Entity> type, World world){

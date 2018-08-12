@@ -100,6 +100,7 @@ public enum PetType {
 	        PetData.WHITE, PetData.YELLOW, PetData.SILVER),
 	SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, "snowman", "SnowMan", PetData.SHEARED),
 	SQUID("Squid", 94, "Squid Pet", 10D, 4D, "squid", "Squid"),
+	TURTLE("Turtle", 0, "Turtle Pet", 30D, 1D, "turtle", "Turtle"),
 	VILLAGER("Villager", 120, "Villager Pet", 20D, 4D, "villager", "Villager", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
 	WOLF("Wolf", 95, "Wolf Pet", 20D, 6D, "wolf", "Wolf", PetData.BABY, PetData.TAMED, PetData.ANGRY,
          PetData.BLACK, PetData.BLUE, PetData.BROWN,
