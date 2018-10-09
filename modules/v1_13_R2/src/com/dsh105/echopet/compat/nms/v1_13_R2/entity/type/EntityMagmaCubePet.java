@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
 
+import net.minecraft.server.v1_13_R2.EntityTypes;
 import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
@@ -29,10 +30,10 @@ import net.minecraft.server.v1_13_R2.World;
 public class EntityMagmaCubePet extends EntitySlimePet implements IEntityMagmaCubePet{
 
 	public EntityMagmaCubePet(World world){
-		super(world);
+		super(EntityTypes.MAGMA_CUBE, world);
 	}
 
 	public EntityMagmaCubePet(World world, IPet pet){
-		super(world, pet);
+		super(EntityTypes.MAGMA_CUBE, world, pet);
 	}
 }

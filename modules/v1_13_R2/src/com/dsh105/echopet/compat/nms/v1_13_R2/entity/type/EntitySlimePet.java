@@ -30,12 +30,12 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	private static final DataWatcherObject<Integer> SIZE = DataWatcher.a(EntitySlimePet.class, DataWatcherRegistry.b);
 	int jumpDelay;
 
-	public EntitySlimePet(World world){
-		super(EntityTypes.SLIME, world);
+	public EntitySlimePet(EntityTypes<? extends Entity> type, World world){
+		super(type, world);
 	}
 
-	public EntitySlimePet(World world, IPet pet){
-		super(EntityTypes.SLIME, world, pet);
+	public EntitySlimePet(EntityTypes<? extends Entity> type, World world, IPet pet){
+		super(type, world, pet);
 		if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
 			if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.SMALL, false)){
 				this.setSize(4);
@@ -46,6 +46,14 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 			this.setSize(2);
 		}
 		this.jumpDelay = this.random.nextInt(15) + 10;
+	}
+
+	public EntitySlimePet(World world){
+		this(EntityTypes.SLIME, world);
+	}
+
+	public EntitySlimePet(World world, IPet pet){
+		this(EntityTypes.SLIME, world, pet);
 	}
 
 	@Override

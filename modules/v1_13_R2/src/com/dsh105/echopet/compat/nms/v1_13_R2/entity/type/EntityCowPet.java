@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCowPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
 
+import net.minecraft.server.v1_13_R2.Entity;
 import net.minecraft.server.v1_13_R2.EntityTypes;
 import net.minecraft.server.v1_13_R2.World;
 
@@ -30,11 +31,19 @@ import net.minecraft.server.v1_13_R2.World;
 @EntityPetType(petType = PetType.COW)
 public class EntityCowPet extends EntityAgeablePet implements IEntityCowPet{
 
+	public EntityCowPet(EntityTypes<? extends Entity> type, World world){
+		super(type, world);
+	}
+
+	public EntityCowPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+		super(type, world, pet);
+	}
+
 	public EntityCowPet(World world){
-		super(EntityTypes.COW, world);
+		this(EntityTypes.COW, world);
 	}
 
 	public EntityCowPet(World world, IPet pet){
-		super(EntityTypes.COW, world, pet);
+		this(EntityTypes.COW, world, pet);
 	}
 }
