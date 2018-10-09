@@ -61,13 +61,13 @@ public class SpawnUtil implements ISpawnUtil{
 			EchoPet.getManager().removePet(pet, true);
 		}else{
 			owner.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 1);
-		}
+	}
 		EchoPet.getPetRegistry().disablePets();
 		return entityPet;
 	}
 
 	@Override
-	// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
+// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
 	public org.bukkit.inventory.ItemStack getSpawnEgg(org.bukkit.inventory.ItemStack i, String entityTag){
 		ItemStack is = CraftItemStack.asNMSCopy(i);
 		NBTTagCompound nbt = is.getTag();
