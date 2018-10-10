@@ -488,19 +488,19 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	}
 
 	protected String getIdleSound(){
-		return "entity." + pet.getPetType().getFixedSoundEffectEntityName() + ".ambient";
+		return "entity." + pet.getPetType().getMinecraftName() + ".ambient";
 	}
 
 	protected String getHurtSound(){
-		return "entity." + pet.getPetType().getFixedSoundEffectEntityName() + ".hurt";
+		return "entity." + pet.getPetType().getMinecraftName() + ".hurt";
 	}
 
 	protected String getDeathSound(){
-		return "entity." + pet.getPetType().getFixedSoundEffectEntityName() + ".death";
+		return "entity." + pet.getPetType().getMinecraftName() + ".death";
 	}
 
 	protected String getStepSound(){
-		return "entity." + pet.getPetType().getFixedSoundEffectEntityName() + ".step";
+		return "entity." + pet.getPetType().getMinecraftName() + ".step";
 	}
 
 	public abstract SizeCategory getSizeCategory();

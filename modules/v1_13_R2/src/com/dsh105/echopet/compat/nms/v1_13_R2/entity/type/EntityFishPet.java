@@ -27,6 +27,6 @@ public abstract class EntityFishPet extends EntityWaterAnimalPet implements IEnt
 	}
 
 	protected String getStepSound(){
-		return "entity." + pet.getPetType().getFixedSoundEffectEntityName() + ".flop";
+		return "entity." + pet.getPetType().getMinecraftName() + ".flop";
 	}
 }

@@ -41,7 +41,7 @@ public enum PetType {
 	GIANT("Giant", 53, "Giant Pet", 100D, 0D, "giant", "Giant"),
 	GUARDIAN("Guardian", 68, "Guardian Pet", 30D, 9D, "guardian", "Guardian", PetData.ELDER),
 	ELDERGUARDIAN("ElderGuardian", 4, "Elder Guardian Pet", 80D, 12D, "elder_guardian", "ElderGuardian", new Version("1.11-R1")),
-	EVOKER("Evoker", 34, "Evoker Pet", 24D, 6D, "evocation_illager", "Evoker", new Version("1.11-R1")),
+	EVOKER("Evoker", 34, "Evoker Pet", 24D, 6D, "evoker", "Evoker", new Version("1.11-R1")),
 	MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, "magma_cube", "LavaSlime", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
 	PHANTOM("Phantom", 0, "Phantom Pet", 20D, 9D, "phantom", "Phantom"),
 	PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, "zombie_pigman", "PigZombie", PetData.BABY),
@@ -60,10 +60,10 @@ public enum PetType {
 	WITHER("Wither", 64, "Wither Pet", 300D, 8D, "wither", "WitherBoss", PetData.SHIELD),
 	ZOMBIE("Zombie", 54, "Zombie Pet", 20D, 5D, "zombie", "Zombie", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST, PetData.HUSK),
 	HUSK("Husk", 23, "Husk Pet", 20D, 5D, "husk", "Husk", new Version("1.11-R1"), PetData.BABY),
-	ILLUSIONER("Illusioner", 37, "Illusioner Pet", 32D, 5D, "illusion_illager", "IllusionIllager", new Version("1.12-R1")),
+	ILLUSIONER("Illusioner", 37, "Illusioner Pet", 32D, 5D, "illusioner", "Illusioner", new Version("1.12-R1")),
 	ZOMBIEVILLAGER("ZombieVillager", 27, "Zombie Villager Pet", 20D, 5D, "zombie_villager", "ZombieVillager", new Version("1.11-R1"), PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
 	VEX("Vex", 35, "Vex Pet", 14D, 5D, "vex", "Vex", new Version("1.11-R1"), PetData.POWER),
-	VINDICATOR("Vindicator", 36, "Vindicator Pet", 24D, 7D, "vindication_illager", "Vindicator", new Version("1.11-R1")),
+	VINDICATOR("Vindicator", 36, "Vindicator Pet", 24D, 7D, "vindicator", "Vindicator", new Version("1.11-R1")),
     // Passive mobs
 	BAT("Bat", 65, "Bat Pet", 6D, 3D, "bat", "Bat"),
 	CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, "chicken", "Chicken", PetData.BABY),
@@ -79,7 +79,7 @@ public enum PetType {
 	ZOMBIEHORSE("ZombieHorse", 29, "Zombie Horse Pet", 30D, 4D, "zombie_horse", "ZombieHorse", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
 	DONKEY("Donkey", 31, "Donkey Pet", 30D, 4D, "donkey", "Donkey", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
 	MULE("Mule", 32, "Mule Pet", 30D, 4D, "mule", "Mule", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
-	IRONGOLEM("IronGolem", 99, "Iron Golem Pet", 100D, 7D, "villager_golem", "VillagerGolem"),
+	IRONGOLEM("IronGolem", 99, "Iron Golem Pet", 100D, 7D, "iron_golem", "IronGolem"),
 	LLAMA("Llama", 103, "Llama Pet", 22D, 3D, "llama", "Llama", new Version("1.11-R1"), PetData.BABY, PetData.CHESTED,
 	          PetData.BLACK, PetData.BLUE, PetData.BROWN,
 	          PetData.CYAN, PetData.GRAY, PetData.GREEN,
@@ -101,9 +101,9 @@ public enum PetType {
 	        PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
           PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 	        PetData.WHITE, PetData.YELLOW, PetData.SILVER),
-	SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, "snowman", "SnowMan", PetData.SHEARED),
+	SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, "snow_golem", "SnowMan", PetData.SHEARED),
 	SQUID("Squid", 94, "Squid Pet", 10D, 4D, "squid", "Squid"),
-	TROPICALFISH("TropicalFish", 0, "Tropical Fish Pet", 3D, 4D, "tropicalfish", "TropicalFish"),
+	TROPICALFISH("TropicalFish", 0, "Tropical Fish Pet", 3D, 4D, "tropical_fish", "TropicalFish"),
 	TURTLE("Turtle", 0, "Turtle Pet", 30D, 1D, "turtle", "Turtle"),
 	VILLAGER("Villager", 120, "Villager Pet", 20D, 4D, "villager", "Villager", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
 	WOLF("Wolf", 95, "Wolf Pet", 20D, 6D, "wolf", "Wolf", PetData.BABY, PetData.TAMED, PetData.ANGRY,
@@ -184,31 +184,6 @@ public enum PetType {
 
 	public String getMinecraftName(){
 		return minecraftEntityName;
-	}
-
-	public String getFixedSoundEffectEntityName(){
-		switch (getClassIdentifier().toLowerCase()){
-			case "polarbear":
-				return "polar_bear";
-			case "mushroomcow":
-				return "cow";
-			case "cavespider":
-				return "spider";
-			case "elderguardian":
-				return "elder_guardian";
-			case "zombievillager":
-				return "villager";
-			case "skeletonhorse":
-				return "skeleton_horse";
-			case "zombiehorse":
-				return "zombie_horse";
-			case "vindicator":
-				return "vindication_illager";
-			case "evoker":
-				return "evocation_illager";
-			default:
-				return getClassIdentifier().toLowerCase();
-		}
 	}
 
     public List<PetData> getAllowedDataTypes() {
