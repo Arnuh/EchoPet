@@ -21,7 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.internal.platform.WorldGuardPlatform;
@@ -51,7 +51,7 @@ public class WorldUtil {
 			if(regionManager == null){
 				return true;
 			}
-			ApplicableRegionSet set = regionManager.getApplicableRegions(new Vector(location.getX(), location.getY(), location.getZ()));// idk if they have a wrapper
+			ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
 
 			if(set.size() <= 0){
 				return true;
