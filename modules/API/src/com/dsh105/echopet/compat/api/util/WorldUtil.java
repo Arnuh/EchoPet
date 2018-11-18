@@ -51,7 +51,7 @@ public class WorldUtil {
 			if(regionManager == null){
 				return true;
 			}
-			ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
+			ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asVector(location));
 
 			if(set.size() <= 0){
 				return true;
