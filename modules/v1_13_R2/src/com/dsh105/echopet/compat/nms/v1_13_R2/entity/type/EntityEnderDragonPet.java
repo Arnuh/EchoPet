@@ -94,7 +94,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 	}
 
 	@Override
-	public void n(){
+	public void k(){// Just earch for "0.2F /" in entity dragon.
 		float f;
 		float f1;
 		Entity passenger = passengers.size() > 0 ? passengers.get(0) : null;
