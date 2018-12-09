@@ -27,7 +27,7 @@ public enum PetItem {
 	BLAZE(PetType.BLAZE, Material.BLAZE_SPAWN_EGG, "Blaze Pet", "blaze"),
 	CAVESPIDER(PetType.CAVESPIDER, Material.CAVE_SPIDER_SPAWN_EGG, "Cave Spider Pet", "cavespider"),
 	CHICKEN(PetType.CHICKEN, Material.CHICKEN_SPAWN_EGG, "Chicken Pet", "chicken"),
-	COD(PetType.COW, Material.COW_SPAWN_EGG, "Cod Pet", "cod"),
+	COD(PetType.COD, Material.COD_SPAWN_EGG, "Cod Pet", "cod"),
 	COW(PetType.COW, Material.COW_SPAWN_EGG, "Cow Pet", "cow"),
 	CREEPER(PetType.CREEPER, Material.CREEPER_SPAWN_EGG, "Creeper Pet", "creeper"),
 	DOLPHIN(PetType.DOLPHIN, Material.DOLPHIN_SPAWN_EGG, "Dolphin Pet", "dolphin"),
