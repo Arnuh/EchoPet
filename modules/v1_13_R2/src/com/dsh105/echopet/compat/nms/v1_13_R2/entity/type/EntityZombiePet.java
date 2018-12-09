@@ -30,6 +30,7 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 	private static final DataWatcherObject<Boolean> BABY = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);
 	private static final DataWatcherObject<Integer> bx = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.b);// gets registered and that is it.
 	private static final DataWatcherObject<Boolean> by = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);// ? has a setter but no getter
+	private static final DataWatcherObject<Boolean> bF = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);// drowned shit
 
 	public EntityZombiePet(EntityTypes<? extends Entity> type, World world){
 		super(type, world);
@@ -56,7 +57,7 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 
 	@Override
 	public void setBaby(boolean flag){
-		getDataWatcher().set(BABY, Boolean.valueOf(flag));
+		getDataWatcher().set(BABY, flag);
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 		getDataWatcher().register(BABY, false);
 		getDataWatcher().register(bx, 0);
 		getDataWatcher().register(by, false);
+		getDataWatcher().register(bF, false);
 	}
 
 	public boolean isVillager(){
