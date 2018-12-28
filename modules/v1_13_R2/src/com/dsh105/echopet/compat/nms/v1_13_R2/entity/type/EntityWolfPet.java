@@ -97,7 +97,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 				this.shakeCount = 0.0F;
 			}
 			if(this.shakeCount > 0.4F){
-				float f = (float) this.getBoundingBox().b;
+				float f = (float) this.getBoundingBox().minY;
 				int i = (int) (MathHelper.sin((this.shakeCount - 0.4F) * 3.1415927F) * 7.0F);
 				for(int j = 0; j < i; ++j){
 					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;

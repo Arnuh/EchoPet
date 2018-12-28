@@ -212,7 +212,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				if(d4 > 10.0D){
 					d4 = 10.0D;
 				}
-				this.b = (this.bA.getBoundingBox().b + d4);
+				this.b = (this.bA.getBoundingBox().minY + d4);
 			}else{
 				this.a += this.random.nextGaussian() * 2.0D;
 				this.c += this.random.nextGaussian() * 2.0D;
