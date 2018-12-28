@@ -46,8 +46,7 @@ public class WorldUtil {
 
 			WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
 			RegionContainer container = platform.getRegionContainer();
-			RegionManager regionManager = container.get(platform.getWorldByName(location.getWorld().getName()));
-
+			RegionManager regionManager = container.get(BukkitAdapter.adapt(location.getWorld()));
 			if(regionManager == null){
 				return true;
 			}
