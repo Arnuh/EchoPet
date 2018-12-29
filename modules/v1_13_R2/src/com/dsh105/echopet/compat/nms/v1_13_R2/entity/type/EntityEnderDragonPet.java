@@ -32,13 +32,12 @@ import net.minecraft.server.v1_13_R2.*;
 @EntityPetType(petType = PetType.ENDERDRAGON)
 public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, IMonster, IEntityEnderDragonPet{
 
-	// TODO: ugly :(
 	public static final DataWatcherObject<Integer> PHASE = DataWatcher.a(EntityEnderDragonPet.class, DataWatcherRegistry.b);
-	private double a;
-	private double b;
-	private double c;
-	public int bl = -1;
-	public double[][] bkk = new double[64][3];
+	private double targetX;// 1.8.8: a
+	private double targetY;// 1.8.8: b
+	private double targetZ;// 1.8.8: c
+	public int someIndex = -1;
+	public double[][] circlePoints = new double[64][3];// idfk its a point of yaw,y positions
 	private EntityComplexPart[] children;
 	private EntityComplexPart head;
 	private EntityComplexPart body;
@@ -47,11 +46,11 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 	private EntityComplexPart tail3;
 	private EntityComplexPart wing1;
 	private EntityComplexPart wing2;
-	private float bu;
-	private float bv;
-	private boolean bw;
-	private boolean bx;
-	private Entity bA;
+	private float someInc2;// incs are used for when to play the flapping sound based on the movement of the dragon.
+	private float someInc1;
+	private boolean useless1;// I can never see where this is set to true. If true it finds a target.
+	private boolean useless2;// Gets set to true if the dragon breaks blocks(i think). If true it reduces "mot" by 20%? and reduces occurrence of wing flaps by 50%
+	private Entity target;// Idk why we even save this.
 
 	public EntityEnderDragonPet(World world){
 		super(EntityTypes.ENDER_DRAGON, world);
@@ -61,13 +60,13 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 		super(EntityTypes.ENDER_DRAGON, world, pet);
 		this.children = new EntityComplexPart[]{this.head = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.body = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.tail1 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail2 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail3 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.wing1 = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.wing2 = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};
 		this.noClip(true);
-		this.b = 100.0D;// wtf is this
+		this.targetY = 100.0D;
 		this.ak = true;// in EntityDragon constructor
 	}
 
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		getDataWatcher().register(PHASE, Integer.valueOf(DragonControllerPhase.k.b()));
+		getDataWatcher().register(PHASE, Integer.valueOf(DragonControllerPhase.HOVER.b()));
 	}
 
 	@Override
@@ -80,42 +79,44 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			f = 0.0F;
 		}
 		f = 1.0F - f;
-		int j = this.bl - i * 1 & 63;
-		int k = this.bl - i * 1 - 1 & 63;
+		int j = this.someIndex - i * 1 & 63;
+		int k = this.someIndex - i * 1 - 1 & 63;
 		double[] adouble = new double[3];
-		double d0 = this.bkk[j][0];
-		double d1 = MathHelper.g(this.bkk[k][0] - d0);
+		double d0 = this.circlePoints[j][0];
+		double d1 = MathHelper.g(this.circlePoints[k][0] - d0);
 		adouble[0] = d0 + d1 * (double) f;
-		d0 = this.bkk[j][1];
-		d1 = this.bkk[k][1] - d0;
+		d0 = this.circlePoints[j][1];
+		d1 = this.circlePoints[k][1] - d0;
 		adouble[1] = d0 + d1 * (double) f;
-		adouble[2] = this.bkk[j][2] + (this.bkk[k][2] - this.bkk[j][2]) * (double) f;
+		adouble[2] = this.circlePoints[j][2] + (this.circlePoints[k][2] - this.circlePoints[j][2]) * (double) f;
 		return adouble;
 	}
 
-	@Override
-	public void k(){// Just earch for "0.2F /" in entity dragon.
-		float f;
-		float f1;
+	//
+	public void tick(){// Just earch for "0.2F /" in entity dragon.
+		// This is all custom.
 		Entity passenger = passengers.size() > 0 ? passengers.get(0) : null;
 		if(passenger != null && (passenger instanceof EntityHuman)){
 			EntityHuman human = (EntityHuman) passenger;
 			if(human.getBukkitEntity() == this.getPlayerOwner().getPlayer()){
-				float side = ((EntityLiving) passenger).bh;
-				float forw = ((EntityLiving) passenger).bi;
+				float sideMot = ((EntityLiving) passenger).bh;
+				// float forw = ((EntityLiving) passenger).bi;
+				// Apparently ender dragon uses up motion instead of forward?
+				float upMot = ((EntityLiving) passenger).bj;
+				// System.out.println(side + ", " + forw + ", " + up);
 				Vector v = new Vector();
 				Location l = new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
-				if(side < 0.0F){
+				if(sideMot < 0.0F){
 					l.setYaw(passenger.yaw - 90);
 					v.add(l.getDirection().normalize().multiply(-0.5));
-				}else if(side > 0.0F){
+				}else if(sideMot > 0.0F){
 					l.setYaw(passenger.yaw + 90);
 					v.add(l.getDirection().normalize().multiply(-0.5));
 				}
-				if(forw < 0.0F){
+				if(upMot < 0.0F){
 					l.setYaw(passenger.yaw);
 					v.add(l.getDirection().normalize().multiply(0.5));
-				}else if(forw > 0.0F){
+				}else if(upMot > 0.0F){
 					l.setYaw(passenger.yaw);
 					v.add(l.getDirection().normalize().multiply(0.5));
 				}
@@ -123,7 +124,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				this.lastYaw = this.yaw;
 				this.pitch = passenger.pitch * 0.5F;
 				this.setYawPitch(this.yaw, this.pitch);
-				this.aO = this.aM = this.yaw;
+				this.aO = this.aP = this.yaw;
 				if(this.FIELD_JUMP != null){
 					try{
 						if(this.FIELD_JUMP.getBoolean(passenger)){
@@ -151,40 +152,41 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				return;
 			}
 		}
+		// Shit grabbed from m() in 1.8.8
 		if(this.world.isClientSide){
-			f = MathHelper.cos(this.bv * 3.1415927F * 2.0F);
-			f1 = MathHelper.cos(this.bu * 3.1415927F * 2.0F);
+			float f = MathHelper.cos(this.someInc1 * 3.1415927F * 2.0F);
+			float f1 = MathHelper.cos(this.someInc2 * 3.1415927F * 2.0F);
 			if(f1 <= -0.3F && f >= -0.3F && !this.isSilent()){
 				this.world.a(this.locX, this.locY, this.locZ, getSoundFromString("entity.enderdragon.flap"), bV(), 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
 			}
 		}
-		this.bu = this.bv;
-		float f2;
+		this.someInc2 = this.someInc1;
+		// hp check for explosion but we don't do that
 		// For EnderCrystals
 		// this.n();
-		f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
+		float f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
 		f *= (float) Math.pow(2.0D, this.motY);
-		if(this.bx){
-			this.bv += f * 0.5F;
+		if(this.useless2){
+			this.someInc1 += f * 0.5F;
 		}else{
-			this.bv += f;
+			this.someInc1 += f;
 		}
 		this.yaw = MathHelper.g(this.yaw);
 		if(isNoAI()){
-			this.bv = 0.5F;
+			this.someInc1 = 0.5F;
 		}else{
-			if(this.bl < 0){
-				for(int i = 0; i < this.bkk.length; ++i){
-					this.bkk[i][0] = (double) this.yaw;
-					this.bkk[i][1] = this.locY;
+			if(this.someIndex < 0){
+				for(int i = 0; i < this.circlePoints.length; ++i){
+					this.circlePoints[i][0] = this.yaw;
+					this.circlePoints[i][1] = this.locY;
 				}
 			}
-			if(++this.bl == this.bkk.length){
-				this.bl = 0;
+			if(++this.someIndex == this.circlePoints.length){
+				this.someIndex = 0;
 			}
 		}
-		this.bkk[this.bl][0] = (double) this.yaw;
-		this.bkk[this.bl][1] = this.locY;
+		this.circlePoints[this.someIndex][0] = (double) this.yaw;
+		this.circlePoints[this.someIndex][1] = this.locY;
 		if(this.world.isClientSide){
 			/*if(this.bg > 0){
 				double d3 = this.locX + (this.bh - this.locX) / this.bg;
@@ -198,66 +200,73 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				setYawPitch(this.yaw, this.pitch);
 			}*/
 		}else{
-			double d3 = this.a - this.locX;
-			double d0 = this.b - this.locY;
-			double d1 = this.c - this.locZ;
-			double d2 = d3 * d3 + d0 * d0 + d1 * d1;
-			if(this.bA != null){
-				this.a = this.bA.locX;
-				this.c = this.bA.locZ;
-				double d5 = this.a - this.locX;
-				double d6 = this.c - this.locZ;
+			double d0 = this.targetX - this.locX;
+			double d1 = this.targetY - this.locY;
+			double d2 = this.targetZ - this.locZ;
+			double d4 = d0 * d0 + d1 * d1 + d2 * d2;
+			if(this.target != null){
+				this.targetX = this.target.locX;
+				this.targetZ = this.target.locZ;
+				double d5 = this.targetX - this.locX;
+				double d6 = this.targetZ - this.locZ;
 				double d7 = Math.sqrt(d5 * d5 + d6 * d6);
-				double d4 = 0.4000000059604645D + d7 / 80.0D - 1.0D;
-				if(d4 > 10.0D){
-					d4 = 10.0D;
+				double d44 = 0.4000000059604645D + d7 / 80.0D - 1.0D;
+				if(d44 > 10.0D){
+					d44 = 10.0D;
 				}
-				this.b = (this.bA.getBoundingBox().minY + d4);
+				this.targetY = (this.target.getBoundingBox().minY + d44);
 			}else{
-				this.a += this.random.nextGaussian() * 2.0D;
-				this.c += this.random.nextGaussian() * 2.0D;
+				this.targetX += this.random.nextGaussian() * 2.0D;
+				this.targetZ += this.random.nextGaussian() * 2.0D;
 			}
-			d0 /= MathHelper.sqrt(d3 * d3 + d1 * d1);
+			if((this.useless1) || (d4 < 100.0D) || (d4 > 22500.0D) || (this.positionChanged) /*|| (this.E)*/){
+				// Finds a target.
+				// cf();
+			}
 			float f3 = 0.6F;
-			d0 = MathHelper.a(d0, -f3, f3);
-			this.motY += d0 * 0.10000000149011612D;
+			// d0 /= MathHelper.sqrt(d3 * d3 + d1 * d1);
+			// d0 = MathHelper.a(d0, -f3, f3);
+			d1 = MathHelper.a(d2 / MathHelper.sqrt(d1 * d1 + d4 * d4), -f3, f3);
+			this.motY += d1 * 0.10000000149011612D;
 			this.yaw = MathHelper.g(this.yaw);
-			double d8 = 180.0D - MathHelper.a(d3, d1) * 180.0D / 3.1415927410125732D;
-			double d9 = MathHelper.g(d8 - this.yaw);
-			if(d9 > 50.0D){
-				d9 = 50.0D;
+			double d5 = 180.0D - MathHelper.a(d0, d2) * 180.0D / 3.1415927410125732D;
+			double d6 = MathHelper.g(d5 - this.yaw);
+			if(d6 > 50.0D){
+				d6 = 50.0D;
 			}
-			if(d9 < -50.0D){
-				d9 = -50.0D;
+			if(d6 < -50.0D){
+				d6 = -50.0D;
 			}
-			Vec3D vec3d = new Vec3D(this.a - this.locX, this.b - this.locY, this.c - this.locZ).a();
-			double d4 = -MathHelper.cos(this.yaw * 3.1415927F / 180.0F);
-			Vec3D vec3d1 = new Vec3D(MathHelper.sin(this.yaw * 3.1415927F / 180.0F), this.motY, d4).a();
-			float f4 = ((float) vec3d1.b(vec3d) + 0.5F) / 1.5F;
-			if(f4 < 0.0F){
-				f4 = 0.0F;
-			}
+			Vec3D vec3d = new Vec3D(this.targetX - this.locX, this.targetY - this.locY, this.targetZ - this.locZ).a();
+			// double d44 = -MathHelper.cos(this.yaw * 3.1415927F / 180.0F);
+			// Vec3D vec3d1 = new Vec3D(MathHelper.sin(this.yaw * 3.1415927F / 180.0F), this.motY, d44).a();
+			Vec3D vec3d2 = new Vec3D(MathHelper.sin(this.yaw * 0.017453292F), this.motY, -MathHelper.cos(this.yaw * 0.017453292F)).a();
+			//
+			float f4 = Math.max(((float) vec3d2.b(vec3d) + 0.5F) / 1.5F, 0.0F);
 			this.bk *= 0.8F;
-			float f5 = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0F + 1.0F;
-			double d10 = Math.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0D + 1.0D;
+			float f55 = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0F + 1.0F;
+			/*double d10 = Math.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0D + 1.0D;
 			if(d10 > 40.0D){
 				d10 = 40.0D;
-			}
-			this.bk = ((float) (this.bk + d9 * (0.699999988079071D / d10 / f5)));
+			}*/
+			// this.bk = ((float)(this.bk + d5 * idragoncontroller.h()));
+			this.bk = ((float) (this.bk + d6 * (0.699999988079071D / d4 / f55)));
 			this.yaw += this.bk * 0.1F;
-			float f6 = (float) (2.0D / (d10 + 1.0D));
-			float f7 = 0.06F;
-			a(0.0F, -1.0F, f7 * (f4 * f6 + (1.0F - f6)));
-			if(this.bx){
+			float f5 = (float) (2.0D / (d4 + 1.0D));
+
+			a(0.0F, 0.0F, -1.0F, 0.06F * (f4 * f5 + (1.0F - f5)));
+			// float f7 = 0.06F;
+			// a(0.0F, -1.0F, f7 * (f4 * f6 + (1.0F - f6)));
+			if(this.useless2){
 				move(EnumMoveType.SELF, this.motX * 0.800000011920929D, this.motY * 0.800000011920929D, this.motZ * 0.800000011920929D);
 			}else{
 				move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
 			}
-			Vec3D vec3d2 = new Vec3D(this.motX, this.motY, this.motZ).a();
-			float f8 = ((float) vec3d2.b(vec3d1) + 1.0F) / 2.0F;
-			f8 = 0.8F + 0.15F * f8;
-			this.motX *= f8;
-			this.motZ *= f8;
+			Vec3D vec3d3 = new Vec3D(this.motX, this.motY, this.motZ).a();
+			float f7 = ((float) vec3d3.b(vec3d2) + 1.0F) / 2.0F;
+			f7 = 0.8F + 0.15F * f7;
+			this.motX *= f7;
+			this.motZ *= f7;
 			this.motY *= 0.9100000262260437D;
 		}
 		this.updateComplexParts();
@@ -277,7 +286,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
 	private void updateComplexParts(){
 		if(this.children != null){
-			this.aP = this.yaw;
+			this.aI = this.yaw;
 			this.head.width = this.head.length = 3.0F;
 			this.tail1.width = this.tail1.length = 2.0F;
 			this.tail2.width = this.tail2.length = 2.0F;
@@ -294,11 +303,11 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			float f10 = this.yaw * 3.1415927F / 180.0F;
 			float f11 = MathHelper.sin(f10);
 			float f12 = MathHelper.cos(f10);
-			this.body.B_();
+			this.body.tick();
 			this.body.setPositionRotation(this.locX + f11 * 0.5F, this.locY, this.locZ - f12 * 0.5F, 0.0F, 0.0F);
-			this.wing1.B_();
+			this.wing1.tick();
 			this.wing1.setPositionRotation(this.locX + f12 * 4.5F, this.locY + 2.0D, this.locZ + f11 * 4.5F, 0.0F, 0.0F);
-			this.wing2.B_();
+			this.wing2.tick();
 			this.wing2.setPositionRotation(this.locX - f12 * 4.5F, this.locY + 2.0D, this.locZ - f11 * 4.5F, 0.0F, 0.0F);
 			/*if ((!this.world.isClientSide) && (this.hurtTicks == 0)) {
 			    launchEntities(this.world.getEntities(this, this.wing1.getBoundingBox().grow(4.0D, 2.0D, 4.0D).c(0.0D, -2.0D, 0.0D)));
@@ -309,8 +318,12 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 			double[] adouble1 = b(0, 1.0F);
 			float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bk * 0.01F);
 			float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bk * 0.01F);
-			this.head.B_();
+			this.head.tick();
+			// this.bD.setPositionRotation(this.locX + f13 * 6.5F * f8, this.locY + f3 + f9 * 6.5F, this.locZ - f14 * 6.5F * f8, 0.0F, 0.0F);
 			this.head.setPositionRotation(this.locX + f3 * 5.5F * f2, this.locY + (adouble1[1] - adouble[1]) * 1.0D + f9 * 5.5F, this.locZ - f13 * 5.5F * f2, 0.0F, 0.0F);
+			// 1.13 tick and set pos neck here
+			// this.bE.tick();
+			// this.bE.setPositionRotation(this.locX + f13 * 5.5F * f8, this.locY + f3 + f9 * 5.5F, this.locZ - f14 * 5.5F * f8, 0.0F, 0.0F);
 			for(int j = 0; j < 3; j++){
 				EntityComplexPart entitycomplexpart = null;
 				if(j == 0){
@@ -328,8 +341,12 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				float f16 = MathHelper.cos(f14);
 				float f17 = 1.5F;
 				float f18 = (j + 1) * 2.0F;
-				entitycomplexpart.B_();// near setPositionRotations
+				entitycomplexpart.tick();// near setPositionRotations
 				entitycomplexpart.setPositionRotation(this.locX - (f11 * f17 + f15 * f18) * f2, this.locY + (adouble2[1] - adouble[1]) * 1.0D - (f18 + f17) * f9 + 1.5D, this.locZ + (f12 * f17 + f16 * f18) * f2, 0.0F, 0.0F);
+			}
+			if(!this.world.isClientSide){
+				// b is a method that handles destroying blocks.
+				// this.bx = (b(this.head.getBoundingBox()) | b(this.body.getBoundingBox());
 			}
 		}
 	}
@@ -345,10 +362,10 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 		float f1 = this.yaw * 3.1415927F / 180.0F;
 		float f2 = MathHelper.sin(f1);
 		float f3 = MathHelper.cos(f1);
-		this.a = this.locX + (double) (f2 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
-		this.b = this.locY + (double) (this.random.nextFloat() * 3.0F) + 1.0D;
-		this.c = this.locZ - (double) (f3 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
-		this.bA = null;
+		this.targetX = this.locX + (double) (f2 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
+		this.targetY = this.locY + (double) (this.random.nextFloat() * 3.0F) + 1.0D;
+		this.targetZ = this.locZ - (double) (f3 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
+		this.target = null;
 		if(damageSource.getEntity() instanceof EntityHuman || damageSource.isExplosion()){
 			// this.attack(damageSource.getEntity(), f);
 		}
