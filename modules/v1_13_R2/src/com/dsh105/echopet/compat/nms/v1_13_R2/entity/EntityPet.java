@@ -299,6 +299,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
 	public void remove(boolean makeSound){
 		if(this.bukkitEntity != null){
+			bukkitEntity.leaveVehicle();
 			bukkitEntity.remove();
 		}
 		if(makeSound){
@@ -405,6 +406,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		    n(f);
 		  }
 		 */
+
 		this.o(this.rideSpeed);// before "looting" methodProfiler
 		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
