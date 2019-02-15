@@ -263,6 +263,7 @@ public abstract class Pet implements IPet{
 			getLocation().getWorld().spawnParticle(Particle.CLOUD, getLocation(), 1);
 			getLocation().getWorld().spawnParticle(Particle.LAVA, getLocation(), 1);
 		}
+		setAsHat(false);
 		removeRider(makeSound, makeParticles);
 		for(com.dsh105.echopet.compat.api.particle.Trail trail : trails){
 			trail.cancel();
