@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
@@ -11,7 +12,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.particle.Trails;
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 /**
@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
  */
 public class TrailManager implements Trails{
 
-	List<ParticleTrail> trails = Lists.newArrayList();
+	private final List<ParticleTrail> trails = Lists.newArrayList();
 
 	public TrailManager(YAMLConfig config){
 		Map<String, ParticleTrail> trails = new HashMap<>();
@@ -39,7 +39,7 @@ public class TrailManager implements Trails{
 				Collection<String> subTrails = config.getStringList("trails." + key + ".subtrails");
 				int interval = config.getInt("trails." + key + ".interval");
 				float speed = (float) config.getDouble("trails." + key + ".speed");
-				int count = config.getInt("trails." + key + ".count");
+				int count = config.getInt("trails." + key + ".count", 1);
 				double x = config.getDouble("trails." + key + ".x");
 				double y = config.getDouble("trails." + key + ".y");
 				double z = config.getDouble("trails." + key + ".z");
@@ -83,13 +83,8 @@ public class TrailManager implements Trails{
 		}
 	}
 
-	public List<Trail> getTrails(){// should be using a set..but i wanna transform
-		return Lists.transform(trails, new Function<ParticleTrail, Trail>(){
-
-			public Trail apply(ParticleTrail t){
-				return (Trail) t;
-			}
-		});
+	public List<Trail> getTrails(){
+		return trails.stream().map(t-> (Trail) t).collect(Collectors.toList());
 	}
 
 	public Trail getTrailByName(String name){
