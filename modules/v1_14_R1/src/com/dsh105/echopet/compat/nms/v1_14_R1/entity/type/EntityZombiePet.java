@@ -17,11 +17,12 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.ZOMBIE)

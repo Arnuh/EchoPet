@@ -16,11 +16,15 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.BAT)

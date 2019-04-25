@@ -16,10 +16,10 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1;
 
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 /*
  * From EntityAPI :)

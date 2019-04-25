@@ -20,7 +20,7 @@ import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.Navigation;
+import net.minecraft.server.v1_14_R1.Navigation;
 
 public class PetGoalFloat extends APetGoalFloat{
 

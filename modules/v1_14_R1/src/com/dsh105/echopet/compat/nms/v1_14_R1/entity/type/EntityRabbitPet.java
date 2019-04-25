@@ -10,7 +10,7 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai.PetGoalFollowOwner;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.RABBIT)

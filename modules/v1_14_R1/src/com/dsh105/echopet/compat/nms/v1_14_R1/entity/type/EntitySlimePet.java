@@ -17,11 +17,12 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.SLIME)

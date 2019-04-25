@@ -18,8 +18,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -29,9 +28,9 @@ import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
 import com.google.common.base.Preconditions;
 
-import net.minecraft.server.v1_13_R2.Entity;
-import net.minecraft.server.v1_13_R2.EntityTypes;
-import net.minecraft.server.v1_13_R2.World;
+import net.minecraft.server.v1_14_R1.Entity;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 /**
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings

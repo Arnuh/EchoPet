@@ -20,8 +20,8 @@ import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySilverfishPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.EntityTypes;
-import net.minecraft.server.v1_13_R2.World;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.3F, height = 0.7F)
 @EntityPetType(petType = PetType.SILVERFISH)

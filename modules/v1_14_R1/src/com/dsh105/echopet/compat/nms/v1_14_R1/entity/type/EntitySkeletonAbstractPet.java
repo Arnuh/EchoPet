@@ -6,7 +6,7 @@ import com.dsh105.echopet.compat.api.entity.SkeletonType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 /**
  * @author Arnah

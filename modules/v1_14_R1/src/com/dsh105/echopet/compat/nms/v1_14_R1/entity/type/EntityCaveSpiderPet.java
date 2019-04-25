@@ -19,8 +19,8 @@ package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCaveSpiderPet;
 
-import net.minecraft.server.v1_13_R2.EntityTypes;
-import net.minecraft.server.v1_13_R2.World;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.7F, height = 0.5F)
 @EntityPetType(petType = PetType.CAVESPIDER)

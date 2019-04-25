@@ -22,16 +22,17 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
@@ -44,7 +45,7 @@ import com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai.PetGoalLookAtPlayer;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_14_R1.*;
 
 public abstract class EntityPet extends EntityCreature implements IAnimal, IEntityPet{
 
