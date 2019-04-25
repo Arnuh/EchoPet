@@ -33,11 +33,11 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 	private static final DataWatcherObject<Boolean> by = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);// ? has a setter but no getter
 	private static final DataWatcherObject<Boolean> bF = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);// drowned shit
 
-	public EntityZombiePet(EntityTypes<? extends Entity> type, World world){
+	public EntityZombiePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityZombiePet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityZombiePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 		// TODO: Broken
 		/*new BukkitRunnable() {

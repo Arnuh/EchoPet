@@ -26,11 +26,11 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	private int rearingCounter = 0;
 	private int stepSoundCount = 0;
 
-	public EntityHorseAbstractPet(EntityTypes<? extends Entity> type, World world){
+	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityHorseAbstractPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

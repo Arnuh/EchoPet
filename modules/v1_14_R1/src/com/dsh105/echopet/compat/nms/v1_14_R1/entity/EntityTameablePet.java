@@ -36,11 +36,11 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	protected static final DataWatcherObject<Byte> bv = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
 	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.o);// Owner
 
-	public EntityTameablePet(EntityTypes<? extends Entity> type, World world){
+	public EntityTameablePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityTameablePet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityTameablePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

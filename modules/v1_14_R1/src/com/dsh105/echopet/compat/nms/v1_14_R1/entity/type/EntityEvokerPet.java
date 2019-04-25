@@ -22,11 +22,11 @@ public class EntityEvokerPet extends EntityIllagerAbstractPet implements IEntity
 	// EntityIllagerWizard
 	private static final DataWatcherObject<Byte> c = DataWatcher.a(EntityEvokerPet.class, DataWatcherRegistry.a);// some sorta spell shit
 
-	public EntityEvokerPet(EntityTypes<? extends Entity> type, World world){
+	public EntityEvokerPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityEvokerPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityEvokerPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

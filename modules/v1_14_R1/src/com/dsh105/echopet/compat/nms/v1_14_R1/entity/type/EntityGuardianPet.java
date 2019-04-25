@@ -17,11 +17,11 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet{
 	private static final DataWatcherObject<Boolean> bz = DataWatcher.a(EntityGuardianPet.class, DataWatcherRegistry.i);// ?
 	private static final DataWatcherObject<Integer> bA = DataWatcher.a(EntityGuardianPet.class, DataWatcherRegistry.b);// some kind of entity id
 
-	public EntityGuardianPet(EntityTypes<? extends Entity> type, World world){
+	public EntityGuardianPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityGuardianPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityGuardianPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

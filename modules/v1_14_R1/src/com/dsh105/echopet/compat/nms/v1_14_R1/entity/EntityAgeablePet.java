@@ -27,11 +27,11 @@ public abstract class EntityAgeablePet extends EntityPet{
 	protected int age;
 	private boolean ageLocked = true;
 
-	public EntityAgeablePet(EntityTypes<? extends Entity> type, World world){
+	public EntityAgeablePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityAgeablePet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityAgeablePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

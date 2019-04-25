@@ -13,11 +13,11 @@ public abstract class EntityFishPet extends EntityWaterAnimalPet implements IEnt
 
 	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntityFishPet.class, DataWatcherRegistry.i);// "FromBucket". Prevents the fish from despawning.
 
-	public EntityFishPet(EntityTypes<? extends Entity> type, World world){
+	public EntityFishPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityFishPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityFishPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

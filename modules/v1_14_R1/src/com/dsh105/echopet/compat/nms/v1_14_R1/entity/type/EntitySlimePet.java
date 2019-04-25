@@ -31,11 +31,11 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	private static final DataWatcherObject<Integer> SIZE = DataWatcher.a(EntitySlimePet.class, DataWatcherRegistry.b);
 	int jumpDelay;
 
-	public EntitySlimePet(EntityTypes<? extends Entity> type, World world){
+	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntitySlimePet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 		if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
 			if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.SMALL, false)){

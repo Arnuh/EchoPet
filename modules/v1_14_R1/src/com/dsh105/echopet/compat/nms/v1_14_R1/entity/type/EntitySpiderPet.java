@@ -32,11 +32,11 @@ public class EntitySpiderPet extends EntityPet implements IEntitySpiderPet{
 
 	private static final DataWatcherObject<Byte> a = DataWatcher.a(EntitySpiderPet.class, DataWatcherRegistry.a);// Some position changed or shit..
 
-	public EntitySpiderPet(EntityTypes<? extends Entity> type, World world){
+	public EntitySpiderPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntitySpiderPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntitySpiderPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

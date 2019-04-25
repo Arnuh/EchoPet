@@ -47,7 +47,7 @@ import com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai.PetGoalLookAtPlayer;
 
 import net.minecraft.server.v1_14_R1.*;
 
-public abstract class EntityPet extends EntityCreature implements IAnimal, IEntityPet{
+public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 
 	protected IPet pet;
 	public PetGoalSelector petGoalSelector;
@@ -57,11 +57,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	public EntityLiving goalTarget = null;
 	public boolean shouldVanish;
 
-	public EntityPet(EntityTypes<? extends Entity> type, World world){
+	public EntityPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world);
 		this.pet = pet;
 		this.initiateEntityPet();

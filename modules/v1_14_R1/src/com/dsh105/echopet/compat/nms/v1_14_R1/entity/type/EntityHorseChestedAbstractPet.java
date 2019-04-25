@@ -16,11 +16,11 @@ public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractP
 	// EntityHorseChestedAbstract: Donkey, Mule
 	private static final DataWatcherObject<Boolean> CHEST = DataWatcher.a(EntityHorseChestedAbstractPet.class, DataWatcherRegistry.i);
 
-	public EntityHorseChestedAbstractPet(EntityTypes<? extends Entity> type, World world){
+	public EntityHorseChestedAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityHorseChestedAbstractPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityHorseChestedAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 

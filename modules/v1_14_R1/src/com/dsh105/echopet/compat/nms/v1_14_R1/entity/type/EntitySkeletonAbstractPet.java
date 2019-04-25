@@ -16,11 +16,11 @@ public class EntitySkeletonAbstractPet extends EntityPet implements IEntitySkele
 
 	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntitySkeletonPet.class, DataWatcherRegistry.i);// Something for PathfinderGoalMeleeAttack
 
-	public EntitySkeletonAbstractPet(EntityTypes<? extends Entity> type, World world){
+	public EntitySkeletonAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntitySkeletonAbstractPet(EntityTypes<? extends Entity> type, World world, final IPet pet){
+	public EntitySkeletonAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, final IPet pet){
 		super(type, world, pet);
 	}
 

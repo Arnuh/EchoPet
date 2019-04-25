@@ -17,11 +17,11 @@ public class EntityIllagerAbstractPet extends EntityPet implements IEntityIllage
 
 	protected static final DataWatcherObject<Byte> a = DataWatcher.a(EntityIllagerAbstractPet.class, DataWatcherRegistry.a);
 
-	public EntityIllagerAbstractPet(EntityTypes<? extends Entity> type, World world){
+	public EntityIllagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
 
-	public EntityIllagerAbstractPet(EntityTypes<? extends Entity> type, World world, IPet pet){
+	public EntityIllagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
 
