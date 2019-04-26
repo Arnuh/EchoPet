@@ -62,10 +62,10 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	public void onLive(){
 		super.onLive();
 		if(this.isStartled()){
-			this.motX = this.motY = this.motZ = 0.0D;
-			this.locY = (double) MathHelper.floor(this.locY) + 1.0D - (double) this.length;
+			setMot(0, 0, 0);
+			this.locY = (double) MathHelper.floor(this.locY) + 1.0D - (double) getHeight();
 		}else{
-			this.motY *= 0.6000000238418579D;
+			setMot(getMot().x, getMot().y * 0.6000000238418579D, getMot().z);
 		}
 	}
 

@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
 import net.minecraft.server.v1_14_R1.Entity;
 import net.minecraft.server.v1_14_R1.EntityHuman;
+import net.minecraft.server.v1_14_R1.IEntitySelector;
 
 @SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
@@ -68,7 +69,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 			if(this.clazz == EntityHuman.class){
 				this.player = this.pet.world.findNearbyPlayer(this.pet, (double) this.range);
 			}else{
-				this.player = this.pet.world.a(this.clazz, this.pet.getBoundingBox().grow((double) this.range, 3.0D, (double) this.range), this.pet);
+				this.player = (Entity) this.pet.world.a(this.clazz, this.pet.getBoundingBox().grow((double) this.range, 3.0D, (double) this.range), IEntitySelector.b(pet)).stream().findAny().orElse(null);
 			}
 			return this.player != null;
 		}
@@ -92,7 +93,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	@Override
 	public void tick(){
 		// 1.9: this.a.getControllerLook().a(this.b.locX, this.b.locY + this.b.getHeadHeight(), this.b.locZ, this.a.cE(), this.a.N());
-		this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.K());
+		// this.pet.getControllerLook().a(this.player.locX, this.player.locY + this.player.getHeadHeight(), this.player.locZ, this.pet.L(), this.pet.K());
 		--this.ticksLeft;
 	}
 }

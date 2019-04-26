@@ -43,9 +43,9 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 
 	@Override
 	protected void makeStepSound(BlockPosition pos, Block block){
-		SoundEffectType soundeffecttype = block.getStepSound();
-		if(this.world.getType(pos) == Blocks.SNOW){
-			soundeffecttype = Blocks.SNOW.getStepSound();
+		SoundEffectType soundeffecttype = block.getStepSound(block.getBlockData());
+		if(this.world.getType(pos).getBlock() == block){
+			soundeffecttype = Blocks.SNOW.getStepSound(block.getBlockData());
 		}
 		if(!block.getBlockData().getMaterial().isLiquid()){
 			HorseVariant enumhorsetype = ((IHorseAbstractPet) getPet()).getVariant();
@@ -68,9 +68,10 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	}
 
 	@Override
-	public void a(float sideMot, float forwMot, float unk){
-		super.a(sideMot, forwMot, unk);
-		if(forwMot <= 0.0F){
+	public void e(Vec3D motion){
+		super.e(motion);
+		// forward
+		if(motion.x <= 0.0F){
 			this.stepSoundCount = 0;
 		}
 	}

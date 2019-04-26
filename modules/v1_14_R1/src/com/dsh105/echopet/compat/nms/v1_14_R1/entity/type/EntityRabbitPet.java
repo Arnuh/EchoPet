@@ -22,12 +22,12 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 
 	public EntityRabbitPet(World world){
 		super(EntityTypes.RABBIT, world);
-		this.h = new ControllerJumpRabbit(this);
+		this.bt = new ControllerJumpRabbit(this);
 	}
 
 	public EntityRabbitPet(World world, IPet pet){
 		super(EntityTypes.RABBIT, world, pet);
-		this.h = new ControllerJumpRabbit(this);
+		this.bt = new ControllerJumpRabbit(this);
 	}
 
 	@Override
@@ -54,20 +54,20 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		}
 		if(this.onGround){
 			if(!this.onGroundLastTick){
-				o(false);
-				reset();// dv
+				setJumping(false);
+				reset();// ef
 			}
-			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) this.h;
+			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) this.bt;
 			if(!jumpController.c()){
 				if(this.moveController.b() && this.delay == 0){
-					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().m();// Gets path towards the player.
+					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().l();// Gets path towards the player.
 					// if(pathentity != null && pathentity.e() < pathentity.d()){
 					// Vec3D vec3d = pathentity.a(this);
 					// a(vec3d.x, vec3d.z);
 					// dl();
 					// }
 					Vec3D vec3d = new Vec3D(this.moveController.d(), this.moveController.e(), this.moveController.f());
-					if((pathentity != null) && (pathentity.e() < pathentity.d())){
+					if((pathentity != null) && (pathentity.f() < pathentity.e())){
 						vec3d = pathentity.a(this);
 					}
 					a(vec3d.x, vec3d.z);
@@ -75,17 +75,18 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 				}
 			}else if(!jumpController.d()){
 				// dp();
-				((ControllerJumpRabbit) this.h).a(true);
+				((ControllerJumpRabbit) this.bt).a(true);
 			}
 		}
 		this.onGroundLastTick = this.onGround;
 	}
 
-	protected void cH(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
-		super.cH();
+	protected void jump(){// has movecontroller in it, 4 above datawatcher register.
+		super.jump();
 		double d0 = this.moveController.c();
 		if(d0 > 0.0D){
-			double d1 = this.motX * this.motX + this.motZ * this.motZ;
+			Vec3D mot = this.getMot();
+			double d1 = mot.x * mot.x + mot.z * mot.z;
 			if(d1 < 0.010000000000000002D){
 				a(0.0F, 0.0F, 1.0F, 0.1F);
 			}
@@ -95,7 +96,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 
 	private void reset(){
 		resetDelay();// dC
-		((ControllerJumpRabbit) h).a(false);// dD
+		((ControllerJumpRabbit) bt).a(false);// dD
 	}
 
 	private void resetDelay(){// dI()
@@ -103,8 +104,8 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		else delay = 1;
 	}
 
-	public void dl(){// Above datawatcher register
-		o(true);// Plays ambient sound if true, does super.l(flag);
+	public void dV(){// Above datawatcher register
+		setJumping(true);// Plays ambient sound if true, does super.l(flag);
 	}
 
 	public class ControllerJumpRabbit extends ControllerJump{// Copied from EntityRabbit

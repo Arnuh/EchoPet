@@ -51,7 +51,7 @@ public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet
 		boolean flag = super.attack(entity);
 		if(flag){
 			this.world.broadcastEntityEffect(this, (byte) 4);
-			entity.motY = 0.4000000059604645D;
+			setMot(getMot().x, 0.4000000059604645D, getMot().z);
 			makeSound("entity.irongolem.step", 1.0F, 1.0F);
 		}
 		return flag;

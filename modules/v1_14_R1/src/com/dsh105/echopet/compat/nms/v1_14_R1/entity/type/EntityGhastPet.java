@@ -65,9 +65,7 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 					this.j += this.i.getRandom().nextInt(5) + 2;
 					d3 = MathHelper.sqrt(d3);
 					if(b(this.b, this.c, this.d, d3)){
-						this.i.motX += d0 / d3 * 0.1D;
-						this.i.motY += d1 / d3 * 0.1D;
-						this.i.motZ += d2 / d3 * 0.1D;
+						this.i.setMot(d0 / d3 * 0.1D, d1 / d3 * 0.1D, d2 / d3 * 0.1D);
 					}else{
 						this.h = ControllerMove.Operation.WAIT;
 					}

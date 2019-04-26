@@ -92,7 +92,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		}else if((this.wet || this.shaking) && this.shaking){
 			if(this.shakeCount == 0.0F){
 				// After sounds
-				makeSound("entity.wolf.shake", cD(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);// just search for '0.2F + 1.0F'
+				makeSound("entity.wolf.shake", getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);// just search for '0.2F + 1.0F'
 			}
 			this.shakeCount += 0.05F;
 			if(this.shakeCount - 0.05F >= 2.0F){
@@ -103,10 +103,11 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 			if(this.shakeCount > 0.4F){
 				float f = (float) this.getBoundingBox().minY;
 				int i = (int) (MathHelper.sin((this.shakeCount - 0.4F) * 3.1415927F) * 7.0F);
+				Vec3D mot = getMot();
 				for(int j = 0; j < i; ++j){
-					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-					this.world.addParticle(Particles.R, this.locX + (double) f1, (double) (f + 0.8F), this.locZ + (double) f2, this.motX, this.motY, this.motZ);
+					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
+					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
+					this.world.addParticle(Particles.SPLASH, this.locX + (double) f1, (double) (f + 0.8F), this.locZ + (double) f2, mot.x, mot.y, mot.z);
 				}
 			}
 		}

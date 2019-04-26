@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
@@ -69,7 +68,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 
 	private void initiateEntityPet(){
 		this.resetEntitySize();
-		this.fireProof = true;
+		// this.fireProof = true;
 		if(this.FIELD_JUMP == null){
 			try{
 				this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bg");// Usually right below lastDamage float. Has 3 floats after it. EntityLiving
@@ -94,19 +93,19 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	public void resizeBoundingBox(boolean flag){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
-			this.setSize(flag ? (es.width() / 2) : es.width(), flag ? (es.height() / 2) : es.height());
+			// this.setSize(flag ? (es.width() / 2) : es.width(), flag ? (es.height() / 2) : es.height());
 		}
 	}
 
 	public void resetEntitySize(){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
-			this.setSize(es.width(), es.height());
+			// this.setSize(es.width(), es.height());
 		}
 	}
 
 	public void setEntitySize(float width, float height){
-		this.setSize(width, height);
+		// this.setSize(width, height);
 	}
 
 	public boolean isPersistent(){
@@ -126,9 +125,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 
 	public void setVelocity(Vector vel){
-		this.motX = vel.getX();
-		this.motY = vel.getY();
-		this.motZ = vel.getZ();
+		this.setMot(vel.getX(), vel.getY(), vel.getZ());
 		this.velocityChanged = true;
 	}
 
@@ -194,7 +191,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	
 	private boolean spawnEntityFromShoulder(@Nullable NBTTagCompound nbttagcompound){// copied from EntityHuman
 		if((!this.world.isClientSide) && (!nbttagcompound.isEmpty())){
-			Entity entity = EntityTypes.a(nbttagcompound, this.world);
+			Entity entity = EntityTypes.a(nbttagcompound, this.world).orElse(null);
+			if(entity == null) return false;
 			if((entity instanceof EntityTameableAnimal)){
 				((EntityTameableAnimal) entity).setOwnerUUID(this.uniqueID);
 			}
@@ -237,8 +235,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 	}
 
-	public CraftCreature getBukkitEntity(){
-		return (CraftCreature) super.getBukkitEntity();
+	public CraftLivingEntity getBukkitEntity(){
+		return (CraftLivingEntity) super.getBukkitEntity();
 	}
 	// well then...it's now 'final'
 	/*
@@ -367,37 +365,43 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 
 	// EntityInsentient
-	public void a(float sideMot, float forwMot, float upMot){// ITS IN ENTITY LIVING
+	public void e(Vec3D motion){// ITS IN ENTITY LIVING
 		// bF() is passenger shit. Minecraft changed it from 1 passenger to a list
 		if(passengers.isEmpty()){// search for passengers.isEmpty() in Entity
-			this.Q = 0.5F;// Above noclip
-			this.aU = 0.02F;// above killer in entity living
-			super.a(sideMot, forwMot, upMot);
+			this.K = 0.5F;// Above noclip
+			this.aO = 0.02F;// above killer in entity living
+			super.e(motion);
 			return;
 		}
 		Entity passenger = passengers.get(0);
 		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
-			this.Q = 0.5F;
-			this.aU = 0.02F;
-			super.a(sideMot, forwMot, upMot);
+			this.K = 0.5F;
+			this.aO = 0.02F;
+			super.e(motion);
 			return;
 		}
 		this.yaw = passenger.yaw;
 		this.lastYaw = this.yaw;
 		this.pitch = passenger.pitch * 0.5F;
 		this.setYawPitch(this.yaw, this.pitch);
-		// aP look for 009999999776482582D in EntityLiving.
-		// aR look for tickPotionEffects(). Middle one
-		this.aR = this.aP = this.yaw;
-		this.P = 1.0F;
-		sideMot = ((EntityLiving) passenger).bh * 0.5F;// 1 below lastDamage in EntityLiving
-		forwMot = ((EntityLiving) passenger).bi;// After ^
-		upMot = ((EntityLiving) passenger).bj;
-		if(forwMot <= 0.0F){// ?
-			forwMot *= 0.25F;
+		// aJ look for 009999999776482582D in EntityLiving.
+		// aL look for tickPotionEffects(). Middle one
+		this.aL = /*this.aJ =*/ this.yaw;
+		// this.P = 1.0F;
+		// side
+		double x = 0, y = 0, z = 0;
+		z = ((EntityLiving) passenger).bb * 0.5F;// 1 below lastDamage in EntityLiving
+		// forward
+		x = ((EntityLiving) passenger).bc;// After ^
+		// up
+		y = ((EntityLiving) passenger).bd;// After ^
+		// forward
+		if(x <= 0.0F){// ?
+			x *= 0.25F;
 		}
-		sideMot *= 0.75F;
-		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
+		// side
+		z *= 0.75F;
+		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motion.x, (float) motion.z);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
 		/*
@@ -408,8 +412,6 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		  }
 		 */
 
-		this.o(this.rideSpeed);// before "looting" methodProfiler
-		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
@@ -422,7 +424,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
-							this.motY = 0.5F;
+							// motY
+							y = 0.5F;
 						}
 					}
 				}catch(IllegalArgumentException e){
@@ -438,7 +441,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
-							this.motY = rideEvent.getJumpHeight();
+							// motY
+							y = rideEvent.getJumpHeight();
 							doJumpAnimation();
 						}
 					}
@@ -451,21 +455,25 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 				}
 			}
 		}
+		this.setMot(x, y, z);
+		motion = new Vec3D(x, y, z);
+		this.o(this.rideSpeed);// before "looting" methodProfiler
+		super.e(motion);
 	}
 
-	protected SoundEffect F(){
+	protected SoundEffect getSoundAmbient(){
 		return getSoundFromString(getIdleSound());
 	}
 
-	protected SoundEffect d(DamageSource damageSource){
+	protected SoundEffect getSoundHurt(DamageSource damageSource){
 		return getSoundFromString(getHurtSound());
 	}
 
-	protected SoundEffect cd(){
+	protected SoundEffect getSoundDeath(){
 		return getSoundFromString(getDeathSound());
 	}
 
-	protected SoundEffect dA(){// EntityRabbit has this, but it goes to jump?
+	protected SoundEffect getSOundStep(){// EntityRabbit has this, but it goes to jump?
 		return getSoundFromString(getStepSound());
 	}
 
@@ -509,8 +517,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	public abstract SizeCategory getSizeCategory();
 
 	// Entity
-	public void W(){// Search for "entityBaseTick". The method its in.
-		super.W();
+	public void tick(){// Search for "entityBaseTick". The method its in.
+		super.tick();
 		onLive();
 		if(this.petGoalSelector == null){
 			this.remove(false);
@@ -519,13 +527,13 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		if(!isPassenger() || getPet().getRider() == null) this.petGoalSelector.updateGoals();
 	}
 
-	protected void x_(){// Registers all the values into datawatcher
-		super.x_();
-		initDatawatcher();
+	protected void initDatawatcher(){// Registers all the values into datawatcher
+		super.initDatawatcher();
+		// initDatawatcher();
 		// We don't need datawatcher stuff from EntityCreature, EntityInsentinent, or EntityLiving.
 	}
 
-	protected void initDatawatcher(){}
+	// protected void initDatawatcher(){}
 
 	protected void doJumpAnimation(){}
 

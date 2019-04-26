@@ -64,7 +64,7 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 
 	@Override
 	public void setArmour(HorseArmour a){
-		this.datawatcher.set(ARMOR, EnumHorseArmor.values()[a.ordinal()].a());
+		// this.datawatcher.set(ARMOR, EnumHorseArmor.values()[a.ordinal()].a());
 	}
 
 	@Override
@@ -86,6 +86,6 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(STYLE, 0);
-		this.datawatcher.register(ARMOR, EnumHorseArmor.NONE.a());
+		// this.datawatcher.register(ARMOR, EnumHorseArmor.NONE.a());
 	}
 }

@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-import com.dsh105.echopet.compat.nms.v1_14_R1.entity.type.EntityEnderDragonPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.type.EntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.type.EntityVexPet;
 
@@ -78,7 +77,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 
 	@Override
 	public boolean shouldContinue(){
-		if(this.nav.g()){
+		if(this.nav.f()){// Navigation - bottom of class, just returns another method.
 			return false;
 		}else if(this.pet.getPlayerOwner() == null){
 			return false;
@@ -99,7 +98,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 
 	@Override
 	public void finish(){
-		this.nav.p();// Navigation abstract - return this.c == null || this.c.b();
+		this.nav.n();// Navigation abstract - return this.c == null || this.c.b();
 	}
 
 	@Override
@@ -107,7 +106,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		// PathfinderGoalFollowOwner
 		EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
 		// 1.9: this.d.getControllerLook().a(this.e, 10.0F, this.d.N());
-		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.K());
+		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.M());
 		if(--this.timer <= 0){
 			this.timer = 10;
 			/*if (this.pet.getPlayerOwner().isFlying()) {
@@ -115,7 +114,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    return;
 			}*/
 			double speed = 0.6F;
-			if(!(this.pet instanceof EntityEnderDragonPet) && this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}

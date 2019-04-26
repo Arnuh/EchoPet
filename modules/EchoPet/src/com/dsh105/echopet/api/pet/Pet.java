@@ -25,7 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Creature;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -116,7 +116,7 @@ public abstract class Pet implements IPet{
 	}
 
 	@Override
-	public Creature getCraftPet(){
+	public LivingEntity getCraftPet(){
 		return this.getEntityPet().getBukkitEntity();
 	}
 

@@ -50,7 +50,7 @@ public class PetGoalFloat extends APetGoalFloat{
 	@Override
 	public void tick(){
 		if(this.pet.random().nextFloat() < 0.8F){
-			this.pet.getControllerJump().a();
+			this.pet.getControllerJump().jump();
 		}
 	}
 }
