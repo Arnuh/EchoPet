@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -29,7 +28,7 @@ public interface IEntityPet {
 
     public SizeCategory getSizeCategory();
 
-    public Creature getBukkitEntity();
+	public LivingEntity getBukkitEntity();
 
     public void resizeBoundingBox(boolean flag);
 

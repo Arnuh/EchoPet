@@ -16,9 +16,8 @@ package com.dsh105.echopet.compat.nms.v1_14_R1;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 
-import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.tuple.ImmutablePair;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -28,9 +27,8 @@ import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
 import com.google.common.base.Preconditions;
 
-import net.minecraft.server.v1_14_R1.Entity;
-import net.minecraft.server.v1_14_R1.EntityTypes;
-import net.minecraft.server.v1_14_R1.World;
+import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.EntityTypes.a;
 
 /**
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings
@@ -95,54 +93,35 @@ public class PetRegistry implements IPetRegistry{
 	public void enablePets(){
 		for(PetType petType : registrationEntries.keySet()){
 			if(petType.isCompatible()){
-				PetRegistrationEntry entry = getRegistrationEntry(petType);
-				if(!oldClasses.containsKey(petType)){
-					EntityTypes<? extends Entity> oldClass = EntityTypes.a(petType.getMinecraftName());
-					if(oldClass == null){
-						System.out.println("Null oldClass for " + petType.getMinecraftName());
-					}else 
-					oldClasses.put(petType, new ImmutablePair<String, EntityTypes<? extends Entity>>(petType.getMinecraftName(), oldClass));
+				EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
+				if(entity == null){
+					Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
+					continue;
 				}
-				Function<? super World, ? extends Entity> func = t-> {
-					try{
-						return (Entity) entry.getEntityClass().getConstructor().newInstance(t);
-					}catch(Exception ex){
-						ex.printStackTrace();
-						return null;
+				EnumCreatureType type = entity.d();
+				a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
+
+					@Override
+					public Entity create(EntityTypes type, World world){
+						return type.a(world);
 					}
-				};
-				EntityTypes.a.a((Class<? extends Entity>) entry.getEntityClass(), func);
+				}, type);
+				IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), entitytypes_a.a(petType.getMinecraftName()));
 			}
 		}
 	}
 
-	Map<PetType, Pair<String, EntityTypes<? extends Entity>>> oldClasses = new HashMap<>();
-
 	@Override
 	public void disablePets(){
 		try{
-			// K = minecraftkey
-			// V = class
 			for(PetType petType : registrationEntries.keySet()){
 				if(petType.isCompatible()){
-					// PetRegistrationEntry entry = getRegistrationEntry(petType);
-					Pair<String, EntityTypes<? extends Entity>> oldClass = oldClasses.get(petType);
-					if(oldClass == null){
-						continue;
-					}
-					Function<? super World, ? extends Entity> func = t-> {
-						try{
-							return oldClass.getValue().c().getConstructor().newInstance(t);
-						}catch(Exception ex){
-							ex.printStackTrace();
-							return null;
-						}
-					};
-					EntityTypes.a.a(oldClass.getValue().c(), func);
+					Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);
+					IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), val);
 				}
 			}
-		}catch(SecurityException | IllegalArgumentException e){
-			e.printStackTrace();
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
 
