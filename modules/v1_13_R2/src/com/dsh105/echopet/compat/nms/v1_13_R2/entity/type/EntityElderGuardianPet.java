@@ -26,9 +26,4 @@ public class EntityElderGuardianPet extends EntityGuardianPet implements IEntity
 	public EntityElderGuardianPet(World world, IPet pet){
 		super(EntityTypes.ELDER_GUARDIAN, world, pet);
 	}
-
-	@Override
-	public boolean isElder(){
-		return true;
-	}
 }

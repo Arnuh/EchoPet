@@ -17,32 +17,17 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import org.bukkit.entity.Player;
+
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGuardianPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGuardianPet;
-import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.GUARDIAN)
 public class GuardianPet extends Pet implements IGuardianPet {
 
     public GuardianPet(Player owner) {
         super(owner);
-    }
-    
-    @Override
-    public boolean isElder() {
-        return ((IEntityGuardianPet) getEntityPet()).isElder();
-    }
-    
-    @Override
-    public void setElder(boolean flag) {
-        if (!isElder() && flag) {
-            getEntityPet().setEntitySize(1.9975F, 1.9975F);
-        } else if (isElder() && !flag) {
-            getEntityPet().resetEntitySize();
-        }
-        ((IEntityGuardianPet) getEntityPet()).setElder(flag);
     }
 }

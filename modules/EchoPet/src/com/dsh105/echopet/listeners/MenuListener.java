@@ -98,76 +98,11 @@ public class MenuListener implements Listener {
 							return;
 						}
 					}
-					/*for (MenuItem mi : MenuItem.values()) {
-					    if (ItemUtil.matches(mi.getItem(), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(false), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(true), currentlyInSlot)) {
-					        if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-					            if (GeneralUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
-					                PetData pd = PetData.valueOf(mi.toString());
-					                if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
-					                    if (pet.getPetData().contains(pd)) {
-					                        EchoPet.getManager().setData(pet, pd, false);
-					                        inv.setItem(slot, mi.getBoolean(true));
-											// pet.getLocation().getWorld().spawnParticle(Particle.SMOKE_NORMAL, pet.getLocation(), 1);
-											// Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
-					                    } else {
-					                        EchoPet.getManager().setData(pet, pd, true);
-					                        inv.setItem(slot, mi.getBoolean(false));
-											// pet.getLocation().getWorld().spawnParticle(Particle.FIREWORKS_SPARK, pet.getLocation(), 1);
-											// Particle.SPARKLE.builder().at(pet.getLocation()).show();
-					                    }
-					                }
-					            } else {
-					                if (mi.toString().equals("HAT")) {
-					                    if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, false, pet.getPetType())) {
-					                        if (!pet.isHat()) {
-					                            pet.setAsHat(true);
-					                            inv.setItem(slot, mi.getBoolean(false));
-					                            Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
-					                        } else {
-					                            pet.setAsHat(false);
-					                            inv.setItem(slot, mi.getBoolean(true));
-					                            Lang.sendTo(pet.getOwner(), Lang.HAT_PET_OFF.toString());
-					                        }
-					                    }
-					                }
-					                if (mi.toString().equals("RIDE")) {
-					                    if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, false, pet.getPetType())) {
-					                        if (!pet.isOwnerRiding()) {
-					                            pet.ownerRidePet(true);
-					                            inv.setItem(slot, mi.getBoolean(false));
-					                            Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_ON.toString());
-					                        } else {
-					                            pet.ownerRidePet(false);
-					                            inv.setItem(slot, mi.getBoolean(true));
-					                            Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_OFF.toString());
-					                        }
-					                    }
-					                }
-					            }
-					        } else {
-								DataMenu dm = new DataMenu(mi, pet);
-								dm.open(false);
-					        }
-					        break;
-					    }
-					}*/
 				}else if(title.startsWith("EchoPet DataMenu - ")){
 					if(currentlyInSlot.equals(MenuUtil.BACK)){
 						new PetMenu(pet).open(false);
 						return;
 					}
-					/*
-					for (DataMenuItem dmi : DataMenuItem.values()) {
-					    if (ItemUtil.matches(dmi.getItem(), currentlyInSlot)) {
-					        PetData pd = dmi.getDataLink();
-							if(pet.getPetType().isDataAllowed(pd)){
-								if(pd.isCompatible() && Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)){
-									EchoPet.getManager().setData(pet, pd, true);
-									break;
-								}
-							}
-						}
-					}*/
 				}
 				if(title.startsWith("EchoPet DataMenu")){
 					for(PetData data : PetData.values){

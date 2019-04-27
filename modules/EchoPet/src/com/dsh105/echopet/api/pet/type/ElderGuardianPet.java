@@ -18,12 +18,4 @@ public class ElderGuardianPet extends GuardianPet implements IElderGuardianPet{
 	public ElderGuardianPet(Player owner){
 		super(owner);
 	}
-
-	@Override
-	public boolean isElder(){
-		return true;
-	}
-
-	@Override
-	public void setElder(boolean flag){}
 }

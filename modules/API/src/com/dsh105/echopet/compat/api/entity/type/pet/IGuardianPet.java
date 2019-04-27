@@ -21,7 +21,4 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 
 public interface IGuardianPet extends IPet {
 
-    boolean isElder();
-
-    void setElder(boolean flag);
 }

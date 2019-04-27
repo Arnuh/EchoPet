@@ -459,30 +459,6 @@ public class PetManager implements IPetManager {
 			if(petType.isDataAllowed(pd)){
 				DyeColor test;
 				/*
-				if(pd == PetData.BABY && pet instanceof IAgeablePet){
-					((IAgeablePet) pet).setBaby(b);
-				}
-				if(pd == PetData.POWER){
-					if(petType == PetType.CREEPER){
-						((ICreeperPet) pet).setPowered(b);
-					}else{
-						((IVexPet) pet).setPowered(b);
-					}
-				}
-				if(pd.isType(DataMenuType.SIZE)){
-					int i = 1;
-					if(pd == PetData.MEDIUM){
-						i = 2;
-					}else if(pd == PetData.LARGE){
-						i = 4;
-					}
-					if(petType == PetType.SLIME){
-						((ISlimePet) pet).setSize(i);
-					}
-					if(petType == PetType.MAGMACUBE){
-						((IMagmaCubePet) pet).setSize(i);
-					}
-				}
 				if(pd.isType(DataMenuType.OCELOT_TYPE) && petType == PetType.OCELOT){
 					try{
 						org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + (pd == PetData.WILD ? "_OCELOT" : "_CAT"));
@@ -539,21 +515,11 @@ public class PetManager implements IPetManager {
 					SkeletonType skeletonType = SkeletonType.valueOf(pd.toString());
 					((ISkeletonAbstractPet) pet).setSkeletonType(skeletonType);
 				}
-				if(pd == PetData.FIRE){
-					((IBlazePet) pet).setOnFire(b);
-				}
 				if(pd == PetData.SADDLE){
 					if(petType == PetType.PIG){
 						((IPigPet) pet).setSaddle(b);
 					}else if(petType == PetType.HORSE || petType == PetType.MULE || petType == PetType.DONKEY || petType == PetType.SKELETONHORSE || petType == PetType.ZOMBIEHORSE){
 						((IHorseAbstractPet) pet).setSaddled(b);
-					}
-				}
-				if(pd == PetData.SHEARED){
-					if(petType == PetType.SHEEP){
-						((ISheepPet) pet).setSheared(b);
-					}else{
-						((ISnowmanPet) pet).setSheared(b);
 					}
 				}
 				if(pd == PetData.SCREAMING){

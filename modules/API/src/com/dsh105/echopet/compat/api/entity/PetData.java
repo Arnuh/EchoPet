@@ -26,8 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.*;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.VersionCheckType;
 
@@ -51,12 +50,48 @@ public enum PetData {
 		if(pet instanceof ISheepPet){
 			((ISheepPet) pet).setSheared(flag);
 			return true;
+		}else if(pet instanceof ISnowmanPet){
+			((ISnowmanPet) pet).setSheared(flag);
+			return true;
 		}
 		return false;
 	}, Material.SHEARS, "Sheared"),
 	BLACK("black", (player, pet, data, flag)-> {
 		return setColorByDye(pet, DyeColor.BLACK);
 	}, Material.BLACK_WOOL, "Black"),
+	FIRE("fire", (player, pet, data, flag)-> {
+		if(pet instanceof IBlazePet){
+			((IBlazePet) pet).setOnFire(flag);
+			return true;
+		}
+		return false;
+	}, Material.FIRE_CHARGE, "Fire"),
+	POWERED("powered", (player, pet, data, flag)-> {
+		if(pet instanceof ICreeperPet){
+			((ICreeperPet) pet).setPowered(flag);
+			return true;
+		}else if(pet instanceof IVexPet){
+			((IVexPet) pet).setPowered(flag);
+			return true;
+		}
+		return false;
+	}, Material.BEACON, "Powered"),
+	SCREAMING("screaming", (player, pet, data, flag)-> {
+		if(pet instanceof IEndermanPet){
+			((IEndermanPet) pet).setScreaming(flag);
+			return true;
+		}
+		return false;
+	}, Material.ENDER_PEARL, "Screaming"),
+	SLIME_SMALL("slime_small", (player, pet, data, flag)-> {
+		return setSlimeSize(pet, 1);
+	}, Material.SLIME_BALL, "Small"),
+	SLIME_MEDIUM("slime_medium", (player, pet, data, flag)-> {
+		return setSlimeSize(pet, 2);
+	}, Material.SLIME_BALL, "Medium"),
+	SLIME_LARGE("slime_large", (player, pet, data, flag)-> {
+		return setSlimeSize(pet, 4);
+	}, Material.SLIME_BALL, "Large"),
     /*ANGRY("angry", DataMenuType.BOOLEAN),
 	BABY("baby", DataMenuType.BOOLEAN),
 	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
@@ -208,5 +243,17 @@ public enum PetData {
 			((IWolfPet) pet).setCollarColor(color);
 		}
 		return true;
+	}
+
+	private static boolean setSlimeSize(IPet pet, int size){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.SLIME)){
+			((ISlimePet) pet).setSize(size);
+			return true;
+		}else if(type.equals(PetType.MAGMACUBE)){
+			((IMagmaCubePet) pet).setSize(size);
+			return true;
+		}
+		return false;
 	}
 }

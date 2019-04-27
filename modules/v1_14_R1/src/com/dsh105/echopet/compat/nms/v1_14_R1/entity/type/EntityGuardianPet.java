@@ -35,19 +35,17 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet{
 
 	@Override
 	protected String getIdleSound(){
-		if(isElder()) return isInWater() ? "entity.elder_guardian.ambient" : "entity.elder_guardian.ambient_land";
 		return isInWater() ? "entity.guardian.ambient" : "entity.guardian.ambient_land";
 	}
 
 	@Override
 	protected String getDeathSound(){
-		if(isElder()) return isInWater() ? "entity.elder_guardian.death" : "entity.elder_guardian.death_land";
 		return isInWater() ? "entity.guardian.death" : "entity.guardian.death_land";
 	}
 
 	@Override
 	public SizeCategory getSizeCategory(){
-		return isElder() ? SizeCategory.GIANT : SizeCategory.LARGE;
+		return SizeCategory.LARGE;
 	}
 
 	@Override
@@ -61,10 +59,4 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet{
 	public void onLive(){
 		super.onLive();
 	}
-
-	public boolean isElder(){
-		return false;
-	}
-
-	public void setElder(boolean flag){}
 }
