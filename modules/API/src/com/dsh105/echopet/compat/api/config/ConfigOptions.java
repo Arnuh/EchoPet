@@ -135,14 +135,16 @@ public class ConfigOptions extends Options {
 			//@formatter:off
 			String[] trailInfo = {
 					"Test is the trail name", 
-					"particleName - Name of org.bukkit.Particle that we display. Required.",
-					"canToggle - Ability to toggle the trail using a command. Used for subtrails. Optional, Default: true.",
-					"subtrails - List of trails which will be active with the parent. Optional.",
-					"interval - Delay in ticks between particle spawns. Optional, Default: 0.",
-					"count - Amount of particles to display. Default: 1",
+					"particleName - Name of Particle that we display.",
+					"canToggle - Ability to toggle the trail using a command",
+					"canToggle is used for subtrails. Default - true",
+					"subtrails - List of trails which will be active with the parent",
+					"interval - Delay in ticks between particle spawns. Default - 0",
+					"count - Amount of particles to display. Default - 1",
 					"speed - Speed of the particle(or extra data)",
-					"x, y, z - Offset from the pets location. Optional, Default: 0.",
-					"x, y, z Offset - Maximum random offset. Optional, Default: 0."
+					"x, y, z - Offset from the pets location. Default - 0",
+					"x, y, z Offset - Maximum random offset. Default - 0",
+					"Everything but particleName is OPTIONAL."
 			};
 			//@formatter:on
 			set("trails.test.particleName", "FLAME", trailInfo);
@@ -194,7 +196,7 @@ public class ConfigOptions extends Options {
 						if(icon.getPetType() == null || icon.getPetType().equals(PetType.HUMAN) || icon.getMaterialData() > 0) set("petSelector.menu.page-" + page + "." + icon.getSlot() + ".materialData", icon.getMaterialData());
 						else set("petSelector.menu.page-" + page + "." + icon.getSlot() + ".entityName", icon.getPetType().getMinecraftName());
 						set("petSelector.menu.page-" + page + "." + icon.getSlot() + ".name", (icon.getName() == null ? "" : icon.getName()).replace(ChatColor.COLOR_CHAR, '&'));
-						ArrayList<String> lore = new ArrayList<String>();
+						List<String> lore = new ArrayList<>();
 						for(String s : icon.getLore()){
 							lore.add(s.replace(ChatColor.COLOR_CHAR, '&'));
 						}
