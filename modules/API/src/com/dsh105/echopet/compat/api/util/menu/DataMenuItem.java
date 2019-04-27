@@ -29,10 +29,10 @@ import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 public enum DataMenuItem{
 	BOOLEAN_TRUE(DataMenuType.BOOLEAN, null, Material.REDSTONE_TORCH, 1, (short) 0, "True", "Turns the feature on."),
 	BOOLEAN_FALSE(DataMenuType.BOOLEAN, null, Material.REDSTONE_TORCH, 1, (short) 0, "False", "Turns the feature off."),
-	BLACK_CAT(DataMenuType.CAT_TYPE, PetData.BLACK, Material.INK_SAC, 1, (short) 0, "Black", "Cat Type"),
-	RED_CAT(DataMenuType.CAT_TYPE, PetData.RED, Material.ROSE_RED, 1, (short) 1, "Red", "Cat Type"),
-	SIAMESE_CAT(DataMenuType.CAT_TYPE, PetData.SIAMESE, Material.LIGHT_GRAY_DYE, 1, (short) 7, "Siamese", "Cat Type"),
-	WILD_CAT(DataMenuType.CAT_TYPE, PetData.WILD, Material.ORANGE_DYE, 1, (short) 14, "Wild", "Cat Type"),
+	BLACK_CAT(DataMenuType.OCELOT_TYPE, PetData.BLACK, Material.INK_SAC, 1, (short) 0, "Black", "Cat Type"),
+	RED_CAT(DataMenuType.OCELOT_TYPE, PetData.RED, Material.ROSE_RED, 1, (short) 1, "Red", "Cat Type"),
+	SIAMESE_CAT(DataMenuType.OCELOT_TYPE, PetData.SIAMESE, Material.LIGHT_GRAY_DYE, 1, (short) 7, "Siamese", "Cat Type"),
+	WILD_CAT(DataMenuType.OCELOT_TYPE, PetData.WILD, Material.ORANGE_DYE, 1, (short) 14, "Wild", "Cat Type"),
 	SMALL(DataMenuType.SIZE, PetData.SMALL, Material.SLIME_BALL, 1, (short) 0, "Small", "Slime Size"),
 	MEDIUM(DataMenuType.SIZE, PetData.MEDIUM, Material.SLIME_BALL, 2, (short) 0, "Medium", "Slime Size"),
 	LARGE(DataMenuType.SIZE, PetData.LARGE, Material.SLIME_BALL, 4, (short) 0, "Large", "Slime Size"),
@@ -110,6 +110,7 @@ public enum DataMenuItem{
 	GREEN_LLAMA(DataMenuType.LLAMA_COLOR, PetData.GREEN, Material.GREEN_CARPET, 1, (short) 13, "Green", "Color"),
 	RED_LLAMA(DataMenuType.LLAMA_COLOR, PetData.RED, Material.RED_CARPET, 1, (short) 14, "Red", "Color"),
 	BLACK_LLAMA(DataMenuType.LLAMA_COLOR, PetData.BLACK, Material.BLACK_CARPET, 1, (short) 15, "Black", "Color"),
+    //
 	BACK(DataMenuType.OTHER, null, Material.BOOK, 1, (short) 0, "Back", "Return to the main menu."),
 	CLOSE(DataMenuType.OTHER, null, Material.BOOK, 1, (short) 0, "Close", "Close the Pet Menu");
 

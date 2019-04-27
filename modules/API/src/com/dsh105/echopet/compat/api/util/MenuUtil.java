@@ -37,6 +37,11 @@ public class MenuUtil {
         if (pt == PetType.BLAZE) {
             options.add(new MenuOption(i++, MenuItem.FIRE));
         }
+		if(pt == PetType.CAT){
+			options.add(new MenuOption(i++, MenuItem.BABY));
+			options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
+			options.add(new MenuOption(i++, MenuItem.COLOR));
+		}
         if (pt == PetType.CREEPER) {
             options.add(new MenuOption(i++, MenuItem.POWER));
         }
@@ -85,7 +90,7 @@ public class MenuUtil {
         }
         if (pt == PetType.OCELOT) {
             options.add(new MenuOption(i++, MenuItem.BABY));
-            options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
+            options.add(new MenuOption(i++, MenuItem.OCELOT_TYPE));
         }
         if (pt == PetType.PIG) {
             options.add(new MenuOption(i++, MenuItem.BABY));

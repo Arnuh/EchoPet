@@ -484,7 +484,7 @@ public class PetManager implements IPetManager {
 						((IMagmaCubePet) pet).setSize(i);
 					}
 				}
-				if(pd.isType(DataMenuType.CAT_TYPE) && petType == PetType.OCELOT){
+				if(pd.isType(DataMenuType.OCELOT_TYPE) && petType == PetType.OCELOT){
 					try{
 						org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + (pd == PetData.WILD ? "_OCELOT" : "_CAT"));
 						if(t != null){

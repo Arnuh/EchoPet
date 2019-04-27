@@ -85,7 +85,8 @@ public class DataMenu {
 
 	public enum DataMenuType{
         BOOLEAN,
-        CAT_TYPE,
+		CAT_TYPE(VersionCheckType.COMPATIBLE, new Version("1.14-R1")),
+        OCELOT_TYPE,
         COLOR,
 		PROFESSION,
 		ZOMBIE_PROFESSION,

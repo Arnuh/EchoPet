@@ -66,6 +66,7 @@ public enum PetType {
 	VINDICATOR("Vindicator", 36, "Vindicator Pet", 24D, 7D, "vindicator", "Vindicator", new Version("1.11-R1")),
     // Passive mobs
 	BAT("Bat", 65, "Bat Pet", 6D, 3D, "bat", "Bat"),
+	CAT("Cat", 00, "Cat Pet", 10D, 3D, "cat", "Cat", new Version("1.14-R1"), PetData.BABY),
 	CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, "chicken", "Chicken", PetData.BABY),
 	COD("Cod", 00, "Cod Pet", 3D, 2D, "cod", "Cod"),
 	COW("Cow", 92, "Cow Pet", 10D, 4D, "cow", "Cow", PetData.BABY),
