@@ -30,118 +30,107 @@ import com.google.common.collect.ImmutableList;
 public enum PetType {
 
     // Aggressive mobs
-	BLAZE("Blaze", 61, "Blaze Pet", 20D, 6D, "blaze", "Blaze", PetData.FIRE),
-	CAVESPIDER("CaveSpider", 59, "Cave Spider Pet", 12D, 5D, "cave_spider", "CaveSpider"),
-	CREEPER("Creeper", 50, "Creeper Pet", 20D, 6D, "creeper", "Creeper", PetData.POWER),
-	DROWNED("Drowned", 0, "Drowned Pet", 20D, 4D, "drowned", "Drowned"),
-	ENDERDRAGON("EnderDragon", 63, "EnderDragon Pet", 200D, 0D, "ender_dragon", "EnderDragon"),
-	ENDERMAN("Enderman", 58, "Enderman Pet", 40D, 6D, "enderman", "Enderman", PetData.SCREAMING),
-	ENDERMITE("Endermite", 67, "Endermite Pet", 2D, 2D, "endermite", "Endermite"),
-	GHAST("Ghast", 56, "Ghast Pet", 10D, 7D, "ghast", "Ghast"),
-	GIANT("Giant", 53, "Giant Pet", 100D, 0D, "giant", "Giant"),
-	GUARDIAN("Guardian", 68, "Guardian Pet", 30D, 9D, "guardian", "Guardian", PetData.ELDER),
-	ELDERGUARDIAN("ElderGuardian", 4, "Elder Guardian Pet", 80D, 12D, "elder_guardian", "ElderGuardian", new Version("1.11-R1")),
-	EVOKER("Evoker", 34, "Evoker Pet", 24D, 6D, "evoker", "Evoker", new Version("1.11-R1")),
-	MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, "magma_cube", "LavaSlime", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-	PHANTOM("Phantom", 0, "Phantom Pet", 20D, 9D, "phantom", "Phantom"),
-	PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, "zombie_pigman", "PigZombie", PetData.BABY),
-	SHULKER("Shulker", 69, "Shulker Pet", 30D, 4D, "shulker", "Shulker", new Version("1.9-R1"), PetData.OPEN, PetData.BLACK, PetData.BLUE, PetData.BROWN,
+	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
+	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
+	CREEPER("Creeper", "Creeper Pet", "creeper", PetData.POWER),
+	DROWNED("Drowned", "Drowned Pet", "drowned"),
+    // ENDERDRAGON("EnderDragon", "EnderDragon Pet", "ender_dragon", "EnderDragon"),
+	ENDERMAN("Enderman", "Enderman Pet", "enderman", PetData.SCREAMING),
+	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
+	GHAST("Ghast", "Ghast Pet", "ghast"),
+	GIANT("Giant", "Giant Pet", "giant"),
+	GUARDIAN("Guardian", "Guardian Pet", "guardian", PetData.ELDER),
+	ELDERGUARDIAN("ElderGuardian", "Elder Guardian Pet", "elder_guardian"),
+	EVOKER("Evoker", "Evoker Pet", "evoker"),
+	MAGMACUBE("MagmaCube", "Magma Cube Pet", "magma_cube", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
+	PHANTOM("Phantom", "Phantom Pet", "phantom"),
+	PIGZOMBIE("PigZombie", "Pig Zombie Pet", "zombie_pigman", PetData.BABY),
+	SHULKER("Shulker", "Shulker Pet", "shulker", "Shulker", PetData.OPEN, PetData.BLACK, PetData.BLUE, PetData.BROWN,
 	          PetData.CYAN, PetData.GRAY, PetData.GREEN,
 		      PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
 	          PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 		      PetData.WHITE, PetData.YELLOW, PetData.SILVER),
-	SILVERFISH("Silverfish", 60, "Silverfish Pet", 8D, 4D, "silverfish", "Silverfish"),
-	SKELETON("Skeleton", 51, "Skeleton Pet", 20D, 5D, "skeleton", "Skeleton", PetData.NORMAL, PetData.WITHER, PetData.STRAY),
-	WITHERSKELETON("WitherSkeleton", 5, "Wither Skeleton Pet", 20D, 5D, "wither_skeleton", "WitherSkeleton", new Version("1.11-R1")),
-	STRAY("Stray", 6, "Stray Pet", 20D, 5D, "stray", "Stray", new Version("1.11-R1")),
-	SLIME("Slime", 55, "Slime Pet", 20D, 4D, "slime", "Slime", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-	SPIDER("Spider", 52, "Spider Pet", 16D, 5D, "spider", "Spider"),
-	WITCH("Witch", 66, "Witch Pet", 26D, 5D, "witch", "Witch"),
-	WITHER("Wither", 64, "Wither Pet", 300D, 8D, "wither", "WitherBoss", PetData.SHIELD),
-	ZOMBIE("Zombie", 54, "Zombie Pet", 20D, 5D, "zombie", "Zombie", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST, PetData.HUSK),
-	HUSK("Husk", 23, "Husk Pet", 20D, 5D, "husk", "Husk", new Version("1.11-R1"), PetData.BABY),
-	ILLUSIONER("Illusioner", 37, "Illusioner Pet", 32D, 5D, "illusioner", "Illusioner", new Version("1.12-R1")),
-	ZOMBIEVILLAGER("ZombieVillager", 27, "Zombie Villager Pet", 20D, 5D, "zombie_villager", "ZombieVillager", new Version("1.11-R1"), PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
-	VEX("Vex", 35, "Vex Pet", 14D, 5D, "vex", "Vex", new Version("1.11-R1"), PetData.POWER),
-	VINDICATOR("Vindicator", 36, "Vindicator Pet", 24D, 7D, "vindicator", "Vindicator", new Version("1.11-R1")),
+	SILVERFISH("Silverfish", "Silverfish Pet", "silverfish"),
+	SKELETON("Skeleton", "Skeleton Pet", "skeleton", PetData.NORMAL, PetData.WITHER, PetData.STRAY),
+	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton", new Version("1.11-R1")),
+	STRAY("Stray", "Stray Pet", "stray"),
+	SLIME("Slime", "Slime Pet", "slime", PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
+	SPIDER("Spider", "Spider Pet", "spider"),
+	WITCH("Witch", "Witch Pet", "witch"),
+	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
+	ZOMBIE("Zombie", "Zombie Pet", "zombie", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST, PetData.HUSK),
+	HUSK("Husk", "Husk Pet", "husk", PetData.BABY),
+	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner"),
+	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
+	VEX("Vex", "Vex Pet", "vex", PetData.POWER),
+	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
     // Passive mobs
-	BAT("Bat", 65, "Bat Pet", 6D, 3D, "bat", "Bat"),
-	CAT("Cat", 00, "Cat Pet", 10D, 3D, "cat", "Cat", new Version("1.14-R1"), PetData.BABY),
-	CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, "chicken", "Chicken", PetData.BABY),
-	COD("Cod", 00, "Cod Pet", 3D, 2D, "cod", "Cod"),
-	COW("Cow", 92, "Cow Pet", 10D, 4D, "cow", "Cow", PetData.BABY),
-	DOLPHIN("Dolphin", 0, "Dolphin Pet", 10D, 4D, "dolphin", "Dolphin"),
-	HORSE("Horse", 100, "Horse Pet", 30D, 4D, "horse", "EntityHorse", PetData.BABY, PetData.CHESTED, PetData.SADDLE,
+	BAT("Bat", "Bat Pet", "bat"),
+	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), PetData.BABY),
+	CHICKEN("Chicken", "Chicken Pet", "chicken", PetData.BABY),
+	COD("Cod", "Cod Pet", "cod"),
+	COW("Cow", "Cow Pet", "cow", PetData.BABY),
+	DOLPHIN("Dolphin", "Dolphin Pet", "dolphin"),
+	HORSE("Horse", "Horse Pet", "horse", PetData.BABY, PetData.CHESTED, PetData.SADDLE,
 	        PetData.HORSE, PetData.DONKEY, PetData.MULE, PetData.SKELETON_HORSE, PetData.UNDEAD_HORSE, PetData.WHITE,
 	        PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK, PetData.WHITE_SOCKS,
 	        PetData.GRAY, PetData.DARK_BROWN, PetData.NONE, PetData.WHITEFIELD, PetData.WHITE_DOTS, PetData.BLACK_DOTS,
           PetData.NOARMOUR, PetData.IRON, PetData.GOLD, PetData.DIAMOND),
-	SKELETONHORSE("SkeletonHorse", 28, "Skeleton Horse Pet", 30D, 4D, "skeleton_horse", "SkeletonHorse", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
-	ZOMBIEHORSE("ZombieHorse", 29, "Zombie Horse Pet", 30D, 4D, "zombie_horse", "ZombieHorse", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
-	DONKEY("Donkey", 31, "Donkey Pet", 30D, 4D, "donkey", "Donkey", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
-	MULE("Mule", 32, "Mule Pet", 30D, 4D, "mule", "Mule", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
-	IRONGOLEM("IronGolem", 99, "Iron Golem Pet", 100D, 7D, "iron_golem", "IronGolem"),
-	LLAMA("Llama", 103, "Llama Pet", 22D, 3D, "llama", "Llama", new Version("1.11-R1"), PetData.BABY, PetData.CHESTED,
+	SKELETONHORSE("SkeletonHorse", "Skeleton Horse Pet", "skeleton_horse", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
+	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", new Version("1.11-R1"), HORSE.getAllowedDataArray()),
+	DONKEY("Donkey", "Donkey Pet", "donkey", HORSE.getAllowedDataArray()),
+	MULE("Mule", "Mule Pet", "mule", HORSE.getAllowedDataArray()),
+	IRONGOLEM("IronGolem", "Iron Golem Pet", "iron_golem"),
+	LLAMA("Llama", "Llama Pet", "llama", PetData.BABY, PetData.CHESTED,
 	          PetData.BLACK, PetData.BLUE, PetData.BROWN,
 	          PetData.CYAN, PetData.GRAY, PetData.GREEN,
 	        PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
 	          PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 	        PetData.WHITE, PetData.YELLOW, PetData.SILVER,
 	        PetData.CREAMY, PetData.BROWN_LLAMA, PetData.GRAY_LLAMA, PetData.WHITE_LLAMA),
-	MUSHROOMCOW("MushroomCow", 96, "Mushroom Cow Pet", 10D, 3D, "mooshroom", "MushroomCow", PetData.BABY),
-	OCELOT("Ocelot", 98, "Ocelot Pet", 10D, 4D, "ocelot", "Ozelot", PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
-	PARROT("Parrot", 105, "Parrot Pet", 6D, 1D, "parrot", "Parrot", new Version("1.12-R1"), PetData.GRAY, PetData.GREEN, PetData.CYAN, PetData.BLUE, PetData.RED, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER),
-	PIG("Pig", 90, "Pig Pet", 10D, 3D, "pig", "Pig", PetData.BABY, PetData.SADDLE),
-	POLARBEAR("PolarBear", 102, "Polar Bear Pet", 30D, 9D, "polar_bear", "PolarBear", new Version("1.10-R1"), PetData.BABY, PetData.STANDING_UP),
-	PUFFERFISH("PufferFish", 0, "PufferFish Pet", 3D, 4D, "pufferfish", "PufferFish"),
-	RABBIT("Rabbit", 101, "Rabbit Pet", 8D, 3D, "rabbit", "Rabbit", PetData.BABY, PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.THE_KILLER_BUNNY),
-	SALMON("Salmon", 0, "Salmon Pet", 3D, 4D, "salmon", "Salmon"),
-	SHEEP("Sheep", 91, "Sheep Pet", 8D, 3D, "sheep", "Sheep", PetData.BABY, PetData.SHEARED,
+	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom", PetData.BABY),
+	OCELOT("Ocelot", "Ocelot Pet", "ocelot", PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
+	PARROT("Parrot", "Parrot Pet", "parrot", PetData.GRAY, PetData.GREEN, PetData.CYAN, PetData.BLUE, PetData.RED, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER),
+	PIG("Pig", "Pig Pet", "pig", PetData.BABY, PetData.SADDLE),
+	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.BABY, PetData.STANDING_UP),
+	PUFFERFISH("PufferFish", "PufferFish Pet", "pufferfish"),
+	RABBIT("Rabbit", "Rabbit Pet", "rabbit", PetData.BABY, PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.THE_KILLER_BUNNY),
+	SALMON("Salmon", "Salmon Pet", "salmon"),
+	SHEEP("Sheep", "Sheep Pet", "sheep", PetData.BABY, PetData.SHEARED,
           PetData.BLACK, PetData.BLUE, PetData.BROWN,
           PetData.CYAN, PetData.GRAY, PetData.GREEN,
 	        PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
           PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 	        PetData.WHITE, PetData.YELLOW, PetData.SILVER),
-	SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, "snow_golem", "SnowMan", PetData.SHEARED),
-	SQUID("Squid", 94, "Squid Pet", 10D, 4D, "squid", "Squid"),
-	TROPICALFISH("TropicalFish", 0, "Tropical Fish Pet", 3D, 4D, "tropical_fish", "TropicalFish"),
-	TURTLE("Turtle", 0, "Turtle Pet", 30D, 1D, "turtle", "Turtle"),
-	VILLAGER("Villager", 120, "Villager Pet", 20D, 4D, "villager", "Villager", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
-	WOLF("Wolf", 95, "Wolf Pet", 20D, 6D, "wolf", "Wolf", PetData.BABY, PetData.TAMED, PetData.ANGRY,
+	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", PetData.SHEARED),
+	SQUID("Squid", "Squid Pet", "squid"),
+	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish"),
+	TURTLE("Turtle", "Turtle Pet", "turtle"),
+	VILLAGER("Villager", "Villager Pet", "villager", PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
+	WOLF("Wolf", "Wolf Pet", "wolf", "Wolf", PetData.BABY, PetData.TAMED, PetData.ANGRY,
          PetData.BLACK, PetData.BLUE, PetData.BROWN,
          PetData.CYAN, PetData.GRAY, PetData.GREEN,
 	        PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
          PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 	        PetData.WHITE, PetData.YELLOW, PetData.SILVER),
 
-	HUMAN("Human", 54, "Human Pet", 20D, 6D, "UNKNOWN", "UNKNOWN");
+	HUMAN("Human", "Human Pet", "UNKNOWN");
 
 	private String classIdentifier;
     private Class<? extends IEntityPet> entityClass;
     private Class<? extends IPet> petClass;
     private String defaultName;
-    private double maxHealth;
-    private double attackDamage;
 	private String minecraftEntityName;
 	private PetData[] allowedDataArray;
     private List<PetData> allowedData;
-    private int id;
 	private Version version;
 
-	PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, String entityType, PetData... allowedData){
-		this(classIdentifier, registrationId, defaultName, maxHealth, attackDamage, entityType, null, new Version(), allowedData);
-	}
-
-	PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, String entityType, Version version, PetData... allowedData){
-		this(classIdentifier, registrationId, defaultName, maxHealth, attackDamage, entityType, null, version, allowedData);
-	}
-
-	PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, String entityType, String entityTypeFixedName, PetData... allowedData){
-		this(classIdentifier, registrationId, defaultName, maxHealth, attackDamage, entityType, entityTypeFixedName, new Version(), allowedData);
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
+		this(classIdentifier, defaultName, minecraftEntityName, new Version(), allowedData);
 	}
 
 	@SuppressWarnings({"unchecked"})
-	PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, String minecraftEntityName, String entityTypeFixedName, Version version, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetData... allowedData){
 		this.classIdentifier = classIdentifier;
 		try{
 		    this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
@@ -149,11 +138,8 @@ public enum PetType {
 		} catch (ClassNotFoundException e) {
 		    // do nothing
 		}
-        this.id = registrationId;
         this.allowedDataArray = allowedData;
         this.allowedData = ImmutableList.copyOf(allowedData);
-        this.maxHealth = maxHealth;
-        this.attackDamage = attackDamage;
 		this.minecraftEntityName = minecraftEntityName;
         this.defaultName = defaultName;
 		this.version = version;
@@ -163,24 +149,12 @@ public enum PetType {
 		return classIdentifier;
 	}
 
-    public int getRegistrationId() {
-        return this.id;
-    }
-
-    public double getMaxHealth() {
-        return this.maxHealth;
-    }
-
     public String getDefaultName(String name) {
 		return EchoPet.getConfig().getString("pets." + this.toString().toLowerCase().replace("_", "") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
     }
 
     public String getDefaultName() {
         return this.defaultName;
-    }
-
-    public double getAttackDamage() {
-		return EchoPet.getConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", "") + ".attackDamage", this.attackDamage);
     }
 
 	public String getMinecraftName(){
