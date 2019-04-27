@@ -16,20 +16,22 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
+import java.util.UUID;
+
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityOcelotPet;
-import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityTameablePet;
+import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
 
 import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.OCELOT)
-public class EntityOcelotPet extends EntityTameablePet implements IEntityOcelotPet{
+public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPet{
 
-	private static final DataWatcherObject<Integer> TYPE = DataWatcher.a(EntityOcelotPet.class, DataWatcherRegistry.b);
+	private static final DataWatcherObject<Boolean> TRUSTING = DataWatcher.a(EntityOcelotPet.class, DataWatcherRegistry.i);
 
 	public EntityOcelotPet(World world){
 		super(EntityTypes.OCELOT, world);
@@ -40,18 +42,18 @@ public class EntityOcelotPet extends EntityTameablePet implements IEntityOcelotP
 	}
 
 	public int getCatType(){
-		return ((Integer) this.datawatcher.get(TYPE)).intValue();
+		return 0;
 	}
 
 	@Override
 	public void setCatType(int i){
-		this.datawatcher.set(TYPE, Integer.valueOf(i));
+
 	}
 
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(TYPE, Integer.valueOf(0));
+		this.datawatcher.register(TRUSTING, false);
 	}
 
 	@Override
@@ -63,4 +65,13 @@ public class EntityOcelotPet extends EntityTameablePet implements IEntityOcelotP
 	protected String getDeathSound(){
 		return "entity.cat.death";
 	}
+
+	@Override
+	public void setTamed(boolean flag){}
+
+	@Override
+	public void setSitting(boolean sitting){}
+
+	@Override
+	public void setOwnerUUID(UUID owner){}
 }
