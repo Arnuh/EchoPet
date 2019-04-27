@@ -92,8 +92,10 @@ public abstract class Pet implements IPet{
 				if(this.entityPet != null){
 					this.applyPetName();
 					this.teleportToOwner();
-					for(PetData pd : getPetData())// hrrm..
+				for(PetData pd : getPetData()){
+					if(pd.getAction() != null) pd.getAction().click(owner, this, pd, true);
 						EchoPet.getManager().setData(this, pd, true);
+				}
 					for(Trail t : trails)
 						t.start(this);
 					if(lastRider != null && !lastRider.isSpawned()){
