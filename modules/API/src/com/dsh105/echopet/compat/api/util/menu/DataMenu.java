@@ -59,17 +59,12 @@ public class DataMenu {
 	private int countItems(PetDataCategory category){
 		int i = 0;
 		for(PetData data : category.getData()){
-			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-				i++;
-			}
-		}
-		/*for(DataMenuItem mi : DataMenuItem.values()){
-			if(mi.getTypes().contains(type) && type.isValid()){
-				if(mi.getDataLink().isCompatible()){
+			if(data.isCompatible()){
+				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
 					i++;
 				}
 			}
-		}*/
+		}
 		return i + 1;// back
 	}
 
@@ -80,18 +75,12 @@ public class DataMenu {
 	public void setItems(PetDataCategory category, int size){
         int i = 0;
 		for(PetData data : category.getData()){
-			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-				inv.setItem(i++, data.toItem());
+			if(data.isCompatible()){
+				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+					inv.setItem(i++, data.toItem());
+				}
 			}
 		}
-		/*for (DataMenuItem mi : DataMenuItem.values()) {
-			if(mi.getTypes().contains(type) && type.isValid()){
-				if(mi.getDataLink().isCompatible()){
-					this.inv.setItem(i, mi.getItem());
-					i++;
-				}
-		    }
-		}*/
 		this.inv.setItem((size - 1), MenuUtil.BACK);
     }
 }

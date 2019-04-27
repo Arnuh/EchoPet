@@ -87,22 +87,22 @@ public abstract class Pet implements IPet{
 		if(entityPet != null) return entityPet;
 		if(owner != null){
 			// if(!EchoPet.getPlugin().getVanishProvider().isVanished(owner)){// We don't spawn pets at all if the player is vanished due to bounding boxes.
-				if(isHidden && !ignoreHidden) return null;
-				this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
-				if(this.entityPet != null){
-					this.applyPetName();
-					this.teleportToOwner();
+			if(isHidden && !ignoreHidden) return null;
+			this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
+			if(this.entityPet != null){
+				this.applyPetName();
+				this.teleportToOwner();
 				for(PetData pd : getPetData()){
 					if(pd.getAction() != null) pd.getAction().click(owner, this, pd, true);
-						EchoPet.getManager().setData(this, pd, true);
+					EchoPet.getManager().setData(this, pd, true);
 				}
-					for(Trail t : trails)
-						t.start(this);
-					if(lastRider != null && !lastRider.isSpawned()){
-						setRider(lastRider);
-						setLastRider(null);
-					}
+				for(Trail t : trails)
+					t.start(this);
+				if(lastRider != null && !lastRider.isSpawned()){
+					setRider(lastRider);
+					setLastRider(null);
 				}
+			}
 			// }
 		}else{
 			EchoPet.getManager().saveFileData("autosave", this);
