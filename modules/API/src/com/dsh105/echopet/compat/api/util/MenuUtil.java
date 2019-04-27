@@ -72,9 +72,6 @@ public class MenuUtil {
 			options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
 			options.add(new MenuOption(i++, MenuItem.COLOR));
 		}
-		if (pt == PetType.PIGZOMBIE) {
-		    
-		}
 		if (pt == PetType.SKELETON) {
 			if(new Version("1.10-R1").isSupported(new Version())){
 				options.add(new MenuOption(i++, MenuItem.SKELETON_TYPE));
@@ -82,9 +79,6 @@ public class MenuUtil {
 		}
 		if (pt == PetType.WITCH) {
 		    options.add(new MenuOption(i++, MenuItem.POTION));
-		}
-		if (pt == PetType.WITHER) {
-		    options.add(new MenuOption(i++, MenuItem.SHIELD));
 		}
 		if(pt == PetType.ZOMBIE || pt == PetType.ZOMBIEVILLAGER){
 		    
@@ -96,12 +90,6 @@ public class MenuUtil {
 		}
 		if (pt == PetType.OCELOT) {
 		    options.add(new MenuOption(i++, MenuItem.OCELOT_TYPE));
-		}
-		if (pt == PetType.PIG) {
-		    options.add(new MenuOption(i++, MenuItem.SADDLE));
-		}
-		if(pt == PetType.POLARBEAR){
-			options.add(new MenuOption(i++, MenuItem.STANDING_UP));
 		}
 		if(pt == PetType.SHEEP || pt == PetType.SNOWMAN){
 			if(pt == PetType.SHEEP){
@@ -117,7 +105,6 @@ public class MenuUtil {
 		    options.add(new MenuOption(i++, MenuItem.PROFESSION));
 		}
 		if(pt == PetType.HORSE || pt == PetType.DONKEY || pt == PetType.MULE || pt == PetType.SKELETONHORSE || pt == PetType.ZOMBIEHORSE){
-		    options.add(new MenuOption(i++, MenuItem.SADDLE));
 			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.HORSE || new Version("1.10-R1").isSupported(new Version())){
 				options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));
 				options.add(new MenuOption(i++, MenuItem.HORSE_ARMOUR));

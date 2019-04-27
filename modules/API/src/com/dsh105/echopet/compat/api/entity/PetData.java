@@ -92,6 +92,30 @@ public enum PetData {
 	SLIME_LARGE("slime_large", (player, pet, data, flag)-> {
 		return setSlimeSize(pet, 4);
 	}, Material.SLIME_BALL, "Large"),
+	SHIELD("shield", (player, pet, data, flag)-> {
+		if(pet instanceof IWitherPet){
+			((IWitherPet) pet).setShielded(flag);
+			return true;
+		}
+		return false;
+	}, Material.GLASS, "Shield"),
+	SADDLE("saddle", (player, pet, data, flag)-> {
+		if(pet instanceof IPigPet){
+			((IPigPet) pet).setSaddle(flag);
+			return true;
+		}else if(pet instanceof IHorseAbstractPet){
+			((IHorseAbstractPet) pet).setSaddled(flag);
+			return true;
+		}
+		return false;
+	}, Material.SADDLE, "Saddle"),
+	STANDING_UP("standing_up", (player, pet, data, flag)-> {
+		if(pet instanceof IPolarBearPet){
+			((IPolarBearPet) pet).setStandingUp(flag);
+			return true;
+		}
+		return false;
+	}, Material.TROPICAL_FISH, "Standing Up"),
     /*ANGRY("angry", DataMenuType.BOOLEAN),
 	BABY("baby", DataMenuType.BOOLEAN),
 	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),

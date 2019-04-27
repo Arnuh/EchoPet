@@ -24,12 +24,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPolarBearPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Jun 9, 2016
- */
 @EntityPetType(petType = PetType.POLARBEAR)
 public class PolarBearPet extends Pet implements IPolarBearPet{
 

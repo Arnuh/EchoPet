@@ -16,19 +16,14 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPolarBearPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
 
 import net.minecraft.server.v1_13_R2.*;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Jun 9, 2016
- */
+@EntitySize(width = 1.4F, height = 1.4F)
+@EntityPetType(petType = PetType.POLARBEAR)
 public class EntityPolarBearPet extends EntityAgeablePet implements IEntityPolarBearPet{
 
 	private static final DataWatcherObject<Boolean> STANDING_UP = DataWatcher.a(EntityPolarBearPet.class, DataWatcherRegistry.i);

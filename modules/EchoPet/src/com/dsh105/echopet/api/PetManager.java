@@ -20,7 +20,6 @@ package com.dsh105.echopet.api;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -457,7 +456,6 @@ public class PetManager implements IPetManager {
 		if(pet.getEntityPet() != null){
 			PetType petType = pet.getPetType();
 			if(petType.isDataAllowed(pd)){
-				DyeColor test;
 				/*
 				if(pd.isType(DataMenuType.OCELOT_TYPE) && petType == PetType.OCELOT){
 					try{
@@ -515,32 +513,8 @@ public class PetManager implements IPetManager {
 					SkeletonType skeletonType = SkeletonType.valueOf(pd.toString());
 					((ISkeletonAbstractPet) pet).setSkeletonType(skeletonType);
 				}
-				if(pd == PetData.SADDLE){
-					if(petType == PetType.PIG){
-						((IPigPet) pet).setSaddle(b);
-					}else if(petType == PetType.HORSE || petType == PetType.MULE || petType == PetType.DONKEY || petType == PetType.SKELETONHORSE || petType == PetType.ZOMBIEHORSE){
-						((IHorseAbstractPet) pet).setSaddled(b);
-					}
-				}
-				if(pd == PetData.SCREAMING){
-					((IEndermanPet) pet).setScreaming(b);
-				}
-				if(pd == PetData.SHIELD){
-					((IWitherPet) pet).setShielded(b);
-				}
-				if(pd == PetData.ELDER){
-					((IGuardianPet) pet).setElder(b);
-				}
 				if(pd.isType(DataMenuType.RABBIT_TYPE) && petType == PetType.RABBIT){
 					((IRabbitPet) pet).setRabbitType(Rabbit.Type.valueOf(pd.toString()));
-				}
-				if(pd == PetData.STANDING_UP){
-					((IPolarBearPet) pet).setStandingUp(b);
-				}
-				if(petType == PetType.SHULKER){
-					if(pd == PetData.OPEN){
-						((IShulkerPet) pet).setOpen(b);
-					}
 				}
 				if(petType == PetType.HORSE || petType == PetType.MULE || petType == PetType.DONKEY || petType == PetType.LLAMA){
 					if(petType == PetType.MULE || petType == PetType.DONKEY || petType == PetType.LLAMA){
