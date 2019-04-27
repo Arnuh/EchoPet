@@ -21,7 +21,6 @@ import org.bukkit.DyeColor;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
@@ -51,7 +50,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	@Override
 	public void setAngry(boolean flag){
 		if(isTamed() && flag){
-			this.getPet().getPetData().remove(PetData.TAMED);
+			// this.getPet().getPetData().remove(PetData.TAMED);
 			setTamed(false);
 		}
 		byte b0 = ((Byte) this.datawatcher.get(bv)).byteValue();
@@ -64,7 +63,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 
 	public void setTamed(boolean flag){
 		if(isAngry() && flag){
-			this.getPet().getPetData().remove(PetData.ANGRY);
+			// this.getPet().getPetData().remove(PetData.ANGRY);
 			setAngry(false);
 		}
 		super.setTamed(flag);

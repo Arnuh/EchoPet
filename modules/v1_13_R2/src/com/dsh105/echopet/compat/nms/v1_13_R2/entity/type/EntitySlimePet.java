@@ -18,7 +18,6 @@ package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
-import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
 
 import net.minecraft.server.v1_13_R2.*;
@@ -36,7 +35,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 
 	public EntitySlimePet(EntityTypes<? extends Entity> type, World world, IPet pet){
 		super(type, world, pet);
-		if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
+		/*if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
 			if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.SMALL, false)){
 				this.setSize(4);
 			}else{
@@ -44,7 +43,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 			}
 		}else{
 			this.setSize(2);
-		}
+		}*/
 		this.jumpDelay = this.random.nextInt(15) + 10;
 	}
 

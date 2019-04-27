@@ -16,65 +16,44 @@
  */
 package com.dsh105.echopet.compat.api.util.menu;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
-import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
+import com.dsh105.echopet.compat.api.util.Perm;
 
 public class PetMenu{
 
 	Inventory inv;
 	private IPet pet;
-	private ArrayList<MenuOption> options = new ArrayList<>();
 
 	public PetMenu(IPet pet){
 		this.pet = pet;
-		this.options = MenuUtil.createOptionList(pet);
+		List<Object> options = MenuUtil.createOptionList(pet);
 		this.inv = Bukkit.createInventory(pet.getOwner(), round(options.size(), 9), "EchoPet DataMenu");
-		int incompatible = 0;
-		for(MenuOption o : this.options){
-			MenuItem mi = o.item;
-			if(mi.getMenuType().isValid()){
-				if(mi.isSupported()){
-					if(mi.getMenuType() == DataMenu.DataMenuType.BOOLEAN){
-						if(GeneralUtil.isEnumType(PetData.class, mi.toString())){
-							PetData pd = PetData.valueOf(mi.toString());
-							if(pd.isCompatible()){
-								this.inv.setItem(o.position - incompatible, mi.getBoolean(!pet.getPetData().contains(pd)));
-							}else incompatible++;
-						}else{
-							if(mi.toString().equals("HAT")){
-								if(pet.isHat()){
-									this.inv.setItem(o.position - incompatible, mi.getBoolean(false));
-								}else{
-									this.inv.setItem(o.position - incompatible, mi.getBoolean(true));
-								}
-							}
-							if(mi.toString().equals("RIDE")){
-								if(pet.isOwnerRiding()){
-									this.inv.setItem(o.position - incompatible, mi.getBoolean(false));
-								}else{
-									this.inv.setItem(o.position - incompatible, mi.getBoolean(true));
-								}
-							}
-						}
-					}else{
-						this.inv.setItem(o.position - incompatible, mi.getItem());
-					}
-				}else incompatible++;
-			}else incompatible++;
+		int index = 0;
+		for(Object obj : options){
+			if(obj instanceof PetData){
+				PetData data = (PetData) obj;
+				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+					inv.setItem(index++, data.toItem());
+				}
+			}else if(obj instanceof PetDataCategory){
+				PetDataCategory category = (PetDataCategory) obj;
+				inv.setItem(index++, category.getItem());
+			}
 		}
-		this.inv.setItem(inv.getSize() - 1, DataMenuItem.CLOSE.getItem());
+		this.inv.setItem(inv.getSize() - 1, MenuUtil.CLOSE);
 	}
 
 	private int round(int num, int multiple){

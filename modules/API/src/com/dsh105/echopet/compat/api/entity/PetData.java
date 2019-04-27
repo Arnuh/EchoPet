@@ -17,15 +17,47 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.util.Version;
-import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-import com.google.common.collect.ImmutableList;
+import com.dsh105.echopet.compat.api.util.VersionCheckType;
 
 public enum PetData {
-
-	ANGRY("angry", DataMenuType.BOOLEAN),
+	HAT("hat", (player, pet, data, flag)-> {
+		pet.setAsHat(flag);
+		return true;
+	}, Material.IRON_HELMET, "Hat Pet", "Wear your pet on your head"),
+	RIDE("ride", (player, pet, data, flag)-> {
+		pet.ownerRidePet(flag);
+		return true;
+	}, Material.CARROT_ON_A_STICK, "Ride Pet", "Control your pet"),
+	BABY("baby", (player, pet, data, flag)-> {
+		if(pet instanceof IAgeablePet){
+			((IAgeablePet) pet).setBaby(flag);
+			return true;
+		}
+		return false;
+	}, Material.WHEAT, "Baby"),
+	SHEARED("sheared", (player, pet, data, flag)-> {
+		if(pet instanceof ISheepPet){
+			((ISheepPet) pet).setSheared(flag);
+			return true;
+		}
+		return false;
+	}, Material.SHEARS, "Sheared"),
+	BLACK("black", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BLACK);
+	}, Material.BLACK_WOOL, "Black"),
+    /*ANGRY("angry", DataMenuType.BOOLEAN),
 	BABY("baby", DataMenuType.BOOLEAN),
 	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
 	BLACK_AND_WHITE("blackandwhite", DataMenuType.RABBIT_TYPE),
@@ -50,7 +82,7 @@ public enum PetData {
 	SILVER("silver", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR),
 	GREEN("green", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	GOLD("gold", DataMenuType.HORSE_ARMOUR, DataMenuType.RABBIT_TYPE),
-	HUSK("husk", new Version("1.10-R1"), 1, DataMenuType.ZOMBIE_PROFESSION),
+	HUSK("husk", DataMenuType.ZOMBIE_PROFESSION),
 	IRON("iron", DataMenuType.HORSE_ARMOUR),
 	THE_KILLER_BUNNY("killerbunny", DataMenuType.RABBIT_TYPE),
 	LARGE("large", DataMenuType.SIZE),
@@ -90,53 +122,91 @@ public enum PetData {
 	STANDING_UP("standingup", DataMenuType.BOOLEAN),
 	NORMAL("normal", DataMenuType.SKELETON_TYPE),
 	WITHER("wither", DataMenuType.SKELETON_TYPE),
-	STRAY("stray", new Version("1.10-R1"), 0, DataMenuType.SKELETON_TYPE),
-	LEFT_SHOULDER("leftshoulder", new Version("1.12-R1"), 0, DataMenuType.BOOLEAN),
-	RIGHT_SHOULDER("rightshoulder", new Version("1.12-R1"), 0, DataMenuType.BOOLEAN),
-	OPEN("open", DataMenuType.BOOLEAN);
+	STRAY("stray", DataMenuType.SKELETON_TYPE),
+	LEFT_SHOULDER("leftshoulder", DataMenuType.BOOLEAN),
+	RIGHT_SHOULDER("rightshoulder", DataMenuType.BOOLEAN),
+	OPEN("open", DataMenuType.BOOLEAN)*/
+	;
 
+	public static final PetData[] values = values();
 
     private String configOptionString;
-	private List<DataMenuType> t;
 	private Version version;
-	private int versionCheckType;
+	private VersionCheckType versionCheckType;
+	private PetDataAction action;
+	private Material material;
+	private String name;
+	private List<String> lore;
 
-	private PetData(String configOptionString, DataMenuType... t){
-		this(configOptionString, new Version(), 1, t);
+	private PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
+		this(configOptionString, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 
-	private PetData(String configOptionString, Version version, int versionCheckType, DataMenuType... t){
+	private PetData(String configOptionString, PetDataAction action, Material material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
         this.configOptionString = configOptionString;
-        this.t = ImmutableList.copyOf(t);
+		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
+		this.material = material;
+		this.name = name;
+		lore = new ArrayList<>();
+		for(String s : loreArray){
+			lore.add(ChatColor.GOLD + s);
+		}
     }
 
     public String getConfigOptionString() {
         return this.configOptionString;
     }
 
-	public List<DataMenuType> getTypes(){
-        return this.t;
-    }
+	public PetDataAction getAction(){
+		return action;
+	}
 
-	public boolean isType(DataMenuType t){
-        return this.t.contains(t);
-    }
+	public String getItemName(){
+		return name;
+	}
+
+	public ItemStack toItem(){
+		ItemStack item = new ItemStack(material);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.RED + name);
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		return item;
+	}
+
+	public ItemStack toItem(boolean flag){
+		ItemStack i = new ItemStack(material);
+		ItemMeta meta = i.getItemMeta();
+		meta.setDisplayName(ChatColor.RED + this.name + (flag ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.YELLOW + " [TOGGLE OFF]"));
+		meta.setLore(this.lore);
+		i.setItemMeta(meta);
+		return i;
+	}
 
 	public boolean isCompatible(){
 		switch (versionCheckType){
-			case 0:{// ==
+			case IDENTICAL:{// ==
 				return version.isIdentical(new Version());
 			}
-			case 1:{// <=
+			case SUPPORTED:{// <=
 				return version.isSupported(new Version());
 			}
-			case 2:{// >=
+			case COMPATIBLE:{// >=
 				return version.isCompatible(new Version());
 			}
 		}
 		return true;
 	}
 
+	private static boolean setColorByDye(IPet pet, DyeColor color){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.SHEEP)){
+			((ISheepPet) pet).setDyeColor(color);
+		}else if(type.equals(PetType.WOLF)){
+			((IWolfPet) pet).setCollarColor(color);
+		}
+		return true;
+	}
 }

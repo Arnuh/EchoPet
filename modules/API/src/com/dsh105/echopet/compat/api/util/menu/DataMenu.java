@@ -24,21 +24,23 @@ import org.bukkit.inventory.InventoryView;
 
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Version;
-import com.dsh105.echopet.compat.api.util.VersionCheckType;
+import com.dsh105.echopet.compat.api.util.MenuUtil;
+import com.dsh105.echopet.compat.api.util.Perm;
 
 public class DataMenu {
 
     Inventory inv;
     private IPet pet;
 
-    public DataMenu(MenuItem mi, IPet pet) {
+	public DataMenu(PetDataCategory category, IPet pet){
         this.pet = pet;
-		int size = round(countItems(mi.getMenuType()), 9);
-		this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu - " + StringUtil.capitalise(mi.toString().replace("_", " ")));
-		this.setItems(mi.getMenuType(), size);
+		int size = round(countItems(category), 9);
+		this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu - " + StringUtil.capitalise(category.toString().replace("_", " ")));
+		this.setItems(category, size);
     }
 
     public void open(boolean sendMessage) {
@@ -54,15 +56,20 @@ public class DataMenu {
         }
     }
 
-	private int countItems(DataMenuType type){
+	private int countItems(PetDataCategory category){
 		int i = 0;
-		for(DataMenuItem mi : DataMenuItem.values()){
+		for(PetData data : category.getData()){
+			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+				i++;
+			}
+		}
+		/*for(DataMenuItem mi : DataMenuItem.values()){
 			if(mi.getTypes().contains(type) && type.isValid()){
 				if(mi.getDataLink().isCompatible()){
 					i++;
 				}
 			}
-		}
+		}*/
 		return i + 1;// back
 	}
 
@@ -70,60 +77,21 @@ public class DataMenu {
 		return multiple * (int) Math.ceil((float) num / (float) multiple);
 	}
 
-    public void setItems(DataMenuType type, int size) {
+	public void setItems(PetDataCategory category, int size){
         int i = 0;
-        for (DataMenuItem mi : DataMenuItem.values()) {
+		for(PetData data : category.getData()){
+			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+				inv.setItem(i++, data.toItem());
+			}
+		}
+		/*for (DataMenuItem mi : DataMenuItem.values()) {
 			if(mi.getTypes().contains(type) && type.isValid()){
 				if(mi.getDataLink().isCompatible()){
 					this.inv.setItem(i, mi.getItem());
 					i++;
 				}
-            }
-        }
-        this.inv.setItem((size - 1), DataMenuItem.BACK.getItem());
-    }
-
-	public enum DataMenuType{
-        BOOLEAN,
-		CAT_TYPE(VersionCheckType.COMPATIBLE, new Version("1.14-R1")),
-        OCELOT_TYPE,
-        COLOR,
-		PROFESSION,
-		ZOMBIE_PROFESSION,
-        SIZE,
-        OTHER,
-		HORSE_TYPE,
-		HORSE_VARIANT,
-        HORSE_MARKING,
-		HORSE_ARMOUR,
-		RABBIT_TYPE,
-		SKELETON_TYPE,
-		LLAMA_VARIANT(VersionCheckType.COMPATIBLE, new Version("1.11-R1")),
-		LLAMA_COLOR(VersionCheckType.COMPATIBLE, new Version("1.11-R1")),
-		PARROT_VARIANT;
-
-		private Version version;
-		private VersionCheckType checkType;
-
-		private DataMenuType(){
-			version = new Version();
-			checkType = VersionCheckType.COMPATIBLE;
-		}
-
-		private DataMenuType(VersionCheckType checkType, Version version){
-			this.version = version;
-			this.checkType = checkType;
-		}
-
-		public boolean isValid(){
-			switch (checkType){
-				case COMPATIBLE:
-					return version.isCompatible(new Version());
-				case SUPPORTED:
-					return version.isSupported(new Version());
-				default:
-					return version.isIdentical(new Version());
-			}
-		}
+		    }
+		}*/
+		this.inv.setItem((size - 1), MenuUtil.BACK);
     }
 }

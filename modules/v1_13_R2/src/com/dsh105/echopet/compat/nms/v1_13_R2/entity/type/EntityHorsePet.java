@@ -66,20 +66,6 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 		this.datawatcher.set(ARMOR, EnumHorseArmor.values()[a.ordinal()].a());
 	}
 
-	@Override
-	public boolean attack(Entity entity){
-		boolean flag = super.attack(entity);
-		if(flag){
-			setHorseVisual(64, true);
-			// TODO:
-			/*if(getType().g()){
-				makeSound("entity.horse.angry", 1.0F, 1.0F);
-			}else{
-				makeSound("entity.donkey.angry", 1.0F, 1.0F);
-			}*/
-		}
-		return flag;
-	}
 
 	@Override
 	protected void initDatawatcher(){

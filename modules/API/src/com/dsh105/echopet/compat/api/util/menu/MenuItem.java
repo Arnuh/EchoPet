@@ -26,10 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.dsh105.echopet.compat.api.util.Version;
-import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 
 public enum MenuItem{
-	HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Type", "Horse"),
+	/*HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Type", "Horse"),
 	HORSE_VARIANT(Material.LEAD, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Variant", "Horse"),
 	HORSE_MARKING(Material.INK_SAC, 1, (short) 0, DataMenuType.HORSE_MARKING, "Marking", "Horse"),
 	HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour", "Horse"),
@@ -60,22 +59,21 @@ public enum MenuItem{
 	PARROT_VARIANT(Material.WHITE_WOOL, 1, (short) 4, DataMenuType.PARROT_VARIANT, "Variant", "Parrot"),
 	LEFT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Left Shoulder", "Put a pet on your Left Shoulder"),
 	RIGHT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Right Shoulder", "Put a pet on your Right Shoulder"),
-	RIDE(Material.CARROT_ON_A_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet."),
-	HAT(Material.IRON_HELMET, 1, (short) 0, DataMenuType.BOOLEAN, "Hat Pet", "Wear your pet on your head.");
+	*/
+	;
 
 	private Material material;
 	private String name;
 	private int amount;
 	private List<String> lore;
 	private short data;
-	private DataMenuType menuType;
 	private Version version;
 
-	MenuItem(Material material, int amount, short data, DataMenuType menuType, String name, String... lore){
-		this(material, amount, data, menuType, name, new Version(), lore);
+	MenuItem(Material material, int amount, short data, String name, String... lore){
+		this(material, amount, data, name, new Version(), lore);
 	}
 
-	MenuItem(Material material, int amount, short data, DataMenuType menuType, String name, Version version, String... lore){
+	MenuItem(Material material, int amount, short data, String name, Version version, String... lore){
 		this.material = material;
 		this.name = name;
 		this.amount = amount;
@@ -83,7 +81,6 @@ public enum MenuItem{
 		List<String> list = new ArrayList<>();
 		list.addAll(Arrays.asList(lore));
 		this.lore = list;
-		this.menuType = menuType;
 		this.version = version;
 	}
 
@@ -103,10 +100,6 @@ public enum MenuItem{
 		meta.setLore(this.lore);
 		i.setItemMeta(meta);
 		return i;
-	}
-
-	public DataMenuType getMenuType(){
-		return this.menuType;
 	}
 
 	public boolean isSupported(){

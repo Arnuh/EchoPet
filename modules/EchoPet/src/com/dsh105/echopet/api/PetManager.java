@@ -19,26 +19,23 @@ package com.dsh105.echopet.api;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
 
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Rabbit;
 
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.compat.api.entity.*;
-import com.dsh105.echopet.compat.api.entity.type.pet.*;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.*;
-import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 
 
 public class PetManager implements IPetManager {
@@ -460,6 +457,8 @@ public class PetManager implements IPetManager {
 		if(pet.getEntityPet() != null){
 			PetType petType = pet.getPetType();
 			if(petType.isDataAllowed(pd)){
+				DyeColor test;
+				/*
 				if(pd == PetData.BABY && pet instanceof IAgeablePet){
 					((IAgeablePet) pet).setBaby(b);
 				}
@@ -654,9 +653,10 @@ public class PetManager implements IPetManager {
 				}else if(pd.equals(PetData.RIGHT_SHOULDER)){
 					pet.getEntityPet().setOwnerShoulderEntityRight();
 				}
+				*/
 			}
 		}
-            
+		/*
 		ListIterator<PetData> i = pet.getPetData().listIterator();
 		while(i.hasNext()){
 			PetData petData = i.next();
@@ -667,10 +667,10 @@ public class PetManager implements IPetManager {
 					if(type != DataMenuType.BOOLEAN && petData.isType(type)){
 						i.remove();
 						break;
-                    }
-                }
-            }
-		}
+				    }
+				}
+		    }
+		}*/
 
 		if(b){
 			if(!pet.getPetData().contains(pd)){

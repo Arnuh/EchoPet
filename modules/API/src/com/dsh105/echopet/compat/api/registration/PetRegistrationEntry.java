@@ -30,19 +30,17 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 public class PetRegistrationEntry {
 
     private String name;
-    private int registrationId;
     private Class<? extends IPet> petClass;
     private Class<? extends IEntityPet> entityClass;
 
     private Constructor<? extends IPet> petConstructor;
     private Constructor<? extends IEntityPet> entityPetConstructor;
 
-    public PetRegistrationEntry(String name, int registrationId, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass) {
+	public PetRegistrationEntry(String name, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass){
 		if(entityClass == null) throw new PetRegistrationException("Invalid Entity Class. Pet type is not supported by this server version.");
 		if(petClass == null) throw new PetRegistrationException("Invalid Pet Class. Pet type is not supported by this server version.");
 
         this.name = name;
-        this.registrationId = registrationId;
         this.entityClass = entityClass;
         this.petClass = petClass;
 
@@ -56,10 +54,6 @@ public class PetRegistrationEntry {
 
     public String getName() {
         return name;
-    }
-
-    public int getRegistrationId() {
-        return registrationId;
     }
 
     public Class<? extends IPet> getPetClass() {
@@ -91,6 +85,6 @@ public class PetRegistrationEntry {
 	}
 
     public static PetRegistrationEntry create(PetType petType) {
-        return new PetRegistrationEntry(StringUtil.capitalise(petType.toString().toLowerCase().replace("_", " ")).replace(" ", "") + "-Pet", petType.getRegistrationId(), petType.getPetClass(), petType.getEntityClass());
+		return new PetRegistrationEntry(StringUtil.capitalise(petType.toString().toLowerCase().replace("_", " ")).replace(" ", "") + "-Pet", petType.getPetClass(), petType.getEntityClass());
     }
 }

@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-import com.dsh105.echopet.compat.nms.v1_13_R2.entity.type.EntityEnderDragonPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.type.EntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.type.EntityVexPet;
 
@@ -115,7 +114,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    return;
 			}*/
 			double speed = 0.6F;
-			if(!(this.pet instanceof EntityEnderDragonPet) && this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(/*!(this.pet instanceof EntityEnderDragonPet) &&*/ this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}

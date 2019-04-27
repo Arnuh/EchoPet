@@ -77,8 +77,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 				e.printStackTrace();
 			}
 		}
-		this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
-		this.setHealth((float) pet.getPetType().getMaxHealth());
+		// this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
+		// this.setHealth((float) pet.getPetType().getMaxHealth());
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
 		this.setPathfinding();
@@ -201,10 +201,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 			return this.world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SHOULDER_ENTITY);
 		}
 		return true;
-	}
-
-	public boolean attack(Entity entity){
-		return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
 	}
 
 	public boolean attack(Entity entity, float damage){
@@ -340,7 +336,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 			this.setSprinting(!this.isSprinting());
 		}
 		if(this.getPet().isHat()){
-			this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
+			// this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
+			this.lastYaw = this.yaw = this.getPlayerOwner().getLocation().getYaw();
 		}
 		if(this.getPlayerOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;

@@ -34,7 +34,7 @@ public enum PetItem {
 	DONKEYHORSE(PetType.DONKEY, Material.DONKEY_SPAWN_EGG, "Donkey Pet", "donkey"),
 	DROWNED(PetType.DROWNED, Material.DROWNED_SPAWN_EGG, "Drowned Pet", "drowned"),
 	ELDERGUARDIAN(PetType.ELDERGUARDIAN, Material.ELDER_GUARDIAN_SPAWN_EGG, "Elder Guardian Pet", "elderguardian"),
-	ENDERDRAGON(PetType.ENDERDRAGON, Material.DRAGON_EGG, "EnderDragon Pet", "enderdragon"),
+    // ENDERDRAGON(PetType.ENDERDRAGON, Material.DRAGON_EGG, "EnderDragon Pet", "enderdragon"),
 	ENDERMAN(PetType.ENDERMAN, Material.ENDERMAN_SPAWN_EGG, "Enderman Pet", "enderman"),
 	ENDERMITE(PetType.ENDERMITE, Material.ENDERMITE_SPAWN_EGG, "Endermite Pet", "endermite"),
 	EVOKER(PetType.EVOKER, Material.EVOKER_SPAWN_EGG, "Evoker Pet", "evoker"),

@@ -43,17 +43,6 @@ public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet
 	}
 
 	@Override
-	public boolean attack(Entity entity){
-		boolean flag = super.attack(entity);
-		if(flag){
-			this.world.broadcastEntityEffect(this, (byte) 4);
-			entity.motY = 0.4000000059604645D;
-			makeSound("entity.irongolem.step", 1.0F, 1.0F);
-		}
-		return flag;
-	}
-
-	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.LARGE;
 	}

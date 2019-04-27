@@ -68,21 +68,6 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	}
 
 	@Override
-	public boolean attack(Entity entity){
-		boolean flag = super.attack(entity);
-		if(flag){
-			setHorseVisual(64, true);
-			// TODO:
-			/*if(getType().g()){
-				makeSound("entity.horse.angry", 1.0F, 1.0F);
-			}else{
-				makeSound("entity.donkey.angry", 1.0F, 1.0F);
-			}*/
-		}
-		return flag;
-	}
-
-	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(STYLE, 0);

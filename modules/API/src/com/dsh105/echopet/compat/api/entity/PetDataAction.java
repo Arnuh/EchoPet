@@ -15,17 +15,11 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.api.pet.type;
+package com.dsh105.echopet.compat.api.entity;
 
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.api.pet.Pet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IEnderDragonPet;
+public interface PetDataAction{
 
-//@EntityPetType(petType = PetType.ENDERDRAGON)
-public class EnderDragonPet extends Pet implements IEnderDragonPet {
-
-    public EnderDragonPet(Player owner) {
-        super(owner);
-    }
+	boolean click(Player player, IPet pet, PetData data, boolean flag);
 }
