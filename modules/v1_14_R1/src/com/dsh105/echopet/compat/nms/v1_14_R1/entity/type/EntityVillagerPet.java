@@ -20,16 +20,17 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.VillagerLevel;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
-import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
 
 import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.VillagerType;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillagerPet{
+public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEntityVillagerPet{
 
-	private static final DataWatcherObject<Integer> PROFESSION = DataWatcher.a(EntityVillagerPet.class, DataWatcherRegistry.b);
+	private static final DataWatcherObject<VillagerData> DATA = DataWatcher.a(EntityVillagerPet.class, DataWatcherRegistry.q);
 
 	public EntityVillagerPet(World world){
 		super(EntityTypes.VILLAGER, world);
@@ -41,12 +42,33 @@ public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillag
 
 	@Override
 	public void setProfession(int i){
-		this.datawatcher.set(PROFESSION, Integer.valueOf(i));
+		try{
+			this.datawatcher.set(DATA, getVillagerData().withProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
+		}catch(Exception ignored){}
+	}
+
+	@Override
+	public void setType(int type){
+		try{
+			this.datawatcher.set(DATA, getVillagerData().withType((VillagerType) VillagerType.class.getFields()[type].get(null)));
+		}catch(Exception ignored){}
+	}
+
+	@Override
+	public void setLevel(int level){
+		try{
+			this.datawatcher.set(DATA, getVillagerData().withLevel(level));
+		}catch(Exception ignored){}
+	}
+
+	public VillagerData getVillagerData(){
+		return (VillagerData) this.datawatcher.get(DATA);
 	}
 
 	@Override
 	public void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(PROFESSION, Integer.valueOf(0));
+		this.datawatcher.register(DATA, new VillagerData(VillagerType.c, VillagerProfession.NONE, VillagerLevel.NOVICE.ordinal()));
 	}
+
 }

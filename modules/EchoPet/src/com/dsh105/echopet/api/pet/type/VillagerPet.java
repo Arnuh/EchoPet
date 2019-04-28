@@ -19,32 +19,19 @@ package com.dsh105.echopet.api.pet.type;
 
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.api.pet.Pet;
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.Profession;
+import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
 
 @EntityPetType(petType = PetType.VILLAGER)
-public class VillagerPet extends Pet implements IVillagerPet {
+public class VillagerPet extends VillagerAbstractPet implements IVillagerPet{
 
-    boolean baby = false;
-    Profession profession = Profession.FARMER;
+	private VillagerType type = VillagerType.PLAINS;
+	private Profession profession = Profession.NONE;
+	private VillagerLevel level = VillagerLevel.NOVICE;
 
     public VillagerPet(Player owner) {
         super(owner);
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
-
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityVillagerPet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
     }
 
     @Override
@@ -53,14 +40,30 @@ public class VillagerPet extends Pet implements IVillagerPet {
     }
 
     @Override
-    public int getProfessionId() {
-		return profession.ordinal();
-    }
-
-    @Override
     public void setProfession(Profession prof) {
 		((IEntityVillagerPet) getEntityPet()).setProfession(prof.ordinal());
         this.profession = prof;
     }
 
+	@Override
+	public VillagerType getType(){
+		return type;
+	}
+
+	@Override
+	public void setType(VillagerType type){
+		((IEntityVillagerPet) getEntityPet()).setType(type.ordinal());
+		this.type = type;
+	}
+
+	@Override
+	public VillagerLevel getLevel(){
+		return level;
+	}
+
+	@Override
+	public void setLevel(VillagerLevel level){
+		((IEntityVillagerPet) getEntityPet()).setLevel(level.ordinal());
+		this.level = level;
+	}
 }

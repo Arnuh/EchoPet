@@ -15,23 +15,16 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.pet;
+package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.compat.api.entity.Profession;
-import com.dsh105.echopet.compat.api.entity.VillagerLevel;
-import com.dsh105.echopet.compat.api.entity.VillagerType;
+import org.bukkit.entity.Player;
 
-public interface IVillagerPet extends IVillagerAbstractPet{
+import com.dsh105.echopet.api.pet.AgeablePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerAbstractPet;
 
-	public Profession getProfession();
+public class VillagerAbstractPet extends AgeablePet implements IVillagerAbstractPet{
 
-	public void setProfession(Profession profession);
-
-	public VillagerType getType();
-
-	public void setType(VillagerType type);
-
-	public VillagerLevel getLevel();
-
-	public void setLevel(VillagerLevel level);
+	public VillagerAbstractPet(Player owner){
+		super(owner);
+	}
 }

@@ -14,24 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.dsh105.echopet.compat.api.entity;
 
-package com.dsh105.echopet.compat.api.entity.type.pet;
-
-import com.dsh105.echopet.compat.api.entity.Profession;
-import com.dsh105.echopet.compat.api.entity.VillagerLevel;
-import com.dsh105.echopet.compat.api.entity.VillagerType;
-
-public interface IVillagerPet extends IVillagerAbstractPet{
-
-	public Profession getProfession();
-
-	public void setProfession(Profession profession);
-
-	public VillagerType getType();
-
-	public void setType(VillagerType type);
-
-	public VillagerLevel getLevel();
-
-	public void setLevel(VillagerLevel level);
+public enum VillagerType{
+	DESERT,
+	JUNGLE,
+	PLAINS,
+	SAVANNA,
+	SNOWY,
+	SWAMP,
+	TAIGA
 }

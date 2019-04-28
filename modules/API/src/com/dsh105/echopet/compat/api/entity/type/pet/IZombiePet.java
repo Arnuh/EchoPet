@@ -18,11 +18,8 @@
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import com.dsh105.echopet.compat.api.entity.Profession;
 
 public interface IZombiePet extends IAgeablePet {
 
-	public void setVillagerProfession(Profession profession);
 
-	public Profession getVillagerProfession();
 }

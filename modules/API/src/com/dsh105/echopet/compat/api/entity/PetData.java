@@ -127,6 +127,7 @@ public enum PetData {
 		}
 		return false;
 	}, Material.BONE, "Angry"),
+    // Collar Colors
 	WHITE("white", (player, pet, data, flag)-> {
 		return setColorByDye(pet, DyeColor.WHITE);
 	}, Material.WHITE_WOOL, "White"),
@@ -175,6 +176,90 @@ public enum PetData {
 	BLACK("black", (player, pet, data, flag)-> {
 		return setColorByDye(pet, DyeColor.BLACK);
 	}, Material.BLACK_WOOL, "Black"),
+    // Villager Types
+	DESERT("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.DESERT);
+	}, Material.SAND, "Desert"),
+	JUNGLE("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.JUNGLE);
+	}, Material.VINE, "Jungle"),
+	PLAINS("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.PLAINS);
+	}, Material.GRASS_BLOCK, "Plains"),
+	SAVANNA("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.SAVANNA);
+	}, Material.SANDSTONE, "Savanna"),
+	SNOWY("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.SNOWY);
+	}, Material.SNOW_BLOCK, "Snowy"),
+	SWAMP("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.SWAMP);
+	}, Material.LILY_PAD, "Swamp"),
+	TAIGA("desert", (player, pet, data, flag)-> {
+		return setVillagerType(pet, VillagerType.TAIGA);
+	}, Material.SPRUCE_LOG, "Taiga"),
+    // Villager Profession
+	NONE("none", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.NONE);
+	}, Material.CRAFTING_TABLE, "None"),
+	ARMORER("armorer", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.ARMORER);
+	}, Material.getMaterial("BLAST_FURNACE"), "Armorer"),
+	BUTCHER("butcher", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.BUTCHER);
+	}, Material.getMaterial("SMOKER"), "Butcher"),
+	CARTOGRAPHER("cartographer", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.CARTOGRAPHER);
+	}, Material.getMaterial("CARTOGRAPHY_TABLE"), "Cartographer"),
+	CLERIC("cleric", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.CLERIC);
+	}, Material.BREWING_STAND, "Cleric"),
+	FARMER("farmer", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.FARMER);
+	}, Material.getMaterial("COMPOSTER"), "Farmer"),
+	FISHERMAN("fisherman", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.FISHERMAN);
+	}, Material.getMaterial("BARREL"), "Fisherman"),
+	FLETCHER("fletcher", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.FLETCHER);
+	}, Material.getMaterial("FLETCHING_TABLE"), "Fletcher"),
+	LEATHERWORKER("leatherworker", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.LEATHERWORKER);
+	}, Material.CAULDRON, "Leatherworker"),
+	LIBRARIAN("librarian", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.LIBRARIAN);
+	}, Material.getMaterial("LECTERN"), "Librarian"),
+	MASON("mason", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.MASON);
+	}, Material.getMaterial("STONECUTTER"), "Stone Mason"),
+	NITWIT("nitwit", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.NITWIT);
+	}, Material.STONE, "Nitwit"),
+	SHEPHERD("sherpherd", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.SHEPHERD);
+	}, Material.getMaterial("LOOM"), "Sherpherd"),
+	TOOLSMITH("toolsmith", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.TOOLSMITH);
+	}, Material.getMaterial("SMITHING_TABLE"), "None"),
+	WEAPONSMITH("weaponsmith", (player, pet, data, flag)-> {
+		return setProfession(pet, Profession.WEAPONSMITH);
+	}, Material.getMaterial("GRINDSTONE"), "Weaponsmith"),
+    // Villager Level
+	NOVICE("novice", (player, pet, data, flag)-> {
+		return setVillagerLevel(pet, VillagerLevel.NOVICE);
+	}, Material.STONE, "Novice"),
+	APPRENTICE("apprentice", (player, pet, data, flag)-> {
+		return setVillagerLevel(pet, VillagerLevel.APPRENTICE);
+	}, Material.IRON_INGOT, "Apprentice"),
+	JOURNEYMEN("journeymen", (player, pet, data, flag)-> {
+		return setVillagerLevel(pet, VillagerLevel.JOURNEYMEN);
+	}, Material.GOLD_INGOT, "Journeymen"),
+	EXPERT("expert", (player, pet, data, flag)-> {
+		return setVillagerLevel(pet, VillagerLevel.EXPERT);
+	}, Material.EMERALD, "Expert"),
+	MASTER("master", (player, pet, data, flag)-> {
+		return setVillagerLevel(pet, VillagerLevel.MASTER);
+	}, Material.DIAMOND, "Master"),
 	/*
 	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
 	BLACK_AND_WHITE("blackandwhite", DataMenuType.RABBIT_TYPE),
@@ -325,5 +410,29 @@ public enum PetData {
 			return true;
 		}
 		return false;
+	}
+
+	private static boolean setVillagerType(IPet pet, VillagerType villagerType){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.VILLAGER)){
+			((IVillagerPet) pet).setType(villagerType);
+		}
+		return true;
+	}
+
+	private static boolean setVillagerLevel(IPet pet, VillagerLevel villagerLevel){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.VILLAGER)){
+			((IVillagerPet) pet).setLevel(villagerLevel);
+		}
+		return true;
+	}
+
+	private static boolean setProfession(IPet pet, Profession profession){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.VILLAGER)){
+			((IVillagerPet) pet).setProfession(profession);
+		}
+		return true;
 	}
 }

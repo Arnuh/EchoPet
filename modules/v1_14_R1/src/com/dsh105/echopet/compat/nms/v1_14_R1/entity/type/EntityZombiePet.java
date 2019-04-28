@@ -16,10 +16,12 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 
 import net.minecraft.server.v1_14_R1.*;
@@ -62,22 +64,12 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 	}
 
 	@Override
-	public void setVillagerProfession(Profession profession){
-		//
-	}
-
-	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		getDataWatcher().register(BABY, false);
 		getDataWatcher().register(bx, 0);
 		getDataWatcher().register(by, false);
 		getDataWatcher().register(bF, false);
-	}
-
-	public boolean isVillager(){
-		if(this instanceof EntityGiantPet) return false;
-		else return(((IZombiePet) pet).getVillagerProfession().ordinal() >= 1 && ((IZombiePet) pet).getVillagerProfession().ordinal() <= 5);
 	}
 
 	@Override

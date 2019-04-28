@@ -106,7 +106,7 @@ public enum PetType {
 	SQUID("Squid", "Squid Pet", "squid"),
 	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish"),
 	TURTLE("Turtle", "Turtle Pet", "turtle"),
-	VILLAGER("Villager", "Villager Pet", "villager"/*, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST*/),
+	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.TAMED, PetData.ANGRY),
 
 	HUMAN("Human", "Human Pet", "UNKNOWN");

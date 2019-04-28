@@ -19,43 +19,15 @@ package com.dsh105.echopet.api.pet.type;
 
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.Profession;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 
 @EntityPetType(petType = PetType.ZOMBIE)
-public class ZombiePet extends Pet implements IZombiePet {
-
-    boolean baby = false;
-	Profession profession = Profession.NORMAL;
+public class ZombiePet extends AgeablePet implements IZombiePet{
 
     public ZombiePet(Player owner) {
         super(owner);
     }
-
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityZombiePet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
-
-    @Override
-	public void setVillagerProfession(Profession profession){
-		((IEntityZombiePet) getEntityPet()).setVillagerProfession(profession);
-		this.profession = profession;
-    }
-
-    @Override
-	public Profession getVillagerProfession(){
-		return profession;
-    }
-
 }

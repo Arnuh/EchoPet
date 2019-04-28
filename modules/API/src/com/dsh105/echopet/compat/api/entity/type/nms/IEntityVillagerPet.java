@@ -17,9 +17,11 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
-
-public interface IEntityVillagerPet extends IEntityAgeablePet {
+public interface IEntityVillagerPet extends IEntityVillagerAbstractPet{
 
     public void setProfession(int profession);
+
+	public void setType(int type);
+
+	public void setLevel(int level);
 }

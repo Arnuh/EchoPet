@@ -49,4 +49,10 @@ public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillag
 		super.initDatawatcher();
 		this.datawatcher.register(PROFESSION, Integer.valueOf(0));
 	}
+
+	@Override
+	public void setType(int type){}
+
+	@Override
+	public void setLevel(int level){}
 }

@@ -18,7 +18,6 @@ package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
 
 import net.minecraft.server.v1_13_R2.*;
@@ -60,10 +59,6 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 		getDataWatcher().set(BABY, flag);
 	}
 
-	@Override
-	public void setVillagerProfession(Profession profession){
-		//
-	}
 
 	@Override
 	protected void initDatawatcher(){
@@ -72,11 +67,6 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet{
 		getDataWatcher().register(bx, 0);
 		getDataWatcher().register(by, false);
 		getDataWatcher().register(bF, false);
-	}
-
-	public boolean isVillager(){
-		if(this instanceof EntityGiantPet) return false;
-		else return(((IZombiePet) pet).getVillagerProfession().ordinal() >= 1 && ((IZombiePet) pet).getVillagerProfession().ordinal() <= 5);
 	}
 
 	@Override

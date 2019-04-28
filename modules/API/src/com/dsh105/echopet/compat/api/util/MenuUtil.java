@@ -94,9 +94,6 @@ public class MenuUtil {
 		if (pt == PetType.WOLF) {
 		    options.add(new MenuOption(i++, MenuItem.COLOR));
 		}
-		if (pt == PetType.VILLAGER) {
-		    options.add(new MenuOption(i++, MenuItem.PROFESSION));
-		}
 		if(pt == PetType.HORSE || pt == PetType.DONKEY || pt == PetType.MULE || pt == PetType.SKELETONHORSE || pt == PetType.ZOMBIEHORSE){
 			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.HORSE || new Version("1.10-R1").isSupported(new Version())){
 				options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));

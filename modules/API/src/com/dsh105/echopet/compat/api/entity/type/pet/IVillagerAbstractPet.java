@@ -17,21 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import com.dsh105.echopet.compat.api.entity.Profession;
-import com.dsh105.echopet.compat.api.entity.VillagerLevel;
-import com.dsh105.echopet.compat.api.entity.VillagerType;
+import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 
-public interface IVillagerPet extends IVillagerAbstractPet{
-
-	public Profession getProfession();
-
-	public void setProfession(Profession profession);
-
-	public VillagerType getType();
-
-	public void setType(VillagerType type);
-
-	public VillagerLevel getLevel();
-
-	public void setLevel(VillagerLevel level);
-}
+public interface IVillagerAbstractPet extends IAgeablePet{}
