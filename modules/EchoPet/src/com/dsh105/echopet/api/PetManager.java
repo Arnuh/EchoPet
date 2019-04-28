@@ -28,6 +28,7 @@ import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -472,8 +473,6 @@ public class PetManager implements IPetManager {
 					if(p != null){
 						if(petType == PetType.ZOMBIE || petType == PetType.ZOMBIEVILLAGER){
 							((IZombiePet) pet).setVillagerProfession(p);
-						}else{
-							((IVillagerPet) pet).setProfession(p);
 						}
 					}
 				}
@@ -586,21 +585,20 @@ public class PetManager implements IPetManager {
 				*/
 			}
 		}
-		/*
-		ListIterator<PetData> i = pet.getPetData().listIterator();
-		while(i.hasNext()){
-			PetData petData = i.next();
-			if(petData != pd){
-				ListIterator<DataMenuType> i2 = pd.getTypes().listIterator();
-				while(i2.hasNext()){
-					DataMenuType type = i2.next();
-					if(type != DataMenuType.BOOLEAN && petData.isType(type)){
+		// Removed others in the same category
+		// Because we can only have 1 active at a time.
+		for(PetDataCategory category : PetDataCategory.values){
+			if(category.hasData(pd)){
+				Iterator<PetData> i = pet.getPetData().listIterator();
+				while(i.hasNext()){
+					PetData data = i.next();
+					if(!pd.equals(data) && category.hasData(data)){
 						i.remove();
-						break;
-				    }
+					}
 				}
-		    }
-		}*/
+				break;
+			}
+		}
 
 		if(b){
 			if(!pet.getPetData().contains(pd)){
