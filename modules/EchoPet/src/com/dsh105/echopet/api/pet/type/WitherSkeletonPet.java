@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SkeletonType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitherSkeletonPet;
 
 /**
@@ -20,8 +19,4 @@ public class WitherSkeletonPet extends SkeletonPet implements IWitherSkeletonPet
 		super(owner);
 	}
 
-	@Override
-	public SkeletonType getSkeletonType(){
-		return SkeletonType.WITHER;
-	}
 }

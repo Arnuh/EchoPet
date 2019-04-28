@@ -107,12 +107,7 @@ public enum PetType {
 	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish"),
 	TURTLE("Turtle", "Turtle Pet", "turtle"),
 	VILLAGER("Villager", "Villager Pet", "villager"/*, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST*/),
-	WOLF("Wolf", "Wolf Pet", "wolf"/*, PetData.TAMED, PetData.ANGRY,
-	                               PetData.BLACK, PetData.BLUE, PetData.BROWN,
-	                               PetData.CYAN, PetData.GRAY, PetData.GREEN,
-	                               PetData.LIGHT_BLUE, PetData.LIME, PetData.MAGENTA,
-	                               PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
-	                               PetData.WHITE, PetData.YELLOW, PetData.SILVER*/),
+	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.TAMED, PetData.ANGRY),
 
 	HUMAN("Human", "Human Pet", "UNKNOWN");
 

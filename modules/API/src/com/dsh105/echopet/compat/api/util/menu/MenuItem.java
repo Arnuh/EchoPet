@@ -38,8 +38,6 @@ public enum MenuItem{
 	POTION(Material.POTION, 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
 	CAT_TYPE(Material.TROPICAL_FISH, 1, (short) 0, DataMenuType.CAT_TYPE, "Cat Type", "Cat"),
 	OCELOT_TYPE(Material.TROPICAL_FISH, 1, (short) 0, DataMenuType.OCELOT_TYPE, "Ocelot Type", "Ocelot"),
-	ANGRY(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Angry", "Wolf"),
-	TAMED(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Tamed", "Wolf"),
 	ZOMBIE_PROFESSION(Material.EMERALD, 1, (short) 0, DataMenuType.ZOMBIE_PROFESSION, "Profession", "Zombie"),
 	COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf", "Cat"),
 	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Profession", "Villager", "Zombie"),

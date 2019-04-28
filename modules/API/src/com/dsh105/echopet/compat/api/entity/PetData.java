@@ -56,9 +56,6 @@ public enum PetData {
 		}
 		return false;
 	}, Material.SHEARS, "Sheared"),
-	BLACK("black", (player, pet, data, flag)-> {
-		return setColorByDye(pet, DyeColor.BLACK);
-	}, Material.BLACK_WOOL, "Black"),
 	FIRE("fire", (player, pet, data, flag)-> {
 		if(pet instanceof IBlazePet){
 			((IBlazePet) pet).setOnFire(flag);
@@ -116,8 +113,69 @@ public enum PetData {
 		}
 		return false;
 	}, Material.TROPICAL_FISH, "Standing Up"),
-    /*ANGRY("angry", DataMenuType.BOOLEAN),
-	BABY("baby", DataMenuType.BOOLEAN),
+	TAMED("tamed", (player, pet, data, flag)-> {
+		if(pet instanceof IWolfPet){
+			((IWolfPet) pet).setTamed(flag);
+			return true;
+		}
+		return false;
+	}, Material.BONE, "Tamed"),
+	ANGRY("angry", (player, pet, data, flag)-> {
+		if(pet instanceof IWolfPet){
+			((IWolfPet) pet).setAngry(flag);
+			return true;
+		}
+		return false;
+	}, Material.BONE, "Angry"),
+	WHITE("white", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.WHITE);
+	}, Material.WHITE_WOOL, "White"),
+	ORANGE("orange", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.ORANGE);
+	}, Material.ORANGE_WOOL, "Orange"),
+	MAGENTA("white", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.MAGENTA);
+	}, Material.MAGENTA_WOOL, "Magenta"),
+	LIGHT_BLUE("light_blue", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIGHT_BLUE);
+	}, Material.LIGHT_BLUE_WOOL, "Light Blue"),
+	YELLOW("yellow", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.YELLOW);
+	}, Material.YELLOW_WOOL, "Yellow"),
+	LIME("lime", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIME);
+	}, Material.LIME_WOOL, "Lime"),
+	PINK("pink", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.PINK);
+	}, Material.PINK_WOOL, "Pink"),
+	GRAY("gray", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.GRAY);
+	}, Material.GRAY_WOOL, "Gray"),
+	LIGHT_GRAY("light_gray", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIGHT_GRAY);
+	}, Material.LIGHT_GRAY_WOOL, "Light Gray"),
+	CYAN("cyan", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.CYAN);
+	}, Material.CYAN_WOOL, "Cyan"),
+	PURPLE("purple", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.PURPLE);
+	}, Material.PURPLE_WOOL, "Purple"),
+	BLUE("blue", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BLUE);
+	}, Material.BLUE_WOOL, "Blue"),
+	BROWN("brown", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BROWN);
+	}, Material.BROWN_WOOL, "Brown"),
+	GREEN("green", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.GREEN);
+	}, Material.GREEN_WOOL, "Green"),
+	RED("red", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.RED);
+	}, Material.RED_WOOL, "Red"),
+	BLACK("black", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BLACK);
+	}, Material.BLACK_WOOL, "Black"),
+	/*
 	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
 	BLACK_AND_WHITE("blackandwhite", DataMenuType.RABBIT_TYPE),
 	BLACKSMITH("blacksmith", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
@@ -144,7 +202,6 @@ public enum PetData {
 	HUSK("husk", DataMenuType.ZOMBIE_PROFESSION),
 	IRON("iron", DataMenuType.HORSE_ARMOUR),
 	THE_KILLER_BUNNY("killerbunny", DataMenuType.RABBIT_TYPE),
-	LARGE("large", DataMenuType.SIZE),
 	LIBRARIAN("librarian", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	LIGHT_BLUE("lightBlue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	LIME("lime", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
@@ -156,19 +213,12 @@ public enum PetData {
 	HORSE("normal", DataMenuType.HORSE_TYPE),
 	ORANGE("orange", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	PINK("pink", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	POWER("powered", DataMenuType.BOOLEAN),
 	PRIEST("priest", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	PURPLE("purple", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	RED("red", DataMenuType.OCELOT_TYPE, DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	SADDLE("saddle", DataMenuType.BOOLEAN),
 	SALT_AND_PEPPER("saltandpepper", DataMenuType.RABBIT_TYPE),
-	SCREAMING("screaming", DataMenuType.BOOLEAN),
-	SHEARED("sheared", DataMenuType.BOOLEAN),
-	SHIELD("shield", DataMenuType.BOOLEAN),
 	SIAMESE("siamese", DataMenuType.OCELOT_TYPE),
 	SKELETON_HORSE("skeleton", DataMenuType.HORSE_TYPE),
-	SMALL("small", DataMenuType.SIZE),
-	TAMED("tamed", DataMenuType.BOOLEAN),
 	VILLAGER("villager", DataMenuType.BOOLEAN),
 	WHITEFIELD("whitePatch", DataMenuType.HORSE_MARKING),
 	WHITE_DOTS("whiteSpot", DataMenuType.HORSE_MARKING),
@@ -178,10 +228,6 @@ public enum PetData {
 	WILD("wild", DataMenuType.OCELOT_TYPE),
 	YELLOW("yellow", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	UNDEAD_HORSE("zombie", DataMenuType.HORSE_TYPE),
-	STANDING_UP("standingup", DataMenuType.BOOLEAN),
-	NORMAL("normal", DataMenuType.SKELETON_TYPE),
-	WITHER("wither", DataMenuType.SKELETON_TYPE),
-	STRAY("stray", DataMenuType.SKELETON_TYPE),
 	LEFT_SHOULDER("leftshoulder", DataMenuType.BOOLEAN),
 	RIGHT_SHOULDER("rightshoulder", DataMenuType.BOOLEAN),
 	OPEN("open", DataMenuType.BOOLEAN)*/

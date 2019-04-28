@@ -22,28 +22,13 @@ import org.bukkit.entity.Player;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SkeletonType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonAbstractPet;
 
 @EntityPetType(petType = PetType.SKELETON)
 public class SkeletonPet extends Pet implements ISkeletonAbstractPet {
 
-	SkeletonType skeletonType;
-
     public SkeletonPet(Player owner) {
         super(owner);
-    }
-
-    @Override
-	public void setSkeletonType(SkeletonType type){
-		((IEntitySkeletonAbstractPet) getEntityPet()).setSkeletonType(type);
-		this.skeletonType = type;
-    }
-
-    @Override
-	public SkeletonType getSkeletonType(){
-		return this.skeletonType;
     }
 
 }

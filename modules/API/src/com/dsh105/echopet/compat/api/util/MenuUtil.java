@@ -92,8 +92,6 @@ public class MenuUtil {
 			}
 		}
 		if (pt == PetType.WOLF) {
-		    options.add(new MenuOption(i++, MenuItem.TAMED));
-		    options.add(new MenuOption(i++, MenuItem.ANGRY));
 		    options.add(new MenuOption(i++, MenuItem.COLOR));
 		}
 		if (pt == PetType.VILLAGER) {
