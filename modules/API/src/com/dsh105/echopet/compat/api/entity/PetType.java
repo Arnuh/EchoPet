@@ -51,7 +51,7 @@ public enum PetType {
 	                                           PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
 	                                           PetData.WHITE, PetData.YELLOW, PetData.SILVER*/),
 	SILVERFISH("Silverfish", "Silverfish Pet", "silverfish"),
-	SKELETON("Skeleton", "Skeleton Pet", "skeleton"/*, PetData.NORMAL, PetData.WITHER, PetData.STRAY*/),
+	SKELETON("Skeleton", "Skeleton Pet", "skeleton"),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
 	STRAY("Stray", "Stray Pet", "stray"),
 	SLIME("Slime", "Slime Pet", "slime", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),

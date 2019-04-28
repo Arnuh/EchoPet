@@ -1,6 +1,9 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherSkeletonPet;
 
 import net.minecraft.server.v1_14_R1.EntityTypes;
@@ -24,7 +27,5 @@ public class EntityWitherSkeletonPet extends EntitySkeletonAbstractPet implement
 		super(EntityTypes.WITHER_SKELETON, world, pet);
 	}
 
-	public SkeletonType getSkeletonType(){
-		return SkeletonType.WITHER;
-	}
+
 }

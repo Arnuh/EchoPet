@@ -43,7 +43,6 @@ public enum MenuItem{
 	ZOMBIE_PROFESSION(Material.EMERALD, 1, (short) 0, DataMenuType.ZOMBIE_PROFESSION, "Profession", "Zombie"),
 	COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf", "Cat"),
 	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Profession", "Villager", "Zombie"),
-	SKELETON_TYPE(Material.BONE, 1, (short) 0, DataMenuType.SKELETON_TYPE, "Skeleton Type", "Skeleton"),
 	LLAMA_VARIANT(Material.LEATHER, 1, (short) 0, DataMenuType.LLAMA_VARIANT, "Llama Variant", "Llama"),
 	LLAMA_COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.LLAMA_COLOR, "Color", "Llama"),
 	OPEN(Material.OAK_TRAPDOOR, 1, (short) 0, DataMenuType.BOOLEAN, "Open", "Shulker"),

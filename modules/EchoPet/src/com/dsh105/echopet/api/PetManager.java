@@ -509,10 +509,6 @@ public class PetManager implements IPetManager {
 						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to ParrotVariant.", e, true);
 					}
 				}
-				if(pd.isType(DataMenuType.SKELETON_TYPE)){
-					SkeletonType skeletonType = SkeletonType.valueOf(pd.toString());
-					((ISkeletonAbstractPet) pet).setSkeletonType(skeletonType);
-				}
 				if(pd.isType(DataMenuType.RABBIT_TYPE) && petType == PetType.RABBIT){
 					((IRabbitPet) pet).setRabbitType(Rabbit.Type.valueOf(pd.toString()));
 				}

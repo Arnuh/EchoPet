@@ -72,11 +72,6 @@ public class MenuUtil {
 			options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
 			options.add(new MenuOption(i++, MenuItem.COLOR));
 		}
-		if (pt == PetType.SKELETON) {
-			if(new Version("1.10-R1").isSupported(new Version())){
-				options.add(new MenuOption(i++, MenuItem.SKELETON_TYPE));
-			}
-		}
 		if (pt == PetType.WITCH) {
 		    options.add(new MenuOption(i++, MenuItem.POTION));
 		}

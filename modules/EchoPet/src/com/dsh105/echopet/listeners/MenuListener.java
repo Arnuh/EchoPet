@@ -69,7 +69,7 @@ public class MenuListener implements Listener {
 						break;
 					}
 				}
-			}catch(Exception e){
+			}catch(Exception ignored){
 				return;
 			}
 		}

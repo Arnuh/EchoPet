@@ -26,7 +26,8 @@ public enum PetDataCategory{
 	OCELOT_TYPE(Material.WHITE_WOOL, "Ocelot Type"),
 	SHEEP_COLOR(Material.WHITE_WOOL, "Color", PetData.BLACK),
 	COLOR(Material.WHITE_WOOL, "Color"),
-	SLIME_SIZE(Material.SLIME_BALL, "Slime Size", PetData.SLIME_SMALL, PetData.SLIME_MEDIUM, PetData.SLIME_LARGE);
+	SLIME_SIZE(Material.SLIME_BALL, "Slime Size", PetData.SLIME_SMALL, PetData.SLIME_MEDIUM, PetData.SLIME_LARGE),
+	;
 
 	public static final PetDataCategory[] values = values();
 	private final PetData[] data;

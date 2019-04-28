@@ -81,9 +81,6 @@ public enum DataMenuItem{
     GOLD_RABBIT(DataMenuType.RABBIT_TYPE, PetData.GOLD, Material.YELLOW_WOOL, 1, (short) 4, "Gold", "Bunny type"),
     SALT_AND_PEPPER_RABBIT(DataMenuType.RABBIT_TYPE, PetData.SALT_AND_PEPPER, Material.YELLOW_WOOL, 1, (short) 4, "Salt and Pepper", "Bunny type"),
     KILLER_BUNNY(DataMenuType.RABBIT_TYPE, PetData.THE_KILLER_BUNNY, Material.RED_WOOL, 1, (short) 14, "Killer Bunny", "Bunny type"),
-    SKELETON_NORMAL(DataMenuType.SKELETON_TYPE, PetData.NORMAL, Material.BONE, 1, (short) 0, "Normal", "Skeleton Type"),
-    WITHER(DataMenuType.SKELETON_TYPE, PetData.WITHER, Material.WITHER_SKELETON_SKULL, 1, (short) 1, "Wither", "Skeleton Type"),
-    STRAY(DataMenuType.SKELETON_TYPE, PetData.STRAY, Material.ARROW, 1, (short) 0, "Stray", "Skeleton Type"),
     //
     BROWN_VARIANT(DataMenuType.LLAMA_VARIANT, PetData.BROWN_LLAMA, Material.BROWN_WOOL, 1, (short) 12, "Brown", "Wool Color"),
     CREAMY_VARIANT(DataMenuType.LLAMA_VARIANT, PetData.CREAMY, Material.YELLOW_WOOL, 1, (short) 4, "Creamy", "Wool Color"),
