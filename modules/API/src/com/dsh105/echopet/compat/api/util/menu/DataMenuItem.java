@@ -25,8 +25,6 @@ import org.bukkit.Material;
 import com.dsh105.echopet.compat.api.entity.PetData;
 
 public enum DataMenuItem{
-	// BOOLEAN_TRUE(DataMenuType.BOOLEAN, null, Material.REDSTONE_TORCH, 1, (short) 0, "True", "Turns the feature on."),
-	// BOOLEAN_FALSE(DataMenuType.BOOLEAN, null, Material.REDSTONE_TORCH, 1, (short) 0, "False", "Turns the feature off."),
     /*BLACK_CAT(DataMenuType.OCELOT_TYPE, PetData.BLACK, Material.INK_SAC, 1, (short) 0, "Black", "Cat Type"),
     RED_CAT(DataMenuType.OCELOT_TYPE, PetData.RED, Material.ROSE_RED, 1, (short) 1, "Red", "Cat Type"),
     SIAMESE_CAT(DataMenuType.OCELOT_TYPE, PetData.SIAMESE, Material.LIGHT_GRAY_DYE, 1, (short) 7, "Siamese", "Cat Type"),
@@ -69,13 +67,6 @@ public enum DataMenuItem{
     IRON(DataMenuType.HORSE_ARMOUR, PetData.IRON, Material.IRON_HORSE_ARMOR, 1, (short) 0, "Iron", "Armour"),
     GOLD(DataMenuType.HORSE_ARMOUR, PetData.GOLD, Material.GOLDEN_HORSE_ARMOR, 1, (short) 0, "Gold", "Armour"),
     DIAMOND(DataMenuType.HORSE_ARMOUR, PetData.DIAMOND, Material.DIAMOND_HORSE_ARMOR, 1, (short) 0, "Diamond", "Armour"),
-    BROWN_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BROWN, Material.BROWN_WOOL, 1, (short) 12, "Brown", "Bunny type"),
-    WHITE_RABBIT(DataMenuType.RABBIT_TYPE, PetData.WHITE, Material.WHITE_WOOL, 1, (short) 0, "White", "Bunny type"),
-    BLACK_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BLACK, Material.BLACK_WOOL, 1, (short) 15, "Black", "Bunny type"),
-    BLACK_AND_WHITE_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BLACK_AND_WHITE, Material.GRAY_WOOL, 1, (short) 7, "Black and White", "Bunny type"),
-    GOLD_RABBIT(DataMenuType.RABBIT_TYPE, PetData.GOLD, Material.YELLOW_WOOL, 1, (short) 4, "Gold", "Bunny type"),
-    SALT_AND_PEPPER_RABBIT(DataMenuType.RABBIT_TYPE, PetData.SALT_AND_PEPPER, Material.YELLOW_WOOL, 1, (short) 4, "Salt and Pepper", "Bunny type"),
-    KILLER_BUNNY(DataMenuType.RABBIT_TYPE, PetData.THE_KILLER_BUNNY, Material.RED_WOOL, 1, (short) 14, "Killer Bunny", "Bunny type"),
     //
     BROWN_VARIANT(DataMenuType.LLAMA_VARIANT, PetData.BROWN_LLAMA, Material.BROWN_WOOL, 1, (short) 12, "Brown", "Wool Color"),
     CREAMY_VARIANT(DataMenuType.LLAMA_VARIANT, PetData.CREAMY, Material.YELLOW_WOOL, 1, (short) 4, "Creamy", "Wool Color"),
@@ -98,9 +89,6 @@ public enum DataMenuItem{
     RED_LLAMA(DataMenuType.LLAMA_COLOR, PetData.RED, Material.RED_CARPET, 1, (short) 14, "Red", "Color"),
     BLACK_LLAMA(DataMenuType.LLAMA_COLOR, PetData.BLACK, Material.BLACK_CARPET, 1, (short) 15, "Black", "Color"),
     */
-    //
-	// BACK(DataMenuType.OTHER, null, Material.BOOK, 1, (short) 0, "Back", "Return to the main menu."),
-	// CLOSE(DataMenuType.OTHER, null, Material.BOOK, 1, (short) 0, "Close", "Close the Pet Menu");
 	;
 	private PetData dataLink;
 	private Material mat;

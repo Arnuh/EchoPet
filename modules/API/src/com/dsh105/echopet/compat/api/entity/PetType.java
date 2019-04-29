@@ -94,7 +94,7 @@ public enum PetType {
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
 	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.STANDING_UP),
 	PUFFERFISH("PufferFish", "PufferFish Pet", "pufferfish"),
-	RABBIT("Rabbit", "Rabbit Pet", "rabbit"/*, PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.THE_KILLER_BUNNY*/),
+	RABBIT("Rabbit", "Rabbit Pet", "rabbit", new PetDataCategory[]{PetDataCategory.RABBIT_TYPE}),
 	SALMON("Salmon", "Salmon Pet", "salmon"),
 	SHEEP("Sheep", "Sheep Pet", "sheep", new PetDataCategory[]{PetDataCategory.WOOL_COLOR}, PetData.SHEARED),
 	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", PetData.SHEARED),

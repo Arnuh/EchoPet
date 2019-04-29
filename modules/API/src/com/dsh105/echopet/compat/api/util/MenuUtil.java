@@ -36,20 +36,20 @@ public class MenuUtil {
 	static{
 		ItemMeta meta = BACK.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Back");
-		meta.setLore(ImmutableList.of("Return to the main menu."));
+		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Return to the main menu."));
 		BACK.setItemMeta(meta);
 		meta = CLOSE.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Close");
-		meta.setLore(ImmutableList.of("Close the Pet Menu"));
+		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Close the Pet Menu"));
 		CLOSE.setItemMeta(meta);
 		//
 		meta = BOOLEAN_TRUE.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "True");
-		meta.setLore(ImmutableList.of("Turn the feature on."));
+		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Turn the feature on."));
 		BOOLEAN_TRUE.setItemMeta(meta);
 		meta = BOOLEAN_FALSE.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "False");
-		meta.setLore(ImmutableList.of("Turn the feature off."));
+		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Turn the feature off."));
 		BOOLEAN_FALSE.setItemMeta(meta);
 	}
 
@@ -86,14 +86,6 @@ public class MenuUtil {
 		if (pt == PetType.OCELOT) {
 		    options.add(new MenuOption(i++, MenuItem.OCELOT_TYPE));
 		}
-		if(pt == PetType.SHEEP || pt == PetType.SNOWMAN){
-			if(pt == PetType.SHEEP){
-				options.add(new MenuOption(i++, MenuItem.COLOR));
-			}
-		}
-		if (pt == PetType.WOLF) {
-		    options.add(new MenuOption(i++, MenuItem.COLOR));
-		}
 		if(pt == PetType.HORSE || pt == PetType.DONKEY || pt == PetType.MULE || pt == PetType.SKELETONHORSE || pt == PetType.ZOMBIEHORSE){
 			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.HORSE || new Version("1.10-R1").isSupported(new Version())){
 				options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));
@@ -105,16 +97,10 @@ public class MenuUtil {
 				options.add(new MenuOption(i++, MenuItem.CHESTED));
 			}
 		}
-		if (pt == PetType.RABBIT) {
-		    options.add(new MenuOption(i++, MenuItem.RABBIT_TYPE));
-		}
 		if(pt == PetType.LLAMA){
 			options.add(new MenuOption(i++, MenuItem.CHESTED));
 			options.add(new MenuOption(i++, MenuItem.LLAMA_COLOR));
 			options.add(new MenuOption(i++, MenuItem.LLAMA_VARIANT));
-		}
-		if(pt == PetType.SHULKER){
-			options.add(new MenuOption(i++, MenuItem.OPEN));
 		}
 		if(pt == PetType.PARROT){
 			options.add(new MenuOption(i++, MenuItem.PARROT_VARIANT));

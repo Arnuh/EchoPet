@@ -23,6 +23,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -260,13 +261,32 @@ public enum PetData {
 	MASTER("master", (player, pet, data, flag)-> {
 		return setVillagerLevel(pet, VillagerLevel.MASTER);
 	}, Material.DIAMOND, "Master"),
+    // Rabbit Type
+	RABBIT_BROWN("rabbit_brown", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.BROWN);
+	}, Material.BROWN_WOOL, "Brown"),
+	RABBIT_WHITE("rabbit_white", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.WHITE);
+	}, Material.WHITE_WOOL, "White"),
+	RABBIT_BLACK("rabbit_black", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.BLACK);
+	}, Material.BLACK_WOOL, "Black"),
+	RABBIT_BLACK_AND_WHITE("rabbit_black_and_white", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.BLACK_AND_WHITE);
+	}, Material.GRAY_WOOL, "Black and White"),
+	RABBIT_GOLD("rabbit_gold", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.GOLD);
+	}, Material.YELLOW_WOOL, "Gold"),
+	RABBIT_SALT_AND_PEPPER("rabbit_salt_and_pepper", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.SALT_AND_PEPPER);
+	}, Material.YELLOW_WOOL, "Salt and Pepper"),
+	RABBIT_KILLER_BUNNY("rabbit_killer_bunny", (player, pet, data, flag)-> {
+		return setRabbitType(pet, Rabbit.Type.THE_KILLER_BUNNY);
+	}, Material.RED_WOOL, "Killer Bunny"),
 	/*
-	BLACK("black", DataMenuType.COLOR, DataMenuType.OCELOT_TYPE, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
-	BLACK_AND_WHITE("blackandwhite", DataMenuType.RABBIT_TYPE),
 	BLACKSMITH("blacksmith", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	BLACK_DOTS("blackSpot", DataMenuType.HORSE_MARKING),
 	BLUE("blue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	BROWN("brown", DataMenuType.COLOR, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
 	BROWN_LLAMA("brown", DataMenuType.LLAMA_VARIANT),
 	BUTCHER("butcher", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	CHESTED("chested", DataMenuType.BOOLEAN),
@@ -283,10 +303,8 @@ public enum PetData {
 	GRAY_LLAMA("gray", DataMenuType.LLAMA_VARIANT),
 	SILVER("silver", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR),
 	GREEN("green", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	GOLD("gold", DataMenuType.HORSE_ARMOUR, DataMenuType.RABBIT_TYPE),
 	HUSK("husk", DataMenuType.ZOMBIE_PROFESSION),
 	IRON("iron", DataMenuType.HORSE_ARMOUR),
-	THE_KILLER_BUNNY("killerbunny", DataMenuType.RABBIT_TYPE),
 	LIBRARIAN("librarian", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	LIGHT_BLUE("lightBlue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	LIME("lime", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
@@ -301,14 +319,12 @@ public enum PetData {
 	PRIEST("priest", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	PURPLE("purple", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	RED("red", DataMenuType.OCELOT_TYPE, DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	SALT_AND_PEPPER("saltandpepper", DataMenuType.RABBIT_TYPE),
 	SIAMESE("siamese", DataMenuType.OCELOT_TYPE),
 	SKELETON_HORSE("skeleton", DataMenuType.HORSE_TYPE),
 	VILLAGER("villager", DataMenuType.BOOLEAN),
 	WHITEFIELD("whitePatch", DataMenuType.HORSE_MARKING),
 	WHITE_DOTS("whiteSpot", DataMenuType.HORSE_MARKING),
 	WHITE_SOCKS("whiteSocks", DataMenuType.HORSE_MARKING),
-	WHITE("white", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.RABBIT_TYPE, DataMenuType.LLAMA_COLOR),
 	WHITE_LLAMA("white", DataMenuType.LLAMA_VARIANT),
 	WILD("wild", DataMenuType.OCELOT_TYPE),
 	YELLOW("yellow", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
@@ -432,6 +448,14 @@ public enum PetData {
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER)){
 			((IVillagerPet) pet).setProfession(profession);
+		}
+		return true;
+	}
+
+	private static boolean setRabbitType(IPet pet, Rabbit.Type rabbitType){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.RABBIT)){
+			((IRabbitPet) pet).setRabbitType(rabbitType);
 		}
 		return true;
 	}
