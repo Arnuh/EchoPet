@@ -22,12 +22,13 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 
-import net.minecraft.server.v1_14_R1.EntityTypes;
-import net.minecraft.server.v1_14_R1.World;
+import net.minecraft.server.v1_14_R1.*;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
+
+	private static final DataWatcherObject<String> Type = DataWatcher.a(EntityMushroomCowPet.class, DataWatcherRegistry.d);
 
 	public EntityMushroomCowPet(World world){
 		super(EntityTypes.MOOSHROOM, world);
@@ -35,5 +36,11 @@ public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroo
 
 	public EntityMushroomCowPet(World world, IPet pet){
 		super(EntityTypes.MOOSHROOM, world, pet);
+	}
+
+	@Override
+	protected void initDatawatcher(){
+		super.initDatawatcher();
+		this.datawatcher.register(Type, EntityMushroomCow.Type.RED.name().toLowerCase());// Mojang grabs the string variable but we can't
 	}
 }

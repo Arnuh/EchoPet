@@ -30,6 +30,7 @@ import net.minecraft.server.v1_14_R1.*;
 public class EntityPigPet extends EntityAgeablePet implements IEntityPigPet{
 
 	private static final DataWatcherObject<Boolean> SADDLE = DataWatcher.a(EntityPigPet.class, DataWatcherRegistry.i);
+	private static final DataWatcherObject<Integer> bA = DataWatcher.a(EntityPigPet.class, DataWatcherRegistry.b);
 
 	public EntityPigPet(World world){
 		super(EntityTypes.PIG, world);
@@ -52,5 +53,6 @@ public class EntityPigPet extends EntityAgeablePet implements IEntityPigPet{
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(SADDLE, Boolean.valueOf(false));
+		this.datawatcher.register(bA, Integer.valueOf(0));
 	}
 }
