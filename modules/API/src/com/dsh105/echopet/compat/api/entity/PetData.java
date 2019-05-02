@@ -128,9 +128,13 @@ public enum PetData {
 		}
 		return false;
 	}, Material.BONE, "Angry"),
-    // Collar Colors
+    // Colors. Used for Collars(wolf), Sheep, and certain Rabbit Types.
 	WHITE("white", (player, pet, data, flag)-> {
-		return setColorByDye(pet, DyeColor.WHITE);
+		if(pet.getPetType().equals(PetType.RABBIT)){
+			return setRabbitType(pet, Rabbit.Type.WHITE);
+		}else{
+			return setColorByDye(pet, DyeColor.WHITE);
+		}
 	}, Material.WHITE_WOOL, "White"),
 	ORANGE("orange", (player, pet, data, flag)-> {
 		return setColorByDye(pet, DyeColor.ORANGE);
@@ -166,7 +170,11 @@ public enum PetData {
 		return setColorByDye(pet, DyeColor.BLUE);
 	}, Material.BLUE_WOOL, "Blue"),
 	BROWN("brown", (player, pet, data, flag)-> {
-		return setColorByDye(pet, DyeColor.BROWN);
+		if(pet.getPetType().equals(PetType.RABBIT)){
+			return setRabbitType(pet, Rabbit.Type.BROWN);
+		}else{
+			return setColorByDye(pet, DyeColor.BROWN);
+		}
 	}, Material.BROWN_WOOL, "Brown"),
 	GREEN("green", (player, pet, data, flag)-> {
 		return setColorByDye(pet, DyeColor.GREEN);
@@ -175,7 +183,11 @@ public enum PetData {
 		return setColorByDye(pet, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
 	BLACK("black", (player, pet, data, flag)-> {
-		return setColorByDye(pet, DyeColor.BLACK);
+		if(pet.getPetType().equals(PetType.RABBIT)){
+			return setRabbitType(pet, Rabbit.Type.BLACK);
+		}else{
+			return setColorByDye(pet, DyeColor.BLACK);
+		}
 	}, Material.BLACK_WOOL, "Black"),
     // Villager Types
 	DESERT("desert", (player, pet, data, flag)-> {
@@ -262,25 +274,17 @@ public enum PetData {
 		return setVillagerLevel(pet, VillagerLevel.MASTER);
 	}, Material.DIAMOND, "Master"),
     // Rabbit Type
-	RABBIT_BROWN("rabbit_brown", (player, pet, data, flag)-> {
-		return setRabbitType(pet, Rabbit.Type.BROWN);
-	}, Material.BROWN_WOOL, "Brown"),
-	RABBIT_WHITE("rabbit_white", (player, pet, data, flag)-> {
-		return setRabbitType(pet, Rabbit.Type.WHITE);
-	}, Material.WHITE_WOOL, "White"),
-	RABBIT_BLACK("rabbit_black", (player, pet, data, flag)-> {
-		return setRabbitType(pet, Rabbit.Type.BLACK);
-	}, Material.BLACK_WOOL, "Black"),
-	RABBIT_BLACK_AND_WHITE("rabbit_black_and_white", (player, pet, data, flag)-> {
+    // Brown, White, Black are handled above.
+	BLACK_AND_WHITE("black_and_white", (player, pet, data, flag)-> {
 		return setRabbitType(pet, Rabbit.Type.BLACK_AND_WHITE);
 	}, Material.GRAY_WOOL, "Black and White"),
-	RABBIT_GOLD("rabbit_gold", (player, pet, data, flag)-> {
+	GOLD("gold", (player, pet, data, flag)-> {
 		return setRabbitType(pet, Rabbit.Type.GOLD);
-	}, Material.YELLOW_WOOL, "Gold"),
-	RABBIT_SALT_AND_PEPPER("rabbit_salt_and_pepper", (player, pet, data, flag)-> {
+	}, Material.GOLD_BLOCK, "Gold"),
+	SALT_AND_PEPPER("salt_and_pepper", (player, pet, data, flag)-> {
 		return setRabbitType(pet, Rabbit.Type.SALT_AND_PEPPER);
 	}, Material.YELLOW_WOOL, "Salt and Pepper"),
-	RABBIT_KILLER_BUNNY("rabbit_killer_bunny", (player, pet, data, flag)-> {
+	KILLER_BUNNY("killer_bunny", (player, pet, data, flag)-> {
 		return setRabbitType(pet, Rabbit.Type.THE_KILLER_BUNNY);
 	}, Material.RED_WOOL, "Killer Bunny"),
 	/*
@@ -296,9 +300,7 @@ public enum PetData {
 	DARK_BROWN("darkbrown", DataMenuType.HORSE_VARIANT),
 	DIAMOND("diamond", DataMenuType.HORSE_ARMOUR),
 	DONKEY("donkey", DataMenuType.HORSE_TYPE),
-	ELDER("elder", DataMenuType.BOOLEAN),
 	FARMER("farmer", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
-	FIRE("fire", DataMenuType.BOOLEAN),
 	GRAY("gray", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	GRAY_LLAMA("gray", DataMenuType.LLAMA_VARIANT),
 	SILVER("silver", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR),
@@ -328,10 +330,7 @@ public enum PetData {
 	WHITE_LLAMA("white", DataMenuType.LLAMA_VARIANT),
 	WILD("wild", DataMenuType.OCELOT_TYPE),
 	YELLOW("yellow", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	UNDEAD_HORSE("zombie", DataMenuType.HORSE_TYPE),
-	LEFT_SHOULDER("leftshoulder", DataMenuType.BOOLEAN),
-	RIGHT_SHOULDER("rightshoulder", DataMenuType.BOOLEAN),
-	OPEN("open", DataMenuType.BOOLEAN)*/
+	UNDEAD_HORSE("zombie", DataMenuType.HORSE_TYPE),*/
 	;
 
 	public static final PetData[] values = values();

@@ -30,7 +30,7 @@ public enum PetDataCategory{
 	VILLAGER_TYPE(Material.SAND, "Villager Type", PetData.DESERT, PetData.JUNGLE, PetData.PLAINS, PetData.SAVANNA, PetData.SNOWY, PetData.SWAMP, PetData.TAIGA),
 	VILLAGER_PROFESSION(Material.CRAFTING_TABLE, "Villager Profession", PetData.NONE, PetData.ARMORER, PetData.BUTCHER, PetData.CARTOGRAPHER, PetData.CLERIC, PetData.FARMER, PetData.FISHERMAN, PetData.FLETCHER, PetData.LEATHERWORKER, PetData.LIBRARIAN, PetData.MASON, PetData.NITWIT, PetData.SHEPHERD, PetData.TOOLSMITH, PetData.WEAPONSMITH),
 	VILLAGER_LEVEL(Material.EMERALD, "Villager Level", PetData.NOVICE, PetData.APPRENTICE, PetData.JOURNEYMEN, PetData.EXPERT, PetData.MASTER),
-	RABBIT_TYPE(Material.RABBIT_HIDE, "Rabbit Type", PetData.RABBIT_BROWN, PetData.RABBIT_WHITE, PetData.RABBIT_BLACK, PetData.RABBIT_BLACK_AND_WHITE, PetData.RABBIT_GOLD, PetData.RABBIT_SALT_AND_PEPPER, PetData.RABBIT_KILLER_BUNNY),
+	RABBIT_TYPE(Material.RABBIT_HIDE, "Rabbit Type", PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.KILLER_BUNNY),
 	;
 
 	public static final PetDataCategory[] values = values();
