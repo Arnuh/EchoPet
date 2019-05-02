@@ -468,14 +468,6 @@ public class PetManager implements IPetManager {
 						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to Ocelot.Type.", e, true);
 					}
 				}
-				if(pd.isType(DataMenuType.PROFESSION) || pd.isType(DataMenuType.ZOMBIE_PROFESSION)){
-					Profession p = Profession.valueOf(pd.toString());
-					if(p != null){
-						if(petType == PetType.ZOMBIE || petType == PetType.ZOMBIEVILLAGER){
-							((IZombiePet) pet).setVillagerProfession(p);
-						}
-					}
-				}
 				if(pd.isType(DataMenuType.COLOR) && (petType == PetType.SHEEP || petType == PetType.WOLF || petType == PetType.SHULKER)){
 					try{
 						DyeColor dc = DyeColor.valueOf(pd.toString());

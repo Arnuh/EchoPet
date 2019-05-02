@@ -16,11 +16,9 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.VillagerLevel;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 
 import net.minecraft.server.v1_14_R1.*;
@@ -28,7 +26,7 @@ import net.minecraft.server.v1_14_R1.VillagerType;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEntityVillagerPet{
+public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEntityVillagerPet, IEntityVillagerDataHolder{
 
 	private static final DataWatcherObject<VillagerData> DATA = DataWatcher.a(EntityVillagerPet.class, DataWatcherRegistry.q);
 

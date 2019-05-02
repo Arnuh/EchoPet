@@ -20,11 +20,12 @@ package com.dsh105.echopet.api.pet.type;
 import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.*;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
 
 @EntityPetType(petType = PetType.VILLAGER)
-public class VillagerPet extends VillagerAbstractPet implements IVillagerPet{
+public class VillagerPet extends VillagerAbstractPet implements IVillagerPet, IVillagerDataHolder{
 
 	private VillagerType type = VillagerType.PLAINS;
 	private Profession profession = Profession.NONE;
@@ -41,7 +42,7 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet{
 
     @Override
     public void setProfession(Profession prof) {
-		((IEntityVillagerPet) getEntityPet()).setProfession(prof.ordinal());
+		((IEntityVillagerDataHolder) getEntityPet()).setProfession(prof.ordinal());
         this.profession = prof;
     }
 
@@ -52,7 +53,7 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet{
 
 	@Override
 	public void setType(VillagerType type){
-		((IEntityVillagerPet) getEntityPet()).setType(type.ordinal());
+		((IEntityVillagerDataHolder) getEntityPet()).setType(type.ordinal());
 		this.type = type;
 	}
 
@@ -63,7 +64,7 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet{
 
 	@Override
 	public void setLevel(VillagerLevel level){
-		((IEntityVillagerPet) getEntityPet()).setLevel(level.ordinal());
+		((IEntityVillagerDataHolder) getEntityPet()).setLevel(level.ordinal());
 		this.level = level;
 	}
 }

@@ -75,14 +75,6 @@ public class MenuUtil {
 		if (pt == PetType.WITCH) {
 		    options.add(new MenuOption(i++, MenuItem.POTION));
 		}
-		if(pt == PetType.ZOMBIE || pt == PetType.ZOMBIEVILLAGER){
-		    
-			if(pt == PetType.ZOMBIEVILLAGER){
-				options.add(new MenuOption(i++, MenuItem.ZOMBIE_PROFESSION));
-			}else if(new Version("1.10-R1").isSupported(new Version())){
-				options.add(new MenuOption(i++, MenuItem.ZOMBIE_PROFESSION));
-			}
-		}
 		if (pt == PetType.OCELOT) {
 		    options.add(new MenuOption(i++, MenuItem.OCELOT_TYPE));
 		}

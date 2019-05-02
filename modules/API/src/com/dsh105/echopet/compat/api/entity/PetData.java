@@ -48,34 +48,34 @@ public enum PetData {
 		return false;
 	}, Material.WHEAT, "Baby"),
 	SHEARED("sheared", (player, pet, data, flag)-> {
-		if(pet instanceof ISheepPet){
+		if(pet.getPetType().equals(PetType.SHEEP)){
 			((ISheepPet) pet).setSheared(flag);
 			return true;
-		}else if(pet instanceof ISnowmanPet){
+		}else if(pet.getPetType().equals(PetType.SNOWMAN)){
 			((ISnowmanPet) pet).setSheared(flag);
 			return true;
 		}
 		return false;
 	}, Material.SHEARS, "Sheared"),
 	FIRE("fire", (player, pet, data, flag)-> {
-		if(pet instanceof IBlazePet){
+		if(pet.getPetType().equals(PetType.BLAZE)){
 			((IBlazePet) pet).setOnFire(flag);
 			return true;
 		}
 		return false;
 	}, Material.FIRE_CHARGE, "Fire"),
 	POWERED("powered", (player, pet, data, flag)-> {
-		if(pet instanceof ICreeperPet){
+		if(pet.getPetType().equals(PetType.CREEPER)){
 			((ICreeperPet) pet).setPowered(flag);
 			return true;
-		}else if(pet instanceof IVexPet){
+		}else if(pet.getPetType().equals(PetType.VEX)){
 			((IVexPet) pet).setPowered(flag);
 			return true;
 		}
 		return false;
 	}, Material.BEACON, "Powered"),
 	SCREAMING("screaming", (player, pet, data, flag)-> {
-		if(pet instanceof IEndermanPet){
+		if(pet.getPetType().equals(PetType.ENDERMAN)){
 			((IEndermanPet) pet).setScreaming(flag);
 			return true;
 		}
@@ -288,11 +288,9 @@ public enum PetData {
 		return setRabbitType(pet, Rabbit.Type.THE_KILLER_BUNNY);
 	}, Material.RED_WOOL, "Killer Bunny"),
 	/*
-	BLACKSMITH("blacksmith", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	BLACK_DOTS("blackSpot", DataMenuType.HORSE_MARKING),
 	BLUE("blue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	BROWN_LLAMA("brown", DataMenuType.LLAMA_VARIANT),
-	BUTCHER("butcher", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	CHESTED("chested", DataMenuType.BOOLEAN),
 	CHESTNUT("chestnut", DataMenuType.HORSE_VARIANT),
 	CREAMY("creamy", DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_VARIANT),
@@ -300,14 +298,11 @@ public enum PetData {
 	DARK_BROWN("darkbrown", DataMenuType.HORSE_VARIANT),
 	DIAMOND("diamond", DataMenuType.HORSE_ARMOUR),
 	DONKEY("donkey", DataMenuType.HORSE_TYPE),
-	FARMER("farmer", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	GRAY("gray", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	GRAY_LLAMA("gray", DataMenuType.LLAMA_VARIANT),
 	SILVER("silver", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR),
 	GREEN("green", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	HUSK("husk", DataMenuType.ZOMBIE_PROFESSION),
 	IRON("iron", DataMenuType.HORSE_ARMOUR),
-	LIBRARIAN("librarian", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	LIGHT_BLUE("lightBlue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	LIME("lime", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	MAGENTA("magenta", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
@@ -318,7 +313,6 @@ public enum PetData {
 	HORSE("normal", DataMenuType.HORSE_TYPE),
 	ORANGE("orange", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	PINK("pink", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	PRIEST("priest", DataMenuType.PROFESSION, DataMenuType.ZOMBIE_PROFESSION),
 	PURPLE("purple", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	RED("red", DataMenuType.OCELOT_TYPE, DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	SIAMESE("siamese", DataMenuType.OCELOT_TYPE),
@@ -429,24 +423,24 @@ public enum PetData {
 
 	private static boolean setVillagerType(IPet pet, VillagerType villagerType){
 		PetType type = pet.getPetType();
-		if(type.equals(PetType.VILLAGER)){
-			((IVillagerPet) pet).setType(villagerType);
+		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
+			((IVillagerDataHolder) pet).setType(villagerType);
 		}
 		return true;
 	}
 
 	private static boolean setVillagerLevel(IPet pet, VillagerLevel villagerLevel){
 		PetType type = pet.getPetType();
-		if(type.equals(PetType.VILLAGER)){
-			((IVillagerPet) pet).setLevel(villagerLevel);
+		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
+			((IVillagerDataHolder) pet).setLevel(villagerLevel);
 		}
 		return true;
 	}
 
 	private static boolean setProfession(IPet pet, Profession profession){
 		PetType type = pet.getPetType();
-		if(type.equals(PetType.VILLAGER)){
-			((IVillagerPet) pet).setProfession(profession);
+		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
+			((IVillagerDataHolder) pet).setProfession(profession);
 		}
 		return true;
 	}

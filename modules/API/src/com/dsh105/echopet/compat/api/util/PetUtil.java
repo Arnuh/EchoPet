@@ -263,18 +263,11 @@ public class PetUtil {
         }
 
 		if(pt.getPetType() == PetType.VILLAGER || pt.getPetType() == PetType.ZOMBIE){
-            String prof = "";
-			if(pt.getPetType() == PetType.VILLAGER){
-				prof = ((IVillagerPet) pt).getProfession() == null ? "Farmer" : StringUtil.capitalise(((IVillagerPet) pt).getProfession().toString().replace("_", " "));
-			}else{
-				// prof = StringUtil.capitalise(((IZombiePet) pt).getVillagerProfession().toString().replace("_", " "));
-			}
+			String prof = StringUtil.capitalise(((IVillagerDataHolder) pt).getProfession().toString().replace("_", " "));
             info.add(ChatColor.GOLD + " - Profession: " + ChatColor.YELLOW + prof);
-        }
-		if(pt.getPetType() == PetType.VILLAGER || pt.getPetType() == PetType.ZOMBIE){
-			String prof = StringUtil.capitalise(((IVillagerPet) pt).getType().toString().replace("_", " "));
+			prof = StringUtil.capitalise(((IVillagerDataHolder) pt).getType().toString().replace("_", " "));
 			info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + prof);
-			prof = StringUtil.capitalise(((IVillagerPet) pt).getLevel().toString().replace("_", " "));
+			prof = StringUtil.capitalise(((IVillagerDataHolder) pt).getLevel().toString().replace("_", " "));
 			info.add(ChatColor.GOLD + " - Level: " + ChatColor.YELLOW + prof);
 		}
 

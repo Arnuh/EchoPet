@@ -14,10 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.dsh105.echopet.compat.api.entity.type.pet;
-
-public interface IVillagerPet extends IVillagerAbstractPet{
+package com.dsh105.echopet.compat.api.entity.type.nms;
 
 
+public interface IEntityVillagerDataHolder{
+
+	public void setProfession(int profession);
+
+	public void setType(int type);
+
+	public void setLevel(int level);
 }

@@ -61,7 +61,7 @@ public enum PetType {
 	ZOMBIE("Zombie", "Zombie Pet", "zombie"/*, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST, PetData.HUSK*/),
 	HUSK("Husk", "Husk Pet", "husk"),
 	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner"),
-	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager"/*, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST*/),
+	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	VEX("Vex", "Vex Pet", "vex", PetData.POWERED),
 	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
     // Passive mobs

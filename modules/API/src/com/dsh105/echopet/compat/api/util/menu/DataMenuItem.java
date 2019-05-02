@@ -29,7 +29,6 @@ public enum DataMenuItem{
     RED_CAT(DataMenuType.OCELOT_TYPE, PetData.RED, Material.ROSE_RED, 1, (short) 1, "Red", "Cat Type"),
     SIAMESE_CAT(DataMenuType.OCELOT_TYPE, PetData.SIAMESE, Material.LIGHT_GRAY_DYE, 1, (short) 7, "Siamese", "Cat Type"),
     WILD_CAT(DataMenuType.OCELOT_TYPE, PetData.WILD, Material.ORANGE_DYE, 1, (short) 14, "Wild", "Cat Type"),
-    HUSK(DataMenuType.ZOMBIE_PROFESSION, PetData.HUSK, Material.ROTTEN_FLESH, 1, (short) 0, "Husk", "Zombie Type"),
     BLACK(DataMenuType.COLOR, PetData.BLACK, Material.BLACK_WOOL, 1, (short) 15, "Black", "Wool or Collar Color"),
     BLUE(new HashSet<>(Arrays.asList(DataMenuType.COLOR, DataMenuType.PARROT_VARIANT)), PetData.BLUE, Material.BLUE_WOOL, 1, (short) 11, "Blue", "Wool or Collar Color"),
     BROWN(DataMenuType.COLOR, PetData.BROWN, Material.BROWN_WOOL, 1, (short) 12, "Brown", "Wool or Collar Color"),
