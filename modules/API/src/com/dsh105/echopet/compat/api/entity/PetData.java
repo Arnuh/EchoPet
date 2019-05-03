@@ -27,7 +27,22 @@ import org.bukkit.entity.Rabbit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.echopet.compat.api.entity.type.pet.*;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.VersionCheckType;
 
@@ -91,14 +106,14 @@ public enum PetData {
 		return setSlimeSize(pet, 4);
 	}, Material.SLIME_BALL, "Large"),
 	SHIELD("shield", (player, pet, data, flag)-> {
-		if(pet instanceof IWitherPet){
+		if(pet.getPetType().equals(PetType.WITHER)){
 			((IWitherPet) pet).setShielded(flag);
 			return true;
 		}
 		return false;
 	}, Material.GLASS, "Shield"),
 	SADDLE("saddle", (player, pet, data, flag)-> {
-		if(pet instanceof IPigPet){
+		if(pet.getPetType().equals(PetType.PIG)){
 			((IPigPet) pet).setSaddle(flag);
 			return true;
 		}else if(pet instanceof IHorseAbstractPet){
@@ -108,21 +123,21 @@ public enum PetData {
 		return false;
 	}, Material.SADDLE, "Saddle"),
 	STANDING_UP("standing_up", (player, pet, data, flag)-> {
-		if(pet instanceof IPolarBearPet){
+		if(pet.getPetType().equals(PetType.POLARBEAR)){
 			((IPolarBearPet) pet).setStandingUp(flag);
 			return true;
 		}
 		return false;
 	}, Material.TROPICAL_FISH, "Standing Up"),
 	TAMED("tamed", (player, pet, data, flag)-> {
-		if(pet instanceof IWolfPet){
-			((IWolfPet) pet).setTamed(flag);
+		if(pet instanceof ITameablePet){
+			((ITameablePet) pet).setTamed(flag);
 			return true;
 		}
 		return false;
 	}, Material.BONE, "Tamed"),
 	ANGRY("angry", (player, pet, data, flag)-> {
-		if(pet instanceof IWolfPet){
+		if(pet.getPetType().equals(PetType.WOLF)){
 			((IWolfPet) pet).setAngry(flag);
 			return true;
 		}
@@ -289,24 +304,19 @@ public enum PetData {
 	}, Material.RED_WOOL, "Killer Bunny"),
 	/*
 	BLACK_DOTS("blackSpot", DataMenuType.HORSE_MARKING),
-	BLUE("blue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	BROWN_LLAMA("brown", DataMenuType.LLAMA_VARIANT),
 	CHESTED("chested", DataMenuType.BOOLEAN),
 	CHESTNUT("chestnut", DataMenuType.HORSE_VARIANT),
 	CREAMY("creamy", DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_VARIANT),
-	CYAN("cyan", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	DARK_BROWN("darkbrown", DataMenuType.HORSE_VARIANT),
 	DIAMOND("diamond", DataMenuType.HORSE_ARMOUR),
 	DONKEY("donkey", DataMenuType.HORSE_TYPE),
-	GRAY("gray", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	GRAY_LLAMA("gray", DataMenuType.LLAMA_VARIANT),
 	SILVER("silver", DataMenuType.COLOR, DataMenuType.HORSE_VARIANT, DataMenuType.LLAMA_COLOR),
-	GREEN("green", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
 	IRON("iron", DataMenuType.HORSE_ARMOUR),
 	LIGHT_BLUE("lightBlue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	LIME("lime", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	MAGENTA("magenta", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	MEDIUM("medium", DataMenuType.SIZE),
 	MULE("mule", DataMenuType.HORSE_TYPE),
 	NOARMOUR("noarmour", DataMenuType.HORSE_ARMOUR),
 	NONE("noMarking", DataMenuType.HORSE_MARKING),
@@ -314,15 +324,11 @@ public enum PetData {
 	ORANGE("orange", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	PINK("pink", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	PURPLE("purple", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	RED("red", DataMenuType.OCELOT_TYPE, DataMenuType.COLOR, DataMenuType.LLAMA_COLOR, DataMenuType.PARROT_VARIANT),
-	SIAMESE("siamese", DataMenuType.OCELOT_TYPE),
 	SKELETON_HORSE("skeleton", DataMenuType.HORSE_TYPE),
-	VILLAGER("villager", DataMenuType.BOOLEAN),
 	WHITEFIELD("whitePatch", DataMenuType.HORSE_MARKING),
 	WHITE_DOTS("whiteSpot", DataMenuType.HORSE_MARKING),
 	WHITE_SOCKS("whiteSocks", DataMenuType.HORSE_MARKING),
 	WHITE_LLAMA("white", DataMenuType.LLAMA_VARIANT),
-	WILD("wild", DataMenuType.OCELOT_TYPE),
 	YELLOW("yellow", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
 	UNDEAD_HORSE("zombie", DataMenuType.HORSE_TYPE),*/
 	;
@@ -405,6 +411,8 @@ public enum PetData {
 			((ISheepPet) pet).setDyeColor(color);
 		}else if(type.equals(PetType.WOLF)){
 			((IWolfPet) pet).setCollarColor(color);
+		}else if(type.equals(PetType.PARROT)){
+			((IParrotPet) pet).setVariant(ParrotVariant.valueOf(color.name()));
 		}
 		return true;
 	}

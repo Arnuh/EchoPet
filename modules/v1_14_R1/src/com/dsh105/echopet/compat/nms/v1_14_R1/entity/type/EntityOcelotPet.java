@@ -16,8 +16,6 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import java.util.UUID;
-
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -25,7 +23,11 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityOcelotPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.OCELOT)
@@ -41,14 +43,6 @@ public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPe
 		super(EntityTypes.OCELOT, world, pet);
 	}
 
-	public int getCatType(){
-		return 0;
-	}
-
-	@Override
-	public void setCatType(int i){
-
-	}
 
 	@Override
 	protected void initDatawatcher(){
@@ -66,12 +60,4 @@ public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPe
 		return "entity.cat.death";
 	}
 
-	@Override
-	public void setTamed(boolean flag){}
-
-	@Override
-	public void setSitting(boolean sitting){}
-
-	@Override
-	public void setOwnerUUID(UUID owner){}
 }

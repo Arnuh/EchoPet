@@ -16,11 +16,9 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
-public enum ParrotVariant{
-	RED,
-	BLUE,
-	GREEN,
-	CYAN,
-	GRAY,
-	;
+public interface ITameablePet{
+
+	public void setTamed(boolean flag);
+
+	public boolean isTamed();
 }

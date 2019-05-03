@@ -34,12 +34,9 @@ public enum MenuItem{
 	HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour", "Horse"),
 	CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
 	POTION(Material.POTION, 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
-	CAT_TYPE(Material.TROPICAL_FISH, 1, (short) 0, DataMenuType.CAT_TYPE, "Cat Type", "Cat"),
-	OCELOT_TYPE(Material.TROPICAL_FISH, 1, (short) 0, DataMenuType.OCELOT_TYPE, "Ocelot Type", "Ocelot"),
 	COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf", "Cat"),
 	LLAMA_VARIANT(Material.LEATHER, 1, (short) 0, DataMenuType.LLAMA_VARIANT, "Llama Variant", "Llama"),
 	LLAMA_COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.LLAMA_COLOR, "Color", "Llama"),
-	PARROT_VARIANT(Material.WHITE_WOOL, 1, (short) 4, DataMenuType.PARROT_VARIANT, "Variant", "Parrot"),
 	LEFT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Left Shoulder", "Put a pet on your Left Shoulder"),
 	RIGHT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Right Shoulder", "Put a pet on your Right Shoulder"),
 	*/

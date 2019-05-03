@@ -35,7 +35,11 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.*;
+import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.Logger;
+import com.dsh105.echopet.compat.api.util.PetUtil;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.util.WorldUtil;
 
 
 public class PetManager implements IPetManager {
@@ -458,16 +462,6 @@ public class PetManager implements IPetManager {
 			PetType petType = pet.getPetType();
 			if(petType.isDataAllowed(pd)){
 				/*
-				if(pd.isType(DataMenuType.OCELOT_TYPE) && petType == PetType.OCELOT){
-					try{
-						org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + (pd == PetData.WILD ? "_OCELOT" : "_CAT"));
-						if(t != null){
-							((IOcelotPet) pet).setCatType(t);
-						}
-					}catch(Exception e){
-						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to Ocelot.Type.", e, true);
-					}
-				}
 				if(pd.isType(DataMenuType.COLOR) && (petType == PetType.SHEEP || petType == PetType.WOLF || petType == PetType.SHULKER)){
 					try{
 						DyeColor dc = DyeColor.valueOf(pd.toString());
@@ -482,16 +476,6 @@ public class PetManager implements IPetManager {
 						}
 					}catch(Exception e){
 						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to DyeColor.", e, true);
-					}
-				}
-				if(pd.isType(DataMenuType.PARROT_VARIANT) && petType == PetType.PARROT){
-					try{
-						ParrotVariant pv = ParrotVariant.valueOf(pd.toString());
-						if(pv != null){
-							((IParrotPet) pet).setVariant(pv);
-						}
-					}catch(Exception e){
-						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to ParrotVariant.", e, true);
 					}
 				}
 				if(petType == PetType.HORSE || petType == PetType.MULE || petType == PetType.DONKEY || petType == PetType.LLAMA){

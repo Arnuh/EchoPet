@@ -5,10 +5,7 @@ import org.bukkit.entity.Player;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 
-/**
- * @author Arnah
- * @since Apr 26, 2019
-*/
+
 public class AgeablePet extends Pet implements IAgeablePet{
 
 	public AgeablePet(Player owner){

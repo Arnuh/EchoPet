@@ -18,13 +18,7 @@
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import org.bukkit.entity.Ocelot;
 
 public interface IOcelotPet extends IAgeablePet {
 
-    public Ocelot.Type getCatType();
-
-    public void setCatType(Ocelot.Type t);
-
-    public void setCatType(int i);
 }

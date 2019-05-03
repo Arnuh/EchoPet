@@ -19,7 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 public interface IAgeablePet extends IPet {
 
-    public abstract void setBaby(boolean flag);
+	public void setBaby(boolean flag);
 
-    public abstract boolean isBaby();
+	public boolean isBaby();
 }

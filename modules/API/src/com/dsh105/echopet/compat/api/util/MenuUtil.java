@@ -24,7 +24,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.google.common.collect.ImmutableList;
 
 import net.md_5.bungee.api.ChatColor;
@@ -75,9 +79,6 @@ public class MenuUtil {
 		if (pt == PetType.WITCH) {
 		    options.add(new MenuOption(i++, MenuItem.POTION));
 		}
-		if (pt == PetType.OCELOT) {
-		    options.add(new MenuOption(i++, MenuItem.OCELOT_TYPE));
-		}
 		if(pt == PetType.HORSE || pt == PetType.DONKEY || pt == PetType.MULE || pt == PetType.SKELETONHORSE || pt == PetType.ZOMBIEHORSE){
 			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.HORSE || new Version("1.10-R1").isSupported(new Version())){
 				options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));
@@ -95,7 +96,6 @@ public class MenuUtil {
 			options.add(new MenuOption(i++, MenuItem.LLAMA_VARIANT));
 		}
 		if(pt == PetType.PARROT){
-			options.add(new MenuOption(i++, MenuItem.PARROT_VARIANT));
 			options.add(new MenuOption(i++, MenuItem.LEFT_SHOULDER));
 			options.add(new MenuOption(i++, MenuItem.RIGHT_SHOULDER));
 		}*/

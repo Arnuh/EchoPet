@@ -14,13 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.api.pet;
 
-public enum ParrotVariant{
-	RED,
-	BLUE,
-	GREEN,
-	CYAN,
-	GRAY,
-	;
+import org.bukkit.entity.Player;
+
+import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.ITameablePet;
+
+public class TameablePet extends AgeablePet implements ITameablePet{
+
+	private boolean tamed;
+
+	public TameablePet(Player owner){
+		super(owner);
+	}
+
+	@Override
+	public void setTamed(boolean tamed){
+		((IEntityTameablePet) getEntityPet()).setTamed(tamed);
+		this.tamed = tamed;
+	}
+
+	@Override
+	public boolean isTamed(){
+		return this.tamed;
+	}
 }

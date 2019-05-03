@@ -26,8 +26,30 @@ import org.bukkit.entity.Player;
 
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.compat.api.entity.*;
-import com.dsh105.echopet.compat.api.entity.type.pet.*;
+import com.dsh105.echopet.compat.api.entity.HorseVariant;
+import com.dsh105.echopet.compat.api.entity.IAgeablePet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPigZombiePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IShulkerPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 
@@ -272,9 +294,9 @@ public class PetUtil {
 		}
 
         if (pt.getPetType() == PetType.OCELOT) {
-            String oType = "";
-            oType = ((IOcelotPet) pt).getCatType() == null ? "Default" : StringUtil.capitalise(((IOcelotPet) pt).getCatType().toString().replace("_", " "));
-            info.add(ChatColor.GOLD + " - Ocelot Type: " + ChatColor.YELLOW + oType);
+			// String oType = "";
+			// oType = ((IOcelotPet) pt).getCatType() == null ? "Default" : StringUtil.capitalise(((IOcelotPet) pt).getCatType().toString().replace("_", " "));
+			// info.add(ChatColor.GOLD + " - Ocelot Type: " + ChatColor.YELLOW + oType);
         }
 
         if (pt.getPetType() == PetType.PIG) {
