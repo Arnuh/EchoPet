@@ -24,6 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,6 +35,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
@@ -153,12 +155,22 @@ public enum PetData {
 		}
 		return false;
 	}, Material.CHEST, "Chest"),
-    // Colors. Used for Collars(wolf), Sheep, and certain Rabbit Types.
+	CREAMY("creamy", (player, pet, data, flag)-> {
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseColor(pet, Horse.Color.CREAMY);
+		}else if(pet.getPetType().equals(PetType.LLAMA)){
+			return setLlamaColor(pet, Llama.Color.CREAMY);
+		}
+		return false;
+	}, Material.YELLOW_WOOL, "Creamy"),
+    // Colors. Used for Collars(wolf), Sheep, Llama Color, and certain Rabbit Types.
 	WHITE("white", (player, pet, data, flag)-> {
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.WHITE);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.WHITE);
+		}else if(pet.getPetType().equals(PetType.LLAMA)){
+			return setLlamaColor(pet, Llama.Color.WHITE);
 		}else{
 			return setColorByDye(pet, DyeColor.WHITE);
 		}
@@ -184,6 +196,8 @@ public enum PetData {
 	GRAY("gray", (player, pet, data, flag)-> {
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.GRAY);
+		}else if(pet.getPetType().equals(PetType.LLAMA)){
+			return setLlamaColor(pet, Llama.Color.GRAY);
 		}else{
 			return setColorByDye(pet, DyeColor.GRAY);
 		}
@@ -205,6 +219,8 @@ public enum PetData {
 			return setRabbitType(pet, Rabbit.Type.BROWN);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BROWN);
+		}else if(pet.getPetType().equals(PetType.LLAMA)){
+			return setLlamaColor(pet, Llama.Color.BROWN);
 		}else{
 			return setColorByDye(pet, DyeColor.BROWN);
 		}
@@ -225,6 +241,55 @@ public enum PetData {
 			return setColorByDye(pet, DyeColor.BLACK);
 		}
 	}, Material.BLACK_WOOL, "Black"),
+    // Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
+	WHITE_CARPET("white_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.WHITE);
+	}, Material.WHITE_CARPET, "White Carpet"),
+	ORANGE_CARPET("orange_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.ORANGE);
+	}, Material.ORANGE_CARPET, "Orange Carpet"),
+	MAGENTA_CARPET("white_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.MAGENTA);
+	}, Material.MAGENTA_CARPET, "Magenta Carpet"),
+	LIGHT_BLUE_CARPET("light_blue_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIGHT_BLUE);
+	}, Material.LIGHT_BLUE_CARPET, "Light Blue Carpet"),
+	YELLOW_CARPET("yellow_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.YELLOW);
+	}, Material.YELLOW_CARPET, "Yellow Carpet"),
+	LIME_CARPET("lime_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIME);
+	}, Material.LIME_CARPET, "Lime Carpet"),
+	PINK_CARPET("pink_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.PINK);
+	}, Material.PINK_CARPET, "Pink Carpet"),
+	GRAY_CARPET("gray_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.GRAY);
+	}, Material.GRAY_CARPET, "Gray Carpet"),
+	LIGHT_GRAY_CARPET("light_gray", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.LIGHT_GRAY);
+	}, Material.LIGHT_GRAY_CARPET, "Light Gray Carpet"),
+	CYAN_CARPET("cyan_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.CYAN);
+	}, Material.CYAN_CARPET, "Cyan Carpet"),
+	PURPLE_CARPET("purple_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.PURPLE);
+	}, Material.PURPLE_CARPET, "Purple Carpet"),
+	BLUE_CARPET("blue_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BLUE);
+	}, Material.BLUE_CARPET, "Blue Carpet"),
+	BROWN_CARPET("brown_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BROWN);
+	}, Material.BROWN_CARPET, "Brown Carpet"),
+	GREEN_CARPET("green_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.GREEN);
+	}, Material.GREEN_CARPET, "Green Carpet"),
+	RED_CARPET("red_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.RED);
+	}, Material.RED_CARPET, "Red Carpet"),
+	BLACK_CARPET("black_carpet", (player, pet, data, flag)-> {
+		return setColorByDye(pet, DyeColor.BLACK);
+	}, Material.BLACK_CARPET, "Black Carpet"),
     // Villager Types
 	DESERT("desert", (player, pet, data, flag)-> {
 		return setVillagerType(pet, VillagerType.DESERT);
@@ -323,13 +388,7 @@ public enum PetData {
 	KILLER_BUNNY("killer_bunny", (player, pet, data, flag)-> {
 		return setRabbitType(pet, Rabbit.Type.THE_KILLER_BUNNY);
 	}, Material.RED_WOOL, "Killer Bunny"),
-    // Horse Colors(variant). White, Brown, Black, Gray is above
-	CREAMY("creamy", (player, pet, data, flag)-> {
-		if(pet.getPetType().equals(PetType.HORSE)){
-			return setHorseColor(pet, Horse.Color.CREAMY);
-		}
-		return false;
-	}, Material.YELLOW_WOOL, "Creamy"),
+    // Horse Colors(variant). Creamy, White, Brown, Black, Gray is above
 	CHESTNUT("chestnut", (player, pet, data, flag)-> {
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.CHESTNUT);
@@ -373,19 +432,6 @@ public enum PetData {
 		}
 		return false;
 	}, Material.BLACK_WOOL, "Black Dots"),
-	/*
-	BROWN_LLAMA("brown", DataMenuType.LLAMA_VARIANT),
-	CREAMY("creamy", DataMenuType.LLAMA_VARIANT),
-	GRAY_LLAMA("gray", DataMenuType.LLAMA_VARIANT),
-	SILVER("silver", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	LIGHT_BLUE("lightBlue", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	LIME("lime", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	MAGENTA("magenta", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	ORANGE("orange", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	PINK("pink", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	PURPLE("purple", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR),
-	WHITE_LLAMA("white", DataMenuType.LLAMA_VARIANT),
-	YELLOW("yellow", DataMenuType.COLOR, DataMenuType.LLAMA_COLOR)*/
 	;
 
 	public static final PetData[] values = values();
@@ -468,6 +514,8 @@ public enum PetData {
 			((IWolfPet) pet).setCollarColor(color);
 		}else if(type.equals(PetType.PARROT)){
 			((IParrotPet) pet).setVariant(ParrotVariant.valueOf(color.name()));
+		}else if(type.equals(PetType.LLAMA)){
+			((ILlamaPet) pet).setCarpetColor(color);
 		}
 		return true;
 	}
@@ -528,6 +576,14 @@ public enum PetData {
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
 			((IHorsePet) pet).setStyle(style);
+		}
+		return true;
+	}
+
+	private static boolean setLlamaColor(IPet pet, Llama.Color color){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.LLAMA)){
+			((ILlamaPet) pet).setSkinColor(color);
 		}
 		return true;
 	}

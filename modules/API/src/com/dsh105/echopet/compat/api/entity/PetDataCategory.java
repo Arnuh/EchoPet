@@ -34,6 +34,8 @@ public enum PetDataCategory{
 	PARROT_VARIANT(Material.WHITE_WOOL, "Parrot Variant", PetData.RED, PetData.BLUE, PetData.GREEN, PetData.CYAN, PetData.GRAY),
 	HORSE_COLOR(Material.LEAD, "Horse Color", PetData.WHITE, PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK, PetData.GRAY, PetData.DARK_BROWN),
 	HORSE_MARKING(Material.INK_SAC, "Horse Marking", PetData.NO_MARKING, PetData.WHITE_SOCKS, PetData.WHITE_FIELD, PetData.WHITE_DOTS, PetData.BLACK_DOTS),
+	LLAMA_COLOR(Material.LEATHER, "Llama Color", PetData.CREAMY, PetData.WHITE, PetData.BROWN, PetData.GRAY),
+	LLAMA_CARPET_COLOR(Material.WHITE_CARPET, "Llama Carpet Color", PetData.WHITE_CARPET, PetData.ORANGE_CARPET, PetData.MAGENTA_CARPET, PetData.LIGHT_BLUE_CARPET, PetData.YELLOW_CARPET, PetData.LIME_CARPET, PetData.PINK_CARPET, PetData.GRAY_CARPET, PetData.LIGHT_GRAY_CARPET, PetData.CYAN_CARPET, PetData.PURPLE_CARPET, PetData.BLUE_CARPET, PetData.BROWN_CARPET, PetData.GREEN_CARPET, PetData.RED_CARPET, PetData.BLACK_CARPET),
 	;
 
 	public static final PetDataCategory[] values = values();

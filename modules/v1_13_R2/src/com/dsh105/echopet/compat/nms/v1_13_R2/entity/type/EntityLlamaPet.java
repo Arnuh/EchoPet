@@ -1,11 +1,19 @@
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Llama;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 /**
  * @Author Borlea
@@ -43,7 +51,7 @@ public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEn
 	}
 
 	@Override
-	public void setSkinColor(LlamaSkin skinColor){
+	public void setSkinColor(Llama.Color skinColor){
 		this.datawatcher.set(VARIANT, skinColor.ordinal());
 	}
 }

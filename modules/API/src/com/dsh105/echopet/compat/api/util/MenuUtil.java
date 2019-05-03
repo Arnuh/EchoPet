@@ -75,19 +75,6 @@ public class MenuUtil {
 		for(PetDataCategory data : pt.getAllowedCategories()){
 			options.add(data);
 		}
-		/*
-		if (pt == PetType.WITCH) {
-		    options.add(new MenuOption(i++, MenuItem.POTION));
-		}
-		if(pt == PetType.LLAMA){
-			options.add(new MenuOption(i++, MenuItem.CHESTED));
-			options.add(new MenuOption(i++, MenuItem.LLAMA_COLOR));
-			options.add(new MenuOption(i++, MenuItem.LLAMA_VARIANT));
-		}
-		if(pt == PetType.PARROT){
-			options.add(new MenuOption(i++, MenuItem.LEFT_SHOULDER));
-			options.add(new MenuOption(i++, MenuItem.RIGHT_SHOULDER));
-		}*/
         return options;
     }
 }

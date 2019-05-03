@@ -458,32 +458,6 @@ public class PetManager implements IPetManager {
 
     @Override
     public void setData(IPet pet, PetData pd, boolean b) {
-		if(pet.getEntityPet() != null){
-			PetType petType = pet.getPetType();
-			if(petType.isDataAllowed(pd)){
-				/*
-				if(pd.isType(DataMenuType.LLAMA_COLOR) && petType == PetType.LLAMA){
-					try{
-						DyeColor dc = DyeColor.valueOf(pd.toString());
-						if(dc != null){
-							((ILlamaPet) pet).setCarpetColor(dc);
-						}
-					}catch(Exception e){
-						Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to DyeColor.", e, true);
-					}
-				}
-				if(pd.isType(DataMenuType.LLAMA_VARIANT) && petType == PetType.LLAMA){
-					LlamaSkin skin = LlamaSkin.valueOf(pd.toString().split("_")[0]);
-					((ILlamaPet) pet).setSkinColor(skin);
-				}
-				if(pd.equals(PetData.LEFT_SHOULDER)){
-					pet.getEntityPet().setOwnerShoulderEntityLeft();
-				}else if(pd.equals(PetData.RIGHT_SHOULDER)){
-					pet.getEntityPet().setOwnerShoulderEntityRight();
-				}
-				*/
-			}
-		}
 		// Removed others in the same category
 		// Because we can only have 1 active at a time.
 		for(PetDataCategory category : PetDataCategory.values){
