@@ -9,15 +9,10 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonHorsePet;
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
- */
+
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.SKELETONHORSE)
-public class EntitySkeletonHorsePet extends EntityHorseChestedAbstractPet implements IEntitySkeletonHorsePet{
+public class EntitySkeletonHorsePet extends EntityHorseAbstractPet implements IEntitySkeletonHorsePet{
 
 	public EntitySkeletonHorsePet(World world){
 		super(EntityTypes.SKELETON_HORSE, world);

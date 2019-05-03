@@ -9,14 +9,12 @@ import com.dsh105.echopet.compat.api.entity.LlamaSkin;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.9F, height = 1.87F)
 @EntityPetType(petType = PetType.LLAMA)
 public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEntityLlamaPet{

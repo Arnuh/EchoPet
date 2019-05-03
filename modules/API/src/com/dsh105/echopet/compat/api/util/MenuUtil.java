@@ -29,6 +29,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.google.common.collect.ImmutableList;
 
 import net.md_5.bungee.api.ChatColor;
@@ -65,6 +66,9 @@ public class MenuUtil {
 		if(pet.getEntityPet() instanceof IEntityAgeablePet){
 			options.add(PetData.BABY);
 		}
+		if(pet.getEntityPet() instanceof IEntityHorseChestedAbstractPet){
+			options.add(PetData.CHESTED);
+		}
 		for(PetData data : pt.getAllowedDataTypes()){
 			options.add(data);
 		}
@@ -72,23 +76,8 @@ public class MenuUtil {
 			options.add(data);
 		}
 		/*
-		if(pt == PetType.CAT){
-			options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
-			options.add(new MenuOption(i++, MenuItem.COLOR));
-		}
 		if (pt == PetType.WITCH) {
 		    options.add(new MenuOption(i++, MenuItem.POTION));
-		}
-		if(pt == PetType.HORSE || pt == PetType.DONKEY || pt == PetType.MULE || pt == PetType.SKELETONHORSE || pt == PetType.ZOMBIEHORSE){
-			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.HORSE || new Version("1.10-R1").isSupported(new Version())){
-				options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));
-				options.add(new MenuOption(i++, MenuItem.HORSE_ARMOUR));
-				options.add(new MenuOption(i++, MenuItem.HORSE_VARIANT));
-				options.add(new MenuOption(i++, MenuItem.HORSE_MARKING));
-			}
-			if(((IHorseAbstractPet) pet).getVariant() == HorseVariant.DONKEY || ((IHorseAbstractPet) pet).getVariant() == HorseVariant.MULE){
-				options.add(new MenuOption(i++, MenuItem.CHESTED));
-			}
 		}
 		if(pt == PetType.LLAMA){
 			options.add(new MenuOption(i++, MenuItem.CHESTED));

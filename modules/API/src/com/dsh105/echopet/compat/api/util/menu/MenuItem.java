@@ -28,17 +28,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.dsh105.echopet.compat.api.util.Version;
 
 public enum MenuItem{
-	/*HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Type", "Horse"),
-	HORSE_VARIANT(Material.LEAD, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Variant", "Horse"),
-	HORSE_MARKING(Material.INK_SAC, 1, (short) 0, DataMenuType.HORSE_MARKING, "Marking", "Horse"),
-	HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour", "Horse"),
-	CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
-	POTION(Material.POTION, 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
-	COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf", "Cat"),
+	/*POTION(Material.POTION, 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
 	LLAMA_VARIANT(Material.LEATHER, 1, (short) 0, DataMenuType.LLAMA_VARIANT, "Llama Variant", "Llama"),
 	LLAMA_COLOR(Material.WHITE_WOOL, 1, (short) 0, DataMenuType.LLAMA_COLOR, "Color", "Llama"),
-	LEFT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Left Shoulder", "Put a pet on your Left Shoulder"),
-	RIGHT_SHOULDER(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Right Shoulder", "Put a pet on your Right Shoulder"),
 	*/
 	;
 

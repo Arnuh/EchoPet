@@ -3,14 +3,13 @@ package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityInsentient;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
- */
 public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractPet implements IEntityHorseChestedAbstractPet{
 
 	// EntityHorseChestedAbstract: Donkey, Mule

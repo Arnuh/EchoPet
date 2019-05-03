@@ -32,6 +32,8 @@ public enum PetDataCategory{
 	VILLAGER_LEVEL(Material.EMERALD, "Villager Level", PetData.NOVICE, PetData.APPRENTICE, PetData.JOURNEYMEN, PetData.EXPERT, PetData.MASTER),
 	RABBIT_TYPE(Material.RABBIT_HIDE, "Rabbit Type", PetData.BROWN, PetData.WHITE, PetData.BLACK, PetData.BLACK_AND_WHITE, PetData.GOLD, PetData.SALT_AND_PEPPER, PetData.KILLER_BUNNY),
 	PARROT_VARIANT(Material.WHITE_WOOL, "Parrot Variant", PetData.RED, PetData.BLUE, PetData.GREEN, PetData.CYAN, PetData.GRAY),
+	HORSE_COLOR(Material.LEAD, "Horse Color", PetData.WHITE, PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK, PetData.GRAY, PetData.DARK_BROWN),
+	HORSE_MARKING(Material.INK_SAC, "Horse Marking", PetData.NO_MARKING, PetData.WHITE_SOCKS, PetData.WHITE_FIELD, PetData.WHITE_DOTS, PetData.BLACK_DOTS),
 	;
 
 	public static final PetDataCategory[] values = values();
