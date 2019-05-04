@@ -61,8 +61,6 @@ public class MenuUtil {
 	public static List<Object> createOptionList(IPet pet){
 		PetType pt = pet.getPetType();
 		List<Object> options = new LinkedList<>();
-		options.add(PetData.HAT);
-		options.add(PetData.RIDE);
 		if(pet.getEntityPet() instanceof IEntityAgeablePet){
 			options.add(PetData.BABY);
 		}

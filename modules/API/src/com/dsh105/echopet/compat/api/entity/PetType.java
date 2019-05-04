@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.entity.Player;
 
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
@@ -95,8 +97,8 @@ public enum PetType {
     private Class<? extends IPet> petClass;
     private String defaultName;
 	private String minecraftEntityName;
-	private List<PetDataCategory> allowedCategories;
-    private List<PetData> allowedData;
+	private List<PetDataCategory> allowedCategories = new ArrayList<>();
+	private List<PetData> allowedData = new ArrayList<>();
 	private Version version;
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, allowedData);
@@ -116,11 +118,15 @@ public enum PetType {
 		try{
 		    this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-		}catch(ClassNotFoundException ignored){
-		    // do nothing
+		}catch(ClassNotFoundException ignored){}
+		this.allowedData.add(PetData.HAT);
+		this.allowedData.add(PetData.RIDE);
+		if(categories != null){
+			this.allowedCategories.addAll(ImmutableList.copyOf(categories));
 		}
-		this.allowedCategories = categories == null ? ImmutableList.of() : ImmutableList.copyOf(categories);
-		this.allowedData = allowedData == null ? ImmutableList.of() : ImmutableList.copyOf(allowedData);
+		if(allowedData != null){
+			this.allowedData.addAll(ImmutableList.copyOf(allowedData));
+		}
 		this.minecraftEntityName = minecraftEntityName;
         this.defaultName = defaultName;
 		this.version = version;
@@ -149,7 +155,6 @@ public enum PetType {
     public List<PetData> getAllowedDataTypes() {
         return this.allowedData;
     }
-
 
     public boolean isDataAllowed(PetData data) {
 		for(PetDataCategory category : allowedCategories){
@@ -200,14 +205,6 @@ public enum PetType {
 			System.out.println("        default: op");
 		}
 		for(String petTypeName : petTypes){
-			System.out.println("    echopet.pet.hat." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.pet.ride." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
 			System.out.println("    echopet.pet.default.set.type." + petTypeName + ":");
 			System.out.println("        default: op");
 		}
@@ -216,6 +213,12 @@ public enum PetType {
 			for(PetData data : petType.getAllowedDataTypes()){
 				System.out.println("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":");
 				System.out.println("        default: op");
+			}
+			for(PetDataCategory category : petType.getAllowedCategories()){
+				for(PetData data : category.getData()){
+					System.out.println("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":");
+					System.out.println("        default: op");
+				}
 			}
 		}
 		for(String petTypeName : petTypes){
@@ -245,7 +248,7 @@ public enum PetType {
 		System.out.println("        default: op");
 		System.out.println("        description: 'All permissions under the /pet command'");
 		System.out.println("        children:");
-		System.out.println("            echopet.pet: true\n            echopet.pet.remove: true\n            echopet.pet.list: true\n            echopet.pet.info: true\n            echopet.pet.menu: true\n            echopet.pet.show: true\n            echopet.pet.hide: true\n            echopet.pet.toggle: true\n            echopet.pet.call: true\n            echopet.pet.name: true\n            echopet.pet.name.override: true\n            echopet.pet.select: true\n            echopet.pet.selector: true\n            echopet.pet.type.*: true\n            echopet.pet.data.*: true\n            echopet.pet.ride.*: true\n            echopet.pet.hat.*: true\n            echopet.pet.default.*: true");
+		System.out.println("            echopet.pet: true\n            echopet.pet.remove: true\n            echopet.pet.list: true\n            echopet.pet.info: true\n            echopet.pet.menu: true\n            echopet.pet.show: true\n            echopet.pet.hide: true\n            echopet.pet.toggle: true\n            echopet.pet.call: true\n            echopet.pet.name: true\n            echopet.pet.name.override: true\n            echopet.pet.select: true\n            echopet.pet.selector: true\n            echopet.pet.type.*: true\n            echopet.pet.data.*: true\n            echopet.pet.default.*: true");
 		//
 		System.out.println("    echopet.pet.type.*:");
 		System.out.println("        default: op");
@@ -260,7 +263,7 @@ public enum PetType {
 		System.out.println("        description: 'All hat permissions'");
 		System.out.println("        children:");
 		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.hat." + petTypeName + ": true");
+			System.out.println("            echopet.pet.type." + petTypeName + ".hat: true");
 		}
 		//
 		System.out.println("    echopet.pet.ride.*:");
@@ -268,7 +271,7 @@ public enum PetType {
 		System.out.println("        description: 'All ride permissions'");
 		System.out.println("        children:");
 		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.ride." + petTypeName + ": true");
+			System.out.println("            echopet.pet.type." + petTypeName + ".ride: true");
 		}
 		//
 		System.out.println("    echopet.pet.default.*:\n        default: op\n        description: 'All permissions under /pet default <...>'\n        children:\n            echopet.pet.default.set.current: true\n            echopet.pet.default.remove: true\n            echopet.pet.default.set.type.*: true");
@@ -323,8 +326,19 @@ public enum PetType {
 			System.out.println("        description: 'All " + petTypeName + " pet data permissions'");
 			System.out.println("        children:");
 			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-			for(PetData data : PetData.values){
-				if(petType.isDataAllowed(data)){
+			for(PetData data : petType.getAllowedDataTypes()){
+				System.out.println("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true");
+			}
+			Class<?> clazz = ReflectionUtil.getClass("com.dsh105.echopet.compat.api.entity.type.pet.I" + petType.getClassIdentifier() + "Pet");
+			if(clazz != null){
+				if(IAgeablePet.class.isAssignableFrom(clazz)){
+					System.out.println("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigOptionString() + ": true");
+				}else if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
+					System.out.println("            echopet.pet.type." + petTypeName + "." + PetData.CHESTED.getConfigOptionString() + ": true");
+				}
+			}
+			for(PetDataCategory category : petType.getAllowedCategories()){
+				for(PetData data : category.getData()){
 					System.out.println("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true");
 				}
 			}

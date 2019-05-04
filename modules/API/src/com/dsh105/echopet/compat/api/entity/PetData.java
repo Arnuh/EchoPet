@@ -330,22 +330,22 @@ public enum PetData {
 	DESERT("desert", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.DESERT);
 	}, Material.SAND, "Desert"),
-	JUNGLE("desert", (player, pet, category, flag)-> {
+	JUNGLE("jungle", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.JUNGLE);
 	}, Material.VINE, "Jungle"),
-	PLAINS("desert", (player, pet, category, flag)-> {
+	PLAINS("plains", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.PLAINS);
 	}, Material.GRASS_BLOCK, "Plains"),
-	SAVANNA("desert", (player, pet, category, flag)-> {
+	SAVANNA("savanna", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.SAVANNA);
 	}, Material.SANDSTONE, "Savanna"),
-	SNOWY("desert", (player, pet, category, flag)-> {
+	SNOWY("snowy", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.SNOWY);
 	}, Material.SNOW_BLOCK, "Snowy"),
-	SWAMP("desert", (player, pet, category, flag)-> {
+	SWAMP("swamp", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.SWAMP);
 	}, Material.LILY_PAD, "Swamp"),
-	TAIGA("desert", (player, pet, category, flag)-> {
+	TAIGA("taiga", (player, pet, category, flag)-> {
 		return setVillagerType(pet, VillagerType.TAIGA);
 	}, Material.SPRUCE_LOG, "Taiga"),
     // Villager Profession

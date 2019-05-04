@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.powermessage.core.PowerMessage;
+import java.util.ArrayList;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.Perm;
+import com.dsh105.powermessage.core.PowerMessage;
 
 public enum HelpEntry {
 
@@ -39,8 +40,8 @@ public enum HelpEntry {
     DEFAULT_SET("default set <type>:[data],[data] [rider]:[data],[data]", false, new String[]{"echopet.pet.default.set.type.<type>", "echopet.pet.default.set.type.<rider>"}, "Set the default pet for when you log in."),
     DEFAULT_SET_CURRENT("default set current", true, new String[]{"echopet.pet.default.set.current"}, "Set your default pet to your active pet"),
     DEFAULT_REMOVE("default remove", true, new String[]{"echopet.pet.default.remove"}, "Remove your default pet"),
-    RIDE("ride", false, new String[]{"echopet.pet.ride.<type>"}, "Ride your pet"),
-    HAT("hat", false, new String[]{"echopet.pet.hat.<type>"}, "Place your pet on your head"),
+	RIDE("ride", false, new String[]{"echopet.pet.<type>.ride"}, "Ride your pet"),
+	HAT("hat", false, new String[]{"echopet.pet.type.<type>.hat"}, "Place your pet on your head"),
     CALL("call", true, new String[]{"echopet.pet.call"}, "Call your pet"),
     MENU("menu", true, new String[]{"echopet.pet.menu"}, "Open the Data Menu GUI for your pet"),
     SHOW("show", true, new String[]{"echopet.pet.show"}, "Show your hidden pet", "Reloads your pet from the save files"),
