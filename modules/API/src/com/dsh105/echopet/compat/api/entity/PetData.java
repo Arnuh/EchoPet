@@ -26,6 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Llama;
 import org.bukkit.entity.Rabbit;
+import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,6 +46,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ITropicalFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
@@ -179,6 +181,8 @@ public enum PetData {
 			return setSlimeSize(pet, 4);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 2);
+		}else if(pet.getPetType().equals(PetType.TROPICALFISH)){
+			return setTropicalFishLarge(pet, flag);
 		}
 		return false;
 	}, (pet)-> {
@@ -204,26 +208,26 @@ public enum PetData {
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
 			return setLlamaColor(pet, Llama.Color.WHITE);
 		}else{
-			return setColorByDye(pet, DyeColor.WHITE);
+			return setColorByDye(pet, category, DyeColor.WHITE);
 		}
 	}, Material.WHITE_WOOL, "White"),
 	ORANGE("orange", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.ORANGE);
+		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_WOOL, "Orange"),
 	MAGENTA("white", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.MAGENTA);
+		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_WOOL, "Magenta"),
 	LIGHT_BLUE("light_blue", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIGHT_BLUE);
+		return setColorByDye(pet, category, DyeColor.LIGHT_BLUE);
 	}, Material.LIGHT_BLUE_WOOL, "Light Blue"),
 	YELLOW("yellow", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.YELLOW);
+		return setColorByDye(pet, category, DyeColor.YELLOW);
 	}, Material.YELLOW_WOOL, "Yellow"),
 	LIME("lime", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIME);
+		return setColorByDye(pet, category, DyeColor.LIME);
 	}, Material.LIME_WOOL, "Lime"),
 	PINK("pink", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.PINK);
+		return setColorByDye(pet, category, DyeColor.PINK);
 	}, Material.PINK_WOOL, "Pink"),
 	GRAY("gray", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.HORSE)){
@@ -231,20 +235,20 @@ public enum PetData {
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
 			return setLlamaColor(pet, Llama.Color.GRAY);
 		}else{
-			return setColorByDye(pet, DyeColor.GRAY);
+			return setColorByDye(pet, category, DyeColor.GRAY);
 		}
 	}, Material.GRAY_WOOL, "Gray"),
 	LIGHT_GRAY("light_gray", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIGHT_GRAY);
+		return setColorByDye(pet, category, DyeColor.LIGHT_GRAY);
 	}, Material.LIGHT_GRAY_WOOL, "Light Gray"),
 	CYAN("cyan", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.CYAN);
+		return setColorByDye(pet, category, DyeColor.CYAN);
 	}, Material.CYAN_WOOL, "Cyan"),
 	PURPLE("purple", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.PURPLE);
+		return setColorByDye(pet, category, DyeColor.PURPLE);
 	}, Material.PURPLE_WOOL, "Purple"),
 	BLUE("blue", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.BLUE);
+		return setColorByDye(pet, category, DyeColor.BLUE);
 	}, Material.BLUE_WOOL, "Blue"),
 	BROWN("brown", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.RABBIT)){
@@ -254,14 +258,14 @@ public enum PetData {
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
 			return setLlamaColor(pet, Llama.Color.BROWN);
 		}else{
-			return setColorByDye(pet, DyeColor.BROWN);
+			return setColorByDye(pet, category, DyeColor.BROWN);
 		}
 	}, Material.BROWN_WOOL, "Brown"),
 	GREEN("green", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.GREEN);
+		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_WOOL, "Green"),
 	RED("red", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.RED);
+		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
 	BLACK("black", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.RABBIT)){
@@ -270,57 +274,57 @@ public enum PetData {
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BLACK);
 		}else{
-			return setColorByDye(pet, DyeColor.BLACK);
+			return setColorByDye(pet, category, DyeColor.BLACK);
 		}
 	}, Material.BLACK_WOOL, "Black"),
     // Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
 	WHITE_CARPET("white_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.WHITE);
+		return setColorByDye(pet, category, DyeColor.WHITE);
 	}, Material.WHITE_CARPET, "White Carpet"),
 	ORANGE_CARPET("orange_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.ORANGE);
+		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_CARPET, "Orange Carpet"),
 	MAGENTA_CARPET("white_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.MAGENTA);
+		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_CARPET, "Magenta Carpet"),
 	LIGHT_BLUE_CARPET("light_blue_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIGHT_BLUE);
+		return setColorByDye(pet, category, DyeColor.LIGHT_BLUE);
 	}, Material.LIGHT_BLUE_CARPET, "Light Blue Carpet"),
 	YELLOW_CARPET("yellow_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.YELLOW);
+		return setColorByDye(pet, category, DyeColor.YELLOW);
 	}, Material.YELLOW_CARPET, "Yellow Carpet"),
 	LIME_CARPET("lime_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIME);
+		return setColorByDye(pet, category, DyeColor.LIME);
 	}, Material.LIME_CARPET, "Lime Carpet"),
 	PINK_CARPET("pink_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.PINK);
+		return setColorByDye(pet, category, DyeColor.PINK);
 	}, Material.PINK_CARPET, "Pink Carpet"),
 	GRAY_CARPET("gray_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.GRAY);
+		return setColorByDye(pet, category, DyeColor.GRAY);
 	}, Material.GRAY_CARPET, "Gray Carpet"),
 	LIGHT_GRAY_CARPET("light_gray", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.LIGHT_GRAY);
+		return setColorByDye(pet, category, DyeColor.LIGHT_GRAY);
 	}, Material.LIGHT_GRAY_CARPET, "Light Gray Carpet"),
 	CYAN_CARPET("cyan_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.CYAN);
+		return setColorByDye(pet, category, DyeColor.CYAN);
 	}, Material.CYAN_CARPET, "Cyan Carpet"),
 	PURPLE_CARPET("purple_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.PURPLE);
+		return setColorByDye(pet, category, DyeColor.PURPLE);
 	}, Material.PURPLE_CARPET, "Purple Carpet"),
 	BLUE_CARPET("blue_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.BLUE);
+		return setColorByDye(pet, category, DyeColor.BLUE);
 	}, Material.BLUE_CARPET, "Blue Carpet"),
 	BROWN_CARPET("brown_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.BROWN);
+		return setColorByDye(pet, category, DyeColor.BROWN);
 	}, Material.BROWN_CARPET, "Brown Carpet"),
 	GREEN_CARPET("green_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.GREEN);
+		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_CARPET, "Green Carpet"),
 	RED_CARPET("red_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.RED);
+		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_CARPET, "Red Carpet"),
 	BLACK_CARPET("black_carpet", (player, pet, category, flag)-> {
-		return setColorByDye(pet, DyeColor.BLACK);
+		return setColorByDye(pet, category, DyeColor.BLACK);
 	}, Material.BLACK_CARPET, "Black Carpet"),
     // Villager Types
 	DESERT("desert", (player, pet, category, flag)-> {
@@ -464,6 +468,44 @@ public enum PetData {
 		}
 		return false;
 	}, Material.BLACK_WOOL, "Black Dots"),
+    // Tropical Fish Patterns
+	KOB("kob", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.KOB);
+	}, Material.WHITE_BANNER, "Kob"),
+	SUNSTREAK("sunstreak", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.SUNSTREAK);
+	}, Material.ORANGE_BANNER, "Sunstreak"),
+	SNOOPER("snooper", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.SNOOPER);
+	}, Material.MAGENTA_BANNER, "Snooper"),
+	DASHER("dasher", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.DASHER);
+	}, Material.LIGHT_BLUE_BANNER, "Dasher"),
+	BRINELY("brinely", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.BRINELY);
+	}, Material.YELLOW_BANNER, "Brinely"),
+	SPOTTY("spotty", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.SPOTTY);
+	}, Material.LIME_BANNER, "Spotty"),
+    // The ones below are just the above but with large as true.
+	FLOPPER("flopper", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.FLOPPER);
+	}, Material.PINK_BANNER, "Flopper"),
+	STRIPEY("stripey", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.STRIPEY);
+	}, Material.GRAY_BANNER, "Stripey"),
+	GLITTER("glitter", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.GLITTER);
+	}, Material.LIGHT_GRAY_BANNER, "glitter"),
+	BLOCKFISH("blockfish", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.BLOCKFISH);
+	}, Material.CYAN_BANNER, "Blockfish"),
+	BETTY("betty", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.BETTY);
+	}, Material.PURPLE_BANNER, "Betty"),
+	CLAYFISH("clayfish", (player, pet, category, flag)-> {
+		return setTropicalFishPattern(pet, TropicalFish.Pattern.CLAYFISH);
+	}, Material.BLUE_BANNER, "Clayfish"),
 	;
 
 	public static final PetData[] values = values();
@@ -544,7 +586,7 @@ public enum PetData {
 		return true;
 	}
 
-	private static boolean setColorByDye(IPet pet, DyeColor color){
+	private static boolean setColorByDye(IPet pet, PetDataCategory category, DyeColor color){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.SHEEP)){
 			((ISheepPet) pet).setDyeColor(color);
@@ -554,6 +596,13 @@ public enum PetData {
 			((IParrotPet) pet).setVariant(ParrotVariant.valueOf(color.name()));
 		}else if(type.equals(PetType.LLAMA)){
 			((ILlamaPet) pet).setCarpetColor(color);
+		}else if(type.equals(PetType.TROPICALFISH)){
+			ITropicalFishPet fish = ((ITropicalFishPet) pet);
+			if(category.equals(PetDataCategory.TROPICAL_FISH_COLOR)){
+				fish.setColor(color);
+			}else if(category.equals(PetDataCategory.TROPICAL_FISH_PATTERN_COLOR)){
+				fish.setPatternColor(color);
+			}
 		}
 		return true;
 	}
@@ -631,6 +680,23 @@ public enum PetData {
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.LLAMA)){
 			((ILlamaPet) pet).setSkinColor(color);
+		}
+		return true;
+	}
+
+	private static boolean setTropicalFishPattern(IPet pet, TropicalFish.Pattern pattern){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.TROPICALFISH)){
+			((ITropicalFishPet) pet).setPattern(pattern);
+			((ITropicalFishPet) pet).setLarge(pattern.ordinal() > 5);
+		}
+		return true;
+	}
+
+	private static boolean setTropicalFishLarge(IPet pet, boolean large){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.TROPICALFISH)){
+			((ITropicalFishPet) pet).setLarge(large);
 		}
 		return true;
 	}

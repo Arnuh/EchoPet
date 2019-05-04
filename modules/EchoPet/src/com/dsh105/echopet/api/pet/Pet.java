@@ -33,7 +33,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -93,7 +99,7 @@ public abstract class Pet implements IPet{
 				this.applyPetName();
 				this.teleportToOwner();
 				for(PetData pd : getPetData()){
-					if(pd.getAction() != null) pd.getAction().click(owner, this, pd, true);
+					if(pd.getAction() != null) pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 					EchoPet.getManager().setData(this, pd, true);
 				}
 				for(Trail t : trails)
