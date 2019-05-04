@@ -33,7 +33,7 @@ import com.dsh105.echopet.compat.api.util.Perm;
 
 public class DataMenu {
 
-    Inventory inv;
+	private Inventory inv;
     private IPet pet;
 
 	public DataMenu(PetDataCategory category, IPet pet){
@@ -77,7 +77,7 @@ public class DataMenu {
 		for(PetData data : category.getData()){
 			if(data.isCompatible()){
 				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-					inv.setItem(i++, data.toItem());
+					inv.setItem(i++, data.toItem(pet));
 				}
 			}
 		}

@@ -26,7 +26,8 @@ public enum PetDataCategory{
 	OCELOT_TYPE(Material.WHITE_WOOL, "Ocelot Type"),
 	WOOL_COLOR(Material.WHITE_WOOL, "Wool Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	COLLAR_COLOR(Material.WHITE_WOOL, "Collar Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
-	SLIME_SIZE(Material.SLIME_BALL, "Slime Size", PetData.SLIME_SMALL, PetData.SLIME_MEDIUM, PetData.SLIME_LARGE),
+	SLIME_SIZE(Material.SLIME_BALL, "Slime Size", PetData.SIZE_SMALL, PetData.SIZE_MEDIUM, PetData.SIZE_LARGE),
+	PUFFERFISH_SIZE(Material.PUFFERFISH, "PufferFish Size", PetData.SIZE_SMALL, PetData.SIZE_MEDIUM, PetData.SIZE_LARGE),
 	VILLAGER_TYPE(Material.SAND, "Villager Type", PetData.DESERT, PetData.JUNGLE, PetData.PLAINS, PetData.SAVANNA, PetData.SNOWY, PetData.SWAMP, PetData.TAIGA),
 	VILLAGER_PROFESSION(Material.IRON_AXE, "Villager Profession", PetData.NONE, PetData.ARMORER, PetData.BUTCHER, PetData.CARTOGRAPHER, PetData.CLERIC, PetData.FARMER, PetData.FISHERMAN, PetData.FLETCHER, PetData.LEATHERWORKER, PetData.LIBRARIAN, PetData.MASON, PetData.NITWIT, PetData.SHEPHERD, PetData.TOOLSMITH, PetData.WEAPONSMITH),
 	VILLAGER_LEVEL(Material.EMERALD, "Villager Level", PetData.NOVICE, PetData.APPRENTICE, PetData.JOURNEYMEN, PetData.EXPERT, PetData.MASTER),
@@ -40,15 +41,14 @@ public enum PetDataCategory{
 
 	public static final PetDataCategory[] values = values();
 	private final PetData[] data;
+	private Material material;
+	private String name;
 	private ItemStack item;
 
 	PetDataCategory(Material material, String name, PetData... data){
+		this.material = material;
+		this.name = name;
 		this.data = data;
-		item = new ItemStack(material);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + name);
-		// meta.setLore(this.lore);
-		item.setItemMeta(meta);
 	}
 
 	public PetData[] getData(){
@@ -63,6 +63,13 @@ public enum PetDataCategory{
 	}
 
 	public ItemStack getItem(){
+		if(item == null){
+			item = new ItemStack(material);
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.RED + name);
+			// meta.setLore(this.lore);
+			item.setItemMeta(meta);
+		}
 		return item;
 	}
 }

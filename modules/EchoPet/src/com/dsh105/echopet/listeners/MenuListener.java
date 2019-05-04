@@ -106,14 +106,14 @@ public class MenuListener implements Listener {
 				}
 				if(title.startsWith("EchoPet DataMenu")){
 					for(PetData data : PetData.values){
-						ItemStack item = data.toItem();
+						ItemStack item = data.toItem(pet);
 						if(item == null){// If no item = boolean toggle
 							if(ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE) || ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_TRUE)){
 								boolean newFlag = ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE);
 								if(data.getAction() != null){
 									if(data.getAction().click(player, pet, data, newFlag)){
 										EchoPet.getManager().setData(pet, data, newFlag);
-										inv.setItem(slot, data.toItem(!newFlag));
+										inv.setItem(slot, data.toItem(pet, !newFlag));
 									}
 								}
 							}

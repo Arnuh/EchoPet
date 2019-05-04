@@ -47,7 +47,7 @@ public class PetMenu{
 				PetData data = (PetData) obj;
 				if(data.isCompatible()){
 					if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-						inv.setItem(index++, data.toItem());
+						inv.setItem(index++, data.toItem(pet));
 					}
 				}
 			}else if(obj instanceof PetDataCategory){

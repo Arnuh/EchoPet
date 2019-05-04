@@ -3,12 +3,13 @@ package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFishPet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityInsentient;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
-*/
 public abstract class EntityFishPet extends EntityWaterAnimalPet implements IEntityFishPet{
 
 	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntityFishPet.class, DataWatcherRegistry.i);// "FromBucket". Prevents the fish from despawning.

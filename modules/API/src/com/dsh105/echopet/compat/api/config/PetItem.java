@@ -25,6 +25,7 @@ public enum PetItem {
 
 	BAT(PetType.BAT, Material.BAT_SPAWN_EGG, "Bat Pet", "bat"),
 	BLAZE(PetType.BLAZE, Material.BLAZE_SPAWN_EGG, "Blaze Pet", "blaze"),
+	CAT(PetType.CAT, Material.getMaterial("CAT_SPAWN_EGG"), "Cat Pet", "cat"),
 	CAVESPIDER(PetType.CAVESPIDER, Material.CAVE_SPIDER_SPAWN_EGG, "Cave Spider Pet", "cavespider"),
 	CHICKEN(PetType.CHICKEN, Material.CHICKEN_SPAWN_EGG, "Chicken Pet", "chicken"),
 	COD(PetType.COD, Material.COD_SPAWN_EGG, "Cod Pet", "cod"),

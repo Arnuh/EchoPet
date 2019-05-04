@@ -40,6 +40,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPufferFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
@@ -101,15 +102,6 @@ public enum PetData {
 		}
 		return false;
 	}, Material.ENDER_PEARL, "Screaming"),
-	SLIME_SMALL("slime_small", (player, pet, data, flag)-> {
-		return setSlimeSize(pet, 1);
-	}, Material.SLIME_BALL, "Small"),
-	SLIME_MEDIUM("slime_medium", (player, pet, data, flag)-> {
-		return setSlimeSize(pet, 2);
-	}, Material.SLIME_BALL, "Medium"),
-	SLIME_LARGE("slime_large", (player, pet, data, flag)-> {
-		return setSlimeSize(pet, 4);
-	}, Material.SLIME_BALL, "Large"),
 	SHIELD("shield", (player, pet, data, flag)-> {
 		if(pet.getPetType().equals(PetType.WITHER)){
 			((IWitherPet) pet).setShielded(flag);
@@ -155,6 +147,46 @@ public enum PetData {
 		}
 		return false;
 	}, Material.CHEST, "Chest"),
+    //
+	SIZE_SMALL("size_small", (player, pet, data, flag)-> {
+		if(pet.getPetType().equals(PetType.SLIME)){
+			return setSlimeSize(pet, 1);
+		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return setPufferFishState(pet, 0);
+		}
+		return false;
+	}, (pet)-> {
+		if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return Material.PUFFERFISH;
+		}
+		return Material.SLIME_BALL;
+	}, "Small"),
+	SIZE_MEDIUM("size_medium", (player, pet, data, flag)-> {
+		if(pet.getPetType().equals(PetType.SLIME)){
+			return setSlimeSize(pet, 2);
+		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return setPufferFishState(pet, 1);
+		}
+		return false;
+	}, (pet)-> {
+		if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return Material.PUFFERFISH;
+		}
+		return Material.SLIME_BALL;
+	}, "Medium"),
+	SIZE_LARGE("size_large", (player, pet, data, flag)-> {
+		if(pet.getPetType().equals(PetType.SLIME)){
+			return setSlimeSize(pet, 4);
+		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return setPufferFishState(pet, 2);
+		}
+		return false;
+	}, (pet)-> {
+		if(pet.getPetType().equals(PetType.PUFFERFISH)){
+			return Material.PUFFERFISH;
+		}
+		return Material.SLIME_BALL;
+	}, "Large"),
 	CREAMY("creamy", (player, pet, data, flag)-> {
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.CREAMY);
@@ -440,15 +472,21 @@ public enum PetData {
 	private Version version;
 	private VersionCheckType versionCheckType;
 	private PetDataAction action;
-	private Material material;
+	private PetDataMaterial material;
 	private String name;
 	private List<String> lore;
 
 	private PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
+		this(configOptionString, action, (pet)-> {
+			return material;
+		}, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+	}
+
+	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
 		this(configOptionString, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 
-	private PetData(String configOptionString, PetDataAction action, Material material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
         this.configOptionString = configOptionString;
 		this.action = action;
 		this.version = version;
@@ -473,8 +511,8 @@ public enum PetData {
 		return name;
 	}
 
-	public ItemStack toItem(){
-		ItemStack item = new ItemStack(material);
+	public ItemStack toItem(IPet pet){
+		ItemStack item = new ItemStack(material.get(pet));
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + name);
 		meta.setLore(lore);
@@ -482,8 +520,8 @@ public enum PetData {
 		return item;
 	}
 
-	public ItemStack toItem(boolean flag){
-		ItemStack i = new ItemStack(material);
+	public ItemStack toItem(IPet pet, boolean flag){
+		ItemStack i = new ItemStack(material.get(pet));
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + this.name + (flag ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.YELLOW + " [TOGGLE OFF]"));
 		meta.setLore(this.lore);
@@ -527,6 +565,15 @@ public enum PetData {
 			return true;
 		}else if(type.equals(PetType.MAGMACUBE)){
 			((IMagmaCubePet) pet).setSize(size);
+			return true;
+		}
+		return false;
+	}
+
+	private static boolean setPufferFishState(IPet pet, int state){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.PUFFERFISH)){
+			((IPufferFishPet) pet).setPuffState(state);
 			return true;
 		}
 		return false;
