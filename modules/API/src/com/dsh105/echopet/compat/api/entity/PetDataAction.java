@@ -21,5 +21,5 @@ import org.bukkit.entity.Player;
 
 public interface PetDataAction{
 
-	boolean click(Player player, IPet pet, PetData data, boolean flag);
+	boolean click(Player player, IPet pet, PetDataCategory category, boolean flag);
 }

@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
@@ -105,13 +106,23 @@ public class MenuListener implements Listener {
 					}
 				}
 				if(title.startsWith("EchoPet DataMenu")){
+					PetDataCategory category = null;
+					if(title.contains(" - ")){
+						String[] split = title.split(" - ");
+						for(PetDataCategory cat : PetDataCategory.values){
+							if(split[split.length - 1].equals(StringUtil.capitalise(cat.toString().replace("_", " ")))){
+								category = cat;
+								break;
+							}
+						}
+					}
 					for(PetData data : PetData.values){
 						ItemStack item = data.toItem(pet);
 						if(item == null){// If no item = boolean toggle
 							if(ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE) || ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_TRUE)){
 								boolean newFlag = ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE);
 								if(data.getAction() != null){
-									if(data.getAction().click(player, pet, data, newFlag)){
+									if(data.getAction().click(player, pet, category, newFlag)){
 										EchoPet.getManager().setData(pet, data, newFlag);
 										inv.setItem(slot, data.toItem(pet, !newFlag));
 									}
@@ -121,7 +132,7 @@ public class MenuListener implements Listener {
 							if(ItemUtil.matches(currentlyInSlot, item)){
 								if(data.getAction() != null){
 									boolean newFlag = !pet.getPetData().contains(data);
-									if(data.getAction().click(player, pet, data, newFlag)){
+									if(data.getAction().click(player, pet, category, newFlag)){
 										EchoPet.getManager().setData(pet, data, newFlag);
 									}
 								}
