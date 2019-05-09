@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
@@ -207,6 +208,8 @@ public enum PetData {
 			return setHorseColor(pet, Horse.Color.WHITE);
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
 			return setLlamaColor(pet, Llama.Color.WHITE);
+		}else if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.White);
 		}else{
 			return setColorByDye(pet, category, DyeColor.WHITE);
 		}
@@ -214,7 +217,7 @@ public enum PetData {
 	ORANGE("orange", (player, pet, category, flag)-> {
 		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_WOOL, "Orange"),
-	MAGENTA("white", (player, pet, category, flag)-> {
+	MAGENTA("magenta", (player, pet, category, flag)-> {
 		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_WOOL, "Magenta"),
 	LIGHT_BLUE("light_blue", (player, pet, category, flag)-> {
@@ -265,14 +268,18 @@ public enum PetData {
 		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_WOOL, "Green"),
 	RED("red", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Red);
+		}
 		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
 	BLACK("black", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.BLACK);
-		}
-		if(pet.getPetType().equals(PetType.HORSE)){
+		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BLACK);
+		}else if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.AllBlack);
 		}else{
 			return setColorByDye(pet, category, DyeColor.BLACK);
 		}
@@ -506,6 +513,47 @@ public enum PetData {
 	CLAYFISH("clayfish", (player, pet, category, flag)-> {
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.CLAYFISH);
 	}, Material.BLUE_BANNER, "Clayfish"),
+    // Cat Types. Red, White, Black use above options
+	TABBY("tabby", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Tabby);
+		}else return false;
+	}, Material.COD, "Tabby"),
+	TUXEDO("tuxedo", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Black);
+		}else return false;
+	}, Material.WHITE_CARPET, "Tuxedo"),
+	SIAMESE("siamese", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Siamese);
+		}else return false;
+	}, Material.BROWN_CARPET, "Siamese"),
+	BRITISH_SHORTHAIR("british_shorthair", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.BritishShortHair);
+		}else return false;
+	}, Material.LIGHT_GRAY_WOOL, "British Shorthair"),
+	CALICO("calico", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Calico);
+		}else return false;
+	}, Material.ORANGE_WOOL, "Calico"),
+	PERSIAN("persian", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Persian);
+		}else return false;
+	}, Material.YELLOW_WOOL, "Persian"),
+	RAGDOLL("ragdoll", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Ragdoll);
+		}else return false;
+	}, Material.WHITE_CARPET, "Ragdoll"),
+	JELLIE("jellie", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Jellie);
+		}else return false;
+	}, Material.GRAY_WOOL, "Jellie"),
 	;
 
 	public static final PetData[] values = values();
@@ -603,6 +651,8 @@ public enum PetData {
 			}else if(category.equals(PetDataCategory.TROPICAL_FISH_PATTERN_COLOR)){
 				fish.setPatternColor(color);
 			}
+		}else if(type.equals(PetType.CAT)) {
+			((ICatPet) pet).setCollarColor(color);
 		}
 		return true;
 	}
@@ -697,6 +747,14 @@ public enum PetData {
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.TROPICALFISH)){
 			((ITropicalFishPet) pet).setLarge(large);
+		}
+		return true;
+	}
+
+	private static boolean setCatType(IPet pet, CatType catType){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.CAT)){
+			((ICatPet) pet).setType(catType);
 		}
 		return true;
 	}

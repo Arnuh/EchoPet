@@ -17,18 +17,36 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.api.pet.AgeablePet;
+import com.dsh105.echopet.api.pet.TameablePet;
+import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 
 @EntityPetType(petType = PetType.CAT)
-public class CatPet extends AgeablePet implements ICatPet{
+public class CatPet extends TameablePet implements ICatPet{
+
+	private CatType catType = CatType.Tabby;
+	private DyeColor collarCollar = DyeColor.RED;
 
 	public CatPet(Player owner){
         super(owner);
     }
+
+	@Override
+	public void setType(CatType type){
+		((IEntityCatPet) getEntityPet()).setType(type);
+		this.catType = type;
+	}
+
+	@Override
+	public void setCollarColor(DyeColor color){
+		((IEntityCatPet) getEntityPet()).setCollarColor(color);
+		this.collarCollar = color;
+	}
 
 }

@@ -33,7 +33,7 @@ public enum PetType {
 
 	BAT("Bat", "Bat Pet", "bat"),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
-	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1")),
+	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}, PetData.TAMED),
 	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
 	CHICKEN("Chicken", "Chicken Pet", "chicken"),
 	COD("Cod", "Cod Pet", "cod"),
@@ -119,17 +119,26 @@ public enum PetType {
 		    this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
 		}catch(ClassNotFoundException ignored){}
+		this.minecraftEntityName = minecraftEntityName;
+		this.defaultName = defaultName;
+		this.version = version;
+		//
 		this.allowedData.add(PetData.HAT);
 		this.allowedData.add(PetData.RIDE);
-		if(categories != null){
-			this.allowedCategories.addAll(ImmutableList.copyOf(categories));
+		Class<?> clazz = ReflectionUtil.getClass("com.dsh105.echopet.compat.api.entity.type.pet.I" + classIdentifier + "Pet");
+		if(clazz != null){
+			if(IAgeablePet.class.isAssignableFrom(clazz)){
+				this.allowedData.add(PetData.BABY);
+			}else if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
+				this.allowedData.add(PetData.CHESTED);
+			}
 		}
 		if(allowedData != null){
 			this.allowedData.addAll(ImmutableList.copyOf(allowedData));
 		}
-		this.minecraftEntityName = minecraftEntityName;
-        this.defaultName = defaultName;
-		this.version = version;
+		if(categories != null){
+			this.allowedCategories.addAll(ImmutableList.copyOf(categories));
+		}
     }
 
 	public String getClassIdentifier(){
@@ -328,14 +337,6 @@ public enum PetType {
 			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 			for(PetData data : petType.getAllowedDataTypes()){
 				System.out.println("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true");
-			}
-			Class<?> clazz = ReflectionUtil.getClass("com.dsh105.echopet.compat.api.entity.type.pet.I" + petType.getClassIdentifier() + "Pet");
-			if(clazz != null){
-				if(IAgeablePet.class.isAssignableFrom(clazz)){
-					System.out.println("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigOptionString() + ": true");
-				}else if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
-					System.out.println("            echopet.pet.type." + petTypeName + "." + PetData.CHESTED.getConfigOptionString() + ": true");
-				}
 			}
 			for(PetDataCategory category : petType.getAllowedCategories()){
 				for(PetData data : category.getData()){

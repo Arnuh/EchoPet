@@ -16,9 +16,15 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+import org.bukkit.DyeColor;
+
+import com.dsh105.echopet.compat.api.entity.CatType;
+import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 
 
-public interface IEntityCatPet extends IEntityAgeablePet {
+public interface IEntityCatPet extends IEntityTameablePet{
 
+	void setType(CatType type);
+
+	void setCollarColor(DyeColor color);
 }

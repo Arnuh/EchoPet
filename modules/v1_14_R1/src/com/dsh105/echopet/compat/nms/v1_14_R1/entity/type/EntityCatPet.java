@@ -16,6 +16,8 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
+import org.bukkit.DyeColor;
+
 import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
@@ -24,7 +26,12 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityTameablePet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.EnumColor;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.CAT)
@@ -49,5 +56,16 @@ public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 		this.datawatcher.register(bG, false);
 		this.datawatcher.register(bH, false);
 		this.datawatcher.register(CollarColor, EnumColor.RED.getColorIndex());
+	}
+
+
+	@Override
+	public void setType(CatType type){
+		datawatcher.set(Type, type.ordinal());
+	}
+
+	@Override
+	public void setCollarColor(DyeColor color){
+		datawatcher.set(CollarColor, color.ordinal());
 	}
 }

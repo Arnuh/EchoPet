@@ -30,23 +30,12 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 public class WolfPet extends TameablePet implements IWolfPet{
 
     DyeColor collar = DyeColor.RED;
-    boolean baby = false;
     boolean angry = false;
 
     public WolfPet(Player owner) {
         super(owner);
     }
 
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityWolfPet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
 
     @Override
 	public void setCollarColor(DyeColor dc){

@@ -349,6 +349,62 @@ permissions:
         default: op
     echopet.pet.type.cat.ride:
         default: op
+    echopet.pet.type.cat.tamed:
+        default: op
+    echopet.pet.type.cat.white:
+        default: op
+    echopet.pet.type.cat.orange:
+        default: op
+    echopet.pet.type.cat.magenta:
+        default: op
+    echopet.pet.type.cat.light_blue:
+        default: op
+    echopet.pet.type.cat.yellow:
+        default: op
+    echopet.pet.type.cat.lime:
+        default: op
+    echopet.pet.type.cat.pink:
+        default: op
+    echopet.pet.type.cat.gray:
+        default: op
+    echopet.pet.type.cat.light_gray:
+        default: op
+    echopet.pet.type.cat.cyan:
+        default: op
+    echopet.pet.type.cat.purple:
+        default: op
+    echopet.pet.type.cat.blue:
+        default: op
+    echopet.pet.type.cat.brown:
+        default: op
+    echopet.pet.type.cat.green:
+        default: op
+    echopet.pet.type.cat.red:
+        default: op
+    echopet.pet.type.cat.black:
+        default: op
+    echopet.pet.type.cat.tabby:
+        default: op
+    echopet.pet.type.cat.tuxedo:
+        default: op
+    echopet.pet.type.cat.red:
+        default: op
+    echopet.pet.type.cat.siamese:
+        default: op
+    echopet.pet.type.cat.british_shorthair:
+        default: op
+    echopet.pet.type.cat.calico:
+        default: op
+    echopet.pet.type.cat.persian:
+        default: op
+    echopet.pet.type.cat.ragdoll:
+        default: op
+    echopet.pet.type.cat.white:
+        default: op
+    echopet.pet.type.cat.jellie:
+        default: op
+    echopet.pet.type.cat.black:
+        default: op
     echopet.pet.type.cavespider.hat:
         default: op
     echopet.pet.type.cavespider.ride:
@@ -357,6 +413,8 @@ permissions:
         default: op
     echopet.pet.type.chicken.ride:
         default: op
+    echopet.pet.type.chicken.baby:
+        default: op
     echopet.pet.type.cod.hat:
         default: op
     echopet.pet.type.cod.ride:
@@ -364,6 +422,8 @@ permissions:
     echopet.pet.type.cow.hat:
         default: op
     echopet.pet.type.cow.ride:
+        default: op
+    echopet.pet.type.cow.baby:
         default: op
     echopet.pet.type.creeper.hat:
         default: op
@@ -379,11 +439,15 @@ permissions:
         default: op
     echopet.pet.type.donkey.ride:
         default: op
+    echopet.pet.type.donkey.baby:
+        default: op
     echopet.pet.type.donkey.saddle:
         default: op
     echopet.pet.type.drowned.hat:
         default: op
     echopet.pet.type.drowned.ride:
+        default: op
+    echopet.pet.type.drowned.baby:
         default: op
     echopet.pet.type.elderguardian.hat:
         default: op
@@ -419,6 +483,8 @@ permissions:
         default: op
     echopet.pet.type.horse.ride:
         default: op
+    echopet.pet.type.horse.baby:
+        default: op
     echopet.pet.type.horse.saddle:
         default: op
     echopet.pet.type.horse.white:
@@ -453,6 +519,8 @@ permissions:
         default: op
     echopet.pet.type.husk.ride:
         default: op
+    echopet.pet.type.husk.baby:
+        default: op
     echopet.pet.type.illusioner.hat:
         default: op
     echopet.pet.type.illusioner.ride:
@@ -464,6 +532,8 @@ permissions:
     echopet.pet.type.llama.hat:
         default: op
     echopet.pet.type.llama.ride:
+        default: op
+    echopet.pet.type.llama.baby:
         default: op
     echopet.pet.type.llama.creamy:
         default: op
@@ -519,15 +589,21 @@ permissions:
         default: op
     echopet.pet.type.mule.ride:
         default: op
+    echopet.pet.type.mule.baby:
+        default: op
     echopet.pet.type.mule.saddle:
         default: op
     echopet.pet.type.mushroomcow.hat:
         default: op
     echopet.pet.type.mushroomcow.ride:
         default: op
+    echopet.pet.type.mushroomcow.baby:
+        default: op
     echopet.pet.type.ocelot.hat:
         default: op
     echopet.pet.type.ocelot.ride:
+        default: op
+    echopet.pet.type.ocelot.baby:
         default: op
     echopet.pet.type.parrot.hat:
         default: op
@@ -551,15 +627,21 @@ permissions:
         default: op
     echopet.pet.type.pig.ride:
         default: op
+    echopet.pet.type.pig.baby:
+        default: op
     echopet.pet.type.pig.saddle:
         default: op
     echopet.pet.type.pigzombie.hat:
         default: op
     echopet.pet.type.pigzombie.ride:
         default: op
+    echopet.pet.type.pigzombie.baby:
+        default: op
     echopet.pet.type.polarbear.hat:
         default: op
     echopet.pet.type.polarbear.ride:
+        default: op
+    echopet.pet.type.polarbear.baby:
         default: op
     echopet.pet.type.polarbear.standing_up:
         default: op
@@ -576,6 +658,8 @@ permissions:
     echopet.pet.type.rabbit.hat:
         default: op
     echopet.pet.type.rabbit.ride:
+        default: op
+    echopet.pet.type.rabbit.baby:
         default: op
     echopet.pet.type.rabbit.brown:
         default: op
@@ -599,13 +683,15 @@ permissions:
         default: op
     echopet.pet.type.sheep.ride:
         default: op
+    echopet.pet.type.sheep.baby:
+        default: op
     echopet.pet.type.sheep.sheared:
         default: op
     echopet.pet.type.sheep.white:
         default: op
     echopet.pet.type.sheep.orange:
         default: op
-    echopet.pet.type.sheep.white:
+    echopet.pet.type.sheep.magenta:
         default: op
     echopet.pet.type.sheep.light_blue:
         default: op
@@ -648,6 +734,8 @@ permissions:
     echopet.pet.type.skeletonhorse.hat:
         default: op
     echopet.pet.type.skeletonhorse.ride:
+        default: op
+    echopet.pet.type.skeletonhorse.baby:
         default: op
     echopet.pet.type.skeletonhorse.saddle:
         default: op
@@ -713,7 +801,7 @@ permissions:
         default: op
     echopet.pet.type.tropicalfish.orange:
         default: op
-    echopet.pet.type.tropicalfish.white:
+    echopet.pet.type.tropicalfish.magenta:
         default: op
     echopet.pet.type.tropicalfish.light_blue:
         default: op
@@ -777,6 +865,8 @@ permissions:
         default: op
     echopet.pet.type.turtle.ride:
         default: op
+    echopet.pet.type.turtle.baby:
+        default: op
     echopet.pet.type.vex.hat:
         default: op
     echopet.pet.type.vex.ride:
@@ -786,6 +876,8 @@ permissions:
     echopet.pet.type.villager.hat:
         default: op
     echopet.pet.type.villager.ride:
+        default: op
+    echopet.pet.type.villager.baby:
         default: op
     echopet.pet.type.villager.desert:
         default: op
@@ -871,7 +963,7 @@ permissions:
         default: op
     echopet.pet.type.wolf.orange:
         default: op
-    echopet.pet.type.wolf.white:
+    echopet.pet.type.wolf.magenta:
         default: op
     echopet.pet.type.wolf.light_blue:
         default: op
@@ -903,15 +995,21 @@ permissions:
         default: op
     echopet.pet.type.zombie.ride:
         default: op
+    echopet.pet.type.zombie.baby:
+        default: op
     echopet.pet.type.zombiehorse.hat:
         default: op
     echopet.pet.type.zombiehorse.ride:
+        default: op
+    echopet.pet.type.zombiehorse.baby:
         default: op
     echopet.pet.type.zombiehorse.saddle:
         default: op
     echopet.pet.type.zombievillager.hat:
         default: op
     echopet.pet.type.zombievillager.ride:
+        default: op
+    echopet.pet.type.zombievillager.baby:
         default: op
     echopet.pet.type.zombievillager.desert:
         default: op
@@ -2007,7 +2105,34 @@ permissions:
         children:
             echopet.pet.type.cat.hat: true
             echopet.pet.type.cat.ride: true
-            echopet.pet.type.cat.baby: true
+            echopet.pet.type.cat.tamed: true
+            echopet.pet.type.cat.white: true
+            echopet.pet.type.cat.orange: true
+            echopet.pet.type.cat.magenta: true
+            echopet.pet.type.cat.light_blue: true
+            echopet.pet.type.cat.yellow: true
+            echopet.pet.type.cat.lime: true
+            echopet.pet.type.cat.pink: true
+            echopet.pet.type.cat.gray: true
+            echopet.pet.type.cat.light_gray: true
+            echopet.pet.type.cat.cyan: true
+            echopet.pet.type.cat.purple: true
+            echopet.pet.type.cat.blue: true
+            echopet.pet.type.cat.brown: true
+            echopet.pet.type.cat.green: true
+            echopet.pet.type.cat.red: true
+            echopet.pet.type.cat.black: true
+            echopet.pet.type.cat.tabby: true
+            echopet.pet.type.cat.tuxedo: true
+            echopet.pet.type.cat.red: true
+            echopet.pet.type.cat.siamese: true
+            echopet.pet.type.cat.british_shorthair: true
+            echopet.pet.type.cat.calico: true
+            echopet.pet.type.cat.persian: true
+            echopet.pet.type.cat.ragdoll: true
+            echopet.pet.type.cat.white: true
+            echopet.pet.type.cat.jellie: true
+            echopet.pet.type.cat.black: true
     echopet.pet.type.cavespider.*:
         default: op
         description: 'All cavespider pet data permissions'
@@ -2021,6 +2146,7 @@ permissions:
             echopet.pet.type.chicken.hat: true
             echopet.pet.type.chicken.ride: true
             echopet.pet.type.chicken.baby: true
+            echopet.pet.type.chicken.baby: true
     echopet.pet.type.cod.*:
         default: op
         description: 'All cod pet data permissions'
@@ -2033,6 +2159,7 @@ permissions:
         children:
             echopet.pet.type.cow.hat: true
             echopet.pet.type.cow.ride: true
+            echopet.pet.type.cow.baby: true
             echopet.pet.type.cow.baby: true
     echopet.pet.type.creeper.*:
         default: op
@@ -2053,6 +2180,7 @@ permissions:
         children:
             echopet.pet.type.donkey.hat: true
             echopet.pet.type.donkey.ride: true
+            echopet.pet.type.donkey.baby: true
             echopet.pet.type.donkey.saddle: true
             echopet.pet.type.donkey.baby: true
     echopet.pet.type.drowned.*:
@@ -2061,6 +2189,7 @@ permissions:
         children:
             echopet.pet.type.drowned.hat: true
             echopet.pet.type.drowned.ride: true
+            echopet.pet.type.drowned.baby: true
             echopet.pet.type.drowned.baby: true
     echopet.pet.type.elderguardian.*:
         default: op
@@ -2111,6 +2240,7 @@ permissions:
         children:
             echopet.pet.type.horse.hat: true
             echopet.pet.type.horse.ride: true
+            echopet.pet.type.horse.baby: true
             echopet.pet.type.horse.saddle: true
             echopet.pet.type.horse.baby: true
             echopet.pet.type.horse.white: true
@@ -2138,6 +2268,7 @@ permissions:
             echopet.pet.type.husk.hat: true
             echopet.pet.type.husk.ride: true
             echopet.pet.type.husk.baby: true
+            echopet.pet.type.husk.baby: true
     echopet.pet.type.illusioner.*:
         default: op
         description: 'All illusioner pet data permissions'
@@ -2156,6 +2287,7 @@ permissions:
         children:
             echopet.pet.type.llama.hat: true
             echopet.pet.type.llama.ride: true
+            echopet.pet.type.llama.baby: true
             echopet.pet.type.llama.baby: true
             echopet.pet.type.llama.creamy: true
             echopet.pet.type.llama.white: true
@@ -2192,6 +2324,7 @@ permissions:
         children:
             echopet.pet.type.mule.hat: true
             echopet.pet.type.mule.ride: true
+            echopet.pet.type.mule.baby: true
             echopet.pet.type.mule.saddle: true
             echopet.pet.type.mule.baby: true
     echopet.pet.type.mushroomcow.*:
@@ -2201,12 +2334,14 @@ permissions:
             echopet.pet.type.mushroomcow.hat: true
             echopet.pet.type.mushroomcow.ride: true
             echopet.pet.type.mushroomcow.baby: true
+            echopet.pet.type.mushroomcow.baby: true
     echopet.pet.type.ocelot.*:
         default: op
         description: 'All ocelot pet data permissions'
         children:
             echopet.pet.type.ocelot.hat: true
             echopet.pet.type.ocelot.ride: true
+            echopet.pet.type.ocelot.baby: true
             echopet.pet.type.ocelot.baby: true
     echopet.pet.type.parrot.*:
         default: op
@@ -2231,6 +2366,7 @@ permissions:
         children:
             echopet.pet.type.pig.hat: true
             echopet.pet.type.pig.ride: true
+            echopet.pet.type.pig.baby: true
             echopet.pet.type.pig.saddle: true
             echopet.pet.type.pig.baby: true
     echopet.pet.type.pigzombie.*:
@@ -2240,12 +2376,14 @@ permissions:
             echopet.pet.type.pigzombie.hat: true
             echopet.pet.type.pigzombie.ride: true
             echopet.pet.type.pigzombie.baby: true
+            echopet.pet.type.pigzombie.baby: true
     echopet.pet.type.polarbear.*:
         default: op
         description: 'All polarbear pet data permissions'
         children:
             echopet.pet.type.polarbear.hat: true
             echopet.pet.type.polarbear.ride: true
+            echopet.pet.type.polarbear.baby: true
             echopet.pet.type.polarbear.standing_up: true
             echopet.pet.type.polarbear.baby: true
     echopet.pet.type.pufferfish.*:
@@ -2263,6 +2401,7 @@ permissions:
         children:
             echopet.pet.type.rabbit.hat: true
             echopet.pet.type.rabbit.ride: true
+            echopet.pet.type.rabbit.baby: true
             echopet.pet.type.rabbit.baby: true
             echopet.pet.type.rabbit.brown: true
             echopet.pet.type.rabbit.white: true
@@ -2283,11 +2422,12 @@ permissions:
         children:
             echopet.pet.type.sheep.hat: true
             echopet.pet.type.sheep.ride: true
+            echopet.pet.type.sheep.baby: true
             echopet.pet.type.sheep.sheared: true
             echopet.pet.type.sheep.baby: true
             echopet.pet.type.sheep.white: true
             echopet.pet.type.sheep.orange: true
-            echopet.pet.type.sheep.white: true
+            echopet.pet.type.sheep.magenta: true
             echopet.pet.type.sheep.light_blue: true
             echopet.pet.type.sheep.yellow: true
             echopet.pet.type.sheep.lime: true
@@ -2325,6 +2465,7 @@ permissions:
         children:
             echopet.pet.type.skeletonhorse.hat: true
             echopet.pet.type.skeletonhorse.ride: true
+            echopet.pet.type.skeletonhorse.baby: true
             echopet.pet.type.skeletonhorse.saddle: true
             echopet.pet.type.skeletonhorse.baby: true
     echopet.pet.type.slime.*:
@@ -2382,7 +2523,7 @@ permissions:
             echopet.pet.type.tropicalfish.clayfish: true
             echopet.pet.type.tropicalfish.white: true
             echopet.pet.type.tropicalfish.orange: true
-            echopet.pet.type.tropicalfish.white: true
+            echopet.pet.type.tropicalfish.magenta: true
             echopet.pet.type.tropicalfish.light_blue: true
             echopet.pet.type.tropicalfish.yellow: true
             echopet.pet.type.tropicalfish.lime: true
@@ -2419,6 +2560,7 @@ permissions:
             echopet.pet.type.turtle.hat: true
             echopet.pet.type.turtle.ride: true
             echopet.pet.type.turtle.baby: true
+            echopet.pet.type.turtle.baby: true
     echopet.pet.type.vex.*:
         default: op
         description: 'All vex pet data permissions'
@@ -2432,6 +2574,7 @@ permissions:
         children:
             echopet.pet.type.villager.hat: true
             echopet.pet.type.villager.ride: true
+            echopet.pet.type.villager.baby: true
             echopet.pet.type.villager.baby: true
             echopet.pet.type.villager.desert: true
             echopet.pet.type.villager.jungle: true
@@ -2495,7 +2638,7 @@ permissions:
             echopet.pet.type.wolf.angry: true
             echopet.pet.type.wolf.white: true
             echopet.pet.type.wolf.orange: true
-            echopet.pet.type.wolf.white: true
+            echopet.pet.type.wolf.magenta: true
             echopet.pet.type.wolf.light_blue: true
             echopet.pet.type.wolf.yellow: true
             echopet.pet.type.wolf.lime: true
@@ -2516,12 +2659,14 @@ permissions:
             echopet.pet.type.zombie.hat: true
             echopet.pet.type.zombie.ride: true
             echopet.pet.type.zombie.baby: true
+            echopet.pet.type.zombie.baby: true
     echopet.pet.type.zombiehorse.*:
         default: op
         description: 'All zombiehorse pet data permissions'
         children:
             echopet.pet.type.zombiehorse.hat: true
             echopet.pet.type.zombiehorse.ride: true
+            echopet.pet.type.zombiehorse.baby: true
             echopet.pet.type.zombiehorse.saddle: true
             echopet.pet.type.zombiehorse.baby: true
     echopet.pet.type.zombievillager.*:
@@ -2530,6 +2675,7 @@ permissions:
         children:
             echopet.pet.type.zombievillager.hat: true
             echopet.pet.type.zombievillager.ride: true
+            echopet.pet.type.zombievillager.baby: true
             echopet.pet.type.zombievillager.baby: true
             echopet.pet.type.zombievillager.desert: true
             echopet.pet.type.zombievillager.jungle: true

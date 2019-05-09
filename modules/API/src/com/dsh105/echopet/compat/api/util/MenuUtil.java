@@ -24,12 +24,10 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.google.common.collect.ImmutableList;
 
 import net.md_5.bungee.api.ChatColor;
@@ -61,12 +59,6 @@ public class MenuUtil {
 	public static List<Object> createOptionList(IPet pet){
 		PetType pt = pet.getPetType();
 		List<Object> options = new LinkedList<>();
-		if(pet.getEntityPet() instanceof IEntityAgeablePet){
-			options.add(PetData.BABY);
-		}
-		if(pet.getEntityPet() instanceof IEntityHorseChestedAbstractPet){
-			options.add(PetData.CHESTED);
-		}
 		for(PetData data : pt.getAllowedDataTypes()){
 			options.add(data);
 		}
