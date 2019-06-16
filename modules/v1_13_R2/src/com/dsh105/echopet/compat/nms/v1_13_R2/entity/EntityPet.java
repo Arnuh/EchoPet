@@ -31,7 +31,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
@@ -44,7 +49,26 @@ import com.dsh105.echopet.compat.nms.v1_13_R2.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.ai.PetGoalLookAtPlayer;
 
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.Block;
+import net.minecraft.server.v1_13_R2.BlockPosition;
+import net.minecraft.server.v1_13_R2.DamageSource;
+import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityCreature;
+import net.minecraft.server.v1_13_R2.EntityHuman;
+import net.minecraft.server.v1_13_R2.EntityLiving;
+import net.minecraft.server.v1_13_R2.EntityPlayer;
+import net.minecraft.server.v1_13_R2.EntityTameableAnimal;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.EnumHand;
+import net.minecraft.server.v1_13_R2.EnumInteractionResult;
+import net.minecraft.server.v1_13_R2.IAnimal;
+import net.minecraft.server.v1_13_R2.IRegistry;
+import net.minecraft.server.v1_13_R2.ItemStack;
+import net.minecraft.server.v1_13_R2.MinecraftKey;
+import net.minecraft.server.v1_13_R2.NBTTagCompound;
+import net.minecraft.server.v1_13_R2.SoundEffect;
+import net.minecraft.server.v1_13_R2.Vec3D;
+import net.minecraft.server.v1_13_R2.World;
 
 public abstract class EntityPet extends EntityCreature implements IAnimal, IEntityPet{
 
@@ -294,9 +318,9 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	}
 
 	public void remove(boolean makeSound){
-		if(this.bukkitEntity != null){
-			bukkitEntity.leaveVehicle();
-			bukkitEntity.remove();
+		if(getBukkitEntity() != null){
+			getBukkitEntity().leaveVehicle();
+			getBukkitEntity().remove();
 		}
 		if(makeSound){
 			SoundEffect sound = getSoundFromString(getDeathSound());
