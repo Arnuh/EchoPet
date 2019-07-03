@@ -355,7 +355,7 @@ public enum PetData{
 	ORANGE_CARPET("orange_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_CARPET, "Orange Carpet"),
-	MAGENTA_CARPET("white_carpet", (player, pet, category, flag)->{
+	MAGENTA_CARPET("magenta_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_CARPET, "Magenta Carpet"),
 	LIGHT_BLUE_CARPET("light_blue_carpet", (player, pet, category, flag)->{
