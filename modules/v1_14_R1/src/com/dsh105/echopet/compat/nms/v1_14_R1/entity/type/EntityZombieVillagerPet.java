@@ -23,8 +23,14 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombieVillagerPet;
 
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.VillagerData;
+import net.minecraft.server.v1_14_R1.VillagerProfession;
 import net.minecraft.server.v1_14_R1.VillagerType;
+import net.minecraft.server.v1_14_R1.World;
 
 
 @EntitySize(width = 0.6F, height = 1.8F)
@@ -46,7 +52,7 @@ public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZ
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(CONVERTING, false);
-		this.datawatcher.register(DATA, new VillagerData(VillagerType.c, VillagerProfession.NONE, 1));
+		this.datawatcher.register(DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
 	}
 
 	@Override
