@@ -40,6 +40,7 @@ public enum PetDataCategory{
 	TROPICAL_FISH_PATTERN(Material.TROPICAL_FISH, "Tropical Fish Pattern", PetData.KOB, PetData.SUNSTREAK, PetData.SNOOPER, PetData.DASHER, PetData.BRINELY, PetData.SPOTTY, PetData.FLOPPER, PetData.STRIPEY, PetData.GLITTER, PetData.BLOCKFISH, PetData.BETTY, PetData.CLAYFISH),
 	TROPICAL_FISH_COLOR(Material.WHITE_WOOL, "Tropical Fish Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	TROPICAL_FISH_PATTERN_COLOR(Material.WHITE_BANNER, "Tropical Fish Pattern Color", PetData.WHITE_CARPET, PetData.ORANGE_CARPET, PetData.MAGENTA_CARPET, PetData.LIGHT_BLUE_CARPET, PetData.YELLOW_CARPET, PetData.LIME_CARPET, PetData.PINK_CARPET, PetData.GRAY_CARPET, PetData.LIGHT_GRAY_CARPET, PetData.CYAN_CARPET, PetData.PURPLE_CARPET, PetData.BLUE_CARPET, PetData.BROWN_CARPET, PetData.GREEN_CARPET, PetData.RED_CARPET, PetData.BLACK_CARPET),
+	FOX_TYPE(Material.getMaterial("SWEET_BERRIES"), "Fox Type", PetData.RED, PetData.SNOW),
 	;
 
 	public static final PetDataCategory[] values = values();

@@ -47,6 +47,7 @@ public enum PetType {
 	ENDERMAN("Enderman", "Enderman Pet", "enderman", PetData.SCREAMING),
 	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
+	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant"),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),

@@ -34,6 +34,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
@@ -150,6 +151,48 @@ public enum PetData {
 		}
 		return false;
 	}, Material.CHEST, "Chest"),
+	SIT("sit", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setSitting(flag);
+			return true;
+		}
+		return false;
+	}, Material.LEAD, "Sit"),
+	CROUCH("crouch", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setCrouching(flag);
+			return true;
+		}
+		return false;
+	}, Material.LEAD, "Crouch"),
+	HEAD_TILT("head_tilt", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setHeadTilt(flag);
+			return true;
+		}
+		return false;
+	}, Material.PLAYER_HEAD, "Head Tilt"),
+	POUNCE("pounce", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setPounce(flag);
+			return true;
+		}
+		return false;
+	}, Material.RABBIT, "Head Tilt"),
+	SLEEP("sleep", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setSleeping(flag);
+			return true;
+		}
+		return false;
+	}, Material.COOKED_PORKCHOP, "Sleep"),
+	LEG_SHAKE("leg_shake", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			((IFoxPet) pet).setLegShake(flag);
+			return true;
+		}
+		return false;
+	}, Material.FEATHER, "Leg Shake"),
     //
 	SIZE_SMALL("size_small", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.SLIME)){
@@ -270,6 +313,8 @@ public enum PetData {
 	RED("red", (player, pet, category, flag)-> {
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Red);
+		}else if(pet.getPetType().equals(PetType.FOX)){
+			return setFoxType(pet, FoxType.Red);
 		}
 		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
@@ -554,6 +599,12 @@ public enum PetData {
 			return setCatType(pet, CatType.Jellie);
 		}else return false;
 	}, Material.GRAY_WOOL, "Jellie"),
+    // Fox Type, Red is just normal red wool.
+	SNOW("snow", (player, pet, category, flag)-> {
+		if(pet.getPetType().equals(PetType.FOX)){
+			return setFoxType(pet, FoxType.Snow);
+		}else return false;
+	}, Material.SNOW_BLOCK, "Snow"),
 	;
 
 	public static final PetData[] values = values();
@@ -755,6 +806,14 @@ public enum PetData {
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.CAT)){
 			((ICatPet) pet).setType(catType);
+		}
+		return true;
+	}
+
+	private static boolean setFoxType(IPet pet, FoxType foxType){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.FOX)){
+			((IFoxPet) pet).setType(foxType);
 		}
 		return true;
 	}
