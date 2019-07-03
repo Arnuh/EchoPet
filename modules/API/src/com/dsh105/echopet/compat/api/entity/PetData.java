@@ -19,17 +19,6 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.Rabbit;
-import org.bukkit.entity.TropicalFish;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
@@ -40,6 +29,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
@@ -55,24 +45,33 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.VersionCheckType;
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.Llama;
+import org.bukkit.entity.Rabbit;
+import org.bukkit.entity.TropicalFish;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public enum PetData {
-	HAT("hat", (player, pet, category, flag)-> {
+public enum PetData{
+	HAT("hat", (player, pet, category, flag)->{
 		pet.setAsHat(flag);
 		return true;
 	}, Material.IRON_HELMET, "Hat Pet", "Wear your pet on your head"),
-	RIDE("ride", (player, pet, category, flag)-> {
+	RIDE("ride", (player, pet, category, flag)->{
 		pet.ownerRidePet(flag);
 		return true;
 	}, Material.CARROT_ON_A_STICK, "Ride Pet", "Control your pet"),
-	BABY("baby", (player, pet, category, flag)-> {
+	BABY("baby", (player, pet, category, flag)->{
 		if(pet instanceof IAgeablePet){
 			((IAgeablePet) pet).setBaby(flag);
 			return true;
 		}
 		return false;
 	}, Material.WHEAT, "Baby"),
-	SHEARED("sheared", (player, pet, category, flag)-> {
+	SHEARED("sheared", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SHEEP)){
 			((ISheepPet) pet).setSheared(flag);
 			return true;
@@ -82,14 +81,14 @@ public enum PetData {
 		}
 		return false;
 	}, Material.SHEARS, "Sheared"),
-	FIRE("fire", (player, pet, category, flag)-> {
+	FIRE("fire", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.BLAZE)){
 			((IBlazePet) pet).setOnFire(flag);
 			return true;
 		}
 		return false;
 	}, Material.FIRE_CHARGE, "Fire"),
-	POWERED("powered", (player, pet, category, flag)-> {
+	POWERED("powered", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CREEPER)){
 			((ICreeperPet) pet).setPowered(flag);
 			return true;
@@ -99,21 +98,21 @@ public enum PetData {
 		}
 		return false;
 	}, Material.BEACON, "Powered"),
-	SCREAMING("screaming", (player, pet, category, flag)-> {
+	SCREAMING("screaming", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.ENDERMAN)){
 			((IEndermanPet) pet).setScreaming(flag);
 			return true;
 		}
 		return false;
 	}, Material.ENDER_PEARL, "Screaming"),
-	SHIELD("shield", (player, pet, category, flag)-> {
+	SHIELD("shield", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.WITHER)){
 			((IWitherPet) pet).setShielded(flag);
 			return true;
 		}
 		return false;
 	}, Material.GLASS, "Shield"),
-	SADDLE("saddle", (player, pet, category, flag)-> {
+	SADDLE("saddle", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.PIG)){
 			((IPigPet) pet).setSaddle(flag);
 			return true;
@@ -123,104 +122,122 @@ public enum PetData {
 		}
 		return false;
 	}, Material.SADDLE, "Saddle"),
-	STANDING_UP("standing_up", (player, pet, category, flag)-> {
+	STANDING_UP("standing_up", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.POLARBEAR)){
 			((IPolarBearPet) pet).setStandingUp(flag);
 			return true;
 		}
 		return false;
 	}, Material.TROPICAL_FISH, "Standing Up"),
-	TAMED("tamed", (player, pet, category, flag)-> {
+	TAMED("tamed", (player, pet, category, flag)->{
 		if(pet instanceof ITameablePet){
 			((ITameablePet) pet).setTamed(flag);
 			return true;
 		}
 		return false;
 	}, Material.BONE, "Tamed"),
-	ANGRY("angry", (player, pet, category, flag)-> {
+	ANGRY("angry", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.WOLF)){
 			((IWolfPet) pet).setAngry(flag);
 			return true;
 		}
 		return false;
 	}, Material.BONE, "Angry"),
-	CHESTED("chest", (player, pet, category, flag)-> {
+	CHESTED("chest", (player, pet, category, flag)->{
 		if(pet instanceof IHorseChestedAbstractPet){
 			((IHorseChestedAbstractPet) pet).setChested(flag);
 			return true;
 		}
 		return false;
 	}, Material.CHEST, "Chest"),
-	SIT("sit", (player, pet, category, flag)-> {
+	SIT("sit", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setSitting(flag);
+			return true;
+		}else if(pet.getPetType().equals(PetType.PANDA)){
+			((IPandaPet) pet).setSitting(flag);
 			return true;
 		}
 		return false;
 	}, Material.LEAD, "Sit"),
-	CROUCH("crouch", (player, pet, category, flag)-> {
+	CROUCH("crouch", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setCrouching(flag);
 			return true;
 		}
 		return false;
 	}, Material.LEAD, "Crouch"),
-	HEAD_TILT("head_tilt", (player, pet, category, flag)-> {
+	HEAD_TILT("head_tilt", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setHeadTilt(flag);
 			return true;
 		}
 		return false;
 	}, Material.PLAYER_HEAD, "Head Tilt"),
-	POUNCE("pounce", (player, pet, category, flag)-> {
+	POUNCE("pounce", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setPounce(flag);
 			return true;
 		}
 		return false;
 	}, Material.RABBIT, "Head Tilt"),
-	SLEEP("sleep", (player, pet, category, flag)-> {
+	SLEEP("sleep", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setSleeping(flag);
 			return true;
 		}
 		return false;
 	}, Material.COOKED_PORKCHOP, "Sleep"),
-	LEG_SHAKE("leg_shake", (player, pet, category, flag)-> {
+	LEG_SHAKE("leg_shake", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setLegShake(flag);
 			return true;
 		}
 		return false;
 	}, Material.FEATHER, "Leg Shake"),
-    //
-	SIZE_SMALL("size_small", (player, pet, category, flag)-> {
+	ROLL("roll", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			((IPandaPet) pet).setRolling(flag);
+			return true;
+		}
+		return false;
+	}, Material.COOKED_SALMON, "Roll"),
+	LAY_DOWN("lay_down", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			((IPandaPet) pet).setLayingDown(flag);
+			return true;
+		}
+		return false;
+	}, Material.CAKE, "Lay Down"),
+	
+	//
+	SIZE_SMALL("size_small", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME)){
 			return setSlimeSize(pet, 1);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 0);
 		}
 		return false;
-	}, (pet)-> {
+	}, (pet)->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Small"),
-	SIZE_MEDIUM("size_medium", (player, pet, category, flag)-> {
+	SIZE_MEDIUM("size_medium", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME)){
 			return setSlimeSize(pet, 2);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 1);
 		}
 		return false;
-	}, (pet)-> {
+	}, (pet)->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Medium"),
-	SIZE_LARGE("size_large", (player, pet, category, flag)-> {
+	SIZE_LARGE("size_large", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME)){
 			return setSlimeSize(pet, 4);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
@@ -229,13 +246,13 @@ public enum PetData {
 			return setTropicalFishLarge(pet, flag);
 		}
 		return false;
-	}, (pet)-> {
+	}, (pet)->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Large"),
-	CREAMY("creamy", (player, pet, category, flag)-> {
+	CREAMY("creamy", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.CREAMY);
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
@@ -243,8 +260,8 @@ public enum PetData {
 		}
 		return false;
 	}, Material.YELLOW_WOOL, "Creamy"),
-    // Colors. Used for Collars(wolf), Sheep, Llama Color, and certain Rabbit Types.
-	WHITE("white", (player, pet, category, flag)-> {
+	// Colors. Used for Collars(wolf), Sheep, Llama Color, and certain Rabbit Types.
+	WHITE("white", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.WHITE);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
@@ -257,25 +274,25 @@ public enum PetData {
 			return setColorByDye(pet, category, DyeColor.WHITE);
 		}
 	}, Material.WHITE_WOOL, "White"),
-	ORANGE("orange", (player, pet, category, flag)-> {
+	ORANGE("orange", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_WOOL, "Orange"),
-	MAGENTA("magenta", (player, pet, category, flag)-> {
+	MAGENTA("magenta", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_WOOL, "Magenta"),
-	LIGHT_BLUE("light_blue", (player, pet, category, flag)-> {
+	LIGHT_BLUE("light_blue", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIGHT_BLUE);
 	}, Material.LIGHT_BLUE_WOOL, "Light Blue"),
-	YELLOW("yellow", (player, pet, category, flag)-> {
+	YELLOW("yellow", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.YELLOW);
 	}, Material.YELLOW_WOOL, "Yellow"),
-	LIME("lime", (player, pet, category, flag)-> {
+	LIME("lime", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIME);
 	}, Material.LIME_WOOL, "Lime"),
-	PINK("pink", (player, pet, category, flag)-> {
+	PINK("pink", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.PINK);
 	}, Material.PINK_WOOL, "Pink"),
-	GRAY("gray", (player, pet, category, flag)-> {
+	GRAY("gray", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.GRAY);
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
@@ -284,33 +301,35 @@ public enum PetData {
 			return setColorByDye(pet, category, DyeColor.GRAY);
 		}
 	}, Material.GRAY_WOOL, "Gray"),
-	LIGHT_GRAY("light_gray", (player, pet, category, flag)-> {
+	LIGHT_GRAY("light_gray", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIGHT_GRAY);
 	}, Material.LIGHT_GRAY_WOOL, "Light Gray"),
-	CYAN("cyan", (player, pet, category, flag)-> {
+	CYAN("cyan", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.CYAN);
 	}, Material.CYAN_WOOL, "Cyan"),
-	PURPLE("purple", (player, pet, category, flag)-> {
+	PURPLE("purple", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.PURPLE);
 	}, Material.PURPLE_WOOL, "Purple"),
-	BLUE("blue", (player, pet, category, flag)-> {
+	BLUE("blue", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.BLUE);
 	}, Material.BLUE_WOOL, "Blue"),
-	BROWN("brown", (player, pet, category, flag)-> {
+	BROWN("brown", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.BROWN);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BROWN);
 		}else if(pet.getPetType().equals(PetType.LLAMA)){
 			return setLlamaColor(pet, Llama.Color.BROWN);
+		}else if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Brown);
 		}else{
 			return setColorByDye(pet, category, DyeColor.BROWN);
 		}
 	}, Material.BROWN_WOOL, "Brown"),
-	GREEN("green", (player, pet, category, flag)-> {
+	GREEN("green", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_WOOL, "Green"),
-	RED("red", (player, pet, category, flag)-> {
+	RED("red", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Red);
 		}else if(pet.getPetType().equals(PetType.FOX)){
@@ -318,7 +337,7 @@ public enum PetData {
 		}
 		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
-	BLACK("black", (player, pet, category, flag)-> {
+	BLACK("black", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.BLACK);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
@@ -329,306 +348,337 @@ public enum PetData {
 			return setColorByDye(pet, category, DyeColor.BLACK);
 		}
 	}, Material.BLACK_WOOL, "Black"),
-    // Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
-	WHITE_CARPET("white_carpet", (player, pet, category, flag)-> {
+	// Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
+	WHITE_CARPET("white_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.WHITE);
 	}, Material.WHITE_CARPET, "White Carpet"),
-	ORANGE_CARPET("orange_carpet", (player, pet, category, flag)-> {
+	ORANGE_CARPET("orange_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.ORANGE);
 	}, Material.ORANGE_CARPET, "Orange Carpet"),
-	MAGENTA_CARPET("white_carpet", (player, pet, category, flag)-> {
+	MAGENTA_CARPET("white_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.MAGENTA);
 	}, Material.MAGENTA_CARPET, "Magenta Carpet"),
-	LIGHT_BLUE_CARPET("light_blue_carpet", (player, pet, category, flag)-> {
+	LIGHT_BLUE_CARPET("light_blue_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIGHT_BLUE);
 	}, Material.LIGHT_BLUE_CARPET, "Light Blue Carpet"),
-	YELLOW_CARPET("yellow_carpet", (player, pet, category, flag)-> {
+	YELLOW_CARPET("yellow_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.YELLOW);
 	}, Material.YELLOW_CARPET, "Yellow Carpet"),
-	LIME_CARPET("lime_carpet", (player, pet, category, flag)-> {
+	LIME_CARPET("lime_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIME);
 	}, Material.LIME_CARPET, "Lime Carpet"),
-	PINK_CARPET("pink_carpet", (player, pet, category, flag)-> {
+	PINK_CARPET("pink_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.PINK);
 	}, Material.PINK_CARPET, "Pink Carpet"),
-	GRAY_CARPET("gray_carpet", (player, pet, category, flag)-> {
+	GRAY_CARPET("gray_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.GRAY);
 	}, Material.GRAY_CARPET, "Gray Carpet"),
-	LIGHT_GRAY_CARPET("light_gray", (player, pet, category, flag)-> {
+	LIGHT_GRAY_CARPET("light_gray", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.LIGHT_GRAY);
 	}, Material.LIGHT_GRAY_CARPET, "Light Gray Carpet"),
-	CYAN_CARPET("cyan_carpet", (player, pet, category, flag)-> {
+	CYAN_CARPET("cyan_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.CYAN);
 	}, Material.CYAN_CARPET, "Cyan Carpet"),
-	PURPLE_CARPET("purple_carpet", (player, pet, category, flag)-> {
+	PURPLE_CARPET("purple_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.PURPLE);
 	}, Material.PURPLE_CARPET, "Purple Carpet"),
-	BLUE_CARPET("blue_carpet", (player, pet, category, flag)-> {
+	BLUE_CARPET("blue_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.BLUE);
 	}, Material.BLUE_CARPET, "Blue Carpet"),
-	BROWN_CARPET("brown_carpet", (player, pet, category, flag)-> {
+	BROWN_CARPET("brown_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.BROWN);
 	}, Material.BROWN_CARPET, "Brown Carpet"),
-	GREEN_CARPET("green_carpet", (player, pet, category, flag)-> {
+	GREEN_CARPET("green_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_CARPET, "Green Carpet"),
-	RED_CARPET("red_carpet", (player, pet, category, flag)-> {
+	RED_CARPET("red_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_CARPET, "Red Carpet"),
-	BLACK_CARPET("black_carpet", (player, pet, category, flag)-> {
+	BLACK_CARPET("black_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.BLACK);
 	}, Material.BLACK_CARPET, "Black Carpet"),
-    // Villager Types
-	DESERT("desert", (player, pet, category, flag)-> {
+	// Villager Types
+	DESERT("desert", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.DESERT);
 	}, Material.SAND, "Desert"),
-	JUNGLE("jungle", (player, pet, category, flag)-> {
+	JUNGLE("jungle", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.JUNGLE);
 	}, Material.VINE, "Jungle"),
-	PLAINS("plains", (player, pet, category, flag)-> {
+	PLAINS("plains", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.PLAINS);
 	}, Material.GRASS_BLOCK, "Plains"),
-	SAVANNA("savanna", (player, pet, category, flag)-> {
+	SAVANNA("savanna", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.SAVANNA);
 	}, Material.SANDSTONE, "Savanna"),
-	SNOWY("snowy", (player, pet, category, flag)-> {
+	SNOWY("snowy", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.SNOWY);
 	}, Material.SNOW_BLOCK, "Snowy"),
-	SWAMP("swamp", (player, pet, category, flag)-> {
+	SWAMP("swamp", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.SWAMP);
 	}, Material.LILY_PAD, "Swamp"),
-	TAIGA("taiga", (player, pet, category, flag)-> {
+	TAIGA("taiga", (player, pet, category, flag)->{
 		return setVillagerType(pet, VillagerType.TAIGA);
 	}, Material.SPRUCE_LOG, "Taiga"),
-    // Villager Profession
-	NONE("none", (player, pet, category, flag)-> {
+	// Villager Profession
+	NONE("none", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.NONE);
 	}, Material.CRAFTING_TABLE, "None"),
-	ARMORER("armorer", (player, pet, category, flag)-> {
+	ARMORER("armorer", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.ARMORER);
 	}, Material.getMaterial("BLAST_FURNACE"), "Armorer"),
-	BUTCHER("butcher", (player, pet, category, flag)-> {
+	BUTCHER("butcher", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.BUTCHER);
 	}, Material.getMaterial("SMOKER"), "Butcher"),
-	CARTOGRAPHER("cartographer", (player, pet, category, flag)-> {
+	CARTOGRAPHER("cartographer", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.CARTOGRAPHER);
 	}, Material.getMaterial("CARTOGRAPHY_TABLE"), "Cartographer"),
-	CLERIC("cleric", (player, pet, category, flag)-> {
+	CLERIC("cleric", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.CLERIC);
 	}, Material.BREWING_STAND, "Cleric"),
-	FARMER("farmer", (player, pet, category, flag)-> {
+	FARMER("farmer", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.FARMER);
 	}, Material.getMaterial("COMPOSTER"), "Farmer"),
-	FISHERMAN("fisherman", (player, pet, category, flag)-> {
+	FISHERMAN("fisherman", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.FISHERMAN);
 	}, Material.getMaterial("BARREL"), "Fisherman"),
-	FLETCHER("fletcher", (player, pet, category, flag)-> {
+	FLETCHER("fletcher", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.FLETCHER);
 	}, Material.getMaterial("FLETCHING_TABLE"), "Fletcher"),
-	LEATHERWORKER("leatherworker", (player, pet, category, flag)-> {
+	LEATHERWORKER("leatherworker", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.LEATHERWORKER);
 	}, Material.CAULDRON, "Leatherworker"),
-	LIBRARIAN("librarian", (player, pet, category, flag)-> {
+	LIBRARIAN("librarian", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.LIBRARIAN);
 	}, Material.getMaterial("LECTERN"), "Librarian"),
-	MASON("mason", (player, pet, category, flag)-> {
+	MASON("mason", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.MASON);
 	}, Material.getMaterial("STONECUTTER"), "Stone Mason"),
-	NITWIT("nitwit", (player, pet, category, flag)-> {
+	NITWIT("nitwit", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.NITWIT);
 	}, Material.STONE, "Nitwit"),
-	SHEPHERD("sherpherd", (player, pet, category, flag)-> {
+	SHEPHERD("sherpherd", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.SHEPHERD);
 	}, Material.getMaterial("LOOM"), "Sherpherd"),
-	TOOLSMITH("toolsmith", (player, pet, category, flag)-> {
+	TOOLSMITH("toolsmith", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.TOOLSMITH);
 	}, Material.getMaterial("SMITHING_TABLE"), "None"),
-	WEAPONSMITH("weaponsmith", (player, pet, category, flag)-> {
+	WEAPONSMITH("weaponsmith", (player, pet, category, flag)->{
 		return setProfession(pet, Profession.WEAPONSMITH);
 	}, Material.getMaterial("GRINDSTONE"), "Weaponsmith"),
-    // Villager Level
-	NOVICE("novice", (player, pet, category, flag)-> {
+	// Villager Level
+	NOVICE("novice", (player, pet, category, flag)->{
 		return setVillagerLevel(pet, VillagerLevel.NOVICE);
 	}, Material.STONE, "Novice"),
-	APPRENTICE("apprentice", (player, pet, category, flag)-> {
+	APPRENTICE("apprentice", (player, pet, category, flag)->{
 		return setVillagerLevel(pet, VillagerLevel.APPRENTICE);
 	}, Material.IRON_INGOT, "Apprentice"),
-	JOURNEYMEN("journeymen", (player, pet, category, flag)-> {
+	JOURNEYMEN("journeymen", (player, pet, category, flag)->{
 		return setVillagerLevel(pet, VillagerLevel.JOURNEYMEN);
 	}, Material.GOLD_INGOT, "Journeymen"),
-	EXPERT("expert", (player, pet, category, flag)-> {
+	EXPERT("expert", (player, pet, category, flag)->{
 		return setVillagerLevel(pet, VillagerLevel.EXPERT);
 	}, Material.EMERALD, "Expert"),
-	MASTER("master", (player, pet, category, flag)-> {
+	MASTER("master", (player, pet, category, flag)->{
 		return setVillagerLevel(pet, VillagerLevel.MASTER);
 	}, Material.DIAMOND, "Master"),
-    // Rabbit Type
-    // Brown, White, Black are handled above.
-	BLACK_AND_WHITE("black_and_white", (player, pet, category, flag)-> {
+	// Rabbit Type
+	// Brown, White, Black are handled above.
+	BLACK_AND_WHITE("black_and_white", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.BLACK_AND_WHITE);
 	}, Material.GRAY_WOOL, "Black and White"),
-	GOLD("gold", (player, pet, category, flag)-> {
+	GOLD("gold", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.GOLD);
 	}, Material.GOLD_BLOCK, "Gold"),
-	SALT_AND_PEPPER("salt_and_pepper", (player, pet, category, flag)-> {
+	SALT_AND_PEPPER("salt_and_pepper", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.SALT_AND_PEPPER);
 	}, Material.YELLOW_WOOL, "Salt and Pepper"),
-	KILLER_BUNNY("killer_bunny", (player, pet, category, flag)-> {
+	KILLER_BUNNY("killer_bunny", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.THE_KILLER_BUNNY);
 	}, Material.RED_WOOL, "Killer Bunny"),
-    // Horse Colors(variant). Creamy, White, Brown, Black, Gray is above
-	CHESTNUT("chestnut", (player, pet, category, flag)-> {
+	// Horse Colors(variant). Creamy, White, Brown, Black, Gray is above
+	CHESTNUT("chestnut", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.CHESTNUT);
 		}
 		return false;
 	}, Material.GRAY_TERRACOTTA, "Chestnut"),
-	DARK_BROWN("dark_brown", (player, pet, category, flag)-> {
+	DARK_BROWN("dark_brown", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.DARK_BROWN);
 		}
 		return false;
 	}, Material.BROWN_TERRACOTTA, "Dark Brown"),
-    // Horse Marking
-	NO_MARKING("no_marking", (player, pet, category, flag)-> {
+	// Horse Marking
+	NO_MARKING("no_marking", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.NONE);
 		}
 		return false;
 	}, Material.LEAD, "Dark Brown"),
-	WHITE_SOCKS("white_socks", (player, pet, category, flag)-> {
+	WHITE_SOCKS("white_socks", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.WHITE);
 		}
 		return false;
 	}, Material.WHITE_CARPET, "White Socks"),
-	WHITE_FIELD("white_field", (player, pet, category, flag)-> {
+	WHITE_FIELD("white_field", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.WHITEFIELD);
 		}
 		return false;
 	}, Material.WHITE_WOOL, "White Field"),
-	WHITE_DOTS("white_dots", (player, pet, category, flag)-> {
+	WHITE_DOTS("white_dots", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.WHITE_DOTS);
 		}
 		return false;
 	}, Material.WHITE_STAINED_GLASS, "White Dots"),
-	BLACK_DOTS("black_dots", (player, pet, category, flag)-> {
+	BLACK_DOTS("black_dots", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.BLACK_DOTS);
 		}
 		return false;
 	}, Material.BLACK_WOOL, "Black Dots"),
-    // Tropical Fish Patterns
-	KOB("kob", (player, pet, category, flag)-> {
+	// Tropical Fish Patterns
+	KOB("kob", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.KOB);
 	}, Material.WHITE_BANNER, "Kob"),
-	SUNSTREAK("sunstreak", (player, pet, category, flag)-> {
+	SUNSTREAK("sunstreak", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.SUNSTREAK);
 	}, Material.ORANGE_BANNER, "Sunstreak"),
-	SNOOPER("snooper", (player, pet, category, flag)-> {
+	SNOOPER("snooper", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.SNOOPER);
 	}, Material.MAGENTA_BANNER, "Snooper"),
-	DASHER("dasher", (player, pet, category, flag)-> {
+	DASHER("dasher", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.DASHER);
 	}, Material.LIGHT_BLUE_BANNER, "Dasher"),
-	BRINELY("brinely", (player, pet, category, flag)-> {
+	BRINELY("brinely", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.BRINELY);
 	}, Material.YELLOW_BANNER, "Brinely"),
-	SPOTTY("spotty", (player, pet, category, flag)-> {
+	SPOTTY("spotty", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.SPOTTY);
 	}, Material.LIME_BANNER, "Spotty"),
-    // The ones below are just the above but with large as true.
-	FLOPPER("flopper", (player, pet, category, flag)-> {
+	// The ones below are just the above but with large as true.
+	FLOPPER("flopper", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.FLOPPER);
 	}, Material.PINK_BANNER, "Flopper"),
-	STRIPEY("stripey", (player, pet, category, flag)-> {
+	STRIPEY("stripey", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.STRIPEY);
 	}, Material.GRAY_BANNER, "Stripey"),
-	GLITTER("glitter", (player, pet, category, flag)-> {
+	GLITTER("glitter", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.GLITTER);
 	}, Material.LIGHT_GRAY_BANNER, "glitter"),
-	BLOCKFISH("blockfish", (player, pet, category, flag)-> {
+	BLOCKFISH("blockfish", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.BLOCKFISH);
 	}, Material.CYAN_BANNER, "Blockfish"),
-	BETTY("betty", (player, pet, category, flag)-> {
+	BETTY("betty", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.BETTY);
 	}, Material.PURPLE_BANNER, "Betty"),
-	CLAYFISH("clayfish", (player, pet, category, flag)-> {
+	CLAYFISH("clayfish", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.CLAYFISH);
 	}, Material.BLUE_BANNER, "Clayfish"),
-    // Cat Types. Red, White, Black use above options
-	TABBY("tabby", (player, pet, category, flag)-> {
+	// Cat Types. Red, White, Black use above options
+	TABBY("tabby", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Tabby);
 		}else return false;
 	}, Material.COD, "Tabby"),
-	TUXEDO("tuxedo", (player, pet, category, flag)-> {
+	TUXEDO("tuxedo", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Black);
 		}else return false;
 	}, Material.WHITE_CARPET, "Tuxedo"),
-	SIAMESE("siamese", (player, pet, category, flag)-> {
+	SIAMESE("siamese", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Siamese);
 		}else return false;
 	}, Material.BROWN_CARPET, "Siamese"),
-	BRITISH_SHORTHAIR("british_shorthair", (player, pet, category, flag)-> {
+	BRITISH_SHORTHAIR("british_shorthair", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.BritishShortHair);
 		}else return false;
 	}, Material.LIGHT_GRAY_WOOL, "British Shorthair"),
-	CALICO("calico", (player, pet, category, flag)-> {
+	CALICO("calico", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Calico);
 		}else return false;
 	}, Material.ORANGE_WOOL, "Calico"),
-	PERSIAN("persian", (player, pet, category, flag)-> {
+	PERSIAN("persian", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Persian);
 		}else return false;
 	}, Material.YELLOW_WOOL, "Persian"),
-	RAGDOLL("ragdoll", (player, pet, category, flag)-> {
+	RAGDOLL("ragdoll", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Ragdoll);
 		}else return false;
 	}, Material.WHITE_CARPET, "Ragdoll"),
-	JELLIE("jellie", (player, pet, category, flag)-> {
+	JELLIE("jellie", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Jellie);
 		}else return false;
 	}, Material.GRAY_WOOL, "Jellie"),
-    // Fox Type, Red is just normal red wool.
-	SNOW("snow", (player, pet, category, flag)-> {
+	// Fox Type, Red is just normal red wool.
+	SNOW("snow", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			return setFoxType(pet, FoxType.Snow);
 		}else return false;
 	}, Material.SNOW_BLOCK, "Snow"),
+	//Panda Types, Brown is normal brown wool.
+	NORMAL("normal", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Normal);
+		}else return false;
+	}, Material.WHITE_WOOL, "Normal"),
+	LAZY("lazy", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Lazy);
+		}else return false;
+	}, Material.CAKE, "Lazy"),
+	WORRIED("worried", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Worried);
+		}else return false;
+	}, Material.SLIME_BALL, "Worried"),
+	PLAYFUL("playful", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Playful);
+		}else return false;
+	}, Material.COOKED_SALMON, "Playful"),
+	AGGRESSIVE("aggressive", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Aggressive);
+		}else return false;
+	}, Material.RED_WOOL, "Aggressive"),
+	WEAK("weak", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Weak);
+		}else return false;
+	}, Material.WOODEN_SWORD, "Weak"),
 	;
-
+	
 	public static final PetData[] values = values();
-
-    private String configOptionString;
+	
+	private String configOptionString;
 	private Version version;
 	private VersionCheckType versionCheckType;
 	private PetDataAction action;
 	private PetDataMaterial material;
 	private String name;
 	private List<String> lore;
-
+	
 	private PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
-		this(configOptionString, action, (pet)-> {
+		this(configOptionString, action, (pet)->{
 			return material;
 		}, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
-
+	
 	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
 		this(configOptionString, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
-
+	
 	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
-        this.configOptionString = configOptionString;
+		this.configOptionString = configOptionString;
 		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
@@ -638,20 +688,20 @@ public enum PetData {
 		for(String s : loreArray){
 			lore.add(ChatColor.GOLD + s);
 		}
-    }
-
-    public String getConfigOptionString() {
-        return this.configOptionString;
-    }
-
+	}
+	
+	public String getConfigOptionString(){
+		return this.configOptionString;
+	}
+	
 	public PetDataAction getAction(){
 		return action;
 	}
-
+	
 	public String getItemName(){
 		return name;
 	}
-
+	
 	public ItemStack toItem(IPet pet){
 		ItemStack item = new ItemStack(material.get(pet));
 		ItemMeta meta = item.getItemMeta();
@@ -660,7 +710,7 @@ public enum PetData {
 		item.setItemMeta(meta);
 		return item;
 	}
-
+	
 	public ItemStack toItem(IPet pet, boolean flag){
 		ItemStack i = new ItemStack(material.get(pet));
 		ItemMeta meta = i.getItemMeta();
@@ -669,9 +719,9 @@ public enum PetData {
 		i.setItemMeta(meta);
 		return i;
 	}
-
+	
 	public boolean isCompatible(){
-		switch (versionCheckType){
+		switch(versionCheckType){
 			case IDENTICAL:{// ==
 				return version.isIdentical(new Version());
 			}
@@ -684,7 +734,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setColorByDye(IPet pet, PetDataCategory category, DyeColor color){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.SHEEP)){
@@ -702,12 +752,12 @@ public enum PetData {
 			}else if(category.equals(PetDataCategory.TROPICAL_FISH_PATTERN_COLOR)){
 				fish.setPatternColor(color);
 			}
-		}else if(type.equals(PetType.CAT)) {
+		}else if(type.equals(PetType.CAT)){
 			((ICatPet) pet).setCollarColor(color);
 		}
 		return true;
 	}
-
+	
 	private static boolean setSlimeSize(IPet pet, int size){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.SLIME)){
@@ -719,7 +769,7 @@ public enum PetData {
 		}
 		return false;
 	}
-
+	
 	private static boolean setPufferFishState(IPet pet, int state){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.PUFFERFISH)){
@@ -728,7 +778,7 @@ public enum PetData {
 		}
 		return false;
 	}
-
+	
 	private static boolean setVillagerType(IPet pet, VillagerType villagerType){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
@@ -736,7 +786,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setVillagerLevel(IPet pet, VillagerLevel villagerLevel){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
@@ -744,7 +794,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setProfession(IPet pet, Profession profession){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
@@ -752,7 +802,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setRabbitType(IPet pet, Rabbit.Type rabbitType){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.RABBIT)){
@@ -760,7 +810,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setHorseColor(IPet pet, Horse.Color color){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
@@ -768,7 +818,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setHorseStyle(IPet pet, Horse.Style style){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
@@ -776,7 +826,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setLlamaColor(IPet pet, Llama.Color color){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.LLAMA)){
@@ -784,7 +834,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setTropicalFishPattern(IPet pet, TropicalFish.Pattern pattern){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.TROPICALFISH)){
@@ -793,7 +843,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setTropicalFishLarge(IPet pet, boolean large){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.TROPICALFISH)){
@@ -801,7 +851,7 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setCatType(IPet pet, CatType catType){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.CAT)){
@@ -809,12 +859,24 @@ public enum PetData {
 		}
 		return true;
 	}
-
+	
 	private static boolean setFoxType(IPet pet, FoxType foxType){
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.FOX)){
 			((IFoxPet) pet).setType(foxType);
 		}
+		return true;
+	}
+	
+	private static boolean setGene(IPet pet, PetDataCategory category, PandaGene gene){
+		if(!pet.getPetType().equals(PetType.PANDA)) return false;
+		IPandaPet panda = ((IPandaPet) pet);
+		if(category.equals(PetDataCategory.PANDA_MAIN_GENE)){
+			panda.setMainGene(gene);
+		}else if(category.equals(PetDataCategory.PANDA_HIDDEN_GENE)){
+			panda.setHiddenGene(gene);
+		}
+		
 		return true;
 	}
 }

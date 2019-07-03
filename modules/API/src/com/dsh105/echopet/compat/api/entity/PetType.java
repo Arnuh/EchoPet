@@ -20,17 +20,15 @@ package com.dsh105.echopet.compat.api.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.google.common.collect.ImmutableList;
+import org.bukkit.entity.Player;
 
-public enum PetType {
-
+public enum PetType{
+	
 	BAT("Bat", "Bat Pet", "bat"),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
 	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}, PetData.TAMED),
@@ -43,7 +41,7 @@ public enum PetType {
 	DONKEY("Donkey", "Donkey Pet", "donkey", PetData.SADDLE),
 	DROWNED("Drowned", "Drowned Pet", "drowned"),
 	ELDERGUARDIAN("ElderGuardian", "Elder Guardian Pet", "elder_guardian"),
-    // ENDERDRAGON("EnderDragon", "EnderDragon Pet", "ender_dragon", "EnderDragon"),
+	// ENDERDRAGON("EnderDragon", "EnderDragon Pet", "ender_dragon", "EnderDragon"),
 	ENDERMAN("Enderman", "Enderman Pet", "enderman", PetData.SCREAMING),
 	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
@@ -61,6 +59,7 @@ public enum PetType {
 	MULE("Mule", "Mule Pet", "mule", PetData.SADDLE),
 	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom"),
 	OCELOT("Ocelot", "Ocelot Pet", "ocelot"),
+	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),
 	PHANTOM("Phantom", "Phantom Pet", "phantom"),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
@@ -92,34 +91,36 @@ public enum PetType {
 	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", PetData.SADDLE),
 	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	;
-
+	
 	private String classIdentifier;
-    private Class<? extends IEntityPet> entityClass;
-    private Class<? extends IPet> petClass;
-    private String defaultName;
+	private Class<? extends IEntityPet> entityClass;
+	private Class<? extends IPet> petClass;
+	private String defaultName;
 	private String minecraftEntityName;
 	private List<PetDataCategory> allowedCategories = new ArrayList<>();
 	private List<PetData> allowedData = new ArrayList<>();
 	private Version version;
+	
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, allowedData);
 	}
-
+	
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetDataCategory[] categories, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), categories, allowedData);
 	}
-
+	
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, version, null, allowedData);
 	}
-
+	
 	@SuppressWarnings({"unchecked"})
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetDataCategory[] categories, PetData... allowedData){
 		this.classIdentifier = classIdentifier;
 		try{
-		    this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
+			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-		}catch(ClassNotFoundException ignored){}
+		}catch(ClassNotFoundException ignored){
+		}
 		this.minecraftEntityName = minecraftEntityName;
 		this.defaultName = defaultName;
 		this.version = version;
@@ -140,68 +141,68 @@ public enum PetType {
 		if(categories != null){
 			this.allowedCategories.addAll(ImmutableList.copyOf(categories));
 		}
-    }
-
+	}
+	
 	public String getClassIdentifier(){
 		return classIdentifier;
 	}
-
-    public String getDefaultName(String name) {
+	
+	public String getDefaultName(String name){
 		return EchoPet.getConfig().getString("pets." + this.toString().toLowerCase().replace("_", "") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
-    }
-
-    public String getDefaultName() {
-        return this.defaultName;
-    }
-
+	}
+	
+	public String getDefaultName(){
+		return this.defaultName;
+	}
+	
 	public String getMinecraftName(){
 		return minecraftEntityName;
 	}
-
+	
 	public List<PetDataCategory> getAllowedCategories(){
 		return allowedCategories;
 	}
-
-    public List<PetData> getAllowedDataTypes() {
-        return this.allowedData;
-    }
-
-    public boolean isDataAllowed(PetData data) {
+	
+	public List<PetData> getAllowedDataTypes(){
+		return this.allowedData;
+	}
+	
+	public boolean isDataAllowed(PetData data){
 		for(PetDataCategory category : allowedCategories){
 			for(PetData d : category.getData()){
 				if(d.equals(data)) return true;
 			}
 		}
-        return getAllowedDataTypes().contains(data);
-    }
-
-	public IEntityPet getNewEntityPetInstance(Object world, IPet pet){
-	    return EchoPet.getPetRegistry().getRegistrationEntry(pet.getPetType()).createEntityPet(world, pet);
+		return getAllowedDataTypes().contains(data);
 	}
-
+	
+	public IEntityPet getNewEntityPetInstance(Object world, IPet pet){
+		return EchoPet.getPetRegistry().getRegistrationEntry(pet.getPetType()).createEntityPet(world, pet);
+	}
+	
 	public IPet getNewPetInstance(Player owner){
-        if (owner != null) {
-            return EchoPet.getPetRegistry().spawn(this, owner);
-        }
-        return null;
-    }
-
-    public Class<? extends IEntityPet> getEntityClass() {
-        return this.entityClass;
-    }
-
-    public Class<? extends IPet> getPetClass() {
-        return this.petClass;
-    }
-
+		if(owner != null){
+			return EchoPet.getPetRegistry().spawn(this, owner);
+		}
+		return null;
+	}
+	
+	public Class<? extends IEntityPet> getEntityClass(){
+		return this.entityClass;
+	}
+	
+	public Class<? extends IPet> getPetClass(){
+		return this.petClass;
+	}
+	
 	public Version getVersion(){
 		return version;
 	}
-
+	
 	public boolean isCompatible(){
 		return version.isCompatible(new Version());
 	}
-
+	
 	private static void outputInfo(){
 		String[] petTypes = new String[PetType.values().length];
 		int pos = 0;
@@ -209,7 +210,7 @@ public enum PetType {
 			petTypes[pos++] = type.name().toLowerCase();
 		}
 		Arrays.sort(petTypes);
-
+		
 		for(String petTypeName : petTypes){
 			System.out.println("    echopet.pet.type." + petTypeName + ":");
 			System.out.println("        default: op");
@@ -346,7 +347,7 @@ public enum PetType {
 			}
 		}
 	}
-
+	
 	public static void main(String[] args){
 		outputInfo();
 	}

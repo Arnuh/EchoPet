@@ -41,31 +41,33 @@ public enum PetDataCategory{
 	TROPICAL_FISH_COLOR(Material.WHITE_WOOL, "Tropical Fish Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	TROPICAL_FISH_PATTERN_COLOR(Material.WHITE_BANNER, "Tropical Fish Pattern Color", PetData.WHITE_CARPET, PetData.ORANGE_CARPET, PetData.MAGENTA_CARPET, PetData.LIGHT_BLUE_CARPET, PetData.YELLOW_CARPET, PetData.LIME_CARPET, PetData.PINK_CARPET, PetData.GRAY_CARPET, PetData.LIGHT_GRAY_CARPET, PetData.CYAN_CARPET, PetData.PURPLE_CARPET, PetData.BLUE_CARPET, PetData.BROWN_CARPET, PetData.GREEN_CARPET, PetData.RED_CARPET, PetData.BLACK_CARPET),
 	FOX_TYPE(Material.getMaterial("SWEET_BERRIES"), "Fox Type", PetData.RED, PetData.SNOW),
+	PANDA_MAIN_GENE(Material.getMaterial("BAMBOO"), "Main Gene", PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
+	PANDA_HIDDEN_GENE(Material.getMaterial("BAMBOO"), "Hidden Gene", PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	;
-
+	
 	public static final PetDataCategory[] values = values();
 	private final PetData[] data;
 	private Material material;
 	private String name;
 	private ItemStack item;
-
+	
 	PetDataCategory(Material material, String name, PetData... data){
 		this.material = material;
 		this.name = name;
 		this.data = data;
 	}
-
+	
 	public PetData[] getData(){
 		return data;
 	}
-
+	
 	public boolean hasData(PetData petData){
 		for(PetData d : data){
 			if(d.equals(petData)) return true;
 		}
 		return false;
 	}
-
+	
 	public ItemStack getItem(){
 		if(item == null){
 			item = new ItemStack(material);
@@ -76,7 +78,7 @@ public enum PetDataCategory{
 		}
 		return item;
 	}
-
+	
 	public static PetDataCategory getByData(PetType type, PetData data){
 		for(PetDataCategory category : type.getAllowedCategories()){
 			if(category.hasData(data)) return category;
