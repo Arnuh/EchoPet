@@ -16,19 +16,20 @@ package com.dsh105.echopet.compat.nms.v1_14_R1;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
 import com.google.common.base.Preconditions;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.Entity;
+import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.EntityTypes.a;
+import net.minecraft.server.v1_14_R1.EnumCreatureType;
+import net.minecraft.server.v1_14_R1.IRegistry;
+import net.minecraft.server.v1_14_R1.World;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings
@@ -39,12 +40,12 @@ import net.minecraft.server.v1_14_R1.EntityTypes.a;
  */
 @SuppressWarnings("unchecked")
 public class PetRegistry implements IPetRegistry{
-
+	
 	private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
-
-
+	
+	
 	public PetRegistry(){
-
+		
 		for(PetType petType : PetType.values()){
 			if(petType.isCompatible()){
 				try{
@@ -56,15 +57,15 @@ public class PetRegistry implements IPetRegistry{
 			}
 		}
 	}
-
+	
 	public PetRegistrationEntry getRegistrationEntry(PetType petType){
 		return registrationEntries.get(petType);
 	}
-
+	
 	public void shutdown(){
 		//
 	}
-
+	
 	public IPet spawn(PetType petType, final Player owner){
 		Preconditions.checkNotNull(petType, "Pet type must not be null.");
 		Preconditions.checkNotNull(owner, "Owner type must not be null.");
@@ -74,13 +75,13 @@ public class PetRegistry implements IPetRegistry{
 			return null;
 		}
 		return performRegistration(registrationEntry, new Callable<IPet>(){
-
+			
 			public IPet call() throws Exception{
 				return registrationEntry.createFor(owner);
 			}
 		});
 	}
-
+	
 	public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable){
 		try{
 			return callable.call();
@@ -88,7 +89,7 @@ public class PetRegistry implements IPetRegistry{
 			throw new PetRegistrationException(e);
 		}
 	}
-
+	
 	@Override
 	public void enablePets(){
 		for(PetType petType : registrationEntries.keySet()){
@@ -98,9 +99,9 @@ public class PetRegistry implements IPetRegistry{
 					Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
 					continue;
 				}
-				EnumCreatureType type = entity.d();
+				EnumCreatureType type = entity.e();
 				a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
-
+					
 					@Override
 					public Entity create(EntityTypes type, World world){
 						return type.a(world);
@@ -110,7 +111,7 @@ public class PetRegistry implements IPetRegistry{
 			}
 		}
 	}
-
+	
 	@Override
 	public void disablePets(){
 		try{
@@ -124,5 +125,5 @@ public class PetRegistry implements IPetRegistry{
 			ex.printStackTrace();
 		}
 	}
-
+	
 }

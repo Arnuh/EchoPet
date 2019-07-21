@@ -16,8 +16,6 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.ai;
 
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
-
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
@@ -25,14 +23,14 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.type.EntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.type.EntityVexPet;
-
 import net.minecraft.server.v1_14_R1.EntityPlayer;
 import net.minecraft.server.v1_14_R1.GenericAttributes;
 import net.minecraft.server.v1_14_R1.Navigation;
 import net.minecraft.server.v1_14_R1.PathEntity;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
-
+	
 	private EntityPet pet;
 	private Navigation nav;
 	private int timer = 0;
@@ -40,7 +38,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	private double stopDistance;
 	private double teleportDistance;
 	// private EntityPlayer owner;
-
+	
 	public PetGoalFollowOwner(EntityPet pet, double startDistance, double stopDistance, double teleportDistance){
 		this.pet = pet;
 		this.nav = (Navigation) pet.getNavigation();
@@ -49,17 +47,17 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		this.teleportDistance = teleportDistance;
 		// this.owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
 	}
-
+	
 	@Override
 	public PetGoalType getType(){
 		return PetGoalType.THREE;
 	}
-
+	
 	@Override
 	public String getDefaultKey(){
 		return "FollowOwner";
 	}
-
+	
 	@Override
 	public boolean shouldStart(){
 		if(!this.pet.isAlive()){
@@ -74,7 +72,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
 		}
 	}
-
+	
 	@Override
 	public boolean shouldContinue(){
 		if(this.nav.f()){// Navigation - bottom of class, just returns another method.
@@ -83,24 +81,26 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance){ return false; }
+		}else if(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance){
+			return false;
+		}
 		// PetGoalMeleeAttack attackGoal = (PetGoalMeleeAttack) this.pet.petGoalSelector.getGoal("Attack");
 		// return !(attackGoal != null && attackGoal.isActive);
 		return true;
 	}
-
+	
 	@Override
 	public void start(){
 		this.timer = 0;
 		// Set pathfinding radius
 		pet.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(this.teleportDistance);
 	}
-
+	
 	@Override
 	public void finish(){
 		this.nav.n();// Navigation abstract - return this.c == null || this.c.b();
 	}
-
+	
 	@Override
 	public void tick(){
 		// PathfinderGoalFollowOwner
@@ -120,20 +120,23 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			}
 			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getPlayerOwner().getLocation());
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
-			if(moveEvent.isCancelled()){ return; }
+			if(moveEvent.isCancelled()){
+				return;
+			}
 			if(pet.goalTarget == null){
 				PathEntity path;
+				int distanceToFollow = 3;//Required distance between the owner and target before it paths.
 				if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
-					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ());
+					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), distanceToFollow);
 				}else{
-					path = pet.getNavigation().a(owner);
+					path = pet.getNavigation().a(owner, distanceToFollow);
 				}
 				// Smooth path finding to entity instead of location
 				pet.getNavigation().a(path, speed);
 			}
 		}
 	}
-
+	
 	public Navigation getNavigation(){
 		return nav;
 	}
