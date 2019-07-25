@@ -161,6 +161,8 @@ permissions:
         default: op
     echopet.pet.type.ocelot:
         default: op
+    echopet.pet.type.panda:
+        default: op
     echopet.pet.type.parrot:
         default: op
     echopet.pet.type.phantom:
@@ -169,11 +171,15 @@ permissions:
         default: op
     echopet.pet.type.pigzombie:
         default: op
+    echopet.pet.type.pillager:
+        default: op
     echopet.pet.type.polarbear:
         default: op
     echopet.pet.type.pufferfish:
         default: op
     echopet.pet.type.rabbit:
+        default: op
+    echopet.pet.type.ravager:
         default: op
     echopet.pet.type.salmon:
         default: op
@@ -279,6 +285,8 @@ permissions:
         default: op
     echopet.pet.default.set.type.ocelot:
         default: op
+    echopet.pet.default.set.type.panda:
+        default: op
     echopet.pet.default.set.type.parrot:
         default: op
     echopet.pet.default.set.type.phantom:
@@ -287,11 +295,15 @@ permissions:
         default: op
     echopet.pet.default.set.type.pigzombie:
         default: op
+    echopet.pet.default.set.type.pillager:
+        default: op
     echopet.pet.default.set.type.polarbear:
         default: op
     echopet.pet.default.set.type.pufferfish:
         default: op
     echopet.pet.default.set.type.rabbit:
+        default: op
+    echopet.pet.default.set.type.ravager:
         default: op
     echopet.pet.default.set.type.salmon:
         default: op
@@ -391,8 +403,6 @@ permissions:
         default: op
     echopet.pet.type.cat.tuxedo:
         default: op
-    echopet.pet.type.cat.red:
-        default: op
     echopet.pet.type.cat.siamese:
         default: op
     echopet.pet.type.cat.british_shorthair:
@@ -403,11 +413,7 @@ permissions:
         default: op
     echopet.pet.type.cat.ragdoll:
         default: op
-    echopet.pet.type.cat.white:
-        default: op
     echopet.pet.type.cat.jellie:
-        default: op
-    echopet.pet.type.cat.black:
         default: op
     echopet.pet.type.cavespider.hat:
         default: op
@@ -573,7 +579,7 @@ permissions:
         default: op
     echopet.pet.type.llama.orange_carpet:
         default: op
-    echopet.pet.type.llama.white_carpet:
+    echopet.pet.type.llama.magenta_carpet:
         default: op
     echopet.pet.type.llama.light_blue_carpet:
         default: op
@@ -631,6 +637,32 @@ permissions:
         default: op
     echopet.pet.type.ocelot.baby:
         default: op
+    echopet.pet.type.panda.hat:
+        default: op
+    echopet.pet.type.panda.ride:
+        default: op
+    echopet.pet.type.panda.baby:
+        default: op
+    echopet.pet.type.panda.roll:
+        default: op
+    echopet.pet.type.panda.sit:
+        default: op
+    echopet.pet.type.panda.lay_down:
+        default: op
+    echopet.pet.type.panda.normal:
+        default: op
+    echopet.pet.type.panda.lazy:
+        default: op
+    echopet.pet.type.panda.worried:
+        default: op
+    echopet.pet.type.panda.playful:
+        default: op
+    echopet.pet.type.panda.aggressive:
+        default: op
+    echopet.pet.type.panda.weak:
+        default: op
+    echopet.pet.type.panda.brown:
+        default: op
     echopet.pet.type.parrot.hat:
         default: op
     echopet.pet.type.parrot.ride:
@@ -662,6 +694,10 @@ permissions:
     echopet.pet.type.pigzombie.ride:
         default: op
     echopet.pet.type.pigzombie.baby:
+        default: op
+    echopet.pet.type.pillager.hat:
+        default: op
+    echopet.pet.type.pillager.ride:
         default: op
     echopet.pet.type.polarbear.hat:
         default: op
@@ -700,6 +736,10 @@ permissions:
     echopet.pet.type.rabbit.salt_and_pepper:
         default: op
     echopet.pet.type.rabbit.killer_bunny:
+        default: op
+    echopet.pet.type.ravager.hat:
+        default: op
+    echopet.pet.type.ravager.ride:
         default: op
     echopet.pet.type.salmon.hat:
         default: op
@@ -859,7 +899,7 @@ permissions:
         default: op
     echopet.pet.type.tropicalfish.orange_carpet:
         default: op
-    echopet.pet.type.tropicalfish.white_carpet:
+    echopet.pet.type.tropicalfish.magenta_carpet:
         default: op
     echopet.pet.type.tropicalfish.light_blue_carpet:
         default: op
@@ -870,8 +910,6 @@ permissions:
     echopet.pet.type.tropicalfish.pink_carpet:
         default: op
     echopet.pet.type.tropicalfish.gray_carpet:
-        default: op
-    echopet.pet.type.tropicalfish.light_gray:
         default: op
     echopet.pet.type.tropicalfish.cyan_carpet:
         default: op
@@ -1149,6 +1187,8 @@ permissions:
         default: op
     echopet.petadmin.type.ocelot:
         default: op
+    echopet.petadmin.type.panda:
+        default: op
     echopet.petadmin.type.parrot:
         default: op
     echopet.petadmin.type.phantom:
@@ -1157,11 +1197,15 @@ permissions:
         default: op
     echopet.petadmin.type.pigzombie:
         default: op
+    echopet.petadmin.type.pillager:
+        default: op
     echopet.petadmin.type.polarbear:
         default: op
     echopet.petadmin.type.pufferfish:
         default: op
     echopet.petadmin.type.rabbit:
+        default: op
+    echopet.petadmin.type.ravager:
         default: op
     echopet.petadmin.type.salmon:
         default: op
@@ -1267,6 +1311,8 @@ permissions:
         default: op
     echopet.petadmin.hat.ocelot:
         default: op
+    echopet.petadmin.hat.panda:
+        default: op
     echopet.petadmin.hat.parrot:
         default: op
     echopet.petadmin.hat.phantom:
@@ -1275,11 +1321,15 @@ permissions:
         default: op
     echopet.petadmin.hat.pigzombie:
         default: op
+    echopet.petadmin.hat.pillager:
+        default: op
     echopet.petadmin.hat.polarbear:
         default: op
     echopet.petadmin.hat.pufferfish:
         default: op
     echopet.petadmin.hat.rabbit:
+        default: op
+    echopet.petadmin.hat.ravager:
         default: op
     echopet.petadmin.hat.salmon:
         default: op
@@ -1385,6 +1435,8 @@ permissions:
         default: op
     echopet.petadmin.ride.ocelot:
         default: op
+    echopet.petadmin.ride.panda:
+        default: op
     echopet.petadmin.ride.parrot:
         default: op
     echopet.petadmin.ride.phantom:
@@ -1393,11 +1445,15 @@ permissions:
         default: op
     echopet.petadmin.ride.pigzombie:
         default: op
+    echopet.petadmin.ride.pillager:
+        default: op
     echopet.petadmin.ride.polarbear:
         default: op
     echopet.petadmin.ride.pufferfish:
         default: op
     echopet.petadmin.ride.rabbit:
+        default: op
+    echopet.petadmin.ride.ravager:
         default: op
     echopet.petadmin.ride.salmon:
         default: op
@@ -1503,6 +1559,8 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.ocelot:
         default: op
+    echopet.petadmin.default.set.type.panda:
+        default: op
     echopet.petadmin.default.set.type.parrot:
         default: op
     echopet.petadmin.default.set.type.phantom:
@@ -1511,11 +1569,15 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.pigzombie:
         default: op
+    echopet.petadmin.default.set.type.pillager:
+        default: op
     echopet.petadmin.default.set.type.polarbear:
         default: op
     echopet.petadmin.default.set.type.pufferfish:
         default: op
     echopet.petadmin.default.set.type.rabbit:
+        default: op
+    echopet.petadmin.default.set.type.ravager:
         default: op
     echopet.petadmin.default.set.type.salmon:
         default: op
@@ -1622,13 +1684,16 @@ permissions:
             echopet.pet.type.mule: true
             echopet.pet.type.mushroomcow: true
             echopet.pet.type.ocelot: true
+            echopet.pet.type.panda: true
             echopet.pet.type.parrot: true
             echopet.pet.type.phantom: true
             echopet.pet.type.pig: true
             echopet.pet.type.pigzombie: true
+            echopet.pet.type.pillager: true
             echopet.pet.type.polarbear: true
             echopet.pet.type.pufferfish: true
             echopet.pet.type.rabbit: true
+            echopet.pet.type.ravager: true
             echopet.pet.type.salmon: true
             echopet.pet.type.sheep: true
             echopet.pet.type.shulker: true
@@ -1685,13 +1750,16 @@ permissions:
             echopet.pet.type.mule.hat: true
             echopet.pet.type.mushroomcow.hat: true
             echopet.pet.type.ocelot.hat: true
+            echopet.pet.type.panda.hat: true
             echopet.pet.type.parrot.hat: true
             echopet.pet.type.phantom.hat: true
             echopet.pet.type.pig.hat: true
             echopet.pet.type.pigzombie.hat: true
+            echopet.pet.type.pillager.hat: true
             echopet.pet.type.polarbear.hat: true
             echopet.pet.type.pufferfish.hat: true
             echopet.pet.type.rabbit.hat: true
+            echopet.pet.type.ravager.hat: true
             echopet.pet.type.salmon.hat: true
             echopet.pet.type.sheep.hat: true
             echopet.pet.type.shulker.hat: true
@@ -1748,13 +1816,16 @@ permissions:
             echopet.pet.type.mule.ride: true
             echopet.pet.type.mushroomcow.ride: true
             echopet.pet.type.ocelot.ride: true
+            echopet.pet.type.panda.ride: true
             echopet.pet.type.parrot.ride: true
             echopet.pet.type.phantom.ride: true
             echopet.pet.type.pig.ride: true
             echopet.pet.type.pigzombie.ride: true
+            echopet.pet.type.pillager.ride: true
             echopet.pet.type.polarbear.ride: true
             echopet.pet.type.pufferfish.ride: true
             echopet.pet.type.rabbit.ride: true
+            echopet.pet.type.ravager.ride: true
             echopet.pet.type.salmon.ride: true
             echopet.pet.type.sheep.ride: true
             echopet.pet.type.shulker.ride: true
@@ -1818,13 +1889,16 @@ permissions:
             echopet.pet.default.set.type.mule: true
             echopet.pet.default.set.type.mushroomcow: true
             echopet.pet.default.set.type.ocelot: true
+            echopet.pet.default.set.type.panda: true
             echopet.pet.default.set.type.parrot: true
             echopet.pet.default.set.type.phantom: true
             echopet.pet.default.set.type.pig: true
             echopet.pet.default.set.type.pigzombie: true
+            echopet.pet.default.set.type.pillager: true
             echopet.pet.default.set.type.polarbear: true
             echopet.pet.default.set.type.pufferfish: true
             echopet.pet.default.set.type.rabbit: true
+            echopet.pet.default.set.type.ravager: true
             echopet.pet.default.set.type.salmon: true
             echopet.pet.default.set.type.sheep: true
             echopet.pet.default.set.type.shulker: true
@@ -1902,13 +1976,16 @@ permissions:
             echopet.petadmin.type.mule: true
             echopet.petadmin.type.mushroomcow: true
             echopet.petadmin.type.ocelot: true
+            echopet.petadmin.type.panda: true
             echopet.petadmin.type.parrot: true
             echopet.petadmin.type.phantom: true
             echopet.petadmin.type.pig: true
             echopet.petadmin.type.pigzombie: true
+            echopet.petadmin.type.pillager: true
             echopet.petadmin.type.polarbear: true
             echopet.petadmin.type.pufferfish: true
             echopet.petadmin.type.rabbit: true
+            echopet.petadmin.type.ravager: true
             echopet.petadmin.type.salmon: true
             echopet.petadmin.type.sheep: true
             echopet.petadmin.type.shulker: true
@@ -1965,13 +2042,16 @@ permissions:
             echopet.petadmin.hat.mule: true
             echopet.petadmin.hat.mushroomcow: true
             echopet.petadmin.hat.ocelot: true
+            echopet.petadmin.hat.panda: true
             echopet.petadmin.hat.parrot: true
             echopet.petadmin.hat.phantom: true
             echopet.petadmin.hat.pig: true
             echopet.petadmin.hat.pigzombie: true
+            echopet.petadmin.hat.pillager: true
             echopet.petadmin.hat.polarbear: true
             echopet.petadmin.hat.pufferfish: true
             echopet.petadmin.hat.rabbit: true
+            echopet.petadmin.hat.ravager: true
             echopet.petadmin.hat.salmon: true
             echopet.petadmin.hat.sheep: true
             echopet.petadmin.hat.shulker: true
@@ -2028,13 +2108,16 @@ permissions:
             echopet.petadmin.ride.mule: true
             echopet.petadmin.ride.mushroomcow: true
             echopet.petadmin.ride.ocelot: true
+            echopet.petadmin.ride.panda: true
             echopet.petadmin.ride.parrot: true
             echopet.petadmin.ride.phantom: true
             echopet.petadmin.ride.pig: true
             echopet.petadmin.ride.pigzombie: true
+            echopet.petadmin.ride.pillager: true
             echopet.petadmin.ride.polarbear: true
             echopet.petadmin.ride.pufferfish: true
             echopet.petadmin.ride.rabbit: true
+            echopet.petadmin.ride.ravager: true
             echopet.petadmin.ride.salmon: true
             echopet.petadmin.ride.sheep: true
             echopet.petadmin.ride.shulker: true
@@ -2098,13 +2181,16 @@ permissions:
             echopet.petadmin.default.set.type.mule: true
             echopet.petadmin.default.set.type.mushroomcow: true
             echopet.petadmin.default.set.type.ocelot: true
+            echopet.petadmin.default.set.type.panda: true
             echopet.petadmin.default.set.type.parrot: true
             echopet.petadmin.default.set.type.phantom: true
             echopet.petadmin.default.set.type.pig: true
             echopet.petadmin.default.set.type.pigzombie: true
+            echopet.petadmin.default.set.type.pillager: true
             echopet.petadmin.default.set.type.polarbear: true
             echopet.petadmin.default.set.type.pufferfish: true
             echopet.petadmin.default.set.type.rabbit: true
+            echopet.petadmin.default.set.type.ravager: true
             echopet.petadmin.default.set.type.salmon: true
             echopet.petadmin.default.set.type.sheep: true
             echopet.petadmin.default.set.type.shulker: true
@@ -2166,15 +2252,12 @@ permissions:
             echopet.pet.type.cat.black: true
             echopet.pet.type.cat.tabby: true
             echopet.pet.type.cat.tuxedo: true
-            echopet.pet.type.cat.red: true
             echopet.pet.type.cat.siamese: true
             echopet.pet.type.cat.british_shorthair: true
             echopet.pet.type.cat.calico: true
             echopet.pet.type.cat.persian: true
             echopet.pet.type.cat.ragdoll: true
-            echopet.pet.type.cat.white: true
             echopet.pet.type.cat.jellie: true
-            echopet.pet.type.cat.black: true
     echopet.pet.type.cavespider.*:
         default: op
         description: 'All cavespider pet data permissions'
@@ -2345,7 +2428,7 @@ permissions:
             echopet.pet.type.llama.gray: true
             echopet.pet.type.llama.white_carpet: true
             echopet.pet.type.llama.orange_carpet: true
-            echopet.pet.type.llama.white_carpet: true
+            echopet.pet.type.llama.magenta_carpet: true
             echopet.pet.type.llama.light_blue_carpet: true
             echopet.pet.type.llama.yellow_carpet: true
             echopet.pet.type.llama.lime_carpet: true
@@ -2390,6 +2473,23 @@ permissions:
             echopet.pet.type.ocelot.hat: true
             echopet.pet.type.ocelot.ride: true
             echopet.pet.type.ocelot.baby: true
+    echopet.pet.type.panda.*:
+        default: op
+        description: 'All panda pet data permissions'
+        children:
+            echopet.pet.type.panda.hat: true
+            echopet.pet.type.panda.ride: true
+            echopet.pet.type.panda.baby: true
+            echopet.pet.type.panda.roll: true
+            echopet.pet.type.panda.sit: true
+            echopet.pet.type.panda.lay_down: true
+            echopet.pet.type.panda.normal: true
+            echopet.pet.type.panda.lazy: true
+            echopet.pet.type.panda.worried: true
+            echopet.pet.type.panda.playful: true
+            echopet.pet.type.panda.aggressive: true
+            echopet.pet.type.panda.weak: true
+            echopet.pet.type.panda.brown: true
     echopet.pet.type.parrot.*:
         default: op
         description: 'All parrot pet data permissions'
@@ -2422,6 +2522,12 @@ permissions:
             echopet.pet.type.pigzombie.hat: true
             echopet.pet.type.pigzombie.ride: true
             echopet.pet.type.pigzombie.baby: true
+    echopet.pet.type.pillager.*:
+        default: op
+        description: 'All pillager pet data permissions'
+        children:
+            echopet.pet.type.pillager.hat: true
+            echopet.pet.type.pillager.ride: true
     echopet.pet.type.polarbear.*:
         default: op
         description: 'All polarbear pet data permissions'
@@ -2453,6 +2559,12 @@ permissions:
             echopet.pet.type.rabbit.gold: true
             echopet.pet.type.rabbit.salt_and_pepper: true
             echopet.pet.type.rabbit.killer_bunny: true
+    echopet.pet.type.ravager.*:
+        default: op
+        description: 'All ravager pet data permissions'
+        children:
+            echopet.pet.type.ravager.hat: true
+            echopet.pet.type.ravager.ride: true
     echopet.pet.type.salmon.*:
         default: op
         description: 'All salmon pet data permissions'
@@ -2580,13 +2692,12 @@ permissions:
             echopet.pet.type.tropicalfish.black: true
             echopet.pet.type.tropicalfish.white_carpet: true
             echopet.pet.type.tropicalfish.orange_carpet: true
-            echopet.pet.type.tropicalfish.white_carpet: true
+            echopet.pet.type.tropicalfish.magenta_carpet: true
             echopet.pet.type.tropicalfish.light_blue_carpet: true
             echopet.pet.type.tropicalfish.yellow_carpet: true
             echopet.pet.type.tropicalfish.lime_carpet: true
             echopet.pet.type.tropicalfish.pink_carpet: true
             echopet.pet.type.tropicalfish.gray_carpet: true
-            echopet.pet.type.tropicalfish.light_gray: true
             echopet.pet.type.tropicalfish.cyan_carpet: true
             echopet.pet.type.tropicalfish.purple_carpet: true
             echopet.pet.type.tropicalfish.blue_carpet: true
