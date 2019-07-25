@@ -73,6 +73,7 @@ public enum PetType{
 	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.STANDING_UP),
 	PUFFERFISH("PufferFish", "PufferFish Pet", "pufferfish", new PetDataCategory[]{PetDataCategory.PUFFERFISH_SIZE}),
 	RABBIT("Rabbit", "Rabbit Pet", "rabbit", new PetDataCategory[]{PetDataCategory.RABBIT_TYPE}),
+	RAVAGER("Ravager", "Ravager Pet", "ravager"),
 	SALMON("Salmon", "Salmon Pet", "salmon"),
 	SHEEP("Sheep", "Sheep Pet", "sheep", new PetDataCategory[]{PetDataCategory.WOOL_COLOR}, PetData.SHEARED),
 	SHULKER("Shulker", "Shulker Pet", "shulker"),
