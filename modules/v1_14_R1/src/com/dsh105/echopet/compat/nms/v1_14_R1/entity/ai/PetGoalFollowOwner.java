@@ -125,11 +125,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			}
 			if(pet.goalTarget == null){
 				PathEntity path;
-				int distanceToFollow = 3;//Required distance between the owner and target before it paths.
+				int followDistance = 3;//Required distance between the owner and target before it paths.
 				if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
-					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), distanceToFollow);
+					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), followDistance);
 				}else{
-					path = pet.getNavigation().a(owner, distanceToFollow);
+					path = pet.getNavigation().a(owner, followDistance);
 				}
 				// Smooth path finding to entity instead of location
 				pet.getNavigation().a(path, speed);

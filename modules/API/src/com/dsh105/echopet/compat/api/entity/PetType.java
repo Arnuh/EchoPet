@@ -17,9 +17,14 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -64,6 +69,7 @@ public enum PetType{
 	PHANTOM("Phantom", "Phantom Pet", "phantom"),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
 	PIGZOMBIE("PigZombie", "Pig Zombie Pet", "zombie_pigman"),
+	PILLAGER("Pillager", "Pillager Pet", "pillager"),
 	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.STANDING_UP),
 	PUFFERFISH("PufferFish", "PufferFish Pet", "pufferfish", new PetDataCategory[]{PetDataCategory.PUFFERFISH_SIZE}),
 	RABBIT("Rabbit", "Rabbit Pet", "rabbit", new PetDataCategory[]{PetDataCategory.RABBIT_TYPE}),
@@ -210,141 +216,156 @@ public enum PetType{
 			petTypes[pos++] = type.name().toLowerCase();
 		}
 		Arrays.sort(petTypes);
-		
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.pet.type." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.pet.default.set.type." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-			for(PetData data : petType.getAllowedDataTypes()){
-				System.out.println("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":");
-				System.out.println("        default: op");
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File("perms.yml")))){
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.pet.type." + petTypeName + ":\n");
+				bw.write("        default: op\n");
 			}
-			for(PetDataCategory category : petType.getAllowedCategories()){
-				for(PetData data : category.getData()){
-					System.out.println("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":");
-					System.out.println("        default: op");
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.pet.default.set.type." + petTypeName + ":\n");
+				bw.write("        default: op\n");
+			}
+			for(String petTypeName : petTypes){
+				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
+				for(PetData data : petType.getAllowedDataTypes()){
+					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+					bw.write("        default: op\n");
+				}
+				Set<String> alreadyHad = new HashSet<>();
+				for(PetDataCategory category : petType.getAllowedCategories()){
+					for(PetData data : category.getData()){
+						if(alreadyHad.contains(data.getConfigOptionString())){
+							System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
+							continue;
+						}
+						alreadyHad.add(data.getConfigOptionString());
+						bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+						bw.write("        default: op\n");
+					}
 				}
 			}
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.petadmin.type." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.petadmin.hat." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.petadmin.ride." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.petadmin.default.set.type." + petTypeName + ":");
-			System.out.println("        default: op");
-		}
-		System.out.println("    echopet.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All EchoPet commands'");
-		System.out.println("        children:");
-		System.out.println("            echopet.pet.*: true");
-		System.out.println("            echopet.petadmin.*: true");
-		//
-		System.out.println("    echopet.pet.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All permissions under the /pet command'");
-		System.out.println("        children:");
-		System.out.println("            echopet.pet: true\n            echopet.pet.remove: true\n            echopet.pet.list: true\n            echopet.pet.info: true\n            echopet.pet.menu: true\n            echopet.pet.show: true\n            echopet.pet.hide: true\n            echopet.pet.toggle: true\n            echopet.pet.call: true\n            echopet.pet.name: true\n            echopet.pet.name.override: true\n            echopet.pet.select: true\n            echopet.pet.selector: true\n            echopet.pet.type.*: true\n            echopet.pet.data.*: true\n            echopet.pet.default.*: true");
-		//
-		System.out.println("    echopet.pet.type.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet type permissions'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.type." + petTypeName + ": true");
-		}
-		//
-		System.out.println("    echopet.pet.hat.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All hat permissions'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.type." + petTypeName + ".hat: true");
-		}
-		//
-		System.out.println("    echopet.pet.ride.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All ride permissions'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.type." + petTypeName + ".ride: true");
-		}
-		//
-		System.out.println("    echopet.pet.default.*:\n        default: op\n        description: 'All permissions under /pet default <...>'\n        children:\n            echopet.pet.default.set.current: true\n            echopet.pet.default.remove: true\n            echopet.pet.default.set.type.*: true");
-		//
-		System.out.println("    echopet.pet.default.set.type.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet types for /pet default set <...>'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.pet.default.set.type." + petTypeName + ": true");
-		}
-		//
-		System.out.println("    echopet.petadmin.*:\n        default: op\n        description: 'All permissions under the /petadmin command'\n        children:\n            echopet.petadmin: true\n            echopet.petadmin.reload: true\n            echopet.petadmin.remove: true\n            echopet.petadmin.list: true\n            echopet.petadmin.info: true\n            echopet.petadmin.menu: true\n            echopet.petadmin.show: true\n            echopet.petadmin.hide: true\n            echopet.petadmin.call: true\n            echopet.petadmin.name: true\n            echopet.petadmin.select: true\n            echopet.petadmin.selector: true\n            echopet.petadmin.type.*: true\n            echopet.pet.data.*: true\n            echopet.petadmin.ride.*: true\n            echopet.petadmin.hat.*: true\n            echopet.petadmin.default.*: true");
-		//
-		System.out.println("    echopet.petadmin.type.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet type permissions for PetAdmin commands'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.petadmin.type." + petTypeName + ": true");
-		}
-		//
-		System.out.println("    echopet.petadmin.hat.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet hat permissions for PetAdmin commands'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.petadmin.hat." + petTypeName + ": true");
-		}
-		//
-		System.out.println("    echopet.petadmin.ride.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet ride permissions for PetAdmin commands'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.petadmin.ride." + petTypeName + ": true");
-		}
-		//
-		System.out.println("    echopet.petadmin.default.*:\n        default: op\n        description: 'All permissions under /petadmin default <...>'\n        children:\n            echopet.petadmin.default.set.current: true\n            echopet.petadmin.default.remove: true\n            echopet.petadmin.default.set.type.*: true");
-		//
-		System.out.println("    echopet.petadmin.default.set.type.*:");
-		System.out.println("        default: op");
-		System.out.println("        description: 'All pet types for /petadmin default set <...>'");
-		System.out.println("        children:");
-		for(String petTypeName : petTypes){
-			System.out.println("            echopet.petadmin.default.set.type." + petTypeName + ": true");
-		}
-		//
-		for(String petTypeName : petTypes){
-			System.out.println("    echopet.pet.type." + petTypeName + ".*:");
-			System.out.println("        default: op");
-			System.out.println("        description: 'All " + petTypeName + " pet data permissions'");
-			System.out.println("        children:");
-			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-			for(PetData data : petType.getAllowedDataTypes()){
-				System.out.println("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true");
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.petadmin.type." + petTypeName + ":\n");
+				bw.write("        default: op\n");
 			}
-			for(PetDataCategory category : petType.getAllowedCategories()){
-				for(PetData data : category.getData()){
-					System.out.println("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true");
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.petadmin.hat." + petTypeName + ":\n");
+				bw.write("        default: op\n");
+			}
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.petadmin.ride." + petTypeName + ":\n");
+				bw.write("        default: op\n");
+			}
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.petadmin.default.set.type." + petTypeName + ":\n");
+				bw.write("        default: op\n");
+			}
+			bw.write("    echopet.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All EchoPet commands'\n");
+			bw.write("        children:\n");
+			bw.write("            echopet.pet.*: true\n");
+			bw.write("            echopet.petadmin.*: true\n");
+			//
+			bw.write("    echopet.pet.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All permissions under the /pet command'\n");
+			bw.write("        children:\n");
+			bw.write("            echopet.pet: true\n            echopet.pet.remove: true\n            echopet.pet.list: true\n            echopet.pet.info: true\n            echopet.pet.menu: true\n            echopet.pet.show: true\n            echopet.pet.hide: true\n            echopet.pet.toggle: true\n            echopet.pet.call: true\n            echopet.pet.name: true\n            echopet.pet.name.override: true\n            echopet.pet.select: true\n            echopet.pet.selector: true\n            echopet.pet.type.*: true\n            echopet.pet.data.*: true\n            echopet.pet.default.*: true\n");
+			//
+			bw.write("    echopet.pet.type.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet type permissions'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.pet.type." + petTypeName + ": true\n");
+			}
+			//
+			bw.write("    echopet.pet.hat.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All hat permissions'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.pet.type." + petTypeName + ".hat: true\n");
+			}
+			//
+			bw.write("    echopet.pet.ride.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All ride permissions'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.pet.type." + petTypeName + ".ride: true\n");
+			}
+			//
+			bw.write("    echopet.pet.default.*:\n        default: op\n        description: 'All permissions under /pet default <...>'\n        children:\n            echopet.pet.default.set.current: true\n            echopet.pet.default.remove: true\n            echopet.pet.default.set.type.*: true\n");
+			//
+			bw.write("    echopet.pet.default.set.type.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet types for /pet default set <...>'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.pet.default.set.type." + petTypeName + ": true\n");
+			}
+			//
+			bw.write("    echopet.petadmin.*:\n        default: op\n        description: 'All permissions under the /petadmin command'\n        children:\n            echopet.petadmin: true\n            echopet.petadmin.reload: true\n            echopet.petadmin.remove: true\n            echopet.petadmin.list: true\n            echopet.petadmin.info: true\n            echopet.petadmin.menu: true\n            echopet.petadmin.show: true\n            echopet.petadmin.hide: true\n            echopet.petadmin.call: true\n            echopet.petadmin.name: true\n            echopet.petadmin.select: true\n            echopet.petadmin.selector: true\n            echopet.petadmin.type.*: true\n            echopet.pet.data.*: true\n            echopet.petadmin.ride.*: true\n            echopet.petadmin.hat.*: true\n            echopet.petadmin.default.*: true\n");
+			//
+			bw.write("    echopet.petadmin.type.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet type permissions for PetAdmin commands'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.petadmin.type." + petTypeName + ": true\n");
+			}
+			//
+			bw.write("    echopet.petadmin.hat.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet hat permissions for PetAdmin commands'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.petadmin.hat." + petTypeName + ": true\n");
+			}
+			//
+			bw.write("    echopet.petadmin.ride.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet ride permissions for PetAdmin commands'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.petadmin.ride." + petTypeName + ": true\n");
+			}
+			//
+			bw.write("    echopet.petadmin.default.*:\n        default: op\n        description: 'All permissions under /petadmin default <...>'\n        children:\n            echopet.petadmin.default.set.current: true\n            echopet.petadmin.default.remove: true\n            echopet.petadmin.default.set.type.*: true\n");
+			//
+			bw.write("    echopet.petadmin.default.set.type.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All pet types for /petadmin default set <...>'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				bw.write("            echopet.petadmin.default.set.type." + petTypeName + ": true\n");
+			}
+			//
+			for(String petTypeName : petTypes){
+				bw.write("    echopet.pet.type." + petTypeName + ".*:\n");
+				bw.write("        default: op\n");
+				bw.write("        description: 'All " + petTypeName + " pet data permissions'\n");
+				bw.write("        children:\n");
+				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
+				for(PetData data : petType.getAllowedDataTypes()){
+					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+				}
+				Set<String> alreadyHad = new HashSet<>();
+				for(PetDataCategory category : petType.getAllowedCategories()){
+					for(PetData data : category.getData()){
+						if(alreadyHad.contains(data.getConfigOptionString())){
+							//System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
+							continue;
+						}
+						alreadyHad.add(data.getConfigOptionString());
+						bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+					}
 				}
 			}
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
 	
