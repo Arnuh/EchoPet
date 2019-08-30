@@ -5,8 +5,8 @@ import org.bukkit.entity.Llama;
 
 
 public interface IEntityLlamaPet extends IEntityHorseChestedAbstractPet{
-
+	
 	public void setCarpetColor(DyeColor color);
-
+	
 	public void setSkinColor(Llama.Color skinColor);
 }

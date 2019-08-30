@@ -203,6 +203,8 @@ permissions:
         default: op
     echopet.pet.type.stray:
         default: op
+    echopet.pet.type.traderllama:
+        default: op
     echopet.pet.type.tropicalfish:
         default: op
     echopet.pet.type.turtle:
@@ -326,6 +328,8 @@ permissions:
     echopet.pet.default.set.type.squid:
         default: op
     echopet.pet.default.set.type.stray:
+        default: op
+    echopet.pet.default.set.type.traderllama:
         default: op
     echopet.pet.default.set.type.tropicalfish:
         default: op
@@ -833,6 +837,52 @@ permissions:
         default: op
     echopet.pet.type.stray.ride:
         default: op
+    echopet.pet.type.traderllama.hat:
+        default: op
+    echopet.pet.type.traderllama.ride:
+        default: op
+    echopet.pet.type.traderllama.baby:
+        default: op
+    echopet.pet.type.traderllama.creamy:
+        default: op
+    echopet.pet.type.traderllama.white:
+        default: op
+    echopet.pet.type.traderllama.brown:
+        default: op
+    echopet.pet.type.traderllama.gray:
+        default: op
+    echopet.pet.type.traderllama.white_carpet:
+        default: op
+    echopet.pet.type.traderllama.orange_carpet:
+        default: op
+    echopet.pet.type.traderllama.magenta_carpet:
+        default: op
+    echopet.pet.type.traderllama.light_blue_carpet:
+        default: op
+    echopet.pet.type.traderllama.yellow_carpet:
+        default: op
+    echopet.pet.type.traderllama.lime_carpet:
+        default: op
+    echopet.pet.type.traderllama.pink_carpet:
+        default: op
+    echopet.pet.type.traderllama.gray_carpet:
+        default: op
+    echopet.pet.type.traderllama.light_gray:
+        default: op
+    echopet.pet.type.traderllama.cyan_carpet:
+        default: op
+    echopet.pet.type.traderllama.purple_carpet:
+        default: op
+    echopet.pet.type.traderllama.blue_carpet:
+        default: op
+    echopet.pet.type.traderllama.brown_carpet:
+        default: op
+    echopet.pet.type.traderllama.green_carpet:
+        default: op
+    echopet.pet.type.traderllama.red_carpet:
+        default: op
+    echopet.pet.type.traderllama.black_carpet:
+        default: op
     echopet.pet.type.tropicalfish.hat:
         default: op
     echopet.pet.type.tropicalfish.ride:
@@ -1229,6 +1279,8 @@ permissions:
         default: op
     echopet.petadmin.type.stray:
         default: op
+    echopet.petadmin.type.traderllama:
+        default: op
     echopet.petadmin.type.tropicalfish:
         default: op
     echopet.petadmin.type.turtle:
@@ -1352,6 +1404,8 @@ permissions:
     echopet.petadmin.hat.squid:
         default: op
     echopet.petadmin.hat.stray:
+        default: op
+    echopet.petadmin.hat.traderllama:
         default: op
     echopet.petadmin.hat.tropicalfish:
         default: op
@@ -1477,6 +1531,8 @@ permissions:
         default: op
     echopet.petadmin.ride.stray:
         default: op
+    echopet.petadmin.ride.traderllama:
+        default: op
     echopet.petadmin.ride.tropicalfish:
         default: op
     echopet.petadmin.ride.turtle:
@@ -1601,6 +1657,8 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.stray:
         default: op
+    echopet.petadmin.default.set.type.traderllama:
+        default: op
     echopet.petadmin.default.set.type.tropicalfish:
         default: op
     echopet.petadmin.default.set.type.turtle:
@@ -1705,6 +1763,7 @@ permissions:
             echopet.pet.type.spider: true
             echopet.pet.type.squid: true
             echopet.pet.type.stray: true
+            echopet.pet.type.traderllama: true
             echopet.pet.type.tropicalfish: true
             echopet.pet.type.turtle: true
             echopet.pet.type.vex: true
@@ -1771,6 +1830,7 @@ permissions:
             echopet.pet.type.spider.hat: true
             echopet.pet.type.squid.hat: true
             echopet.pet.type.stray.hat: true
+            echopet.pet.type.traderllama.hat: true
             echopet.pet.type.tropicalfish.hat: true
             echopet.pet.type.turtle.hat: true
             echopet.pet.type.vex.hat: true
@@ -1837,6 +1897,7 @@ permissions:
             echopet.pet.type.spider.ride: true
             echopet.pet.type.squid.ride: true
             echopet.pet.type.stray.ride: true
+            echopet.pet.type.traderllama.ride: true
             echopet.pet.type.tropicalfish.ride: true
             echopet.pet.type.turtle.ride: true
             echopet.pet.type.vex.ride: true
@@ -1910,6 +1971,7 @@ permissions:
             echopet.pet.default.set.type.spider: true
             echopet.pet.default.set.type.squid: true
             echopet.pet.default.set.type.stray: true
+            echopet.pet.default.set.type.traderllama: true
             echopet.pet.default.set.type.tropicalfish: true
             echopet.pet.default.set.type.turtle: true
             echopet.pet.default.set.type.vex: true
@@ -1997,6 +2059,7 @@ permissions:
             echopet.petadmin.type.spider: true
             echopet.petadmin.type.squid: true
             echopet.petadmin.type.stray: true
+            echopet.petadmin.type.traderllama: true
             echopet.petadmin.type.tropicalfish: true
             echopet.petadmin.type.turtle: true
             echopet.petadmin.type.vex: true
@@ -2063,6 +2126,7 @@ permissions:
             echopet.petadmin.hat.spider: true
             echopet.petadmin.hat.squid: true
             echopet.petadmin.hat.stray: true
+            echopet.petadmin.hat.traderllama: true
             echopet.petadmin.hat.tropicalfish: true
             echopet.petadmin.hat.turtle: true
             echopet.petadmin.hat.vex: true
@@ -2129,6 +2193,7 @@ permissions:
             echopet.petadmin.ride.spider: true
             echopet.petadmin.ride.squid: true
             echopet.petadmin.ride.stray: true
+            echopet.petadmin.ride.traderllama: true
             echopet.petadmin.ride.tropicalfish: true
             echopet.petadmin.ride.turtle: true
             echopet.petadmin.ride.vex: true
@@ -2202,6 +2267,7 @@ permissions:
             echopet.petadmin.default.set.type.spider: true
             echopet.petadmin.default.set.type.squid: true
             echopet.petadmin.default.set.type.stray: true
+            echopet.petadmin.default.set.type.traderllama: true
             echopet.petadmin.default.set.type.tropicalfish: true
             echopet.petadmin.default.set.type.turtle: true
             echopet.petadmin.default.set.type.vex: true
@@ -2655,6 +2721,33 @@ permissions:
         children:
             echopet.pet.type.stray.hat: true
             echopet.pet.type.stray.ride: true
+    echopet.pet.type.traderllama.*:
+        default: op
+        description: 'All traderllama pet data permissions'
+        children:
+            echopet.pet.type.traderllama.hat: true
+            echopet.pet.type.traderllama.ride: true
+            echopet.pet.type.traderllama.baby: true
+            echopet.pet.type.traderllama.creamy: true
+            echopet.pet.type.traderllama.white: true
+            echopet.pet.type.traderllama.brown: true
+            echopet.pet.type.traderllama.gray: true
+            echopet.pet.type.traderllama.white_carpet: true
+            echopet.pet.type.traderllama.orange_carpet: true
+            echopet.pet.type.traderllama.magenta_carpet: true
+            echopet.pet.type.traderllama.light_blue_carpet: true
+            echopet.pet.type.traderllama.yellow_carpet: true
+            echopet.pet.type.traderllama.lime_carpet: true
+            echopet.pet.type.traderllama.pink_carpet: true
+            echopet.pet.type.traderllama.gray_carpet: true
+            echopet.pet.type.traderllama.light_gray: true
+            echopet.pet.type.traderllama.cyan_carpet: true
+            echopet.pet.type.traderllama.purple_carpet: true
+            echopet.pet.type.traderllama.blue_carpet: true
+            echopet.pet.type.traderllama.brown_carpet: true
+            echopet.pet.type.traderllama.green_carpet: true
+            echopet.pet.type.traderllama.red_carpet: true
+            echopet.pet.type.traderllama.black_carpet: true
     echopet.pet.type.tropicalfish.*:
         default: op
         description: 'All tropicalfish pet data permissions'

@@ -255,7 +255,7 @@ public enum PetData{
 	CREAMY("creamy", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.CREAMY);
-		}else if(pet.getPetType().equals(PetType.LLAMA)){
+		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.CREAMY);
 		}
 		return false;
@@ -266,7 +266,7 @@ public enum PetData{
 			return setRabbitType(pet, Rabbit.Type.WHITE);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.WHITE);
-		}else if(pet.getPetType().equals(PetType.LLAMA)){
+		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.WHITE);
 		}else if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.White);
@@ -295,7 +295,7 @@ public enum PetData{
 	GRAY("gray", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.GRAY);
-		}else if(pet.getPetType().equals(PetType.LLAMA)){
+		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.GRAY);
 		}else{
 			return setColorByDye(pet, category, DyeColor.GRAY);
@@ -318,7 +318,7 @@ public enum PetData{
 			return setRabbitType(pet, Rabbit.Type.BROWN);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BROWN);
-		}else if(pet.getPetType().equals(PetType.LLAMA)){
+		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.BROWN);
 		}else if(pet.getPetType().equals(PetType.PANDA)){
 			return setGene(pet, category, PandaGene.Brown);
@@ -743,7 +743,7 @@ public enum PetData{
 			((IWolfPet) pet).setCollarColor(color);
 		}else if(type.equals(PetType.PARROT)){
 			((IParrotPet) pet).setVariant(ParrotVariant.valueOf(color.name()));
-		}else if(type.equals(PetType.LLAMA)){
+		}else if(type.equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			((ILlamaPet) pet).setCarpetColor(color);
 		}else if(type.equals(PetType.TROPICALFISH)){
 			ITropicalFishPet fish = ((ITropicalFishPet) pet);
@@ -829,7 +829,7 @@ public enum PetData{
 	
 	private static boolean setLlamaColor(IPet pet, Llama.Color color){
 		PetType type = pet.getPetType();
-		if(type.equals(PetType.LLAMA)){
+		if(type.equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			((ILlamaPet) pet).setSkinColor(color);
 		}
 		return true;
