@@ -30,6 +30,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.google.common.collect.ImmutableList;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public enum PetType{
@@ -52,13 +53,13 @@ public enum PetType{
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
 	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
-	GIANT("Giant", "Giant Pet", "giant"),
+	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
 	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
 	HUMAN("Human", "Human Pet", "UNKNOWN"),
 	HUSK("Husk", "Husk Pet", "husk"),
-	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner"),
-	IRONGOLEM("IronGolem", "Iron Golem Pet", "iron_golem"),
+	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner", Material.VILLAGER_SPAWN_EGG),
+	IRONGOLEM("IronGolem", "Iron Golem Pet", "iron_golem", Material.IRON_BLOCK),
 	LLAMA("Llama", "Llama Pet", "llama", new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
 	MAGMACUBE("MagmaCube", "Magma Cube Pet", "magma_cube", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),
 	MULE("Mule", "Mule Pet", "mule", PetData.SADDLE),
@@ -81,7 +82,7 @@ public enum PetType{
 	SKELETON("Skeleton", "Skeleton Pet", "skeleton"),
 	SKELETONHORSE("SkeletonHorse", "Skeleton Horse Pet", "skeleton_horse", PetData.SADDLE),
 	SLIME("Slime", "Slime Pet", "slime", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),
-	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", PetData.SHEARED),
+	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", Material.PUMPKIN, PetData.SHEARED),
 	SPIDER("Spider", "Spider Pet", "spider"),
 	SQUID("Squid", "Squid Pet", "squid"),
 	STRAY("Stray", "Stray Pet", "stray"),
@@ -101,6 +102,8 @@ public enum PetType{
 	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	;
 	
+	public static final PetType[] values = values();
+	
 	private String classIdentifier;
 	private Class<? extends IEntityPet> entityClass;
 	private Class<? extends IPet> petClass;
@@ -109,21 +112,31 @@ public enum PetType{
 	private List<PetDataCategory> allowedCategories = new ArrayList<>();
 	private List<PetData> allowedData = new ArrayList<>();
 	private Version version;
+	private Material uiMaterial;
 	
+	//This is a fucking mess
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, allowedData);
 	}
 	
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Material uiMaterial, PetData... allowedData){
+		this(classIdentifier, defaultName, minecraftEntityName, new Version(), uiMaterial, null, allowedData);
+	}
+	
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetDataCategory[] categories, PetData... allowedData){
-		this(classIdentifier, defaultName, minecraftEntityName, new Version(), categories, allowedData);
+		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, categories, allowedData);
 	}
 	
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetData... allowedData){
-		this(classIdentifier, defaultName, minecraftEntityName, version, null, allowedData);
+		this(classIdentifier, defaultName, minecraftEntityName, version, null, null, allowedData);
+	}
+	
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetDataCategory[] categories, PetData... allowedData){
+		this(classIdentifier, defaultName, minecraftEntityName, version, null, categories, allowedData);
 	}
 	
 	@SuppressWarnings({"unchecked"})
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetDataCategory[] categories, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData... allowedData){
 		this.classIdentifier = classIdentifier;
 		try{
 			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
@@ -133,6 +146,21 @@ public enum PetType{
 		this.minecraftEntityName = minecraftEntityName;
 		this.defaultName = defaultName;
 		this.version = version;
+		this.uiMaterial = uiMaterial;
+		if(uiMaterial == null){
+			for(Material material : Material.values()){
+				String name = material.name().toLowerCase();
+				if(name.endsWith("spawn_egg") && name.startsWith(minecraftEntityName)){
+					this.uiMaterial = material;
+					break;
+				}
+			}
+		}
+		if(!name().equalsIgnoreCase("HUMAN")){//Humans ignore the config.
+			if(this.uiMaterial == null){//Plugin probably wont work
+				System.out.println("Found no Material for pet type " + name());
+			}
+		}
 		//
 		this.allowedData.add(PetData.HAT);
 		this.allowedData.add(PetData.RIDE);
@@ -206,6 +234,10 @@ public enum PetType{
 	
 	public Version getVersion(){
 		return version;
+	}
+	
+	public Material getUIMaterial(){
+		return uiMaterial;
 	}
 	
 	public boolean isCompatible(){

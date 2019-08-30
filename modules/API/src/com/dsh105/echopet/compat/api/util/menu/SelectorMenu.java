@@ -19,7 +19,10 @@ package com.dsh105.echopet.compat.api.util.menu;
 
 import java.util.Map;
 import java.util.logging.Level;
-
+import com.codingforcookies.robert.core.GUI;
+import com.codingforcookies.robert.slot.ISlotAction;
+import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,13 +30,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.codingforcookies.robert.core.GUI;
-import com.codingforcookies.robert.slot.ISlotAction;
-import com.dsh105.echopet.compat.api.config.ConfigOptions;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-
 public class SelectorMenu extends GUI{
-
+	
 	public SelectorMenu(Player player, final int page){
 		super(ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets") + (page + 1));
 		type(6);
@@ -52,9 +50,9 @@ public class SelectorMenu extends GUI{
 				iconIS.setType(Material.MAGMA_CREAM);
 			}
 			this.slot(slot, iconIS, new ISlotAction(){
-
+				
 				private final SelectorIcon icon = pageItems.get(slot);
-
+				
 				public void doAction(GUI gui, final Player p, ClickType type){
 					if(icon.getPage() == page){
 						if(icon.getName().equals(SelectorItem.BACK.getName().replace(ChatColor.COLOR_CHAR, '&'))){
@@ -69,7 +67,7 @@ public class SelectorMenu extends GUI{
 							p.closeInventory();
 							if(icon.getCommand().equalsIgnoreCase(EchoPet.getPlugin().getCommandString() + " menu")){
 								new BukkitRunnable(){
-
+									
 									public void run(){
 										p.performCommand(icon.getCommand());
 									}
@@ -83,5 +81,5 @@ public class SelectorMenu extends GUI{
 			});
 		}
 	}
-
+	
 }
