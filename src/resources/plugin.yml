@@ -215,6 +215,8 @@ permissions:
         default: op
     echopet.pet.type.vindicator:
         default: op
+    echopet.pet.type.wanderingtrader:
+        default: op
     echopet.pet.type.witch:
         default: op
     echopet.pet.type.wither:
@@ -340,6 +342,8 @@ permissions:
     echopet.pet.default.set.type.villager:
         default: op
     echopet.pet.default.set.type.vindicator:
+        default: op
+    echopet.pet.default.set.type.wanderingtrader:
         default: op
     echopet.pet.default.set.type.witch:
         default: op
@@ -1051,6 +1055,12 @@ permissions:
         default: op
     echopet.pet.type.vindicator.ride:
         default: op
+    echopet.pet.type.wanderingtrader.hat:
+        default: op
+    echopet.pet.type.wanderingtrader.ride:
+        default: op
+    echopet.pet.type.wanderingtrader.baby:
+        default: op
     echopet.pet.type.witch.hat:
         default: op
     echopet.pet.type.witch.ride:
@@ -1291,6 +1301,8 @@ permissions:
         default: op
     echopet.petadmin.type.vindicator:
         default: op
+    echopet.petadmin.type.wanderingtrader:
+        default: op
     echopet.petadmin.type.witch:
         default: op
     echopet.petadmin.type.wither:
@@ -1416,6 +1428,8 @@ permissions:
     echopet.petadmin.hat.villager:
         default: op
     echopet.petadmin.hat.vindicator:
+        default: op
+    echopet.petadmin.hat.wanderingtrader:
         default: op
     echopet.petadmin.hat.witch:
         default: op
@@ -1543,6 +1557,8 @@ permissions:
         default: op
     echopet.petadmin.ride.vindicator:
         default: op
+    echopet.petadmin.ride.wanderingtrader:
+        default: op
     echopet.petadmin.ride.witch:
         default: op
     echopet.petadmin.ride.wither:
@@ -1669,6 +1685,8 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.vindicator:
         default: op
+    echopet.petadmin.default.set.type.wanderingtrader:
+        default: op
     echopet.petadmin.default.set.type.witch:
         default: op
     echopet.petadmin.default.set.type.wither:
@@ -1769,6 +1787,7 @@ permissions:
             echopet.pet.type.vex: true
             echopet.pet.type.villager: true
             echopet.pet.type.vindicator: true
+            echopet.pet.type.wanderingtrader: true
             echopet.pet.type.witch: true
             echopet.pet.type.wither: true
             echopet.pet.type.witherskeleton: true
@@ -1836,6 +1855,7 @@ permissions:
             echopet.pet.type.vex.hat: true
             echopet.pet.type.villager.hat: true
             echopet.pet.type.vindicator.hat: true
+            echopet.pet.type.wanderingtrader.hat: true
             echopet.pet.type.witch.hat: true
             echopet.pet.type.wither.hat: true
             echopet.pet.type.witherskeleton.hat: true
@@ -1903,6 +1923,7 @@ permissions:
             echopet.pet.type.vex.ride: true
             echopet.pet.type.villager.ride: true
             echopet.pet.type.vindicator.ride: true
+            echopet.pet.type.wanderingtrader.ride: true
             echopet.pet.type.witch.ride: true
             echopet.pet.type.wither.ride: true
             echopet.pet.type.witherskeleton.ride: true
@@ -1977,6 +1998,7 @@ permissions:
             echopet.pet.default.set.type.vex: true
             echopet.pet.default.set.type.villager: true
             echopet.pet.default.set.type.vindicator: true
+            echopet.pet.default.set.type.wanderingtrader: true
             echopet.pet.default.set.type.witch: true
             echopet.pet.default.set.type.wither: true
             echopet.pet.default.set.type.witherskeleton: true
@@ -2065,6 +2087,7 @@ permissions:
             echopet.petadmin.type.vex: true
             echopet.petadmin.type.villager: true
             echopet.petadmin.type.vindicator: true
+            echopet.petadmin.type.wanderingtrader: true
             echopet.petadmin.type.witch: true
             echopet.petadmin.type.wither: true
             echopet.petadmin.type.witherskeleton: true
@@ -2132,6 +2155,7 @@ permissions:
             echopet.petadmin.hat.vex: true
             echopet.petadmin.hat.villager: true
             echopet.petadmin.hat.vindicator: true
+            echopet.petadmin.hat.wanderingtrader: true
             echopet.petadmin.hat.witch: true
             echopet.petadmin.hat.wither: true
             echopet.petadmin.hat.witherskeleton: true
@@ -2199,6 +2223,7 @@ permissions:
             echopet.petadmin.ride.vex: true
             echopet.petadmin.ride.villager: true
             echopet.petadmin.ride.vindicator: true
+            echopet.petadmin.ride.wanderingtrader: true
             echopet.petadmin.ride.witch: true
             echopet.petadmin.ride.wither: true
             echopet.petadmin.ride.witherskeleton: true
@@ -2273,6 +2298,7 @@ permissions:
             echopet.petadmin.default.set.type.vex: true
             echopet.petadmin.default.set.type.villager: true
             echopet.petadmin.default.set.type.vindicator: true
+            echopet.petadmin.default.set.type.wanderingtrader: true
             echopet.petadmin.default.set.type.witch: true
             echopet.petadmin.default.set.type.wither: true
             echopet.petadmin.default.set.type.witherskeleton: true
@@ -2852,6 +2878,13 @@ permissions:
         children:
             echopet.pet.type.vindicator.hat: true
             echopet.pet.type.vindicator.ride: true
+    echopet.pet.type.wanderingtrader.*:
+        default: op
+        description: 'All wanderingtrader pet data permissions'
+        children:
+            echopet.pet.type.wanderingtrader.hat: true
+            echopet.pet.type.wanderingtrader.ride: true
+            echopet.pet.type.wanderingtrader.baby: true
     echopet.pet.type.witch.*:
         default: op
         description: 'All witch pet data permissions'

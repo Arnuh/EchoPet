@@ -91,6 +91,7 @@ public enum PetType{
 	VEX("Vex", "Vex Pet", "vex", PetData.POWERED),
 	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
+	WANDERINGTRADER("WanderingTrader", "Wandering Trader Pet", "wandering_trader"),
 	WITCH("Witch", "Witch Pet", "witch"),
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
