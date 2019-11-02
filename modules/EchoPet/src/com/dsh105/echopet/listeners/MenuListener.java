@@ -17,16 +17,6 @@
 
 package com.dsh105.echopet.listeners;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -38,30 +28,41 @@ import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-public class MenuListener implements Listener {
-
+public class MenuListener implements Listener{
+	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onInventoryClick(InventoryClickEvent event){
 		if(!(event.getWhoClicked() instanceof Player)){
 			return;
 		}
-
+		
 		Player player = (Player) event.getWhoClicked();
 		if(event.getView().getTitle().contains("EchoPet DataMenu")){
 			event.setCancelled(true);
+			event.setResult(Event.Result.DENY);
 		}
-
+		
 		Inventory inv = event.getInventory();
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
-
+		
 		if(slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null){
 			return;
 		}
-
+		
 		ItemStack currentlyInSlot = inv.getItem(slot);
-
+		
 		if(event.getSlotType() == InventoryType.SlotType.RESULT){
 			try{
 				for(int i = 1; i <= 4; i++){
@@ -147,7 +148,7 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
-
+	
 	@EventHandler
 	public void inventoryClose(InventoryCloseEvent e){
 		Player player = (Player) e.getPlayer();
