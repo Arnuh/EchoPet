@@ -639,6 +639,10 @@ permissions:
         default: op
     echopet.pet.type.mushroomcow.baby:
         default: op
+    echopet.pet.type.mushroomcow.red:
+        default: op
+    echopet.pet.type.mushroomcow.brown:
+        default: op
     echopet.pet.type.ocelot.hat:
         default: op
     echopet.pet.type.ocelot.ride:
@@ -2558,6 +2562,8 @@ permissions:
             echopet.pet.type.mushroomcow.hat: true
             echopet.pet.type.mushroomcow.ride: true
             echopet.pet.type.mushroomcow.baby: true
+            echopet.pet.type.mushroomcow.red: true
+            echopet.pet.type.mushroomcow.brown: true
     echopet.pet.type.ocelot.*:
         default: op
         description: 'All ocelot pet data permissions'

@@ -43,6 +43,7 @@ public enum PetDataCategory{
 	FOX_TYPE(Material.getMaterial("SWEET_BERRIES"), "Fox Type", PetData.RED, PetData.SNOW),
 	PANDA_MAIN_GENE(Material.getMaterial("BAMBOO"), "Main Gene", PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	PANDA_HIDDEN_GENE(Material.getMaterial("BAMBOO"), "Hidden Gene", PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
+	MUSHROOMCOW_TYPE(Material.MUSHROOM_STEW, "Mushroom Cow Type", PetData.RED, PetData.BROWN),
 	;
 	
 	public static final PetDataCategory[] values = values();

@@ -29,6 +29,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
@@ -322,6 +323,8 @@ public enum PetData{
 			return setLlamaColor(pet, Llama.Color.BROWN);
 		}else if(pet.getPetType().equals(PetType.PANDA)){
 			return setGene(pet, category, PandaGene.Brown);
+		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
+			return setMushroomCowType(pet, MushroomCowType.Brown);
 		}else{
 			return setColorByDye(pet, category, DyeColor.BROWN);
 		}
@@ -334,6 +337,8 @@ public enum PetData{
 			return setCatType(pet, CatType.Red);
 		}else if(pet.getPetType().equals(PetType.FOX)){
 			return setFoxType(pet, FoxType.Red);
+		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
+			return setMushroomCowType(pet, MushroomCowType.Red);
 		}
 		return setColorByDye(pet, category, DyeColor.RED);
 	}, Material.RED_WOOL, "Red"),
@@ -876,7 +881,14 @@ public enum PetData{
 		}else if(category.equals(PetDataCategory.PANDA_HIDDEN_GENE)){
 			panda.setHiddenGene(gene);
 		}
-		
+		return true;
+	}
+	
+	private static boolean setMushroomCowType(IPet pet, MushroomCowType cowType){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.MUSHROOMCOW)){
+			((IMushroomCowPet) pet).setType(cowType);
+		}
 		return true;
 	}
 }

@@ -63,7 +63,7 @@ public enum PetType{
 	LLAMA("Llama", "Llama Pet", "llama", new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
 	MAGMACUBE("MagmaCube", "Magma Cube Pet", "magma_cube", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),
 	MULE("Mule", "Mule Pet", "mule", PetData.SADDLE),
-	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom"),
+	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom", new PetDataCategory[]{PetDataCategory.MUSHROOMCOW_TYPE}),
 	OCELOT("Ocelot", "Ocelot Pet", "ocelot"),
 	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),

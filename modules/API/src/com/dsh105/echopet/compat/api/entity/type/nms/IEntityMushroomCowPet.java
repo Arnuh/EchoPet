@@ -18,7 +18,9 @@
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 
-public interface IEntityMushroomCowPet extends IEntityAgeablePet {
-
+public interface IEntityMushroomCowPet extends IEntityAgeablePet{
+	
+	void setType(MushroomCowType type);
 }
