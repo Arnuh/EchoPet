@@ -18,10 +18,10 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 
 public interface IEntityVillagerDataHolder{
-
-	public void setProfession(int profession);
-
-	public void setType(int type);
-
-	public void setLevel(int level);
+	
+	void setProfession(int profession);
+	
+	void setType(int type);
+	
+	void setLevel(int level);
 }

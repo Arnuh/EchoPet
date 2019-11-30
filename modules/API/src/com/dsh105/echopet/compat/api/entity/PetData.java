@@ -697,17 +697,17 @@ public enum PetData{
 	private String name;
 	private List<String> lore;
 	
-	private PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
+	PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
 		this(configOptionString, action, (pet)->{
 			return material;
 		}, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
+	PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
 		this(configOptionString, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	private PetData(String configOptionString, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	PetData(String configOptionString, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
 		this.configOptionString = configOptionString;
 		this.action = action;
 		this.version = version;

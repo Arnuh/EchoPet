@@ -21,16 +21,16 @@ import com.dsh105.echopet.compat.api.entity.VillagerLevel;
 import com.dsh105.echopet.compat.api.entity.VillagerType;
 
 public interface IVillagerDataHolder{
-
-	public Profession getProfession();
-
-	public void setProfession(Profession profession);
-
-	public VillagerType getType();
-
-	public void setType(VillagerType type);
-
-	public VillagerLevel getLevel();
-
-	public void setLevel(VillagerLevel level);
+	
+	Profession getProfession();
+	
+	void setProfession(Profession profession);
+	
+	VillagerType getType();
+	
+	void setType(VillagerType type);
+	
+	VillagerLevel getLevel();
+	
+	void setLevel(VillagerLevel level);
 }

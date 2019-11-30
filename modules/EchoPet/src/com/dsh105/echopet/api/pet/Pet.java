@@ -20,16 +20,6 @@ package com.dsh105.echopet.api.pet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.StringUtil;
@@ -49,25 +39,33 @@ import com.dsh105.echopet.compat.api.util.PetNames;
 import com.dsh105.echopet.compat.api.util.PlayerUtil;
 import com.dsh105.echopet.compat.api.util.StringSimplifier;
 import com.google.common.collect.Lists;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Pet implements IPet{
-
+	
 	private IEntityPet entityPet;
 	private PetType petType;
-
+	
 	private Object ownerIdentification;
 	private Pet rider, lastRider;
 	private String name;
 	private ArrayList<PetData> petData = new ArrayList<PetData>();
 	private InventoryView dataMenu;
 	private List<com.dsh105.echopet.compat.api.particle.Trail> trails = Lists.newArrayList();
-
+	
 	private boolean isRider = false;
-
+	
 	public boolean ownerIsMounting = false;
 	private boolean ownerRiding = false, isHat = false;
 	private boolean isHidden = false;
-
+	
 	public Pet(Player owner){
 		if(owner != null){
 			this.ownerIdentification = UUIDMigration.getIdentificationFor(owner);
@@ -75,20 +73,19 @@ public abstract class Pet implements IPet{
 			this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
 		}
 	}
-
+	
 	protected final void setPetType(){
 		EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
 		if(entityPetType != null){
 			this.petType = entityPetType.petType();
 		}
 	}
-
+	
 	public boolean isSpawned(){
 		if(entityPet == null) return false;
-		if(entityPet.isDead()) return false;
-		return true;
+		return !entityPet.isDead();
 	}
-
+	
 	public IEntityPet spawnPet(Player owner, boolean ignoreHidden){
 		if(entityPet != null) return entityPet;
 		if(owner != null){
@@ -102,8 +99,9 @@ public abstract class Pet implements IPet{
 					if(pd.getAction() != null) pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 					EchoPet.getManager().setData(this, pd, true);
 				}
-				for(Trail t : trails)
+				for(Trail t : trails){
 					t.start(this);
+				}
 				if(lastRider != null && !lastRider.isSpawned()){
 					setRider(lastRider);
 					setLastRider(null);
@@ -117,32 +115,34 @@ public abstract class Pet implements IPet{
 		}
 		return entityPet;
 	}
-
+	
 	@Override
 	public IEntityPet getEntityPet(){
 		return this.entityPet;
 	}
-
+	
 	@Override
 	public LivingEntity getCraftPet(){
 		return this.getEntityPet().getBukkitEntity();
 	}
-
+	
 	@Override
 	public Location getLocation(){
 		return this.getCraftPet().getLocation();
 	}
-
+	
 	@Override
 	public Player getOwner(){
-		if(this.ownerIdentification == null){ return null; }
+		if(this.ownerIdentification == null){
+			return null;
+		}
 		if(this.ownerIdentification instanceof UUID){
 			return Bukkit.getPlayer((UUID) ownerIdentification);
 		}else{
 			return Bukkit.getPlayerExact((String) this.ownerIdentification);
 		}
 	}
-
+	
 	@Override
 	public String getNameOfOwner(){
 		if(this.ownerIdentification instanceof String){
@@ -151,7 +151,7 @@ public abstract class Pet implements IPet{
 			return this.getOwner() == null ? "" : this.getOwner().getName();
 		}
 	}
-
+	
 	@Override
 	public UUID getOwnerUUID(){
 		if(this.ownerIdentification instanceof UUID){
@@ -160,61 +160,61 @@ public abstract class Pet implements IPet{
 			return this.getOwner() == null ? null : this.getOwner().getUniqueId();
 		}
 	}
-
+	
 	@Override
 	public Object getOwnerIdentification(){
 		return ownerIdentification;
 	}
-
+	
 	@Override
 	public PetType getPetType(){
 		return this.petType;
 	}
-
+	
 	@Override
 	public boolean isRider(){
 		return this.isRider;
 	}
-
+	
 	protected void setRider(){
 		this.isRider = true;
 	}
-
+	
 	@Override
 	public boolean isOwnerInMountingProcess(){
 		return ownerIsMounting;
 	}
-
+	
 	@Override
 	public Pet getRider(){
 		return this.rider;
 	}
-
+	
 	@Override
 	public Pet getLastRider(){
 		return this.lastRider;
 	}
-
+	
 	@Override
 	public String getPetName(){
 		return name;
 	}
-
+	
 	@Override
 	public String getPetNameWithoutColours(){
 		return ChatColor.stripColor(this.getPetName());
 	}
-
+	
 	@Override
 	public String serialisePetName(){
 		return getPetName().replace(ChatColor.COLOR_CHAR, '&');
 	}
-
+	
 	@Override
 	public boolean setPetName(String name){
 		return this.setPetName(name, true);
 	}
-
+	
 	@Override
 	public boolean setPetName(String name, boolean sendFailMessage){
 		if(PetNames.allow(name, this)){
@@ -236,25 +236,25 @@ public abstract class Pet implements IPet{
 			return false;
 		}
 	}
-
+	
 	private void applyPetName(){
 		if(this.getEntityPet() != null && this.getCraftPet() != null){
 			this.getCraftPet().setCustomName(this.name);
 			this.getCraftPet().setCustomNameVisible(EchoPet.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
 		}
 	}
-
+	
 	@Override
 	public ArrayList<PetData> getPetData(){
 		return this.petData;
 	}
-
+	
 	@Override
 	public void setLastRider(IPet lastRider){
 		if(lastRider == null) this.lastRider = null;
 		else this.lastRider = (Pet) lastRider;
 	}
-
+	
 	@Override
 	public void removeRider(boolean makeSound, boolean makeParticles){
 		if(rider != null){
@@ -264,7 +264,7 @@ public abstract class Pet implements IPet{
 			EchoPet.getPlugin().getSpawnUtil().removePassenger(getCraftPet());
 		}
 	}
-
+	
 	@Override
 	public void removePet(boolean makeSound, boolean makeParticles){
 		if(getEntityPet() != null && this.getCraftPet() != null && makeParticles){
@@ -281,7 +281,7 @@ public abstract class Pet implements IPet{
 			this.entityPet = null;
 		}
 	}
-
+	
 	@Override
 	public boolean teleportToOwner(){
 		if(this.getOwner() == null || this.getOwner().getLocation() == null){
@@ -302,7 +302,7 @@ public abstract class Pet implements IPet{
 		}
 		return tele;
 	}
-
+	
 	@Override
 	public boolean teleport(Location to){
 		if(this.getOwner() == null || this.getOwner().getLocation() == null){
@@ -329,32 +329,32 @@ public abstract class Pet implements IPet{
 		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOwnerRiding(){
 		return this.ownerRiding;
 	}
-
+	
 	@Override
 	public boolean isHat(){
 		return this.isHat;
 	}
-
+	
 	@Override
 	public void ownerRidePet(boolean flag){
 		if(this.ownerRiding == flag) return;
-
+		
 		this.ownerIsMounting = true;
-
+		
 		if(this.isHat){
 			this.setAsHat(false);
 		}
-
+		
 		if(!isSpawned()){
 			this.ownerIsMounting = false;
 			return;
 		}
-
+		
 		if(!flag){
 			if(getCraftPet() != null){
 				getCraftPet().eject();
@@ -367,7 +367,7 @@ public abstract class Pet implements IPet{
 			if(getCraftPet() != null){
 				if(getRider() != null && getRider().isSpawned()) getRider().removePet(false, true);
 				new BukkitRunnable(){
-
+					
 					@Override
 					public void run(){
 						getCraftPet().setPassenger(getOwner());// Can't do nms method here due to requiring a 2nd update which I don't feel like doing.
@@ -388,18 +388,18 @@ public abstract class Pet implements IPet{
 		// getLocation().getWorld().spawnParticle(Particle.BLOCK_DUST, getLocation(), 1);
 		// Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
 	}
-
+	
 	@Override
 	public void setAsHat(boolean flag){
 		if(isHat == flag) return;
 		if(ownerRiding){
 			ownerRidePet(false);
 		}
-
+		
 		if(!isSpawned()) return;
-
+		
 		this.teleportToOwner();
-
+		
 		// The fact forcefully setting the passenger requires an update still baffles me.
 		// Why do I still develop for this game..
 		WrappedPacket packet = new WrappedPacket(PacketType.Play.Server.MOUNT);
@@ -422,7 +422,7 @@ public abstract class Pet implements IPet{
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		// Particle.PORTAL.builder().at(getLocation()).show();
 	}
-
+	
 	@Override
 	public Pet createRider(final PetType pt, boolean sendFailMessage){
 		if(pt == PetType.HUMAN){
@@ -455,10 +455,10 @@ public abstract class Pet implements IPet{
 		this.rider.setRider();
 		if(isSpawned()) EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getCraftPet(), newRider.getCraftPet());
 		EchoPet.getSqlManager().saveToDatabase(rider, true);
-
+		
 		return this.rider;
 	}
-
+	
 	public void setRider(IPet newRider){
 		if(!isSpawned()) return;
 		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
@@ -476,31 +476,31 @@ public abstract class Pet implements IPet{
 		this.rider.setRider();
 		EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getCraftPet(), this.rider.getCraftPet());
 	}
-
+	
 	public InventoryView getInventoryView(){
 		return dataMenu;
 	}
-
+	
 	public void setInventoryView(InventoryView dataMenu){
 		this.dataMenu = dataMenu;
 	}
-
+	
 	public List<Trail> getTrails(){
 		return this.trails;
 	}
-
+	
 	public void addTrail(Trail trail){
 		trails.add(trail);
 	}
-
+	
 	public void removeTrail(Trail trail){
 		trails.remove(trail);
 	}
-
+	
 	public boolean isHidden(){
 		return isHidden;
 	}
-
+	
 	public void setHidden(boolean isHidden){
 		this.isHidden = isHidden;
 	}

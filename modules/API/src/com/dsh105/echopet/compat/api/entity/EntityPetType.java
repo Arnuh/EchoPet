@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EntityPetType {
-
-    public PetType petType();
+public @interface EntityPetType{
+	
+	PetType petType();
 }

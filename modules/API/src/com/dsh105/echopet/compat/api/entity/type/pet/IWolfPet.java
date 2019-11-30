@@ -17,17 +17,16 @@
 
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
+import com.dsh105.echopet.compat.api.entity.ITameablePet;
 import org.bukkit.DyeColor;
 
-import com.dsh105.echopet.compat.api.entity.ITameablePet;
-
 public interface IWolfPet extends ITameablePet{
-
-    public void setCollarColor(DyeColor dc);
-
-    public DyeColor getCollarColor();
-
-    public void setAngry(boolean flag);
-
-    public boolean isAngry();
+	
+	void setCollarColor(DyeColor dc);
+	
+	DyeColor getCollarColor();
+	
+	void setAngry(boolean flag);
+	
+	boolean isAngry();
 }

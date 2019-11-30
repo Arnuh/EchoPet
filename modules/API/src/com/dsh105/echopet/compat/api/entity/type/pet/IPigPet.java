@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 
-public interface IPigPet extends IAgeablePet {
-
-    public void setSaddle(boolean flag);
-
-    public boolean hasSaddle();
+public interface IPigPet extends IAgeablePet{
+	
+	void setSaddle(boolean flag);
+	
+	boolean hasSaddle();
 }

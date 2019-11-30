@@ -19,7 +19,7 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-public interface IEntityBlazePet extends IEntityPet {
-
-    public void setOnFire(boolean flag);
+public interface IEntityBlazePet extends IEntityPet{
+	
+	void setOnFire(boolean flag);
 }

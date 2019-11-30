@@ -1,46 +1,66 @@
+/*
+ * This file is part of EchoPet.
+ *
+ * EchoPet is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * EchoPet is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
 import java.util.Optional;
 import java.util.UUID;
-
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.Block;
+import net.minecraft.server.v1_13_R2.BlockPosition;
+import net.minecraft.server.v1_13_R2.Blocks;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.SoundEffectType;
+import net.minecraft.server.v1_13_R2.World;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Nov 19, 2016
  */
 public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements IEntityHorseAbstractPet{
-
+	
 	// EntityHorseAbstract: Zombie, Skeleton
 	private static final DataWatcherObject<Byte> VISUAL = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.a);// feet kicking, whatev
 	private static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.o);
 	private int rearingCounter = 0;
 	private int stepSoundCount = 0;
-
+	
 	public EntityHorseAbstractPet(EntityTypes<? extends Entity> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityHorseAbstractPet(EntityTypes<? extends Entity> type, World world, IPet pet){
 		super(type, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(VISUAL, (byte) 0);
 		this.datawatcher.register(OWNER, Optional.empty());
 	}
-
+	
 	@Override
 	protected void makeStepSound(BlockPosition pos, Block block){
 		SoundEffectType soundeffecttype = block.getStepSound();
@@ -66,7 +86,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			}
 		}
 	}
-
+	
 	@Override
 	public void a(float sideMot, float forwMot, float unk){
 		super.a(sideMot, forwMot, unk);
@@ -74,7 +94,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			this.stepSoundCount = 0;
 		}
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.isBaby()){
@@ -83,7 +103,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			return SizeCategory.LARGE;
 		}
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();
@@ -91,19 +111,19 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			setHorseVisual(64, false);
 		}
 	}
-
+	
 	@Override
 	protected void doJumpAnimation(){
 		makeSound("entity.horse.gallop", 0.4F, 1.0F);
 		this.rearingCounter = 1;
 		setHorseVisual(64, true);
 	}
-
+	
 	@Override
 	public void setSaddled(boolean flag){
 		this.setHorseVisual(4, flag);
 	}
-
+	
 	/**
 	 * 2: Is tamed
 	 * 4: Saddle
@@ -114,9 +134,9 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public boolean getHorseVisual(int i){
-		return (((Byte) this.datawatcher.get(VISUAL)).byteValue() & i) != 0;
+		return (this.datawatcher.get(VISUAL).byteValue() & i) != 0;
 	}
-
+	
 	/**
 	 * 2: Is tamed
 	 * 4: Saddle
@@ -127,13 +147,13 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public void setHorseVisual(int i, boolean flag){
-		byte b0 = ((Byte) this.datawatcher.get(VISUAL)).byteValue();
+		byte b0 = this.datawatcher.get(VISUAL).byteValue();
 		if(flag){
 			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
 		}else{
 			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
 		}
 	}
-
+	
 	public void setVariant(HorseVariant variant){}
 }

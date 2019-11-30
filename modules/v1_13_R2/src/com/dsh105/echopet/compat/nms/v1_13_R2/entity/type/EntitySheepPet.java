@@ -16,55 +16,57 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import org.bukkit.DyeColor;
-
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
+import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.SHEEP)
 public class EntitySheepPet extends EntityAgeablePet implements IEntitySheepPet{
-
+	
 	private static final DataWatcherObject<Byte> COLOR_SHEARED = DataWatcher.a(EntitySheepPet.class, DataWatcherRegistry.a);// Fuck you mojang for doing two values in one byte
-
+	
 	public EntitySheepPet(World world){
 		super(EntityTypes.SHEEP, world);
 	}
-
+	
 	public EntitySheepPet(World world, IPet pet){
 		super(EntityTypes.SHEEP, world, pet);
 	}
-
+	
 	public int getColor(){
-		return ((Byte) this.datawatcher.get(COLOR_SHEARED)).byteValue() & 0xF;
+		return this.datawatcher.get(COLOR_SHEARED).byteValue() & 0xF;
 	}
-
+	
 	@Override
 	public void setDyeColor(DyeColor color){
-		byte b0 = ((Byte) this.datawatcher.get(COLOR_SHEARED)).byteValue();
+		byte b0 = this.datawatcher.get(COLOR_SHEARED).byteValue();
 		this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xF0 | color.ordinal() & 0xF)));
 	}
-
+	
 	public boolean isSheared(){
-		return (((Byte) this.datawatcher.get(COLOR_SHEARED)).byteValue() & 0x10) != 0;
+		return (this.datawatcher.get(COLOR_SHEARED).byteValue() & 0x10) != 0;
 	}
-
+	
 	@Override
 	public void setSheared(boolean flag){
-		byte b0 = ((Byte) this.datawatcher.get(COLOR_SHEARED)).byteValue();
+		byte b0 = this.datawatcher.get(COLOR_SHEARED).byteValue();
 		if(flag){
 			this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
 		}else{
 			this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
 		}
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();

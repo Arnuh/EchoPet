@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-public interface IEntityCreeperPet extends IEntityPet {
-
-    public void setIgnited(boolean flag);
-
-    public void setPowered(boolean flag);
+public interface IEntityCreeperPet extends IEntityPet{
+	
+	void setIgnited(boolean flag);
+	
+	void setPowered(boolean flag);
 }

@@ -16,38 +16,45 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.4F, height = 1.8F)
 @EntityPetType(petType = PetType.SNOWMAN)
 public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet{
-
+	
 	private static final DataWatcherObject<Byte> SHEARED = DataWatcher.a(EntitySnowmanPet.class, DataWatcherRegistry.a);// SHEARED(Removes pumpkin)
-
+	
 	public EntitySnowmanPet(World world){
 		super(EntityTypes.SNOW_GOLEM, world);
 	}
-
+	
 	public EntitySnowmanPet(World world, IPet pet){
 		super(EntityTypes.SNOW_GOLEM, world, pet);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(SHEARED, (byte) 16);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}
-
+	
 	public void setSheared(boolean flag){
-		byte b0 = ((Byte) this.datawatcher.get(SHEARED)).byteValue();
+		byte b0 = this.datawatcher.get(SHEARED).byteValue();
 		if(!flag){
 			this.datawatcher.set(SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
 		}else{

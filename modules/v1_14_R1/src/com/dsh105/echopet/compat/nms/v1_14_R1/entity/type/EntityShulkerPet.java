@@ -17,9 +17,6 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
 import java.util.Optional;
-
-import org.bukkit.DyeColor;
-
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -27,33 +24,37 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.BlockPosition;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.EnumColor;
+import net.minecraft.server.v1_14_R1.EnumDirection;
+import net.minecraft.server.v1_14_R1.World;
+import org.bukkit.DyeColor;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Mar 7, 2016
  */
 
 @EntitySize(width = 1.0F, height = 1.0F)
 @EntityPetType(petType = PetType.SHULKER)
 public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
-
+	
 	protected static final DataWatcherObject<EnumDirection> ATTACHED_FACE = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.n);
 	protected static final DataWatcherObject<Optional<BlockPosition>> ATTACHED_BLOCK_POS = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.m);
 	protected static final DataWatcherObject<Byte> PEEK_TICK = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.a);// how many ticks its opened for
 	protected static final DataWatcherObject<Byte> COLOR_DW = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.a);
-
+	
 	public EntityShulkerPet(World world){
 		super(EntityTypes.SHULKER, world);
 	}
-
+	
 	public EntityShulkerPet(World world, IPet pet){
 		super(EntityTypes.SHULKER, world, pet);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(ATTACHED_FACE, EnumDirection.DOWN);
@@ -61,12 +62,12 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 		this.datawatcher.register(PEEK_TICK, (byte) 0);
 		this.datawatcher.register(COLOR_DW, (byte) EnumColor.PURPLE.getColorIndex());
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}
-
+	
 	@Override
 	public void setOpen(boolean open){
 		if(open){
@@ -75,7 +76,7 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 			datawatcher.set(PEEK_TICK, (byte) 0);
 		}
 	}
-
+	
 	@Override
 	public void setColor(DyeColor color){
 		datawatcher.register(COLOR_DW, (byte) EnumColor.fromColorIndex(color.ordinal()).getColorIndex());// is enumcolor stuff needed?

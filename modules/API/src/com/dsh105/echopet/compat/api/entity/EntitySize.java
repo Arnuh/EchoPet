@@ -24,9 +24,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EntitySize {
-
-    public float width();
-
-    public float height();
+public @interface EntitySize{
+	
+	float width();
+	
+	float height();
 }

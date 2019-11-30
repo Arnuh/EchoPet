@@ -17,57 +17,64 @@
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
 import java.util.Optional;
-
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.IBlockData;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.6F, height = 2.9F)
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
-
+	
 	private static final DataWatcherObject<Optional<IBlockData>> BLOCK = DataWatcher.a(EntityEndermanPet.class, DataWatcherRegistry.h);
 	private static final DataWatcherObject<Boolean> SCREAMING = DataWatcher.a(EntityEndermanPet.class, DataWatcherRegistry.i);
-
+	
 	public EntityEndermanPet(World world){
 		super(EntityTypes.ENDERMAN, world);
 	}
-
+	
 	public EntityEndermanPet(World world, IPet pet){
 		super(EntityTypes.ENDERMAN, world, pet);
 	}
-
+	
 	public void setScreaming(boolean flag){
 		this.datawatcher.set(SCREAMING, Boolean.valueOf(flag));
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(BLOCK, Optional.empty());
 		this.datawatcher.register(SCREAMING, Boolean.valueOf(false));
 	}
-
+	
 	public boolean isScreaming(){
 		return this.datawatcher.get(SCREAMING);
 	}
-
+	
 	public void setCarried(IBlockData iblockdata){
 		this.datawatcher.set(BLOCK, Optional.ofNullable(iblockdata));
 	}
-
+	
 	public IBlockData getCarried(){
-		return (IBlockData) ((Optional<IBlockData>) this.datawatcher.get(BLOCK)).orElse(null);
+		return this.datawatcher.get(BLOCK).orElse(null);
 	}
-
+	
 	@Override
 	protected String getIdleSound(){
 		return ((IEndermanPet) pet).isScreaming() ? "entity.endermen.scream" : "entity.endermen.ambient";
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;

@@ -17,19 +17,18 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
-
-public interface ISpawnUtil {
-
-	public IEntityPet spawn(IPet pet, Player owner);
-
-	public ItemStack getSpawnEgg(ItemStack i, String entityTag);
-
-	public void setPassenger(int pos, org.bukkit.entity.LivingEntity entity, org.bukkit.entity.LivingEntity passenger);
-
-	public void removePassenger(org.bukkit.entity.LivingEntity entity);
+public interface ISpawnUtil{
+	
+	IEntityPet spawn(IPet pet, Player owner);
+	
+	ItemStack getSpawnEgg(ItemStack i, String entityTag);
+	
+	void setPassenger(int pos, org.bukkit.entity.LivingEntity entity, org.bukkit.entity.LivingEntity passenger);
+	
+	void removePassenger(org.bukkit.entity.LivingEntity entity);
 }

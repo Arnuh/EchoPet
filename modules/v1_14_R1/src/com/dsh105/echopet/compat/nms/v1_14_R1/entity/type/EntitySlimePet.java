@@ -23,20 +23,24 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityInsentient;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.SLIME)
 public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
-
+	
 	private static final DataWatcherObject<Integer> SIZE = DataWatcher.a(EntitySlimePet.class, DataWatcherRegistry.b);
 	int jumpDelay;
-
+	
 	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 		/*if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
@@ -50,15 +54,15 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		}*/
 		this.jumpDelay = this.random.nextInt(15) + 10;
 	}
-
+	
 	public EntitySlimePet(World world){
 		this(EntityTypes.SLIME, world);
 	}
-
+	
 	public EntitySlimePet(World world, IPet pet){
 		this(EntityTypes.SLIME, world, pet);
 	}
-
+	
 	@Override
 	public void setSize(int i){
 		this.datawatcher.set(SIZE, Integer.valueOf(i));
@@ -67,31 +71,31 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		this.setPosition(this.locX, this.locY, this.locZ);
 		this.setHealth(this.getMaxHealth());
 	}
-
+	
 	public int getSize(){
-		return ((Integer) this.datawatcher.get(SIZE)).intValue();
+		return this.datawatcher.get(SIZE).intValue();
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(SIZE, Integer.valueOf(1));
 	}
-
+	
 	@Override
 	protected String getIdleSound(){
 		return isSmall() ? "entity.small_slime.squish" : "entity.slime.squish";
 	}
-
+	
 	@Override
 	protected String getDeathSound(){
 		return isSmall() ? "entity.small_slime.death" : "entity.slime.death";
 	}
-
+	
 	public boolean isSmall(){// ?
 		return getSize() <= 1;
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();
@@ -101,7 +105,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 			getControllerJump().jump();
 		}
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.getSize() == 1){

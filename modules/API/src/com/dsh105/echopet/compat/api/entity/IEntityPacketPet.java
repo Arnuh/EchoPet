@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-public interface IEntityPacketPet extends IEntityPet {
-
-    public void updatePosition();
-
-    public boolean hasInititiated();
+public interface IEntityPacketPet extends IEntityPet{
+	
+	void updatePosition();
+	
+	boolean hasInititiated();
 }

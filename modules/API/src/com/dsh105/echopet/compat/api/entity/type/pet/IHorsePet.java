@@ -22,15 +22,15 @@ import org.bukkit.entity.Horse;
 
 public interface IHorsePet extends IHorseAbstractPet{
 	
-	public void setColor(Horse.Color color);
+	void setColor(Horse.Color color);
 	
-	public void setStyle(Horse.Style style);
+	void setStyle(Horse.Style style);
 	
-	public void setArmour(HorseArmor armour);
+	void setArmour(HorseArmor armour);
 	
-	public Horse.Color getColor();
+	Horse.Color getColor();
 	
-	public Horse.Style getStyle();
+	Horse.Style getStyle();
 	
-	public HorseArmor getArmour();
+	HorseArmor getArmour();
 }

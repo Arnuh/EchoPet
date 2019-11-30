@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-public interface IWitherPet extends IPet {
-
-    public void setShielded(boolean flag);
-
-    public boolean isShielded();
+public interface IWitherPet extends IPet{
+	
+	void setShielded(boolean flag);
+	
+	boolean isShielded();
 }

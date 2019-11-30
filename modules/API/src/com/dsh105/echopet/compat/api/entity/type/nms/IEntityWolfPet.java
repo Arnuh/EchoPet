@@ -17,13 +17,12 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
+import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 import org.bukkit.DyeColor;
 
-import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
-
 public interface IEntityWolfPet extends IEntityTameablePet{
-
-	public void setCollarColor(DyeColor dc);
-
-    public void setAngry(boolean flag);
+	
+	void setCollarColor(DyeColor dc);
+	
+	void setAngry(boolean flag);
 }

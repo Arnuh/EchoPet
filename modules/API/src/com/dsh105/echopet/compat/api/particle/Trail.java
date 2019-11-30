@@ -1,59 +1,71 @@
+/*
+ * This file is part of EchoPet.
+ *
+ * EchoPet is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * EchoPet is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.dsh105.echopet.compat.api.particle;
 
 import java.util.Collection;
 import java.util.Set;
-
 import com.dsh105.echopet.compat.api.entity.IPet;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Jul 11, 2016
  */
 public interface Trail{
-
-	public String getName();
-
-	public String getParticleType();
-
-	public String getPermission();
-
-	public boolean canToggle();
-
-	public int getTickDelay();
-
-	public float getSpeed();
-
-	public int getCount();
-
-	public double getX();
-
-	public double getY();
-
-	public double getZ();
-
-	public float getXOffset();
-
-	public float getYOffset();
-
-	public float getZOffset();
-
-	public Trail getParentTrail();
-
-	public void setParentTrail(Trail parentTrail);
-
-	public Collection<String> getSubTrailNames();
-
-	public Set<Trail> getSubTrails();
-
-	public void addSubTrail(Trail subTrail);
-
-	public void start(final IPet pet);
-
-	public void cancel();
-
-	public void displayTrail(final IPet pet);
-
-	public Trail clone();
+	
+	String getName();
+	
+	String getParticleType();
+	
+	String getPermission();
+	
+	boolean canToggle();
+	
+	int getTickDelay();
+	
+	float getSpeed();
+	
+	int getCount();
+	
+	double getX();
+	
+	double getY();
+	
+	double getZ();
+	
+	float getXOffset();
+	
+	float getYOffset();
+	
+	float getZOffset();
+	
+	Trail getParentTrail();
+	
+	void setParentTrail(Trail parentTrail);
+	
+	Collection<String> getSubTrailNames();
+	
+	Set<Trail> getSubTrails();
+	
+	void addSubTrail(Trail subTrail);
+	
+	void start(final IPet pet);
+	
+	void cancel();
+	
+	void displayTrail(final IPet pet);
+	
+	Trail clone();
 }

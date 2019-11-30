@@ -19,27 +19,31 @@ package com.dsh105.echopet.compat.nms.v1_13_R2.entity;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeablePet{
-
+	
 	private static final DataWatcherObject<Boolean> BABY = DataWatcher.a(EntityAgeablePet.class, DataWatcherRegistry.i);
 	protected int age;
 	private boolean ageLocked = true;
-
+	
 	public EntityAgeablePet(EntityTypes<? extends Entity> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityAgeablePet(EntityTypes<? extends Entity> type, World world, IPet pet){
 		super(type, world, pet);
 	}
-
+	
 	public int getAge(){
-		return ((Boolean) this.datawatcher.get(BABY)).booleanValue() ? -1 : this.age;
+		return this.datawatcher.get(BABY).booleanValue() ? -1 : this.age;
 	}
-
+	
 	public void setAge(int i, boolean flag){
 		int j = getAge();
 		j += i * 20;
@@ -48,30 +52,30 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 		}
 		setAgeRaw(j);
 	}
-
+	
 	public void setAge(int i){
 		setAge(i, false);
 	}
-
+	
 	public void setAgeRaw(int i){
 		this.datawatcher.set(BABY, Boolean.valueOf(i < 0));
 		this.age = i;
 	}
-
+	
 	public boolean isAgeLocked(){
 		return ageLocked;
 	}
-
+	
 	public void setAgeLocked(boolean ageLocked){
 		this.ageLocked = ageLocked;
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(BABY, false);
 	}
-
+	
 	@Override
 	public void inactiveTick(){
 		super.inactiveTick();
@@ -86,16 +90,16 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 			}
 		}
 	}
-
+	
 	public void setBaby(boolean flag){
 		this.datawatcher.set(BABY, flag);
 	}
-
+	
 	@Override
 	public boolean isBaby(){
 		return this.datawatcher.get(BABY).booleanValue();
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.isBaby()){

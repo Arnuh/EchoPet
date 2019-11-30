@@ -2,14 +2,12 @@ package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
 import java.util.Optional;
 import java.util.UUID;
-
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
-
 import net.minecraft.server.v1_14_R1.Block;
 import net.minecraft.server.v1_14_R1.BlockPosition;
 import net.minecraft.server.v1_14_R1.Blocks;
@@ -23,28 +21,28 @@ import net.minecraft.server.v1_14_R1.Vec3D;
 import net.minecraft.server.v1_14_R1.World;
 
 public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements IEntityHorseAbstractPet{
-
+	
 	// EntityHorseAbstract: Zombie, Skeleton
 	private static final DataWatcherObject<Byte> VISUAL = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.a);// feet kicking, whatev
 	private static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.o);
 	private int rearingCounter = 0;
 	private int stepSoundCount = 0;
-
+	
 	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(VISUAL, (byte) 0);
 		this.datawatcher.register(OWNER, Optional.empty());
 	}
-
+	
 	@Override
 	protected void makeStepSound(BlockPosition pos, Block block){
 		SoundEffectType soundeffecttype = block.getStepSound(block.getBlockData());
@@ -70,7 +68,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			}
 		}
 	}
-
+	
 	@Override
 	public void e(Vec3D motion){
 		super.e(motion);
@@ -79,7 +77,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			this.stepSoundCount = 0;
 		}
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.isBaby()){
@@ -88,7 +86,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			return SizeCategory.LARGE;
 		}
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();
@@ -96,19 +94,19 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			setHorseVisual(64, false);
 		}
 	}
-
+	
 	@Override
 	protected void doJumpAnimation(){
 		makeSound("entity.horse.gallop", 0.4F, 1.0F);
 		this.rearingCounter = 1;
 		setHorseVisual(64, true);
 	}
-
+	
 	@Override
 	public void setSaddled(boolean flag){
 		this.setHorseVisual(4, flag);
 	}
-
+	
 	/**
 	 * 2: Is tamed
 	 * 4: Saddle
@@ -119,9 +117,9 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public boolean getHorseVisual(int i){
-		return (((Byte) this.datawatcher.get(VISUAL)).byteValue() & i) != 0;
+		return (this.datawatcher.get(VISUAL).byteValue() & i) != 0;
 	}
-
+	
 	/**
 	 * 2: Is tamed
 	 * 4: Saddle
@@ -132,13 +130,13 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public void setHorseVisual(int i, boolean flag){
-		byte b0 = ((Byte) this.datawatcher.get(VISUAL)).byteValue();
+		byte b0 = this.datawatcher.get(VISUAL).byteValue();
 		if(flag){
 			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
 		}else{
 			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
 		}
 	}
-
+	
 	public void setVariant(HorseVariant variant){}
 }

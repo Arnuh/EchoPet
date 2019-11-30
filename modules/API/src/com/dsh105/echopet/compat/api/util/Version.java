@@ -40,18 +40,18 @@ import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
  * Represents a server version that can be utilised as a comparison
  */
 public class Version{
-
-    private String version;
-    private int[] numericVersion;
+	
+	private String version;
+	private int[] numericVersion;
 	private boolean snapshot;
-
-    /**
-     * Constructs a new Version from the current server version running
-     */
-    public Version() {
-        this(CommonReflection.getVersionTag());
-    }
-
+	
+	/**
+	 * Constructs a new Version from the current server version running
+	 */
+	public Version(){
+		this(CommonReflection.getVersionTag());
+	}
+	
 	/**
 	 * Constructs a new Version from the given server version
 	 *
@@ -61,7 +61,7 @@ public class Version{
 		this.version = version;
 		this.numericVersion = getNumericVersion(version);
 	}
-
+	
 	/**
 	 * Constructs a new Version from the given numeric server version
 	 * <p/>
@@ -83,7 +83,7 @@ public class Version{
 		}
 		this.version = ver;
 	}
-
+	
 	/**
 	 * Returns an array of integers that represents the given server version
 	 *
@@ -92,7 +92,7 @@ public class Version{
 	 */
 	public int[] getNumericVersion(String serverVersion){
 		if(!serverVersion.contains("-R") && serverVersion.contains("_")){
-			serverVersion = serverVersion.substring(0, serverVersion.indexOf("R") - 1) + "-" + serverVersion.substring(serverVersion.indexOf("R"), serverVersion.length());
+			serverVersion = serverVersion.substring(0, serverVersion.indexOf("R") - 1) + "-" + serverVersion.substring(serverVersion.indexOf("R"));
 			serverVersion = serverVersion.replace("_", ".");
 		}
 		int size = serverVersion.split("\\.").length;
@@ -110,13 +110,14 @@ public class Version{
 		for(int i = 0; i < parts.length; i++){
 			try{
 				numericVersionParts[i] = ObjectParser.isInt(parts[i]);
-			}catch(NullPointerException ex){}
+			}catch(NullPointerException ex){
+			}
 		}
 		if(rev != null) numericVersionParts[numericVersionParts.length - 1] = rev;
 		if(numericVersionParts.length <= 0) throw new IllegalArgumentException("Invalid version: " + serverVersion);
 		return numericVersionParts;
 	}
-
+	
 	/**
 	 * Gets this version in string format
 	 *
@@ -125,7 +126,7 @@ public class Version{
 	public String getVersion(){
 		return version;
 	}
-
+	
 	/**
 	 * Returns an array of integers that represents this server version
 	 *
@@ -134,14 +135,14 @@ public class Version{
 	public int[] getNumericVersion(){
 		return numericVersion;
 	}
-
+	
 	/**
 	 * @return If the version is a snapshot
 	 */
 	public boolean isSnapshot(){
 		return snapshot;
 	}
-
+	
 	/**
 	 * Returns whether or not this version is identical to the given version
 	 * <p/>
@@ -153,7 +154,7 @@ public class Version{
 	public boolean isIdentical(String version){
 		return isIdentical(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not the given version is compatible with this version
 	 * <p/>
@@ -167,7 +168,7 @@ public class Version{
 	public boolean isCompatible(String version){
 		return isCompatible(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not the given version is compatible with this version
 	 * <p/>
@@ -181,7 +182,7 @@ public class Version{
 	public boolean isSupported(String version){
 		return isSupported(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not this version is identical to the given version
 	 * <p/>
@@ -193,7 +194,7 @@ public class Version{
 	public boolean isIdentical(int[] version){
 		return isIdentical(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not the given version is compatible with this version
 	 * <p/>
@@ -207,7 +208,7 @@ public class Version{
 	public boolean isCompatible(int[] version){
 		return isCompatible(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not this version supports the given version
 	 * <p/>
@@ -221,7 +222,7 @@ public class Version{
 	public boolean isSupported(int[] version){
 		return isSupported(new Version(version));
 	}
-
+	
 	/**
 	 * Returns whether or not this version is identical to the given version
 	 * <p/>
@@ -238,7 +239,7 @@ public class Version{
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Returns whether or not the given version is compatible with this version
 	 * <p/>
@@ -258,7 +259,7 @@ public class Version{
 		}
 		return compatible;
 	}
-
+	
 	/**
 	 * Returns whether or not this version supports the given version
 	 * <p/>

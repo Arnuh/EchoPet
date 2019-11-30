@@ -19,18 +19,15 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 import org.bukkit.DyeColor;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Mar 7, 2016
  */
 public interface IShulkerPet{
-
-	public void setOpen(boolean open);
-
-	public boolean isOpen();
-
-	public void setColor(DyeColor color);
-
-	public DyeColor getColor();
+	
+	void setOpen(boolean open);
+	
+	boolean isOpen();
+	
+	void setColor(DyeColor color);
+	
+	DyeColor getColor();
 }

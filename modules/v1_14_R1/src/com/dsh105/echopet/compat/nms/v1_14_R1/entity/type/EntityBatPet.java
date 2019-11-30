@@ -23,42 +23,48 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.MathHelper;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.BAT)
 public class EntityBatPet extends EntityPet implements IEntityBatPet{
-
+	
 	private static final DataWatcherObject<Byte> a = DataWatcher.a(EntityBatPet.class, DataWatcherRegistry.a);
-
+	
 	public EntityBatPet(World world){
 		super(EntityTypes.BAT, world);
 	}
-
+	
 	public EntityBatPet(World world, IPet pet){
 		super(EntityTypes.BAT, world, pet);
 	}
-
+	
 	public void setHanging(boolean flag){
-		int i = ((Byte) this.datawatcher.get(a)).byteValue();
+		int i = this.datawatcher.get(a).byteValue();
 		if(flag){
 			this.datawatcher.set(a, Byte.valueOf((byte) (i | 0x1)));
 		}else{
 			this.datawatcher.set(a, Byte.valueOf((byte) (i & -2)));
 		}
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(a, Byte.valueOf((byte) 0));
 	}
-
+	
 	protected String getIdleSound(){
-		if((!isStartled()) && (this.random.nextInt(4) != 0)){ return null; }
+		if((!isStartled()) && (this.random.nextInt(4) != 0)){
+			return null;
+		}
 		return "entity.bat.ambient";
 	}
-
+	
 	public void onLive(){
 		super.onLive();
 		if(this.isStartled()){
@@ -68,11 +74,11 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 			setMot(getMot().x, getMot().y * 0.6000000238418579D, getMot().z);
 		}
 	}
-
+	
 	public boolean isStartled(){
-		return (((Byte) this.datawatcher.get(a)).byteValue() & 0x1) != 0;
+		return (this.datawatcher.get(a).byteValue() & 0x1) != 0;
 	}
-
+	
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
 	}
