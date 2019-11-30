@@ -519,7 +519,7 @@ public enum PetData{
 			return setHorseStyle(pet, Horse.Style.NONE);
 		}
 		return false;
-	}, Material.LEAD, "Dark Brown"),
+	}, Material.LEAD, "No Marking"),
 	WHITE_SOCKS("white_socks", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseStyle(pet, Horse.Style.WHITE);
@@ -544,6 +544,31 @@ public enum PetData{
 		}
 		return false;
 	}, Material.BLACK_WOOL, "Black Dots"),
+	//Horse Armor
+	NO_ARMOR("no_armor", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseArmor(pet, HorseArmor.None);
+		}
+		return false;
+	}, Material.ARMOR_STAND, "No Armor"),//none?
+	IRON_ARMOR("iron_armor", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseArmor(pet, HorseArmor.Iron);
+		}
+		return false;
+	}, Material.IRON_HORSE_ARMOR, "Iron Armor"),
+	GOLD_ARMOR("gold_armor", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseArmor(pet, HorseArmor.Gold);
+		}
+		return false;
+	}, Material.GOLDEN_HORSE_ARMOR, "Gold Armor"),
+	DIAMOND_ARMOR("diamond_armor", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseArmor(pet, HorseArmor.Diamond);
+		}
+		return false;
+	}, Material.DIAMOND_HORSE_ARMOR, "Diamond Armor"),
 	// Tropical Fish Patterns
 	KOB("kob", (player, pet, category, flag)->{
 		return setTropicalFishPattern(pet, TropicalFish.Pattern.KOB);
@@ -828,6 +853,14 @@ public enum PetData{
 		PetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
 			((IHorsePet) pet).setStyle(style);
+		}
+		return true;
+	}
+	
+	private static boolean setHorseArmor(IPet pet, HorseArmor armor){
+		PetType type = pet.getPetType();
+		if(type.equals(PetType.HORSE)){
+			((IHorsePet) pet).setArmour(armor);
 		}
 		return true;
 	}

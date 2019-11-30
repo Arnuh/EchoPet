@@ -527,6 +527,14 @@ permissions:
         default: op
     echopet.pet.type.horse.saddle:
         default: op
+    echopet.pet.type.horse.no_armor:
+        default: op
+    echopet.pet.type.horse.iron_armor:
+        default: op
+    echopet.pet.type.horse.gold_armor:
+        default: op
+    echopet.pet.type.horse.diamond_armor:
+        default: op
     echopet.pet.type.horse.white:
         default: op
     echopet.pet.type.horse.creamy:
@@ -2474,6 +2482,10 @@ permissions:
             echopet.pet.type.horse.ride: true
             echopet.pet.type.horse.baby: true
             echopet.pet.type.horse.saddle: true
+            echopet.pet.type.horse.no_armor: true
+            echopet.pet.type.horse.iron_armor: true
+            echopet.pet.type.horse.gold_armor: true
+            echopet.pet.type.horse.diamond_armor: true
             echopet.pet.type.horse.white: true
             echopet.pet.type.horse.creamy: true
             echopet.pet.type.horse.chestnut: true

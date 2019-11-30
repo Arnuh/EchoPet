@@ -55,7 +55,7 @@ public enum PetType{
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
-	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
+	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR, PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
 	HUMAN("Human", "Human Pet", "UNKNOWN"),
 	HUSK("Husk", "Husk Pet", "husk"),
 	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner", Material.VILLAGER_SPAWN_EGG),
@@ -147,7 +147,7 @@ public enum PetType{
 		this.defaultName = defaultName;
 		this.version = version;
 		this.uiMaterial = uiMaterial;
-		if(uiMaterial == null){
+		if(this.uiMaterial == null){
 			for(Material material : Material.values()){
 				String name = material.name().toLowerCase();
 				if(name.endsWith("spawn_egg") && name.startsWith(minecraftEntityName)){

@@ -17,18 +17,14 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
+import com.dsh105.echopet.compat.api.entity.HorseArmor;
 import org.bukkit.entity.Horse;
 
-import com.dsh105.echopet.compat.api.entity.HorseArmour;
-import com.dsh105.echopet.compat.api.entity.HorseVariant;
-
 public interface IEntityHorsePet extends IEntityHorseAbstractPet{
-
-	public void setColor(Horse.Color color);
-
-	public void setVariant(HorseVariant variant);
 	
-	public void setStyle(Horse.Style style);
-
-	public void setArmour(HorseArmour a);
+	void setColor(Horse.Color color);
+	
+	void setStyle(Horse.Style style);
+	
+	void setArmour(HorseArmor a);
 }
