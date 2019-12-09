@@ -321,7 +321,7 @@ public enum PetType{
 			bw.write("        description: 'All hat permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + ".hat: true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.HAT.getConfigOptionString() + ": true\n");
 			}
 			//
 			bw.write("    echopet.pet.ride.*:\n");
@@ -329,7 +329,18 @@ public enum PetType{
 			bw.write("        description: 'All ride permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + ".ride: true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.RIDE.getConfigOptionString() + ": true\n");
+			}
+			//
+			bw.write("    echopet.pet.baby.*:\n");
+			bw.write("        default: op\n");
+			bw.write("        description: 'All baby permissions'\n");
+			bw.write("        children:\n");
+			for(String petTypeName : petTypes){
+				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
+				if(petType.getAllowedDataTypes().contains(PetData.BABY)){
+					bw.write("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigOptionString() + ": true\n");
+				}
 			}
 			//
 			bw.write("    echopet.pet.default.*:\n        default: op\n        description: 'All permissions under /pet default <...>'\n        children:\n            echopet.pet.default.set.current: true\n            echopet.pet.default.remove: true\n            echopet.pet.default.set.type.*: true\n");

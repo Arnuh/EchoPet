@@ -1943,6 +1943,35 @@ permissions:
             echopet.pet.type.zombie.ride: true
             echopet.pet.type.zombiehorse.ride: true
             echopet.pet.type.zombievillager.ride: true
+    echopet.pet.baby.*:
+        default: op
+        description: 'All baby permissions'
+        children:
+            echopet.pet.type.chicken.baby: true
+            echopet.pet.type.cow.baby: true
+            echopet.pet.type.donkey.baby: true
+            echopet.pet.type.drowned.baby: true
+            echopet.pet.type.fox.baby: true
+            echopet.pet.type.horse.baby: true
+            echopet.pet.type.husk.baby: true
+            echopet.pet.type.llama.baby: true
+            echopet.pet.type.mule.baby: true
+            echopet.pet.type.mushroomcow.baby: true
+            echopet.pet.type.ocelot.baby: true
+            echopet.pet.type.panda.baby: true
+            echopet.pet.type.pig.baby: true
+            echopet.pet.type.pigzombie.baby: true
+            echopet.pet.type.polarbear.baby: true
+            echopet.pet.type.rabbit.baby: true
+            echopet.pet.type.sheep.baby: true
+            echopet.pet.type.skeletonhorse.baby: true
+            echopet.pet.type.traderllama.baby: true
+            echopet.pet.type.turtle.baby: true
+            echopet.pet.type.villager.baby: true
+            echopet.pet.type.wanderingtrader.baby: true
+            echopet.pet.type.zombie.baby: true
+            echopet.pet.type.zombiehorse.baby: true
+            echopet.pet.type.zombievillager.baby: true
     echopet.pet.default.*:
         default: op
         description: 'All permissions under /pet default <...>'
