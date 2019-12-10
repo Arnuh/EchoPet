@@ -17,74 +17,70 @@
 
 package com.dsh105.echopet.compat.api.util.inventory;
 
-import java.util.Arrays;
-
+import java.util.ArrayList;
+import java.util.List;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-
-public class MenuIcon {
-
-    private int slot;
+public class MenuIcon{
+	
+	private int slot;
 	private Material material;
-    private int materialData;
 	private String name, entityTag;
-    private String[] lore;
-
-	public MenuIcon(int slot, Material material, int materialData, String name, String... lore){
-        this.slot = slot;
+	private List<String> lore;
+	
+	public MenuIcon(int slot, Material material, String name, List<String> lore){
+		this.slot = slot;
 		this.material = material;
-        this.materialData = materialData;
-        this.name = name;
-        this.lore = lore;
-    }
-
-	public MenuIcon(int slot, Material material, String entityTag, String name, String... lore){
+		this.name = name;
+		this.lore = lore;
+	}
+	
+	public MenuIcon(int slot, Material material, String entityTag, String name, List<String> lore){
 		this.slot = slot;
 		this.material = material;
 		this.entityTag = entityTag;
 		this.name = name;
 		this.lore = lore;
 	}
-
-    public int getSlot() {
-        return slot;
-    }
-
+	
+	public int getSlot(){
+		return slot;
+	}
+	
 	public Material getMaterial(){
 		return material;
-    }
-
-    public int getMaterialData() {
-        return materialData;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String[] getLore() {
-        return lore;
-    }
-
-    public ItemStack getIcon(Player viewer) {
-		ItemStack i = new ItemStack(material, 1, (short) materialData);
-        ItemMeta meta = i.getItemMeta();
-        meta.setDisplayName(name);
-        if (this.lore != null && this.lore.length > 0) {
-            meta.setLore(Arrays.asList(lore));
-        }
-        i.setItemMeta(meta);
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public List<String> getLore(){
+		return lore;
+	}
+	
+	public ItemStack getIcon(Player viewer){
+		ItemStack i = new ItemStack(material, 1);
+		ItemMeta meta = i.getItemMeta();
+		meta.setDisplayName(name);
+		if(this.lore != null && !lore.isEmpty()){
+			List<String> currentLore = meta.getLore();
+			if(currentLore == null) currentLore = new ArrayList<>();
+			currentLore.addAll(lore);
+			meta.setLore(currentLore);
+		}
+		i.setItemMeta(meta);
 		if(entityTag != null){
 			i = EchoPet.getPlugin().getSpawnUtil().getSpawnEgg(i, entityTag);
 		}
 		return i;
-    }
-
-    public void onClick(Player viewer) {
-
-    }
+	}
+	
+	public void onClick(Player viewer){
+	
+	}
 }

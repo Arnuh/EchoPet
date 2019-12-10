@@ -14,26 +14,22 @@
 
 package com.dsh105.echopet.compat.api.registration;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import org.bukkit.entity.Player;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Nov 18, 2016
  */
 public interface IPetRegistry{
-
-	public PetRegistrationEntry getRegistrationEntry(PetType petType);
-
-	public void shutdown();
-
-	public IPet spawn(PetType petType, final Player owner);
-
-	public void enablePets();
-
-	public void disablePets();
+	
+	PetRegistrationEntry getRegistrationEntry(PetType petType);
+	
+	void shutdown();
+	
+	IPet spawn(PetType petType, final Player owner);
+	
+	void enablePets();
+	
+	void disablePets();
 }

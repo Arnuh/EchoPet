@@ -17,58 +17,57 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.HorseArmor;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.HorseArmour;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
-
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends HorseAbstractPet implements IHorsePet{
-
+	
 	Color color = Horse.Color.WHITE;
 	Style style = Style.NONE;
-    HorseArmour armour = HorseArmour.NONE;
-
-    public HorsePet(Player owner) {
-        super(owner);
-    }
-
-    @Override
+	HorseArmor armour = HorseArmor.None;
+	
+	public HorsePet(Player owner){
+		super(owner);
+	}
+	
+	@Override
 	public void setColor(Color color){
 		((IEntityHorsePet) getEntityPet()).setColor(color);
 		this.color = color;
 	}
-
+	
 	@Override
 	public void setStyle(Style style){
 		((IEntityHorsePet) getEntityPet()).setStyle(style);
 		this.style = style;
-    }
-
-    @Override
-    public void setArmour(HorseArmour armour) {
-        ((IEntityHorsePet) getEntityPet()).setArmour(armour);
-        this.armour = armour;
-    }
-
-    @Override
+	}
+	
+	@Override
+	public void setArmour(HorseArmor armour){
+		((IEntityHorsePet) getEntityPet()).setArmour(armour);
+		this.armour = armour;
+	}
+	
+	@Override
 	public Color getColor(){
 		return this.color;
-    }
-
-    @Override
+	}
+	
+	@Override
 	public Style getStyle(){
 		return this.style;
-    }
-
-    @Override
-    public HorseArmour getArmour() {
-        return this.armour;
-    }
+	}
+	
+	@Override
+	public HorseArmor getArmour(){
+		return this.armour;
+	}
 }

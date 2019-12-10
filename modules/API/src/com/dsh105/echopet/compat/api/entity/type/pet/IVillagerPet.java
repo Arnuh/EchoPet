@@ -17,15 +17,7 @@
 
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
+public interface IVillagerPet extends IVillagerAbstractPet{
 
-import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import com.dsh105.echopet.compat.api.entity.Profession;
 
-public interface IVillagerPet extends IAgeablePet{
-
-	public Profession getProfession();
-
-    public int getProfessionId();
-
-	public void setProfession(Profession prof);
 }

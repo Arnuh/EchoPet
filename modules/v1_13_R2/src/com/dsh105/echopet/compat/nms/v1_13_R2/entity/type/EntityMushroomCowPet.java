@@ -19,21 +19,26 @@ package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
-
 import net.minecraft.server.v1_13_R2.EntityTypes;
 import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
-
+	
 	public EntityMushroomCowPet(World world){
 		super(EntityTypes.MOOSHROOM, world);
 	}
-
+	
 	public EntityMushroomCowPet(World world, IPet pet){
 		super(EntityTypes.MOOSHROOM, world, pet);
+	}
+	
+	@Override
+	public void setType(MushroomCowType type){
+		throw new UnsupportedOperationException();
 	}
 }

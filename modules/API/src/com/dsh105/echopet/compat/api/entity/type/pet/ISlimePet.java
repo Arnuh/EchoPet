@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-public interface ISlimePet extends IPet {
-
-    public void setSize(int i);
-
-    public int getSize();
+public interface ISlimePet extends IPet{
+	
+	void setSize(int i);
+	
+	int getSize();
 }

@@ -34,9 +34,9 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-public interface IEntityAgeablePet extends IEntityPet {
-
-    public abstract void setBaby(boolean flag);
-
-    public abstract boolean isBaby();
+public interface IEntityAgeablePet extends IEntityPet{
+	
+	void setBaby(boolean flag);
+	
+	boolean isBaby();
 }

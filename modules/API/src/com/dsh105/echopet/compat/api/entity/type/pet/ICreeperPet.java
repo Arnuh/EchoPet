@@ -19,13 +19,13 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-public interface ICreeperPet extends IPet {
-
-    public void setPowered(boolean flag);
-
-    public boolean isPowered();
-
-    public void setIgnited(boolean flag);
-
-    public boolean isIgnited();
+public interface ICreeperPet extends IPet{
+	
+	void setPowered(boolean flag);
+	
+	boolean isPowered();
+	
+	void setIgnited(boolean flag);
+	
+	boolean isIgnited();
 }

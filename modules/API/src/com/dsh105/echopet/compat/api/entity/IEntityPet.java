@@ -17,39 +17,37 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import org.bukkit.entity.Creature;
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
-
-public interface IEntityPet {
-
-    public IPetGoalSelector getPetGoalSelector();
-
-    public SizeCategory getSizeCategory();
-
-    public Creature getBukkitEntity();
-
-    public void resizeBoundingBox(boolean flag);
-
-	public void remove(boolean makeSound);
-
-    public boolean isDead();
-
-    public boolean onInteract(Player p);
-
-    public void setTarget(LivingEntity livingEntity);
-
-    public LivingEntity getTarget();
-
-	public void setOwnerShoulderEntityLeft();
-
-	public void setOwnerShoulderEntityRight();
-
-    void resetEntitySize();
-    
-    void setEntitySize(float width, float height);
-
-    public IPet getPet();
+public interface IEntityPet{
+	
+	IPetGoalSelector getPetGoalSelector();
+	
+	SizeCategory getSizeCategory();
+	
+	LivingEntity getBukkitEntity();
+	
+	void resizeBoundingBox(boolean flag);
+	
+	void remove(boolean makeSound);
+	
+	boolean isDead();
+	
+	boolean onInteract(Player p);
+	
+	void setTarget(LivingEntity livingEntity);
+	
+	LivingEntity getTarget();
+	
+	void setOwnerShoulderEntityLeft();
+	
+	void setOwnerShoulderEntityRight();
+	
+	void resetEntitySize();
+	
+	void setEntitySize(float width, float height);
+	
+	IPet getPet();
 }

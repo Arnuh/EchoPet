@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-public interface IBatPet extends IPet {
-
-    public void setHanging(boolean flag);
-
-    public boolean isHanging();
+public interface IBatPet extends IPet{
+	
+	void setHanging(boolean flag);
+	
+	boolean isHanging();
 }

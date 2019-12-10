@@ -22,32 +22,35 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.9F, height = 0.9F)
 @EntityPetType(petType = PetType.PIG)
 public class EntityPigPet extends EntityAgeablePet implements IEntityPigPet{
-
+	
 	private static final DataWatcherObject<Boolean> SADDLE = DataWatcher.a(EntityPigPet.class, DataWatcherRegistry.i);
-
+	
 	public EntityPigPet(World world){
 		super(EntityTypes.PIG, world);
 	}
-
+	
 	public EntityPigPet(World world, IPet pet){
 		super(EntityTypes.PIG, world, pet);
 	}
-
+	
 	public boolean hasSaddle(){
-		return ((Boolean) this.datawatcher.get(SADDLE)).booleanValue();
+		return this.datawatcher.get(SADDLE).booleanValue();
 	}
-
+	
 	@Override
 	public void setSaddled(boolean flag){
 		this.datawatcher.set(SADDLE, Boolean.valueOf(flag));
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();

@@ -18,43 +18,43 @@ package com.dsh105.echopet.compat.nms.v1_13_R2.entity;
 
 import java.util.Optional;
 import java.util.UUID;
-
 import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Mar 6, 2016
  */
 // These are not actually tameable and only here to add missing datawatchers
 public class EntityTameablePet extends EntityAgeablePet implements IEntityTameablePet{
-
+	
 	protected static final DataWatcherObject<Byte> bv = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
 	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.o);// Owner
-
+	
 	public EntityTameablePet(EntityTypes<? extends Entity> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityTameablePet(EntityTypes<? extends Entity> type, World world, IPet pet){
 		super(type, world, pet);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(bv, (byte) 0);
 		this.datawatcher.register(OWNER, Optional.empty());
 	}
-
+	
 	// These are all useless
 	public boolean isTamed(){
 		return (this.datawatcher.get(bv) & 0x4) != 0;
 	}
-
+	
 	public void setTamed(boolean paramBoolean){
 		int i = this.datawatcher.get(bv);
 		if(paramBoolean){
@@ -63,11 +63,11 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 			this.datawatcher.set(bv, Byte.valueOf((byte) (i & 0xFFFFFFFB)));
 		}
 	}
-
+	
 	public boolean isSitting(){
 		return (this.datawatcher.get(bv) & 0x1) != 0;
 	}
-
+	
 	public void setSitting(boolean paramBoolean){
 		int i = this.datawatcher.get(bv);
 		if(paramBoolean){
@@ -76,11 +76,11 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 			this.datawatcher.set(bv, Byte.valueOf((byte) (i & 0xFFFFFFFE)));
 		}
 	}
-
+	
 	public UUID getOwnerUUID(){
 		return this.datawatcher.get(OWNER).orElse(null);
 	}
-
+	
 	public void setOwnerUUID(UUID paramUUID){
 		this.datawatcher.set(OWNER, Optional.ofNullable(paramUUID));
 	}

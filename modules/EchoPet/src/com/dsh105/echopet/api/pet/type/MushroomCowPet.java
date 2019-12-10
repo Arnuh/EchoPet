@@ -17,31 +17,26 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.MUSHROOMCOW)
-public class MushroomCowPet extends Pet implements IMushroomCowPet {
-
-    boolean baby;
-
-    public MushroomCowPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityMushroomCowPet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
-
+public class MushroomCowPet extends CowPet implements IMushroomCowPet{
+	
+	private MushroomCowType type;
+	
+	public MushroomCowPet(Player owner){
+		super(owner);
+		type = MushroomCowType.Red;
+	}
+	
+	@Override
+	public void setType(MushroomCowType type){
+		((IEntityMushroomCowPet) getEntityPet()).setType(type);
+		this.type = type;
+	}
 }

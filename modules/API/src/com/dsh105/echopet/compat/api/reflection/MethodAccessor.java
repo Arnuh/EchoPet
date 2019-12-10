@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.compat.api.reflection;
 
-public interface MethodAccessor<T> {
-
-    T invoke(Object instance, Object... args);
-
-    public Class<?> getReturnType();
-
-	public Class<?>[] getArguments();
+public interface MethodAccessor<T>{
+	
+	T invoke(Object instance, Object... args);
+	
+	Class<?> getReturnType();
+	
+	Class<?>[] getArguments();
 }

@@ -1,26 +1,21 @@
 package com.dsh105.echopet.api.pet.type;
 
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Player;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
-import com.dsh105.echopet.compat.api.entity.LlamaSkin;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
- */
+
 @EntityPetType(petType = PetType.LLAMA)
 public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 
 	private DyeColor carpetColor = null;
-	private LlamaSkin skinColor = LlamaSkin.WHITE;
+	private Llama.Color skinColor = Llama.Color.WHITE;
 
 	public LlamaPet(Player owner){
 		super(owner);
@@ -37,7 +32,7 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	}
 
 	@Override
-	public LlamaSkin getSkinColor(){
+	public Llama.Color getSkinColor(){
 		return skinColor;
 	}
 
@@ -48,7 +43,7 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	}
 
 	@Override
-	public void setSkinColor(LlamaSkin skinColor){
+	public void setSkinColor(Llama.Color skinColor){
 		((IEntityLlamaPet) getEntityPet()).setSkinColor(skinColor);
 		this.skinColor = skinColor;
 	}

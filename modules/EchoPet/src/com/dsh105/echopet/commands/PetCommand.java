@@ -36,7 +36,11 @@ import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.*;
+import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.Perm;
+import com.dsh105.echopet.compat.api.util.PetUtil;
+import com.dsh105.echopet.compat.api.util.Version;
+import com.dsh105.echopet.compat.api.util.WorldUtil;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
@@ -261,7 +265,7 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
                     }
-                    if (Perm.hasTypePerm(sender, true, Perm.BASE_HAT, false, pi.getPetType())) {
+					if(Perm.hasDataPerm(sender, true, pi.getPetType(), PetData.HAT, false)){
                         pi.setAsHat(!pi.isHat());
                         if (pi.isHat()) {
                             Lang.sendTo(sender, Lang.HAT_PET_ON.toString());
@@ -281,7 +285,7 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
                     }
-                    if (Perm.hasTypePerm(sender, true, Perm.BASE_RIDE, false, pi.getPetType())) {
+					if(Perm.hasDataPerm(sender, true, pi.getPetType(), PetData.RIDE, false)){
                         pi.ownerRidePet(!pi.isOwnerRiding());
                         if (pi.isOwnerRiding()) {
                             Lang.sendTo(sender, Lang.RIDE_PET_ON.toString());

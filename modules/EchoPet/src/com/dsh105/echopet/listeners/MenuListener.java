@@ -17,7 +17,19 @@
 
 package com.dsh105.echopet.listeners;
 
+import com.dsh105.commodus.StringUtil;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.ItemUtil;
+import com.dsh105.echopet.compat.api.util.Logger;
+import com.dsh105.echopet.compat.api.util.MenuUtil;
+import com.dsh105.echopet.compat.api.util.menu.DataMenu;
+import com.dsh105.echopet.compat.api.util.menu.PetMenu;
+import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,56 +39,46 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.ItemUtil;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.Logger;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.menu.*;
-import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-
-public class MenuListener implements Listener {
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) event.getWhoClicked();
-        if (event.getView().getTitle().contains("EchoPet DataMenu")) {
-            event.setCancelled(true);
-        }
-
-        Inventory inv = event.getInventory();
-        String title = event.getView().getTitle();
-        int slot = event.getRawSlot();
-
-        if (slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null) {
-            return;
-        }
-
-        ItemStack currentlyInSlot = inv.getItem(slot);
-
-        if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-            try {
-                for (int i = 1; i <= 4; i++) {
-                    if (currentlyInSlot != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())) {
-                        player.updateInventory();
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                return;
-            }
-        }
+public class MenuListener implements Listener{
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onInventoryClick(InventoryClickEvent event){
+		if(!(event.getWhoClicked() instanceof Player)){
+			return;
+		}
+		
+		Player player = (Player) event.getWhoClicked();
+		if(event.getView().getTitle().contains("EchoPet DataMenu")){
+			event.setCancelled(true);
+			event.setResult(Event.Result.DENY);
+		}
+		
+		Inventory inv = event.getInventory();
+		String title = event.getView().getTitle();
+		int slot = event.getRawSlot();
+		
+		if(slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null){
+			return;
+		}
+		
+		ItemStack currentlyInSlot = inv.getItem(slot);
+		
+		if(event.getSlotType() == InventoryType.SlotType.RESULT){
+			try{
+				for(int i = 1; i <= 4; i++){
+					if(currentlyInSlot != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())){
+						player.updateInventory();
+						break;
+					}
+				}
+			}catch(Exception ignored){
+				return;
+			}
+		}
 		IPet currentPet = EchoPet.getManager().getPet(player);
 		if(currentPet == null){
-            return;
-        }
+			return;
+		}
 		if(currentPet.getRider() != null){
 			if(currentPet.getRider().getInventoryView() != null){
 				if(currentPet.getRider().getInventoryView().equals(event.getView())){
@@ -85,91 +87,68 @@ public class MenuListener implements Listener {
 			}
 		}
 		final IPet pet = currentPet;
-
 		if(currentlyInSlot != null){
-            try {
-                if (title.equals("EchoPet DataMenu")) {
-                    if (currentlyInSlot.equals(DataMenuItem.CLOSE.getItem())) {
-                        player.closeInventory();
-                        return;
-                    }
-                    for (MenuItem mi : MenuItem.values()) {
-                        if (ItemUtil.matches(mi.getItem(), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(false), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(true), currentlyInSlot)) {
-                            if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-                                if (GeneralUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
-                                    PetData pd = PetData.valueOf(mi.toString());
-                                    if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
-                                        if (pet.getPetData().contains(pd)) {
-                                            EchoPet.getManager().setData(pet, pd, false);
-                                            inv.setItem(slot, mi.getBoolean(true));
-											// pet.getLocation().getWorld().spawnParticle(Particle.SMOKE_NORMAL, pet.getLocation(), 1);
-											// Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
-                                        } else {
-                                            EchoPet.getManager().setData(pet, pd, true);
-                                            inv.setItem(slot, mi.getBoolean(false));
-											// pet.getLocation().getWorld().spawnParticle(Particle.FIREWORKS_SPARK, pet.getLocation(), 1);
-											// Particle.SPARKLE.builder().at(pet.getLocation()).show();
-                                        }
-                                    }
-                                } else {
-                                    if (mi.toString().equals("HAT")) {
-                                        if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, false, pet.getPetType())) {
-                                            if (!pet.isHat()) {
-                                                pet.setAsHat(true);
-                                                inv.setItem(slot, mi.getBoolean(false));
-                                                Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
-                                            } else {
-                                                pet.setAsHat(false);
-                                                inv.setItem(slot, mi.getBoolean(true));
-                                                Lang.sendTo(pet.getOwner(), Lang.HAT_PET_OFF.toString());
-                                            }
-                                        }
-                                    }
-                                    if (mi.toString().equals("RIDE")) {
-                                        if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, false, pet.getPetType())) {
-                                            if (!pet.isOwnerRiding()) {
-                                                pet.ownerRidePet(true);
-                                                inv.setItem(slot, mi.getBoolean(false));
-                                                Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_ON.toString());
-                                            } else {
-                                                pet.ownerRidePet(false);
-                                                inv.setItem(slot, mi.getBoolean(true));
-                                                Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_OFF.toString());
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-								DataMenu dm = new DataMenu(mi, pet);
-								dm.open(false);
-                            }
-                            break;
-                        }
-                    }
-                } else if (title.startsWith("EchoPet DataMenu - ")) {
-                    if (currentlyInSlot.equals(DataMenuItem.BACK.getItem())) {
+			try{
+				if(title.equals("EchoPet DataMenu")){
+					if(currentlyInSlot.equals(MenuUtil.CLOSE)){
+						player.closeInventory();
+						return;
+					}
+					for(PetDataCategory category : PetDataCategory.values){
+						if(ItemUtil.matches(currentlyInSlot, category.getItem())){
+							new DataMenu(category, pet).open(false);
+							return;
+						}
+					}
+				}else if(title.startsWith("EchoPet DataMenu - ")){
+					if(currentlyInSlot.equals(MenuUtil.BACK)){
 						new PetMenu(pet).open(false);
-                        return;
-                    }
-                    for (DataMenuItem dmi : DataMenuItem.values()) {
-                        if (ItemUtil.matches(dmi.getItem(), currentlyInSlot)) {
-                            PetData pd = dmi.getDataLink();
-							if(pet.getPetType().isDataAllowed(pd)){
-								if(pd.isCompatible() && Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)){
-									EchoPet.getManager().setData(pet, pd, true);
-									break;
-								}
+						return;
+					}
+				}
+				if(title.startsWith("EchoPet DataMenu")){
+					PetDataCategory category = null;
+					if(title.contains(" - ")){
+						String[] split = title.split(" - ");
+						for(PetDataCategory cat : PetDataCategory.values){
+							if(split[split.length - 1].equals(StringUtil.capitalise(cat.toString().replace("_", " ")))){
+								category = cat;
+								break;
 							}
 						}
-                    }
-                }
+					}
+					for(PetData data : PetData.values){
+						ItemStack item = data.toItem(pet);
+						if(item == null){// If no item = boolean toggle
+							if(ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE) || ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_TRUE)){
+								boolean newFlag = ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE);
+								if(data.getAction() != null){
+									if(data.getAction().click(player, pet, category, newFlag)){
+										EchoPet.getManager().setData(pet, data, newFlag);
+										inv.setItem(slot, data.toItem(pet, !newFlag));
+									}
+								}
+							}
+						}else{
+							if(ItemUtil.matches(currentlyInSlot, item)){
+								if(data.getAction() != null){
+									boolean newFlag = !pet.getPetData().contains(data);
+									if(data.getAction().click(player, pet, category, newFlag)){
+										EchoPet.getManager().setData(pet, data, newFlag);
+									}
+								}
+								break;
+							}
+						}
+					}
+				}
 			}catch(Exception e){
 				e.printStackTrace();
-                Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
-            }
-        }
-    }
-
+				Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void inventoryClose(InventoryCloseEvent e){
 		Player player = (Player) e.getPlayer();

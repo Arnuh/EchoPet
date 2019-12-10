@@ -19,40 +19,16 @@ package com.dsh105.echopet.api.pet.type;
 
 import org.bukkit.entity.Player;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.Profession;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigZombiePet;
 
 @EntityPetType(petType = PetType.PIGZOMBIE)
-public class PigZombiePet extends Pet implements IPigZombiePet {
-
-    boolean baby = false;
-    boolean villager = false;
-    boolean equipment = false;
+public class PigZombiePet extends AgeablePet implements IPigZombiePet{
 
     public PigZombiePet(Player owner) {
         super(owner);
     }
 
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityPigZombiePet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
-
-	@Override
-	public void setVillagerProfession(Profession profession){}
-
-	@Override
-	public Profession getVillagerProfession(){
-		return Profession.NORMAL;
-	}
 }

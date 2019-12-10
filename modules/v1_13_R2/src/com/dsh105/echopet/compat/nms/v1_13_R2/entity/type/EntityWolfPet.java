@@ -16,60 +16,68 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import org.bukkit.DyeColor;
-
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityTameablePet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.EnumColor;
+import net.minecraft.server.v1_13_R2.MathHelper;
+import net.minecraft.server.v1_13_R2.Particles;
+import net.minecraft.server.v1_13_R2.World;
+import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.WOLF)
 public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
-
+	
 	private static final DataWatcherObject<Float> DATA_HEALTH = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.c);
 	private static final DataWatcherObject<Boolean> bA = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.i);// ??
 	private static final DataWatcherObject<Integer> COLLAR_COLOR = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.b);
 	private boolean wet;
 	private boolean shaking;
 	private float shakeCount;
-
+	
 	public EntityWolfPet(World world){
 		super(EntityTypes.WOLF, world);
 	}
-
+	
 	public EntityWolfPet(World world, IPet pet){
 		super(EntityTypes.WOLF, world, pet);
 	}
-
+	
 	@Override
 	public void setAngry(boolean flag){
 		if(isTamed() && flag){
-			this.getPet().getPetData().remove(PetData.TAMED);
+			// this.getPet().getPetData().remove(PetData.TAMED);
 			setTamed(false);
 		}
-		byte b0 = ((Byte) this.datawatcher.get(bv)).byteValue();
+		byte b0 = this.datawatcher.get(bv).byteValue();
 		if(flag){
 			this.datawatcher.set(bv, Byte.valueOf((byte) (b0 | 0x2)));
 		}else{
 			this.datawatcher.set(bv, Byte.valueOf((byte) (b0 & 0xFFFFFFFD)));
 		}
 	}
-
+	
 	public void setTamed(boolean flag){
 		if(isAngry() && flag){
-			this.getPet().getPetData().remove(PetData.ANGRY);
+			// this.getPet().getPetData().remove(PetData.ANGRY);
 			setAngry(false);
 		}
 		super.setTamed(flag);
 	}
-
+	
 	public boolean isAngry(){
-		return (((Byte) this.datawatcher.get(bv)).byteValue() & 0x2) != 0;
+		return (this.datawatcher.get(bv).byteValue() & 0x2) != 0;
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void setCollarColor(DyeColor dc){
@@ -77,7 +85,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 			this.datawatcher.set(COLLAR_COLOR, Integer.valueOf(EnumColor.fromColorIndex(dc.getWoolData()).getColorIndex()));
 		}
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();
@@ -102,17 +110,17 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 				for(int j = 0; j < i; ++j){
 					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
 					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-					this.world.addParticle(Particles.R, this.locX + (double) f1, (double) (f + 0.8F), this.locZ + (double) f2, this.motX, this.motY, this.motZ);
+					this.world.addParticle(Particles.R, this.locX + (double) f1, f + 0.8F, this.locZ + (double) f2, this.motX, this.motY, this.motZ);
 				}
 			}
 		}
 	}
-
+	
 	@Override
 	protected String getIdleSound(){
-		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed()) && (((Float) this.datawatcher.get(DATA_HEALTH)).floatValue() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
+		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed()) && (this.datawatcher.get(DATA_HEALTH).floatValue() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();

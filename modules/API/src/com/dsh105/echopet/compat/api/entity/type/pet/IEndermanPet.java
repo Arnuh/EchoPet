@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 
-public interface IEndermanPet extends IPet {
-
-    public void setScreaming(boolean flag);
-
-    public boolean isScreaming();
+public interface IEndermanPet extends IPet{
+	
+	void setScreaming(boolean flag);
+	
+	boolean isScreaming();
 }

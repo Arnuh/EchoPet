@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import org.bukkit.plugin.Plugin;
-
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.particle.Trails;
@@ -26,44 +24,45 @@ import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.jolbox.bonecp.BoneCP;
+import org.bukkit.plugin.Plugin;
 
-public interface IEchoPetPlugin extends Plugin {
-
-    public ISpawnUtil getSpawnUtil();
-
-    public String getPrefix();
-
-    public String getCommandString();
-
-    public String getAdminCommandString();
-
+public interface IEchoPetPlugin extends Plugin{
+	
+	ISpawnUtil getSpawnUtil();
+	
+	String getPrefix();
+	
+	String getCommandString();
+	
+	String getAdminCommandString();
+	
 	IPetRegistry getPetRegistry();
-
-    public IPetManager getPetManager();
-
-    public ISqlPetManager getSqlPetManager();
-
-    public BoneCP getDbPool();
-
+	
+	IPetManager getPetManager();
+	
+	ISqlPetManager getSqlPetManager();
+	
+	BoneCP getDbPool();
+	
 	// public IVanishProvider getVanishProvider();
-
-    public IWorldGuardProvider getWorldGuardProvider();
-
-    public YAMLConfig getPetConfig();
-
-    public YAMLConfig getMainConfig();
-
-    public YAMLConfig getLangConfig();
-
-    public ConfigOptions getOptions();
-
-    public boolean isUsingNetty();
-
-    public boolean isUpdateAvailable();
-
-    public String getUpdateName();
-
-    public long getUpdateSize();
-
-	public Trails getTrailManager();
+	
+	IWorldGuardProvider getWorldGuardProvider();
+	
+	YAMLConfig getPetConfig();
+	
+	YAMLConfig getMainConfig();
+	
+	YAMLConfig getLangConfig();
+	
+	ConfigOptions getOptions();
+	
+	boolean isUsingNetty();
+	
+	boolean isUpdateAvailable();
+	
+	String getUpdateName();
+	
+	long getUpdateSize();
+	
+	Trails getTrailManager();
 }

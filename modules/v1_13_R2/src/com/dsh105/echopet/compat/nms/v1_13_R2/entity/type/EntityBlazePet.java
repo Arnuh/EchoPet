@@ -16,28 +16,35 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.6F, height = 1.7F)
 @EntityPetType(petType = PetType.BLAZE)
 public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
-
+	
 	private static final DataWatcherObject<Byte> ANGERED = DataWatcher.a(EntityBlazePet.class, DataWatcherRegistry.a);
-
+	
 	public EntityBlazePet(World world){
 		super(EntityTypes.BLAZE, world);
 	}
-
+	
 	public EntityBlazePet(World world, IPet pet){
 		super(EntityTypes.BLAZE, world, pet);
 	}
-
+	
 	public void setOnFire(boolean flag){
-		byte b1 = ((Byte) this.datawatcher.get(ANGERED)).byteValue();
+		byte b1 = this.datawatcher.get(ANGERED).byteValue();
 		if(flag){
 			b1 = (byte) (b1 | 0x1);
 		}else{
@@ -45,20 +52,20 @@ public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 		}
 		this.datawatcher.set(ANGERED, Byte.valueOf(b1));
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(ANGERED, Byte.valueOf((byte) 0));
 	}
-
+	
 	protected String getIdleSound(){
 		return "entity.blaze.ambient";
 	}
-
+	
 	protected String getDeathSound(){
 		return "entity.blaze.death";
 	}
-
+	
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}

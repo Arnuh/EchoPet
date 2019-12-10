@@ -19,11 +19,7 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.SkeletonType;
 
 public interface ISkeletonAbstractPet extends IPet {
 
-	public void setSkeletonType(SkeletonType type);
-
-	public SkeletonType getSkeletonType();
 }

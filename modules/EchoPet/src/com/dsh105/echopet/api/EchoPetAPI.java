@@ -269,7 +269,7 @@ public class EchoPetAPI {
             return;
         }
         if (pet.getEntityPet().getPetGoalSelector().getGoal("Attack") != null) {
-            pet.getCraftPet().setTarget(target);
+			// pet.getCraftPet().setTarget(target);
         }
     }
 
@@ -283,7 +283,7 @@ public class EchoPetAPI {
         if (pet == null) {
             EchoPet.LOG.severe("Failed to get attack target for Pet through the EchoPetAPI. Pet cannot be null.");
         }
-        return pet.getCraftPet().getTarget();
+		return null;// pet.getCraftPet().getTarget();
     }
 
     /**

@@ -1,18 +1,12 @@
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Llama;
 
-import com.dsh105.echopet.compat.api.entity.LlamaSkin;
 
-/**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
- * @since Nov 19, 2016
- */
 public interface IEntityLlamaPet extends IEntityHorseChestedAbstractPet{
-
-	public void setCarpetColor(DyeColor color);
-
-	public void setSkinColor(LlamaSkin skinColor);
+	
+	void setCarpetColor(DyeColor color);
+	
+	void setSkinColor(Llama.Color skinColor);
 }

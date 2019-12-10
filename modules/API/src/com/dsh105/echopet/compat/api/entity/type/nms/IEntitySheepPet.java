@@ -17,13 +17,12 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import org.bukkit.DyeColor;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
-
-public interface IEntitySheepPet extends IEntityAgeablePet {
-
-    public void setSheared(boolean flag);
-
-	public void setDyeColor(DyeColor color);
+public interface IEntitySheepPet extends IEntityAgeablePet{
+	
+	void setSheared(boolean flag);
+	
+	void setDyeColor(DyeColor color);
 }

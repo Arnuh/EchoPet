@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-public interface IEntityNoClipPet extends IEntityPet {
-
-    public void noClip(boolean b);
-
+public interface IEntityNoClipPet extends IEntityPet{
+	
+	void noClip(boolean b);
+	
 }

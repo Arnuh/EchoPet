@@ -19,7 +19,7 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-public interface IEntitySlimePet extends IEntityPet {
-
-    public void setSize(int size);
+public interface IEntitySlimePet extends IEntityPet{
+	
+	void setSize(int size);
 }

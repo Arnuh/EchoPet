@@ -1,3 +1,19 @@
+/*
+ * This file is part of EchoPet.
+ *
+ * EchoPet is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * EchoPet is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.dsh105.echopet.api.pet.particle;
 
 import java.util.Collection;
@@ -5,25 +21,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.bukkit.Particle;
-import org.bukkit.configuration.ConfigurationSection;
-
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.particle.Trails;
 import com.google.common.collect.Lists;
+import org.bukkit.Particle;
+import org.bukkit.configuration.ConfigurationSection;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Jul 11, 2016
  */
 public class TrailManager implements Trails{
-
+	
 	private final List<ParticleTrail> trails = Lists.newArrayList();
-
+	
 	public TrailManager(YAMLConfig config){
 		Map<String, ParticleTrail> trails = new HashMap<>();
 		if(config.config().isSet("trails")){
@@ -55,7 +66,7 @@ public class TrailManager implements Trails{
 		}
 		trails.clear();
 	}
-
+	
 	protected void loadSubTrails(Map<String, ParticleTrail> cleanedUp, Map<String, ParticleTrail> trails, ParticleTrail trail){
 		boolean newTrail = true;
 		for(String trailName : trail.getSubTrailNames()){
@@ -82,18 +93,18 @@ public class TrailManager implements Trails{
 			addTrail(trail);
 		}
 	}
-
+	
 	public List<Trail> getTrails(){
-		return trails.stream().map(t-> (Trail) t).collect(Collectors.toList());
+		return trails.stream().map(t->(Trail) t).collect(Collectors.toList());
 	}
-
+	
 	public Trail getTrailByName(String name){
 		for(Trail particle : getTrails()){
 			if(particle.getName().equalsIgnoreCase(name)) return particle;
 		}
 		return null;
 	}
-
+	
 	public void addTrail(ParticleTrail particle){
 		trails.add(particle);
 	}

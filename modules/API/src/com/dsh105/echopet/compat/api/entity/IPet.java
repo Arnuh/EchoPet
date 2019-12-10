@@ -20,104 +20,102 @@ package com.dsh105.echopet.compat.api.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import com.dsh105.echopet.compat.api.particle.Trail;
 import org.bukkit.Location;
-import org.bukkit.entity.Creature;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 
-import com.dsh105.echopet.compat.api.particle.Trail;
-
 public interface IPet{
-
-	public IEntityPet spawnPet(Player owner, boolean ignoreHidden);
-
-	public boolean isSpawned();
-
-    public IEntityPet getEntityPet();
-
-    public Creature getCraftPet();
-
-    public Location getLocation();
-
-    public Player getOwner();
-
-    public String getNameOfOwner();
-
-    public UUID getOwnerUUID();
-
-    public Object getOwnerIdentification();
-
-    public PetType getPetType();
-
-    public boolean isRider();
-
-    public IPet getRider();
-
+	
+	IEntityPet spawnPet(Player owner, boolean ignoreHidden);
+	
+	boolean isSpawned();
+	
+	IEntityPet getEntityPet();
+	
+	LivingEntity getCraftPet();
+	
+	Location getLocation();
+	
+	Player getOwner();
+	
+	String getNameOfOwner();
+	
+	UUID getOwnerUUID();
+	
+	Object getOwnerIdentification();
+	
+	PetType getPetType();
+	
+	boolean isRider();
+	
+	IPet getRider();
+	
 	/**
 	 * @return The last despawned rider(Null if no rider, or rider was removed)
 	 */
-	public IPet getLastRider();
-
-	public void setLastRider(IPet lastRider);
-
-    public boolean isOwnerInMountingProcess();
-
-    public String getPetName();
-
-    public String getPetNameWithoutColours();
-    
-    public String serialisePetName();
-
-    public boolean setPetName(String name);
-
-    public boolean setPetName(String name, boolean sendFailMessage);
-
-	public ArrayList<PetData> getPetData();
-
-	public void removeRider(boolean makeSound, boolean makeParticles);
-
-	public void removePet(boolean makeSound, boolean makeParticles);
-
-    public boolean teleportToOwner();
-
-    public boolean teleport(Location to);
-
-    public boolean isOwnerRiding();
-
-    public boolean isHat();
-
-    public void ownerRidePet(boolean flag);
-
-	public void setAsHat(boolean flag);
-
-    public IPet createRider(final PetType pt, boolean sendFailMessage);
-
-	public void setRider(IPet rider);
-
-	public InventoryView getInventoryView();
-
-	public void setInventoryView(InventoryView dataMenu);
-
-	public List<Trail> getTrails();
-
-	public void addTrail(Trail trail);
-
-	public void removeTrail(Trail trail);
-
+	IPet getLastRider();
+	
+	void setLastRider(IPet lastRider);
+	
+	boolean isOwnerInMountingProcess();
+	
+	String getPetName();
+	
+	String getPetNameWithoutColours();
+	
+	String serialisePetName();
+	
+	boolean setPetName(String name);
+	
+	boolean setPetName(String name, boolean sendFailMessage);
+	
+	ArrayList<PetData> getPetData();
+	
+	void removeRider(boolean makeSound, boolean makeParticles);
+	
+	void removePet(boolean makeSound, boolean makeParticles);
+	
+	boolean teleportToOwner();
+	
+	boolean teleport(Location to);
+	
+	boolean isOwnerRiding();
+	
+	boolean isHat();
+	
+	void ownerRidePet(boolean flag);
+	
+	void setAsHat(boolean flag);
+	
+	IPet createRider(final PetType pt, boolean sendFailMessage);
+	
+	void setRider(IPet rider);
+	
+	InventoryView getInventoryView();
+	
+	void setInventoryView(InventoryView dataMenu);
+	
+	List<Trail> getTrails();
+	
+	void addTrail(Trail trail);
+	
+	void removeTrail(Trail trail);
+	
 	/**
 	 * Check if a pet was removed(hidden) by the player. Usually done by commands
 	 * To check if the pet is spawned {@link IPet#isSpawned()}
-	 * 
+	 *
 	 * @return If the player has hidden the pet.
 	 */
-	public boolean isHidden();
-
+	boolean isHidden();
+	
 	/**
 	 * Used to 'hide' a pet. Usually used in commands
 	 * Does nothing on its own and is only checked in spawnPet. Must be used with {@link IPet#removePet(boolean, boolean)}
-	 * 
+	 *
 	 * @param isHidden Set if the pet is hidden
 	 */
-	public void setHidden(boolean isHidden);
+	void setHidden(boolean isHidden);
 }

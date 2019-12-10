@@ -22,7 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,46 +34,38 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.config.ConfigOptions;
-import com.dsh105.echopet.compat.api.config.PetItem;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-
-public class SelectorLayout {
-
-	private static ArrayList<SelectorIcon> selectorLayout = new ArrayList<SelectorIcon>();
-
+public class SelectorLayout{
+	
+	private static List<SelectorIcon> selectorLayout = new ArrayList<>();
+	
 	private static ItemStack selectorItem;
-
-	public static ItemStack getSelectorItem() {
+	
+	public static ItemStack getSelectorItem(){
 		if(selectorItem != null) return selectorItem;
 		YAMLConfig config = ConfigOptions.instance.getConfig();
 		String name = config.getString("petSelector.item.name", "&aPets");
 		String material = config.getString("petSelector.item.material", Material.BONE.name());
-		int materialData = config.getInt("petSelector.item.materialData", 0);
 		List<String> lore = config.config().getStringList("petSelector.item.lore");
-		if (lore == null) {
-			lore = new ArrayList<String>();
+		if(lore == null){
+			lore = new ArrayList<>();
 		}
-		ItemStack i = new ItemStack(Material.valueOf(material), 1, (short) materialData);
+		ItemStack i = new ItemStack(Material.valueOf(material), 1);
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-		ArrayList<String> loreList = new ArrayList<String>();
-		if (lore.size() > 0) {
-			for (String s : lore) {
+		List<String> loreList = new ArrayList<>();
+		if(lore.size() > 0){
+			for(String s : lore){
 				loreList.add(ChatColor.translateAlternateColorCodes('&', s));
 			}
 		}
-		if (!loreList.isEmpty()) {
+		if(!loreList.isEmpty()){
 			meta.setLore(loreList);
 		}
 		i.setItemMeta(meta);
 		selectorItem = i;
 		return i;
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public static void loadLayout(){
 		selectorLayout.clear();
@@ -87,7 +83,7 @@ public class SelectorLayout {
 				String cmd = config.getString(s + ".page-" + page + "." + slot + ".command");
 				String petType = config.getString(s + ".page-" + page + "." + slot + ".petType");
 				PetType pt = null;
-				if (petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())) {
+				if(petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())){
 					pt = PetType.valueOf(petType.toUpperCase());
 				}
 				Material material = Material.getMaterial(config.getString(s + ".page-" + page + "." + slot + ".material"));
@@ -102,32 +98,32 @@ public class SelectorLayout {
 					entityTag = config.getString(s + ".page-" + page + "." + slot + ".entityName", "Pig");
 				}
 				String name = config.getString(s + ".page-" + page + "." + slot + ".name");
-				if (name == null) {
+				if(name == null){
 					continue;
 				}
 				List<String> lore = config.config().getStringList(s + ".page-" + page + "." + slot + ".lore");
-				if (lore == null) {
+				if(lore == null){
 					lore = new ArrayList<>();
 				}
 				ArrayList<String> loreList = new ArrayList<>();
-				if (lore.size() > 0) {
-					for (String part : lore) {
+				if(lore.size() > 0){
+					for(String part : lore){
 						loreList.add(ChatColor.translateAlternateColorCodes('&', part));
 					}
 				}
 				if(material == null) return;
-				if(material.name().equalsIgnoreCase("MONSTER_EGG") || material.name().endsWith("SPAWN_EGG")) selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList.toArray(new String[0])));
-				else selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, data, name, loreList.toArray(new String[0])));
+				if(material.name().equalsIgnoreCase("MONSTER_EGG") || material.name().endsWith("SPAWN_EGG")) selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList));
+				else selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, name, loreList));
 			}
 		}
-
+		
 	}
-
+	
 	public static Map<Integer, Map<Integer, SelectorIcon>> getLoadedLayout(){
 		Map<Integer, Map<Integer, SelectorIcon>> layout = new HashMap<>();
-		for (SelectorIcon icon : selectorLayout) {
-			if (!ConfigOptions.instance.getConfig().getBoolean("petSelector.showDisabledPets", true) && icon.getPetType() != null) {
-				if (!ConfigOptions.instance.allowPetType(icon.getPetType())) {
+		for(SelectorIcon icon : selectorLayout){
+			if(!ConfigOptions.instance.getConfig().getBoolean("petSelector.showDisabledPets", true) && icon.getPetType() != null){
+				if(!ConfigOptions.instance.allowPetType(icon.getPetType())){
 					continue;
 				}
 			}
@@ -138,7 +134,7 @@ public class SelectorLayout {
 		}
 		return layout;
 	}
-
+	
 	public static int getTotalPageCount(){
 		int pageCount = 0;
 		for(SelectorIcon icon : SelectorLayout.getDefaultLayout()){
@@ -146,28 +142,27 @@ public class SelectorLayout {
 		}
 		return pageCount;
 	}
-
-	public static ArrayList<SelectorIcon> getDefaultLayout() {
-		ArrayList<SelectorIcon> layout = new ArrayList<SelectorIcon>();
+	
+	public static List<SelectorIcon> getDefaultLayout(){
+		List<SelectorIcon> layout = new ArrayList<>();
 		int count = 0;
 		int highestPage = 0;// uh
-		for (PetItem item : PetItem.values()) {
+		for(PetType type : PetType.values){
+			if(type.equals(PetType.HUMAN)) continue;
+			if(!type.isCompatible()) continue;
 			int page = (int) ((double) count / 45);
 			if(page > highestPage) highestPage = page;
-			if(item.getPetType() != null && !item.getPetType().equals(PetType.HUMAN) && !(item.getMaterialData() > 0)){
-				if(item.getPetType().isCompatible()){
-					String entityTypeName = item.getPetType().getMinecraftName();
-					if(entityTypeName != null) layout.add(new SelectorIcon(page, count - page * 45, item.getCommand(), item.petType, item.getMat(), entityTypeName, item.getName()));
-				}else continue;// don't allow count++
+			String entityTypeName = type.getMinecraftName();
+			if(entityTypeName != null){
+				layout.add(new SelectorIcon(page, count - page * 45, "pet " + type.name().toLowerCase(), type, type.getUIMaterial(), entityTypeName, type.getDefaultName(), new ArrayList<>()));
 			}
-			else if(item.getMaterialData() > 0) layout.add(new SelectorIcon(page, count - page * 45, item.getCommand(), item.petType, item.getMat(), item.getMaterialData(), item.getName()));
 			count++;
 		}
 		SelectorItem[] selectorItems = new SelectorItem[]{SelectorItem.BACK, SelectorItem.TOGGLE, SelectorItem.CALL, SelectorItem.HAT, SelectorItem.CLOSE, SelectorItem.RIDE, SelectorItem.NAME, SelectorItem.MENU, SelectorItem.NEXT};
 		for(int i = 0; i <= highestPage; i++){
 			int pos = 45;
 			for(SelectorItem item : selectorItems){
-				layout.add(new SelectorIcon(i, pos++, item.getCommand(), null, item.getMat(), item.getData(), item.getName()));
+				layout.add(new SelectorIcon(i, pos++, item.getCommand(), null, item.getMat(), item.getName(), new ArrayList<>()));
 			}
 		}
 		return layout;

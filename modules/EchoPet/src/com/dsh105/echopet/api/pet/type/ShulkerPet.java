@@ -16,48 +16,44 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
-import org.bukkit.DyeColor;
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IShulkerPet;
+import org.bukkit.DyeColor;
+import org.bukkit.entity.Player;
 
 /**
- * @Author Borlea
- * @Github https://github.com/borlea/
- * @Website http://codingforcookies.com/
  * @since Mar 7, 2016
  */
 
 @EntityPetType(petType = PetType.SHULKER)
 public class ShulkerPet extends Pet implements IShulkerPet{
-
+	
 	protected boolean open;
 	protected DyeColor color;
-
+	
 	public ShulkerPet(Player owner){
 		super(owner);
 	}
-
+	
 	@Override
 	public void setOpen(boolean open){
 		this.open = open;
 		((IEntityShulkerPet) getEntityPet()).setOpen(open);
 	}
-
+	
 	public boolean isOpen(){
 		return open;
 	}
-
+	
 	@Override
 	public void setColor(DyeColor color){
 		this.color = color;
 		((IEntityShulkerPet) getEntityPet()).setColor(color);
 	}
-
+	
 	@Override
 	public DyeColor getColor(){
 		return color;

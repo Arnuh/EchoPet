@@ -19,7 +19,7 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-public interface IEntityWitherPet extends IEntityPet {
-
-    public void setShielded(boolean flag);
+public interface IEntityWitherPet extends IEntityPet{
+	
+	void setShielded(boolean flag);
 }

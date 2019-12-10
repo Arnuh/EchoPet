@@ -25,23 +25,22 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICowPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.COW)
-public class CowPet extends Pet implements ICowPet {
-
-    boolean baby;
-
-    public CowPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityCowPet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
-
+public class CowPet extends Pet implements ICowPet{
+	
+	boolean baby;
+	
+	public CowPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setBaby(boolean flag){
+		((IEntityCowPet) getEntityPet()).setBaby(flag);
+		this.baby = flag;
+	}
+	
+	@Override
+	public boolean isBaby(){
+		return this.baby;
+	}
 }
