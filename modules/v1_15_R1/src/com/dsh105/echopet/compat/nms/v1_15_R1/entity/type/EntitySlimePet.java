@@ -82,12 +82,12 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		this.datawatcher.set(SIZE, Integer.valueOf(i));
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		this.a(es.width() * (float) i, es.height() * (float) i);
-		this.setPosition(this.locX, this.locY, this.locZ);
+		this.setPosition(locX(), locY(), locZ());
 		this.setHealth(this.getMaxHealth());
 	}
 	
 	public int getSize(){
-		return this.datawatcher.get(SIZE).intValue();
+		return this.datawatcher.get(SIZE);
 	}
 	
 	@Override

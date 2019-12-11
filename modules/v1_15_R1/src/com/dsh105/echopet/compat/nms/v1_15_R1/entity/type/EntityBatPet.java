@@ -83,7 +83,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		super.onLive();
 		if(this.isStartled()){
 			setMot(0, 0, 0);
-			this.locY = (double) MathHelper.floor(this.locY) + 1.0D - (double) getHeight();
+			setPositionRaw(locX(), MathHelper.floor(locY()) + 1.0 - this.getHeight(), locZ());
 		}else{
 			setMot(getMot().x, getMot().y * 0.6000000238418579D, getMot().z);
 		}

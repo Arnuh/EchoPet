@@ -74,9 +74,9 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 		
 		public void a(){
 			if(this.h == ControllerMove.Operation.MOVE_TO){
-				double d0 = this.b - this.i.locX;
-				double d1 = this.c - this.i.locY;
-				double d2 = this.d - this.i.locZ;
+				double d0 = this.b - this.i.locX();
+				double d1 = this.c - this.i.locY();
+				double d2 = this.d - this.i.locZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				if(this.j-- <= 0){
 					this.j += this.i.getRandom().nextInt(5) + 2;
@@ -91,9 +91,9 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 		}
 		
 		private boolean b(double d0, double d1, double d2, double d3){
-			double d4 = (d0 - this.i.locX) / d3;
-			double d5 = (d1 - this.i.locY) / d3;
-			double d6 = (d2 - this.i.locZ) / d3;
+			double d4 = (d0 - this.i.locX()) / d3;
+			double d5 = (d1 - this.i.locY()) / d3;
+			double d6 = (d2 - this.i.locZ()) / d3;
 			AxisAlignedBB axisalignedbb = this.i.getBoundingBox();
 			for(int i = 1; i < d3; i++){
 				axisalignedbb = axisalignedbb.d(d4, d5, d6);

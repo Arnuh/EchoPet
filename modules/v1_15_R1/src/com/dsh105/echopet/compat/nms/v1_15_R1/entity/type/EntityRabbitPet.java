@@ -41,12 +41,12 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	
 	public EntityRabbitPet(World world){
 		super(EntityTypes.RABBIT, world);
-		this.bt = new ControllerJumpRabbit(this);
+		this.bq = new ControllerJumpRabbit(this);
 	}
 	
 	public EntityRabbitPet(World world, IPet pet){
 		super(EntityTypes.RABBIT, world, pet);
-		this.bt = new ControllerJumpRabbit(this);
+		this.bq = new ControllerJumpRabbit(this);
 	}
 	
 	@Override
@@ -76,10 +76,10 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 				setJumping(false);
 				reset();// ef
 			}
-			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) this.bt;
+			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) getControllerJump();
 			if(!jumpController.c()){
 				if(this.moveController.b() && this.delay == 0){
-					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().l();// Gets path towards the player.
+					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().k();// Gets path towards the player.
 					// if(pathentity != null && pathentity.e() < pathentity.d()){
 					// Vec3D vec3d = pathentity.a(this);
 					// a(vec3d.x, vec3d.z);
@@ -93,8 +93,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 					dl();
 				}
 			}else if(!jumpController.d()){
-				// dp();
-				((ControllerJumpRabbit) this.bt).a(true);
+				((ControllerJumpRabbit) getControllerJump()).a(true);
 			}
 		}
 		this.onGroundLastTick = this.onGround;
@@ -115,7 +114,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	
 	private void reset(){
 		resetDelay();// dC
-		((ControllerJumpRabbit) bt).a(false);// dD
+		((ControllerJumpRabbit) getControllerJump()).a(false);// dD
 	}
 	
 	private void resetDelay(){// dI()
@@ -123,7 +122,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		else delay = 1;
 	}
 	
-	public void dV(){// Above datawatcher register
+	public void eq(){// Above datawatcher register
 		setJumping(true);// Plays ambient sound if true, does super.l(flag);
 	}
 	

@@ -117,7 +117,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		// PathfinderGoalFollowOwner
 		EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
 		// 1.9: this.d.getControllerLook().a(this.e, 10.0F, this.d.N());
-		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.M());
+		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.dU());
 		if(--this.timer <= 0){
 			this.timer = 10;
 			/*if (this.pet.getPlayerOwner().isFlying()) {

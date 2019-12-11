@@ -46,7 +46,7 @@ public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet
 	public void onLive(){
 		super.onLive();
 		for(int i = 0; i < 2; i++){
-			this.world.addParticle(Particles.PORTAL, this.locX + (this.random.nextDouble() - 0.5D) * getWidth(), this.locY + this.random.nextDouble() * getHeight(), this.locZ + (this.random.nextDouble() - 0.5D) * getWidth(), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+			this.world.addParticle(Particles.PORTAL, locX() + (this.random.nextDouble() - 0.5D) * getWidth(), locY() + this.random.nextDouble() * getHeight(), locZ() + (this.random.nextDouble() - 0.5D) * getWidth(), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
 		}
 	}
 }

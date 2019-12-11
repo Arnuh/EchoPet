@@ -230,7 +230,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 			if((entity instanceof EntityTameableAnimal)){
 				((EntityTameableAnimal) entity).setOwnerUUID(this.uniqueID);
 			}
-			entity.setPosition(this.locX, this.locY + 0.699999988079071D, this.locZ);
+			entity.setPosition(locX(), locY() + 0.699999988079071D, locZ());
 			return this.world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SHOULDER_ENTITY);
 		}
 		return true;
@@ -404,18 +404,17 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	
 	//Tbh just look at EntityHorseAbstract.
 	public void e(Vec3D motion){
-		// bF() is passenger shit. Minecraft changed it from 1 passenger to a list
-		if(passengers.isEmpty()){// search for passengers.isEmpty() in Entity
-			this.K = 0.5F;// Above noclip
-			this.aO = 0.02F;// above killer in entity living
+		if(passengers.isEmpty()){
+			this.H = 0.5F;// Above noclip
+			this.aM = 0.02F;// above killer in entity living
 			super.e(motion);
 			return;
 		}
 		//getRidingPassenger() exists, maybe swap to it?
 		Entity passenger = passengers.get(0);
-		if(passenger == null || !(passenger instanceof EntityHuman) || (passenger instanceof EntityHuman && ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer())){
-			this.K = 0.5F;
-			this.aO = 0.02F;
+		if(!(passenger instanceof EntityHuman) || ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer()){
+			this.H = 0.5F;
+			this.aM = 0.02F;
 			super.e(motion);
 			return;
 		}
@@ -425,13 +424,13 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		this.setYawPitch(this.yaw, this.pitch);
 		this.aK = this.aM = this.yaw;
 		
-		double motX = ((EntityHuman) passenger).bb * 0.5;
+		double motX = ((EntityHuman) passenger).aZ * 0.5;
 		double motY = motion.y;
-		double motZ = ((EntityHuman) passenger).bd;
+		double motZ = ((EntityHuman) passenger).bb;
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
-		this.aO = db() * 0.1F;
+		this.aM = dt() * 0.1F;
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
