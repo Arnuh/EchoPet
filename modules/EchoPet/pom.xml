@@ -21,7 +21,7 @@
 
     <artifactId>EchoPet</artifactId>
     <name>EchoPet</name>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,10 +30,10 @@
     </properties>
 
     <parent>
-	  <groupId>com.dsh105</groupId>
-	  <artifactId>EchoPet-Parent</artifactId>
-	  <version>1</version>
-	  <relativePath>../../</relativePath>
+        <groupId>com.dsh105</groupId>
+        <artifactId>EchoPet-Parent</artifactId>
+        <version>1</version>
+        <relativePath>../../</relativePath>
     </parent>
 
     <dependencies>
@@ -47,12 +47,12 @@
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>Commodus</artifactId>
-                	<groupId>com.dsh105</groupId>
+                    <artifactId>Commodus</artifactId>
+                    <groupId>com.dsh105</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>PowerMessage</artifactId>
-                	<groupId>com.dsh105</groupId>
+                    <artifactId>PowerMessage</artifactId>
+                    <groupId>com.dsh105</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -81,24 +81,36 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-        	<groupId>com.dsh105</groupId>
-        	<artifactId>PowerMessage</artifactId>
-        	<version>1.0.1-SNAPSHOT</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>Commodus</artifactId>
-        			<groupId>com.dsh105</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-v1_15_R1</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
         </dependency>
         <dependency>
-        	<groupId>com.dsh105</groupId>
-        	<artifactId>Commodus</artifactId>
-        	<version>1.0.4-SNAPSHOT</version>
+            <groupId>com.dsh105</groupId>
+            <artifactId>PowerMessage</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>Commodus</artifactId>
+                    <groupId>com.dsh105</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
-	<build>
-	    <directory>../../target</directory>
+    <build>
+        <directory>../../target</directory>
         <sourceDirectory>src/</sourceDirectory>
         <finalName>${project.name}-${project.version}</finalName>
         <resources>
@@ -180,7 +192,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                        	<finalName>${project.name}</finalName>
+                            <finalName>${project.name}</finalName>
                             <minimizeJar>true</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <filters>
@@ -243,5 +255,5 @@
                 </executions>
             </plugin>
         </plugins>
-	</build>
+    </build>
 </project>
