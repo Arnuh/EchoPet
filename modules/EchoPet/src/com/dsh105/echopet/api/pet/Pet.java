@@ -442,7 +442,7 @@ public abstract class Pet implements IPet{
 		if(isSpawned()) newRider.spawnPet(getOwner(), false);
 		this.rider = (Pet) newRider;
 		this.rider.setRider();
-		getCraftPet().addPassenger(newRider.getCraftPet());
+		if(isSpawned()) getCraftPet().addPassenger(newRider.getCraftPet());
 		EchoPet.getSqlManager().saveToDatabase(rider, true);
 		
 		return this.rider;
