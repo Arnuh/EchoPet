@@ -20,8 +20,6 @@ package com.dsh105.echopet.api.pet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.captainbern.minecraft.protocol.PacketType;
-import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
@@ -36,7 +34,6 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetNames;
-import com.dsh105.echopet.compat.api.util.PlayerUtil;
 import com.dsh105.echopet.compat.api.util.StringSimplifier;
 import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
@@ -261,7 +258,7 @@ public abstract class Pet implements IPet{
 			lastRider = rider;
 			rider.removePet(makeSound, makeParticles);
 			rider = null;
-			EchoPet.getPlugin().getSpawnUtil().removePassenger(getCraftPet());
+			getCraftPet().eject();
 		}
 	}
 	
@@ -297,7 +294,7 @@ public abstract class Pet implements IPet{
 		if(tele && rider != null){
 			this.rider = rider;
 			this.rider.spawnPet(getOwner(), true);
-			EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getCraftPet(), rider.getCraftPet());
+			getCraftPet().addPassenger(rider.getCraftPet());
 			EchoPet.getSqlManager().saveToDatabase(rider, true);
 		}
 		return tele;
@@ -370,7 +367,7 @@ public abstract class Pet implements IPet{
 					
 					@Override
 					public void run(){
-						getCraftPet().setPassenger(getOwner());// Can't do nms method here due to requiring a 2nd update which I don't feel like doing.
+						getCraftPet().addPassenger(getOwner());
 						ownerIsMounting = false;
 						if(getEntityPet() instanceof IEntityNoClipPet){
 							((IEntityNoClipPet) getEntityPet()).noClip(false);
@@ -400,19 +397,11 @@ public abstract class Pet implements IPet{
 		
 		this.teleportToOwner();
 		
-		// The fact forcefully setting the passenger requires an update still baffles me.
-		// Why do I still develop for this game..
-		WrappedPacket packet = new WrappedPacket(PacketType.Play.Server.MOUNT);
-		packet.getIntegers().write(0, getOwner().getEntityId());
 		if(!flag){
-			EchoPet.getPlugin().getSpawnUtil().removePassenger(getOwner());// This nms method isn't needed here.. but I've lost all hope in mojang so its a safeguard.
-			packet.getIntegerArrays().write(0, new int[1]);
+			getOwner().eject();
 		}else{
-			EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getOwner(), getCraftPet());
-			int[] passengers = {getCraftPet().getEntityId()};
-			packet.getIntegerArrays().write(0, passengers);
+			getOwner().addPassenger(getCraftPet());
 		}
-		PlayerUtil.sendPacket(getOwner(), packet.getHandle());
 		this.getEntityPet().resizeBoundingBox(flag);
 		this.isHat = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
@@ -453,7 +442,7 @@ public abstract class Pet implements IPet{
 		if(isSpawned()) newRider.spawnPet(getOwner(), false);
 		this.rider = (Pet) newRider;
 		this.rider.setRider();
-		if(isSpawned()) EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getCraftPet(), newRider.getCraftPet());
+		getCraftPet().addPassenger(newRider.getCraftPet());
 		EchoPet.getSqlManager().saveToDatabase(rider, true);
 		
 		return this.rider;
@@ -474,7 +463,7 @@ public abstract class Pet implements IPet{
 		if(!newRider.isSpawned()) newRider.spawnPet(getOwner(), false);
 		this.rider = (Pet) newRider;
 		this.rider.setRider();
-		EchoPet.getPlugin().getSpawnUtil().setPassenger(0, getCraftPet(), this.rider.getCraftPet());
+		getCraftPet().addPassenger(rider.getCraftPet());
 	}
 	
 	public InventoryView getInventoryView(){

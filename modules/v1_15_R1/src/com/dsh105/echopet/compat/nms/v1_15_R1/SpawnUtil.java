@@ -43,7 +43,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -88,13 +87,5 @@ public class SpawnUtil implements ISpawnUtil{
 		if(!entityTag.startsWith("minecraft:")) entityTag = "minecraft:" + entityTag;
 		nbt.getCompound("EntityTag").setString("id", entityTag);
 		return CraftItemStack.asCraftMirror(is);
-	}
-	
-	public void setPassenger(int pos, org.bukkit.entity.LivingEntity entity, org.bukkit.entity.LivingEntity passenger){
-		((CraftLivingEntity) entity).getHandle().passengers.add(pos, ((CraftLivingEntity) passenger).getHandle());
-	}
-	
-	public void removePassenger(org.bukkit.entity.LivingEntity entity){
-		((CraftLivingEntity) entity).getHandle().passengers.clear();
 	}
 }
