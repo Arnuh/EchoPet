@@ -211,8 +211,6 @@
                                     <include>org.slf4j:slf4j-jdk14</include>
                                     <include>com.dsh105:Commodus</include>
                                     <include>com.dsh105:PowerMessage</include>
-                                    <include>com.captainbern:Minecraft-Reflection</include>
-                                    <include>com.comphenix.packetwrapper:PacketWrapper</include>
                                     <include>com.codingforcookies:robert</include>
                                 </includes>
                             </artifactSet>
@@ -232,18 +230,6 @@
                                 <relocation>
                                     <pattern>com.dsh105.powermessage</pattern>
                                     <shadedPattern>com.dsh105.echopet.libs.com.dsh105.powermessage</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.captainbern.reflection</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.com.captainbern.reflection</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.captainbern.minecraft</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.com.captainbern.minecraft</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.comphenix.packetwrapper</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.com.comphenix.packetwrapper</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.codingforcookies.robert</pattern>
