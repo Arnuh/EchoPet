@@ -28,7 +28,4 @@ public interface ISpawnUtil{
 	
 	ItemStack getSpawnEgg(ItemStack i, String entityTag);
 	
-	void setPassenger(int pos, org.bukkit.entity.LivingEntity entity, org.bukkit.entity.LivingEntity passenger);
-	
-	void removePassenger(org.bukkit.entity.LivingEntity entity);
 }
