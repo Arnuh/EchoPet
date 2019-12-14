@@ -698,9 +698,7 @@ public enum PetData{
 	private List<String> lore;
 	
 	PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
-		this(configOptionString, action, (pet)->{
-			return material;
-		}, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+		this(configOptionString, action, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
 	PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
@@ -714,7 +712,7 @@ public enum PetData{
 		this.versionCheckType = versionCheckType;
 		this.material = material;
 		this.name = name;
-		lore = new ArrayList<>();
+		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add(ChatColor.GOLD + s);
 		}
@@ -730,6 +728,10 @@ public enum PetData{
 	
 	public String getItemName(){
 		return name;
+	}
+	
+	public boolean ignoreSaving(){
+		return this == PetData.RIDE || this == PetData.HAT;
 	}
 	
 	public ItemStack toItem(IPet pet){

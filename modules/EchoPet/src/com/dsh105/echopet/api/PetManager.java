@@ -357,6 +357,7 @@ public class PetManager implements IPetManager{
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.trail." + trail.getName(), true);
 		}
 		for(PetData pd : pet.getPetData()){
+			if(pd.ignoreSaving()) continue;
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 		}
 		
@@ -366,6 +367,7 @@ public class PetManager implements IPetManager{
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().serialisePetName());
 			for(PetData pd : pet.getRider().getPetData()){
+				if(pd.ignoreSaving()) continue;
 				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
 			}
 		}
@@ -393,6 +395,7 @@ public class PetManager implements IPetManager{
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
 		
 		for(PetData pd : data){
+			if(pd.ignoreSaving()) continue;
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 		}
 		
@@ -400,6 +403,7 @@ public class PetManager implements IPetManager{
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", riderName);
 			for(PetData pd : riderData){
+				if(pd.ignoreSaving()) continue;
 				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
 			}
 			
@@ -459,13 +463,7 @@ public class PetManager implements IPetManager{
 		// Because we can only have 1 active at a time.
 		for(PetDataCategory category : PetDataCategory.values){
 			if(category.hasData(pd)){
-				Iterator<PetData> i = pet.getPetData().listIterator();
-				while(i.hasNext()){
-					PetData data = i.next();
-					if(!pd.equals(data) && category.hasData(data)){
-						i.remove();
-					}
-				}
+				pet.getPetData().removeIf(data->!pd.equals(data) && category.hasData(data));
 				break;
 			}
 		}
