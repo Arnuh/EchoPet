@@ -71,7 +71,7 @@ public enum PetDataCategory{
 	}
 	
 	public ItemStack getItem(){
-		if(item == null){
+		if(item == null && material != null){
 			item = new ItemStack(material);
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName(ChatColor.RED + name);

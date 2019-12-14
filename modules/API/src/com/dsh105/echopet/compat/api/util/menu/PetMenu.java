@@ -17,11 +17,6 @@
 package com.dsh105.echopet.compat.api.util.menu;
 
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -31,12 +26,16 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 
 public class PetMenu{
-
+	
 	Inventory inv;
 	private IPet pet;
-
+	
 	public PetMenu(IPet pet){
 		this.pet = pet;
 		List<Object> options = MenuUtil.createOptionList(pet);
@@ -52,20 +51,24 @@ public class PetMenu{
 				}
 			}else if(obj instanceof PetDataCategory){
 				PetDataCategory category = (PetDataCategory) obj;
-				inv.setItem(index++, category.getItem());
+				ItemStack item = category.getItem();
+				if(item == null) continue;
+				inv.setItem(index++, item);
 			}
 		}
 		this.inv.setItem(inv.getSize() - 1, MenuUtil.CLOSE);
 	}
-
+	
 	private int round(int num, int multiple){
 		return multiple * (int) Math.ceil((float) num / (float) multiple);
 	}
-
+	
 	public void open(boolean sendMessage){
 		PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.MAIN);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(menuEvent);
-		if(menuEvent.isCancelled()){ return; }
+		if(menuEvent.isCancelled()){
+			return;
+		}
 		InventoryView view = this.pet.getOwner().openInventory(this.inv);
 		pet.setInventoryView(view);
 		if(sendMessage){
