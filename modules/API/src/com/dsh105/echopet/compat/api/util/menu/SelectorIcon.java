@@ -62,7 +62,7 @@ public class SelectorIcon extends MenuIcon{
 	public ItemStack getIcon(Player viewer){
 		ItemStack i = super.getIcon(viewer);
 		ItemMeta meta = i.getItemMeta();
-		ChatColor c = this.petType == null ? ChatColor.YELLOW : (viewer.hasPermission("echopet.pet.type." + this.getPetType().toString().toLowerCase().replace("_", ""))) ? ChatColor.GREEN : ChatColor.RED;
+		ChatColor c = this.petType == null ? ChatColor.YELLOW : (viewer.hasPermission("echopet.pet.type." + getPetType().getConfigKeyName())) ? ChatColor.GREEN : ChatColor.RED;
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', c + this.getName()));// NPE
 		i.setItemMeta(meta);
 		

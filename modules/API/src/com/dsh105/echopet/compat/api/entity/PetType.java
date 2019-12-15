@@ -185,7 +185,7 @@ public enum PetType{
 	}
 	
 	public String getDefaultName(String name){
-		return EchoPet.getConfig().getString("pets." + this.toString().toLowerCase().replace("_", "") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+		return EchoPet.getConfig().getString("pets." + getConfigKeyName() + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
 	}
 	
 	public String getDefaultName(){
@@ -244,11 +244,18 @@ public enum PetType{
 		return version.isCompatible(new Version());
 	}
 	
+	/**
+	 * @return String used for both configs & permissions to identify this pet.
+	 */
+	public String getConfigKeyName(){
+		return name().toLowerCase().replace("_", "");
+	}
+	
 	private static void outputInfo(){
 		String[] petTypes = new String[PetType.values().length];
 		int pos = 0;
 		for(PetType type : PetType.values()){
-			petTypes[pos++] = type.name().toLowerCase();
+			petTypes[pos++] = type.getConfigKeyName();
 		}
 		Arrays.sort(petTypes);
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File("perms.yml")))){

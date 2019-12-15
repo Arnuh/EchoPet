@@ -308,7 +308,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	public boolean onInteract(Player p){
 		if(p.getUniqueId().equals(getPlayerOwner().getUniqueId())){
 			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
-			if(EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)){
+			if(EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().getConfigKeyName() + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)){
 				new PetMenu(getPet()).open(false);
 			}
 			return true;

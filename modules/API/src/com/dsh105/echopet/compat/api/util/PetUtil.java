@@ -53,10 +53,6 @@ import org.bukkit.entity.Player;
 
 public class PetUtil{
 	
-	public static String getPetPerm(PetType petType){
-		return petType.toString().toLowerCase().replace("_", "");
-	}
-	
 	public static PetStorage formPetFromArgs(CommandSender sender, String s, boolean petAdmin){
 		String petString = s;
 		String dataString = "";
@@ -368,7 +364,7 @@ public class PetUtil{
 			String separator = ", ";
 			if(sender instanceof Player){
 				
-				if(!sender.hasPermission("echopet.pet" + admin + ".type." + pt.toString().toLowerCase().replace("_", ""))){
+				if(!sender.hasPermission("echopet.pet" + admin + ".type." + pt.getConfigKeyName())){
 					color1 = ChatColor.RED;
 					color2 = ChatColor.DARK_RED;
 				}
