@@ -270,18 +270,18 @@ public enum PetType{
 			for(String petTypeName : petTypes){
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				for(PetData data : petType.getAllowedDataTypes()){
-					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ":\n");
 					bw.write("        default: op\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
 					for(PetData data : category.getData()){
-						if(alreadyHad.contains(data.getConfigOptionString())){
-							System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
+						if(alreadyHad.contains(data.getConfigKeyName())){
+							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from data " + data + " and category " + category);
 							continue;
 						}
-						alreadyHad.add(data.getConfigOptionString());
-						bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+						alreadyHad.add(data.getConfigKeyName());
+						bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ":\n");
 						bw.write("        default: op\n");
 					}
 				}
@@ -328,7 +328,7 @@ public enum PetType{
 			bw.write("        description: 'All hat permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.HAT.getConfigOptionString() + ": true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.HAT.getConfigKeyName() + ": true\n");
 			}
 			//
 			bw.write("    echopet.pet.ride.*:\n");
@@ -336,7 +336,7 @@ public enum PetType{
 			bw.write("        description: 'All ride permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.RIDE.getConfigOptionString() + ": true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.RIDE.getConfigKeyName() + ": true\n");
 			}
 			//
 			bw.write("    echopet.pet.baby.*:\n");
@@ -346,7 +346,7 @@ public enum PetType{
 			for(String petTypeName : petTypes){
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				if(petType.getAllowedDataTypes().contains(PetData.BABY)){
-					bw.write("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigOptionString() + ": true\n");
+					bw.write("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigKeyName() + ": true\n");
 				}
 			}
 			//
@@ -403,17 +403,17 @@ public enum PetType{
 				bw.write("        children:\n");
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				for(PetData data : petType.getAllowedDataTypes()){
-					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ": true\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
 					for(PetData data : category.getData()){
-						if(alreadyHad.contains(data.getConfigOptionString())){
+						if(alreadyHad.contains(data.getConfigKeyName())){
 							//System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
 						}
-						alreadyHad.add(data.getConfigOptionString());
-						bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+						alreadyHad.add(data.getConfigKeyName());
+						bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ": true\n");
 					}
 				}
 			}

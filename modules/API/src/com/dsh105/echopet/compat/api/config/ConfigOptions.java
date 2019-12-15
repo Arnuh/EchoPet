@@ -55,11 +55,11 @@ public class ConfigOptions extends Options{
 	}
 	
 	public boolean allowData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigOptionString(), true);
+		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
 	}
 	
 	public boolean forceData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigOptionString(), false);
+		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
 	}
 	
 	public boolean canFly(PetType petType){
@@ -239,8 +239,8 @@ public class ConfigOptions extends Options{
 			
 			for(PetData pd : PetData.values()){
 				if(petType.isDataAllowed(pd)){
-					set("pets." + configOption + ".allow." + pd.getConfigOptionString(), true);
-					set("pets." + configOption + ".force." + pd.getConfigOptionString(), false);
+					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
+					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
 				}
 			}
 		}

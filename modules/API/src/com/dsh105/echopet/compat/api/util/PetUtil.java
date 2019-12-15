@@ -410,7 +410,7 @@ public class PetUtil{
 		}
 		StringBuilder builder = new StringBuilder();
 		for(PetData pd : data){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
 		builder.deleteCharAt(builder.length() - 2);
@@ -423,11 +423,11 @@ public class PetUtil{
 		}
 		StringBuilder builder = new StringBuilder();
 		for(PetData pd : data){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
 		for(PetData pd : riderData){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append("(Rider), ");
 		}
 		builder.deleteCharAt(builder.length() - 2);
