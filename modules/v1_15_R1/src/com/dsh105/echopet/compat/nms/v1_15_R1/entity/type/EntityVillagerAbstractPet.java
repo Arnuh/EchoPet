@@ -33,12 +33,17 @@ package com.dsh105.echopet.compat.nms.v1_15_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_15_R1.entity.EntityAgeablePet;
+import net.minecraft.server.v1_15_R1.DataWatcher;
+import net.minecraft.server.v1_15_R1.DataWatcherObject;
+import net.minecraft.server.v1_15_R1.DataWatcherRegistry;
 import net.minecraft.server.v1_15_R1.EntityInsentient;
 import net.minecraft.server.v1_15_R1.EntityTypes;
 import net.minecraft.server.v1_15_R1.World;
 
 public class EntityVillagerAbstractPet extends EntityAgeablePet implements IEntityVillagerAbstractPet{
 	
+	//Some tick thing? Gets - 1 every time tick() is called.
+	private static final DataWatcherObject<Integer> bx = DataWatcher.a(EntityVillagerAbstractPet.class, DataWatcherRegistry.b);
 	
 	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
@@ -46,5 +51,11 @@ public class EntityVillagerAbstractPet extends EntityAgeablePet implements IEnti
 	
 	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
+	}
+	
+	@Override
+	public void initDatawatcher(){
+		super.initDatawatcher();
+		this.datawatcher.register(bx, 0);
 	}
 }

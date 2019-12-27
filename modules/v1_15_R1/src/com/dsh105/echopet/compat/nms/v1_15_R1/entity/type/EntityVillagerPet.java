@@ -93,5 +93,4 @@ public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEnt
 		super.initDatawatcher();
 		this.datawatcher.register(DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, VillagerLevel.NOVICE.ordinal()));
 	}
-	
 }
