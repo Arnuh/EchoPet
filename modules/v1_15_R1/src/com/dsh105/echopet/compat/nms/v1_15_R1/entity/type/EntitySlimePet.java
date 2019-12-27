@@ -79,7 +79,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	
 	@Override
 	public void setSize(int i){
-		this.datawatcher.set(SIZE, Integer.valueOf(i));
+		this.datawatcher.set(SIZE, i);
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		this.a(es.width() * (float) i, es.height() * (float) i);
 		this.setPosition(locX(), locY(), locZ());
@@ -93,7 +93,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(SIZE, Integer.valueOf(1));
+		this.datawatcher.register(SIZE, 1);
 	}
 	
 	@Override

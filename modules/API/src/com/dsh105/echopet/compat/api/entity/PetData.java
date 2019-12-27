@@ -213,33 +213,33 @@ public enum PetData{
 	
 	//
 	SIZE_SMALL("size_small", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 1);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 0);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Small"),
 	SIZE_MEDIUM("size_medium", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 2);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 1);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Medium"),
 	SIZE_LARGE("size_large", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 4);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 2);
@@ -247,7 +247,7 @@ public enum PetData{
 			return setTropicalFishLarge(pet, flag);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
