@@ -181,7 +181,7 @@ public enum PetData{
 			return true;
 		}
 		return false;
-	}, Material.RABBIT, "Head Tilt"),
+	}, Material.RABBIT, "Pounce"),
 	SLEEP("sleep", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setSleeping(flag);
@@ -706,7 +706,7 @@ public enum PetData{
 	}
 	
 	PetData(String configKeyName, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
-		this.configKeyName = configKeyName;//Should probably generate this from name()
+		this.configKeyName = configKeyName;//Should probably generate this from name().toLowerCase() ?
 		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
