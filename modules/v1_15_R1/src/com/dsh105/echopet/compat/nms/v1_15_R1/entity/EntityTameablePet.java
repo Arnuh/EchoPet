@@ -44,11 +44,11 @@ import net.minecraft.server.v1_15_R1.World;
 /**
  * @since Mar 6, 2016
  */
-// These are not actually tameable and only here to add missing datawatchers
 public class EntityTameablePet extends EntityAgeablePet implements IEntityTameablePet{
 	
-	protected static final DataWatcherObject<Byte> bv = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
-	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.o);// Owner
+	protected static final int Sitting = 0x1, Angry = 0x2, Tamed = 0x4;
+	protected static final DataWatcherObject<Byte> Flag = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
+	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.o);
 	
 	public EntityTameablePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
@@ -60,42 +60,35 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(bv, (byte) 0);
+		this.datawatcher.register(Flag, (byte) 0);
 		this.datawatcher.register(OWNER, Optional.empty());
 	}
 	
-	// These are all useless
 	public boolean isTamed(){
-		return (this.datawatcher.get(bv) & 0x4) != 0;
+		return (getFlag() & Tamed) != 0;
 	}
 	
-	public void setTamed(boolean paramBoolean){
-		int i = this.datawatcher.get(bv);
-		if(paramBoolean){
-			this.datawatcher.set(bv, Byte.valueOf((byte) (i | 0x4)));
-		}else{
-			this.datawatcher.set(bv, Byte.valueOf((byte) (i & 0xFFFFFFFB)));
-		}
+	@Override
+	public void setSitting(boolean sitting){
+		if(sitting) addFlag(Sitting);
+		else removeFlag(Sitting);
 	}
 	
-	public boolean isSitting(){
-		return (this.datawatcher.get(bv) & 0x1) != 0;
+	@Override
+	public void setTamed(boolean tamed){
+		if(tamed) addFlag(Tamed);
+		else removeFlag(Tamed);
 	}
 	
-	public void setSitting(boolean paramBoolean){
-		int i = this.datawatcher.get(bv);
-		if(paramBoolean){
-			this.datawatcher.set(bv, Byte.valueOf((byte) (i | 0x1)));
-		}else{
-			this.datawatcher.set(bv, Byte.valueOf((byte) (i & 0xFFFFFFFE)));
-		}
+	protected void addFlag(int flag){
+		datawatcher.set(Flag, (byte) (getFlag() | flag));
 	}
 	
-	public UUID getOwnerUUID(){
-		return this.datawatcher.get(OWNER).orElse(null);
+	protected void removeFlag(int flag){
+		datawatcher.set(Flag, (byte) (getFlag() & ~flag));
 	}
 	
-	public void setOwnerUUID(UUID paramUUID){
-		this.datawatcher.set(OWNER, Optional.ofNullable(paramUUID));
+	protected int getFlag(){
+		return datawatcher.get(Flag);
 	}
 }

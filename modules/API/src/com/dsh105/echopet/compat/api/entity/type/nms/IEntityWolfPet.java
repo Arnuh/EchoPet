@@ -24,5 +24,5 @@ public interface IEntityWolfPet extends IEntityTameablePet{
 	
 	void setCollarColor(DyeColor dc);
 	
-	void setAngry(boolean flag);
+	void setAngry(boolean angry);
 }

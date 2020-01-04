@@ -54,36 +54,39 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	}
 	
 	@Override
-	public void setAngry(boolean flag){
-		if(isTamed() && flag){
-			// this.getPet().getPetData().remove(PetData.TAMED);
-			setTamed(false);
-		}
-		byte b0 = this.datawatcher.get(bv).byteValue();
-		if(flag){
-			this.datawatcher.set(bv, Byte.valueOf((byte) (b0 | 0x2)));
-		}else{
-			this.datawatcher.set(bv, Byte.valueOf((byte) (b0 & 0xFFFFFFFD)));
-		}
+	protected void initDatawatcher(){
+		super.initDatawatcher();
+		this.datawatcher.register(DATA_HEALTH, getHealth());
+		this.datawatcher.register(bA, Boolean.FALSE);
+		this.datawatcher.register(COLLAR_COLOR, EnumColor.RED.getColorIndex());
 	}
 	
-	public void setTamed(boolean flag){
-		if(isAngry() && flag){
-			// this.getPet().getPetData().remove(PetData.ANGRY);
+	@Override
+	public void setAngry(boolean angry){
+		if(isTamed() && angry){
+			setTamed(false);
+		}
+		if(angry) addFlag(Angry);
+		else removeFlag(Angry);
+	}
+	
+	@Override
+	public void setTamed(boolean tamed){
+		if(isAngry() && tamed){
 			setAngry(false);
 		}
-		super.setTamed(flag);
+		super.setTamed(tamed);
 	}
 	
 	public boolean isAngry(){
-		return (this.datawatcher.get(bv).byteValue() & 0x2) != 0;
+		return (getFlag() & Angry) != 0;
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void setCollarColor(DyeColor dc){
 		if(((IWolfPet) pet).isTamed()){
-			this.datawatcher.set(COLLAR_COLOR, Integer.valueOf(EnumColor.fromColorIndex(dc.getWoolData()).getColorIndex()));
+			this.datawatcher.set(COLLAR_COLOR, EnumColor.fromColorIndex(dc.getWoolData()).getColorIndex());
 		}
 	}
 	
@@ -120,14 +123,6 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	
 	@Override
 	protected String getIdleSound(){
-		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed()) && (this.datawatcher.get(DATA_HEALTH).floatValue() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
-	}
-	
-	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(DATA_HEALTH, Float.valueOf(getHealth()));
-		this.datawatcher.register(bA, Boolean.valueOf(false));
-		this.datawatcher.register(COLLAR_COLOR, Integer.valueOf(EnumColor.RED.getColorIndex()));
+		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed()) && (this.datawatcher.get(DATA_HEALTH) < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
 	}
 }

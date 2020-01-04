@@ -373,6 +373,10 @@ permissions:
         default: op
     echopet.pet.type.cat.ride:
         default: op
+    echopet.pet.type.cat.baby:
+        default: op
+    echopet.pet.type.cat.sit:
+        default: op
     echopet.pet.type.cat.tamed:
         default: op
     echopet.pet.type.cat.white:
@@ -1090,6 +1094,10 @@ permissions:
     echopet.pet.type.wolf.hat:
         default: op
     echopet.pet.type.wolf.ride:
+        default: op
+    echopet.pet.type.wolf.baby:
+        default: op
+    echopet.pet.type.wolf.sit:
         default: op
     echopet.pet.type.wolf.tamed:
         default: op
@@ -1947,6 +1955,7 @@ permissions:
         default: op
         description: 'All baby permissions'
         children:
+            echopet.pet.type.cat.baby: true
             echopet.pet.type.chicken.baby: true
             echopet.pet.type.cow.baby: true
             echopet.pet.type.donkey.baby: true
@@ -1969,6 +1978,7 @@ permissions:
             echopet.pet.type.turtle.baby: true
             echopet.pet.type.villager.baby: true
             echopet.pet.type.wanderingtrader.baby: true
+            echopet.pet.type.wolf.baby: true
             echopet.pet.type.zombie.baby: true
             echopet.pet.type.zombiehorse.baby: true
             echopet.pet.type.zombievillager.baby: true
@@ -2366,6 +2376,8 @@ permissions:
         children:
             echopet.pet.type.cat.hat: true
             echopet.pet.type.cat.ride: true
+            echopet.pet.type.cat.baby: true
+            echopet.pet.type.cat.sit: true
             echopet.pet.type.cat.tamed: true
             echopet.pet.type.cat.white: true
             echopet.pet.type.cat.orange: true
@@ -2957,6 +2969,8 @@ permissions:
         children:
             echopet.pet.type.wolf.hat: true
             echopet.pet.type.wolf.ride: true
+            echopet.pet.type.wolf.baby: true
+            echopet.pet.type.wolf.sit: true
             echopet.pet.type.wolf.tamed: true
             echopet.pet.type.wolf.angry: true
             echopet.pet.type.wolf.white: true

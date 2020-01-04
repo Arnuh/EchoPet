@@ -37,7 +37,7 @@ public enum PetType{
 	
 	BAT("Bat", "Bat Pet", "bat"),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
-	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}, PetData.TAMED),
+	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}),
 	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
 	CHICKEN("Chicken", "Chicken Pet", "chicken"),
 	COD("Cod", "Cod Pet", "cod"),
@@ -96,7 +96,7 @@ public enum PetType{
 	WITCH("Witch", "Witch Pet", "witch"),
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
-	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.TAMED, PetData.ANGRY),
+	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.ANGRY),
 	ZOMBIE("Zombie", "Zombie Pet", "zombie"),
 	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", PetData.SADDLE),
 	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
@@ -168,8 +168,13 @@ public enum PetType{
 		if(clazz != null){
 			if(IAgeablePet.class.isAssignableFrom(clazz)){
 				this.allowedData.add(PetData.BABY);
-			}else if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
+			}
+			if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
 				this.allowedData.add(PetData.CHESTED);
+			}
+			if(ITameablePet.class.isAssignableFrom(clazz)){
+				this.allowedData.add(PetData.SIT);
+				this.allowedData.add(PetData.TAMED);
 			}
 		}
 		if(allowedData != null){

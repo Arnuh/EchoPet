@@ -143,7 +143,7 @@ public enum PetData{
 			return true;
 		}
 		return false;
-	}, Material.BONE, "Angry"),
+	}, Material.PORKCHOP, "Angry"),
 	CHESTED("chest", (player, pet, category, flag)->{
 		if(pet instanceof IHorseChestedAbstractPet){
 			((IHorseChestedAbstractPet) pet).setChested(flag);
@@ -157,6 +157,9 @@ public enum PetData{
 			return true;
 		}else if(pet.getPetType().equals(PetType.PANDA)){
 			((IPandaPet) pet).setSitting(flag);
+			return true;
+		}else if(pet instanceof ITameablePet){
+			((ITameablePet) pet).setSitting(flag);
 			return true;
 		}
 		return false;
