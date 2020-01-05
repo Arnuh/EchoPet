@@ -70,7 +70,6 @@ public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 		this.datawatcher.register(CollarColor, EnumColor.RED.getColorIndex());
 	}
 	
-	
 	@Override
 	public void setType(CatType type){
 		datawatcher.set(Type, type.ordinal());

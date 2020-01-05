@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
@@ -141,9 +142,17 @@ public enum PetData{
 		if(pet.getPetType().equals(PetType.WOLF)){
 			((IWolfPet) pet).setAngry(flag);
 			return true;
+		}else if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setAngry(flag);
+			return true;
 		}
 		return false;
-	}, Material.PORKCHOP, "Angry"),
+	}, pet->{
+		if(pet.getPetType().equals(PetType.WOLF)){
+			return Material.PORKCHOP;
+		}
+		return Material.STONE_SWORD;//Bee
+	}, "Angry"),
 	CHESTED("chest", (player, pet, category, flag)->{
 		if(pet instanceof IHorseChestedAbstractPet){
 			((IHorseChestedAbstractPet) pet).setChested(flag);
@@ -213,8 +222,19 @@ public enum PetData{
 		}
 		return false;
 	}, Material.CAKE, "Lay Down"),
-	
-	//
+	//Bee
+	STINGER("stinger", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setHasStung(flag);//"stinger" and "has stun" are kinda flipped but it's better than an item called "Stun" or "Has Stun"
+			return true;
+		}else return false;
+	}, Material.POISONOUS_POTATO, "Stinger"),
+	NECTAR("nectar", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setHasNectar(flag);
+			return true;
+		}else return false;
+	}, Material.getMaterial("HONEY_BOTTLE"), "Nectar"),//HONEYCOMB ?
 	SIZE_SMALL("size_small", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 1);
