@@ -29,7 +29,7 @@ public interface IPetRegistry{
 	
 	IPet spawn(PetType petType, final Player owner);
 	
-	void enablePets();
+	void enablePet(PetType petType);
 	
-	void disablePets();
+	void disablePet(PetType petType);
 }

@@ -57,9 +57,7 @@ public class PetRegistry implements IPetRegistry{
 	
 	private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
 	
-	
 	public PetRegistry(){
-		
 		for(PetType petType : PetType.values()){
 			if(petType.isCompatible()){
 				try{
@@ -77,7 +75,7 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	public void shutdown(){
-		//
+		registrationEntries.clear();
 	}
 	
 	public IPet spawn(PetType petType, final Player owner){
@@ -105,39 +103,34 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	@Override
-	public void enablePets(){
-		for(PetType petType : registrationEntries.keySet()){
-			if(petType.isCompatible()){
-				EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
-				if(entity == null){
-					Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
-					continue;
-				}
-				EnumCreatureType type = entity.e();
-				a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
-					
-					@Override
-					public Entity create(EntityTypes type, World world){
-						return type.a(world);
-					}
-				}, type);
-				IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), entitytypes_a.a(petType.getMinecraftName()));
+	public void enablePet(PetType petType){
+		if(petType.isCompatible()){
+			EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
+			if(entity == null){
+				Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
+				return;
 			}
+			EnumCreatureType type = entity.e();
+			a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
+				
+				@Override
+				public Entity create(EntityTypes type, World world){
+					return type.a(world);
+				}
+			}, type);
+			IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), entitytypes_a.a(petType.getMinecraftName()));
 		}
 	}
 	
 	@Override
-	public void disablePets(){
+	public void disablePet(PetType petType){
 		try{
-			for(PetType petType : registrationEntries.keySet()){
-				if(petType.isCompatible()){
-					Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);
-					IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), val);
-				}
+			if(petType.isCompatible()){
+				Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);
+				IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), val);
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
-	
 }
