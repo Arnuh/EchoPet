@@ -1947,6 +1947,7 @@ permissions:
         default: op
         description: 'All baby permissions'
         children:
+            echopet.pet.type.bee.baby: true
             echopet.pet.type.chicken.baby: true
             echopet.pet.type.cow.baby: true
             echopet.pet.type.donkey.baby: true
