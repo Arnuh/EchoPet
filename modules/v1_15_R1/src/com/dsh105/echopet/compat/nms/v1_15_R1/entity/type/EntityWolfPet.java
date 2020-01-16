@@ -52,7 +52,6 @@ import org.bukkit.DyeColor;
 @EntityPetType(petType = PetType.WOLF)
 public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	
-	private static final DataWatcherObject<Float> DATA_HEALTH = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.c);
 	private static final DataWatcherObject<Boolean> bA = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.i);// ??
 	private static final DataWatcherObject<Integer> COLLAR_COLOR = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.b);
 	private boolean wet;
@@ -70,8 +69,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(DATA_HEALTH, getHealth());
-		this.datawatcher.register(bA, Boolean.FALSE);
+		this.datawatcher.register(bA, false);
 		this.datawatcher.register(COLLAR_COLOR, EnumColor.RED.getColorIndex());
 	}
 	
@@ -137,6 +135,6 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	
 	@Override
 	protected String getIdleSound(){
-		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed()) && (this.datawatcher.get(DATA_HEALTH) < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
+		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed() && getHealth() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
 	}
 }

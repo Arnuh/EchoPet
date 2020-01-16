@@ -57,7 +57,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(DATA_HEALTH, getHealth());
-		this.datawatcher.register(bA, Boolean.FALSE);
+		this.datawatcher.register(bA, false);
 		this.datawatcher.register(COLLAR_COLOR, EnumColor.RED.getColorIndex());
 	}
 	
