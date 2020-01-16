@@ -237,22 +237,19 @@ public class PetManager implements IPetManager{
 				if(!EchoPet.getOptions().allowPetType(petType)){
 					return null;
 				}
-				IPet pi = this.createPet(p, petType, true);
-				if(pi == null){
+				IPet pet = this.createPet(p, petType, true);
+				if(pet == null){
 					return null;
 				}
-				//Pet pi = petType.getNewPetInstance(p, petType);
-				//Pet pi = new Pet(p, petType);
-				
-				pi.setPetName(name);
+				pet.setPetName(name);
 				ConfigurationSection trails = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.trail");
 				if(trails != null){
 					for(String key : trails.getKeys(false)){
 						Trail trail = EchoPet.getPlugin().getTrailManager().getTrailByName(key);
 						if(trail == null) continue;
 						Trail newTrail = trail.clone();
-						newTrail.start(pi);
-						pi.addTrail(newTrail);
+						newTrail.start(pet);
+						pet.addTrail(newTrail);
 					}
 				}
 				
@@ -264,19 +261,19 @@ public class PetManager implements IPetManager{
 							PetData pd = PetData.valueOf(key.toUpperCase());
 							data.add(pd);
 						}else{
-							Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pi.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+							Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
 						}
 					}
 				}
 				
 				if(!data.isEmpty()){
-					setData(pi, data.toArray(new PetData[data.size()]), true);
+					setData(pet, data.toArray(new PetData[data.size()]), true);
 				}
 				
-				this.loadRiderFromFile(type, pi);
+				this.loadRiderFromFile(type, pet);
 				
-				forceAllValidData(pi);
-				return pi;
+				forceAllValidData(pet);
+				return pet;
 			}
 		}
 		return null;
@@ -290,20 +287,20 @@ public class PetManager implements IPetManager{
 	@Override
 	public void loadRiderFromFile(String type, IPet pet){
 		if(pet.getOwner() != null){
-			String path = type + "." + pet.getOwnerIdentification();
-			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") != null){
-				PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.type"));
-				String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.name");
+			String path = type + "." + pet.getOwnerIdentification() + ".rider";
+			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".type") != null){
+				PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
+				String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".name");
 				if(riderName.equalsIgnoreCase("") || riderName == null){
 					riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
 				}
 				if(riderPetType == null) return;
 				if(EchoPet.getOptions().allowRidersFor(pet.getPetType())){
 					IPet rider = pet.createRider(riderPetType, true);
-					if(rider != null && rider.getEntityPet() != null){
+					if(rider != null){
 						rider.setPetName(riderName);
 						ArrayList<PetData> riderData = new ArrayList<PetData>();
-						ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".rider.data");
+						ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".data");
 						if(mcs != null){
 							for(String key : mcs.getKeys(false)){
 								if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
@@ -315,7 +312,7 @@ public class PetManager implements IPetManager{
 							}
 						}
 						if(!riderData.isEmpty()){
-							setData(pet, riderData.toArray(new PetData[riderData.size()]), true);
+							setData(rider, riderData.toArray(new PetData[riderData.size()]), true);
 						}
 					}
 				}
