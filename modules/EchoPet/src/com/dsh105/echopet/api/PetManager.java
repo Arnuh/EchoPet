@@ -19,6 +19,7 @@ package com.dsh105.echopet.api;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -186,22 +187,22 @@ public class PetManager implements IPetManager{
 	// Force all data specified in config file and notify player.
 	@Override
 	public void forceAllValidData(IPet pi){
-		ArrayList<PetData> tempData = new ArrayList<PetData>();
+		List<PetData> tempData = new ArrayList<>();
 		for(PetData data : PetData.values()){
 			if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
 				tempData.add(data);
 			}
 		}
-		setData(pi, tempData.toArray(new PetData[tempData.size()]), true);
+		setData(pi, tempData, true);
 		
-		ArrayList<PetData> tempRiderData = new ArrayList<PetData>();
+		List<PetData> tempRiderData = new ArrayList<>();
 		if(pi.getRider() != null){
 			for(PetData data : PetData.values()){
 				if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
 					tempRiderData.add(data);
 				}
 			}
-			setData(pi.getRider(), tempRiderData.toArray(new PetData[tempData.size()]), true);
+			setData(pi.getRider(), tempData, true);
 		}
 		
 		if(EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)){
@@ -230,10 +231,9 @@ public class PetManager implements IPetManager{
 			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path) != null){
 				PetType petType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
 				String name = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.name");
-				if(name.equalsIgnoreCase("") || name == null){
+				if(name == null || name.equalsIgnoreCase("")){
 					name = petType.getDefaultName(p.getName());
 				}
-				if(petType == null) return null;
 				if(!EchoPet.getOptions().allowPetType(petType)){
 					return null;
 				}
@@ -253,7 +253,7 @@ public class PetManager implements IPetManager{
 					}
 				}
 				
-				ArrayList<PetData> data = new ArrayList<PetData>();
+				List<PetData> data = new ArrayList<>();
 				ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
 				if(cs != null){
 					for(String key : cs.getKeys(false)){
@@ -267,7 +267,7 @@ public class PetManager implements IPetManager{
 				}
 				
 				if(!data.isEmpty()){
-					setData(pet, data.toArray(new PetData[data.size()]), true);
+					setData(pet, data, true);
 				}
 				
 				this.loadRiderFromFile(type, pet);
@@ -291,15 +291,14 @@ public class PetManager implements IPetManager{
 			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".type") != null){
 				PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
 				String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".name");
-				if(riderName.equalsIgnoreCase("") || riderName == null){
+				if(riderName == null || riderName.equalsIgnoreCase("")){
 					riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
 				}
-				if(riderPetType == null) return;
 				if(EchoPet.getOptions().allowRidersFor(pet.getPetType())){
 					IPet rider = pet.createRider(riderPetType, true);
 					if(rider != null){
 						rider.setPetName(riderName);
-						ArrayList<PetData> riderData = new ArrayList<PetData>();
+						List<PetData> riderData = new ArrayList<>();
 						ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".data");
 						if(mcs != null){
 							for(String key : mcs.getKeys(false)){
@@ -312,7 +311,7 @@ public class PetManager implements IPetManager{
 							}
 						}
 						if(!riderData.isEmpty()){
-							setData(rider, riderData.toArray(new PetData[riderData.size()]), true);
+							setData(rider, riderData, true);
 						}
 					}
 				}
@@ -375,13 +374,11 @@ public class PetManager implements IPetManager{
 	public void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD){
 		clearFileData(type, p);
 		PetType pt = UPD.petType;
-		PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 		String petName = UPD.petName;
 		if(UPD.petName == null || UPD.petName.equalsIgnoreCase("")){
 			petName = pt.getDefaultName(p.getName());
 		}
 		PetType riderType = UMD.petType;
-		PetData[] riderData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
 		String riderName = UMD.petName;
 		if(UMD.petName == null || UMD.petName.equalsIgnoreCase("")){
 			riderName = pt.getDefaultName(p.getName());
@@ -391,15 +388,15 @@ public class PetManager implements IPetManager{
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
 		
-		for(PetData pd : data){
+		for(PetData pd : UPD.petDataList){
 			if(pd.ignoreSaving()) continue;
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 		}
 		
-		if(riderData != null && riderType != null){
+		if(riderType != null){
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", riderName);
-			for(PetData pd : riderData){
+			for(PetData pd : UMD.petDataList){
 				if(pd.ignoreSaving()) continue;
 				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
 			}
@@ -412,14 +409,13 @@ public class PetManager implements IPetManager{
 	public void saveFileData(String type, Player p, PetStorage UPD){
 		clearFileData(type, p);
 		PetType pt = UPD.petType;
-		PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 		String petName = UPD.petName;
 		
 		String path = type + "." + UUIDMigration.getIdentificationFor(p);
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
 		
-		for(PetData pd : data){
+		for(PetData pd : UPD.petDataList){
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 		}
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
@@ -448,7 +444,7 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public void setData(IPet pet, PetData[] data, boolean b){
+	public void setData(IPet pet, List<PetData> data, boolean b){
 		for(PetData pd : data){
 			setData(pet, pd, b);
 		}

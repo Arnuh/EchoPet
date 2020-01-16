@@ -320,7 +320,7 @@ public abstract class Pet implements IPet{
 			}
 			this.getCraftPet().teleport(l);
 			if(this.getRider() != null){
-				this.getCraftPet().setPassenger(this.getRider().getCraftPet());
+				this.getCraftPet().addPassenger(this.getRider().getCraftPet());
 			}
 			return true;
 		}
