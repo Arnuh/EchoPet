@@ -284,7 +284,7 @@ public enum PetData{
 		}
 		return false;
 	}, Material.YELLOW_WOOL, "Creamy"),
-	// Colors. Used for Collars(wolf), Sheep, Llama Color, and certain Rabbit Types.
+	// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, and certain Rabbit Types.
 	WHITE("white", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.WHITE);
@@ -292,11 +292,8 @@ public enum PetData{
 			return setHorseColor(pet, Horse.Color.WHITE);
 		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.WHITE);
-		}else if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.White);
-		}else{
-			return setColorByDye(pet, category, DyeColor.WHITE);
 		}
+		return setColorByDye(pet, category, DyeColor.WHITE);
 	}, Material.WHITE_WOOL, "White"),
 	ORANGE("orange", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.ORANGE);
@@ -348,17 +345,14 @@ public enum PetData{
 			return setGene(pet, category, PandaGene.Brown);
 		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
 			return setMushroomCowType(pet, MushroomCowType.Brown);
-		}else{
-			return setColorByDye(pet, category, DyeColor.BROWN);
 		}
+		return setColorByDye(pet, category, DyeColor.BROWN);
 	}, Material.BROWN_WOOL, "Brown"),
 	GREEN("green", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_WOOL, "Green"),
 	RED("red", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.Red);
-		}else if(pet.getPetType().equals(PetType.FOX)){
+		if(pet.getPetType().equals(PetType.FOX)){
 			return setFoxType(pet, FoxType.Red);
 		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
 			return setMushroomCowType(pet, MushroomCowType.Red);
@@ -370,11 +364,8 @@ public enum PetData{
 			return setRabbitType(pet, Rabbit.Type.BLACK);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BLACK);
-		}else if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.AllBlack);
-		}else{
-			return setColorByDye(pet, category, DyeColor.BLACK);
 		}
+		return setColorByDye(pet, category, DyeColor.BLACK);
 	}, Material.BLACK_WOOL, "Black"),
 	// Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
 	WHITE_CARPET("white_carpet", (player, pet, category, flag)->{
@@ -640,12 +631,17 @@ public enum PetData{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Black);
 		}else return false;
-	}, Material.WHITE_CARPET, "Tuxedo"),
+	}, Material.OBSIDIAN, "Tuxedo"),
+	CAT_RED("cat_red", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Red);
+		}else return false;
+	}, Material.RED_WOOL, "Red"),
 	SIAMESE("siamese", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Siamese);
 		}else return false;
-	}, Material.BROWN_CARPET, "Siamese"),
+	}, Material.BROWN_WOOL, "Siamese"),
 	BRITISH_SHORTHAIR("british_shorthair", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.BritishShortHair);
@@ -666,11 +662,21 @@ public enum PetData{
 			return setCatType(pet, CatType.Ragdoll);
 		}else return false;
 	}, Material.WHITE_CARPET, "Ragdoll"),
+	CAT_WHITE("cat_white", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.White);
+		}else return false;
+	}, Material.WHITE_WOOL, "White"),
 	JELLIE("jellie", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Jellie);
 		}else return false;
 	}, Material.GRAY_WOOL, "Jellie"),
+	CAT_BLACK("cat_black", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Black);
+		}else return false;
+	}, Material.BLACK_WOOL, "Black"),
 	// Fox Type, Red is just normal red wool.
 	SNOW("snow", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){

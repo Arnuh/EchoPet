@@ -94,7 +94,6 @@ public abstract class Pet implements IPet{
 				this.teleportToOwner();
 				for(PetData pd : getPetData()){
 					if(pd.getAction() != null) pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
-					EchoPet.getManager().setData(this, pd, true);
 				}
 				for(Trail t : trails){
 					t.start(this);
