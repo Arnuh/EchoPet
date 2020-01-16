@@ -431,6 +431,8 @@ permissions:
         default: op
     echopet.pet.type.cat.tuxedo:
         default: op
+    echopet.pet.type.cat.cat_red:
+        default: op
     echopet.pet.type.cat.siamese:
         default: op
     echopet.pet.type.cat.british_shorthair:
@@ -441,7 +443,11 @@ permissions:
         default: op
     echopet.pet.type.cat.ragdoll:
         default: op
+    echopet.pet.type.cat.cat_white:
+        default: op
     echopet.pet.type.cat.jellie:
+        default: op
+    echopet.pet.type.cat.cat_black:
         default: op
     echopet.pet.type.cavespider.hat:
         default: op
@@ -2440,12 +2446,15 @@ permissions:
             echopet.pet.type.cat.black: true
             echopet.pet.type.cat.tabby: true
             echopet.pet.type.cat.tuxedo: true
+            echopet.pet.type.cat.cat_red: true
             echopet.pet.type.cat.siamese: true
             echopet.pet.type.cat.british_shorthair: true
             echopet.pet.type.cat.calico: true
             echopet.pet.type.cat.persian: true
             echopet.pet.type.cat.ragdoll: true
+            echopet.pet.type.cat.cat_white: true
             echopet.pet.type.cat.jellie: true
+            echopet.pet.type.cat.cat_black: true
     echopet.pet.type.cavespider.*:
         default: op
         description: 'All cavespider pet data permissions'
