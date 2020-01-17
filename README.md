@@ -7,4 +7,4 @@
 ### Need help? Visit the [Wiki](https://github.com/Arnuh/EchoPet/wiki)!
 
 
-# Join us on IRC to get updates or help #echopet
+# Join us on [Discord](https://discord.gg/VxPqHmG) to get updates or help
