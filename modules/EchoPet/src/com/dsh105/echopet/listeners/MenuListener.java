@@ -117,7 +117,8 @@ public class MenuListener implements Listener{
 							}
 						}
 					}
-					for(PetData data : PetData.values){
+					PetData[] values = category != null ? category.getData() : PetData.values;//Pretty sure this is fine.
+					for(PetData data : values){
 						ItemStack item = data.toItem(pet);
 						if(item == null){// If no item = boolean toggle
 							if(ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE) || ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_TRUE)){

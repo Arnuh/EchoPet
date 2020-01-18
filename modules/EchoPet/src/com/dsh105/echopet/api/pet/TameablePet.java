@@ -16,25 +16,30 @@
  */
 package com.dsh105.echopet.api.pet;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 import com.dsh105.echopet.compat.api.entity.ITameablePet;
+import org.bukkit.entity.Player;
 
 public class TameablePet extends AgeablePet implements ITameablePet{
-
-	private boolean tamed;
-
+	
+	private boolean sitting, tamed;
+	
 	public TameablePet(Player owner){
 		super(owner);
 	}
-
+	
+	@Override
+	public void setSitting(boolean sitting){
+		((IEntityTameablePet) getEntityPet()).setSitting(sitting);
+		this.sitting = sitting;
+	}
+	
 	@Override
 	public void setTamed(boolean tamed){
 		((IEntityTameablePet) getEntityPet()).setTamed(tamed);
 		this.tamed = tamed;
 	}
-
+	
 	@Override
 	public boolean isTamed(){
 		return this.tamed;

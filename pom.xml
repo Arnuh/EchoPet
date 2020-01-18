@@ -26,18 +26,14 @@
 	<module>./modules/EchoPet</module>
     <module>./modules/v1_13_R2</module>
     <module>./modules/v1_14_R1</module>
+	<module>./modules/v1_15_R1</module>
   </modules>
-  
+
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.13.2-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.captainbern</groupId>
-            <artifactId>Minecraft-Reflection</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <!--<dependency>
             <groupId>org.kitteh</groupId>

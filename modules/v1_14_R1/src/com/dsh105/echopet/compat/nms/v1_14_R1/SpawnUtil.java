@@ -16,28 +16,25 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
 import net.minecraft.server.v1_14_R1.ItemStack;
 import net.minecraft.server.v1_14_R1.NBTTagCompound;
 import net.minecraft.server.v1_14_R1.World;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class SpawnUtil implements ISpawnUtil{
-
+	
 	public IEntityPet spawn(IPet pet, Player owner){
 		Location l = owner.getLocation();
 		// if(EchoPet.getPlugin().getVanishProvider().isVanished(owner)) return null;
@@ -50,7 +47,7 @@ public class SpawnUtil implements ISpawnUtil{
 		}
 		l = spawnEvent.getSpawnLocation();
 		World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
-		EchoPet.getPetRegistry().enablePets();
+		EchoPet.getPetRegistry().enablePet(pet.getPetType());
 		EntityPet entityPet = (EntityPet) pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
 		entityPet.setLocation(new Location(mcWorld.getWorld(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch()));
 		if(!l.getChunk().isLoaded()){
@@ -61,13 +58,13 @@ public class SpawnUtil implements ISpawnUtil{
 			EchoPet.getManager().removePet(pet, true);
 		}else{
 			owner.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 1);
-	}
-		EchoPet.getPetRegistry().disablePets();
+		}
+		EchoPet.getPetRegistry().disablePet(pet.getPetType());
 		return entityPet;
 	}
-
+	
 	@Override
-// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
+	// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
 	public org.bukkit.inventory.ItemStack getSpawnEgg(org.bukkit.inventory.ItemStack i, String entityTag){
 		ItemStack is = CraftItemStack.asNMSCopy(i);
 		NBTTagCompound nbt = is.getTag();
@@ -76,13 +73,5 @@ public class SpawnUtil implements ISpawnUtil{
 		if(!entityTag.startsWith("minecraft:")) entityTag = "minecraft:" + entityTag;
 		nbt.getCompound("EntityTag").setString("id", entityTag);
 		return CraftItemStack.asCraftMirror(is);
-	}
-
-	public void setPassenger(int pos, org.bukkit.entity.LivingEntity entity, org.bukkit.entity.LivingEntity passenger){
-		((CraftLivingEntity) entity).getHandle().passengers.add(pos, ((CraftLivingEntity) passenger).getHandle());
-	}
-
-	public void removePassenger(org.bukkit.entity.LivingEntity entity){
-		((CraftLivingEntity) entity).getHandle().passengers.clear();
 	}
 }

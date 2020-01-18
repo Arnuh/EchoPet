@@ -44,30 +44,30 @@ public class ConfigOptions extends Options{
 	}
 	
 	public boolean allowPetType(PetType petType){
-		return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", "") + ".enable", true);
+		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".enable", true);
 	}
 	
 	public boolean allowRidersFor(PetType petType){
 		/*if(petType == PetType.ENDERDRAGON){
 			return false;
 		}*/
-		return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", "") + ".allow.riders", true);
+		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".allow.riders", true);
 	}
 	
 	public boolean allowData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.toString().toLowerCase().replace("_", "") + ".allow." + data.getConfigOptionString(), true);
+		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
 	}
 	
 	public boolean forceData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.toString().toLowerCase().replace("_", "") + ".force." + data.getConfigOptionString(), false);
+		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
 	}
 	
 	public boolean canFly(PetType petType){
-		return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", "") + ".canFly", false);
+		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".canFly", false);
 	}
 	
 	public boolean canIgnoreFallDamage(PetType petType){
-		return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", "") + ".ignoreFallDamage", true);
+		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".ignoreFallDamage", true);
 	}
 	
 	public String getCommandString(){
@@ -75,11 +75,11 @@ public class ConfigOptions extends Options{
 	}
 	
 	public float getRideSpeed(PetType petType){
-		return (float) this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", "") + ".rideSpeed", 0.2D);
+		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
 	}
 	
 	public double getRideJumpHeight(PetType petType){
-		return this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", "") + ".rideJump", 0.6D);
+		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideJump", 0.6D);
 	}
 	
 	public boolean useSql(){
@@ -129,8 +129,8 @@ public class ConfigOptions extends Options{
 		
 		if(config.getConfigurationSection("worldguard.regions") == null){
 			set("worldguard.regions.echopet", true);
+			set("worldguard.regions.allowByDefault", true);
 		}
-		set("worldguard.regions.allowByDefault", true);
 		set("worldguard.regionEnterCheck", true);
 		
 		if(config.getConfigurationSection("trails") == null){
@@ -210,36 +210,37 @@ public class ConfigOptions extends Options{
 		}
 		
 		for(PetType petType : PetType.values()){
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".enable", true);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".tagVisible", true);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".defaultName", petType.getDefaultName());
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".interactMenu", true);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".startFollowDistance", 12);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".stopFollowDistance", 4);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".teleportDistance", 40);
+			String configOption = petType.getConfigKeyName();
+			set("pets." + configOption + ".enable", true);
+			set("pets." + configOption + ".tagVisible", true);
+			set("pets." + configOption + ".defaultName", petType.getDefaultName());
+			set("pets." + configOption + ".interactMenu", true);
+			set("pets." + configOption + ".startFollowDistance", 12);
+			set("pets." + configOption + ".stopFollowDistance", 4);
+			set("pets." + configOption + ".teleportDistance", 40);
 
-			/*set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.canDamagePlayers", false);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.lockRange", 10);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.ticksBetweenAttacks", 20);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.damage", petType.getAttackDamage());
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.loseHealth", false);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".attack.health", petType.getMaxHealth());*/
+			/*set("pets." + configOption + ".attack.canDamagePlayers", false);
+			set("pets." + configOption + ".attack.lockRange", 10);
+			set("pets." + configOption + ".attack.ticksBetweenAttacks", 20);
+			set("pets." + configOption + ".attack.damage", petType.getAttackDamage());
+			set("pets." + configOption + ".attack.loseHealth", false);
+			set("pets." + configOption + ".attack.health", petType.getMaxHealth());*/
 			
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".rideSpeed", 0.2D);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".jumpHeight", 0.6D);
+			set("pets." + configOption + ".rideSpeed", 0.2D);
+			set("pets." + configOption + ".jumpHeight", 0.6D);
 			
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".ignoreFallDamage", true);
+			set("pets." + configOption + ".ignoreFallDamage", true);
 			
 			// if(petType != PetType.ENDERDRAGON){
 			boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".canFly", canFly);
-			set("pets." + petType.toString().toLowerCase().replace("_", "") + ".allow.riders", true);
+			set("pets." + configOption + ".canFly", canFly);
+			set("pets." + configOption + ".allow.riders", true);
 			// }
 			
 			for(PetData pd : PetData.values()){
 				if(petType.isDataAllowed(pd)){
-					set("pets." + petType.toString().toLowerCase().replace("_", "") + ".allow." + pd.getConfigOptionString(), true);
-					set("pets." + petType.toString().toLowerCase().replace("_", "") + ".force." + pd.getConfigOptionString(), false);
+					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
+					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
 				}
 			}
 		}

@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.plugin;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -66,7 +67,7 @@ public interface IPetManager{
 	
 	void clearFileData(String type, Player p);
 	
-	void setData(IPet pet, PetData[] data, boolean b);
+	void setData(IPet pet, List<PetData> data, boolean b);
 	
 	void setData(IPet pet, PetData pd, boolean b);
 }

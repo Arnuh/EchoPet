@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public enum PetDataCategory{
-	CAT_TYPE(Material.SALMON, "Cat Type", PetData.TABBY, PetData.TUXEDO, PetData.RED, PetData.SIAMESE, PetData.BRITISH_SHORTHAIR, PetData.CALICO, PetData.PERSIAN, PetData.RAGDOLL, PetData.WHITE, PetData.JELLIE, PetData.BLACK),
+	CAT_TYPE(Material.SALMON, "Cat Type", PetData.TABBY, PetData.TUXEDO, PetData.CAT_RED, PetData.SIAMESE, PetData.BRITISH_SHORTHAIR, PetData.CALICO, PetData.PERSIAN, PetData.RAGDOLL, PetData.CAT_WHITE, PetData.JELLIE, PetData.CAT_BLACK),
 	OCELOT_TYPE(Material.WHITE_WOOL, "Ocelot Type"),
 	WOOL_COLOR(Material.WHITE_WOOL, "Wool Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	COLLAR_COLOR(Material.WHITE_WOOL, "Collar Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
@@ -71,7 +71,7 @@ public enum PetDataCategory{
 	}
 	
 	public ItemStack getItem(){
-		if(item == null){
+		if(item == null && material != null){
 			item = new ItemStack(material);
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName(ChatColor.RED + name);

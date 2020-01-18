@@ -23,9 +23,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.MAGMACUBE)
-public class MagmaCubePet extends SlimePet implements IMagmaCubePet {
-
-    public MagmaCubePet(Player owner) {
-        super(owner);
-    }
+public class MagmaCubePet extends SlimePet implements IMagmaCubePet{
+	
+	public MagmaCubePet(Player owner){
+		super(owner);
+	}
 }

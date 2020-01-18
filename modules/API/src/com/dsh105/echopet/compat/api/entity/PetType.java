@@ -36,8 +36,9 @@ import org.bukkit.entity.Player;
 public enum PetType{
 	
 	BAT("Bat", "Bat Pet", "bat"),
+	BEE("Bee", "Bee Pet", "bee", new Version("1.15-R1"), PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
-	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}, PetData.TAMED),
+	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}),
 	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
 	CHICKEN("Chicken", "Chicken Pet", "chicken"),
 	COD("Cod", "Cod Pet", "cod"),
@@ -51,7 +52,7 @@ public enum PetType{
 	ENDERMAN("Enderman", "Enderman Pet", "enderman", PetData.SCREAMING),
 	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
-	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
+	FOX("Fox", "Fox Pet", "fox", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
@@ -65,16 +66,16 @@ public enum PetType{
 	MULE("Mule", "Mule Pet", "mule", PetData.SADDLE),
 	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom", new PetDataCategory[]{PetDataCategory.MUSHROOMCOW_TYPE}),
 	OCELOT("Ocelot", "Ocelot Pet", "ocelot"),
-	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
+	PANDA("Panda", "Panda Pet", "panda", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),
 	PHANTOM("Phantom", "Phantom Pet", "phantom"),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
 	PIGZOMBIE("PigZombie", "Pig Zombie Pet", "zombie_pigman"),
-	PILLAGER("Pillager", "Pillager Pet", "pillager"),
+	PILLAGER("Pillager", "Pillager Pet", "pillager", new Version("1.14-R1")),
 	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.STANDING_UP),
 	PUFFERFISH("PufferFish", "PufferFish Pet", "pufferfish", new PetDataCategory[]{PetDataCategory.PUFFERFISH_SIZE}),
 	RABBIT("Rabbit", "Rabbit Pet", "rabbit", new PetDataCategory[]{PetDataCategory.RABBIT_TYPE}),
-	RAVAGER("Ravager", "Ravager Pet", "ravager"),
+	RAVAGER("Ravager", "Ravager Pet", "ravager", new Version("1.14-R1")),
 	SALMON("Salmon", "Salmon Pet", "salmon"),
 	SHEEP("Sheep", "Sheep Pet", "sheep", new PetDataCategory[]{PetDataCategory.WOOL_COLOR}, PetData.SHEARED),
 	SHULKER("Shulker", "Shulker Pet", "shulker"),
@@ -86,17 +87,17 @@ public enum PetType{
 	SPIDER("Spider", "Spider Pet", "spider"),
 	SQUID("Squid", "Squid Pet", "squid"),
 	STRAY("Stray", "Stray Pet", "stray"),
-	TRADERLLAMA("TraderLlama", "Trader Llama Pet", "trader_llama", new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
+	TRADERLLAMA("TraderLlama", "Trader Llama Pet", "trader_llama", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
 	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish", new PetDataCategory[]{PetDataCategory.TROPICAL_FISH_PATTERN, PetDataCategory.TROPICAL_FISH_COLOR, PetDataCategory.TROPICAL_FISH_PATTERN_COLOR}, PetData.SIZE_LARGE),
 	TURTLE("Turtle", "Turtle Pet", "turtle"),
 	VEX("Vex", "Vex Pet", "vex", PetData.POWERED),
 	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
-	WANDERINGTRADER("WanderingTrader", "Wandering Trader Pet", "wandering_trader"),
+	WANDERINGTRADER("WanderingTrader", "Wandering Trader Pet", "wandering_trader", new Version("1.14-R1")),
 	WITCH("Witch", "Witch Pet", "witch"),
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
-	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.TAMED, PetData.ANGRY),
+	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.ANGRY),
 	ZOMBIE("Zombie", "Zombie Pet", "zombie"),
 	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", PetData.SADDLE),
 	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
@@ -168,8 +169,13 @@ public enum PetType{
 		if(clazz != null){
 			if(IAgeablePet.class.isAssignableFrom(clazz)){
 				this.allowedData.add(PetData.BABY);
-			}else if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
+			}
+			if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
 				this.allowedData.add(PetData.CHESTED);
+			}
+			if(ITameablePet.class.isAssignableFrom(clazz)){
+				this.allowedData.add(PetData.SIT);
+				this.allowedData.add(PetData.TAMED);
 			}
 		}
 		if(allowedData != null){
@@ -185,7 +191,7 @@ public enum PetType{
 	}
 	
 	public String getDefaultName(String name){
-		return EchoPet.getConfig().getString("pets." + this.toString().toLowerCase().replace("_", "") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+		return EchoPet.getConfig().getString("pets." + getConfigKeyName() + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
 	}
 	
 	public String getDefaultName(){
@@ -244,11 +250,18 @@ public enum PetType{
 		return version.isCompatible(new Version());
 	}
 	
+	/**
+	 * @return String used for both configs & permissions to identify this pet.
+	 */
+	public String getConfigKeyName(){
+		return name().toLowerCase().replace("_", "");
+	}
+	
 	private static void outputInfo(){
 		String[] petTypes = new String[PetType.values().length];
 		int pos = 0;
 		for(PetType type : PetType.values()){
-			petTypes[pos++] = type.name().toLowerCase();
+			petTypes[pos++] = type.getConfigKeyName();
 		}
 		Arrays.sort(petTypes);
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File("perms.yml")))){
@@ -263,18 +276,18 @@ public enum PetType{
 			for(String petTypeName : petTypes){
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				for(PetData data : petType.getAllowedDataTypes()){
-					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ":\n");
 					bw.write("        default: op\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
 					for(PetData data : category.getData()){
-						if(alreadyHad.contains(data.getConfigOptionString())){
-							System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
+						if(alreadyHad.contains(data.getConfigKeyName())){
+							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from data " + data + " and category " + category);
 							continue;
 						}
-						alreadyHad.add(data.getConfigOptionString());
-						bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ":\n");
+						alreadyHad.add(data.getConfigKeyName());
+						bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ":\n");
 						bw.write("        default: op\n");
 					}
 				}
@@ -321,7 +334,7 @@ public enum PetType{
 			bw.write("        description: 'All hat permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.HAT.getConfigOptionString() + ": true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.HAT.getConfigKeyName() + ": true\n");
 			}
 			//
 			bw.write("    echopet.pet.ride.*:\n");
@@ -329,7 +342,7 @@ public enum PetType{
 			bw.write("        description: 'All ride permissions'\n");
 			bw.write("        children:\n");
 			for(String petTypeName : petTypes){
-				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.RIDE.getConfigOptionString() + ": true\n");
+				bw.write("            echopet.pet.type." + petTypeName + "." + PetData.RIDE.getConfigKeyName() + ": true\n");
 			}
 			//
 			bw.write("    echopet.pet.baby.*:\n");
@@ -339,7 +352,7 @@ public enum PetType{
 			for(String petTypeName : petTypes){
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				if(petType.getAllowedDataTypes().contains(PetData.BABY)){
-					bw.write("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigOptionString() + ": true\n");
+					bw.write("            echopet.pet.type." + petTypeName + "." + PetData.BABY.getConfigKeyName() + ": true\n");
 				}
 			}
 			//
@@ -396,17 +409,17 @@ public enum PetType{
 				bw.write("        children:\n");
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
 				for(PetData data : petType.getAllowedDataTypes()){
-					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ": true\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
 					for(PetData data : category.getData()){
-						if(alreadyHad.contains(data.getConfigOptionString())){
+						if(alreadyHad.contains(data.getConfigKeyName())){
 							//System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
 						}
-						alreadyHad.add(data.getConfigOptionString());
-						bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigOptionString() + ": true\n");
+						alreadyHad.add(data.getConfigKeyName());
+						bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ": true\n");
 					}
 				}
 			}

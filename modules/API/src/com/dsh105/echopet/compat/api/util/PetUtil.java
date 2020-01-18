@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
@@ -52,10 +53,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PetUtil{
-	
-	public static String getPetPerm(PetType petType){
-		return petType.toString().toLowerCase().replace("_", "");
-	}
 	
 	public static PetStorage formPetFromArgs(CommandSender sender, String s, boolean petAdmin){
 		String petString = s;
@@ -204,30 +201,18 @@ public class PetUtil{
 		
 		return new PetStorage(petDataList, petType, name);
 	}
-
-	/*private static boolean isPetType(String s) {
-        try {
-			PetType.valueOf(s.toUpperCase());
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}*/
 	
 	private static boolean isPetDataType(String s){
 		try{
-			PetData data = PetData.valueOf(s.toUpperCase());
-			if(data == null){
-				PetData.valueOf(s.toUpperCase() + "_");
-			}
+			PetData.valueOf(s.toUpperCase());
 			return true;
 		}catch(Exception e){
 			return false;
 		}
 	}
 	
-	public static ArrayList<String> generatePetInfo(IPet pt){
-		ArrayList<String> info = new ArrayList<String>();
+	public static List<String> generatePetInfo(IPet pt){
+		List<String> info = new ArrayList<String>();
 		info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(pt.getPetType().toString()));
 		info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + pt.getPetName());
 		if(pt instanceof IAgeablePet){
@@ -249,8 +234,8 @@ public class PetUtil{
 		return info;
 	}
 	
-	public static ArrayList<String> generatePetDataInfo(IPet pt){
-		ArrayList<String> info = new ArrayList<String>();
+	public static List<String> generatePetDataInfo(IPet pt){
+		List<String> info = new ArrayList<String>();
 		if(pt.getPetType() == PetType.BLAZE){
 			info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + ((IBlazePet) pt).isOnFire());
 		}
@@ -359,8 +344,8 @@ public class PetUtil{
 		return info;
 	}
 	
-	public static ArrayList<String> getPetList(CommandSender sender, boolean petAdmin){
-		ArrayList<String> list = new ArrayList<String>();
+	public static List<String> getPetList(CommandSender sender, boolean petAdmin){
+		List<String> list = new ArrayList<String>();
 		String admin = petAdmin ? "admin" : "";
 		for(PetType pt : PetType.values()){
 			ChatColor color1 = ChatColor.GREEN;
@@ -368,7 +353,7 @@ public class PetUtil{
 			String separator = ", ";
 			if(sender instanceof Player){
 				
-				if(!sender.hasPermission("echopet.pet" + admin + ".type." + pt.toString().toLowerCase().replace("_", ""))){
+				if(!sender.hasPermission("echopet.pet" + admin + ".type." + pt.getConfigKeyName())){
 					color1 = ChatColor.RED;
 					color2 = ChatColor.DARK_RED;
 				}
@@ -408,30 +393,30 @@ public class PetUtil{
 		return list;
 	}
 	
-	public static String dataToString(ArrayList<PetData> data){
+	public static String dataToString(List<PetData> data){
 		if(data.isEmpty()){
 			return null;
 		}
 		StringBuilder builder = new StringBuilder();
 		for(PetData pd : data){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
 		builder.deleteCharAt(builder.length() - 2);
 		return builder.toString();
 	}
 	
-	public static String dataToString(ArrayList<PetData> data, ArrayList<PetData> riderData){
+	public static String dataToString(List<PetData> data, List<PetData> riderData){
 		if(data.isEmpty()){
 			return null;
 		}
 		StringBuilder builder = new StringBuilder();
 		for(PetData pd : data){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
 		for(PetData pd : riderData){
-			builder.append(pd.getConfigOptionString());
+			builder.append(pd.getConfigKeyName());
 			builder.append("(Rider), ");
 		}
 		builder.deleteCharAt(builder.length() - 2);

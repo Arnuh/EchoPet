@@ -16,13 +16,9 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
-import java.util.UUID;
-
 public interface IEntityTameablePet extends IEntityAgeablePet{
-	
-	void setTamed(boolean flag);
 	
 	void setSitting(boolean sitting);
 	
-	void setOwnerUUID(UUID owner);
+	void setTamed(boolean tamed);
 }

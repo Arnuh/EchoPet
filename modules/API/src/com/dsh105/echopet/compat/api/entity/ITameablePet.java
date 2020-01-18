@@ -16,9 +16,11 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
-public interface ITameablePet{
+public interface ITameablePet extends IAgeablePet{
 	
-	void setTamed(boolean flag);
+	void setSitting(boolean sitting);
+	
+	void setTamed(boolean tamed);
 	
 	boolean isTamed();
 }

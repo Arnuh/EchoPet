@@ -25,22 +25,22 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SLIME)
-public class SlimePet extends Pet implements ISlimePet {
-
-    int size;
-
-    public SlimePet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setSize(int i) {
-        ((IEntitySlimePet) getEntityPet()).setSize(i);
-        this.size = i;
-    }
-
-    @Override
-    public int getSize() {
-        return this.size;
-    }
+public class SlimePet extends Pet implements ISlimePet{
+	
+	private int size = 1;
+	
+	public SlimePet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setSize(int i){
+		((IEntitySlimePet) getEntityPet()).setSize(i);
+		this.size = i;
+	}
+	
+	@Override
+	public int getSize(){
+		return this.size;
+	}
 }

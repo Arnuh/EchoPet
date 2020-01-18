@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
@@ -141,9 +142,17 @@ public enum PetData{
 		if(pet.getPetType().equals(PetType.WOLF)){
 			((IWolfPet) pet).setAngry(flag);
 			return true;
+		}else if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setAngry(flag);
+			return true;
 		}
 		return false;
-	}, Material.BONE, "Angry"),
+	}, pet->{
+		if(pet.getPetType().equals(PetType.WOLF)){
+			return Material.PORKCHOP;
+		}
+		return Material.STONE_SWORD;//Bee
+	}, "Angry"),
 	CHESTED("chest", (player, pet, category, flag)->{
 		if(pet instanceof IHorseChestedAbstractPet){
 			((IHorseChestedAbstractPet) pet).setChested(flag);
@@ -157,6 +166,9 @@ public enum PetData{
 			return true;
 		}else if(pet.getPetType().equals(PetType.PANDA)){
 			((IPandaPet) pet).setSitting(flag);
+			return true;
+		}else if(pet instanceof ITameablePet){
+			((ITameablePet) pet).setSitting(flag);
 			return true;
 		}
 		return false;
@@ -181,7 +193,7 @@ public enum PetData{
 			return true;
 		}
 		return false;
-	}, Material.RABBIT, "Head Tilt"),
+	}, Material.RABBIT, "Pounce"),
 	SLEEP("sleep", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
 			((IFoxPet) pet).setSleeping(flag);
@@ -210,36 +222,47 @@ public enum PetData{
 		}
 		return false;
 	}, Material.CAKE, "Lay Down"),
-	
-	//
+	//Bee
+	STINGER("stinger", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setHasStung(flag);//"stinger" and "has stun" are kinda flipped but it's better than an item called "Stun" or "Has Stun"
+			return true;
+		}else return false;
+	}, Material.POISONOUS_POTATO, "Stinger"),
+	NECTAR("nectar", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.BEE)){
+			((IBeePet) pet).setHasNectar(flag);
+			return true;
+		}else return false;
+	}, Material.getMaterial("HONEY_BOTTLE"), "Nectar"),//HONEYCOMB ?
 	SIZE_SMALL("size_small", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 1);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 0);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Small"),
 	SIZE_MEDIUM("size_medium", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 2);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 1);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
 		return Material.SLIME_BALL;
 	}, "Medium"),
 	SIZE_LARGE("size_large", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.SLIME)){
+		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 4);
 		}else if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return setPufferFishState(pet, 2);
@@ -247,7 +270,7 @@ public enum PetData{
 			return setTropicalFishLarge(pet, flag);
 		}
 		return false;
-	}, (pet)->{
+	}, pet->{
 		if(pet.getPetType().equals(PetType.PUFFERFISH)){
 			return Material.PUFFERFISH;
 		}
@@ -261,7 +284,7 @@ public enum PetData{
 		}
 		return false;
 	}, Material.YELLOW_WOOL, "Creamy"),
-	// Colors. Used for Collars(wolf), Sheep, Llama Color, and certain Rabbit Types.
+	// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, and certain Rabbit Types.
 	WHITE("white", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.WHITE);
@@ -269,11 +292,8 @@ public enum PetData{
 			return setHorseColor(pet, Horse.Color.WHITE);
 		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			return setLlamaColor(pet, Llama.Color.WHITE);
-		}else if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.White);
-		}else{
-			return setColorByDye(pet, category, DyeColor.WHITE);
 		}
+		return setColorByDye(pet, category, DyeColor.WHITE);
 	}, Material.WHITE_WOOL, "White"),
 	ORANGE("orange", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.ORANGE);
@@ -325,17 +345,14 @@ public enum PetData{
 			return setGene(pet, category, PandaGene.Brown);
 		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
 			return setMushroomCowType(pet, MushroomCowType.Brown);
-		}else{
-			return setColorByDye(pet, category, DyeColor.BROWN);
 		}
+		return setColorByDye(pet, category, DyeColor.BROWN);
 	}, Material.BROWN_WOOL, "Brown"),
 	GREEN("green", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.GREEN);
 	}, Material.GREEN_WOOL, "Green"),
 	RED("red", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.Red);
-		}else if(pet.getPetType().equals(PetType.FOX)){
+		if(pet.getPetType().equals(PetType.FOX)){
 			return setFoxType(pet, FoxType.Red);
 		}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
 			return setMushroomCowType(pet, MushroomCowType.Red);
@@ -347,11 +364,8 @@ public enum PetData{
 			return setRabbitType(pet, Rabbit.Type.BLACK);
 		}else if(pet.getPetType().equals(PetType.HORSE)){
 			return setHorseColor(pet, Horse.Color.BLACK);
-		}else if(pet.getPetType().equals(PetType.CAT)){
-			return setCatType(pet, CatType.AllBlack);
-		}else{
-			return setColorByDye(pet, category, DyeColor.BLACK);
 		}
+		return setColorByDye(pet, category, DyeColor.BLACK);
 	}, Material.BLACK_WOOL, "Black"),
 	// Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
 	WHITE_CARPET("white_carpet", (player, pet, category, flag)->{
@@ -617,12 +631,17 @@ public enum PetData{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Black);
 		}else return false;
-	}, Material.WHITE_CARPET, "Tuxedo"),
+	}, Material.OBSIDIAN, "Tuxedo"),
+	CAT_RED("cat_red", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Red);
+		}else return false;
+	}, Material.RED_WOOL, "Red"),
 	SIAMESE("siamese", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Siamese);
 		}else return false;
-	}, Material.BROWN_CARPET, "Siamese"),
+	}, Material.BROWN_WOOL, "Siamese"),
 	BRITISH_SHORTHAIR("british_shorthair", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.BritishShortHair);
@@ -643,11 +662,21 @@ public enum PetData{
 			return setCatType(pet, CatType.Ragdoll);
 		}else return false;
 	}, Material.WHITE_CARPET, "Ragdoll"),
+	CAT_WHITE("cat_white", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.White);
+		}else return false;
+	}, Material.WHITE_WOOL, "White"),
 	JELLIE("jellie", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.CAT)){
 			return setCatType(pet, CatType.Jellie);
 		}else return false;
 	}, Material.GRAY_WOOL, "Jellie"),
+	CAT_BLACK("cat_black", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.CAT)){
+			return setCatType(pet, CatType.Black);
+		}else return false;
+	}, Material.BLACK_WOOL, "Black"),
 	// Fox Type, Red is just normal red wool.
 	SNOW("snow", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.FOX)){
@@ -689,7 +718,7 @@ public enum PetData{
 	
 	public static final PetData[] values = values();
 	
-	private String configOptionString;
+	private String configKeyName;
 	private Version version;
 	private VersionCheckType versionCheckType;
 	private PetDataAction action;
@@ -697,31 +726,29 @@ public enum PetData{
 	private String name;
 	private List<String> lore;
 	
-	PetData(String configOptionString, PetDataAction action, Material material, String name, String... loreArray){
-		this(configOptionString, action, (pet)->{
-			return material;
-		}, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+	PetData(String configKeyName, PetDataAction action, Material material, String name, String... loreArray){
+		this(configKeyName, action, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	PetData(String configOptionString, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
-		this(configOptionString, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+	PetData(String configKeyName, PetDataAction action, PetDataMaterial material, String name, String... loreArray){
+		this(configKeyName, action, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	PetData(String configOptionString, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
-		this.configOptionString = configOptionString;
+	PetData(String configKeyName, PetDataAction action, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+		this.configKeyName = configKeyName;//Should probably generate this from name().toLowerCase() ?
 		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
 		this.name = name;
-		lore = new ArrayList<>();
+		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add(ChatColor.GOLD + s);
 		}
 	}
 	
-	public String getConfigOptionString(){
-		return this.configOptionString;
+	public String getConfigKeyName(){
+		return this.configKeyName;
 	}
 	
 	public PetDataAction getAction(){
@@ -730,6 +757,10 @@ public enum PetData{
 	
 	public String getItemName(){
 		return name;
+	}
+	
+	public boolean ignoreSaving(){
+		return this == PetData.RIDE || this == PetData.HAT;
 	}
 	
 	public ItemStack toItem(IPet pet){
