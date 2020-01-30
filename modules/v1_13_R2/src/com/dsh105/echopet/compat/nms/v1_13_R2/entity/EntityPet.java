@@ -72,7 +72,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 	public PetGoalSelector petGoalSelector;
 	protected Field FIELD_JUMP = null;
 	protected double jumpHeight;
-	protected float rideSpeed;
+	protected float rideSpeed, flySpeed;
 	public EntityLiving goalTarget = null;
 	public boolean shouldVanish;
 	
@@ -101,6 +101,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		// this.setHealth((float) pet.getPetType().getMaxHealth());
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
+		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
 		this.setPathfinding();
 	}
 	
@@ -421,20 +422,14 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
-		/*
-		 * Search for 'getBoolean("NoAI")'. in EntityInsentient few methods down
-		  public void k(float f) {
-		    super.k(f);
-		    n(f);
-		  }
-		 */
 		
-		this.o(this.rideSpeed);// before "looting" methodProfiler
-		super.a(sideMot, forwMot, upMot);
 		PetType pt = this.getPet().getPetType();
+		float speed = rideSpeed;
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
-				// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
+				if(!onGround){
+					speed = flySpeed;
+				}
 				try{
 					if(((Player) (passenger.getBukkitEntity())).isFlying()){
 						((Player) (passenger.getBukkitEntity())).setFlying(false);
@@ -446,11 +441,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 							this.motY = 0.5F;
 						}
 					}
-				}catch(IllegalArgumentException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
-				}catch(IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
-				}catch(IllegalStateException e){
+				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
 					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
 				}
 			}else if(this.onGround){
@@ -463,15 +454,13 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 							doJumpAnimation();
 						}
 					}
-				}catch(IllegalArgumentException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
-				}catch(IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
-				}catch(IllegalStateException e){
+				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
 					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
 				}
 			}
 		}
+		this.o(this.rideSpeed);// before "looting" methodProfiler
+		super.a(sideMot, forwMot, upMot);
 	}
 	
 	protected SoundEffect F(){

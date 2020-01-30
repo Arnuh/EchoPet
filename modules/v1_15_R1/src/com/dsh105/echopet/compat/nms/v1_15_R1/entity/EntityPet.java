@@ -84,7 +84,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	public PetGoalSelector petGoalSelector;
 	protected Field FIELD_JUMP = null;
 	protected double jumpHeight;
-	protected float rideSpeed;
+	protected float rideSpeed, flySpeed;
 	public EntityLiving goalTarget = null;
 	public boolean shouldVanish;
 	
@@ -113,6 +113,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		// this.setHealth((float) pet.getPetType().getMaxHealth());
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
+		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
 		this.setPathfinding();
 	}
 	
@@ -435,9 +436,12 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
 		PetType pt = this.getPet().getPetType();
+		float speed = rideSpeed;
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
-				// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
+				if(!onGround){
+					speed = flySpeed;
+				}
 				try{
 					if(((Player) (passenger.getBukkitEntity())).isFlying()){
 						((Player) (passenger.getBukkitEntity())).setFlying(false);
@@ -446,8 +450,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
-							motY = 0.5F;
-							setMot(motion.x, motY, motion.z);
+							setMot(getMot().x, 0.5F, getMot().z);
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
@@ -459,8 +462,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
-							motY = rideEvent.getJumpHeight();
-							setMot(motion.x, motY, motion.z);
+							setMot(getMot().x, rideEvent.getJumpHeight(), getMot().z);
 							doJumpAnimation();
 						}
 					}
@@ -471,7 +473,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 		//Could just check if motY != 0.0 and do setMot for jumps?
 		//getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).getValue() for horses?
-		this.o(this.rideSpeed);// before "looting" methodProfiler
+		this.o(speed);// before "looting" methodProfiler
 		super.e(new Vec3D(motX, motY, motZ));
 	}
 	

@@ -78,6 +78,10 @@ public class ConfigOptions extends Options{
 		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
 	}
 	
+	public float getFlySpeed(PetType petType){
+		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".flySpeed", 0.5D);
+	}
+	
 	public double getRideJumpHeight(PetType petType){
 		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideJump", 0.6D);
 	}
@@ -227,12 +231,13 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".attack.health", petType.getMaxHealth());*/
 			
 			set("pets." + configOption + ".rideSpeed", 0.2D);
+			set("pets." + configOption + ".flySpeed", 0.5D);
 			set("pets." + configOption + ".jumpHeight", 0.6D);
 			
 			set("pets." + configOption + ".ignoreFallDamage", true);
 			
 			// if(petType != PetType.ENDERDRAGON){
-			boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX);
+			boolean canFly = (petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX);
 			set("pets." + configOption + ".canFly", canFly);
 			set("pets." + configOption + ".allow.riders", true);
 			// }
