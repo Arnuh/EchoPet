@@ -21,14 +21,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.config.YAMLConfigManager;
@@ -43,18 +35,34 @@ import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.particle.Trails;
-import com.dsh105.echopet.compat.api.plugin.*;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
+import com.dsh105.echopet.compat.api.plugin.IPetManager;
+import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
+import com.dsh105.echopet.compat.api.plugin.ModuleLogger;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
-import com.dsh105.echopet.compat.api.util.*;
+import com.dsh105.echopet.compat.api.util.ISpawnUtil;
+import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.Logger;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
+import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.DumperOptions;
 
 public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
 
@@ -196,8 +204,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         mainConfig.reloadConfig();
 
         try {
-            petConfig = this.configManager.getNewConfig("pets.yml");
-            petConfig.reloadConfig();
+	        petConfig = this.configManager.getNewConfig("pets.yml");
+	        petConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
+	        petConfig.reloadConfig();
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
         }
@@ -441,6 +450,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         return size;
     }
 
+	@Override
 	public Trails getTrailManager(){
 		return trailManager;
 	}

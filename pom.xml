@@ -14,20 +14,21 @@
   ~
   ~ You should have received a copy of the GNU General Public License
   ~ along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.dsh105</groupId>
-  <artifactId>EchoPet-Parent</artifactId>
-  <name>EchoPet-Parent</name>
-  <packaging>pom</packaging>
-  <version>1</version>
-  <modules>
-	<module>./modules/API</module>
-	<module>./modules/EchoPet</module>
-    <module>./modules/v1_13_R2</module>
-    <module>./modules/v1_14_R1</module>
-	<module>./modules/v1_15_R1</module>
-  </modules>
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.dsh105</groupId>
+    <artifactId>EchoPet-Parent</artifactId>
+    <name>EchoPet-Parent</name>
+    <packaging>pom</packaging>
+    <version>1</version>
+    <modules>
+        <module>./modules/API</module>
+        <module>./modules/EchoPet</module>
+        <module>./modules/v1_13_R2</module>
+        <module>./modules/v1_14_R1</module>
+        <module>./modules/v1_15_R1</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -64,15 +65,15 @@
             <version>0.8.0.RELEASE</version>
         </dependency>
         <dependency>
-        	<groupId>com.codingforcookies</groupId>
-        	<artifactId>robert</artifactId>
-        	<version>1.0</version>
-			<exclusions>
-			  <exclusion>
-				<artifactId>spigot-api</artifactId>
-				<groupId>org.spigotmc</groupId>
-			  </exclusion>
-	        </exclusions>
+            <groupId>com.codingforcookies</groupId>
+            <artifactId>robert</artifactId>
+            <version>1.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spigot-api</artifactId>
+                    <groupId>org.spigotmc</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -86,8 +87,8 @@
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
         <repository>
-        	<id>sk89q-repo</id>
-        	<url>http://maven.sk89q.com/repo/</url>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
 
@@ -105,39 +106,39 @@
             </resource>
         </resources>
         <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-assembly-plugin</artifactId>
-              <version>2.6</version>
-          </plugin>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-jar-plugin</artifactId>
-              <version>2.4</version>
-          </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.1.1</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <finalName>${project.artifactId}-shaded</finalName>
-                        <artifactSet>
-                            <includes>
-                                <include>com.dsh105:*</include>
-                                <include>com.captainbern:*</include>
-                                <include>resources:*</include>
-                            </includes>
-                        </artifactSet>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-shaded</finalName>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.dsh105:*</include>
+                                    <include>com.captainbern:*</include>
+                                    <include>resources:*</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
