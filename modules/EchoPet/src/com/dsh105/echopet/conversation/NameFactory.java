@@ -22,17 +22,9 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;
 
-public class NameFactory {
-
-    public static void askForName(Conversable whom, IPet pet, boolean admin) {
-        new ConversationFactory(EchoPet.getPlugin())
-                .withModality(true)
-                .withLocalEcho(false)
-                .withPrefix(new NameConversationPrefix())
-                .withTimeout(90)
-                .withFirstPrompt(new NamePrompt(pet, admin))
-                .withEscapeSequence("exit")
-                .withEscapeSequence("quit")
-                .buildConversation(whom).begin();
-    }
+public class NameFactory{
+	
+	public static void askForName(Conversable whom, IPet pet, boolean admin){
+		new ConversationFactory(EchoPet.getPlugin()).withModality(true).withLocalEcho(false).withPrefix(new NameConversationPrefix()).withTimeout(90).withFirstPrompt(new NamePrompt(pet, admin)).withEscapeSequence("exit").withEscapeSequence("quit").buildConversation(whom).begin();
+	}
 }

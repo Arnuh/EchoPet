@@ -17,69 +17,68 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.api.pet.PacketPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHumanPet;
 import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.HUMAN)
-public class HumanPet extends PacketPet implements IHumanPet {
-
-    public HumanPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setEquipment(Material material) {
+public class HumanPet extends PacketPet implements IHumanPet{
+	
+	public HumanPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setEquipment(Material material){
 		((IEntityHumanPet) this.getEntityPet()).setEquipment(material);
-    }
-
-    @Override
-    public Material getEquipment() {
+	}
+	
+	@Override
+	public Material getEquipment(){
 		return ((IEntityHumanPet) this.getEntityPet()).getEquipment();
-    }
-
-    @Override
-    public boolean setPetName(String name, boolean sendFailMessage) {
-        name = name.length() > 16 ? name.substring(0, 16) : name;
-        boolean success = super.setPetName(name, sendFailMessage);
-        this.updateName(name);
-        return success;
-    }
-
-    @Override
-    public boolean setPetName(String name) {
-        name = name.length() > 16 ? name.substring(0, 16) : name;
-        boolean success = super.setPetName(name);
-        this.updateName(name);
-        return success;
-    }
-
-    private void updateName(String name) {
-        if (this.getEntityPet() == null) {
-            return;
-        }
-        if (this.getEntityPet().hasInititiated()) {
-            this.getEntityPet().updatePosition();
-        }
-        IEntityHumanPet human = (IEntityHumanPet) this.getEntityPet();
-        if (human.getGameProfile() != null) {
-            human.setGameProfile(WrappedGameProfile.getNewProfile(human.getGameProfile(), name));
-        }
-    }
-
-    @Override
-    public boolean teleport(Location to) {
-        boolean success = super.teleport(to);
-        if (this.getEntityPet().hasInititiated()) {
-            this.getEntityPet().updatePosition();
-        }
-        return success;
-    }
+	}
+	
+	@Override
+	public boolean setPetName(String name, boolean sendFailMessage){
+		name = name.length() > 16 ? name.substring(0, 16) : name;
+		boolean success = super.setPetName(name, sendFailMessage);
+		this.updateName(name);
+		return success;
+	}
+	
+	@Override
+	public boolean setPetName(String name){
+		name = name.length() > 16 ? name.substring(0, 16) : name;
+		boolean success = super.setPetName(name);
+		this.updateName(name);
+		return success;
+	}
+	
+	private void updateName(String name){
+		if(this.getEntityPet() == null){
+			return;
+		}
+		if(this.getEntityPet().hasInititiated()){
+			this.getEntityPet().updatePosition();
+		}
+		IEntityHumanPet human = (IEntityHumanPet) this.getEntityPet();
+		if(human.getGameProfile() != null){
+			human.setGameProfile(WrappedGameProfile.getNewProfile(human.getGameProfile(), name));
+		}
+	}
+	
+	@Override
+	public boolean teleport(Location to){
+		boolean success = super.teleport(to);
+		if(this.getEntityPet().hasInititiated()){
+			this.getEntityPet().updatePosition();
+		}
+		return success;
+	}
 }

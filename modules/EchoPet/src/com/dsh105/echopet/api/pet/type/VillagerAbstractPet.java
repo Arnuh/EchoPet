@@ -17,13 +17,12 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerAbstractPet;
+import org.bukkit.entity.Player;
 
 public class VillagerAbstractPet extends AgeablePet implements IVillagerAbstractPet{
-
+	
 	public VillagerAbstractPet(Player owner){
 		super(owner);
 	}

@@ -25,22 +25,22 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IChickenPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CHICKEN)
-public class ChickenPet extends Pet implements IChickenPet {
-
-    boolean baby;
-
-    public ChickenPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setBaby(boolean flag) {
-        ((IEntityChickenPet) getEntityPet()).setBaby(flag);
-        this.baby = flag;
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.baby;
-    }
+public class ChickenPet extends Pet implements IChickenPet{
+	
+	boolean baby;
+	
+	public ChickenPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setBaby(boolean flag){
+		((IEntityChickenPet) getEntityPet()).setBaby(flag);
+		this.baby = flag;
+	}
+	
+	@Override
+	public boolean isBaby(){
+		return this.baby;
+	}
 }

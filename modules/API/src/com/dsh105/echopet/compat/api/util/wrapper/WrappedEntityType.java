@@ -19,20 +19,20 @@ package com.dsh105.echopet.compat.api.util.wrapper;
 
 import org.bukkit.entity.EntityType;
 
-public class WrappedEntityType {
-
-    private final String entityTypeName;
-
-    public WrappedEntityType(String entityTypeName) {
-        this.entityTypeName = entityTypeName;
-    }
-
-    public EntityType get() {
-        try {
-            return EntityType.valueOf(this.entityTypeName);
-        } catch (Exception exception) {
-            return null;
-        }
-    }
-
+public class WrappedEntityType{
+	
+	private final String entityTypeName;
+	
+	public WrappedEntityType(String entityTypeName){
+		this.entityTypeName = entityTypeName;
+	}
+	
+	public EntityType get(){
+		try{
+			return EntityType.valueOf(this.entityTypeName);
+		}catch(Exception exception){
+			return null;
+		}
+	}
+	
 }

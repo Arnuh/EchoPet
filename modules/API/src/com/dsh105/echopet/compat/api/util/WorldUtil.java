@@ -17,9 +17,6 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
-
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -29,21 +26,23 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 
-public class WorldUtil {
-
+public class WorldUtil{
+	
 	public static boolean allowPets(Location location){
 		boolean allowWorld = EchoPet.getPlugin().getMainConfig().getBoolean("worlds." + location.getWorld().getName(), EchoPet.getPlugin().getMainConfig().getBoolean("worlds.enableByDefault", true));
 		return allowWorld && allowRegion(location);
 	}
-
+	
 	public static boolean allowRegion(Location location){
 		if(EchoPet.getPlugin().getWorldGuardProvider().isHooked()){
 			WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();// is this even used in worldguard anymore? Keeping it cause it's how we hook
 			if(wg == null){
 				return true;
 			}
-
+			
 			WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
 			RegionContainer container = platform.getRegionContainer();
 			RegionManager regionManager = container.get(BukkitAdapter.adapt(location.getWorld()));
@@ -51,17 +50,17 @@ public class WorldUtil {
 				return true;
 			}
 			ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
-
+			
 			if(set.size() <= 0){
 				return true;
 			}
-
+			
 			boolean result = true;
 			boolean hasSet = false;
 			boolean def = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
-
+			
 			ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
-
+			
 			for(ProtectedRegion region : set){
 				for(String key : cs.getKeys(false)){
 					if(!key.equalsIgnoreCase("allowByDefault") && !key.equalsIgnoreCase("regionEnterCheck")){
@@ -74,7 +73,7 @@ public class WorldUtil {
 					}
 				}
 			}
-
+			
 			return hasSet ? result : def;
 		}
 		return true;

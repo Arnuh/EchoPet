@@ -26,15 +26,15 @@ import net.minecraft.server.v1_13_R2.World;
 @EntitySize(width = 0.95F, height = 0.95F)
 @EntityPetType(petType = PetType.SQUID)
 public class EntitySquidPet extends EntityPet implements IEntitySquidPet{
-
+	
 	public EntitySquidPet(World world){
 		super(EntityTypes.SQUID, world);
 	}
-
+	
 	public EntitySquidPet(World world, IPet pet){
 		super(EntityTypes.SQUID, world, pet);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;

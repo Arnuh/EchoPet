@@ -17,21 +17,21 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
-public class PetGoalSelectorItem {
-
-    private PetGoal petGoal;
-    private int priority;
-
-    public PetGoalSelectorItem(int priority, PetGoal goal) {
-        this.petGoal = goal;
-        this.priority = priority;
-    }
-
-    public PetGoal getPetGoal() {
-        return petGoal;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
+public class PetGoalSelectorItem{
+	
+	private PetGoal petGoal;
+	private int priority;
+	
+	public PetGoalSelectorItem(int priority, PetGoal goal){
+		this.petGoal = goal;
+		this.priority = priority;
+	}
+	
+	public PetGoal getPetGoal(){
+		return petGoal;
+	}
+	
+	public int getPriority(){
+		return priority;
+	}
 }

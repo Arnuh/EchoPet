@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICaveSpiderPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CAVESPIDER)
-public class CaveSpiderPet extends Pet implements ICaveSpiderPet {
-
-    public CaveSpiderPet(Player owner) {
-        super(owner);
-    }
+public class CaveSpiderPet extends Pet implements ICaveSpiderPet{
+	
+	public CaveSpiderPet(Player owner){
+		super(owner);
+	}
 }

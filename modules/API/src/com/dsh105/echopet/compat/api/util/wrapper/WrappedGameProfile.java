@@ -19,62 +19,61 @@ package com.dsh105.echopet.compat.api.util.wrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
-
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
-public class WrappedGameProfile extends AbstractWrapper {
-
+public class WrappedGameProfile extends AbstractWrapper{
+	
 	private WrappedGameProfile(Object ident, String name){
-        Class<?> gameProfileClass = null;
-        try {
-            gameProfileClass = Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
-        } catch (ClassNotFoundException e) {
-            try {
-                gameProfileClass = Class.forName("com.mojang.authlib.GameProfile");
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            }
-        }
-
-        try {
-            if (ident instanceof UUID) {
-                super.setHandle(gameProfileClass.getConstructor(ident.getClass(), String.class).newInstance(ident, name));
-            } else if (ident instanceof String) {
-                super.setHandle(gameProfileClass.getConstructor(String.class, String.class).newInstance(ident, name));
-            }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public WrappedGameProfile(UUID uuid, String name) {
+		Class<?> gameProfileClass = null;
+		try{
+			gameProfileClass = Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
+		}catch(ClassNotFoundException e){
+			try{
+				gameProfileClass = Class.forName("com.mojang.authlib.GameProfile");
+			}catch(ClassNotFoundException e1){
+				e1.printStackTrace();
+			}
+		}
+		
+		try{
+			if(ident instanceof UUID){
+				super.setHandle(gameProfileClass.getConstructor(ident.getClass(), String.class).newInstance(ident, name));
+			}else if(ident instanceof String){
+				super.setHandle(gameProfileClass.getConstructor(String.class, String.class).newInstance(ident, name));
+			}
+		}catch(InstantiationException e){
+			e.printStackTrace();
+		}catch(IllegalAccessException e){
+			e.printStackTrace();
+		}catch(InvocationTargetException e){
+			e.printStackTrace();
+		}catch(NoSuchMethodException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public WrappedGameProfile(UUID uuid, String name){
 		this((Object) uuid, name);
-    }
-
-    public WrappedGameProfile(String ident, String name) {
+	}
+	
+	public WrappedGameProfile(String ident, String name){
 		this((Object) ident, name);
-    }
-
-    public static WrappedGameProfile getNewProfile(WrappedGameProfile old, String newName) {
+	}
+	
+	public static WrappedGameProfile getNewProfile(WrappedGameProfile old, String newName){
 		return new WrappedGameProfile(old.getUniqueId(), newName);
-    }
-
-    public UUID getUniqueId() {
-        return getId();
-    }
-
-    public String getIdent() {
-        return getId();
-    }
-
-    private <T> T getId() {
-        return ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.GAMEPROFILE_FUNC_ID.getName()), getHandle());
-    }
+	}
+	
+	public UUID getUniqueId(){
+		return getId();
+	}
+	
+	public String getIdent(){
+		return getId();
+	}
+	
+	private <T> T getId(){
+		return ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.GAMEPROFILE_FUNC_ID.getName()), getHandle());
+	}
 }

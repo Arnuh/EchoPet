@@ -17,94 +17,93 @@
 
 package com.dsh105.echopet.compat.api.event;
 
+import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-
 /**
  * Called when a {@link com.dsh105.echopet.api.pet.Pet} moves
  */
 
-public class PetMoveEvent extends Event implements Cancellable {
-
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled = false;
-
-    private IPet pet;
-    private Location from;
-    private Location to;
-
-    public PetMoveEvent(IPet pet, Location from, Location to) {
-        this.pet = pet;
-        this.from = from;
-        this.to = to;
-    }
-
-    /**
-     * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved to
-     *
-     * @return {@link org.bukkit.Location} moved to
-     */
-    public Location getTo() {
-        return this.to;
-    }
-
-    /**
-     * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved from
-     *
-     * @return {@link org.bukkit.Location} moved from
-     */
-    public Location getFrom() {
-        return this.from;
-    }
-
-    /**
-     * Sets the {@link org.bukkit.Location} that this {@link com.dsh105.echopet.api.pet.Pet} will move to
-     *
-     * @param to new {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} will move to
-     */
-    public void setTo(Location to) {
-        this.to = to;
-    }
-
-    /**
-     * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-     *
-     * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-     */
-    public IPet getPet() {
-        return this.pet;
-    }
-
-    /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @return true if this event is cancelled
-     */
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel this event
-     */
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
+public class PetMoveEvent extends Event implements Cancellable{
+	
+	private static final HandlerList handlers = new HandlerList();
+	private boolean cancelled = false;
+	
+	private IPet pet;
+	private Location from;
+	private Location to;
+	
+	public PetMoveEvent(IPet pet, Location from, Location to){
+		this.pet = pet;
+		this.from = from;
+		this.to = to;
+	}
+	
+	/**
+	 * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved to
+	 *
+	 * @return {@link org.bukkit.Location} moved to
+	 */
+	public Location getTo(){
+		return this.to;
+	}
+	
+	/**
+	 * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved from
+	 *
+	 * @return {@link org.bukkit.Location} moved from
+	 */
+	public Location getFrom(){
+		return this.from;
+	}
+	
+	/**
+	 * Sets the {@link org.bukkit.Location} that this {@link com.dsh105.echopet.api.pet.Pet} will move to
+	 *
+	 * @param to new {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} will move to
+	 */
+	public void setTo(Location to){
+		this.to = to;
+	}
+	
+	/**
+	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
+	 *
+	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
+	 */
+	public IPet getPet(){
+		return this.pet;
+	}
+	
+	/**
+	 * Gets the cancellation state of this event. A cancelled event will not
+	 * be executed in the server, but will still pass to other plugins
+	 *
+	 * @return true if this event is cancelled
+	 */
+	public boolean isCancelled(){
+		return cancelled;
+	}
+	
+	/**
+	 * Sets the cancellation state of this event. A cancelled event will not
+	 * be executed in the server, but will still pass to other plugins
+	 *
+	 * @param cancel true if you wish to cancel this event
+	 */
+	public void setCancelled(boolean cancel){
+		this.cancelled = cancel;
+	}
+	
+	@Override
+	public HandlerList getHandlers(){
 		return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	}
+	
+	public static HandlerList getHandlerList(){
+		return handlers;
+	}
 }

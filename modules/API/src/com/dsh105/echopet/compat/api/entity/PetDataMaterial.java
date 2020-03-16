@@ -19,6 +19,6 @@ package com.dsh105.echopet.compat.api.entity;
 import org.bukkit.Material;
 
 public interface PetDataMaterial{
-
+	
 	Material get(IPet pet);
 }

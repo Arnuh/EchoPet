@@ -17,6 +17,6 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
-public abstract class APetGoalFloat extends PetGoal {
-
+public abstract class APetGoalFloat extends PetGoal{
+	
 }

@@ -17,11 +17,6 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -30,32 +25,36 @@ import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
-public class DataMenu {
-
+public class DataMenu{
+	
 	private Inventory inv;
-    private IPet pet;
-
+	private IPet pet;
+	
 	public DataMenu(PetDataCategory category, IPet pet){
-        this.pet = pet;
+		this.pet = pet;
 		int size = round(countItems(category), 9);
 		this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu - " + StringUtil.capitalise(category.toString().replace("_", " ")));
 		this.setItems(category, size);
-    }
-
-    public void open(boolean sendMessage) {
-        PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.DATA);
-        EchoPet.getPlugin().getServer().getPluginManager().callEvent(menuEvent);
-        if (menuEvent.isCancelled()) {
-            return;
-        }
-        Player p = this.pet.getOwner();
-        if (p != null) {
+	}
+	
+	public void open(boolean sendMessage){
+		PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.DATA);
+		EchoPet.getPlugin().getServer().getPluginManager().callEvent(menuEvent);
+		if(menuEvent.isCancelled()){
+			return;
+		}
+		Player p = this.pet.getOwner();
+		if(p != null){
 			InventoryView view = p.openInventory(this.inv);
 			pet.setInventoryView(view);
-        }
-    }
-
+		}
+	}
+	
 	private int countItems(PetDataCategory category){
 		int i = 0;
 		for(PetData data : category.getData()){
@@ -67,13 +66,13 @@ public class DataMenu {
 		}
 		return i + 1;// back
 	}
-
+	
 	private int round(int num, int multiple){
 		return multiple * (int) Math.ceil((float) num / (float) multiple);
 	}
-
+	
 	public void setItems(PetDataCategory category, int size){
-        int i = 0;
+		int i = 0;
 		for(PetData data : category.getData()){
 			if(data.isCompatible()){
 				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
@@ -82,5 +81,5 @@ public class DataMenu {
 			}
 		}
 		this.inv.setItem((size - 1), MenuUtil.BACK);
-    }
+	}
 }

@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ISquidPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SQUID)
-public class SquidPet extends Pet implements ISquidPet {
-
-    public SquidPet(Player owner) {
-        super(owner);
-    }
+public class SquidPet extends Pet implements ISquidPet{
+	
+	public SquidPet(Player owner){
+		super(owner);
+	}
 }

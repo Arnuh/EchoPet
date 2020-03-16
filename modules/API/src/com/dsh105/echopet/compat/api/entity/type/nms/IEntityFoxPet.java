@@ -18,18 +18,18 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 
 public interface IEntityFoxPet{
-
+	
 	void setType(int type);
-
+	
 	void setSitting(boolean sitting);
-
+	
 	void setCrouching(boolean crouching);
-
+	
 	void setHeadTilt(boolean tilted);
-
+	
 	void setPounce(boolean pounce);
-
+	
 	void setSleeping(boolean sleeping);
-
+	
 	void setLegShake(boolean shake);
 }

@@ -53,46 +53,46 @@ import com.dsh105.echopet.compat.api.reflection.ClassTemplate;
 import com.dsh105.echopet.compat.api.reflection.MethodAccessor;
 import org.bukkit.Bukkit;
 
-public class RemappedClassHandler extends ClassHandler {
-
-    protected ClassLoader classLoader;
-    protected Object remapper;
-    protected MethodAccessor<String> map;
-
-    public RemappedClassHandler() {
-        this(RemappedClassHandler.class.getClassLoader());
-    }
-
-    public RemappedClassHandler(ClassLoader classLoader) {
-        this.classLoader = classLoader;
-    }
-
-    protected RemappedClassHandler initialize() throws UnsupportedOperationException, IllegalStateException {
-        if (Bukkit.getServer() == null || !Bukkit.getServer().getVersion().contains("MCPC-Plus")) {
-            throw new UnsupportedOperationException("Remapper not available!");
-        }
-
-        this.remapper = ClassTemplate.create(this.classLoader.getClass()).getField("remapper").get(getClass().getClassLoader());
-
-        if (this.remapper == null) {
-            throw new IllegalStateException("Remapper is NULL!");
-        }
-
-        Class<?> remapperClass = this.remapper.getClass();
-        this.map = ClassTemplate.create(remapperClass).getMethod("map", String.class);
-        return this;
-    }
-
-    public String getRemappedName(String className) {
-        return map.invoke(remapper, className.replace('.', '/')).replace('/', '.');
-    }
-
-    @Override
-    public Class<?> loadClass(String className) throws ClassNotFoundException {
-        try {
-            return this.classLoader.loadClass(getRemappedName(className));
-        } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException("Failed to find class: " + className + " (Remapped class-name: " + getRemappedName(className) + ")");
-        }
-    }
+public class RemappedClassHandler extends ClassHandler{
+	
+	protected ClassLoader classLoader;
+	protected Object remapper;
+	protected MethodAccessor<String> map;
+	
+	public RemappedClassHandler(){
+		this(RemappedClassHandler.class.getClassLoader());
+	}
+	
+	public RemappedClassHandler(ClassLoader classLoader){
+		this.classLoader = classLoader;
+	}
+	
+	protected RemappedClassHandler initialize() throws UnsupportedOperationException, IllegalStateException{
+		if(Bukkit.getServer() == null || !Bukkit.getServer().getVersion().contains("MCPC-Plus")){
+			throw new UnsupportedOperationException("Remapper not available!");
+		}
+		
+		this.remapper = ClassTemplate.create(this.classLoader.getClass()).getField("remapper").get(getClass().getClassLoader());
+		
+		if(this.remapper == null){
+			throw new IllegalStateException("Remapper is NULL!");
+		}
+		
+		Class<?> remapperClass = this.remapper.getClass();
+		this.map = ClassTemplate.create(remapperClass).getMethod("map", String.class);
+		return this;
+	}
+	
+	public String getRemappedName(String className){
+		return map.invoke(remapper, className.replace('.', '/')).replace('/', '.');
+	}
+	
+	@Override
+	public Class<?> loadClass(String className) throws ClassNotFoundException{
+		try{
+			return this.classLoader.loadClass(getRemappedName(className));
+		}catch(ClassNotFoundException e){
+			throw new ClassNotFoundException("Failed to find class: " + className + " (Remapped class-name: " + getRemappedName(className) + ")");
+		}
+	}
 }

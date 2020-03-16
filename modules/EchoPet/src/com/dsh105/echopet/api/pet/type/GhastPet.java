@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IGhastPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.GHAST)
-public class GhastPet extends Pet implements IGhastPet {
-
-    public GhastPet(Player owner) {
-        super(owner);
-    }
+public class GhastPet extends Pet implements IGhastPet{
+	
+	public GhastPet(Player owner){
+		super(owner);
+	}
 }

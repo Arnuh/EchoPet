@@ -16,14 +16,13 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import org.bukkit.DyeColor;
-
 import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.ITameablePet;
+import org.bukkit.DyeColor;
 
 public interface ICatPet extends ITameablePet{
-
+	
 	void setType(CatType type);
-
+	
 	void setCollarColor(DyeColor color);
 }

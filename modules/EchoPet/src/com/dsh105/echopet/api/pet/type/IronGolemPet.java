@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IIronGolemPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.IRONGOLEM)
-public class IronGolemPet extends Pet implements IIronGolemPet {
-
-    public IronGolemPet(Player owner) {
-        super(owner);
-    }
+public class IronGolemPet extends Pet implements IIronGolemPet{
+	
+	public IronGolemPet(Player owner){
+		super(owner);
+	}
 }

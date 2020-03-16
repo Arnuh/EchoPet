@@ -26,65 +26,65 @@ import java.util.Map;
  * @param <K> map key type
  * @param <V> map value type
  */
-public class EntityMapModifier<K, V> {
-
-    private final Map<K, V> map;
-    private Map<V, Map<K, V>> results = new HashMap<V, Map<K, V>>();
-    private Map<K, V> modifications = new HashMap<K, V>();
-
-    public EntityMapModifier(Map<K, V> map) {
-        this.map = map;
-    }
-
-    public Map<K, V> getMap() {
-        return map;
-    }
-
-    public void modify(K key, V value) {
-        modifications.put(key, value);
-    }
-
-    public void applyModifications() {
-        for (Map.Entry<K, V> entry : modifications.entrySet()) {
-            map.put(entry.getKey(), entry.getValue());
-        }
-    }
-
-    public void removeModifications() {
-        for (K key : modifications.keySet()) {
-            map.remove(key);
-        }
-        modifications.clear();
-    }
-
-    public boolean clear(V value) {
-        for (K key : requestMappings(value).keySet()) {
-            map.remove(key);
-        }
-        return true;
-    }
-
-    public boolean add(V value) {
-        for (Map.Entry<K, V> entry : requestMappings(value).entrySet()) {
-            map.put(entry.getKey(), entry.getValue());
-        }
-        return true;
-    }
-
-    public Map<K, V> requestMappings(V value) {
-        if (results.containsKey(value)) {
-            return results.get(value);
-        }
-
-        Map<K, V> result = new HashMap<K, V>();
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            K key1 = entry.getKey();
-            V value1 = entry.getValue();
-            if (value.equals(value1)) {
-                result.put(key1, value1);
-            }
-        }
-        results.put(value, result);
-        return result;
-    }
+public class EntityMapModifier<K, V>{
+	
+	private final Map<K, V> map;
+	private Map<V, Map<K, V>> results = new HashMap<V, Map<K, V>>();
+	private Map<K, V> modifications = new HashMap<K, V>();
+	
+	public EntityMapModifier(Map<K, V> map){
+		this.map = map;
+	}
+	
+	public Map<K, V> getMap(){
+		return map;
+	}
+	
+	public void modify(K key, V value){
+		modifications.put(key, value);
+	}
+	
+	public void applyModifications(){
+		for(Map.Entry<K, V> entry : modifications.entrySet()){
+			map.put(entry.getKey(), entry.getValue());
+		}
+	}
+	
+	public void removeModifications(){
+		for(K key : modifications.keySet()){
+			map.remove(key);
+		}
+		modifications.clear();
+	}
+	
+	public boolean clear(V value){
+		for(K key : requestMappings(value).keySet()){
+			map.remove(key);
+		}
+		return true;
+	}
+	
+	public boolean add(V value){
+		for(Map.Entry<K, V> entry : requestMappings(value).entrySet()){
+			map.put(entry.getKey(), entry.getValue());
+		}
+		return true;
+	}
+	
+	public Map<K, V> requestMappings(V value){
+		if(results.containsKey(value)){
+			return results.get(value);
+		}
+		
+		Map<K, V> result = new HashMap<K, V>();
+		for(Map.Entry<K, V> entry : map.entrySet()){
+			K key1 = entry.getKey();
+			V value1 = entry.getValue();
+			if(value.equals(value1)){
+				result.put(key1, value1);
+			}
+		}
+		results.put(value, result);
+		return result;
+	}
 }

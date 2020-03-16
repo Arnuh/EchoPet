@@ -17,20 +17,19 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
+import java.util.ArrayList;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 
-import java.util.ArrayList;
-
-public class PetStorage {
-
-    public ArrayList<PetData> petDataList;
-    public PetType petType;
-    public String petName;
-
-    public PetStorage(ArrayList<PetData> petDataList, PetType petType, String petName) {
-        this.petDataList = petDataList;
-        this.petType = petType;
-        this.petName = petName;
-    }
+public class PetStorage{
+	
+	public ArrayList<PetData> petDataList;
+	public PetType petType;
+	public String petName;
+	
+	public PetStorage(ArrayList<PetData> petDataList, PetType petType, String petName){
+		this.petDataList = petDataList;
+		this.petType = petType;
+		this.petName = petName;
+	}
 }

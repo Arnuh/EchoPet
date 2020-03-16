@@ -17,6 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-public interface IPacketPet extends IPet {
-
+public interface IPacketPet extends IPet{
+	
 }

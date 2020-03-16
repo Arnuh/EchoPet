@@ -17,22 +17,22 @@
 
 package com.dsh105.echopet.compat.api.util.wrapper;
 
-public class AbstractWrapper {
-
-    private Object handle;
-
-    public AbstractWrapper() {
-    }
-
-    protected void setHandle(Object handle) {
-        if (this.handle == null) {
-            this.handle = handle;
-            return;
-        }
-        throw new RuntimeException("Handle already set!");
-    }
-
-    public Object getHandle() {
-        return this.handle;
-    }
+public class AbstractWrapper{
+	
+	private Object handle;
+	
+	public AbstractWrapper(){
+	}
+	
+	protected void setHandle(Object handle){
+		if(this.handle == null){
+			this.handle = handle;
+			return;
+		}
+		throw new RuntimeException("Handle already set!");
+	}
+	
+	public Object getHandle(){
+		return this.handle;
+	}
 }

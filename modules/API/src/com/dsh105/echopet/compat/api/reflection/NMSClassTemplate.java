@@ -22,25 +22,25 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 @SuppressWarnings("rawtypes")
 public class NMSClassTemplate extends ClassTemplate{
-
-    protected NMSClassTemplate() {
-        setNMSClass(getClass().getSimpleName());
-    }
-
-    public NMSClassTemplate(String className) {
-        setNMSClass(className);
-    }
-
+	
+	protected NMSClassTemplate(){
+		setNMSClass(getClass().getSimpleName());
+	}
+	
+	public NMSClassTemplate(String className){
+		setNMSClass(className);
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected void setNMSClass(String name){
 		Class clazz = ReflectionUtil.getNMSClass(name);
-        if (clazz == null) {
-            EchoPet.LOG.warning("Failed to find a matching class with name: " + name);
-        }
-        setClass(clazz);
-    }
-
-    public static NMSClassTemplate create(String className) {
-        return new NMSClassTemplate(className);
-    }
+		if(clazz == null){
+			EchoPet.LOG.warning("Failed to find a matching class with name: " + name);
+		}
+		setClass(clazz);
+	}
+	
+	public static NMSClassTemplate create(String className){
+		return new NMSClassTemplate(className);
+	}
 }

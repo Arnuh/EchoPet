@@ -20,9 +20,9 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import org.bukkit.entity.Rabbit;
 
-public interface IRabbitPet extends IAgeablePet {
-
-    void setRabbitType(Rabbit.Type type);
-
-    Rabbit.Type getRabbitType();
+public interface IRabbitPet extends IAgeablePet{
+	
+	void setRabbitType(Rabbit.Type type);
+	
+	Rabbit.Type getRabbitType();
 }

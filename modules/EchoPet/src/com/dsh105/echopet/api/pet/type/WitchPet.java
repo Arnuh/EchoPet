@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWitchPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.WITCH)
-public class WitchPet extends Pet implements IWitchPet {
-
-    public WitchPet(Player owner) {
-        super(owner);
-    }
+public class WitchPet extends Pet implements IWitchPet{
+	
+	public WitchPet(Player owner){
+		super(owner);
+	}
 }

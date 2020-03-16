@@ -19,44 +19,40 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.List;
 import java.util.Map;
-
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 
-public class PetNames {
-
+public class PetNames{
+	
 	@SuppressWarnings("unchecked")
 	public static boolean allow(String input, IPet pet){
-        YAMLConfig config = ConfigOptions.instance.getConfig();
-        String nameToCheck = ChatColor.stripColor(input);
-        ConfigurationSection cs = config.getConfigurationSection("petNames");
-        if (cs != null) {
-            for (String key : cs.getKeys(false)) {
-                if (key.equalsIgnoreCase(nameToCheck)) {
-                    String value = config.getString("petNames." + key);
-                    return pet.getOwner().hasPermission("echopet.pet.name.override") || !(value.equalsIgnoreCase("deny") || value.equalsIgnoreCase("false"));
-                }
-            }
-        }
-
-        if (config.getBoolean("petNamesRegexMatching")) {
-            List<Map<String, String>> csRegex = (List<Map<String, String>>) config.get("petNamesRegex");
-            if (!csRegex.isEmpty()) {
-                for (Map<String, String> regexMap : csRegex) {
-                    for (Map.Entry<String, String> entry : regexMap.entrySet()) {
-                        if (nameToCheck.matches(entry.getKey())) {
-                            return pet.getOwner().hasPermission("echopet.pet.name.override")
-                                    || !(entry.getValue().equalsIgnoreCase("deny")
-                                    || entry.getValue().equalsIgnoreCase("false"));
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
+		YAMLConfig config = ConfigOptions.instance.getConfig();
+		String nameToCheck = ChatColor.stripColor(input);
+		ConfigurationSection cs = config.getConfigurationSection("petNames");
+		if(cs != null){
+			for(String key : cs.getKeys(false)){
+				if(key.equalsIgnoreCase(nameToCheck)){
+					String value = config.getString("petNames." + key);
+					return pet.getOwner().hasPermission("echopet.pet.name.override") || !(value.equalsIgnoreCase("deny") || value.equalsIgnoreCase("false"));
+				}
+			}
+		}
+		
+		if(config.getBoolean("petNamesRegexMatching")){
+			List<Map<String, String>> csRegex = (List<Map<String, String>>) config.get("petNamesRegex");
+			if(!csRegex.isEmpty()){
+				for(Map<String, String> regexMap : csRegex){
+					for(Map.Entry<String, String> entry : regexMap.entrySet()){
+						if(nameToCheck.matches(entry.getKey())){
+							return pet.getOwner().hasPermission("echopet.pet.name.override") || !(entry.getValue().equalsIgnoreCase("deny") || entry.getValue().equalsIgnoreCase("false"));
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

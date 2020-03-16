@@ -25,22 +25,22 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.BLAZE)
-public class BlazePet extends Pet implements IBlazePet {
-
-    boolean onFire;
-
-    public BlazePet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setOnFire(boolean flag) {
-        ((IEntityBlazePet) getEntityPet()).setOnFire(flag);
-        this.onFire = flag;
-    }
-
-    @Override
-    public boolean isOnFire() {
-        return this.onFire;
-    }
+public class BlazePet extends Pet implements IBlazePet{
+	
+	boolean onFire;
+	
+	public BlazePet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setOnFire(boolean flag){
+		((IEntityBlazePet) getEntityPet()).setOnFire(flag);
+		this.onFire = flag;
+	}
+	
+	@Override
+	public boolean isOnFire(){
+		return this.onFire;
+	}
 }

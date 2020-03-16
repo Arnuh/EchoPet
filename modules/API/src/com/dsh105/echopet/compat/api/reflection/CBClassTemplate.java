@@ -20,26 +20,26 @@ package com.dsh105.echopet.compat.api.reflection;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
-public class CBClassTemplate extends ClassTemplate<Object> {
-
-    public CBClassTemplate() {
-        setCBClass(getClass().getSimpleName());
-    }
-
-    public CBClassTemplate(String className) {
-        setCBClass(className);
-    }
-
+public class CBClassTemplate extends ClassTemplate<Object>{
+	
+	public CBClassTemplate(){
+		setCBClass(getClass().getSimpleName());
+	}
+	
+	public CBClassTemplate(String className){
+		setCBClass(className);
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected void setCBClass(String name){
 		Class<?> clazz = ReflectionUtil.getCBCClass(name);
-        if (clazz == null) {
-            EchoPet.LOG.warning("Failed to find a matching class with name: " + name);
-        }
+		if(clazz == null){
+			EchoPet.LOG.warning("Failed to find a matching class with name: " + name);
+		}
 		setClass((Class<Object>) clazz);
-    }
-
-    public static CBClassTemplate create(String className) {
-        return new CBClassTemplate(className);
-    }
+	}
+	
+	public static CBClassTemplate create(String className){
+		return new CBClassTemplate(className);
+	}
 }

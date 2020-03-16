@@ -17,34 +17,33 @@
 
 package com.dsh105.echopet.hook;
 
-import org.bukkit.plugin.Plugin;
-
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.PluginDependencyProvider;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.listeners.RegionListener;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import org.bukkit.plugin.Plugin;
 
-public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugin> implements IWorldGuardProvider {
-
-    public WorldGuardProvider(Plugin myPluginInstance) {
-        super(myPluginInstance, "WorldGuard");
-    }
-
-    @Override
-    public void onHook() {
+public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugin> implements IWorldGuardProvider{
+	
+	public WorldGuardProvider(Plugin myPluginInstance){
+		super(myPluginInstance, "WorldGuard");
+	}
+	
+	@Override
+	public void onHook(){
 		if(new Version("6.0").isCompatible(getDependency().getDescription().getVersion())){
-            if (EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regionEnterCheck", true)) {
-                this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new RegionListener(), this.getHandlingPlugin());
-            }
-        } else {
-            throw new IllegalStateException("Only WorldGuard 6.0 and after are supported");
-        }
-    }
-
-    @Override
-    public void onUnhook() {
-
-    }
+			if(EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regionEnterCheck", true)){
+				this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new RegionListener(), this.getHandlingPlugin());
+			}
+		}else{
+			throw new IllegalStateException("Only WorldGuard 6.0 and after are supported");
+		}
+	}
+	
+	@Override
+	public void onUnhook(){
+	
+	}
 }

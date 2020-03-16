@@ -17,47 +17,46 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-public class PlayerUtil {
-
-    private static final Method sendPacket = ReflectionUtil.getMethod(ReflectionUtil.getNMSClass("PlayerConnection"), ReflectionConstants.PLAYER_FUNC_SENDPACKET.getName(), ReflectionUtil.getNMSClass("Packet"));
-
-    public static void sendPacket(Player player, Object packet) {
-        Object playerConnection = getPlayerConnection(player);
-        try {
-            sendPacket.invoke(playerConnection, packet);
-        } catch (IllegalAccessException e) {
-            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
-        } catch (IllegalArgumentException e) {
-            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
-        } catch (InvocationTargetException e) {
-            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
-        }
-    }
-
-    public static Object playerToEntityPlayer(Player player) {
-        Method getHandle = ReflectionUtil.getMethod(player.getClass(), "getHandle");
-        try {
-            return getHandle.invoke(player);
-        } catch (IllegalAccessException e) {
-            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
-            return null;
-        } catch (IllegalArgumentException e) {
-            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
-            return null;
-        } catch (InvocationTargetException e) {
-            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
-            return null;
-        }
-    }
-
-    public static Object getPlayerConnection(Player player) {
-        return ReflectionUtil.getField(ReflectionUtil.getNMSClass("EntityPlayer"), ReflectionConstants.PLAYER_FIELD_CONNECTION.getName(), playerToEntityPlayer(player));
-    }
+public class PlayerUtil{
+	
+	private static final Method sendPacket = ReflectionUtil.getMethod(ReflectionUtil.getNMSClass("PlayerConnection"), ReflectionConstants.PLAYER_FUNC_SENDPACKET.getName(), ReflectionUtil.getNMSClass("Packet"));
+	
+	public static void sendPacket(Player player, Object packet){
+		Object playerConnection = getPlayerConnection(player);
+		try{
+			sendPacket.invoke(playerConnection, packet);
+		}catch(IllegalAccessException e){
+			EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+		}catch(IllegalArgumentException e){
+			EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+		}catch(InvocationTargetException e){
+			EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+		}
+	}
+	
+	public static Object playerToEntityPlayer(Player player){
+		Method getHandle = ReflectionUtil.getMethod(player.getClass(), "getHandle");
+		try{
+			return getHandle.invoke(player);
+		}catch(IllegalAccessException e){
+			EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+			return null;
+		}catch(IllegalArgumentException e){
+			EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+			return null;
+		}catch(InvocationTargetException e){
+			EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+			return null;
+		}
+	}
+	
+	public static Object getPlayerConnection(Player player){
+		return ReflectionUtil.getField(ReflectionUtil.getNMSClass("EntityPlayer"), ReflectionConstants.PLAYER_FIELD_CONNECTION.getName(), playerToEntityPlayer(player));
+	}
 }

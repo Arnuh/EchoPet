@@ -17,17 +17,16 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.ZOMBIE)
 public class ZombiePet extends AgeablePet implements IZombiePet{
-
-    public ZombiePet(Player owner) {
-        super(owner);
-    }
+	
+	public ZombiePet(Player owner){
+		super(owner);
+	}
 }

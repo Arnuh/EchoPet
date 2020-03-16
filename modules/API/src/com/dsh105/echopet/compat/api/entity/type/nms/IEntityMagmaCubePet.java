@@ -17,6 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-public interface IEntityMagmaCubePet extends IEntitySlimePet {
-
+public interface IEntityMagmaCubePet extends IEntitySlimePet{
+	
 }

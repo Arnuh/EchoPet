@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IEndermitePet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.ENDERMITE)
-public class EndermitePet extends Pet implements IEndermitePet {
-
-    public EndermitePet(Player owner) {
-        super(owner);
-    }
+public class EndermitePet extends Pet implements IEndermitePet{
+	
+	public EndermitePet(Player owner){
+		super(owner);
+	}
 }

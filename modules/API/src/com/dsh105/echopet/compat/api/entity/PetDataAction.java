@@ -20,6 +20,6 @@ package com.dsh105.echopet.compat.api.entity;
 import org.bukkit.entity.Player;
 
 public interface PetDataAction{
-
+	
 	boolean click(Player player, IPet pet, PetDataCategory category, boolean flag);
 }

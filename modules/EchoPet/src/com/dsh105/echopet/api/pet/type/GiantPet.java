@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IGiantPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.GIANT)
-public class GiantPet extends Pet implements IGiantPet {
-
-    public GiantPet(Player owner) {
-        super(owner);
-    }
+public class GiantPet extends Pet implements IGiantPet{
+	
+	public GiantPet(Player owner){
+		super(owner);
+	}
 }

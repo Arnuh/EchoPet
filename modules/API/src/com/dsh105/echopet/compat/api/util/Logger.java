@@ -21,46 +21,46 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Logger {
-
-    private static boolean enabled = false;
-    private static String logPrefix;
-
-    public static void initiate(JavaPlugin plugin, String name, String prefix) {
-        logPrefix = prefix;
-        enabled = true;
-    }
-
-    public static void log(LogLevel logLevel, String message, boolean logToConsole) {
-        if (enabled) {
-            if (logToConsole) {
-                EchoPet.LOG.log(message);
-            }
-        }
-    }
-
-    public static void log(LogLevel logLevel, String message, Exception e, boolean logToConsole) {
-        if (enabled) {
-            if (logToConsole) {
-                EchoPet.LOG.severe(message);
-            }
-            e.printStackTrace();
-        }
-    }
-
-    public enum LogLevel {
-        NORMAL(ChatColor.GREEN + "[INFO]"),
-        SEVERE(ChatColor.RED + "[SEVERE]"),
-        WARNING(ChatColor.RED + "[WARNING]");
-
-        private String prefix;
-
-        LogLevel(String prefix) {
-            this.prefix = prefix;
-        }
-
-        public String getPrefix() {
-            return Logger.logPrefix + " " + this.prefix;
-        }
-    }
+public class Logger{
+	
+	private static boolean enabled = false;
+	private static String logPrefix;
+	
+	public static void initiate(JavaPlugin plugin, String name, String prefix){
+		logPrefix = prefix;
+		enabled = true;
+	}
+	
+	public static void log(LogLevel logLevel, String message, boolean logToConsole){
+		if(enabled){
+			if(logToConsole){
+				EchoPet.LOG.log(message);
+			}
+		}
+	}
+	
+	public static void log(LogLevel logLevel, String message, Exception e, boolean logToConsole){
+		if(enabled){
+			if(logToConsole){
+				EchoPet.LOG.severe(message);
+			}
+			e.printStackTrace();
+		}
+	}
+	
+	public enum LogLevel{
+		NORMAL(ChatColor.GREEN + "[INFO]"),
+		SEVERE(ChatColor.RED + "[SEVERE]"),
+		WARNING(ChatColor.RED + "[WARNING]");
+		
+		private String prefix;
+		
+		LogLevel(String prefix){
+			this.prefix = prefix;
+		}
+		
+		public String getPrefix(){
+			return Logger.logPrefix + " " + this.prefix;
+		}
+	}
 }

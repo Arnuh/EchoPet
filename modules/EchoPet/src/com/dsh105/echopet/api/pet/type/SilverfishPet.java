@@ -24,9 +24,9 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ISilverfishPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SILVERFISH)
-public class SilverfishPet extends Pet implements ISilverfishPet {
-
-    public SilverfishPet(Player owner) {
-        super(owner);
-    }
+public class SilverfishPet extends Pet implements ISilverfishPet{
+	
+	public SilverfishPet(Player owner){
+		super(owner);
+	}
 }

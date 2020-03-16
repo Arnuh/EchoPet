@@ -25,22 +25,22 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.ENDERMAN)
-public class EndermanPet extends Pet implements IEndermanPet {
-
-    boolean scream;
-
-    public EndermanPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setScreaming(boolean flag) {
-        ((IEntityEndermanPet) getEntityPet()).setScreaming(flag);
-        this.scream = flag;
-    }
-
-    @Override
-    public boolean isScreaming() {
-        return this.scream;
-    }
+public class EndermanPet extends Pet implements IEndermanPet{
+	
+	boolean scream;
+	
+	public EndermanPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setScreaming(boolean flag){
+		((IEntityEndermanPet) getEntityPet()).setScreaming(flag);
+		this.scream = flag;
+	}
+	
+	@Override
+	public boolean isScreaming(){
+		return this.scream;
+	}
 }

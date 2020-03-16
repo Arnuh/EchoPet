@@ -21,21 +21,21 @@ package com.dsh105.echopet.compat.api.ai;
  * From EntityAPI :)
  */
 
-public enum PetGoalType {
-
-    ZERO,
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN;
-
-    // NMS Goals have stored integers to check compatibility -> goal.j()
-    // This enum is used to compare these goals easily and more friendly
-
-    public boolean isCompatibleWith(PetGoalType type) {
-        return (this.ordinal() & type.ordinal()) == 0;
-    }
+public enum PetGoalType{
+	
+	ZERO,
+	ONE,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN;
+	
+	// NMS Goals have stored integers to check compatibility -> goal.j()
+	// This enum is used to compare these goals easily and more friendly
+	
+	public boolean isCompatibleWith(PetGoalType type){
+		return (this.ordinal() & type.ordinal()) == 0;
+	}
 }

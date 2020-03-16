@@ -17,26 +17,26 @@
 
 package com.dsh105.echopet.compat.api.registration;
 
-public class PetRegistrationException extends RuntimeException {
-
+public class PetRegistrationException extends RuntimeException{
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	public PetRegistrationException(){
-    }
-
-    public PetRegistrationException(String message) {
-        super(message);
-    }
-
-    public PetRegistrationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PetRegistrationException(Throwable cause) {
-        super(cause);
-    }
-
-    public PetRegistrationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+	}
+	
+	public PetRegistrationException(String message){
+		super(message);
+	}
+	
+	public PetRegistrationException(String message, Throwable cause){
+		super(message, cause);
+	}
+	
+	public PetRegistrationException(Throwable cause){
+		super(cause);
+	}
+	
+	public PetRegistrationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace){
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
 }

@@ -19,21 +19,21 @@ package com.dsh105.echopet.compat.api.util.wrapper;
 
 import org.bukkit.Material;
 
-public class WrappedMaterial {
-
-    private final String materialName;
-
-    public WrappedMaterial(String materialName) {
-        this.materialName = materialName;
-    }
-
-    public Material get() {
-        try {
-            return Material.valueOf(this.materialName);
-        } catch (Exception exception) {
+public class WrappedMaterial{
+	
+	private final String materialName;
+	
+	public WrappedMaterial(String materialName){
+		this.materialName = materialName;
+	}
+	
+	public Material get(){
+		try{
+			return Material.valueOf(this.materialName);
+		}catch(Exception exception){
 			System.out.println("Invalid material: " + materialName);
-            return null;
-        }
-    }
-
+			return null;
+		}
+	}
+	
 }

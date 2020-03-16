@@ -25,34 +25,34 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CREEPER)
-public class CreeperPet extends Pet implements ICreeperPet {
-
-    boolean powered;
-    boolean ignited;
-
-    public CreeperPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setPowered(boolean flag) {
-        ((IEntityCreeperPet) getEntityPet()).setPowered(flag);
-        this.powered = flag;
-    }
-
-    @Override
-    public boolean isPowered() {
-        return this.powered;
-    }
-
-    @Override
-    public void setIgnited(boolean flag) {
-        ((IEntityCreeperPet) getEntityPet()).setIgnited(flag);
-        this.ignited = flag;
-    }
-
-    @Override
-    public boolean isIgnited() {
-        return this.ignited;
-    }
+public class CreeperPet extends Pet implements ICreeperPet{
+	
+	boolean powered;
+	boolean ignited;
+	
+	public CreeperPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setPowered(boolean flag){
+		((IEntityCreeperPet) getEntityPet()).setPowered(flag);
+		this.powered = flag;
+	}
+	
+	@Override
+	public boolean isPowered(){
+		return this.powered;
+	}
+	
+	@Override
+	public void setIgnited(boolean flag){
+		((IEntityCreeperPet) getEntityPet()).setIgnited(flag);
+		this.ignited = flag;
+	}
+	
+	@Override
+	public boolean isIgnited(){
+		return this.ignited;
+	}
 }

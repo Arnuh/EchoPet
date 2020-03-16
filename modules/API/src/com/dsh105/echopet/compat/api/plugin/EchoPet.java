@@ -22,63 +22,65 @@ import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 
-public final class EchoPet {
-
-    private static IEchoPetPlugin PLUGIN;
-    public static final Log LOG = new Log("EchoPet");
-
-    public static void setPlugin(IEchoPetPlugin plugin) {
-        if (PLUGIN != null) {
-            return;
-        }
-        PLUGIN = plugin;
-
-    }
-
-    public static IEchoPetPlugin getPlugin() {
-        return PLUGIN;
-    }
-
-    public static String getPrefix() {
-        return PLUGIN.getPrefix();
-    }
-
-    public static IPetManager getManager() {
-        return PLUGIN.getPetManager();
-    }
-
-    public static ISqlPetManager getSqlManager() {
-        return PLUGIN.getSqlPetManager();
-    }
-
+public final class EchoPet{
+	
+	private static IEchoPetPlugin PLUGIN;
+	public static final Log LOG = new Log("EchoPet");
+	
+	public static void setPlugin(IEchoPetPlugin plugin){
+		if(PLUGIN != null){
+			return;
+		}
+		PLUGIN = plugin;
+		
+	}
+	
+	public static IEchoPetPlugin getPlugin(){
+		return PLUGIN;
+	}
+	
+	public static String getPrefix(){
+		return PLUGIN.getPrefix();
+	}
+	
+	public static IPetManager getManager(){
+		return PLUGIN.getPetManager();
+	}
+	
+	public static ISqlPetManager getSqlManager(){
+		return PLUGIN.getSqlPetManager();
+	}
+	
 	public static IPetRegistry getPetRegistry(){
-        return PLUGIN.getPetRegistry();
-    }
-
-    public static ConfigOptions getOptions() {
-        return PLUGIN.getOptions();
-    }
-
-    public static boolean isUsingNetty() {
-        return PLUGIN.isUsingNetty();
-    }
-
-    public static YAMLConfig getConfig() {
-        return getConfig(ConfigType.MAIN);
-    }
-
-    public static YAMLConfig getConfig(ConfigType type) {
-        switch (type) {
-            case DATA:
-                return PLUGIN.getPetConfig();
-            case LANG:
-                return PLUGIN.getLangConfig();
-            default:
-                return PLUGIN.getMainConfig();
-        }
-    }
-
-    public enum ConfigType {
-        MAIN, DATA, LANG
-    }
+		return PLUGIN.getPetRegistry();
+	}
+	
+	public static ConfigOptions getOptions(){
+		return PLUGIN.getOptions();
+	}
+	
+	public static boolean isUsingNetty(){
+		return PLUGIN.isUsingNetty();
+	}
+	
+	public static YAMLConfig getConfig(){
+		return getConfig(ConfigType.MAIN);
+	}
+	
+	public static YAMLConfig getConfig(ConfigType type){
+		switch(type){
+			case DATA:
+				return PLUGIN.getPetConfig();
+			case LANG:
+				return PLUGIN.getLangConfig();
+			default:
+				return PLUGIN.getMainConfig();
+		}
+	}
+	
+	public enum ConfigType{
+		MAIN,
+		DATA,
+		LANG
+	}
 }

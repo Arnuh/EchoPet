@@ -17,33 +17,32 @@
 
 package com.dsh105.echopet.listeners;
 
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.WorldUtil;
 
-
-public class RegionListener implements Listener {
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerMove(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
-        IPet pet = EchoPet.getManager().getPet(p);
+public class RegionListener implements Listener{
+	
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onPlayerMove(PlayerMoveEvent event){
+		Player p = event.getPlayer();
+		IPet pet = EchoPet.getManager().getPet(p);
 		if(pet != null && pet.isSpawned()){
-            if (!WorldUtil.allowRegion(event.getTo())) {
+			if(!WorldUtil.allowRegion(event.getTo())){
 				pet.removePet(true, true);
-                Lang.sendTo(p, Lang.ENTER_PET_DISABLED_REGION.toString());
-            }
-        }
-    }
-
+				Lang.sendTo(p, Lang.ENTER_PET_DISABLED_REGION.toString());
+			}
+		}
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPetMove(PetRideMoveEvent event){
 		IPet pet = event.getPet();

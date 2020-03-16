@@ -19,23 +19,21 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.google.common.collect.ImmutableList;
-
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public class MenuUtil {
-
+public class MenuUtil{
+	
 	public static final ItemStack BACK = new ItemStack(Material.BOOK), CLOSE = new ItemStack(Material.BOOK);
 	public static final ItemStack BOOLEAN_TRUE = new ItemStack(Material.REDSTONE_TORCH), BOOLEAN_FALSE = new ItemStack(Material.REDSTONE_TORCH);
+	
 	static{
 		ItemMeta meta = BACK.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Back");
@@ -55,7 +53,7 @@ public class MenuUtil {
 		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Turn the feature off."));
 		BOOLEAN_FALSE.setItemMeta(meta);
 	}
-
+	
 	public static List<Object> createOptionList(IPet pet){
 		PetType pt = pet.getPetType();
 		List<Object> options = new LinkedList<>();
@@ -65,6 +63,6 @@ public class MenuUtil {
 		for(PetDataCategory data : pt.getAllowedCategories()){
 			options.add(data);
 		}
-        return options;
-    }
+		return options;
+	}
 }

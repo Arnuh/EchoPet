@@ -25,23 +25,23 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.WITHER)
-public class WitherPet extends Pet implements IWitherPet {
-
-    boolean shield = false;
-
-    public WitherPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public void setShielded(boolean flag) {
-        ((IEntityWitherPet) getEntityPet()).setShielded(flag);
-        this.shield = flag;
-    }
-
-    @Override
-    public boolean isShielded() {
-        return this.shield;
-    }
-
+public class WitherPet extends Pet implements IWitherPet{
+	
+	boolean shield = false;
+	
+	public WitherPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public void setShielded(boolean flag){
+		((IEntityWitherPet) getEntityPet()).setShielded(flag);
+		this.shield = flag;
+	}
+	
+	@Override
+	public boolean isShielded(){
+		return this.shield;
+	}
+	
 }

@@ -20,18 +20,18 @@ import com.dsh105.echopet.compat.api.entity.FoxType;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 
 public interface IFoxPet extends IAgeablePet{
-
+	
 	void setType(FoxType type);
-
+	
 	void setSitting(boolean sitting);
-
+	
 	void setCrouching(boolean crouching);
-
+	
 	void setHeadTilt(boolean tilted);
-
+	
 	void setPounce(boolean pounce);
-
+	
 	void setSleeping(boolean sleeping);
-
+	
 	void setLegShake(boolean shake);
 }

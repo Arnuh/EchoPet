@@ -19,51 +19,50 @@ package com.dsh105.echopet.compat.api.reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 @SuppressWarnings("unchecked")
-public class SafeConstructor<T> {
-
-    private Constructor<T> constructor;
+public class SafeConstructor<T>{
+	
+	private Constructor<T> constructor;
 	// private Class<?>[] params;
-
+	
 	public SafeConstructor(Constructor<T> constructor){
-        setConstructor(constructor);
-    }
-
+		setConstructor(constructor);
+	}
+	
 	public SafeConstructor(Class<?> coreClass, Class<?>... params){
-        try {
+		try{
 			Constructor<T> constructor = (Constructor<T>) coreClass.getConstructor(params);
-            setConstructor(constructor);
-        } catch (NoSuchMethodException e) {
-            EchoPet.LOG.warning("No such constructor!");
-        }
-    }
-
+			setConstructor(constructor);
+		}catch(NoSuchMethodException e){
+			EchoPet.LOG.warning("No such constructor!");
+		}
+	}
+	
 	protected void setConstructor(Constructor<T> constructor){
-        if (constructor == null) {
-            throw new UnsupportedOperationException("Cannot create a new constructor!");
-        }
-        this.constructor = constructor;
+		if(constructor == null){
+			throw new UnsupportedOperationException("Cannot create a new constructor!");
+		}
+		this.constructor = constructor;
 		// this.params = constructor.getParameterTypes();
-    }
-
+	}
+	
 	public Constructor<?> getConstructor(){
-        return this.constructor;
-    }
-
-    public T newInstance(Object... params) {
-        try {
-            return (T) this.getConstructor().newInstance(params);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		return this.constructor;
+	}
+	
+	public T newInstance(Object... params){
+		try{
+			return (T) this.getConstructor().newInstance(params);
+		}catch(InstantiationException e){
+			throw new RuntimeException(e);
+		}catch(IllegalAccessException e){
+			throw new RuntimeException(e);
+		}catch(IllegalArgumentException e){
+			throw new RuntimeException(e);
+		}catch(InvocationTargetException e){
+			throw new RuntimeException(e);
+		}
+	}
 }

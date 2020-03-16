@@ -17,19 +17,18 @@
 
 package com.dsh105.echopet.api.pet;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPacketPet;
+import org.bukkit.entity.Player;
 
-public class PacketPet extends Pet implements IPacketPet {
-
-    public PacketPet(Player owner) {
-        super(owner);
-    }
-
-    @Override
-    public IEntityPacketPet getEntityPet() {
-        return (IEntityPacketPet) super.getEntityPet();
-    }
+public class PacketPet extends Pet implements IPacketPet{
+	
+	public PacketPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public IEntityPacketPet getEntityPet(){
+		return (IEntityPacketPet) super.getEntityPet();
+	}
 }

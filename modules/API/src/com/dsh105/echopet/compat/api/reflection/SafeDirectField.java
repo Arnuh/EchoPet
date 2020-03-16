@@ -17,16 +17,16 @@
 
 package com.dsh105.echopet.compat.api.reflection;
 
-public abstract class SafeDirectField<T> implements FieldAccessor<T> {
-
-    public boolean isValid() {
-        return true;
-    }
-
-
-    public T transfer(Object from, Object to) {
-        T old = get(to);
-        set(to, get(from));
-        return old;
-    }
+public abstract class SafeDirectField<T> implements FieldAccessor<T>{
+	
+	public boolean isValid(){
+		return true;
+	}
+	
+	
+	public T transfer(Object from, Object to){
+		T old = get(to);
+		set(to, get(from));
+		return old;
+	}
 }

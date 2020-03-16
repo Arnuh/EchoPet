@@ -18,73 +18,71 @@
 package com.dsh105.echopet.compat.api.registration;
 
 import java.lang.reflect.Constructor;
-
-import org.bukkit.entity.Player;
-
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import org.bukkit.entity.Player;
 
-public class PetRegistrationEntry {
-
-    private String name;
-    private Class<? extends IPet> petClass;
-    private Class<? extends IEntityPet> entityClass;
-
-    private Constructor<? extends IPet> petConstructor;
-    private Constructor<? extends IEntityPet> entityPetConstructor;
-
+public class PetRegistrationEntry{
+	
+	private String name;
+	private Class<? extends IPet> petClass;
+	private Class<? extends IEntityPet> entityClass;
+	
+	private Constructor<? extends IPet> petConstructor;
+	private Constructor<? extends IEntityPet> entityPetConstructor;
+	
 	public PetRegistrationEntry(String name, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass){
 		if(entityClass == null) throw new PetRegistrationException("Invalid Entity Class. Pet type is not supported by this server version.");
 		if(petClass == null) throw new PetRegistrationException("Invalid Pet Class. Pet type is not supported by this server version.");
-
-        this.name = name;
-        this.entityClass = entityClass;
-        this.petClass = petClass;
-
-        try {
-            this.petConstructor = this.petClass.getConstructor(Player.class);
-            this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
-        } catch (NoSuchMethodException e) {
-            throw new PetRegistrationException("Failed to create pet constructors!", e);
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Class<? extends IPet> getPetClass() {
-        return petClass;
-    }
-
-    public Class<? extends IEntityPet> getEntityClass() {
-        return entityClass;
-    }
-
+		
+		this.name = name;
+		this.entityClass = entityClass;
+		this.petClass = petClass;
+		
+		try{
+			this.petConstructor = this.petClass.getConstructor(Player.class);
+			this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
+		}catch(NoSuchMethodException e){
+			throw new PetRegistrationException("Failed to create pet constructors!", e);
+		}
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public Class<? extends IPet> getPetClass(){
+		return petClass;
+	}
+	
+	public Class<? extends IEntityPet> getEntityClass(){
+		return entityClass;
+	}
+	
 	public IPet createFor(Player owner){
-        Throwable throwable;
-        try {
-            return this.petConstructor.newInstance(owner);
+		Throwable throwable;
+		try{
+			return this.petConstructor.newInstance(owner);
 		}catch(Exception e){
 			throwable = e;
 		}
-        throw new IllegalStateException("Failed to create pet object for " + owner.getName(), throwable);
-    }
-
-	public IEntityPet createEntityPet(Object nmsWorld, IPet pet){
-	    Throwable throwable;
-	    try {
-	        return this.entityPetConstructor.newInstance(nmsWorld, pet);
-		}catch(Exception e){
-	        throwable = e;
-	    }
-	    throw new IllegalStateException("Failed to create EntityPet object for " + pet.getOwner().getName(), throwable);
+		throw new IllegalStateException("Failed to create pet object for " + owner.getName(), throwable);
 	}
-
-    public static PetRegistrationEntry create(PetType petType) {
+	
+	public IEntityPet createEntityPet(Object nmsWorld, IPet pet){
+		Throwable throwable;
+		try{
+			return this.entityPetConstructor.newInstance(nmsWorld, pet);
+		}catch(Exception e){
+			throwable = e;
+		}
+		throw new IllegalStateException("Failed to create EntityPet object for " + pet.getOwner().getName(), throwable);
+	}
+	
+	public static PetRegistrationEntry create(PetType petType){
 		return new PetRegistrationEntry(StringUtil.capitalise(petType.toString().toLowerCase().replace("_", " ")).replace(" ", "") + "-Pet", petType.getPetClass(), petType.getEntityClass());
-    }
+	}
 }

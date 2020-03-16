@@ -16,61 +16,60 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
-import org.bukkit.entity.Player;
-
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.FoxType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFoxPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.FOX)
 public class FoxPet extends AgeablePet implements IFoxPet{
-
+	
 	private FoxType type = FoxType.Red;
 	private boolean sitting, crouching, headtilt, pounce, sleeping, shake;
-
+	
 	public FoxPet(Player owner){
 		super(owner);
 	}
-
+	
 	@Override
 	public void setType(FoxType type){
 		this.type = type;
 		((IEntityFoxPet) getEntityPet()).setType(type.ordinal());
 	}
-
+	
 	@Override
 	public void setSitting(boolean sitting){
 		this.sitting = sitting;
 		((IEntityFoxPet) getEntityPet()).setSitting(sitting);
 	}
-
+	
 	@Override
 	public void setCrouching(boolean crouching){
 		this.crouching = crouching;
 		((IEntityFoxPet) getEntityPet()).setCrouching(crouching);
 	}
-
+	
 	@Override
 	public void setHeadTilt(boolean tilted){
 		this.headtilt = tilted;
 		((IEntityFoxPet) getEntityPet()).setHeadTilt(tilted);
 	}
-
+	
 	@Override
 	public void setPounce(boolean pounce){
 		this.pounce = pounce;
 		((IEntityFoxPet) getEntityPet()).setPounce(pounce);
 	}
-
+	
 	@Override
 	public void setSleeping(boolean sleeping){
 		this.sleeping = sleeping;
 		((IEntityFoxPet) getEntityPet()).setSleeping(sleeping);
 	}
-
+	
 	@Override
 	public void setLegShake(boolean shake){
 		this.shake = shake;

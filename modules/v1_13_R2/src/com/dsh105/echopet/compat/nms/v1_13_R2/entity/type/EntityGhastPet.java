@@ -16,41 +16,48 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.AxisAlignedBB;
+import net.minecraft.server.v1_13_R2.ControllerMove;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.MathHelper;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 4.0F, height = 4.0F)
 @EntityPetType(petType = PetType.GHAST)
 public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
-
+	
 	public EntityGhastPet(World world){
 		super(EntityTypes.GHAST, world);
 		this.moveController = new ControllerGhast(this);
 	}
-
+	
 	public EntityGhastPet(World world, IPet pet){
 		super(EntityTypes.GHAST, world, pet);
 		this.moveController = new ControllerGhast(this);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.OVERSIZE;
 	}
-
+	
 	static class ControllerGhast extends ControllerMove{
-
+		
 		private final EntityPet i;
 		private int j;
-
+		
 		public ControllerGhast(EntityPet entityghast){
 			super(entityghast);
 			this.i = entityghast;
 		}
-
+		
 		public void a(){
 			if(this.h == ControllerMove.Operation.MOVE_TO){
 				double d0 = this.b - this.i.locX;
@@ -70,7 +77,7 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 				}
 			}
 		}
-
+		
 		private boolean b(double d0, double d1, double d2, double d3){
 			double d4 = (d0 - this.i.locX) / d3;
 			double d5 = (d1 - this.i.locY) / d3;
