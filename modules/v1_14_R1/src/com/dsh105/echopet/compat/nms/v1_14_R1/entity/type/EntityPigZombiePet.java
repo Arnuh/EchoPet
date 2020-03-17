@@ -16,29 +16,32 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
-
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.PIGZOMBIE)
 public class EntityPigZombiePet extends EntityZombiePet implements IEntityPigZombiePet{
-
+	
 	public EntityPigZombiePet(World world){
 		super(EntityTypes.ZOMBIE_PIGMAN, world);
 	}
-
+	
 	public EntityPigZombiePet(World world, IPet pet){
 		super(EntityTypes.ZOMBIE_PIGMAN, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.isBaby()){

@@ -19,18 +19,17 @@ package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
-
 import net.minecraft.server.v1_14_R1.EntityInsentient;
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 public class EntityVillagerAbstractPet extends EntityAgeablePet implements IEntityVillagerAbstractPet{
-
-
+	
+	
 	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}

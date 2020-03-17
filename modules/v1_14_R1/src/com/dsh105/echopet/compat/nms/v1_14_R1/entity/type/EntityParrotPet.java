@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.ParrotVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityParrotPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityTameablePet;
-
 import net.minecraft.server.v1_14_R1.DataWatcher;
 import net.minecraft.server.v1_14_R1.DataWatcherObject;
 import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
@@ -34,27 +33,27 @@ import net.minecraft.server.v1_14_R1.World;
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.PARROT)
 public class EntityParrotPet extends EntityTameablePet implements IEntityParrotPet{
-
+	
 	private static final DataWatcherObject<Integer> VARIANT = DataWatcher.a(EntityParrotPet.class, DataWatcherRegistry.b);
-
+	
 	public EntityParrotPet(World world){
 		super(EntityTypes.PARROT, world);
 	}
-
+	
 	public EntityParrotPet(World world, IPet pet){
 		super(EntityTypes.PARROT, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(VARIANT, 0);
 	}
-
+	
 	public ParrotVariant getVariant(){
 		return ParrotVariant.values()[MathHelper.clamp(this.datawatcher.get(VARIANT), 0, 4)];
 	}
-
+	
 	public void setVariant(ParrotVariant variant){
 		this.datawatcher.set(VARIANT, variant.ordinal());
 	}

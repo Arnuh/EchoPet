@@ -1,9 +1,12 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermitePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.Particles;
 import net.minecraft.server.v1_14_R1.World;
@@ -11,20 +14,20 @@ import net.minecraft.server.v1_14_R1.World;
 @EntitySize(width = 0.4F, height = 0.3F)
 @EntityPetType(petType = PetType.ENDERMITE)
 public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet{
-
+	
 	public EntityEndermitePet(World world){
 		super(EntityTypes.ENDERMITE, world);
 	}
-
+	
 	public EntityEndermitePet(World world, IPet pet){
 		super(EntityTypes.ENDERMITE, world, pet);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();

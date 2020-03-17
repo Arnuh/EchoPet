@@ -22,7 +22,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityOcelotPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
-
 import net.minecraft.server.v1_13_R2.DataWatcher;
 import net.minecraft.server.v1_13_R2.DataWatcherObject;
 import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
@@ -32,31 +31,31 @@ import net.minecraft.server.v1_13_R2.World;
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.OCELOT)
 public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPet{
-
+	
 	private static final DataWatcherObject<Integer> TYPE = DataWatcher.a(EntityOcelotPet.class, DataWatcherRegistry.b);
-
+	
 	public EntityOcelotPet(World world){
 		super(EntityTypes.OCELOT, world);
 	}
-
+	
 	public EntityOcelotPet(World world, IPet pet){
 		super(EntityTypes.OCELOT, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(TYPE, Integer.valueOf(0));
 	}
-
+	
 	@Override
 	protected String getIdleSound(){
-		return(this.random.nextInt(4) == 0 ? "entity.cat.purreow" : null);
+		return (this.random.nextInt(4) == 0 ? "entity.cat.purreow" : null);
 	}
-
+	
 	@Override
 	protected String getDeathSound(){
 		return "entity.cat.death";
 	}
-
+	
 }

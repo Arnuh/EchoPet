@@ -23,32 +23,35 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPolarBearPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 1.4F, height = 1.4F)
 @EntityPetType(petType = PetType.POLARBEAR)
 public class EntityPolarBearPet extends EntityAgeablePet implements IEntityPolarBearPet{
-
+	
 	private static final DataWatcherObject<Boolean> STANDING_UP = DataWatcher.a(EntityPolarBearPet.class, DataWatcherRegistry.i);
-
+	
 	public EntityPolarBearPet(World world){
 		super(EntityTypes.POLAR_BEAR, world);
 	}
-
+	
 	public EntityPolarBearPet(World world, IPet pet){
 		super(EntityTypes.POLAR_BEAR, world, pet);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(STANDING_UP, false);
 	}
-
+	
 	public void setStandingUp(boolean flag){
 		datawatcher.set(STANDING_UP, flag);
 	}
-
+	
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}

@@ -23,20 +23,24 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
-
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.DataWatcher;
+import net.minecraft.server.v1_14_R1.DataWatcherObject;
+import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
+import net.minecraft.server.v1_14_R1.EntityInsentient;
+import net.minecraft.server.v1_14_R1.EntityTypes;
+import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.ZOMBIE)
 public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePet{
-
+	
 	private static final DataWatcherObject<Integer> bx = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.b);// gets registered and that is it.
 	private static final DataWatcherObject<Boolean> by = DataWatcher.a(EntityZombiePet.class, DataWatcherRegistry.i);// DROWN_CONVERTING
-
+	
 	public EntityZombiePet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityZombiePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 		// TODO: Broken
@@ -47,22 +51,22 @@ public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePe
 		    }
 		}.runTaskLater(EchoPet.getPlugin(), 5L);*/
 	}
-
+	
 	public EntityZombiePet(World world){
 		this(EntityTypes.ZOMBIE, world);
 	}
-
+	
 	public EntityZombiePet(World world, IPet pet){
 		this(EntityTypes.ZOMBIE, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		getDataWatcher().register(bx, 0);
 		getDataWatcher().register(by, false);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		if(this.isBaby()){

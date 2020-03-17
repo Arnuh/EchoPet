@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitchPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
 import net.minecraft.server.v1_14_R1.DataWatcher;
 import net.minecraft.server.v1_14_R1.DataWatcherObject;
 import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
@@ -33,23 +32,23 @@ import net.minecraft.server.v1_14_R1.World;
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.WITCH)
 public class EntityWitchPet extends EntityPet implements IEntityWitchPet{
-
+	
 	private static final DataWatcherObject<Boolean> POTION = DataWatcher.a(EntityWitchPet.class, DataWatcherRegistry.i);
-
+	
 	public EntityWitchPet(World world){
 		super(EntityTypes.WITCH, world);
 	}
-
+	
 	public EntityWitchPet(World world, IPet pet){
 		super(EntityTypes.WITCH, world, pet);
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.getDataWatcher().register(POTION, true);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;

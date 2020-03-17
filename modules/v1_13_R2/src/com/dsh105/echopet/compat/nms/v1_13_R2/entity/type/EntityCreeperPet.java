@@ -16,43 +16,50 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCreeperPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityPet;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.World;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.CREEPER)
 public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
-
+	
 	private static final DataWatcherObject<Integer> a = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.b);// No clue
 	private static final DataWatcherObject<Boolean> POWERED = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.i);
 	private static final DataWatcherObject<Boolean> IGNITED = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.i);// What is this?
-
+	
 	public EntityCreeperPet(World world){
 		super(EntityTypes.CREEPER, world);
 	}
-
+	
 	public EntityCreeperPet(World world, IPet pet){
 		super(EntityTypes.CREEPER, world, pet);
 	}
-
+	
 	public void setPowered(boolean flag){
 		this.datawatcher.set(POWERED, flag);
 	}
-
+	
 	public void setIgnited(boolean flag){
 		this.datawatcher.set(IGNITED, flag);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(a, Integer.valueOf(-1));
 		this.datawatcher.register(POWERED, Boolean.valueOf(false));
 		this.datawatcher.register(IGNITED, Boolean.valueOf(false));
 	}
-
+	
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}

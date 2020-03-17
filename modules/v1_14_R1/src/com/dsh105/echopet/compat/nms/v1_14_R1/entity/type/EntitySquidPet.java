@@ -16,25 +16,28 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySquidPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityPet;
-
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.95F, height = 0.95F)
 @EntityPetType(petType = PetType.SQUID)
 public class EntitySquidPet extends EntityPet implements IEntitySquidPet{
-
+	
 	public EntitySquidPet(World world){
 		super(EntityTypes.SQUID, world);
 	}
-
+	
 	public EntitySquidPet(World world, IPet pet){
 		super(EntityTypes.SQUID, world, pet);
 	}
-
+	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;

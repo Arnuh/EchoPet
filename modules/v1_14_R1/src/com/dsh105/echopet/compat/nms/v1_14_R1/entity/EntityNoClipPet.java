@@ -17,20 +17,20 @@
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
-
 import net.minecraft.server.v1_14_R1.EntityInsentient;
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 public abstract class EntityNoClipPet extends EntityPet{
-
+	
 	protected EntityNoClipPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityNoClipPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
+	
 	public void noClip(boolean flag){
 		this.noclip = flag;
 	}

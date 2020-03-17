@@ -22,7 +22,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCowPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityAgeablePet;
-
 import net.minecraft.server.v1_14_R1.EntityInsentient;
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
@@ -30,19 +29,19 @@ import net.minecraft.server.v1_14_R1.World;
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.COW)
 public class EntityCowPet extends EntityAgeablePet implements IEntityCowPet{
-
+	
 	public EntityCowPet(EntityTypes<? extends EntityInsentient> type, World world){
 		super(type, world);
 	}
-
+	
 	public EntityCowPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
 		super(type, world, pet);
 	}
-
+	
 	public EntityCowPet(World world){
 		this(EntityTypes.COW, world);
 	}
-
+	
 	public EntityCowPet(World world, IPet pet){
 		this(EntityTypes.COW, world, pet);
 	}

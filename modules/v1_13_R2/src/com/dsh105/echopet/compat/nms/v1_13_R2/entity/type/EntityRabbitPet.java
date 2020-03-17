@@ -1,7 +1,5 @@
 package com.dsh105.echopet.compat.nms.v1_13_R2.entity.type;
 
-import org.bukkit.entity.Rabbit;
-
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -9,43 +7,50 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.EntityAgeablePet;
 import com.dsh105.echopet.compat.nms.v1_13_R2.entity.ai.PetGoalFollowOwner;
-
-import net.minecraft.server.v1_13_R2.*;
+import net.minecraft.server.v1_13_R2.ControllerJump;
+import net.minecraft.server.v1_13_R2.DataWatcher;
+import net.minecraft.server.v1_13_R2.DataWatcherObject;
+import net.minecraft.server.v1_13_R2.DataWatcherRegistry;
+import net.minecraft.server.v1_13_R2.EntityTypes;
+import net.minecraft.server.v1_13_R2.PathEntity;
+import net.minecraft.server.v1_13_R2.Vec3D;
+import net.minecraft.server.v1_13_R2.World;
+import org.bukkit.entity.Rabbit;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet{
-
+	
 	private static final DataWatcherObject<Integer> TYPE = DataWatcher.a(EntityRabbitPet.class, DataWatcherRegistry.b);
 	private boolean onGroundLastTick = false;
 	private int delay = 0;// bC
-
+	
 	public EntityRabbitPet(World world){
 		super(EntityTypes.RABBIT, world);
 		this.h = new ControllerJumpRabbit(this);
 	}
-
+	
 	public EntityRabbitPet(World world, IPet pet){
 		super(EntityTypes.RABBIT, world, pet);
 		this.h = new ControllerJumpRabbit(this);
 	}
-
+	
 	@Override
 	public Rabbit.Type getRabbitType(){
 		return TypeMapping.fromMagic(this.datawatcher.get(TYPE));
 	}
-
+	
 	@Override
 	public void setRabbitType(Rabbit.Type type){
 		this.datawatcher.set(TYPE, TypeMapping.toMagic(type));
 	}
-
+	
 	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(TYPE, Integer.valueOf(0));
 	}
-
+	
 	@Override
 	public void onLive(){
 		super.onLive();
@@ -80,7 +85,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		}
 		this.onGroundLastTick = this.onGround;
 	}
-
+	
 	protected void cH(){// has movecontroller in it, 4 above datawatcher register. contains 010000000000000002D
 		super.cH();
 		double d0 = this.moveController.c();
@@ -92,43 +97,43 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		}
 		this.world.broadcastEntityEffect(this, (byte) 1);// Does leg jump animation I think
 	}
-
+	
 	private void reset(){
 		resetDelay();// dC
 		((ControllerJumpRabbit) h).a(false);// dD
 	}
-
+	
 	private void resetDelay(){// dI()
 		if(moveController.c() < 2.2D) delay = 10;
 		else delay = 1;
 	}
-
+	
 	public void dl(){// Above datawatcher register
 		o(true);// Plays ambient sound if true, does super.l(flag);
 	}
-
+	
 	public class ControllerJumpRabbit extends ControllerJump{// Copied from EntityRabbit
-
+		
 		private EntityRabbitPet c;
 		private boolean d = false;
-
+		
 		public ControllerJumpRabbit(EntityRabbitPet entityrabbit){
 			super(entityrabbit);
 			this.c = entityrabbit;
 		}
-
+		
 		public boolean c(){
 			return this.a;
 		}
-
+		
 		public boolean d(){
 			return this.d;
 		}
-
+		
 		public void a(boolean flag){
 			this.d = flag;
 		}
-
+		
 		public void b(){
 			if(this.a){
 				this.c.dl();// this is the method above ^
@@ -136,11 +141,12 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			}
 		}
 	}
-
+	
 	static class TypeMapping{
-
+		
 		private static final int[] NMS_TYPES = new int[Rabbit.Type.values().length];
 		private static final Rabbit.Type[] INVERSE = new Rabbit.Type[Rabbit.Type.values().length];
+		
 		static{
 			set(Rabbit.Type.BROWN, 0);
 			set(Rabbit.Type.WHITE, 1);
@@ -150,22 +156,24 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			set(Rabbit.Type.SALT_AND_PEPPER, 5);
 			set(Rabbit.Type.THE_KILLER_BUNNY, 99);
 		}
-
+		
 		private static void set(Rabbit.Type type, int magicValue){
 			NMS_TYPES[type.ordinal()] = magicValue;
 			if(magicValue < INVERSE.length){
 				INVERSE[magicValue] = type;
 			}
 		}
-
+		
 		protected static Rabbit.Type fromMagic(int magicValue){
 			if(magicValue < INVERSE.length){
 				return INVERSE[magicValue];
-			}else if(magicValue == 99){ return Rabbit.Type.THE_KILLER_BUNNY; }
+			}else if(magicValue == 99){
+				return Rabbit.Type.THE_KILLER_BUNNY;
+			}
 			// a default
 			return Rabbit.Type.BROWN;
 		}
-
+		
 		protected static int toMagic(Rabbit.Type type){
 			return NMS_TYPES[type.ordinal()];
 		}

@@ -5,7 +5,6 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMulePet;
-
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
@@ -13,11 +12,11 @@ import net.minecraft.server.v1_14_R1.World;
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.MULE)
 public class EntityMulePet extends EntityHorseChestedAbstractPet implements IEntityMulePet{
-
+	
 	public EntityMulePet(World world){
 		super(EntityTypes.MULE, world);
 	}
-
+	
 	public EntityMulePet(World world, IPet pet){
 		super(EntityTypes.MULE, world, pet);
 	}

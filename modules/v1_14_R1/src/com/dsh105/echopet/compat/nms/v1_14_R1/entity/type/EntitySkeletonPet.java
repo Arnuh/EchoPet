@@ -22,18 +22,17 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
-
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.SKELETON)
 public class EntitySkeletonPet extends EntitySkeletonAbstractPet implements IEntitySkeletonPet{
-
+	
 	public EntitySkeletonPet(World world){
 		super(EntityTypes.SKELETON, world);
 	}
-
+	
 	public EntitySkeletonPet(World world, final IPet pet){
 		super(EntityTypes.SKELETON, world, pet);
 		// TODO: Fix
@@ -48,5 +47,5 @@ public class EntitySkeletonPet extends EntitySkeletonAbstractPet implements IEnt
 		    }
 		}.runTaskLater(EchoPet.getPlugin(), 5L);*/
 	}
-
+	
 }

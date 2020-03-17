@@ -16,66 +16,91 @@
  */
 package com.dsh105.echopet.compat.nms.v1_13_R2;
 
+import net.minecraft.server.v1_13_R2.ControllerJump;
+import net.minecraft.server.v1_13_R2.ControllerLook;
+import net.minecraft.server.v1_13_R2.ControllerMove;
+import net.minecraft.server.v1_13_R2.EntityInsentient;
+import net.minecraft.server.v1_13_R2.EntityLiving;
+import net.minecraft.server.v1_13_R2.EntitySenses;
+import net.minecraft.server.v1_13_R2.NavigationAbstract;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
-
-import net.minecraft.server.v1_13_R2.*;
 
 /*
  * From EntityAPI :)
  */
 public class NMSEntityUtil{
-
+	
 	public static NavigationAbstract getNavigation(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){ return getNavigation(((CraftLivingEntity) livingEntity).getHandle()); }
+		if(livingEntity instanceof CraftLivingEntity){
+			return getNavigation(((CraftLivingEntity) livingEntity).getHandle());
+		}
 		return null;
 	}
-
+	
 	public static NavigationAbstract getNavigation(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){ return ((EntityInsentient) entityLiving).getNavigation(); }
+		if(entityLiving instanceof EntityInsentient){
+			return ((EntityInsentient) entityLiving).getNavigation();
+		}
 		return null;
 	}
-
+	
 	public static EntitySenses getEntitySenses(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){ return getEntitySenses(((CraftLivingEntity) livingEntity).getHandle()); }
+		if(livingEntity instanceof CraftLivingEntity){
+			return getEntitySenses(((CraftLivingEntity) livingEntity).getHandle());
+		}
 		return null;
 	}
-
+	
 	public static EntitySenses getEntitySenses(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){ return ((EntityInsentient) entityLiving).getEntitySenses(); }
+		if(entityLiving instanceof EntityInsentient){
+			return ((EntityInsentient) entityLiving).getEntitySenses();
+		}
 		return null;
 	}
-
+	
 	public static ControllerJump getControllerJump(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){ return getControllerJump(((CraftLivingEntity) livingEntity).getHandle()); }
+		if(livingEntity instanceof CraftLivingEntity){
+			return getControllerJump(((CraftLivingEntity) livingEntity).getHandle());
+		}
 		return null;
 	}
-
+	
 	public static ControllerJump getControllerJump(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){ return ((EntityInsentient) entityLiving).getControllerJump(); }
+		if(entityLiving instanceof EntityInsentient){
+			return ((EntityInsentient) entityLiving).getControllerJump();
+		}
 		return null;
 	}
-
+	
 	public static ControllerMove getControllerMove(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){ return getControllerMove(((CraftLivingEntity) livingEntity).getHandle()); }
+		if(livingEntity instanceof CraftLivingEntity){
+			return getControllerMove(((CraftLivingEntity) livingEntity).getHandle());
+		}
 		return null;
 	}
-
+	
 	public static ControllerMove getControllerMove(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){ return ((EntityInsentient) entityLiving).getControllerMove(); }
+		if(entityLiving instanceof EntityInsentient){
+			return ((EntityInsentient) entityLiving).getControllerMove();
+		}
 		return null;
 	}
-
+	
 	public static ControllerLook getControllerLook(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){ return getControllerLook(((CraftLivingEntity) livingEntity).getHandle()); }
+		if(livingEntity instanceof CraftLivingEntity){
+			return getControllerLook(((CraftLivingEntity) livingEntity).getHandle());
+		}
 		return null;
 	}
-
+	
 	public static ControllerLook getControllerLook(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){ return ((EntityInsentient) entityLiving).getControllerLook(); }
+		if(entityLiving instanceof EntityInsentient){
+			return ((EntityInsentient) entityLiving).getControllerLook();
+		}
 		return null;
 	}
-
+	
 	public static boolean isInGuardedAreaOf(EntityLiving entityLiving, int x, int y, int z){
 		// TODO: not used currently
 		return false;
@@ -85,7 +110,7 @@ public class NMSEntityUtil{
 		    return false;
 		}*/
 	}
-
+	
 	/*
 	 * Hacky stuff to get around doTick() becoming final
 	 */
@@ -93,7 +118,7 @@ public class NMSEntityUtil{
 	// protected static FieldAccessor<Set<?>> ACTIVE_GOALS;
 	// protected static MethodAccessor<Void> ADD_GOAL;
 	// protected static FieldAccessor<Object> GOAL_SELECTOR;
-
+	
 	public static void clearGoals(Object nmsEntityHandle){
 		/*if(GOALS == null || ACTIVE_GOALS == null || GOAL_SELECTOR == null){
 			initializeFields();
@@ -101,7 +126,7 @@ public class NMSEntityUtil{
 		GOALS.get(GOAL_SELECTOR.get(nmsEntityHandle)).clear();
 		ACTIVE_GOALS.get(GOAL_SELECTOR.get(nmsEntityHandle)).clear();*/
 	}
-
+	
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	protected static void initializeFields(){
 		/*try{

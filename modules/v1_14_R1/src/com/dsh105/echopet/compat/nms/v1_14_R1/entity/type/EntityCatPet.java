@@ -16,8 +16,6 @@
  */
 package com.dsh105.echopet.compat.nms.v1_14_R1.entity.type;
 
-import org.bukkit.DyeColor;
-
 import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
@@ -25,31 +23,31 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.nms.v1_14_R1.entity.EntityTameablePet;
-
 import net.minecraft.server.v1_14_R1.DataWatcher;
 import net.minecraft.server.v1_14_R1.DataWatcherObject;
 import net.minecraft.server.v1_14_R1.DataWatcherRegistry;
 import net.minecraft.server.v1_14_R1.EntityTypes;
 import net.minecraft.server.v1_14_R1.EnumColor;
 import net.minecraft.server.v1_14_R1.World;
+import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.CAT)
 public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
-
+	
 	private static final DataWatcherObject<Integer> Type = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.b);
 	private static final DataWatcherObject<Boolean> bG = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.i);
 	private static final DataWatcherObject<Boolean> bH = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.i);
 	private static final DataWatcherObject<Integer> CollarColor = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.b);
-
+	
 	public EntityCatPet(World world){
 		super(EntityTypes.CAT, world);
 	}
-
+	
 	public EntityCatPet(World world, IPet pet){
 		super(EntityTypes.CAT, world, pet);
 	}
-
+	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(Type, CatType.Black.ordinal());
@@ -57,13 +55,13 @@ public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 		this.datawatcher.register(bH, false);
 		this.datawatcher.register(CollarColor, EnumColor.RED.getColorIndex());
 	}
-
-
+	
+	
 	@Override
 	public void setType(CatType type){
 		datawatcher.set(Type, type.ordinal());
 	}
-
+	
 	@Override
 	public void setCollarColor(DyeColor color){
 		datawatcher.set(CollarColor, color.ordinal());
