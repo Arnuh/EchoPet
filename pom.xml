@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>VanishNoPacket</artifactId>
-            <version>3.20</version>
+            <version>3.20.1</version>
             <scope>provided</scope>
             <exclusions>
             	<exclusion>
