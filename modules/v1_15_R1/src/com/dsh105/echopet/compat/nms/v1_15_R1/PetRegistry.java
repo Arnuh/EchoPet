@@ -36,13 +36,6 @@ import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
 import com.google.common.base.Preconditions;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.EntityTypes.a;
-import net.minecraft.server.v1_15_R1.EnumCreatureType;
-import net.minecraft.server.v1_15_R1.IRegistry;
-import net.minecraft.server.v1_15_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -104,7 +97,7 @@ public class PetRegistry implements IPetRegistry{
 	
 	@Override
 	public void enablePet(PetType petType){
-		if(petType.isCompatible()){
+		/*if(petType.isCompatible()){
 			EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
 			if(entity == null){
 				Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
@@ -119,18 +112,18 @@ public class PetRegistry implements IPetRegistry{
 				}
 			}, type);
 			IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), entitytypes_a.a(petType.getMinecraftName()));
-		}
+		}*/
 	}
 	
 	@Override
 	public void disablePet(PetType petType){
-		try{
+		/*try{
 			if(petType.isCompatible()){
 				Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);
 				IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), val);
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
-		}
+		}*/
 	}
 }
