@@ -84,8 +84,8 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	}
 	
 	@Override
-	public void e(Vec3D motion){
-		super.e(motion);
+	public void f(Vec3D motion){
+		super.f(motion);
 		// forward
 		if(motion.x <= 0.0F){
 			this.stepSoundCount = 0;

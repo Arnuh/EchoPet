@@ -117,7 +117,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		// PathfinderGoalFollowOwner
 		EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
 		// 1.9: this.d.getControllerLook().a(this.e, 10.0F, this.d.N());
-		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.dU());
+		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.eo());
 		if(--this.timer <= 0){
 			this.timer = 10;
 			/*if (this.pet.getPlayerOwner().isFlying()) {
@@ -125,7 +125,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    return;
 			}*/
 			double speed = 0.6F;
-			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
