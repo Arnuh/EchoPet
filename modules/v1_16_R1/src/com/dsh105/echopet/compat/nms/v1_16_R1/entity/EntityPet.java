@@ -47,7 +47,6 @@ import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.nms.v1_16_R1.NMSEntityUtil;
-import com.dsh105.echopet.compat.nms.v1_16_R1.SpawnUtil;
 import com.dsh105.echopet.compat.nms.v1_16_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_16_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_16_R1.entity.ai.PetGoalLookAtPlayer;
@@ -59,26 +58,22 @@ import net.minecraft.server.v1_16_R1.EntityHuman;
 import net.minecraft.server.v1_16_R1.EntityInsentient;
 import net.minecraft.server.v1_16_R1.EntityLiving;
 import net.minecraft.server.v1_16_R1.EntityPlayer;
-import net.minecraft.server.v1_16_R1.EntityTameableAnimal;
 import net.minecraft.server.v1_16_R1.EntityTypes;
 import net.minecraft.server.v1_16_R1.EnumHand;
 import net.minecraft.server.v1_16_R1.EnumInteractionResult;
 import net.minecraft.server.v1_16_R1.IRegistry;
 import net.minecraft.server.v1_16_R1.ItemStack;
 import net.minecraft.server.v1_16_R1.MinecraftKey;
-import net.minecraft.server.v1_16_R1.NBTTagByte;
 import net.minecraft.server.v1_16_R1.NBTTagCompound;
 import net.minecraft.server.v1_16_R1.SoundEffect;
 import net.minecraft.server.v1_16_R1.Vec3D;
 import net.minecraft.server.v1_16_R1.World;
-import net.minecraft.server.v1_16_R1.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 
 public abstract class EntityPet extends EntityInsentient implements IEntityPet{
@@ -192,76 +187,14 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 	
 	public void setOwnerShoulderEntityLeft(){
-		if(!releaseLeftShoulderEntity()) return;
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("id", getSaveID());
-		nbt.setBoolean("echopet", true);
-		save(nbt);
-		markEchoPetEntity(nbt);
-		((CraftPlayer) this.getPlayerOwner()).getHandle().setShoulderEntityLeft(nbt);
+		//
 	}
 	
 	
 	public void setOwnerShoulderEntityRight(){
-		if(!releaseRightShoulderEntity()) return;
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("id", getSaveID());
-		save(nbt);
-		markEchoPetEntity(nbt);
-		((CraftPlayer) this.getPlayerOwner()).getHandle().setShoulderEntityRight(nbt);
+		//
 	}
 	
-	private boolean releaseLeftShoulderEntity(){
-		EntityPlayer player = ((CraftPlayer) this.getPlayerOwner()).getHandle();
-		NBTTagCompound nbt = player.getShoulderEntityLeft();
-		if(nbt != null && !nbt.isEmpty()){
-			if(!EchoPet.getPlugin().getSpawnUtil().isEchoPetEntity(getBukkitEntity())){
-				if(!spawnEntityFromShoulder(nbt)) return false;
-			}
-			player.setShoulderEntityLeft(new NBTTagCompound());
-			return false;
-		}
-		return true;
-	}
-	
-	private boolean releaseRightShoulderEntity(){
-		EntityPlayer player = ((CraftPlayer) this.getPlayerOwner()).getHandle();
-		NBTTagCompound nbt = player.getShoulderEntityRight();
-		if(nbt != null && !nbt.isEmpty()){
-			if(!EchoPet.getPlugin().getSpawnUtil().isEchoPetEntity(getBukkitEntity())){
-				if(!spawnEntityFromShoulder(nbt)) return false;
-			}
-			player.setShoulderEntityRight(new NBTTagCompound());
-			return false;
-		}
-		return true;
-	}
-	
-	private void markEchoPetEntity(NBTTagCompound nbt){
-		getBukkitEntity().getPersistentDataContainer().put(SpawnUtil.parrotKey.toString(), NBTTagByte.a(true));
-		/*NBTTagCompound values = nbt.getCompound("BukkitValues");
-		if(values == null){
-			values = new NBTTagCompound();
-			nbt.set("BukkitValues", values);
-		}
-		values.setBoolean(SpawnUtil.parrotKey.toString(), true);
-		CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
-		CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
-		persistentDataContainer.putAll(values);*/
-		System.out.println(getBukkitEntity().getPersistentDataContainer().getRaw().toString());
-	}
-	
-	private boolean spawnEntityFromShoulder(NBTTagCompound nbttagcompound){
-		return !this.world.isClientSide && !nbttagcompound.isEmpty() ? (Boolean) EntityTypes.a(nbttagcompound, this.world).map((entity)->{
-			if(entity instanceof EntityTameableAnimal){
-				((EntityTameableAnimal) entity).setOwnerUUID(this.uniqueID);
-			}
-			
-			entity.setPosition(this.locX(), this.locY() + 0.699999988079071D, this.locZ());
-			return ((WorldServer) this.world).addEntitySerialized(entity, CreatureSpawnEvent.SpawnReason.SHOULDER_ENTITY);
-		}).orElse(true) : true;
-	}
-
 	/*public boolean attack(Entity entity){
 		return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
 	}*/
@@ -367,7 +300,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		if(makeSound){
 			SoundEffect sound = getSoundFromString(getDeathSound());
 			if(sound != null){
-				a(sound, 1.0F, 1.0F);// was makeSound in 1.8
+				playSound(sound, 1.0F, 1.0F);// was makeSound in 1.8
 				/*
 				  public void a(SoundEffect soundeffect, float f, float f1)
 				  {
@@ -429,34 +362,34 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 	
 	//Tbh just look at EntityHorseAbstract.
-	public void e(Vec3D motion){
+	public void f(Vec3D motion){
 		if(passengers.isEmpty()){
-			this.H = 0.5F;// Above noclip
-			this.aM = 0.02F;// above killer in entity living
-			super.e(motion);
+			this.G = 0.5F;// Above noclip
+			this.aL = 0.02F;// above killer in entity living
+			super.f(motion);
 			return;
 		}
 		//getRidingPassenger() exists, maybe swap to it?
 		Entity passenger = passengers.get(0);
 		if(!(passenger instanceof EntityHuman) || ((EntityHuman) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer()){
-			this.H = 0.5F;
-			this.aM = 0.02F;
-			super.e(motion);
+			this.G = 0.5F;
+			this.aL = 0.02F;
+			super.f(motion);
 			return;
 		}
 		this.yaw = passenger.yaw;
 		this.lastYaw = this.yaw;
 		this.pitch = passenger.pitch * 0.5F;
 		this.setYawPitch(this.yaw, this.pitch);
-		this.aK = this.aM = this.yaw;
+		this.aJ = this.aH = this.yaw;
 		
-		double motX = ((EntityHuman) passenger).aZ * 0.5;
+		double motX = ((EntityHuman) passenger).aY * 0.5;
 		double motY = motion.y;
-		double motZ = ((EntityHuman) passenger).bb;
+		double motZ = ((EntityHuman) passenger).ba;
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
-		this.aM = dt() * 0.1F;
+		this.aL = dM() * 0.1F;
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
@@ -498,8 +431,8 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 		//Could just check if motY != 0.0 and do setMot for jumps?
 		//getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).getValue() for horses?
-		this.o(speed);// before "looting" methodProfiler
-		super.e(new Vec3D(motX, motY, motZ));
+		this.n(speed);// before "looting" methodProfiler
+		super.f(new Vec3D(motX, motY, motZ));
 	}
 	
 	protected SoundEffect getSoundAmbient(){
@@ -528,7 +461,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	
 	public void makeSound(String soundEffect, float f, float f1){
 		SoundEffect se = getSoundFromString(soundEffect);
-		if(se != null) a(se, f, f1);
+		if(se != null) playSound(se, f, f1);
 		// Minecraft doesn't actually do a null check in the method.. we have to do one for them.
 		// But minecraft does do a null check on entity SoundEffects(ambient, hurt, death)
 	}

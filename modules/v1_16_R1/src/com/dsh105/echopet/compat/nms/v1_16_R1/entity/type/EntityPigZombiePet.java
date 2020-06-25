@@ -44,11 +44,11 @@ import net.minecraft.server.v1_16_R1.World;
 public class EntityPigZombiePet extends EntityZombiePet implements IEntityPigZombiePet{
 	
 	public EntityPigZombiePet(World world){
-		super(EntityTypes.ZOMBIE_PIGMAN, world);
+		super(EntityTypes.ZOMBIFIED_PIGLIN, world);
 	}
 	
 	public EntityPigZombiePet(World world, IPet pet){
-		super(EntityTypes.ZOMBIE_PIGMAN, world, pet);
+		super(EntityTypes.ZOMBIFIED_PIGLIN, world, pet);
 	}
 	
 	@Override

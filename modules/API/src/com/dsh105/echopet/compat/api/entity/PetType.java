@@ -144,6 +144,11 @@ public enum PetType{
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
 		}catch(ClassNotFoundException ignored){
 		}
+		if(name().equals("PIGZOMBIE")){//hacky fix for now
+			if(new Version("1.16-R1").isCompatible(new Version())){
+				minecraftEntityName = "zombified_piglin";
+			}
+		}
 		this.minecraftEntityName = minecraftEntityName;
 		this.defaultName = defaultName;
 		this.version = version;

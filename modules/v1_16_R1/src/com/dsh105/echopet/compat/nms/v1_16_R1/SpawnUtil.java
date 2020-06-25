@@ -44,13 +44,9 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_16_R1.persistence.CraftPersistentDataContainer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.persistence.PersistentDataType;
 
 public class SpawnUtil implements ISpawnUtil{
 	
@@ -94,11 +90,5 @@ public class SpawnUtil implements ISpawnUtil{
 		if(!entityTag.startsWith("minecraft:")) entityTag = "minecraft:" + entityTag;
 		nbt.getCompound("EntityTag").setString("id", entityTag);
 		return CraftItemStack.asCraftMirror(is);
-	}
-	
-	@Override
-	public boolean isEchoPetEntity(Entity entity){
-		CraftPersistentDataContainer data = ((CraftEntity) entity).getPersistentDataContainer();
-		return data.has(parrotKey, PersistentDataType.BYTE);
 	}
 }

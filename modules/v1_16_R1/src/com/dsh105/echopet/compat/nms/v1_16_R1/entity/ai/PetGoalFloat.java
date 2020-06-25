@@ -56,8 +56,8 @@ public class PetGoalFloat extends APetGoalFloat{
 	
 	@Override
 	public boolean shouldStart(){
-		// 1.9: return (this.a.isInWater()) || (this.a.an());
-		return this.pet.isInWater() || this.pet.aH();
+		// 1.16: return ((this.a.isInWater() && this.a.b(TagsFluid.WATER) > this.a.cw()) || this.a.aN());
+		return this.pet.isInWater() || this.pet.aN();
 	}
 	
 	@Override

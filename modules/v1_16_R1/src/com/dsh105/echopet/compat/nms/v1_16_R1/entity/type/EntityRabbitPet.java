@@ -41,12 +41,12 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	
 	public EntityRabbitPet(World world){
 		super(EntityTypes.RABBIT, world);
-		this.bq = new ControllerJumpRabbit(this);
+		this.bp = new ControllerJumpRabbit(this);
 	}
 	
 	public EntityRabbitPet(World world, IPet pet){
 		super(EntityTypes.RABBIT, world, pet);
-		this.bq = new ControllerJumpRabbit(this);
+		this.bp = new ControllerJumpRabbit(this);
 	}
 	
 	@Override
@@ -122,7 +122,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		else delay = 1;
 	}
 	
-	public void eq(){// Above datawatcher register
+	public void eL(){// Above datawatcher register
 		setJumping(true);// Plays ambient sound if true, does super.l(flag);
 	}
 	
