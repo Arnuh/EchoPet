@@ -56,6 +56,7 @@ public enum PetType{
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
+	HOGLIN("Hoglin", "Hoglin Pet", "hoglin", new Version("1.16-R1")),
 	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR, PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
 	HUMAN("Human", "Human Pet", "UNKNOWN"),
 	HUSK("Husk", "Husk Pet", "husk"),
