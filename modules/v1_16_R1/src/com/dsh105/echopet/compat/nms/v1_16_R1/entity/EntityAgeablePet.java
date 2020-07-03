@@ -55,7 +55,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public int getAge(){
-		return this.datawatcher.get(BABY).booleanValue() ? -1 : this.age;
+		return this.datawatcher.get(BABY) ? -1 : this.age;
 	}
 	
 	public void setAge(int i, boolean flag){
@@ -72,7 +72,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public void setAgeRaw(int i){
-		this.datawatcher.set(BABY, Boolean.valueOf(i < 0));
+		this.datawatcher.set(BABY, i < 0);
 		this.age = i;
 	}
 	
@@ -111,7 +111,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	
 	@Override
 	public boolean isBaby(){
-		return this.datawatcher.get(BABY).booleanValue();
+		return this.datawatcher.get(BABY);
 	}
 	
 	@Override
