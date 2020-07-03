@@ -71,6 +71,7 @@ public enum PetType{
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),
 	PHANTOM("Phantom", "Phantom Pet", "phantom"),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
+	PIGLIN("Piglin", "Piglin Pet", "piglin", new Version("1.16-R1"), PetData.DANCE),
 	PIGZOMBIE("PigZombie", "Pig Zombie Pet", "zombie_pigman"),
 	PILLAGER("Pillager", "Pillager Pet", "pillager", new Version("1.14-R1")),
 	POLARBEAR("PolarBear", "Polar Bear Pet", "polar_bear", PetData.STANDING_UP),

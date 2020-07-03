@@ -34,6 +34,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPiglinPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPufferFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
@@ -235,6 +236,12 @@ public enum PetData{
 			return true;
 		}else return false;
 	}, Material.getMaterial("HONEY_BOTTLE"), "Nectar"),//HONEYCOMB ?
+	DANCE("dance", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PIGLIN)){
+			((IPiglinPet) pet).setDancing(flag);
+			return true;
+		}else return false;
+	}, Material.GOLD_INGOT, "Dance"),
 	SIZE_SMALL("size_small", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 1);
