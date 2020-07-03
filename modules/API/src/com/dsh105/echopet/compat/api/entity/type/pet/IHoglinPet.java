@@ -19,6 +19,6 @@
 
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 
-public interface IHoglinPet extends IPet{}
+public interface IHoglinPet extends IAgeablePet{}

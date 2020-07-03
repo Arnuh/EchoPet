@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHoglinPet;
-import com.dsh105.echopet.compat.nms.v1_16_R1.entity.EntityPet;
+import com.dsh105.echopet.compat.nms.v1_16_R1.entity.EntityAgeablePet;
 import net.minecraft.server.v1_16_R1.DataWatcher;
 import net.minecraft.server.v1_16_R1.DataWatcherObject;
 import net.minecraft.server.v1_16_R1.DataWatcherRegistry;
@@ -31,9 +31,9 @@ import net.minecraft.server.v1_16_R1.World;
 
 @EntitySize(width = 1.4F, height = 1.4F)
 @EntityPetType(petType = PetType.HOGLIN)
-public class EntityHoglinPet extends EntityPet implements IEntityHoglinPet{
+public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPet{
 	
-	private static final DataWatcherObject<Boolean> isImmuneToZombification = DataWatcher.a(EntityHoglinPet.class, DataWatcherRegistry.i);
+	private static final DataWatcherObject<Boolean> immuneToZombification = DataWatcher.a(EntityHoglinPet.class, DataWatcherRegistry.i);
 	
 	public EntityHoglinPet(World world){
 		super(EntityTypes.HOGLIN, world);
@@ -45,7 +45,7 @@ public class EntityHoglinPet extends EntityPet implements IEntityHoglinPet{
 	
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(isImmuneToZombification, true);//default is false
+		this.datawatcher.register(immuneToZombification, true);//Default to true to fix shaking when in overworld.
 	}
 	
 	@Override

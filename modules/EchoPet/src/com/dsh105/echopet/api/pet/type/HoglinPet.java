@@ -17,14 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHoglinPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.HOGLIN)
-public class HoglinPet extends Pet implements IHoglinPet{
+public class HoglinPet extends AgeablePet implements IHoglinPet{
 	
 	public HoglinPet(Player owner){
 		super(owner);
