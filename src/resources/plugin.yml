@@ -143,6 +143,8 @@ permissions:
         default: op
     echopet.pet.type.guardian:
         default: op
+    echopet.pet.type.hoglin:
+        default: op
     echopet.pet.type.horse:
         default: op
     echopet.pet.type.human:
@@ -170,6 +172,8 @@ permissions:
     echopet.pet.type.phantom:
         default: op
     echopet.pet.type.pig:
+        default: op
+    echopet.pet.type.piglin:
         default: op
     echopet.pet.type.pigzombie:
         default: op
@@ -273,6 +277,8 @@ permissions:
         default: op
     echopet.pet.default.set.type.guardian:
         default: op
+    echopet.pet.default.set.type.hoglin:
+        default: op
     echopet.pet.default.set.type.horse:
         default: op
     echopet.pet.default.set.type.human:
@@ -300,6 +306,8 @@ permissions:
     echopet.pet.default.set.type.phantom:
         default: op
     echopet.pet.default.set.type.pig:
+        default: op
+    echopet.pet.default.set.type.piglin:
         default: op
     echopet.pet.default.set.type.pigzombie:
         default: op
@@ -545,6 +553,12 @@ permissions:
         default: op
     echopet.pet.type.guardian.ride:
         default: op
+    echopet.pet.type.hoglin.hat:
+        default: op
+    echopet.pet.type.hoglin.ride:
+        default: op
+    echopet.pet.type.hoglin.baby:
+        default: op
     echopet.pet.type.horse.hat:
         default: op
     echopet.pet.type.horse.ride:
@@ -734,6 +748,14 @@ permissions:
     echopet.pet.type.pig.baby:
         default: op
     echopet.pet.type.pig.saddle:
+        default: op
+    echopet.pet.type.piglin.hat:
+        default: op
+    echopet.pet.type.piglin.ride:
+        default: op
+    echopet.pet.type.piglin.baby:
+        default: op
+    echopet.pet.type.piglin.dance:
         default: op
     echopet.pet.type.pigzombie.hat:
         default: op
@@ -1271,6 +1293,8 @@ permissions:
         default: op
     echopet.petadmin.type.guardian:
         default: op
+    echopet.petadmin.type.hoglin:
+        default: op
     echopet.petadmin.type.horse:
         default: op
     echopet.petadmin.type.human:
@@ -1298,6 +1322,8 @@ permissions:
     echopet.petadmin.type.phantom:
         default: op
     echopet.petadmin.type.pig:
+        default: op
+    echopet.petadmin.type.piglin:
         default: op
     echopet.petadmin.type.pigzombie:
         default: op
@@ -1401,6 +1427,8 @@ permissions:
         default: op
     echopet.petadmin.hat.guardian:
         default: op
+    echopet.petadmin.hat.hoglin:
+        default: op
     echopet.petadmin.hat.horse:
         default: op
     echopet.petadmin.hat.human:
@@ -1428,6 +1456,8 @@ permissions:
     echopet.petadmin.hat.phantom:
         default: op
     echopet.petadmin.hat.pig:
+        default: op
+    echopet.petadmin.hat.piglin:
         default: op
     echopet.petadmin.hat.pigzombie:
         default: op
@@ -1531,6 +1561,8 @@ permissions:
         default: op
     echopet.petadmin.ride.guardian:
         default: op
+    echopet.petadmin.ride.hoglin:
+        default: op
     echopet.petadmin.ride.horse:
         default: op
     echopet.petadmin.ride.human:
@@ -1558,6 +1590,8 @@ permissions:
     echopet.petadmin.ride.phantom:
         default: op
     echopet.petadmin.ride.pig:
+        default: op
+    echopet.petadmin.ride.piglin:
         default: op
     echopet.petadmin.ride.pigzombie:
         default: op
@@ -1661,6 +1695,8 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.guardian:
         default: op
+    echopet.petadmin.default.set.type.hoglin:
+        default: op
     echopet.petadmin.default.set.type.horse:
         default: op
     echopet.petadmin.default.set.type.human:
@@ -1688,6 +1724,8 @@ permissions:
     echopet.petadmin.default.set.type.phantom:
         default: op
     echopet.petadmin.default.set.type.pig:
+        default: op
+    echopet.petadmin.default.set.type.piglin:
         default: op
     echopet.petadmin.default.set.type.pigzombie:
         default: op
@@ -1801,6 +1839,7 @@ permissions:
             echopet.pet.type.ghast: true
             echopet.pet.type.giant: true
             echopet.pet.type.guardian: true
+            echopet.pet.type.hoglin: true
             echopet.pet.type.horse: true
             echopet.pet.type.human: true
             echopet.pet.type.husk: true
@@ -1815,6 +1854,7 @@ permissions:
             echopet.pet.type.parrot: true
             echopet.pet.type.phantom: true
             echopet.pet.type.pig: true
+            echopet.pet.type.piglin: true
             echopet.pet.type.pigzombie: true
             echopet.pet.type.pillager: true
             echopet.pet.type.polarbear: true
@@ -1870,6 +1910,7 @@ permissions:
             echopet.pet.type.ghast.hat: true
             echopet.pet.type.giant.hat: true
             echopet.pet.type.guardian.hat: true
+            echopet.pet.type.hoglin.hat: true
             echopet.pet.type.horse.hat: true
             echopet.pet.type.human.hat: true
             echopet.pet.type.husk.hat: true
@@ -1884,6 +1925,7 @@ permissions:
             echopet.pet.type.parrot.hat: true
             echopet.pet.type.phantom.hat: true
             echopet.pet.type.pig.hat: true
+            echopet.pet.type.piglin.hat: true
             echopet.pet.type.pigzombie.hat: true
             echopet.pet.type.pillager.hat: true
             echopet.pet.type.polarbear.hat: true
@@ -1939,6 +1981,7 @@ permissions:
             echopet.pet.type.ghast.ride: true
             echopet.pet.type.giant.ride: true
             echopet.pet.type.guardian.ride: true
+            echopet.pet.type.hoglin.ride: true
             echopet.pet.type.horse.ride: true
             echopet.pet.type.human.ride: true
             echopet.pet.type.husk.ride: true
@@ -1953,6 +1996,7 @@ permissions:
             echopet.pet.type.parrot.ride: true
             echopet.pet.type.phantom.ride: true
             echopet.pet.type.pig.ride: true
+            echopet.pet.type.piglin.ride: true
             echopet.pet.type.pigzombie.ride: true
             echopet.pet.type.pillager.ride: true
             echopet.pet.type.polarbear.ride: true
@@ -1995,6 +2039,7 @@ permissions:
             echopet.pet.type.donkey.baby: true
             echopet.pet.type.drowned.baby: true
             echopet.pet.type.fox.baby: true
+            echopet.pet.type.hoglin.baby: true
             echopet.pet.type.horse.baby: true
             echopet.pet.type.husk.baby: true
             echopet.pet.type.llama.baby: true
@@ -2003,6 +2048,7 @@ permissions:
             echopet.pet.type.ocelot.baby: true
             echopet.pet.type.panda.baby: true
             echopet.pet.type.pig.baby: true
+            echopet.pet.type.piglin.baby: true
             echopet.pet.type.pigzombie.baby: true
             echopet.pet.type.polarbear.baby: true
             echopet.pet.type.rabbit.baby: true
@@ -2047,6 +2093,7 @@ permissions:
             echopet.pet.default.set.type.ghast: true
             echopet.pet.default.set.type.giant: true
             echopet.pet.default.set.type.guardian: true
+            echopet.pet.default.set.type.hoglin: true
             echopet.pet.default.set.type.horse: true
             echopet.pet.default.set.type.human: true
             echopet.pet.default.set.type.husk: true
@@ -2061,6 +2108,7 @@ permissions:
             echopet.pet.default.set.type.parrot: true
             echopet.pet.default.set.type.phantom: true
             echopet.pet.default.set.type.pig: true
+            echopet.pet.default.set.type.piglin: true
             echopet.pet.default.set.type.pigzombie: true
             echopet.pet.default.set.type.pillager: true
             echopet.pet.default.set.type.polarbear: true
@@ -2137,6 +2185,7 @@ permissions:
             echopet.petadmin.type.ghast: true
             echopet.petadmin.type.giant: true
             echopet.petadmin.type.guardian: true
+            echopet.petadmin.type.hoglin: true
             echopet.petadmin.type.horse: true
             echopet.petadmin.type.human: true
             echopet.petadmin.type.husk: true
@@ -2151,6 +2200,7 @@ permissions:
             echopet.petadmin.type.parrot: true
             echopet.petadmin.type.phantom: true
             echopet.petadmin.type.pig: true
+            echopet.petadmin.type.piglin: true
             echopet.petadmin.type.pigzombie: true
             echopet.petadmin.type.pillager: true
             echopet.petadmin.type.polarbear: true
@@ -2206,6 +2256,7 @@ permissions:
             echopet.petadmin.hat.ghast: true
             echopet.petadmin.hat.giant: true
             echopet.petadmin.hat.guardian: true
+            echopet.petadmin.hat.hoglin: true
             echopet.petadmin.hat.horse: true
             echopet.petadmin.hat.human: true
             echopet.petadmin.hat.husk: true
@@ -2220,6 +2271,7 @@ permissions:
             echopet.petadmin.hat.parrot: true
             echopet.petadmin.hat.phantom: true
             echopet.petadmin.hat.pig: true
+            echopet.petadmin.hat.piglin: true
             echopet.petadmin.hat.pigzombie: true
             echopet.petadmin.hat.pillager: true
             echopet.petadmin.hat.polarbear: true
@@ -2275,6 +2327,7 @@ permissions:
             echopet.petadmin.ride.ghast: true
             echopet.petadmin.ride.giant: true
             echopet.petadmin.ride.guardian: true
+            echopet.petadmin.ride.hoglin: true
             echopet.petadmin.ride.horse: true
             echopet.petadmin.ride.human: true
             echopet.petadmin.ride.husk: true
@@ -2289,6 +2342,7 @@ permissions:
             echopet.petadmin.ride.parrot: true
             echopet.petadmin.ride.phantom: true
             echopet.petadmin.ride.pig: true
+            echopet.petadmin.ride.piglin: true
             echopet.petadmin.ride.pigzombie: true
             echopet.petadmin.ride.pillager: true
             echopet.petadmin.ride.polarbear: true
@@ -2351,6 +2405,7 @@ permissions:
             echopet.petadmin.default.set.type.ghast: true
             echopet.petadmin.default.set.type.giant: true
             echopet.petadmin.default.set.type.guardian: true
+            echopet.petadmin.default.set.type.hoglin: true
             echopet.petadmin.default.set.type.horse: true
             echopet.petadmin.default.set.type.human: true
             echopet.petadmin.default.set.type.husk: true
@@ -2365,6 +2420,7 @@ permissions:
             echopet.petadmin.default.set.type.parrot: true
             echopet.petadmin.default.set.type.phantom: true
             echopet.petadmin.default.set.type.pig: true
+            echopet.petadmin.default.set.type.piglin: true
             echopet.petadmin.default.set.type.pigzombie: true
             echopet.petadmin.default.set.type.pillager: true
             echopet.petadmin.default.set.type.polarbear: true
@@ -2567,6 +2623,13 @@ permissions:
         children:
             echopet.pet.type.guardian.hat: true
             echopet.pet.type.guardian.ride: true
+    echopet.pet.type.hoglin.*:
+        default: op
+        description: 'All hoglin pet data permissions'
+        children:
+            echopet.pet.type.hoglin.hat: true
+            echopet.pet.type.hoglin.ride: true
+            echopet.pet.type.hoglin.baby: true
     echopet.pet.type.horse.*:
         default: op
         description: 'All horse pet data permissions'
@@ -2718,6 +2781,14 @@ permissions:
             echopet.pet.type.pig.ride: true
             echopet.pet.type.pig.baby: true
             echopet.pet.type.pig.saddle: true
+    echopet.pet.type.piglin.*:
+        default: op
+        description: 'All piglin pet data permissions'
+        children:
+            echopet.pet.type.piglin.hat: true
+            echopet.pet.type.piglin.ride: true
+            echopet.pet.type.piglin.baby: true
+            echopet.pet.type.piglin.dance: true
     echopet.pet.type.pigzombie.*:
         default: op
         description: 'All pigzombie pet data permissions'
