@@ -16,7 +16,7 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
@@ -25,19 +25,13 @@ import org.bukkit.entity.Player;
 /**
  * @since Nov 19, 2016
  */
-public abstract class HorseAbstractPet extends Pet implements IHorseAbstractPet{
+public abstract class HorseAbstractPet extends AgeablePet implements IHorseAbstractPet{
 	
 	HorseVariant horseVariant = HorseVariant.HORSE;
-	boolean baby = false;
 	boolean saddle = false;
 	
 	public HorseAbstractPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public boolean isBaby(){
-		return this.baby;
 	}
 	
 	@Override
@@ -48,12 +42,6 @@ public abstract class HorseAbstractPet extends Pet implements IHorseAbstractPet{
 	@Override
 	public HorseVariant getVariant(){
 		return this.horseVariant;
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		((IEntityHorseAbstractPet) getEntityPet()).setBaby(flag);
-		this.baby = flag;
 	}
 	
 	@Override

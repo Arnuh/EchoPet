@@ -15,18 +15,8 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.api.pet.type;
+package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.api.pet.AgeablePet;
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.pet.IChickenPet;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 
-@EntityPetType(petType = PetType.CHICKEN)
-public class ChickenPet extends AgeablePet implements IChickenPet{
-	
-	public ChickenPet(Player owner){
-		super(owner);
-	}
-}
+public interface IEntityPiglinPet extends IEntityAgeablePet{}

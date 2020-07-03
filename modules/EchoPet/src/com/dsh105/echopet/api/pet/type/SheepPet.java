@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
@@ -27,25 +27,13 @@ import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SHEEP)
-public class SheepPet extends Pet implements ISheepPet{
+public class SheepPet extends AgeablePet implements ISheepPet{
 	
-	boolean baby;
 	boolean sheared;
 	Color color;
 	
 	public SheepPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		((IEntitySheepPet) getEntityPet()).setBaby(flag);
-		this.baby = flag;
-	}
-	
-	@Override
-	public boolean isBaby(){
-		return this.baby;
 	}
 	
 	@Override
