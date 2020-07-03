@@ -18,7 +18,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigPet;
@@ -26,24 +26,12 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.PIG)
-public class PigPet extends Pet implements IPigPet{
+public class PigPet extends AgeablePet implements IPigPet{
 	
-	boolean baby;
 	boolean saddle;
 	
 	public PigPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		((IEntityPigPet) getEntityPet()).setBaby(flag);
-		this.baby = flag;
-	}
-	
-	@Override
-	public boolean isBaby(){
-		return this.baby;
 	}
 	
 	@Override

@@ -17,30 +17,16 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICowPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.COW)
-public class CowPet extends Pet implements ICowPet{
-	
-	boolean baby;
+public class CowPet extends AgeablePet implements ICowPet{
 	
 	public CowPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		((IEntityCowPet) getEntityPet()).setBaby(flag);
-		this.baby = flag;
-	}
-	
-	@Override
-	public boolean isBaby(){
-		return this.baby;
 	}
 }
