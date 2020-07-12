@@ -148,6 +148,7 @@ public enum PetType{
 		}
 		if(name().equals("PIGZOMBIE")){//hacky fix for now
 			if(new Version("1.16-R1").isCompatible(new Version())){
+				defaultName = "Zombified Piglin Pet";
 				minecraftEntityName = "zombified_piglin";
 			}
 		}
