@@ -28,9 +28,26 @@ import org.bukkit.command.TabCompleter;
 
 public class CommandComplete implements TabCompleter{
 	
+	private static final String[] basic = {"name", "rider", "list", "info", "default", "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
+	
+	private static final String[] commands;
+	private static final String[] firstArgs;
+	private static final String[] blankArray = new String[0];
+	
+	static{
+		//handles /pet and /petadmin autocomplete
+		commands = new String[]{EchoPet.getPlugin().getCommandString(), EchoPet.getPlugin().getCommandString() + "admin"};
+		//handles /pet <pettype, all values in the basic array>
+		firstArgs = new String[basic.length + PetType.values.length];
+		System.arraycopy(basic, 0, firstArgs, 0, basic.length);
+		for(int i = basic.length; i < firstArgs.length; i++){
+			firstArgs[i] = PetType.values[i - basic.length].name().toLowerCase();
+		}
+	}
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		String cmdString = EchoPet.getPlugin().getCommandString();
 		if(cmd.getName().equalsIgnoreCase(cmdString)){
 			String[] completions;
@@ -51,17 +68,16 @@ public class CommandComplete implements TabCompleter{
 	private String[] getCompletions(int i){
 		switch(i){
 			case 0:
-				return new String[]{EchoPet.getPlugin().getCommandString(), EchoPet.getPlugin().getCommandString() + "admin"};
+				return commands;
 			case 1:
-				return new String[]{"bat", "blaze", "cavespider", "chicken", "cow", "creeper", "enderdragon", "enderman", "ghast", "horse", "human", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig", "pigzombie", "sheep", "silverfish", "skeleton", "slime", "snowman", "spider", "squid", "villager", "witch", "wither", "wolf", "zombie", "name", "rider", "list", "info", "default", "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
+				return firstArgs;
 		}
-		return new String[0];
+		return blankArray;
 	}
 	
 	private String[] getCompletions(int i, String argBefore){
 		switch(i){
 			case 0:
-				return getCompletions(i);
 			case 1:
 				return getCompletions(i);
 			case 2:
@@ -83,8 +99,8 @@ public class CommandComplete implements TabCompleter{
 					list.add("set");
 					list.add("remove");
 				}
-				return list.toArray(new String[list.size()]);
+				return list.toArray(new String[0]);
 		}
-		return new String[0];
+		return blankArray;
 	}
 }
