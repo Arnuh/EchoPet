@@ -49,6 +49,8 @@ public enum HelpEntry{
 	SELECTOR("selector", true, new String[]{"echopet.pet.selector"}, "Gives you the Pet Selection GUI Menu item"),
 	;
 	
+	public static final HelpEntry[] values = values();
+	
 	private String commandArguments;
 	private boolean canCheckPerm;
 	private String[] permission;

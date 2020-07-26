@@ -213,7 +213,7 @@ public class ConfigOptions extends Options{
 			}
 		}
 		
-		for(PetType petType : PetType.values()){
+		for(PetType petType : PetType.values){
 			String configOption = petType.getConfigKeyName();
 			set("pets." + configOption + ".enable", true);
 			set("pets." + configOption + ".tagVisible", true);
@@ -242,7 +242,7 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".allow.riders", true);
 			// }
 			
-			for(PetData pd : PetData.values()){
+			for(PetData pd : PetData.values){
 				if(petType.isDataAllowed(pd)){
 					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
 					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);

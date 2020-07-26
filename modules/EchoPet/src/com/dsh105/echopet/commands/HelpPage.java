@@ -64,6 +64,8 @@ public enum HelpPage{
 		
 		ChatColor.GOLD + "/" + EchoPet.getPlugin().getCommandString() + " selector", ChatColor.YELLOW + "    - Give yourself the Pet Selector.", ChatColor.DARK_RED + "    - Permission: echopet.pet.selector");
 	
+	public static HelpPage[] values = values();
+	
 	private int id;
 	private String[] lines;
 	
@@ -81,7 +83,7 @@ public enum HelpPage{
 	}
 	
 	public static String[] getHelpPage(int i){
-		for(HelpPage hp : HelpPage.values()){
+		for(HelpPage hp : HelpPage.values){
 			if(hp.getId() == i){
 				return hp.getLines();
 			}

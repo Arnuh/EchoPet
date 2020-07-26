@@ -347,7 +347,7 @@ public class PetUtil{
 	public static List<String> getPetList(CommandSender sender, boolean petAdmin){
 		List<String> list = new ArrayList<String>();
 		String admin = petAdmin ? "admin" : "";
-		for(PetType pt : PetType.values()){
+		for(PetType pt : PetType.values){
 			ChatColor color1 = ChatColor.GREEN;
 			ChatColor color2 = ChatColor.DARK_GREEN;
 			String separator = ", ";

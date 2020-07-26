@@ -30,7 +30,7 @@ public class TableMigrationUtil{
 		tableMigrationStrategies.add(new MigrationStrategy("Pets"){
 			@Override
 			public String getMigratedTableSchema(){
-				return "EchoPet (" + "    OwnerName varchar(255)," + "    PetType varchar(255)," + "    PetName varchar(255)," + serialise(PetData.values(), false) + ", " + "    RiderPetType varchar(255), RiderPetName varchar(255), " + serialise(PetData.values(), true) + ", " + "    PRIMARY KEY (OwnerName)" + ");";
+				return "EchoPet (" + "    OwnerName varchar(255)," + "    PetType varchar(255)," + "    PetName varchar(255)," + serialise(PetData.values, false) + ", " + "    RiderPetType varchar(255), RiderPetName varchar(255), " + serialise(PetData.values, true) + ", " + "    PRIMARY KEY (OwnerName)" + ");";
 			}
 			
 			@Override
@@ -107,7 +107,7 @@ public class TableMigrationUtil{
 					statement.setString(3, resultSet.getString("PetName"));
 					
 					List<PetData> dataList = new ArrayList<PetData>();
-					for(PetData data : PetData.values()){
+					for(PetData data : PetData.values){
 						String dataValue = resultSet.getString(data.toString());
 						
 						if(dataValue != null && Boolean.valueOf(dataValue)){
@@ -121,7 +121,7 @@ public class TableMigrationUtil{
 					statement.setString(6, resultSet.getString("RiderPetName"));
 					
 					List<PetData> riderDataList = new ArrayList<PetData>();
-					for(PetData data : PetData.values()){
+					for(PetData data : PetData.values){
 						String dataValue = resultSet.getString("Rider" + data.toString());
 						
 						if(dataValue != null && Boolean.valueOf(dataValue)){

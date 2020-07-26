@@ -82,7 +82,7 @@ public class CommandComplete implements TabCompleter{
 				return getCompletions(i);
 			case 2:
 				ArrayList<String> list = new ArrayList<String>();
-				for(PetType pt : PetType.values()){
+				for(PetType pt : PetType.values){
 					if(argBefore.equalsIgnoreCase(pt.toString().toLowerCase())){
 						list.add(pt.toString().toLowerCase());
 					}
@@ -92,7 +92,7 @@ public class CommandComplete implements TabCompleter{
 					list.add("rider");
 				}else if(argBefore.equalsIgnoreCase("rider")){
 					list.add("remove");
-					for(PetType pt : PetType.values()){
+					for(PetType pt : PetType.values){
 						list.add(pt.toString().toLowerCase());
 					}
 				}else if(argBefore.equalsIgnoreCase("default")){

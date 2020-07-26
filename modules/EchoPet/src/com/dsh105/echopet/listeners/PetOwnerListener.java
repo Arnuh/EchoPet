@@ -222,7 +222,7 @@ public class PetOwnerListener implements Listener{
 		
 		// TODO MAKE THIS ASYNC, maybe? one day?
 		// only load pets for players with permissions (otherwise RIP mysql users)
-		for(PetType type : PetType.values()){
+		for(PetType type : PetType.values){
 			boolean access = Perm.hasTypePerm(p, false, Perm.BASE_PETTYPE, true, type);
 			
 			// no perms? no fun!

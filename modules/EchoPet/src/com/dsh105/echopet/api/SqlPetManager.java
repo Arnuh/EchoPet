@@ -190,7 +190,7 @@ public class SqlPetManager implements ISqlPetManager{
 			if(EchoPet.getPlugin().getDbPool() != null){
 				try(Connection con = EchoPet.getPlugin().getDbPool().getConnection()){
 					try(PreparedStatement ps = con.prepareStatement("UPDATE " + TableMigrationUtil.LATEST_TABLE + " SET RiderData = ? WHERE OwnerName = ?;")){
-						ps.setLong(1, SQLUtil.serializePetData(Arrays.asList(PetData.values())));
+						ps.setLong(1, SQLUtil.serializePetData(Arrays.asList(PetData.values)));
 						ps.setString(2, String.valueOf(playerIdent));
 						ps.executeUpdate();
 					}
