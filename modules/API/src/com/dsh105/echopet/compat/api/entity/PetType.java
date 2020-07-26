@@ -266,9 +266,9 @@ public enum PetType{
 	}
 	
 	private static void outputInfo(){
-		String[] petTypes = new String[PetType.values().length];
+		String[] petTypes = new String[PetType.values.length];
 		int pos = 0;
-		for(PetType type : PetType.values()){
+		for(PetType type : PetType.values){
 			petTypes[pos++] = type.getConfigKeyName();
 		}
 		Arrays.sort(petTypes);

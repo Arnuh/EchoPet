@@ -212,7 +212,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		try{
 			langConfig = this.configManager.getNewConfig("language.yml", langHeader);
 			try{
-				for(Lang l : Lang.values()){
+				for(Lang l : Lang.values){
 					String[] desc = l.getDescription();
 					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.toString_()), desc);
 				}

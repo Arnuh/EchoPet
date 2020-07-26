@@ -43,7 +43,7 @@ public class PetRegistry implements IPetRegistry{
 	private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
 	
 	public PetRegistry(){
-		for(PetType petType : PetType.values()){
+		for(PetType petType : PetType.values){
 			if(petType.isCompatible()){
 				try{
 					PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);

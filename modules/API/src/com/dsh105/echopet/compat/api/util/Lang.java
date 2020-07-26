@@ -123,6 +123,8 @@ public enum Lang{
 	ADMIN_CLOSE_SELECTOR("admin_close_selector", "&eThe &6Pet Selector &eMenu has been closed for &6%player%."),
 	ADMIN_RELOAD_CONFIG("admin_reload_config", "&eConfiguration File reloaded.");
 	
+	public static final Lang[] values = values();
+	
 	private String path;
 	private String def;
 	private String[] desc;

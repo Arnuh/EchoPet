@@ -55,7 +55,7 @@ public class PetCommand implements CommandExecutor{
 	
 	private Paginator<PowerMessage> getHelp(CommandSender sender){
 		ArrayList<PowerMessage> helpMessages = new ArrayList<PowerMessage>();
-		for(HelpEntry he : HelpEntry.values()){
+		for(HelpEntry he : HelpEntry.values){
 			helpMessages.add(he.getPowerMessage(sender));
 		}
 		return new Paginator<PowerMessage>(helpMessages, 5);
@@ -327,7 +327,7 @@ public class PetCommand implements CommandExecutor{
 					
 					PowerMessage message = new PowerMessage(Lang.VALID_PET_TYPES.toString() + " ");
 					
-					for(PetType type : PetType.values()){
+					for(PetType type : PetType.values){
 						boolean access = Perm.hasTypePerm(sender, false, Perm.BASE_PETTYPE, true, type);
 						ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
 						ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;

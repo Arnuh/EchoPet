@@ -188,7 +188,7 @@ public class PetManager implements IPetManager{
 	@Override
 	public void forceAllValidData(IPet pi){
 		List<PetData> tempData = new ArrayList<>();
-		for(PetData data : PetData.values()){
+		for(PetData data : PetData.values){
 			if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
 				tempData.add(data);
 			}
@@ -197,7 +197,7 @@ public class PetManager implements IPetManager{
 		
 		List<PetData> tempRiderData = new ArrayList<>();
 		if(pi.getRider() != null){
-			for(PetData data : PetData.values()){
+			for(PetData data : PetData.values){
 				if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
 					tempRiderData.add(data);
 				}
