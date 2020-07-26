@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.codingforcookies</groupId>
             <artifactId>robert</artifactId>
-            <version>1.1</version>
+            <version>1.2-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spigot-api</artifactId>

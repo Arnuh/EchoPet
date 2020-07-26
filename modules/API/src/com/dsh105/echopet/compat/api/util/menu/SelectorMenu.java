@@ -33,7 +33,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SelectorMenu extends GUI{
 	
 	public SelectorMenu(Player player, final int page){
-		super(ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets") + (page + 1));
+		super(ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets Page: ") + (page + 1));
 		type(6);
 		final Map<Integer, Map<Integer, SelectorIcon>> layout = SelectorLayout.getLoadedLayout();
 		final Map<Integer, SelectorIcon> pageItems = layout.get(page);
@@ -81,5 +81,4 @@ public class SelectorMenu extends GUI{
 			});
 		}
 	}
-	
 }
