@@ -150,19 +150,19 @@ public class SelectorLayout{
 		for(PetType type : PetType.values){
 			if(type.equals(PetType.HUMAN)) continue;
 			if(!type.isCompatible()) continue;
-			int page = (int) ((double) count / 45);
-			if(page > highestPage) highestPage = page;
+			int page = (int) (count / 45D);
+			highestPage = Math.max(page, highestPage);
 			String entityTypeName = type.getMinecraftName();
 			if(entityTypeName != null){
 				layout.add(new SelectorIcon(page, count - page * 45, "pet " + type.name().toLowerCase(), type, type.getUIMaterial(), entityTypeName, type.getDefaultName(), new ArrayList<>()));
+				count++;
 			}
-			count++;
 		}
 		SelectorItem[] selectorItems = new SelectorItem[]{SelectorItem.BACK, SelectorItem.TOGGLE, SelectorItem.CALL, SelectorItem.HAT, SelectorItem.CLOSE, SelectorItem.RIDE, SelectorItem.NAME, SelectorItem.MENU, SelectorItem.NEXT};
-		for(int i = 0; i <= highestPage; i++){
+		for(int page = 0; page <= highestPage; page++){
 			int pos = 45;
 			for(SelectorItem item : selectorItems){
-				layout.add(new SelectorIcon(i, pos++, item.getCommand(), null, item.getMat(), item.getName(), new ArrayList<>()));
+				layout.add(new SelectorIcon(page, pos++, item.getCommand(), null, item.getMat(), item.getName(), new ArrayList<>()));
 			}
 		}
 		return layout;

@@ -21,7 +21,7 @@
 
     <artifactId>EchoPet</artifactId>
     <name>EchoPet</name>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
