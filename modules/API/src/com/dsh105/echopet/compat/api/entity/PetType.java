@@ -89,6 +89,7 @@ public enum PetType{
 	SPIDER("Spider", "Spider Pet", "spider"),
 	SQUID("Squid", "Squid Pet", "squid"),
 	STRAY("Stray", "Stray Pet", "stray"),
+	STRIDER("Strider", "Strider Pet", "strider", new Version("1.16-R1")),
 	TRADERLLAMA("TraderLlama", "Trader Llama Pet", "trader_llama", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
 	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish", new PetDataCategory[]{PetDataCategory.TROPICAL_FISH_PATTERN, PetDataCategory.TROPICAL_FISH_COLOR, PetDataCategory.TROPICAL_FISH_PATTERN_COLOR}, PetData.SIZE_LARGE),
 	TURTLE("Turtle", "Turtle Pet", "turtle"),
