@@ -68,17 +68,17 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			if((isVehicle()) && (!enumhorsetype.hasChest())){
 				this.stepSoundCount += 1;
 				if((this.stepSoundCount > 5) && (this.stepSoundCount % 3 == 0)){
-					makeSound("entity.horse.gallop", soundeffecttype.a() * 0.15F, soundeffecttype.b());
+					makeSound("entity.horse.gallop", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 					if((enumhorsetype == HorseVariant.HORSE) && (this.random.nextInt(10) == 0)){
-						makeSound("entity.horse.breathe", soundeffecttype.a() * 0.6F, soundeffecttype.b());
+						makeSound("entity.horse.breathe", soundeffecttype.getVolume() * 0.6F, soundeffecttype.getPitch());
 					}
 				}else if(this.stepSoundCount <= 5){
-					makeSound("entity.horse.step_wood", soundeffecttype.a() * 0.15F, soundeffecttype.b());
+					makeSound("entity.horse.step_wood", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 				}
 			}else if(soundeffecttype == SoundEffectType.a){
-				makeSound("entity.horse.step_wood", soundeffecttype.a() * 0.15F, soundeffecttype.b());
+				makeSound("entity.horse.step_wood", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 			}else{
-				makeSound("entity.horse.step", soundeffecttype.a() * 0.15F, soundeffecttype.b());
+				makeSound("entity.horse.step", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 			}
 		}
 	}
