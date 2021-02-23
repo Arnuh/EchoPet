@@ -45,7 +45,6 @@ import org.bukkit.entity.Player;
  * <p/>
  * NOTE: This class is a modified version of the registry used in EchoPet v3.
  */
-@SuppressWarnings("unchecked")
 public class PetRegistry implements IPetRegistry{
 	
 	private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
@@ -53,6 +52,11 @@ public class PetRegistry implements IPetRegistry{
 	public PetRegistry(){
 		for(PetType petType : PetType.values){
 			if(petType.isCompatible()){
+				if(petType.equals(PetType.VILLAGER)){
+					if(!NMSEntityUtil.doVillagerFix()){
+						continue;// Fix failed, prevent villagers.
+					}
+				}
 				try{
 					PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
 					registrationEntries.put(petType, registrationEntry);
