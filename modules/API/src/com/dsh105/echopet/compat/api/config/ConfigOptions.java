@@ -28,7 +28,6 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -128,7 +127,7 @@ public class ConfigOptions extends Options{
 		set("sendLoadMessage", true, "Send message that pet was loaded if -loadSavedPets- is true");
 		set("sendForceMessage", true, "For all data values forced, EchoPet will notify the player", "(if set to true).");
 		
-		set("worlds." + Bukkit.getWorlds().get(0).getName(), true);
+		set("worlds.world", true);
 		set("worlds.enableByDefault", true);
 		
 		if(config.getConfigurationSection("worldguard.regions") == null){

@@ -30,13 +30,23 @@
  */
 package com.dsh105.echopet.compat.nms.v1_16_R3;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.function.Supplier;
+import com.dsh105.echopet.compat.api.reflection.FieldUtil;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.server.v1_16_R3.ControllerJump;
 import net.minecraft.server.v1_16_R3.ControllerLook;
 import net.minecraft.server.v1_16_R3.ControllerMove;
 import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityLiving;
 import net.minecraft.server.v1_16_R3.EntitySenses;
+import net.minecraft.server.v1_16_R3.EntityVillager;
 import net.minecraft.server.v1_16_R3.NavigationAbstract;
+import net.minecraft.server.v1_16_R3.Sensor;
+import net.minecraft.server.v1_16_R3.SensorNearestLivingEntities;
+import net.minecraft.server.v1_16_R3.SensorType;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
@@ -169,5 +179,57 @@ public class NMSEntityUtil{
 		}catch(Exception ಠ_ಠ){
 			throw new RuntimeException("Failed to initialize the goal-related fields!", ಠ_ಠ);
 		}*/
+	}
+	
+	private static final Supplier<SensorNearestLivingEntities> sensorSupplier = FakeSensorNearestLivingEntities::new;
+	
+	private static ImmutableList<SensorType<? extends Sensor<? super EntityVillager>>> getSensors(){
+		// From EntityVillager
+		return ImmutableList.of(SensorType.c, SensorType.d, SensorType.b, SensorType.e, SensorType.f, SensorType.g, SensorType.h, SensorType.i, SensorType.j);
+	}
+	
+	/** Villager behavior does casts on behavior memory "INTERACTION_TARGET"<br>
+	 * These casts assume the result is a EntityVillager, and when its not, we crash<br>
+	 * If we take control of SensorNearestLivingEntities we can attempt to prevent our custom entities from appearing in behavior memory.<br>
+	 * With this sensor we can block them from entering "MOBS" and "VISIBLE_MOBS" which seems to be used for any other memory.<br>
+	 *<br>
+	 * This requires the plugin to load before worlds or else villagers can be created before the fix is applied.
+	 */
+	public static boolean doVillagerFix(){
+		
+		try{
+			// Probably have a cleaner way to do this but I want to get rid of most the reflection util classes and depends anyway.
+			
+			Constructor<?> constructor = SensorType.class.getDeclaredConstructors()[0];
+			constructor.setAccessible(true);
+			
+			// Replace the field in the class enum in case its for some reason grabbed later.
+			for(Field field : SensorType.class.getDeclaredFields()){
+				SensorType<?> sensor = (SensorType<?>) field.get(null);
+				if(sensor.a() instanceof SensorNearestLivingEntities){
+					FieldUtil.setFinalStatic(field, null, constructor.newInstance(sensorSupplier));
+					//System.out.println("Found sensor field: " + field.getName());
+					break;
+				}
+			}
+			
+			// Replace the cached list of sensors for villagers.
+			for(Field field : EntityVillager.class.getDeclaredFields()){
+				if(!(field.getGenericType() instanceof ParameterizedType)){
+					continue;
+				}
+				ParameterizedType type = (ParameterizedType) field.getGenericType();
+				String typeName = type.getActualTypeArguments()[0].getTypeName();
+				if(typeName.contains(SensorType.class.getSimpleName())){// meh
+					FieldUtil.setFinalStatic(field, null, getSensors());
+					//System.out.println("Found sensor list: " + field.getName());
+					break;
+				}
+			}
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
 	}
 }
