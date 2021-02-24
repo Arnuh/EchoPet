@@ -105,8 +105,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
 	@Override
 	public void tick(){
-		// 1.9: this.a.getControllerLook().a(this.b.locX, this.b.locY + this.b.getHeadHeight(), this.b.locZ, this.a.cE(), this.a.N());
-		// this.pet.getControllerLook().a(this.player.locX, this.player.locY + this.player.getHeadHeight(), this.player.locZ, this.pet.L(), this.pet.K());
+		this.pet.getControllerLook().a(this.player.locX(), this.player.getHeadY(), this.player.locZ());
 		--this.ticksLeft;
 	}
 }
