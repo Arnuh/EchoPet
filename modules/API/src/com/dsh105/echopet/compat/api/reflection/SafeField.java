@@ -136,6 +136,7 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Deprecated
 	public void setReadOnly(Object target, boolean value){
 		if(value){
 			set(target, "modifiers", field.getModifiers() | Modifier.FINAL);

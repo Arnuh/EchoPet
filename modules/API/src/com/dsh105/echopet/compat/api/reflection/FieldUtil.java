@@ -1,7 +1,7 @@
 package com.dsh105.echopet.compat.api.reflection;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import sun.misc.Unsafe;
 
 /**
  * @author Arnah
@@ -9,13 +9,22 @@ import java.lang.reflect.Modifier;
  **/
 public class FieldUtil{
 	
-	public static void setFinalStatic(Field field, Object obj, Object value) throws Exception{
-		field.setAccessible(true);
+	private static Unsafe unsafe;
+	
+	static{
+		try{
+			final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+			unsafeField.setAccessible(true);
+			unsafe = (Unsafe) unsafeField.get(null);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void setFinalStatic(Field field, Object value) throws Exception{
+		Object fieldBase = unsafe.staticFieldBase(field);
+		long fieldOffset = unsafe.staticFieldOffset(field);
 		
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-		
-		field.set(obj, value);
+		unsafe.putObject(fieldBase, fieldOffset, value);
 	}
 }
