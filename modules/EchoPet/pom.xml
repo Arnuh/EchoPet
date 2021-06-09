@@ -23,10 +23,11 @@
     <name>EchoPet</name>
     <version>1.0.8-SNAPSHOT</version>
     <packaging>jar</packaging>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
     </properties>
 
     <parent>
@@ -137,17 +138,9 @@
         </resources>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -158,6 +151,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <excludeDefaultDirectories>true</excludeDefaultDirectories>
                     <filesets>
@@ -169,12 +163,11 @@
                         </fileset>
                     </filesets>
                 </configuration>
-                <version>2.5</version>
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>maven-replacer-plugin</artifactId>
-                <version>1.3.8</version>
+                <version>1.4.1</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -196,7 +189,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

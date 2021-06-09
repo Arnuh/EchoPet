@@ -31,6 +31,18 @@
         <module>./modules/v1_16_R3</module>
     </modules>
 
+    <properties>
+        <jdk.version>16</jdk.version>
+        <maven.version>3.1.0</maven.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+    </properties>
+
+    <prerequisites>
+        <maven>${maven.version}</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -93,6 +105,14 @@
         </repository>
     </repositories>
 
+    <!-- Temp until maven-shade-plugin has a non snapshot version for jdk 16 -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <url>https://repository.apache.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -110,17 +130,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>${jdk.version}</release>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.2.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
