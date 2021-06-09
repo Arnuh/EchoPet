@@ -27,24 +27,16 @@
     <name>EchoPet-API-${project.version}</name>
     <packaging>jar</packaging>
     <version>1.0.0</version>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
     </properties>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <finalName>${project.name}</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source/>
-                    <target/>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
     <dependencies>
         <dependency>
