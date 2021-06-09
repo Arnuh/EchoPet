@@ -207,7 +207,7 @@ public class NMSEntityUtil{
 			for(Field field : SensorType.class.getDeclaredFields()){
 				SensorType<?> sensor = (SensorType<?>) field.get(null);
 				if(sensor.a() instanceof SensorNearestLivingEntities){
-					FieldUtil.setFinalStatic(field, null, constructor.newInstance(sensorSupplier));
+					FieldUtil.setFinalStatic(field, constructor.newInstance(sensorSupplier));
 					//System.out.println("Found sensor field: " + field.getName());
 					break;
 				}
@@ -221,7 +221,7 @@ public class NMSEntityUtil{
 				ParameterizedType type = (ParameterizedType) field.getGenericType();
 				String typeName = type.getActualTypeArguments()[0].getTypeName();
 				if(typeName.contains(SensorType.class.getSimpleName())){// meh
-					FieldUtil.setFinalStatic(field, null, getSensors());
+					FieldUtil.setFinalStatic(field, getSensors());
 					//System.out.println("Found sensor list: " + field.getName());
 					break;
 				}
