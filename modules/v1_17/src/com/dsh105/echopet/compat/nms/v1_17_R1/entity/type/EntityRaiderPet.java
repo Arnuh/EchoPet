@@ -31,31 +31,27 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRaiderPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 public abstract class EntityRaiderPet extends EntityPet implements IEntityRaiderPet{
 	
-	protected static final DataWatcherObject<Boolean> c = DataWatcher.a(EntityRaiderPet.class, DataWatcherRegistry.i);//unknown, gets set but not grabbed in EntityRaider.
+	protected static final EntityDataAccessor<Boolean> c = SynchedEntityData.defineId(EntityRaiderPet.class, EntityDataSerializers.BOOLEAN);//unknown, gets set but not grabbed in EntityRaider.
 	
-	public EntityRaiderPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityRaiderPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityRaiderPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityRaiderPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(c, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(c, false);
 	}
 }

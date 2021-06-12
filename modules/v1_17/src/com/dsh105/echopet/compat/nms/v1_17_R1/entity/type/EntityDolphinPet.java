@@ -20,38 +20,34 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDolphinPet;
-import net.minecraft.server.v1_17_R1.BlockPosition;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 @EntitySize(width = 0.9F, height = 0.6F)
 @EntityPetType(petType = PetType.COD)
 public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDolphinPet{
 	
-	private static final DataWatcherObject<BlockPosition> b = DataWatcher.a(EntityDolphinPet.class, DataWatcherRegistry.l);// "TreasurePos" - Some target to swim to.
-	private static final DataWatcherObject<Boolean> c = DataWatcher.a(EntityDolphinPet.class, DataWatcherRegistry.i);// "GotFish" - Used for the pathfinder goal to go to "TreasurePog"
-	private static final DataWatcherObject<Integer> bC = DataWatcher.a(EntityDolphinPet.class, DataWatcherRegistry.b);// "Moistness" - Takes damage when < 0.
+	private static final EntityDataAccessor<BlockPos> b = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BLOCK_POS);// "TreasurePos" - Some target to swim to.
+	private static final EntityDataAccessor<Boolean> c = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BOOLEAN);// "GotFish" - Used for the pathfinder goal to go to "TreasurePog"
+	private static final EntityDataAccessor<Integer> bC = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.INT);// "Moistness" - Takes damage when < 0.
 	
-	public EntityDolphinPet(World world){
-		super(EntityTypes.DOLPHIN, world);
+	public EntityDolphinPet(Level world){
+		super(EntityType.DOLPHIN, world);
 	}
 	
-	public EntityDolphinPet(World world, IPet pet){
-		super(EntityTypes.DOLPHIN, world, pet);
+	public EntityDolphinPet(Level world, IPet pet){
+		super(EntityType.DOLPHIN, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(b, BlockPosition.ZERO);
-		this.datawatcher.register(c, Boolean.valueOf(false));
-		this.datawatcher.register(bC, Integer.valueOf(2400));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(b, BlockPos.ZERO);
+		this.entityData.define(c, Boolean.valueOf(false));
+		this.entityData.define(bC, Integer.valueOf(2400));
 	}
 	
 	@Override

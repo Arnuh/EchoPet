@@ -32,30 +32,82 @@ package com.dsh105.echopet.compat.nms.v1_17_R1;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.function.Supplier;
 import com.dsh105.echopet.compat.api.reflection.FieldUtil;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.server.v1_17_R1.ControllerJump;
-import net.minecraft.server.v1_17_R1.ControllerLook;
-import net.minecraft.server.v1_17_R1.ControllerMove;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityLiving;
-import net.minecraft.server.v1_17_R1.EntitySenses;
-import net.minecraft.server.v1_17_R1.EntityVillager;
-import net.minecraft.server.v1_17_R1.NavigationAbstract;
-import net.minecraft.server.v1_17_R1.Sensor;
-import net.minecraft.server.v1_17_R1.SensorNearestLivingEntities;
-import net.minecraft.server.v1_17_R1.SensorType;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftLivingEntity;
-import org.bukkit.entity.LivingEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.item.ItemStack;
 
 /*
  * From EntityAPI :)
  */
 public class NMSEntityUtil{
 	
-	public static NavigationAbstract getNavigation(LivingEntity livingEntity){
+	private static Field jumpField;
+	
+	static{
+		try{
+			FakeEntity fakeEntity = new FakeEntity();
+			fakeEntity.setJumping(true);
+			for(Field field : LivingEntity.class.getDeclaredFields()){
+				if(!Modifier.isProtected(field.getModifiers())){
+					continue;
+				}
+				if(boolean.class.isAssignableFrom(field.getType())){
+					field.setAccessible(true);
+					if(field.getBoolean(fakeEntity)){
+						jumpField = field;
+						break;
+					}
+					field.setAccessible(false);
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public static Field getJumpingField(){
+		return jumpField;
+	}
+	
+	private static class FakeEntity extends LivingEntity{
+		
+		protected FakeEntity(){
+			super(EntityType.BAT, null);
+		}
+		
+		@Override
+		public Iterable<ItemStack> getArmorSlots(){
+			return null;
+		}
+		
+		@Override
+		public ItemStack getItemBySlot(EquipmentSlot equipmentSlot){
+			return null;
+		}
+		
+		@Override
+		public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack){
+		
+		}
+		
+		@Override
+		public HumanoidArm getMainArm(){
+			return null;
+		}
+	}
+	
+	/*public static NavigationAbstract getNavigation(LivingEntity livingEntity){
 		if(livingEntity instanceof CraftLivingEntity){
 			return getNavigation(((CraftLivingEntity) livingEntity).getHandle());
 		}
@@ -132,8 +184,8 @@ public class NMSEntityUtil{
 		    return ((EntityCreature) entityLiving).d(new BlockPosition(x, y, z));
 		} else {
 		    return false;
-		}*/
-	}
+		}*//*
+	}*/
 	
 	/*
 	 * Hacky stuff to get around doTick() becoming final
@@ -181,11 +233,11 @@ public class NMSEntityUtil{
 		}*/
 	}
 	
-	private static final Supplier<SensorNearestLivingEntities> sensorSupplier = FakeSensorNearestLivingEntities::new;
+	private static final Supplier<NearestLivingEntitySensor> sensorSupplier = FakeSensorNearestLivingEntities::new;
 	
-	private static ImmutableList<SensorType<? extends Sensor<? super EntityVillager>>> getSensors(){
+	private static ImmutableList<SensorType<? extends Sensor<? super Villager>>> getSensors(){
 		// From EntityVillager
-		return ImmutableList.of(SensorType.c, SensorType.d, SensorType.b, SensorType.e, SensorType.f, SensorType.g, SensorType.h, SensorType.i, SensorType.j);
+		return ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, SensorType.NEAREST_ITEMS, SensorType.NEAREST_BED, SensorType.HURT_BY, SensorType.VILLAGER_HOSTILES, SensorType.VILLAGER_BABIES, SensorType.SECONDARY_POIS, SensorType.GOLEM_DETECTED);
 	}
 	
 	/** Villager behavior does casts on behavior memory "INTERACTION_TARGET"<br>
@@ -206,7 +258,7 @@ public class NMSEntityUtil{
 			// Replace the field in the class enum in case its for some reason grabbed later.
 			for(Field field : SensorType.class.getDeclaredFields()){
 				SensorType<?> sensor = (SensorType<?>) field.get(null);
-				if(sensor.a() instanceof SensorNearestLivingEntities){
+				if(sensor.create() instanceof NearestLivingEntitySensor){
 					FieldUtil.setFinalStatic(field, constructor.newInstance(sensorSupplier));
 					//System.out.println("Found sensor field: " + field.getName());
 					break;
@@ -214,7 +266,7 @@ public class NMSEntityUtil{
 			}
 			
 			// Replace the cached list of sensors for villagers.
-			for(Field field : EntityVillager.class.getDeclaredFields()){
+			for(Field field : Villager.class.getDeclaredFields()){
 				if(!(field.getGenericType() instanceof ParameterizedType)){
 					continue;
 				}

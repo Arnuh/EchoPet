@@ -19,12 +19,12 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Llama;
 
@@ -32,41 +32,41 @@ import org.bukkit.entity.Llama;
 @EntityPetType(petType = PetType.LLAMA)
 public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEntityLlamaPet{
 	
-	private static final DataWatcherObject<Integer> STRENGTH = DataWatcher.a(EntityLlamaPet.class, DataWatcherRegistry.b);// changes storage
-	private static final DataWatcherObject<Integer> COLOR = DataWatcher.a(EntityLlamaPet.class, DataWatcherRegistry.b);// carpet color
-	private static final DataWatcherObject<Integer> VARIANT = DataWatcher.a(EntityLlamaPet.class, DataWatcherRegistry.b);// Like an outfit
+	private static final EntityDataAccessor<Integer> STRENGTH = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// changes storage
+	private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// carpet color
+	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// Like an outfit
 	
-	public EntityLlamaPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityLlamaPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityLlamaPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityLlamaPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	public EntityLlamaPet(World world){
-		this(EntityTypes.LLAMA, world);
+	public EntityLlamaPet(Level world){
+		this(EntityType.LLAMA, world);
 	}
 	
-	public EntityLlamaPet(World world, IPet pet){
-		this(EntityTypes.LLAMA, world, pet);
+	public EntityLlamaPet(Level world, IPet pet){
+		this(EntityType.LLAMA, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(STRENGTH, 0);
-		this.datawatcher.register(COLOR, -1);
-		this.datawatcher.register(VARIANT, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(STRENGTH, 0);
+		this.entityData.define(COLOR, -1);
+		this.entityData.define(VARIANT, 0);
 	}
 	
 	@Override
 	public void setCarpetColor(DyeColor color){
-		this.datawatcher.set(COLOR, color == null ? -1 : color.ordinal());
+		this.entityData.set(COLOR, color == null ? -1 : color.ordinal());
 	}
 	
 	@Override
 	public void setSkinColor(Llama.Color skinColor){
-		this.datawatcher.set(VARIANT, skinColor.ordinal());
+		this.entityData.set(VARIANT, skinColor.ordinal());
 	}
 }

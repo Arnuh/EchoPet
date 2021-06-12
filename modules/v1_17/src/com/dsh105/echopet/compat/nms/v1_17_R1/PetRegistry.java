@@ -111,7 +111,7 @@ public class PetRegistry implements IPetRegistry{
 			a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
 				
 				@Override
-				public Entity create(EntityTypes type, World world){
+				public Entity create(EntityTypes type, Level world){
 					return type.a(world);
 				}
 			}, type);

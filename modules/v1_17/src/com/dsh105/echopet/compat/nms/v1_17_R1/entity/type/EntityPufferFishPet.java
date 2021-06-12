@@ -20,35 +20,35 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.7F, height = 0.7F)
 @EntityPetType(petType = PetType.PUFFERFISH)
 public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferFishPet{
 	
-	private static final DataWatcherObject<Integer> STATE = DataWatcher.a(EntityPufferFishPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(EntityPufferFishPet.class, EntityDataSerializers.INT);
 	
-	public EntityPufferFishPet(World world){
-		super(EntityTypes.PUFFERFISH, world);
+	public EntityPufferFishPet(Level world){
+		super(EntityType.PUFFERFISH, world);
 	}
 	
-	public EntityPufferFishPet(World world, IPet pet){
-		super(EntityTypes.PUFFERFISH, world, pet);
+	public EntityPufferFishPet(Level world, IPet pet){
+		super(EntityType.PUFFERFISH, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(STATE, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(STATE, 0);
 	}
 	
 	@Override
 	public void setPuffState(int state){
-		datawatcher.set(STATE, state);
+		entityData.set(STATE, state);
 	}
 	
 	@Override

@@ -19,18 +19,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDonkeyPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.DONKEY)
 public class EntityDonkeyPet extends EntityHorseChestedAbstractPet implements IEntityDonkeyPet{
 	
-	public EntityDonkeyPet(World world){
-		super(EntityTypes.DONKEY, world);
+	public EntityDonkeyPet(Level world){
+		super(EntityType.DONKEY, world);
 	}
 	
-	public EntityDonkeyPet(World world, IPet pet){
-		super(EntityTypes.DONKEY, world, pet);
+	public EntityDonkeyPet(Level world, IPet pet){
+		super(EntityType.DONKEY, world, pet);
 	}
 }

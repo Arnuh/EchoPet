@@ -37,25 +37,25 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.SLIME)
 public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	
-	private static final DataWatcherObject<Integer> SIZE = DataWatcher.a(EntitySlimePet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> SIZE = SynchedEntityData.defineId(EntitySlimePet.class, EntityDataSerializers.INT);
 	int jumpDelay;
 	
-	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntitySlimePet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntitySlimePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntitySlimePet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 		/*if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)){
 			if(!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.SMALL, false)){
@@ -69,40 +69,40 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		this.jumpDelay = this.random.nextInt(15) + 10;
 	}
 	
-	public EntitySlimePet(World world){
-		this(EntityTypes.SLIME, world);
+	public EntitySlimePet(Level world){
+		this(EntityType.SLIME, world);
 	}
 	
-	public EntitySlimePet(World world, IPet pet){
-		this(EntityTypes.SLIME, world, pet);
+	public EntitySlimePet(Level world, IPet pet){
+		this(EntityType.SLIME, world, pet);
 	}
 	
 	@Override
 	public void setSize(int i){
-		this.datawatcher.set(SIZE, i);
-		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
-		this.a(es.width() * (float) i, es.height() * (float) i);
-		this.setPosition(locX(), locY(), locZ());
+		this.entityData.set(SIZE, i);
+		//EntitySize es = this.getClass().getAnnotation(EntitySize.class);
+		//this.a(es.width() * (float) i, es.height() * (float) i);
+		this.setPos(getX(), getY(), getZ());
 		this.setHealth(this.getMaxHealth());
 	}
 	
 	public int getSize(){
-		return this.datawatcher.get(SIZE);
+		return this.entityData.get(SIZE);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(SIZE, 1);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(SIZE, 1);
 	}
 	
 	@Override
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return isSmall() ? "entity.small_slime.squish" : "entity.slime.squish";
 	}
 	
 	@Override
-	protected String getDeathSound(){
+	protected String getDeathSoundString(){
 		return isSmall() ? "entity.small_slime.death" : "entity.slime.death";
 	}
 	
@@ -116,7 +116,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		if(this.onGround && this.jumpDelay-- <= 0){
 			this.jumpDelay = this.random.nextInt(15) + 10;
 			makeSound("entity.slime.attack", 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-			getControllerJump().jump();
+			getJumpControl().jump();
 		}
 	}
 	

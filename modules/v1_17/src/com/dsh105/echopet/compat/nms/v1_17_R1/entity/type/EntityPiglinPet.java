@@ -23,38 +23,38 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.PIGLIN)
 public class EntityPiglinPet extends EntityAgeablePet implements IEntityPiglinPet{
 	
 	//Technically not an animal/ageable but its the first datawatcher so we can take advantage of that.
-	private static final DataWatcherObject<Boolean> immuneToZombification = DataWatcher.a(EntityPiglinPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Boolean> crossbowCharged = DataWatcher.a(EntityPiglinPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Boolean> dancing = DataWatcher.a(EntityPiglinPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> immuneToZombification = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> crossbowCharged = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> dancing = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityPiglinPet(World world){
-		super(EntityTypes.PIGLIN, world);
+	public EntityPiglinPet(Level world){
+		super(EntityType.PIGLIN, world);
 	}
 	
-	public EntityPiglinPet(World world, IPet pet){
-		super(EntityTypes.PIGLIN, world, pet);
+	public EntityPiglinPet(Level world, IPet pet){
+		super(EntityType.PIGLIN, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(crossbowCharged, false);
-		this.datawatcher.register(immuneToZombification, true);//Default to true to fix shaking when in overworld.
-		this.datawatcher.register(dancing, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(crossbowCharged, false);
+		this.entityData.define(immuneToZombification, true);//Default to true to fix shaking when in overworld.
+		this.entityData.define(dancing, false);
 	}
 	
 	@Override
 	public void setDancing(boolean flag){
-		datawatcher.set(dancing, flag);
+		entityData.set(dancing, flag);
 	}
 }

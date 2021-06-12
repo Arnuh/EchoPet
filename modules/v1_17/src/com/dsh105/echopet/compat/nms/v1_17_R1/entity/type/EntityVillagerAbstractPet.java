@@ -33,29 +33,29 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public class EntityVillagerAbstractPet extends EntityAgeablePet implements IEntityVillagerAbstractPet{
 	
 	//Some tick thing? Gets - 1 every time tick() is called.
-	private static final DataWatcherObject<Integer> bx = DataWatcher.a(EntityVillagerAbstractPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> bx = SynchedEntityData.defineId(EntityVillagerAbstractPet.class, EntityDataSerializers.INT);
 	
-	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityVillagerAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityVillagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityVillagerAbstractPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
 	@Override
-	public void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(bx, 0);
+	public void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(bx, 0);
 	}
 }

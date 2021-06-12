@@ -37,30 +37,30 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIronGolemPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 1.4F, height = 2.9F)
 @EntityPetType(petType = PetType.IRONGOLEM)
 public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet{
 	
-	protected static final DataWatcherObject<Byte> PLAYER_CREATED = DataWatcher.a(EntityIronGolemPet.class, DataWatcherRegistry.a);
+	protected static final EntityDataAccessor<Byte> PLAYER_CREATED = SynchedEntityData.defineId(EntityIronGolemPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityIronGolemPet(World world){
-		super(EntityTypes.IRON_GOLEM, world);
+	public EntityIronGolemPet(Level world){
+		super(EntityType.IRON_GOLEM, world);
 	}
 	
-	public EntityIronGolemPet(World world, IPet pet){
-		super(EntityTypes.IRON_GOLEM, world, pet);
+	public EntityIronGolemPet(Level world, IPet pet){
+		super(EntityType.IRON_GOLEM, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(PLAYER_CREATED, Byte.valueOf((byte) 0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(PLAYER_CREATED, Byte.valueOf((byte) 0));
 	}
 	
 	

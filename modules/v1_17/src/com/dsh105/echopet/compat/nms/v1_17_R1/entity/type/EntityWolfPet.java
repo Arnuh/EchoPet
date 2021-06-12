@@ -37,40 +37,41 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityTameablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.EnumColor;
-import net.minecraft.server.v1_17_R1.MathHelper;
-import net.minecraft.server.v1_17_R1.Particles;
-import net.minecraft.server.v1_17_R1.Vec3D;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.royawesome.jlibnoise.MathHelper;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.WOLF)
 public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	
-	private static final DataWatcherObject<Boolean> bA = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.i);// ??
-	private static final DataWatcherObject<Integer> COLLAR_COLOR = DataWatcher.a(EntityWolfPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.INT);
 	private boolean wet;
 	private boolean shaking;
 	private float shakeCount;
 	
-	public EntityWolfPet(World world){
-		super(EntityTypes.WOLF, world);
+	public EntityWolfPet(Level world){
+		super(EntityType.WOLF, world);
 	}
 	
-	public EntityWolfPet(World world, IPet pet){
-		super(EntityTypes.WOLF, world, pet);
+	public EntityWolfPet(Level world, IPet pet){
+		super(EntityType.WOLF, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(bA, false);
-		this.datawatcher.register(COLLAR_COLOR, EnumColor.RED.getColorIndex());
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(DATA_INTERESTED_ID, false);
+		this.entityData.define(DATA_COLLAR_COLOR, net.minecraft.world.item.DyeColor.RED.getId());
+		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
 	}
 	
 	@Override
@@ -98,14 +99,14 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	@Override
 	public void setCollarColor(DyeColor dc){
 		if(((IWolfPet) pet).isTamed()){
-			this.datawatcher.set(COLLAR_COLOR, EnumColor.fromColorIndex(dc.getWoolData()).getColorIndex());
+			this.entityData.set(DATA_COLLAR_COLOR, net.minecraft.world.item.DyeColor.byId(dc.getWoolData()).getId());
 		}
 	}
 	
 	@Override
 	public void onLive(){
 		super.onLive();
-		if(this.inWater){
+		if(this.isInWater()){
 			this.wet = true;
 			this.shaking = false;
 			this.shakeCount = 0.0F;
@@ -123,18 +124,18 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 			if(this.shakeCount > 0.4F){
 				float f = (float) this.getBoundingBox().minY;
 				int i = (int) (MathHelper.sin((this.shakeCount - 0.4F) * 3.1415927F) * 7.0F);
-				Vec3D mot = getMot();
+				Vec3 mot = getDeltaMovement();
 				for(int j = 0; j < i; ++j){
-					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
-					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
-					this.world.addParticle(Particles.SPLASH, locX() + (double) f1, f + 0.8F, this.locZ() + (double) f2, mot.x, mot.y, mot.z);
+					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+					this.level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, this.getZ() + (double) f2, mot.x, mot.y, mot.z);
 				}
 			}
 		}
 	}
 	
 	@Override
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed() && getHealth() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
 	}
 }

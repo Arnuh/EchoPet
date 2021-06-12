@@ -19,22 +19,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDrownedPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.DROWNED)
 public class EntityDrownedPet extends EntityZombiePet implements IEntityDrownedPet{
 	
-	public EntityDrownedPet(World world){
-		super(EntityTypes.DROWNED, world);
+	public EntityDrownedPet(Level world){
+		super(EntityType.DROWNED, world);
 	}
 	
-	public EntityDrownedPet(World world, IPet pet){
-		super(EntityTypes.DROWNED, world, pet);
+	public EntityDrownedPet(Level world, IPet pet){
+		super(EntityType.DROWNED, world, pet);
 	}
 }

@@ -36,35 +36,35 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import org.bukkit.entity.MushroomCow;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
 	
-	private static final DataWatcherObject<String> Type = DataWatcher.a(EntityMushroomCowPet.class, DataWatcherRegistry.d);
+	private static final EntityDataAccessor<String> Type = SynchedEntityData.defineId(EntityMushroomCowPet.class, EntityDataSerializers.STRING);
 	
-	public EntityMushroomCowPet(World world){
-		super(EntityTypes.MOOSHROOM, world);
+	public EntityMushroomCowPet(Level world){
+		super(EntityType.MOOSHROOM, world);
 	}
 	
-	public EntityMushroomCowPet(World world, IPet pet){
-		super(EntityTypes.MOOSHROOM, world, pet);
+	public EntityMushroomCowPet(Level world, IPet pet){
+		super(EntityType.MOOSHROOM, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(Type, MushroomCow.Variant.RED.name().toLowerCase());// Mojang grabs the string variable but we can't
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(Type, MushroomCow.Variant.RED.name().toLowerCase());// Mojang grabs the string variable but we can't
 	}
 	
 	@Override
 	public void setType(MushroomCowType type){
-		datawatcher.set(Type, type.name().toLowerCase());
+		entityData.set(Type, type.name().toLowerCase());
 	}
 }

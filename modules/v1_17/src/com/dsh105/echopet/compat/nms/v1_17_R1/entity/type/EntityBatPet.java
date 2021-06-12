@@ -37,60 +37,60 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.MathHelper;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.BAT)
 public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	
-	private static final DataWatcherObject<Byte> a = DataWatcher.a(EntityBatPet.class, DataWatcherRegistry.a);
+	private static final EntityDataAccessor<Byte> a = SynchedEntityData.defineId(EntityBatPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityBatPet(World world){
-		super(EntityTypes.BAT, world);
+	public EntityBatPet(Level world){
+		super(EntityType.BAT, world);
 	}
 	
-	public EntityBatPet(World world, IPet pet){
-		super(EntityTypes.BAT, world, pet);
+	public EntityBatPet(Level world, IPet pet){
+		super(EntityType.BAT, world, pet);
 	}
 	
 	public void setHanging(boolean flag){
-		int i = this.datawatcher.get(a).byteValue();
+		int i = this.entityData.get(a);
 		if(flag){
-			this.datawatcher.set(a, Byte.valueOf((byte) (i | 0x1)));
+			this.entityData.set(a, (byte) (i | 0x1));
 		}else{
-			this.datawatcher.set(a, Byte.valueOf((byte) (i & -2)));
+			this.entityData.set(a, (byte) (i & -2));
 		}
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(a, Byte.valueOf((byte) 0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(a, (byte) 0);
 	}
 	
-	protected String getIdleSound(){
-		if((!isStartled()) && (this.random.nextInt(4) != 0)){
-			return null;
-		}
-		return "entity.bat.ambient";
+	public SoundEvent getAmbientSound(){
+		return this.isResting() && this.random.nextInt(4) != 0 ? null : SoundEvents.BAT_AMBIENT;
 	}
 	
-	public void onLive(){
-		super.onLive();
-		if(this.isStartled()){
-			setMot(0, 0, 0);
-			setPositionRaw(locX(), MathHelper.floor(locY()) + 1.0 - this.getHeight(), locZ());
+	public void tick(){
+		super.tick();
+		if(this.isResting()){
+			this.setDeltaMovement(Vec3.ZERO);
+			this.setPosRaw(this.getX(), (double) Mth.floor(this.getY()) + 1.0D - (double) this.getBbHeight(), this.getZ());
 		}else{
-			setMot(getMot().x, getMot().y * 0.6000000238418579D, getMot().z);
+			this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
 		}
 	}
 	
-	public boolean isStartled(){
-		return (this.datawatcher.get(a).byteValue() & 0x1) != 0;
+	public boolean isResting(){
+		return (this.entityData.get(a) & 0x1) != 0;
 	}
 	
 	public SizeCategory getSizeCategory(){

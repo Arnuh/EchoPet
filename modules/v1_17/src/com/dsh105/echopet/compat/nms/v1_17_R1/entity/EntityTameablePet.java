@@ -34,12 +34,12 @@ import java.util.Optional;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 /**
  * @since Mar 6, 2016
@@ -47,21 +47,21 @@ import net.minecraft.server.v1_17_R1.World;
 public class EntityTameablePet extends EntityAgeablePet implements IEntityTameablePet{
 	
 	protected static final int Sitting = 0x1, Angry = 0x2, Tamed = 0x4;
-	protected static final DataWatcherObject<Byte> Flag = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.a);
-	protected static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityTameablePet.class, DataWatcherRegistry.o);
+	protected static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.BYTE);
+	protected static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.OPTIONAL_UUID);
 	
-	public EntityTameablePet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityTameablePet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityTameablePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityTameablePet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(Flag, (byte) 0);
-		this.datawatcher.register(OWNER, Optional.empty());
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(Flag, (byte) 0);
+		this.entityData.define(OWNER, Optional.empty());
 	}
 	
 	public boolean isTamed(){
@@ -81,14 +81,14 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	}
 	
 	protected void addFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(Flag, (byte) (getFlag() | flag));
 	}
 	
 	protected void removeFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(Flag, (byte) (getFlag() & ~flag));
 	}
 	
 	protected int getFlag(){
-		return datawatcher.get(Flag);
+		return entityData.get(Flag);
 	}
 }

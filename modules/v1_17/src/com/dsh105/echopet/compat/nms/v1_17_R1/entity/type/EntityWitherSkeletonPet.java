@@ -35,21 +35,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherSkeletonPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.7F, height = 2.4F)
 @EntityPetType(petType = PetType.WITHERSKELETON)
 public class EntityWitherSkeletonPet extends EntitySkeletonAbstractPet implements IEntityWitherSkeletonPet{
 	
-	public EntityWitherSkeletonPet(World world){
-		super(EntityTypes.WITHER_SKELETON, world);
+	public EntityWitherSkeletonPet(Level world){
+		super(EntityType.WITHER_SKELETON, world);
 	}
 	
-	public EntityWitherSkeletonPet(World world, final IPet pet){
-		super(EntityTypes.WITHER_SKELETON, world, pet);
+	public EntityWitherSkeletonPet(Level world, final IPet pet){
+		super(EntityType.WITHER_SKELETON, world, pet);
 	}
 }

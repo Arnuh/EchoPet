@@ -38,43 +38,38 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.BlockPosition;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.EnumColor;
-import net.minecraft.server.v1_17_R1.EnumDirection;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
-
-/**
- * @since Mar 7, 2016
- */
 
 @EntitySize(width = 1.0F, height = 1.0F)
 @EntityPetType(petType = PetType.SHULKER)
 public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 	
-	protected static final DataWatcherObject<EnumDirection> ATTACHED_FACE = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.n);
-	protected static final DataWatcherObject<Optional<BlockPosition>> ATTACHED_BLOCK_POS = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.m);
-	protected static final DataWatcherObject<Byte> PEEK_TICK = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.a);// how many ticks its opened for
-	protected static final DataWatcherObject<Byte> COLOR_DW = DataWatcher.a(EntityShulkerPet.class, DataWatcherRegistry.a);
+	protected static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.DIRECTION);
+	protected static final EntityDataAccessor<Optional<BlockPos>> ATTACHED_BLOCK_POS = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+	protected static final EntityDataAccessor<Byte> PEEK_TICK = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.BYTE);// how many ticks its opened for
+	protected static final EntityDataAccessor<Byte> COLOR_DW = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityShulkerPet(World world){
-		super(EntityTypes.SHULKER, world);
+	public EntityShulkerPet(Level world){
+		super(EntityType.SHULKER, world);
 	}
 	
-	public EntityShulkerPet(World world, IPet pet){
-		super(EntityTypes.SHULKER, world, pet);
+	public EntityShulkerPet(Level world, IPet pet){
+		super(EntityType.SHULKER, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(ATTACHED_FACE, EnumDirection.DOWN);
-		this.datawatcher.register(ATTACHED_BLOCK_POS, Optional.empty());
-		this.datawatcher.register(PEEK_TICK, (byte) 0);
-		this.datawatcher.register(COLOR_DW, (byte) EnumColor.PURPLE.getColorIndex());
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(ATTACHED_FACE, Direction.DOWN);
+		this.entityData.define(ATTACHED_BLOCK_POS, Optional.empty());
+		this.entityData.define(PEEK_TICK, (byte) 0);
+		this.entityData.define(COLOR_DW, (byte) net.minecraft.world.item.DyeColor.PURPLE.getId());
 	}
 	
 	@Override
@@ -85,14 +80,14 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 	@Override
 	public void setOpen(boolean open){
 		if(open){
-			datawatcher.set(PEEK_TICK, Byte.MAX_VALUE);// since we don't have the ai nothing decreases it except us.
+			entityData.set(PEEK_TICK, Byte.MAX_VALUE);// since we don't have the ai nothing decreases it except us.
 		}else{
-			datawatcher.set(PEEK_TICK, (byte) 0);
+			entityData.set(PEEK_TICK, (byte) 0);
 		}
 	}
 	
 	@Override
 	public void setColor(DyeColor color){
-		datawatcher.register(COLOR_DW, (byte) EnumColor.fromColorIndex(color.ordinal()).getColorIndex());// is enumcolor stuff needed?
+		entityData.define(COLOR_DW, (byte) net.minecraft.world.item.DyeColor.byId(color.ordinal()).getId());
 	}
 }

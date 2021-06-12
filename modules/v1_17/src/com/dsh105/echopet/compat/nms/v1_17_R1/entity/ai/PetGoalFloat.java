@@ -33,15 +33,15 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.Navigation;
 
 public class PetGoalFloat extends APetGoalFloat{
 	
-	private EntityPet pet;
+	//FloatGoal
+	private final EntityPet pet;
 	
 	public PetGoalFloat(EntityPet pet){
 		this.pet = pet;
-		((Navigation) pet.getNavigation()).c(true);
+		pet.getNavigation().setCanFloat(true);
 	}
 	
 	@Override
@@ -56,14 +56,13 @@ public class PetGoalFloat extends APetGoalFloat{
 	
 	@Override
 	public boolean shouldStart(){
-		// 1.16: return ((this.a.isInWater() && this.a.b(TagsFluid.WATER) > this.a.cw()) || this.a.aN());
-		return this.pet.isInWater() || this.pet.aQ();
+		return this.pet.isInWater() || this.pet.isInLava();
 	}
 	
 	@Override
 	public void tick(){
 		if(this.pet.random().nextFloat() < 0.8F){
-			this.pet.getControllerJump().jump();
+			this.pet.getJumpControl().jump();
 		}
 	}
 }

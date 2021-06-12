@@ -37,46 +37,45 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityTameablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.EnumColor;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.CAT)
 public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 	
-	private static final DataWatcherObject<Integer> Type = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.b);
-	private static final DataWatcherObject<Boolean> bG = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Boolean> bH = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Integer> CollarColor = DataWatcher.a(EntityCatPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> Type = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> bG = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> bH = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> CollarColor = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
 	
-	public EntityCatPet(World world){
-		super(EntityTypes.CAT, world);
+	public EntityCatPet(Level world){
+		super(EntityType.CAT, world);
 	}
 	
-	public EntityCatPet(World world, IPet pet){
-		super(EntityTypes.CAT, world, pet);
+	public EntityCatPet(Level world, IPet pet){
+		super(EntityType.CAT, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(Type, CatType.Black.ordinal());
-		this.datawatcher.register(bG, false);
-		this.datawatcher.register(bH, false);
-		this.datawatcher.register(CollarColor, EnumColor.RED.getColorIndex());
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(Type, CatType.Black.ordinal());
+		this.entityData.define(bG, false);
+		this.entityData.define(bH, false);
+		this.entityData.define(CollarColor, net.minecraft.world.item.DyeColor.RED.getId());
 	}
 	
 	@Override
 	public void setType(CatType type){
-		datawatcher.set(Type, type.ordinal());
+		entityData.set(Type, type.ordinal());
 	}
 	
 	@Override
 	public void setCollarColor(DyeColor color){
-		datawatcher.set(CollarColor, color.ordinal());
+		entityData.set(CollarColor, color.ordinal());
 	}
 }

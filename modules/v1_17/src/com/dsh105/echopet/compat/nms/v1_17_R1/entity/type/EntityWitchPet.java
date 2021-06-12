@@ -37,30 +37,30 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitchPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.WITCH)
 public class EntityWitchPet extends EntityPet implements IEntityWitchPet{
 	
-	private static final DataWatcherObject<Boolean> POTION = DataWatcher.a(EntityWitchPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> POTION = SynchedEntityData.defineId(EntityWitchPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityWitchPet(World world){
-		super(EntityTypes.WITCH, world);
+	public EntityWitchPet(Level world){
+		super(EntityType.WITCH, world);
 	}
 	
-	public EntityWitchPet(World world, IPet pet){
-		super(EntityTypes.WITCH, world, pet);
+	public EntityWitchPet(Level world, IPet pet){
+		super(EntityType.WITCH, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.getDataWatcher().register(POTION, true);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		entityData.define(POTION, true);
 	}
 	
 	@Override

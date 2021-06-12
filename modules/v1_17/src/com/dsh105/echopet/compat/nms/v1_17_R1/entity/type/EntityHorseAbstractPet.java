@@ -20,75 +20,78 @@ import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.Block;
-import net.minecraft.server.v1_17_R1.BlockPosition;
-import net.minecraft.server.v1_17_R1.Blocks;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.SoundEffectType;
-import net.minecraft.server.v1_17_R1.Vec3D;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements IEntityHorseAbstractPet{
 	
 	// EntityHorseAbstract: Zombie, Skeleton
-	private static final DataWatcherObject<Byte> VISUAL = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.a);// feet kicking, whatev
-	private static final DataWatcherObject<Optional<UUID>> OWNER = DataWatcher.a(EntityHorseAbstractPet.class, DataWatcherRegistry.o);
+	private static final EntityDataAccessor<Byte> VISUAL = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.BYTE);// feet kicking, whatev
+	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.OPTIONAL_UUID);
 	private int rearingCounter = 0;
-	private int stepSoundCount = 0;
+	private int gallopSoundCounter = 0;
+	protected boolean canGallop = true;
 	
-	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityHorseAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityHorseAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityHorseAbstractPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(VISUAL, (byte) 0);
-		this.datawatcher.register(OWNER, Optional.empty());
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(VISUAL, (byte) 0);
+		this.entityData.define(OWNER, Optional.empty());
 	}
 	
 	@Override
-	protected void makeStepSound(BlockPosition pos, Block block){
-		SoundEffectType soundeffecttype = block.getStepSound(block.getBlockData());
-		if(this.world.getType(pos).getBlock() == block){
-			soundeffecttype = Blocks.SNOW.getStepSound(block.getBlockData());
-		}
-		if(!block.getBlockData().getMaterial().isLiquid()){
-			HorseVariant enumhorsetype = ((IHorseAbstractPet) getPet()).getVariant();
-			if((isVehicle()) && (!enumhorsetype.hasChest())){
-				this.stepSoundCount += 1;
-				if((this.stepSoundCount > 5) && (this.stepSoundCount % 3 == 0)){
-					makeSound("entity.horse.gallop", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
-					if((enumhorsetype == HorseVariant.HORSE) && (this.random.nextInt(10) == 0)){
-						makeSound("entity.horse.breathe", soundeffecttype.getVolume() * 0.6F, soundeffecttype.getPitch());
-					}
-				}else if(this.stepSoundCount <= 5){
-					makeSound("entity.horse.step_wood", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
+	protected void playStepSound(BlockPos blockposition, BlockState iblockdata){
+		if(!iblockdata.getMaterial().isLiquid()){
+			BlockState iblockdata1 = this.level.getBlockState(blockposition.up());
+			SoundType soundeffecttype = iblockdata.getSoundType();
+			if(iblockdata1.is(Blocks.SNOW)){
+				soundeffecttype = iblockdata1.getSoundType();
+			}
+			
+			if(this.isVehicle() && this.canGallop){
+				++this.gallopSoundCounter;
+				if(this.gallopSoundCounter > 5 && this.gallopSoundCounter % 3 == 0){
+					this.playGallopSound(soundeffecttype);
+				}else if(this.gallopSoundCounter <= 5){
+					this.playSound(SoundEvents.HORSE_STEP_WOOD, soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 				}
-			}else if(soundeffecttype == SoundEffectType.a){
-				makeSound("entity.horse.step_wood", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
+			}else if(soundeffecttype == SoundType.WOOD){
+				this.playSound(SoundEvents.HORSE_STEP_WOOD, soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 			}else{
-				makeSound("entity.horse.step", soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
+				this.playSound(SoundEvents.HORSE_STEP, soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
 			}
 		}
 	}
 	
+	protected void playGallopSound(SoundType soundeffecttype){
+		this.playSound(SoundEvents.HORSE_GALLOP, soundeffecttype.getVolume() * 0.15F, soundeffecttype.getPitch());
+	}
+	
 	@Override
-	public void g(Vec3D motion){
-		super.g(motion);
+	public void travel(Vec3 motion){
+		super.travel(motion);
 		// forward
 		if(motion.x <= 0.0F){
-			this.stepSoundCount = 0;
+			this.gallopSoundCounter = 0;
 		}
 	}
 	
@@ -131,7 +134,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public boolean getHorseVisual(int i){
-		return (this.datawatcher.get(VISUAL).byteValue() & i) != 0;
+		return (this.entityData.get(VISUAL).byteValue() & i) != 0;
 	}
 	
 	/**
@@ -144,11 +147,11 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public void setHorseVisual(int i, boolean flag){
-		byte b0 = this.datawatcher.get(VISUAL).byteValue();
+		byte b0 = this.entityData.get(VISUAL).byteValue();
 		if(flag){
-			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
+			this.entityData.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
 		}else{
-			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
+			this.entityData.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
 		}
 	}
 	

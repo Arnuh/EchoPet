@@ -21,11 +21,11 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBeePet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 /**
  * @author Arnah
@@ -40,21 +40,21 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 	//final boolean flag = this.isAngry() && !this.hasStung() && this.getGoalTarget() != null && this.getGoalTarget().h(this) < 4.0;
 	//this.t(flag);
 	//0x2 is skipped? ok
-	private static final DataWatcherObject<Byte> Flag = DataWatcher.a(EntityBeePet.class, DataWatcherRegistry.a);
-	private static final DataWatcherObject<Integer> Anger = DataWatcher.a(EntityBeePet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Integer> Anger = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.INT);
 	
-	public EntityBeePet(World world){
-		super(EntityTypes.BEE, world);
+	public EntityBeePet(Level world){
+		super(EntityType.BEE, world);
 	}
 	
-	public EntityBeePet(World world, IPet pet){
-		super(EntityTypes.BEE, world, pet);
+	public EntityBeePet(Level world, IPet pet){
+		super(EntityType.BEE, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(Flag, (byte) 0);
-		this.datawatcher.register(Anger, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(Flag, (byte) 0);
+		this.entityData.define(Anger, 0);
 	}
 	
 	@Override
@@ -71,19 +71,19 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 	
 	@Override
 	public void setAngry(boolean angry){
-		datawatcher.set(Anger, angry ? 1 : 0);
+		entityData.set(Anger, angry ? 1 : 0);
 	}
 	
 	private void addFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(Flag, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(Flag, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return datawatcher.get(Flag);
+		return entityData.get(Flag);
 	}
 	
 	@Override

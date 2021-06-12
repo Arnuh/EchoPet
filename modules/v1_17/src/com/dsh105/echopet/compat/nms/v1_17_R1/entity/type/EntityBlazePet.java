@@ -37,46 +37,46 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.7F)
 @EntityPetType(petType = PetType.BLAZE)
 public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 	
-	private static final DataWatcherObject<Byte> ANGERED = DataWatcher.a(EntityBlazePet.class, DataWatcherRegistry.a);
+	private static final EntityDataAccessor<Byte> ANGERED = SynchedEntityData.defineId(EntityBlazePet.class, EntityDataSerializers.BYTE);
 	
-	public EntityBlazePet(World world){
-		super(EntityTypes.BLAZE, world);
+	public EntityBlazePet(Level world){
+		super(EntityType.BLAZE, world);
 	}
 	
-	public EntityBlazePet(World world, IPet pet){
-		super(EntityTypes.BLAZE, world, pet);
+	public EntityBlazePet(Level world, IPet pet){
+		super(EntityType.BLAZE, world, pet);
 	}
 	
 	public void setOnFire(boolean flag){
-		byte b1 = this.datawatcher.get(ANGERED).byteValue();
+		byte b1 = this.entityData.get(ANGERED).byteValue();
 		if(flag){
 			b1 = (byte) (b1 | 0x1);
 		}else{
 			b1 = (byte) (b1 & 0xFFFFFFFE);
 		}
-		this.datawatcher.set(ANGERED, Byte.valueOf(b1));
+		this.entityData.set(ANGERED, Byte.valueOf(b1));
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(ANGERED, Byte.valueOf((byte) 0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(ANGERED, Byte.valueOf((byte) 0));
 	}
 	
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return "entity.blaze.ambient";
 	}
 	
-	protected String getDeathSound(){
+	protected String getDeathSoundString(){
 		return "entity.blaze.death";
 	}
 	

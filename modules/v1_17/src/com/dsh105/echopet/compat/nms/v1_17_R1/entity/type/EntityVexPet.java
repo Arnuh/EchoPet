@@ -37,44 +37,41 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVexPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityNoClipPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.4F, height = 0.8F)
 @EntityPetType(petType = PetType.VEX)
 public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	
-	protected static final DataWatcherObject<Byte> DATA = DataWatcher.a(EntityVexPet.class, DataWatcherRegistry.a);
+	protected static final EntityDataAccessor<Byte> DATA = SynchedEntityData.defineId(EntityVexPet.class, EntityDataSerializers.BYTE);
 	// Has the ability to have multiple settings.. but it seems to only use 1 for 'charged' which is 'attack mode'
 	
-	public EntityVexPet(World world){
-		super(EntityTypes.VEX, world);
+	public EntityVexPet(Level world){
+		super(EntityType.VEX, world);
 	}
 	
-	public EntityVexPet(World world, IPet pet){
-		super(EntityTypes.VEX, world, pet);
+	public EntityVexPet(Level world, IPet pet){
+		super(EntityType.VEX, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		getDataWatcher().register(DATA, (byte) 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		entityData.define(DATA, (byte) 0);
 	}
 	
 	private void a(int i, boolean flag){
-		byte b0 = this.datawatcher.get(DATA).byteValue();
+		byte b0 = this.entityData.get(DATA).byteValue();
 		int j;
 		if(flag){
 			j = b0 | i;
 		}else{
 			j = b0 & (i ^ 0xFFFFFFFF);
 		}
-		this.datawatcher.set(DATA, Byte.valueOf((byte) (j & 0xFF)));
+		this.entityData.set(DATA, Byte.valueOf((byte) (j & 0xFF)));
 	}
 	
 	public boolean isPowered(){
@@ -82,7 +79,7 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	}
 	
 	private boolean b(int i){// just check EntityVex
-		byte b0 = this.datawatcher.get(DATA).byteValue();
+		byte b0 = this.entityData.get(DATA).byteValue();
 		return (b0 & i) != 0;
 	}
 	

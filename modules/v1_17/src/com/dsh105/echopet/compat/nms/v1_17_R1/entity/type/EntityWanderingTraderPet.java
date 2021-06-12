@@ -33,22 +33,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWanderingTraderPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 30, 2019
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.WANDERINGTRADER)
 public class EntityWanderingTraderPet extends EntityVillagerAbstractPet implements IEntityWanderingTraderPet{
 	
-	public EntityWanderingTraderPet(World world){
-		super(EntityTypes.WANDERING_TRADER, world);
+	public EntityWanderingTraderPet(Level world){
+		super(EntityType.WANDERING_TRADER, world);
 	}
 	
-	public EntityWanderingTraderPet(World world, IPet pet){
-		super(EntityTypes.WANDERING_TRADER, world, pet);
+	public EntityWanderingTraderPet(Level world, IPet pet){
+		super(EntityType.WANDERING_TRADER, world, pet);
 	}
 }

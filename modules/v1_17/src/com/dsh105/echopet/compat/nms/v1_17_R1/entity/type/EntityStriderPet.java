@@ -23,32 +23,32 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityStriderPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.9F, height = 1.7F)
 @EntityPetType(petType = PetType.STRIDER)
 public class EntityStriderPet extends EntityAgeablePet implements IEntityStriderPet{
 	
-	private static final DataWatcherObject<Integer> boostTicks = DataWatcher.a(EntityStriderPet.class, DataWatcherRegistry.b);
-	private static final DataWatcherObject<Boolean> isShivering = DataWatcher.a(EntityStriderPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Boolean> hasSaddle = DataWatcher.a(EntityStriderPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Integer> boostTicks = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> isShivering = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> hasSaddle = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityStriderPet(World world){
-		super(EntityTypes.STRIDER, world);
+	public EntityStriderPet(Level world){
+		super(EntityType.STRIDER, world);
 	}
 	
-	public EntityStriderPet(World world, IPet pet){
-		super(EntityTypes.STRIDER, world, pet);
+	public EntityStriderPet(Level world, IPet pet){
+		super(EntityType.STRIDER, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(boostTicks, 0);
-		this.datawatcher.register(isShivering, false);
-		this.datawatcher.register(hasSaddle, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(boostTicks, 0);
+		this.entityData.define(isShivering, false);
+		this.entityData.define(hasSaddle, false);
 	}
 }

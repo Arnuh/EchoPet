@@ -36,40 +36,40 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityOcelotPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.OCELOT)
 public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPet{
 	
-	private static final DataWatcherObject<Boolean> TRUSTING = DataWatcher.a(EntityOcelotPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> TRUSTING = SynchedEntityData.defineId(EntityOcelotPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityOcelotPet(World world){
-		super(EntityTypes.OCELOT, world);
+	public EntityOcelotPet(Level world){
+		super(EntityType.OCELOT, world);
 	}
 	
-	public EntityOcelotPet(World world, IPet pet){
-		super(EntityTypes.OCELOT, world, pet);
+	public EntityOcelotPet(Level world, IPet pet){
+		super(EntityType.OCELOT, world, pet);
 	}
 	
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(TRUSTING, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(TRUSTING, false);
 	}
 	
 	@Override
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return (this.random.nextInt(4) == 0 ? "entity.cat.purreow" : null);
 	}
 	
 	@Override
-	protected String getDeathSound(){
+	protected String getDeathSoundString(){
 		return "entity.cat.death";
 	}
 	

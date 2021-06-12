@@ -36,54 +36,54 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.SHEEP)
 public class EntitySheepPet extends EntityAgeablePet implements IEntitySheepPet{
 	
-	private static final DataWatcherObject<Byte> COLOR_SHEARED = DataWatcher.a(EntitySheepPet.class, DataWatcherRegistry.a);// Fuck you mojang for doing two values in one byte
+	private static final EntityDataAccessor<Byte> COLOR_SHEARED = SynchedEntityData.defineId(EntitySheepPet.class, EntityDataSerializers.BYTE);// Fuck you mojang for doing two values in one byte
 	
-	public EntitySheepPet(World world){
-		super(EntityTypes.SHEEP, world);
+	public EntitySheepPet(Level world){
+		super(EntityType.SHEEP, world);
 	}
 	
-	public EntitySheepPet(World world, IPet pet){
-		super(EntityTypes.SHEEP, world, pet);
+	public EntitySheepPet(Level world, IPet pet){
+		super(EntityType.SHEEP, world, pet);
 	}
 	
 	public int getColor(){
-		return this.datawatcher.get(COLOR_SHEARED).byteValue() & 0xF;
+		return this.entityData.get(COLOR_SHEARED).byteValue() & 0xF;
 	}
 	
 	@Override
 	public void setDyeColor(DyeColor color){
-		byte b0 = this.datawatcher.get(COLOR_SHEARED).byteValue();
-		this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xF0 | color.ordinal() & 0xF)));
+		byte b0 = this.entityData.get(COLOR_SHEARED).byteValue();
+		this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xF0 | color.ordinal() & 0xF)));
 	}
 	
 	public boolean isSheared(){
-		return (this.datawatcher.get(COLOR_SHEARED).byteValue() & 0x10) != 0;
+		return (this.entityData.get(COLOR_SHEARED).byteValue() & 0x10) != 0;
 	}
 	
 	@Override
 	public void setSheared(boolean flag){
-		byte b0 = this.datawatcher.get(COLOR_SHEARED).byteValue();
+		byte b0 = this.entityData.get(COLOR_SHEARED).byteValue();
 		if(flag){
-			this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
+			this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
 		}else{
-			this.datawatcher.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
+			this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
 		}
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(COLOR_SHEARED, Byte.valueOf((byte) 0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(COLOR_SHEARED, Byte.valueOf((byte) 0));
 	}
 }

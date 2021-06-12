@@ -36,24 +36,24 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.PIGZOMBIE)
 public class EntityPigZombiePet extends EntityZombiePet implements IEntityPigZombiePet{
 	
-	public EntityPigZombiePet(World world){
-		super(EntityTypes.ZOMBIFIED_PIGLIN, world);
+	public EntityPigZombiePet(Level world){
+		super(EntityType.ZOMBIFIED_PIGLIN, world);
 	}
 	
-	public EntityPigZombiePet(World world, IPet pet){
-		super(EntityTypes.ZOMBIFIED_PIGLIN, world, pet);
+	public EntityPigZombiePet(Level world, IPet pet){
+		super(EntityType.ZOMBIFIED_PIGLIN, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
+	protected void defineSynchedData(){
+		super.defineSynchedData();
 	}
 	
 	@Override

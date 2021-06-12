@@ -34,23 +34,19 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRavagerPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 @EntitySize(width = 1.95F, height = 2.2F)
 @EntityPetType(petType = PetType.RAVAGER)
 public class EntityRavagerPet extends EntityRaiderPet implements IEntityRavagerPet{
 	
-	public EntityRavagerPet(World world){
-		super(EntityTypes.RAVAGER, world);
+	public EntityRavagerPet(Level world){
+		super(EntityType.RAVAGER, world);
 	}
 	
-	public EntityRavagerPet(World world, IPet pet){
-		super(EntityTypes.RAVAGER, world, pet);
+	public EntityRavagerPet(Level world, IPet pet){
+		super(EntityType.RAVAGER, world, pet);
 	}
 	
 	@Override
