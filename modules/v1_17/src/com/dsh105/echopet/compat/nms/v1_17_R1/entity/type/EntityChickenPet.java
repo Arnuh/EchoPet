@@ -36,18 +36,18 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityChickenPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.3F, height = 0.7F)
 @EntityPetType(petType = PetType.CHICKEN)
 public class EntityChickenPet extends EntityAgeablePet implements IEntityChickenPet{
 	
-	public EntityChickenPet(World world){
-		super(EntityTypes.CHICKEN, world);
+	public EntityChickenPet(Level world){
+		super(EntityType.CHICKEN, world);
 	}
 	
-	public EntityChickenPet(World world, IPet pet){
-		super(EntityTypes.CHICKEN, world, pet);
+	public EntityChickenPet(Level world, IPet pet){
+		super(EntityType.CHICKEN, world, pet);
 	}
 }

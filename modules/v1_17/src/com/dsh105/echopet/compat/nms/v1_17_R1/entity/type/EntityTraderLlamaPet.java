@@ -33,22 +33,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityTraderLlamaPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 30, 2019
- */
 @EntitySize(width = 0.9F, height = 1.87F)
 @EntityPetType(petType = PetType.TRADERLLAMA)
 public class EntityTraderLlamaPet extends EntityLlamaPet implements IEntityTraderLlamaPet{
 	
-	public EntityTraderLlamaPet(World world){
-		super(EntityTypes.TRADER_LLAMA, world);
+	public EntityTraderLlamaPet(Level world){
+		super(EntityType.TRADER_LLAMA, world);
 	}
 	
-	public EntityTraderLlamaPet(World world, IPet pet){
-		super(EntityTypes.TRADER_LLAMA, world, pet);
+	public EntityTraderLlamaPet(Level world, IPet pet){
+		super(EntityType.TRADER_LLAMA, world, pet);
 	}
 }

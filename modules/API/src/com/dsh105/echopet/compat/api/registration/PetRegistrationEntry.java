@@ -22,7 +22,6 @@ import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import org.bukkit.entity.Player;
 
 public class PetRegistrationEntry{
@@ -34,6 +33,7 @@ public class PetRegistrationEntry{
 	private Constructor<? extends IPet> petConstructor;
 	private Constructor<? extends IEntityPet> entityPetConstructor;
 	
+	@SuppressWarnings("unchecked")
 	public PetRegistrationEntry(String name, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass){
 		if(entityClass == null) throw new PetRegistrationException("Invalid Entity Class. Pet type is not supported by this server version.");
 		if(petClass == null) throw new PetRegistrationException("Invalid Pet Class. Pet type is not supported by this server version.");
@@ -44,7 +44,12 @@ public class PetRegistrationEntry{
 		
 		try{
 			this.petConstructor = this.petClass.getConstructor(Player.class);
-			this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
+			for(Constructor<?> con : this.entityClass.getConstructors()){
+				if(con.getParameterCount() != 2) continue;
+				this.entityPetConstructor = (Constructor<? extends IEntityPet>) con;
+				break;
+			}
+			//this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
 		}catch(NoSuchMethodException e){
 			throw new PetRegistrationException("Failed to create pet constructors!", e);
 		}

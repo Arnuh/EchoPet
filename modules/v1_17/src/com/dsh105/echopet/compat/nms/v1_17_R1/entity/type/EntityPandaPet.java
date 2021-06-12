@@ -37,57 +37,53 @@ import com.dsh105.echopet.compat.api.entity.PandaGene;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPandaPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Jul 03, 2019
- */
 @EntitySize(width = 1.3F, height = 1.25F)
 @EntityPetType(petType = PetType.PANDA)
 public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	
-	private static final DataWatcherObject<Integer> bA = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.b);//Doesn't look like something we care about
-	private static final DataWatcherObject<Integer> bB = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.b);
-	private static final DataWatcherObject<Integer> bC = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.b);//clears mainhand if 100?
-	private static final DataWatcherObject<Byte> MainGene = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.a);
-	private static final DataWatcherObject<Byte> HiddenGene = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.a);
-	private static final DataWatcherObject<Byte> Flag = DataWatcher.a(EntityPandaPet.class, DataWatcherRegistry.a);
+	private static final EntityDataAccessor<Integer> bA = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);//Doesn't look like something we care about
+	private static final EntityDataAccessor<Integer> bB = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> bC = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);//clears mainhand if 100?
+	private static final EntityDataAccessor<Byte> MainGene = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> HiddenGene = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
 	//Unknown1 is some green particles
 	private static final int Unknown1 = 0x2, Roll = 0x4, Sit = 0x8, LayOnBack = 0x10;
 	private static int testStage = 1;
 	
-	public EntityPandaPet(World world){
-		super(EntityTypes.PANDA, world);
+	public EntityPandaPet(Level world){
+		super(EntityType.PANDA, world);
 	}
 	
-	public EntityPandaPet(World world, IPet pet){
-		super(EntityTypes.PANDA, world, pet);
+	public EntityPandaPet(Level world, IPet pet){
+		super(EntityType.PANDA, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(bA, 0);
-		this.datawatcher.register(bB, 0);
-		this.datawatcher.register(MainGene, (byte) 0);
-		this.datawatcher.register(HiddenGene, (byte) 0);
-		this.datawatcher.register(Flag, (byte) 0);
-		this.datawatcher.register(bC, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(bA, 0);
+		this.entityData.define(bB, 0);
+		this.entityData.define(MainGene, (byte) 0);
+		this.entityData.define(HiddenGene, (byte) 0);
+		this.entityData.define(Flag, (byte) 0);
+		this.entityData.define(bC, 0);
 	}
 	
 	@Override
 	public void setMainGene(PandaGene gene){
-		datawatcher.set(MainGene, (byte) gene.ordinal());
+		entityData.set(MainGene, (byte) gene.ordinal());
 	}
 	
 	@Override
 	public void setHiddenGene(PandaGene gene){
-		datawatcher.set(HiddenGene, (byte) gene.ordinal());
+		entityData.set(HiddenGene, (byte) gene.ordinal());
 	}
 	
 	@Override
@@ -109,14 +105,14 @@ public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	}
 	
 	private void addFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(Flag, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		datawatcher.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(Flag, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return datawatcher.get(Flag);
+		return entityData.get(Flag);
 	}
 }

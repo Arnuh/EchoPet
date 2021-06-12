@@ -21,20 +21,20 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermitePet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.Particles;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.4F, height = 0.3F)
 @EntityPetType(petType = PetType.ENDERMITE)
 public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet{
 	
-	public EntityEndermitePet(World world){
-		super(EntityTypes.ENDERMITE, world);
+	public EntityEndermitePet(Level world){
+		super(EntityType.ENDERMITE, world);
 	}
 	
-	public EntityEndermitePet(World world, IPet pet){
-		super(EntityTypes.ENDERMITE, world, pet);
+	public EntityEndermitePet(Level world, IPet pet){
+		super(EntityType.ENDERMITE, world, pet);
 	}
 	
 	@Override
@@ -45,8 +45,9 @@ public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet
 	@Override
 	public void onLive(){
 		super.onLive();
+		// Is this clientside?
 		for(int i = 0; i < 2; i++){
-			this.world.addParticle(Particles.PORTAL, locX() + (this.random.nextDouble() - 0.5D) * getWidth(), locY() + this.random.nextDouble() * getHeight(), locZ() + (this.random.nextDouble() - 0.5D) * getWidth(), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+			this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
 		}
 	}
 }

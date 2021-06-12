@@ -18,48 +18,44 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 public class EntitySkeletonAbstractPet extends EntityPet implements IEntitySkeletonAbstractPet{
 	
-	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntitySkeletonPet.class, DataWatcherRegistry.i);// Something for PathfinderGoalMeleeAttack
+	private static final EntityDataAccessor<Boolean> b = SynchedEntityData.defineId(EntitySkeletonPet.class, EntityDataSerializers.BOOLEAN);// Something for PathfinderGoalMeleeAttack
 	
-	public EntitySkeletonAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntitySkeletonAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntitySkeletonAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, final IPet pet){
+	public EntitySkeletonAbstractPet(EntityType<? extends Mob> type, Level world, final IPet pet){
 		super(type, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(b, Boolean.valueOf(false));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(b, false);
 	}
 	
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return "entity.skeleton.ambient";
 	}
 	
-	protected String getHurtSound(){
+	protected String getHurtSoundString(){
 		return "entity.skeleton.hurt";
 	}
 	
-	protected String getDeathSound(){
+	protected String getDeathSoundString(){
 		return "entity.skeleton.death";
 	}
 	
-	protected String getStepSound(){
+	protected String getStepSoundString(){
 		return "entity.skeleton.step";
 	}
 	

@@ -16,34 +16,34 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractPet implements IEntityHorseChestedAbstractPet{
 	
 	// EntityHorseChestedAbstract: Donkey, Mule
-	private static final DataWatcherObject<Boolean> CHEST = DataWatcher.a(EntityHorseChestedAbstractPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> CHEST = SynchedEntityData.defineId(EntityHorseChestedAbstractPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityHorseChestedAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityHorseChestedAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityHorseChestedAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityHorseChestedAbstractPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(CHEST, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(CHEST, false);
 	}
 	
 	@Override
 	public void setChested(boolean flag){
-		datawatcher.set(CHEST, flag);
+		entityData.set(CHEST, flag);
 	}
 }

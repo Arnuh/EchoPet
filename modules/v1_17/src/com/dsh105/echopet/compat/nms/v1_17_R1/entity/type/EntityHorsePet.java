@@ -36,16 +36,15 @@ import com.dsh105.echopet.compat.api.entity.HorseArmor;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.EnumItemSlot;
-import net.minecraft.server.v1_17_R1.Item;
-import net.minecraft.server.v1_17_R1.ItemStack;
-import net.minecraft.server.v1_17_R1.Items;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import org.bukkit.entity.Horse;
 
 @EntitySize(width = 1.4F, height = 1.6F)
@@ -53,26 +52,26 @@ import org.bukkit.entity.Horse;
 public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHorsePet{
 	
 	// EntityHorse
-	private static final DataWatcherObject<Integer> VARIANT = DataWatcher.a(EntityHorsePet.class, DataWatcherRegistry.b);// Pattern
+	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityHorsePet.class, EntityDataSerializers.INT);// Pattern
 	
-	public EntityHorsePet(World world){
-		super(EntityTypes.HORSE, world);
+	public EntityHorsePet(Level world){
+		super(EntityType.HORSE, world);
 	}
 	
-	public EntityHorsePet(World world, IPet pet){
-		super(EntityTypes.HORSE, world, pet);
+	public EntityHorsePet(Level world, IPet pet){
+		super(EntityType.HORSE, world, pet);
 	}
 	
 	public int getVariant(){
-		return datawatcher.get(VARIANT);
+		return entityData.get(VARIANT);
 	}
 	
 	public void setColor(Horse.Color color){
-		datawatcher.set(VARIANT, (color.ordinal() & 0xFF | getStyle().ordinal() << 8));
+		entityData.set(VARIANT, (color.ordinal() & 0xFF | getStyle().ordinal() << 8));
 	}
 	
 	public void setStyle(Horse.Style style){
-		datawatcher.set(VARIANT, getColor().ordinal() & 0xFF | style.ordinal() << 8);
+		entityData.set(VARIANT, getColor().ordinal() & 0xFF | style.ordinal() << 8);
 	}
 	
 	public Horse.Style getStyle(){
@@ -85,7 +84,7 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	
 	@Override
 	public void setArmour(HorseArmor a){
-		Item item = null;
+		Item item;
 		switch(a){
 			case Iron:
 				item = Items.IRON_HORSE_ARMOR;
@@ -100,15 +99,15 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 				item = Items.AIR;
 				break;
 		}
-		setSlot(EnumItemSlot.CHEST, item == null ? null : new ItemStack(item));
-		EntityInsentient.a(EnumItemSlot.CHEST, 0);//dropChance
+		setSlot(EquipmentSlot.CHEST, item == null ? null : new ItemStack(item), true);
+		setDropChance(EquipmentSlot.CHEST, 0);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(VARIANT, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, 0);
 		
-		// this.datawatcher.register(ARMOR, EnumHorseArmor.NONE.a());
+		// this.entityData.define(ARMOR, EnumHorseArmor.NONE.a());
 	}
 }

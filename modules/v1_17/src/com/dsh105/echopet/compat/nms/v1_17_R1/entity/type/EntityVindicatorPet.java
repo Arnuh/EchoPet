@@ -35,21 +35,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVindicatorPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.VINDICATOR)
 public class EntityVindicatorPet extends EntityIllagerAbstractPet implements IEntityVindicatorPet{
 	
-	public EntityVindicatorPet(World world){
-		super(EntityTypes.VINDICATOR, world);
+	public EntityVindicatorPet(Level world){
+		super(EntityType.VINDICATOR, world);
 	}
 	
-	public EntityVindicatorPet(World world, IPet pet){
-		super(EntityTypes.VINDICATOR, world, pet);
+	public EntityVindicatorPet(Level world, IPet pet){
+		super(EntityType.VINDICATOR, world, pet);
 	}
 }

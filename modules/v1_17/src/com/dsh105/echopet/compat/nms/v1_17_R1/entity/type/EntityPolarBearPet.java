@@ -37,33 +37,33 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPolarBearPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 1.4F, height = 1.4F)
 @EntityPetType(petType = PetType.POLARBEAR)
 public class EntityPolarBearPet extends EntityAgeablePet implements IEntityPolarBearPet{
 	
-	private static final DataWatcherObject<Boolean> STANDING_UP = DataWatcher.a(EntityPolarBearPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> STANDING_UP = SynchedEntityData.defineId(EntityPolarBearPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityPolarBearPet(World world){
-		super(EntityTypes.POLAR_BEAR, world);
+	public EntityPolarBearPet(Level world){
+		super(EntityType.POLAR_BEAR, world);
 	}
 	
-	public EntityPolarBearPet(World world, IPet pet){
-		super(EntityTypes.POLAR_BEAR, world, pet);
+	public EntityPolarBearPet(Level world, IPet pet){
+		super(EntityType.POLAR_BEAR, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(STANDING_UP, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(STANDING_UP, false);
 	}
 	
 	public void setStandingUp(boolean flag){
-		datawatcher.set(STANDING_UP, flag);
+		entityData.set(STANDING_UP, flag);
 	}
 	
 	public SizeCategory getSizeCategory(){

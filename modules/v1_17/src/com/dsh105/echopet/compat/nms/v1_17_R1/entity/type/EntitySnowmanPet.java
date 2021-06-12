@@ -37,29 +37,29 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.4F, height = 1.8F)
 @EntityPetType(petType = PetType.SNOWMAN)
 public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet{
 	
-	private static final DataWatcherObject<Byte> SHEARED = DataWatcher.a(EntitySnowmanPet.class, DataWatcherRegistry.a);// SHEARED(Removes pumpkin)
+	private static final EntityDataAccessor<Byte> SHEARED = SynchedEntityData.defineId(EntitySnowmanPet.class, EntityDataSerializers.BYTE);// SHEARED(Removes pumpkin)
 	
-	public EntitySnowmanPet(World world){
-		super(EntityTypes.SNOW_GOLEM, world);
+	public EntitySnowmanPet(Level world){
+		super(EntityType.SNOW_GOLEM, world);
 	}
 	
-	public EntitySnowmanPet(World world, IPet pet){
-		super(EntityTypes.SNOW_GOLEM, world, pet);
+	public EntitySnowmanPet(Level world, IPet pet){
+		super(EntityType.SNOW_GOLEM, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(SHEARED, (byte) 16);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(SHEARED, (byte) 16);
 	}
 	
 	@Override
@@ -68,11 +68,11 @@ public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet{
 	}
 	
 	public void setSheared(boolean flag){
-		byte b0 = this.datawatcher.get(SHEARED).byteValue();
+		byte b0 = this.entityData.get(SHEARED).byteValue();
 		if(!flag){
-			this.datawatcher.set(SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
+			this.entityData.set(SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
 		}else{
-			this.datawatcher.set(SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
+			this.entityData.set(SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
 		}
 	}
 }

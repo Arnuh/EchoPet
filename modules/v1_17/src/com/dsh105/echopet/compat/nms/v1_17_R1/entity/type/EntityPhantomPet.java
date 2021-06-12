@@ -20,23 +20,19 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 12, 2018
- */
 @EntitySize(width = 0.9F, height = 0.5F)
 @EntityPetType(petType = PetType.PHANTOM)
 public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomPet{
 	
-	public EntityPhantomPet(World world){
-		super(EntityTypes.PHANTOM, world);
+	public EntityPhantomPet(Level world){
+		super(EntityType.PHANTOM, world);
 	}
 	
-	public EntityPhantomPet(World world, IPet pet){
-		super(EntityTypes.PHANTOM, world, pet);
+	public EntityPhantomPet(Level world, IPet pet){
+		super(EntityType.PHANTOM, world, pet);
 	}
 	
 	@Override

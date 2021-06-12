@@ -34,41 +34,38 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIllagerAbstractPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
-/**
- * @since May 23, 2017
- */
 public class EntityIllagerAbstractPet extends EntityPet implements IEntityIllagerAbstractPet{
 	
-	protected static final DataWatcherObject<Byte> a = DataWatcher.a(EntityIllagerAbstractPet.class, DataWatcherRegistry.a);
+	protected static final EntityDataAccessor<Byte> a = SynchedEntityData.defineId(EntityIllagerAbstractPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityIllagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityIllagerAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityIllagerAbstractPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityIllagerAbstractPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(a, (byte) 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(a, (byte) 0);
 	}
 	
 	protected void a(int paramInt, boolean paramBoolean){
-		int i = this.datawatcher.get(a);
+		int i = this.entityData.get(a);
 		if(paramBoolean){
 			i |= paramInt;
 		}else{
 			i &= (paramInt ^ 0xFFFFFFFF);
 		}
-		this.datawatcher.set(a, (byte) (i & 0xFF));
+		this.entityData.set(a, (byte) (i & 0xFF));
 	}
 	
 	@Override

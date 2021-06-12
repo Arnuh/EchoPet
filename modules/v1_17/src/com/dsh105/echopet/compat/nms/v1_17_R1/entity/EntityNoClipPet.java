@@ -31,21 +31,21 @@
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public abstract class EntityNoClipPet extends EntityPet{
 	
-	protected EntityNoClipPet(EntityTypes<? extends EntityInsentient> type, World world){
+	protected EntityNoClipPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityNoClipPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityNoClipPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
 	public void noClip(boolean flag){
-		this.noclip = flag;
+		this.noPhysics = flag;
 	}
 }

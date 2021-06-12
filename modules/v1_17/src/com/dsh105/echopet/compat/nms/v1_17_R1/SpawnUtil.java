@@ -36,9 +36,9 @@ import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.ItemStack;
-import net.minecraft.server.v1_17_R1.NBTTagCompound;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -63,7 +63,7 @@ public class SpawnUtil implements ISpawnUtil{
 			return null;
 		}
 		l = spawnEvent.getSpawnLocation();
-		World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
+		Level mcWorld = ((CraftWorld) l.getWorld()).getHandle();
 		EchoPet.getPetRegistry().enablePet(pet.getPetType());
 		EntityPet entityPet = (EntityPet) pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
 		entityPet.setLocation(new Location(mcWorld.getWorld(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch()));
@@ -84,11 +84,11 @@ public class SpawnUtil implements ISpawnUtil{
 	// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
 	public org.bukkit.inventory.ItemStack getSpawnEgg(org.bukkit.inventory.ItemStack i, String entityTag){
 		ItemStack is = CraftItemStack.asNMSCopy(i);
-		NBTTagCompound nbt = is.getTag();
-		if(nbt == null) nbt = new NBTTagCompound();
-		if(!nbt.hasKey("EntityTag")) nbt.set("EntityTag", new NBTTagCompound());
+		CompoundTag nbt = is.getTag();
+		if(nbt == null) nbt = new CompoundTag();
+		if(!nbt.contains("EntityTag")) nbt.put("EntityTag", new CompoundTag());
 		if(!entityTag.startsWith("minecraft:")) entityTag = "minecraft:" + entityTag;
-		nbt.getCompound("EntityTag").setString("id", entityTag);
+		nbt.getCompound("EntityTag").putString("id", entityTag);
 		return CraftItemStack.asCraftMirror(is);
 	}
 }

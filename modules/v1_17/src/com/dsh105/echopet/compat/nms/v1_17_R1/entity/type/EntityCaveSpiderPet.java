@@ -36,24 +36,24 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCaveSpiderPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.7F, height = 0.5F)
 @EntityPetType(petType = PetType.CAVESPIDER)
 public class EntityCaveSpiderPet extends EntitySpiderPet implements IEntityCaveSpiderPet{
 	
-	public EntityCaveSpiderPet(World world){
-		super(EntityTypes.CAVE_SPIDER, world);
+	public EntityCaveSpiderPet(Level world){
+		super(EntityType.CAVE_SPIDER, world);
 	}
 	
-	public EntityCaveSpiderPet(World world, IPet pet){
-		super(EntityTypes.CAVE_SPIDER, world, pet);
+	public EntityCaveSpiderPet(Level world, IPet pet){
+		super(EntityType.CAVE_SPIDER, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
+	protected void defineSynchedData(){
+		super.defineSynchedData();
 	}
 	
 	@Override

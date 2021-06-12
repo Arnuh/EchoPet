@@ -36,43 +36,40 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEvokerPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.EVOKER)
 public class EntityEvokerPet extends EntityIllagerAbstractPet implements IEntityEvokerPet{
 	
 	// EntityIllagerWizard
-	private static final DataWatcherObject<Byte> c = DataWatcher.a(EntityEvokerPet.class, DataWatcherRegistry.a);// some sorta spell shit
+	private static final EntityDataAccessor<Byte> c = SynchedEntityData.defineId(EntityEvokerPet.class, EntityDataSerializers.BYTE);// some sorta spell shit
 	
-	public EntityEvokerPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityEvokerPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityEvokerPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityEvokerPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	public EntityEvokerPet(World world){
-		this(EntityTypes.EVOKER, world);
+	public EntityEvokerPet(Level world){
+		this(EntityType.EVOKER, world);
 	}
 	
-	public EntityEvokerPet(World world, IPet pet){
-		this(EntityTypes.EVOKER, world, pet);
+	public EntityEvokerPet(Level world, IPet pet){
+		this(EntityType.EVOKER, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(c, (byte) 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(c, (byte) 0);
 	}
 	
 	@Override

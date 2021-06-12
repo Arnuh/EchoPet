@@ -35,22 +35,19 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHuskPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 18, 2016
- */
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.HUSK)
 public class EntityHuskPet extends EntityZombiePet implements IEntityHuskPet{
 	
-	public EntityHuskPet(World world){
-		super(EntityTypes.HUSK, world);
+	public EntityHuskPet(Level world){
+		super(EntityType.HUSK, world);
 	}
 	
-	public EntityHuskPet(World world, IPet pet){
-		super(EntityTypes.HUSK, world, pet);
+	public EntityHuskPet(Level world, IPet pet){
+		super(EntityType.HUSK, world, pet);
 	}
 	
 }

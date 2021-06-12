@@ -35,21 +35,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIllusionerPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since May 23, 2017
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.ILLUSIONER)
 public class EntityIllusionerPet extends EntityEvokerPet implements IEntityIllusionerPet{
 	
-	public EntityIllusionerPet(World world){
-		super(EntityTypes.ILLUSIONER, world);
+	public EntityIllusionerPet(Level world){
+		super(EntityType.ILLUSIONER, world);
 	}
 	
-	public EntityIllusionerPet(World world, IPet pet){
-		super(EntityTypes.ILLUSIONER, world, pet);
+	public EntityIllusionerPet(Level world, IPet pet){
+		super(EntityType.ILLUSIONER, world, pet);
 	}
 }

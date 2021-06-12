@@ -36,19 +36,19 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGiantPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 5.5F, height = 5.5F)
 @EntityPetType(petType = PetType.GIANT)
 public class EntityGiantPet extends EntityZombiePet implements IEntityGiantPet{
 	
-	public EntityGiantPet(World world){
-		super(EntityTypes.GIANT, world);
+	public EntityGiantPet(Level world){
+		super(EntityType.GIANT, world);
 	}
 	
-	public EntityGiantPet(World world, IPet pet){
-		super(EntityTypes.GIANT, world, pet);
+	public EntityGiantPet(Level world, IPet pet){
+		super(EntityType.GIANT, world, pet);
 	}
 	
 	@Override

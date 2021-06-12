@@ -20,32 +20,31 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityTropicalFishPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.TropicalFish;
-
 
 @EntitySize(width = 0.5F, height = 0.4F)
 @EntityPetType(petType = PetType.TROPICALFISH)
 public class EntityTropicalFishPet extends EntityFishPet implements IEntityTropicalFishPet{
 	
-	private static final DataWatcherObject<Integer> DATA = DataWatcher.a(EntityTropicalFishPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> DATA = SynchedEntityData.defineId(EntityTropicalFishPet.class, EntityDataSerializers.INT);
 	
-	public EntityTropicalFishPet(World world){
-		super(EntityTypes.TROPICAL_FISH, world);
+	public EntityTropicalFishPet(Level world){
+		super(EntityType.TROPICAL_FISH, world);
 	}
 	
-	public EntityTropicalFishPet(World world, IPet pet){
-		super(EntityTypes.TROPICAL_FISH, world, pet);
+	public EntityTropicalFishPet(Level world, IPet pet){
+		super(EntityType.TROPICAL_FISH, world, pet);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(DATA, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(DATA, 0);
 	}
 	
 	public void setVariantData(boolean large, TropicalFish.Pattern pattern, DyeColor bodyColor, DyeColor patternColor){
@@ -53,7 +52,7 @@ public class EntityTropicalFishPet extends EntityFishPet implements IEntityTropi
 		variantData |= bodyColor.ordinal() << 16;
 		variantData |= pattern.ordinal() << 8;
 		variantData |= (large ? 1 : 0);
-		datawatcher.set(DATA, variantData);
+		entityData.set(DATA, variantData);
 	}
 	
 	@Override

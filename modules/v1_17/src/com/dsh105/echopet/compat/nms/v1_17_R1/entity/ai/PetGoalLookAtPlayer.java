@@ -33,31 +33,34 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai;
 import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.Entity;
-import net.minecraft.server.v1_17_R1.EntityHuman;
-import net.minecraft.server.v1_17_R1.IEntitySelector;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 
 @SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
-	private EntityPet pet;
+	//LookAtPlayerGoal
+	private final EntityPet pet;
 	protected Entity player;
-	private float range;
-	private int ticksLeft;
-	private float chance;
-	private Class clazz;
+	private final float lookDistance, lookDistanceSqr;
+	private int lookTime;
+	private final float probability;
+	private final Class clazz;
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c){
 		this.pet = pet;
-		this.range = 8.0F;
-		this.chance = 0.02F;
+		this.lookDistance = 8.0F;
+		this.lookDistanceSqr = lookDistance * lookDistance;
+		this.probability = 0.02F;
 		this.clazz = c;
 	}
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1){
 		this.pet = pet;
-		this.range = f;
-		this.chance = f1;
+		this.lookDistance = f;
+		this.lookDistanceSqr = lookDistance * lookDistance;
+		this.probability = f1;
 		this.clazz = c;
 	}
 	
@@ -74,15 +77,15 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean shouldStart(){
-		if(this.pet.random().nextFloat() >= this.chance){
+		if(this.pet.random().nextFloat() >= this.probability){
 			return false;
 		}else if(this.pet.passengers.size() > 0){
 			return false;
 		}else{
-			if(this.clazz == EntityHuman.class){
-				this.player = this.pet.world.findNearbyPlayer(this.pet, this.range);
+			if(this.clazz == ServerPlayer.class){
+				this.player = this.pet.level.getNearestPlayer(this.pet, lookDistance);
 			}else{
-				this.player = (Entity) this.pet.world.a(this.clazz, this.pet.getBoundingBox().grow(this.range, 3.0D, this.range), IEntitySelector.b(pet)).stream().findAny().orElse(null);
+				this.player = (Entity) this.pet.level.getEntitiesOfClass(this.clazz, this.pet.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), EntitySelector.notRiding(pet)).stream().findAny().orElse(null);
 			}
 			return this.player != null;
 		}
@@ -90,12 +93,12 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
 	@Override
 	public boolean shouldContinue(){
-		return this.player.isAlive() && (this.pet.h(this.player) <= (double) (this.range * this.range) && this.ticksLeft > 0);
+		return this.player.isAlive() && (this.pet.distanceToSqr(this.player) <= lookDistanceSqr && this.lookTime > 0);
 	}
 	
 	@Override
 	public void start(){
-		this.ticksLeft = 40 + this.pet.random().nextInt(40);
+		this.lookTime = 40 + this.pet.random().nextInt(40);
 	}
 	
 	@Override
@@ -105,7 +108,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
 	@Override
 	public void tick(){
-		this.pet.getControllerLook().a(this.player.locX(), this.player.getHeadY(), this.player.locZ());
-		--this.ticksLeft;
+		this.pet.getLookControl().setLookAt(this.player.getX(), this.player.getEyeY(), this.player.getZ());
+		--this.lookTime;
 	}
 }

@@ -17,9 +17,9 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBirdPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 /**
  * @author Arnah
@@ -27,11 +27,11 @@ import net.minecraft.server.v1_17_R1.World;
  */
 public abstract class EntityBirdPet extends EntityPet implements IEntityBirdPet{
 	
-	public EntityBirdPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityBirdPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityBirdPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityBirdPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 }

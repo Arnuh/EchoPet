@@ -37,29 +37,27 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.type.EntityGhastPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.type.EntityVexPet;
-import net.minecraft.server.v1_17_R1.EntityPlayer;
-import net.minecraft.server.v1_17_R1.GenericAttributes;
-import net.minecraft.server.v1_17_R1.Navigation;
-import net.minecraft.server.v1_17_R1.PathEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.level.pathfinder.Path;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
-	private EntityPet pet;
-	private Navigation nav;
-	private int timer = 0;
-	private double startDistance;
-	private double stopDistance;
-	private double teleportDistance;
-	// private EntityPlayer owner;
+	// FollowOwnerGoal
+	private final EntityPet pet;
+	private final PathNavigation nav;
+	private int timeToRecalcPath = 0;
+	private final double startDistanceSqr;
+	private final double stopDistanceSqr;
+	private final double teleportDistanceSqr;
 	
 	public PetGoalFollowOwner(EntityPet pet, double startDistance, double stopDistance, double teleportDistance){
 		this.pet = pet;
-		this.nav = (Navigation) pet.getNavigation();
-		this.startDistance = startDistance;
-		this.stopDistance = stopDistance;
-		this.teleportDistance = teleportDistance;
-		// this.owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
+		this.nav = pet.getNavigation();
+		this.startDistanceSqr = startDistance * startDistance;
+		this.stopDistanceSqr = stopDistance * stopDistance;
+		this.teleportDistanceSqr = teleportDistance * teleportDistance; // Mojang uses 144(12)
 	}
 	
 	@Override
@@ -80,52 +78,50 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance){
+		}else if(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistanceSqr){
 			return false;
-		}else{
-			return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
 		}
+		return true;
 	}
 	
 	@Override
 	public boolean shouldContinue(){
-		if(this.nav.f()){// Navigation - bottom of class, just returns another method.
+		if(this.nav.isDone()){// Navigation - bottom of class, just returns another method.
 			return false;
 		}else if(this.pet.getPlayerOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else return !(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance);
-		// PetGoalMeleeAttack attackGoal = (PetGoalMeleeAttack) this.pet.petGoalSelector.getGoal("Attack");
-		// return !(attackGoal != null && attackGoal.isActive);
+		}else{
+			return !(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= stopDistanceSqr);
+		}
 	}
 	
 	@Override
 	public void start(){
-		this.timer = 0;
+		this.timeToRecalcPath = 0;
 		// Set pathfinding radius
-		pet.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(this.teleportDistance);
+		//pet.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(this.teleportDistanceSqr);
 	}
 	
 	@Override
 	public void finish(){
-		this.nav.n();// Navigation abstract - return this.c == null || this.c.b();
+		this.nav.stop();
 	}
 	
 	@Override
 	public void tick(){
-		// PathfinderGoalFollowOwner
-		EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
-		// 1.9: this.d.getControllerLook().a(this.e, 10.0F, this.d.N());
-		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.O());
-		if(--this.timer <= 0){
-			this.timer = 10;
+		ServerPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
+		
+		this.pet.getLookControl().setLookAt(owner, 10.0F, (float) this.pet.getMaxHeadXRot());
+		if(--this.timeToRecalcPath <= 0){
+			this.timeToRecalcPath = 10;
 			/*if (this.pet.getPlayerOwner().isFlying()) {
 			    //Don't move pet when owner flying
 			    return;
 			}*/
 			double speed = 0.6F;
-			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.distanceToSqr(owner) > (this.teleportDistanceSqr) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
@@ -134,21 +130,20 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			if(moveEvent.isCancelled()){
 				return;
 			}
-			if(pet.goalTarget == null){
-				PathEntity path;
-				int followDistance = 3;//Required distance between the owner and target before it paths.
-				if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
-					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), followDistance);
-				}else{
-					path = pet.getNavigation().a(owner, followDistance);
-				}
-				// Smooth path finding to entity instead of location
-				pet.getNavigation().a(path, speed);
+			
+			Path path;
+			int followDistance = 3;//Required distance between the owner and target before it paths.
+			if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
+				path = pet.getNavigation().createPath(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), followDistance);
+			}else{
+				path = pet.getNavigation().createPath(owner, followDistance);
 			}
+			// Smooth path finding to entity instead of location
+			pet.getNavigation().moveTo(path, speed);
 		}
 	}
 	
-	public Navigation getNavigation(){
+	public PathNavigation getNavigation(){
 		return nav;
 	}
 }

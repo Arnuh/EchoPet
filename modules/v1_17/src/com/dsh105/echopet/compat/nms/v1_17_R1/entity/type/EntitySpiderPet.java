@@ -37,39 +37,39 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySpiderPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 1.4F, height = 0.9F)
 @EntityPetType(petType = PetType.SPIDER)
 public class EntitySpiderPet extends EntityPet implements IEntitySpiderPet{
 	
-	private static final DataWatcherObject<Byte> a = DataWatcher.a(EntitySpiderPet.class, DataWatcherRegistry.a);// Some position changed or shit..
+	private static final EntityDataAccessor<Byte> a = SynchedEntityData.defineId(EntitySpiderPet.class, EntityDataSerializers.BYTE);// Some position changed or shit..
 	
-	public EntitySpiderPet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntitySpiderPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntitySpiderPet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntitySpiderPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
-	public EntitySpiderPet(World world){
-		this(EntityTypes.SPIDER, world);
+	public EntitySpiderPet(Level world){
+		this(EntityType.SPIDER, world);
 	}
 	
-	public EntitySpiderPet(World world, IPet pet){
-		this(EntityTypes.SPIDER, world, pet);
+	public EntitySpiderPet(Level world, IPet pet){
+		this(EntityType.SPIDER, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(a, Byte.valueOf((byte) 0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(a, Byte.valueOf((byte) 0));
 	}
 	
 	@Override

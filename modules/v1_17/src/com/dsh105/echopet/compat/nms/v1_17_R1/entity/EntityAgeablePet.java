@@ -33,29 +33,29 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityInsentient;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeablePet{
 	
-	private static final DataWatcherObject<Boolean> BABY = DataWatcher.a(EntityAgeablePet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(EntityAgeablePet.class, EntityDataSerializers.BOOLEAN);
 	protected int age;
 	private boolean ageLocked = true;
 	
-	public EntityAgeablePet(EntityTypes<? extends EntityInsentient> type, World world){
+	public EntityAgeablePet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
 	
-	public EntityAgeablePet(EntityTypes<? extends EntityInsentient> type, World world, IPet pet){
+	public EntityAgeablePet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
 	}
 	
 	public int getAge(){
-		return this.datawatcher.get(BABY) ? -1 : this.age;
+		return this.entityData.get(BABY) ? -1 : this.age;
 	}
 	
 	public void setAge(int i, boolean flag){
@@ -72,7 +72,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public void setAgeRaw(int i){
-		this.datawatcher.set(BABY, i < 0);
+		this.entityData.set(BABY, i < 0);
 		this.age = i;
 	}
 	
@@ -85,15 +85,15 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(BABY, false);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(BABY, false);
 	}
 	
 	@Override
 	public void inactiveTick(){
 		super.inactiveTick();
-		if(!(this.world.isClientSide || this.ageLocked)){
+		if(!(this.level.isClientSide || this.ageLocked)){
 			int i = this.getAge();
 			if(i < 0){
 				++i;
@@ -106,12 +106,12 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public void setBaby(boolean flag){
-		this.datawatcher.set(BABY, flag);
+		this.entityData.set(BABY, flag);
 	}
 	
 	@Override
 	public boolean isBaby(){
-		return this.datawatcher.get(BABY);
+		return this.entityData.get(BABY);
 	}
 	
 	@Override

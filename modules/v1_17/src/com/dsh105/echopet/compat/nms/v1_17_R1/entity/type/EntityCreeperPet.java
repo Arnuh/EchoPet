@@ -37,41 +37,41 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCreeperPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.CREEPER)
 public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 	
-	private static final DataWatcherObject<Integer> a = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.b);// No clue
-	private static final DataWatcherObject<Boolean> POWERED = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.i);
-	private static final DataWatcherObject<Boolean> IGNITED = DataWatcher.a(EntityCreeperPet.class, DataWatcherRegistry.i);// What is this?
+	private static final EntityDataAccessor<Integer> a = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.INT);// No clue
+	private static final EntityDataAccessor<Boolean> POWERED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> IGNITED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);// What is this?
 	
-	public EntityCreeperPet(World world){
-		super(EntityTypes.CREEPER, world);
+	public EntityCreeperPet(Level world){
+		super(EntityType.CREEPER, world);
 	}
 	
-	public EntityCreeperPet(World world, IPet pet){
-		super(EntityTypes.CREEPER, world, pet);
+	public EntityCreeperPet(Level world, IPet pet){
+		super(EntityType.CREEPER, world, pet);
 	}
 	
 	public void setPowered(boolean flag){
-		this.datawatcher.set(POWERED, flag);
+		this.entityData.set(POWERED, flag);
 	}
 	
 	public void setIgnited(boolean flag){
-		this.datawatcher.set(IGNITED, flag);
+		this.entityData.set(IGNITED, flag);
 	}
 	
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(a, Integer.valueOf(-1));
-		this.datawatcher.register(POWERED, Boolean.valueOf(false));
-		this.datawatcher.register(IGNITED, Boolean.valueOf(false));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(a, Integer.valueOf(-1));
+		this.entityData.define(POWERED, Boolean.valueOf(false));
+		this.entityData.define(IGNITED, Boolean.valueOf(false));
 	}
 	
 	public SizeCategory getSizeCategory(){

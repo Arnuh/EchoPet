@@ -35,21 +35,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityElderGuardianPet;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
-/**
- * @since Nov 18, 2016
- */
 @EntitySize(width = 0.85F * 2.35F, height = 0.85F * 2.35F)
 @EntityPetType(petType = PetType.ELDERGUARDIAN)
 public class EntityElderGuardianPet extends EntityGuardianPet implements IEntityElderGuardianPet{
 	
-	public EntityElderGuardianPet(World world){
-		super(EntityTypes.ELDER_GUARDIAN, world);
+	public EntityElderGuardianPet(Level world){
+		super(EntityType.ELDER_GUARDIAN, world);
 	}
 	
-	public EntityElderGuardianPet(World world, IPet pet){
-		super(EntityTypes.ELDER_GUARDIAN, world, pet);
+	public EntityElderGuardianPet(Level world, IPet pet){
+		super(EntityType.ELDER_GUARDIAN, world, pet);
 	}
 }

@@ -37,10 +37,6 @@ public interface IEntityPet{
 	
 	boolean onInteract(Player p);
 	
-	void setTarget(LivingEntity livingEntity);
-	
-	LivingEntity getTarget();
-	
 	void setOwnerShoulderEntityLeft();
 	
 	void setOwnerShoulderEntityRight();

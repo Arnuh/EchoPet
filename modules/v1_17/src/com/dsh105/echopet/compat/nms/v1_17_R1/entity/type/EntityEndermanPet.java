@@ -39,53 +39,53 @@ import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.IBlockData;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 @EntitySize(width = 0.6F, height = 2.9F)
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	
-	private static final DataWatcherObject<Optional<IBlockData>> BLOCK = DataWatcher.a(EntityEndermanPet.class, DataWatcherRegistry.h);
-	private static final DataWatcherObject<Boolean> SCREAMING = DataWatcher.a(EntityEndermanPet.class, DataWatcherRegistry.i);
+	private static final EntityDataAccessor<Optional<BlockState>> BLOCK = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BLOCK_STATE);
+	private static final EntityDataAccessor<Boolean> SCREAMING = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BOOLEAN);
 	
-	public EntityEndermanPet(World world){
-		super(EntityTypes.ENDERMAN, world);
+	public EntityEndermanPet(Level world){
+		super(EntityType.ENDERMAN, world);
 	}
 	
-	public EntityEndermanPet(World world, IPet pet){
-		super(EntityTypes.ENDERMAN, world, pet);
+	public EntityEndermanPet(Level world, IPet pet){
+		super(EntityType.ENDERMAN, world, pet);
 	}
 	
 	public void setScreaming(boolean flag){
-		this.datawatcher.set(SCREAMING, Boolean.valueOf(flag));
+		this.entityData.set(SCREAMING, Boolean.valueOf(flag));
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(BLOCK, Optional.empty());
-		this.datawatcher.register(SCREAMING, Boolean.valueOf(false));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(BLOCK, Optional.empty());
+		this.entityData.define(SCREAMING, Boolean.valueOf(false));
 	}
 	
 	public boolean isScreaming(){
-		return this.datawatcher.get(SCREAMING);
+		return this.entityData.get(SCREAMING);
 	}
 	
-	public void setCarried(IBlockData iblockdata){
-		this.datawatcher.set(BLOCK, Optional.ofNullable(iblockdata));
+	public void setCarried(BlockState iblockdata){
+		this.entityData.set(BLOCK, Optional.ofNullable(iblockdata));
 	}
 	
-	public IBlockData getCarried(){
-		return this.datawatcher.get(BLOCK).orElse(null);
+	public BlockState getCarried(){
+		return this.entityData.get(BLOCK).orElse(null);
 	}
 	
 	@Override
-	protected String getIdleSound(){
+	protected String getAmbientSoundString(){
 		return ((IEndermanPet) pet).isScreaming() ? "entity.endermen.scream" : "entity.endermen.ambient";
 	}
 	

@@ -38,46 +38,46 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFoxPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.FOX)
 public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	
-	private static final DataWatcherObject<Integer> Type = DataWatcher.a(EntityFoxPet.class, DataWatcherRegistry.b);
-	private static final DataWatcherObject<Byte> StanceFlag = DataWatcher.a(EntityFoxPet.class, DataWatcherRegistry.a);
-	private static final DataWatcherObject<Optional<UUID>> bB = DataWatcher.a(EntityFoxPet.class, DataWatcherRegistry.o);
-	private static final DataWatcherObject<Optional<UUID>> bD = DataWatcher.a(EntityFoxPet.class, DataWatcherRegistry.o);
+	private static final EntityDataAccessor<Integer> Type = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Byte> StanceFlag = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Optional<UUID>> bB = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Optional<UUID>> bD = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
 	// Crouch is when they are starting to attack, shaking ass
 	// Pounce tilts his head down
 	// Pounce2 tilts his head + shakes legs or just shakes legs?
 	// Kind of weird because sometimes neither will tilt his head down until you respawn him which might be due to StanceFlag going < 0
 	private static final int Sitting = 0x1, Crouching = 0x4, HeadTilt = 0x8, Pounce = 0x10, Sleeping = 0x20, Pounce2 = 0x40, Unknown = 0x80;
 	
-	public EntityFoxPet(World world){
-		super(EntityTypes.FOX, world);
+	public EntityFoxPet(Level world){
+		super(EntityType.FOX, world);
 	}
 	
-	public EntityFoxPet(World world, IPet pet){
-		super(EntityTypes.FOX, world, pet);
+	public EntityFoxPet(Level world, IPet pet){
+		super(EntityType.FOX, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(bB, Optional.empty());
-		this.datawatcher.register(bD, Optional.empty());
-		this.datawatcher.register(Type, 0);
-		this.datawatcher.register(StanceFlag, (byte) 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(bB, Optional.empty());
+		this.entityData.define(bD, Optional.empty());
+		this.entityData.define(Type, 0);
+		this.entityData.define(StanceFlag, (byte) 0);
 	}
 	
 	@Override
 	public void setType(int type){
-		this.datawatcher.set(Type, type);
+		this.entityData.set(Type, type);
 	}
 	
 	@Override
@@ -116,14 +116,14 @@ public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	}
 	
 	private void addFlag(int flag){
-		datawatcher.set(StanceFlag, (byte) (getFlag() | flag));
+		entityData.set(StanceFlag, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		datawatcher.set(StanceFlag, (byte) (getFlag() & ~flag));
+		entityData.set(StanceFlag, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return datawatcher.get(StanceFlag);
+		return entityData.get(StanceFlag);
 	}
 }

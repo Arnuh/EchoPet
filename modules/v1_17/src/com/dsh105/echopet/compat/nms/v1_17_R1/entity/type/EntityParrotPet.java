@@ -37,44 +37,44 @@ import com.dsh105.echopet.compat.api.entity.ParrotVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityParrotPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityTameablePet;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.MathHelper;
-import net.minecraft.server.v1_17_R1.NBTTagCompound;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.PARROT)
 public class EntityParrotPet extends EntityTameablePet implements IEntityParrotPet{
 	
-	private static final DataWatcherObject<Integer> VARIANT = DataWatcher.a(EntityParrotPet.class, DataWatcherRegistry.b);
+	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityParrotPet.class, EntityDataSerializers.INT);
 	
-	public EntityParrotPet(World world){
-		super(EntityTypes.PARROT, world);
+	public EntityParrotPet(Level world){
+		super(EntityType.PARROT, world);
 	}
 	
-	public EntityParrotPet(World world, IPet pet){
-		super(EntityTypes.PARROT, world, pet);
+	public EntityParrotPet(Level world, IPet pet){
+		super(EntityType.PARROT, world, pet);
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(VARIANT, 0);
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, 0);
 	}
 	
 	public int getVariant(){
-		return MathHelper.clamp(this.datawatcher.get(VARIANT), 0, 4);
+		return Mth.clamp(this.entityData.get(VARIANT), 0, 4);
 	}
 	
 	public void setVariant(ParrotVariant variant){
-		this.datawatcher.set(VARIANT, variant.ordinal());
+		this.entityData.set(VARIANT, variant.ordinal());
 	}
 	
-	public void b(NBTTagCompound nbttagcompound){
-		super.b(nbttagcompound);
-		nbttagcompound.setInt("Variant", getVariant());
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){
+		super.addAdditionalSaveData(nbttagcompound);
+		nbttagcompound.putInt("Variant", this.getVariant());
 	}
 }

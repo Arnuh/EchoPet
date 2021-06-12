@@ -21,138 +21,170 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFollowOwner;
-import net.minecraft.server.v1_17_R1.ControllerJump;
-import net.minecraft.server.v1_17_R1.DataWatcher;
-import net.minecraft.server.v1_17_R1.DataWatcherObject;
-import net.minecraft.server.v1_17_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_17_R1.EntityTypes;
-import net.minecraft.server.v1_17_R1.PathEntity;
-import net.minecraft.server.v1_17_R1.Vec3D;
-import net.minecraft.server.v1_17_R1.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.control.JumpControl;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import org.bukkit.entity.Rabbit;
 
 @EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet{
 	
-	private static final DataWatcherObject<Integer> TYPE = DataWatcher.a(EntityRabbitPet.class, DataWatcherRegistry.b);
-	private boolean onGroundLastTick = false;
-	private int delay = 0;// bC
+	private static final EntityDataAccessor<Integer> TYPE = SynchedEntityData.defineId(EntityRabbitPet.class, EntityDataSerializers.INT);
+	private int jumpTicks;
+	private int jumpDuration;
+	private boolean wasOnGround;
+	private int jumpDelayTicks;
 	
-	public EntityRabbitPet(World world){
-		super(EntityTypes.RABBIT, world);
-		this.bi = new ControllerJumpRabbit(this);
+	public EntityRabbitPet(Level world){
+		super(EntityType.RABBIT, world);
+		this.jumpControl = new ControllerJumpRabbit(this);
 	}
 	
-	public EntityRabbitPet(World world, IPet pet){
-		super(EntityTypes.RABBIT, world, pet);
-		this.bi = new ControllerJumpRabbit(this);
+	public EntityRabbitPet(Level world, IPet pet){
+		super(EntityType.RABBIT, world, pet);
+		this.jumpControl = new ControllerJumpRabbit(this);
 	}
 	
 	@Override
 	public Rabbit.Type getRabbitType(){
-		return TypeMapping.fromMagic(this.datawatcher.get(TYPE));
+		return TypeMapping.fromMagic(this.entityData.get(TYPE));
 	}
 	
 	@Override
 	public void setRabbitType(Rabbit.Type type){
-		this.datawatcher.set(TYPE, TypeMapping.toMagic(type));
+		this.entityData.set(TYPE, TypeMapping.toMagic(type));
 	}
 	
 	@Override
-	protected void initDatawatcher(){
-		super.initDatawatcher();
-		this.datawatcher.register(TYPE, Integer.valueOf(0));
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(TYPE, Integer.valueOf(0));
+	}
+	
+	public void setJumping(boolean flag){
+		super.setJumping(flag);
+		if(flag){
+			this.playSound(this.getJumpSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+		}
+	}
+	
+	public void startJumping(){
+		this.setJumping(true);
+		this.jumpDuration = 10;
+		this.jumpTicks = 0;
 	}
 	
 	@Override
-	public void onLive(){
-		super.onLive();
-		if(this.delay > 0){
-			this.delay -= 1;
+	public void customServerAiStep(){
+		super.customServerAiStep();
+		if(this.jumpDelayTicks > 0){
+			this.jumpDelayTicks -= 1;
 		}
 		if(this.onGround){
-			if(!this.onGroundLastTick){
-				setJumping(false);
-				reset();// ef
+			if(!this.wasOnGround){
+				this.setJumping(false);
+				this.checkLandingDelay();
 			}
-			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) getControllerJump();
-			if(!jumpController.c()){
-				if(this.moveController.b() && this.delay == 0){
-					PathEntity pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().k();// Gets path towards the player.
+			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) getJumpControl();
+			if(!jumpController.wantJump()){
+				if(this.moveControl.hasWanted() && this.jumpDelayTicks == 0){
+					Path pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().getPath();// Gets path towards the player.
 					// if(pathentity != null && pathentity.e() < pathentity.d()){
 					// Vec3D vec3d = pathentity.a(this);
 					// a(vec3d.x, vec3d.z);
 					// dl();
 					// }
-					Vec3D vec3d = new Vec3D(this.moveController.d(), this.moveController.e(), this.moveController.f());
-					if((pathentity != null) && (pathentity.f() < pathentity.e())){
-						vec3d = pathentity.a(this);
+					Vec3 vec3d = new Vec3(this.moveControl.getWantedX(), this.moveControl.getWantedY(), this.moveControl.getWantedZ());
+					if(pathentity != null && !pathentity.isDone()){
+						vec3d = pathentity.getNextEntityPos(this);
 					}
-					a(vec3d.x, vec3d.z);
-					dl();
+					this.facePoint(vec3d.x, vec3d.z);
+					this.startJumping();
 				}
-			}else if(!jumpController.d()){
-				((ControllerJumpRabbit) getControllerJump()).a(true);
+			}else if(!jumpController.canJump()){
+				this.enableJumpControl();
 			}
 		}
-		this.onGroundLastTick = this.onGround;
+		this.wasOnGround = this.onGround;
 	}
 	
-	protected void jump(){// has movecontroller in it, 4 above datawatcher register.
-		super.jump();
-		double d0 = this.moveController.c();
-		if(d0 > 0.0D){
-			Vec3D mot = this.getMot();
-			double d1 = mot.x * mot.x + mot.z * mot.z;
-			if(d1 < 0.010000000000000002D){
-				a(0.0F, 0.0F, 1.0F, 0.1F);
-			}
+	private void facePoint(double d0, double d1){
+		this.setYRot((float) (Mth.atan2(d1 - this.getZ(), d0 - this.getX()) * 57.2957763671875D) - 90.0F);
+	}
+	
+	private void enableJumpControl(){
+		((ControllerJumpRabbit) this.jumpControl).setCanJump(true);
+	}
+	
+	private void disableJumpControl(){
+		((ControllerJumpRabbit) this.jumpControl).setCanJump(false);
+	}
+	
+	private void setLandingDelay(){
+		if(this.moveControl.getSpeedModifier() < 2.2D){
+			this.jumpDelayTicks = 10;
+		}else{
+			this.jumpDelayTicks = 1;
 		}
-		this.world.broadcastEntityEffect(this, (byte) 1);// Does leg jump animation I think
 	}
 	
-	private void reset(){
-		resetDelay();// dC
-		((ControllerJumpRabbit) getControllerJump()).a(false);// dD
+	private void checkLandingDelay(){
+		this.setLandingDelay();
+		this.disableJumpControl();
 	}
 	
-	private void resetDelay(){// dI()
-		if(moveController.c() < 2.2D) delay = 10;
-		else delay = 1;
+	public void aiStep(){
+		super.aiStep();
+		if(this.jumpTicks != this.jumpDuration){
+			++this.jumpTicks;
+		}else if(this.jumpDuration != 0){
+			this.jumpTicks = 0;
+			this.jumpDuration = 0;
+			this.setJumping(false);
+		}
 	}
 	
-	public void eL(){// Above datawatcher register
-		setJumping(true);// Plays ambient sound if true, does super.l(flag);
+	protected SoundEvent getJumpSound(){
+		return SoundEvents.RABBIT_JUMP;
 	}
 	
-	public class ControllerJumpRabbit extends ControllerJump{// Copied from EntityRabbit
+	public class ControllerJumpRabbit extends JumpControl{// Copied from EntityRabbit
 		
-		private EntityRabbitPet c;
-		private boolean d = false;
+		private final EntityRabbitPet rabbit;
+		private boolean canJump;
 		
 		public ControllerJumpRabbit(EntityRabbitPet entityrabbit){
 			super(entityrabbit);
-			this.c = entityrabbit;
+			this.rabbit = entityrabbit;
 		}
 		
-		public boolean c(){
-			return this.a;
+		public boolean wantJump(){
+			return this.jump;
 		}
 		
-		public boolean d(){
-			return this.d;
+		public boolean canJump(){
+			return this.canJump;
 		}
 		
-		public void a(boolean flag){
-			this.d = flag;
+		public void setCanJump(boolean flag){
+			this.canJump = flag;
 		}
 		
-		public void b(){
-			if(this.a){
-				this.c.dl();// this is the method above ^
-				this.a = false;
+		public void tick(){
+			if(this.jump){
+				this.rabbit.startJumping();
+				this.jump = false;
 			}
+			
 		}
 	}
 	
