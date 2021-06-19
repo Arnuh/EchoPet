@@ -11,26 +11,21 @@
  * You should have received a copy of the GNU General Public License
  *  along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityStrayPet;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.6F, height = 1.9F)
-@EntityPetType(petType = PetType.STRAY)
-public class EntityStrayPet extends EntitySkeletonAbstractPet implements IEntityStrayPet{
+
+public abstract class EntityAbstractIllagerPet extends EntityRaiderPet{
 	
-	public EntityStrayPet(Level world){
-		super(EntityType.STRAY, world);
+	public EntityAbstractIllagerPet(EntityType<? extends Mob> type, Level world){
+		super(type, world);
 	}
 	
-	public EntityStrayPet(Level world, final IPet pet){
-		super(EntityType.STRAY, world, pet);
+	public EntityAbstractIllagerPet(EntityType<? extends Mob> type, Level world, IPet pet){
+		super(type, world, pet);
 	}
 }

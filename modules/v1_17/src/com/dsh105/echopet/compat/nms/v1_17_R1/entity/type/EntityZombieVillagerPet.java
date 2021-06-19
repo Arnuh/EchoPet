@@ -49,8 +49,8 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.ZOMBIEVILLAGER)
 public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZombieVillagerPet, IEntityVillagerDataHolder{
 	
-	private static final EntityDataAccessor<Boolean> CONVERTING = SynchedEntityData.defineId(EntityZombieVillagerPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<VillagerData> DATA = SynchedEntityData.defineId(EntityZombieVillagerPet.class, EntityDataSerializers.VILLAGER_DATA);
+	private static final EntityDataAccessor<Boolean> DATA_CONVERTING_ID = SynchedEntityData.defineId(EntityZombieVillagerPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(EntityZombieVillagerPet.class, EntityDataSerializers.VILLAGER_DATA);
 	
 	public EntityZombieVillagerPet(Level world){
 		super(EntityType.ZOMBIE_VILLAGER, world);
@@ -63,14 +63,14 @@ public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZ
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(CONVERTING, false);
-		this.entityData.define(DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
+		this.entityData.define(DATA_CONVERTING_ID, false);
+		this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
 	}
 	
 	@Override
 	public void setProfession(int i){
 		try{
-			this.entityData.set(DATA, getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
 		}catch(Exception ignored){
 		}
 	}
@@ -78,7 +78,7 @@ public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZ
 	@Override
 	public void setType(int type){
 		try{
-			this.entityData.set(DATA, getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
 		}catch(Exception ignored){
 		}
 	}
@@ -86,12 +86,12 @@ public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZ
 	@Override
 	public void setLevel(int level){
 		try{
-			this.entityData.set(DATA, getVillagerData().setLevel(level));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setLevel(level));
 		}catch(Exception ignored){
 		}
 	}
 	
 	public VillagerData getVillagerData(){
-		return this.entityData.get(DATA);
+		return this.entityData.get(DATA_VILLAGER_DATA);
 	}
 }

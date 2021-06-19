@@ -25,7 +25,8 @@ import net.minecraft.world.level.Level;
 
 public abstract class EntityFishPet extends EntityWaterAnimalPet implements IEntityFishPet{
 	
-	private static final EntityDataAccessor<Boolean> b = SynchedEntityData.defineId(EntityFishPet.class, EntityDataSerializers.BOOLEAN);// "FromBucket". Prevents the fish from despawning.
+	// Prevents the fish from despawning.
+	private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(EntityFishPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityFishPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -37,7 +38,7 @@ public abstract class EntityFishPet extends EntityWaterAnimalPet implements IEnt
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(b, Boolean.valueOf(false));
+		this.entityData.define(FROM_BUCKET, false);
 	}
 	
 	protected String getStepSoundString(){

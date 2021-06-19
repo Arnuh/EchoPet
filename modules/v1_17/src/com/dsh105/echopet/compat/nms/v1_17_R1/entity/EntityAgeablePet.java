@@ -42,7 +42,7 @@ import net.minecraft.world.level.Level;
 
 public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeablePet{
 	
-	private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(EntityAgeablePet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_BABY_ID = SynchedEntityData.defineId(EntityAgeablePet.class, EntityDataSerializers.BOOLEAN);
 	protected int age;
 	private boolean ageLocked = true;
 	
@@ -55,7 +55,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public int getAge(){
-		return this.entityData.get(BABY) ? -1 : this.age;
+		return this.entityData.get(DATA_BABY_ID) ? -1 : this.age;
 	}
 	
 	public void setAge(int i, boolean flag){
@@ -72,7 +72,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public void setAgeRaw(int i){
-		this.entityData.set(BABY, i < 0);
+		this.entityData.set(DATA_BABY_ID, i < 0);
 		this.age = i;
 	}
 	
@@ -87,7 +87,7 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(BABY, false);
+		this.entityData.define(DATA_BABY_ID, false);
 	}
 	
 	@Override
@@ -106,12 +106,12 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	public void setBaby(boolean flag){
-		this.entityData.set(BABY, flag);
+		this.entityData.set(DATA_BABY_ID, flag);
 	}
 	
 	@Override
 	public boolean isBaby(){
-		return this.entityData.get(BABY);
+		return this.entityData.get(DATA_BABY_ID);
 	}
 	
 	@Override

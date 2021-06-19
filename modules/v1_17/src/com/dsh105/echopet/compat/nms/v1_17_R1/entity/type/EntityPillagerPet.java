@@ -32,6 +32,7 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPillagerPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -41,9 +42,11 @@ import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.PILLAGER)
-public class EntityPillagerPet extends EntityIllagerAbstractPet implements IEntityPillagerPet{
+public class EntityPillagerPet extends EntityAbstractIllagerPet implements IEntityPillagerPet{
 	
-	private static final EntityDataAccessor<Boolean> b = SynchedEntityData.defineId(EntityPillagerPet.class, EntityDataSerializers.BOOLEAN);//unknown
+	private static final EntityDataAccessor<Boolean> IS_CHARGING_CROSSBOW = SynchedEntityData.defineId(EntityPillagerPet.class, EntityDataSerializers.BOOLEAN);
+	
+	// Does some weird thing with slot offset of 300?
 	
 	public EntityPillagerPet(Level world){
 		super(EntityType.PILLAGER, world);
@@ -54,8 +57,13 @@ public class EntityPillagerPet extends EntityIllagerAbstractPet implements IEnti
 	}
 	
 	@Override
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
+	}
+	
+	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(b, false);
+		this.entityData.define(IS_CHARGING_CROSSBOW, false);
 	}
 }

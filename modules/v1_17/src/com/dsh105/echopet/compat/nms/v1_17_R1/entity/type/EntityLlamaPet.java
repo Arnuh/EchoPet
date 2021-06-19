@@ -32,9 +32,9 @@ import org.bukkit.entity.Llama;
 @EntityPetType(petType = PetType.LLAMA)
 public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEntityLlamaPet{
 	
-	private static final EntityDataAccessor<Integer> STRENGTH = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// changes storage
-	private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// carpet color
-	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// Like an outfit
+	private static final EntityDataAccessor<Integer> DATA_STRENGTH_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// changes storage
+	private static final EntityDataAccessor<Integer> DATA_SWAG_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// carpet color
+	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// Like an outfit
 	
 	public EntityLlamaPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -55,18 +55,18 @@ public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEn
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(STRENGTH, 0);
-		this.entityData.define(COLOR, -1);
-		this.entityData.define(VARIANT, 0);
+		this.entityData.define(DATA_STRENGTH_ID, 0);
+		this.entityData.define(DATA_SWAG_ID, -1);
+		this.entityData.define(DATA_VARIANT_ID, 0);
 	}
 	
 	@Override
 	public void setCarpetColor(DyeColor color){
-		this.entityData.set(COLOR, color == null ? -1 : color.ordinal());
+		this.entityData.set(DATA_SWAG_ID, color == null ? -1 : color.ordinal());
 	}
 	
 	@Override
 	public void setSkinColor(Llama.Color skinColor){
-		this.entityData.set(VARIANT, skinColor.ordinal());
+		this.entityData.set(DATA_VARIANT_ID, skinColor.ordinal());
 	}
 }

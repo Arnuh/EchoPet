@@ -47,9 +47,10 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.CREEPER)
 public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 	
-	private static final EntityDataAccessor<Integer> a = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.INT);// No clue
-	private static final EntityDataAccessor<Boolean> POWERED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> IGNITED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);// What is this?
+	// Igniting using flint & steel triggers explosion, 2 useless datawatchers for pets.
+	private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_IS_POWERED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_IS_IGNITED = SynchedEntityData.defineId(EntityCreeperPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityCreeperPet(Level world){
 		super(EntityType.CREEPER, world);
@@ -60,18 +61,18 @@ public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 	}
 	
 	public void setPowered(boolean flag){
-		this.entityData.set(POWERED, flag);
+		this.entityData.set(DATA_IS_POWERED, flag);
 	}
 	
 	public void setIgnited(boolean flag){
-		this.entityData.set(IGNITED, flag);
+		this.entityData.set(DATA_IS_IGNITED, flag);
 	}
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(a, Integer.valueOf(-1));
-		this.entityData.define(POWERED, Boolean.valueOf(false));
-		this.entityData.define(IGNITED, Boolean.valueOf(false));
+		this.entityData.define(DATA_SWELL_DIR, -1);
+		this.entityData.define(DATA_IS_POWERED, false);
+		this.entityData.define(DATA_IS_IGNITED, false);
 	}
 	
 	public SizeCategory getSizeCategory(){

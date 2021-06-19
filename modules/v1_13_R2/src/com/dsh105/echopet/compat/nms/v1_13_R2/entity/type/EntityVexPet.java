@@ -72,7 +72,7 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 		return (b0 & i) != 0;
 	}
 	
-	public void setPowered(boolean flag){
+	public void setIsCharging(boolean flag){
 		a(1, flag);
 		// noClip(!flag);
 	}

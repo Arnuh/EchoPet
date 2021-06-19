@@ -47,7 +47,7 @@ import org.bukkit.DyeColor;
 @EntityPetType(petType = PetType.SHEEP)
 public class EntitySheepPet extends EntityAgeablePet implements IEntitySheepPet{
 	
-	private static final EntityDataAccessor<Byte> COLOR_SHEARED = SynchedEntityData.defineId(EntitySheepPet.class, EntityDataSerializers.BYTE);// Fuck you mojang for doing two values in one byte
+	private static final EntityDataAccessor<Byte> DATA_WOOL_ID = SynchedEntityData.defineId(EntitySheepPet.class, EntityDataSerializers.BYTE);// Fuck you mojang for doing two values in one byte
 	
 	public EntitySheepPet(Level world){
 		super(EntityType.SHEEP, world);
@@ -58,32 +58,32 @@ public class EntitySheepPet extends EntityAgeablePet implements IEntitySheepPet{
 	}
 	
 	public int getColor(){
-		return this.entityData.get(COLOR_SHEARED).byteValue() & 0xF;
+		return this.entityData.get(DATA_WOOL_ID) & 0xF;
 	}
 	
 	@Override
 	public void setDyeColor(DyeColor color){
-		byte b0 = this.entityData.get(COLOR_SHEARED).byteValue();
-		this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xF0 | color.ordinal() & 0xF)));
+		byte b0 = this.entityData.get(DATA_WOOL_ID);
+		this.entityData.set(DATA_WOOL_ID, (byte) (b0 & 0xF0 | color.ordinal() & 0xF));
 	}
 	
 	public boolean isSheared(){
-		return (this.entityData.get(COLOR_SHEARED).byteValue() & 0x10) != 0;
+		return (this.entityData.get(DATA_WOOL_ID) & 0x10) != 0;
 	}
 	
 	@Override
 	public void setSheared(boolean flag){
-		byte b0 = this.entityData.get(COLOR_SHEARED).byteValue();
+		byte b0 = this.entityData.get(DATA_WOOL_ID);
 		if(flag){
-			this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 | 0x10)));
+			this.entityData.set(DATA_WOOL_ID, (byte) (b0 | 0x10));
 		}else{
-			this.entityData.set(COLOR_SHEARED, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
+			this.entityData.set(DATA_WOOL_ID, (byte) (b0 & -0x11));
 		}
 	}
 	
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(COLOR_SHEARED, Byte.valueOf((byte) 0));
+		this.entityData.define(DATA_WOOL_ID, (byte) 0);
 	}
 }

@@ -36,12 +36,18 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.SKELETON)
 public class EntitySkeletonPet extends EntitySkeletonAbstractPet implements IEntitySkeletonPet{
+	
+	//isFreezeConverting / isShaking
+	private static final EntityDataAccessor<Boolean> DATA_STRAY_CONVERSION_ID = SynchedEntityData.defineId(EntitySkeletonPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntitySkeletonPet(Level world){
 		super(EntityType.SKELETON, world);
@@ -62,4 +68,9 @@ public class EntitySkeletonPet extends EntitySkeletonAbstractPet implements IEnt
 		}.runTaskLater(EchoPet.getPlugin(), 5L);*/
 	}
 	
+	@Override
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(DATA_STRAY_CONVERSION_ID, false);
+	}
 }

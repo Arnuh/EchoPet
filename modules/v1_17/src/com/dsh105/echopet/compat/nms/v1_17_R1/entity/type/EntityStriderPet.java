@@ -33,9 +33,9 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.STRIDER)
 public class EntityStriderPet extends EntityAgeablePet implements IEntityStriderPet{
 	
-	private static final EntityDataAccessor<Integer> boostTicks = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> isShivering = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> hasSaddle = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_BOOST_TIME = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_SUFFOCATING = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(EntityStriderPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityStriderPet(Level world){
 		super(EntityType.STRIDER, world);
@@ -47,8 +47,8 @@ public class EntityStriderPet extends EntityAgeablePet implements IEntityStrider
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(boostTicks, 0);
-		this.entityData.define(isShivering, false);
-		this.entityData.define(hasSaddle, false);
+		this.entityData.define(DATA_BOOST_TIME, 0);
+		this.entityData.define(DATA_SUFFOCATING, false);
+		this.entityData.define(DATA_SADDLE_ID, false);
 	}
 }

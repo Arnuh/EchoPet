@@ -32,7 +32,7 @@ import org.bukkit.entity.TropicalFish;
 @EntityPetType(petType = PetType.TROPICALFISH)
 public class EntityTropicalFishPet extends EntityFishPet implements IEntityTropicalFishPet{
 	
-	private static final EntityDataAccessor<Integer> DATA = SynchedEntityData.defineId(EntityTropicalFishPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(EntityTropicalFishPet.class, EntityDataSerializers.INT);
 	
 	public EntityTropicalFishPet(Level world){
 		super(EntityType.TROPICAL_FISH, world);
@@ -44,7 +44,7 @@ public class EntityTropicalFishPet extends EntityFishPet implements IEntityTropi
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(DATA, 0);
+		this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
 	}
 	
 	public void setVariantData(boolean large, TropicalFish.Pattern pattern, DyeColor bodyColor, DyeColor patternColor){
@@ -52,7 +52,7 @@ public class EntityTropicalFishPet extends EntityFishPet implements IEntityTropi
 		variantData |= bodyColor.ordinal() << 16;
 		variantData |= pattern.ordinal() << 8;
 		variantData |= (large ? 1 : 0);
-		entityData.set(DATA, variantData);
+		entityData.set(DATA_ID_TYPE_VARIANT, variantData);
 	}
 	
 	@Override

@@ -46,8 +46,8 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.PIG)
 public class EntityPigPet extends EntityAgeablePet implements IEntityPigPet{
 	
-	private static final EntityDataAccessor<Boolean> SADDLE = SynchedEntityData.defineId(EntityPigPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> bA = SynchedEntityData.defineId(EntityPigPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(EntityPigPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_BOOST_TIME = SynchedEntityData.defineId(EntityPigPet.class, EntityDataSerializers.INT);
 	
 	public EntityPigPet(Level world){
 		super(EntityType.PIG, world);
@@ -58,18 +58,18 @@ public class EntityPigPet extends EntityAgeablePet implements IEntityPigPet{
 	}
 	
 	public boolean hasSaddle(){
-		return this.entityData.get(SADDLE).booleanValue();
+		return this.entityData.get(DATA_SADDLE_ID);
 	}
 	
 	@Override
 	public void setSaddled(boolean flag){
-		this.entityData.set(SADDLE, Boolean.valueOf(flag));
+		this.entityData.set(DATA_SADDLE_ID, flag);
 	}
 	
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(SADDLE, Boolean.valueOf(false));
-		this.entityData.define(bA, Integer.valueOf(0));
+		this.entityData.define(DATA_SADDLE_ID, Boolean.FALSE);
+		this.entityData.define(DATA_BOOST_TIME, 0);
 	}
 }

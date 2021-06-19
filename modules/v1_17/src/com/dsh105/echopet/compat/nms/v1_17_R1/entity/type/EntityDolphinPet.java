@@ -31,9 +31,12 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.COD)
 public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDolphinPet{
 	
-	private static final EntityDataAccessor<BlockPos> b = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BLOCK_POS);// "TreasurePos" - Some target to swim to.
-	private static final EntityDataAccessor<Boolean> c = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BOOLEAN);// "GotFish" - Used for the pathfinder goal to go to "TreasurePog"
-	private static final EntityDataAccessor<Integer> bC = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.INT);// "Moistness" - Takes damage when < 0.
+	// Some target to swim to.
+	private static final EntityDataAccessor<BlockPos> TREASURE_POS = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BLOCK_POS);
+	//Used for the pathfinder goal to go to "TreasurePog"
+	private static final EntityDataAccessor<Boolean> GOT_FISH = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BOOLEAN);
+	//Takes damage when < 0.
+	private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.INT);
 	
 	public EntityDolphinPet(Level world){
 		super(EntityType.DOLPHIN, world);
@@ -45,9 +48,9 @@ public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDol
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(b, BlockPos.ZERO);
-		this.entityData.define(c, Boolean.valueOf(false));
-		this.entityData.define(bC, Integer.valueOf(2400));
+		this.entityData.define(TREASURE_POS, BlockPos.ZERO);
+		this.entityData.define(GOT_FISH, false);
+		this.entityData.define(MOISTNESS_LEVEL, 2400);
 	}
 	
 	@Override

@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractPet implements IEntityHorseChestedAbstractPet{
 	
 	// EntityHorseChestedAbstract: Donkey, Mule
-	private static final EntityDataAccessor<Boolean> CHEST = SynchedEntityData.defineId(EntityHorseChestedAbstractPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_ID_CHEST = SynchedEntityData.defineId(EntityHorseChestedAbstractPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityHorseChestedAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -39,11 +39,11 @@ public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractP
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(CHEST, false);
+		this.entityData.define(DATA_ID_CHEST, false);
 	}
 	
 	@Override
 	public void setChested(boolean flag){
-		entityData.set(CHEST, flag);
+		entityData.set(DATA_ID_CHEST, flag);
 	}
 }

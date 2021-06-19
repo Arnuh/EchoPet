@@ -49,7 +49,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.PARROT)
 public class EntityParrotPet extends EntityTameablePet implements IEntityParrotPet{
 	
-	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityParrotPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(EntityParrotPet.class, EntityDataSerializers.INT);
 	
 	public EntityParrotPet(Level world){
 		super(EntityType.PARROT, world);
@@ -62,15 +62,15 @@ public class EntityParrotPet extends EntityTameablePet implements IEntityParrotP
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(VARIANT, 0);
+		this.entityData.define(DATA_VARIANT_ID, 0);
 	}
 	
 	public int getVariant(){
-		return Mth.clamp(this.entityData.get(VARIANT), 0, 4);
+		return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 4);
 	}
 	
 	public void setVariant(ParrotVariant variant){
-		this.entityData.set(VARIANT, variant.ordinal());
+		this.entityData.set(DATA_VARIANT_ID, variant.ordinal());
 	}
 	
 	public void addAdditionalSaveData(CompoundTag nbttagcompound){

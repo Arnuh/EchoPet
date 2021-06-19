@@ -48,15 +48,15 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.FOX)
 public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	
-	private static final EntityDataAccessor<Integer> Type = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Byte> StanceFlag = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Optional<UUID>> bB = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
-	private static final EntityDataAccessor<Optional<UUID>> bD = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0 = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_1 = SynchedEntityData.defineId(EntityFoxPet.class, EntityDataSerializers.OPTIONAL_UUID);
 	// Crouch is when they are starting to attack, shaking ass
 	// Pounce tilts his head down
 	// Pounce2 tilts his head + shakes legs or just shakes legs?
 	// Kind of weird because sometimes neither will tilt his head down until you respawn him which might be due to StanceFlag going < 0
-	private static final int Sitting = 0x1, Crouching = 0x4, HeadTilt = 0x8, Pounce = 0x10, Sleeping = 0x20, Pounce2 = 0x40, Unknown = 0x80;
+	private static final int Sitting = 0x1, Crouching = 0x4, Interested = 0x8, Pouncing = 0x10, Sleeping = 0x20, FacePlanted = 0x40, Defending = 0x80;
 	
 	public EntityFoxPet(Level world){
 		super(EntityType.FOX, world);
@@ -69,15 +69,15 @@ public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(bB, Optional.empty());
-		this.entityData.define(bD, Optional.empty());
-		this.entityData.define(Type, 0);
-		this.entityData.define(StanceFlag, (byte) 0);
+		this.entityData.define(DATA_TRUSTED_ID_0, Optional.empty());
+		this.entityData.define(DATA_TRUSTED_ID_1, Optional.empty());
+		this.entityData.define(DATA_TYPE_ID, 0);
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 	
 	@Override
 	public void setType(int type){
-		this.entityData.set(Type, type);
+		this.entityData.set(DATA_TYPE_ID, type);
 	}
 	
 	@Override
@@ -94,14 +94,14 @@ public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	
 	@Override
 	public void setHeadTilt(boolean tilt){
-		if(tilt) addFlag(HeadTilt);
-		else removeFlag(HeadTilt);
+		if(tilt) addFlag(Interested);
+		else removeFlag(Interested);
 	}
 	
 	@Override
 	public void setPounce(boolean pounce){
-		if(pounce) addFlag(Pounce);
-		else removeFlag(Pounce);
+		if(pounce) addFlag(Pouncing);
+		else removeFlag(Pouncing);
 	}
 	
 	@Override
@@ -111,19 +111,19 @@ public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	}
 	
 	public void setLegShake(boolean shake){
-		if(shake) addFlag(Pounce2);
-		else removeFlag(Pounce2);
+		if(shake) addFlag(FacePlanted);
+		else removeFlag(FacePlanted);
 	}
 	
 	private void addFlag(int flag){
-		entityData.set(StanceFlag, (byte) (getFlag() | flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		entityData.set(StanceFlag, (byte) (getFlag() & ~flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return entityData.get(StanceFlag);
+		return entityData.get(DATA_FLAGS_ID);
 	}
 }

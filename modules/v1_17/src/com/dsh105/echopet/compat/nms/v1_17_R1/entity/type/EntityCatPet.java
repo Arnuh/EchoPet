@@ -48,10 +48,10 @@ import org.bukkit.DyeColor;
 @EntityPetType(petType = PetType.CAT)
 public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 	
-	private static final EntityDataAccessor<Integer> Type = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> bG = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> bH = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> CollarColor = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> IS_LYING = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> RELAX_STATE_ONE = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
 	
 	public EntityCatPet(Level world){
 		super(EntityType.CAT, world);
@@ -63,19 +63,19 @@ public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(Type, CatType.Black.ordinal());
-		this.entityData.define(bG, false);
-		this.entityData.define(bH, false);
-		this.entityData.define(CollarColor, net.minecraft.world.item.DyeColor.RED.getId());
+		this.entityData.define(DATA_TYPE_ID, CatType.Black.ordinal());
+		this.entityData.define(IS_LYING, false);
+		this.entityData.define(RELAX_STATE_ONE, false);
+		this.entityData.define(DATA_COLLAR_COLOR, net.minecraft.world.item.DyeColor.RED.getId());
 	}
 	
 	@Override
 	public void setType(CatType type){
-		entityData.set(Type, type.ordinal());
+		entityData.set(DATA_TYPE_ID, type.ordinal());
 	}
 	
 	@Override
 	public void setCollarColor(DyeColor color){
-		entityData.set(CollarColor, color.ordinal());
+		entityData.set(DATA_COLLAR_COLOR, color.ordinal());
 	}
 }

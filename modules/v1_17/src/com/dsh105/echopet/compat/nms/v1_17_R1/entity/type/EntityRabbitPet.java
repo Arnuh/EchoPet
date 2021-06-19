@@ -38,7 +38,7 @@ import org.bukkit.entity.Rabbit;
 @EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet{
 	
-	private static final EntityDataAccessor<Integer> TYPE = SynchedEntityData.defineId(EntityRabbitPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(EntityRabbitPet.class, EntityDataSerializers.INT);
 	private int jumpTicks;
 	private int jumpDuration;
 	private boolean wasOnGround;
@@ -56,18 +56,18 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	
 	@Override
 	public Rabbit.Type getRabbitType(){
-		return TypeMapping.fromMagic(this.entityData.get(TYPE));
+		return TypeMapping.fromMagic(this.entityData.get(DATA_TYPE_ID));
 	}
 	
 	@Override
 	public void setRabbitType(Rabbit.Type type){
-		this.entityData.set(TYPE, TypeMapping.toMagic(type));
+		this.entityData.set(DATA_TYPE_ID, TypeMapping.toMagic(type));
 	}
 	
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(TYPE, Integer.valueOf(0));
+		this.entityData.define(DATA_TYPE_ID, 0);
 	}
 	
 	public void setJumping(boolean flag){
@@ -157,7 +157,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		return SoundEvents.RABBIT_JUMP;
 	}
 	
-	public class ControllerJumpRabbit extends JumpControl{// Copied from EntityRabbit
+	public static class ControllerJumpRabbit extends JumpControl{// Copied from EntityRabbit
 		
 		private final EntityRabbitPet rabbit;
 		private boolean canJump;

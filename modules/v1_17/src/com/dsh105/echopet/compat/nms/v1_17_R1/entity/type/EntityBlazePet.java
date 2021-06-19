@@ -47,7 +47,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.BLAZE)
 public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 	
-	private static final EntityDataAccessor<Byte> ANGERED = SynchedEntityData.defineId(EntityBlazePet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityBlazePet.class, EntityDataSerializers.BYTE);
 	
 	public EntityBlazePet(Level world){
 		super(EntityType.BLAZE, world);
@@ -58,18 +58,18 @@ public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 	}
 	
 	public void setOnFire(boolean flag){
-		byte b1 = this.entityData.get(ANGERED).byteValue();
+		byte b1 = this.entityData.get(DATA_FLAGS_ID);
 		if(flag){
 			b1 = (byte) (b1 | 0x1);
 		}else{
-			b1 = (byte) (b1 & 0xFFFFFFFE);
+			b1 = (byte) (b1 & -0x2);
 		}
-		this.entityData.set(ANGERED, Byte.valueOf(b1));
+		this.entityData.set(DATA_FLAGS_ID, b1);
 	}
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(ANGERED, Byte.valueOf((byte) 0));
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 	
 	protected String getAmbientSoundString(){

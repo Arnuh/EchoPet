@@ -32,8 +32,9 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.GUARDIAN)
 public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet{
 	
-	private static final EntityDataAccessor<Boolean> bz = SynchedEntityData.defineId(EntityGuardianPet.class, EntityDataSerializers.BOOLEAN);// ?
-	private static final EntityDataAccessor<Integer> bA = SynchedEntityData.defineId(EntityGuardianPet.class, EntityDataSerializers.INT);// some kind of entity id
+	// Does some particle stuff
+	private static final EntityDataAccessor<Boolean> DATA_ID_MOVING = SynchedEntityData.defineId(EntityGuardianPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(EntityGuardianPet.class, EntityDataSerializers.INT);
 	
 	public EntityGuardianPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -69,8 +70,8 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet{
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(bz, Boolean.valueOf(false));
-		this.entityData.define(bA, Integer.valueOf(0));
+		this.entityData.define(DATA_ID_MOVING, false);
+		this.entityData.define(DATA_ID_ATTACK_TARGET, 0);
 	}
 	
 	@Override

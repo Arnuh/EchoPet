@@ -31,12 +31,14 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.TURTLE)
 public class EntityTurtlePet extends EntityAgeablePet implements IEntityTurtlePet{
 	
-	private static final EntityDataAccessor<BlockPos> bD = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BLOCK_POS);// "HomePos" - beach they spawned at
-	private static final EntityDataAccessor<Boolean> bE = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);// "HasEgg" If the turtle is carrying an egg.
-	private static final EntityDataAccessor<Boolean> bG = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);// Set to false when egg is placed("HasEgg" to false right after)
-	private static final EntityDataAccessor<BlockPos> bH = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BLOCK_POS);// "TravelPos"
-	private static final EntityDataAccessor<Boolean> bI = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);// set in c() and d() of PathfinderGoal
-	private static final EntityDataAccessor<Boolean> bJ = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);// set to true when "TravelPos" is set to a position.
+	//beach they spawned at
+	private static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BLOCK_POS);
+	private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);
+	// Set to false when egg is placed("HasEgg" to false right after)
+	private static final EntityDataAccessor<Boolean> LAYING_EGG = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<BlockPos> TRAVEL_POS = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BLOCK_POS);
+	private static final EntityDataAccessor<Boolean> GOING_HOME = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> TRAVELLING = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityTurtlePet(Level world){
 		super(EntityType.TURTLE, world);
@@ -48,11 +50,11 @@ public class EntityTurtlePet extends EntityAgeablePet implements IEntityTurtlePe
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(bD, BlockPos.ZERO);
-		this.entityData.define(bE, Boolean.valueOf(false));
-		this.entityData.define(bH, BlockPos.ZERO);
-		this.entityData.define(bI, Boolean.valueOf(false));
-		this.entityData.define(bJ, Boolean.valueOf(false));
-		this.entityData.define(bG, Boolean.valueOf(false));
+		this.entityData.define(HOME_POS, BlockPos.ZERO);
+		this.entityData.define(HAS_EGG, false);
+		this.entityData.define(TRAVEL_POS, BlockPos.ZERO);
+		this.entityData.define(GOING_HOME, false);
+		this.entityData.define(TRAVELLING, false);
+		this.entityData.define(LAYING_EGG, false);
 	}
 }

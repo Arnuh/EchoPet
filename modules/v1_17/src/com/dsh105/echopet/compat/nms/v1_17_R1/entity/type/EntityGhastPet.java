@@ -36,7 +36,9 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGhastPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -46,7 +48,9 @@ import net.minecraft.world.phys.Vec3;
 
 @EntitySize(width = 4.0F, height = 4.0F)
 @EntityPetType(petType = PetType.GHAST)
-public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
+public class EntityGhastPet extends EntityFlyingPet implements IEntityGhastPet{
+	
+	private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(EntityGhastPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityGhastPet(Level world){
 		super(EntityType.GHAST, world);
@@ -61,6 +65,11 @@ public class EntityGhastPet extends EntityPet implements IEntityGhastPet{
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.OVERSIZE;
+	}
+	
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(DATA_IS_CHARGING, false);
 	}
 	
 	static class ControllerGhast extends MoveControl{
