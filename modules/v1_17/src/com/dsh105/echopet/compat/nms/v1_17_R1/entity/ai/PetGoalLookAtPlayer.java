@@ -49,11 +49,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	private final Class clazz;
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c){
-		this.pet = pet;
-		this.lookDistance = 8.0F;
-		this.lookDistanceSqr = lookDistance * lookDistance;
-		this.probability = 0.02F;
-		this.clazz = c;
+		this(pet, c, 8.0F, 0.02F);
 	}
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1){

@@ -17,31 +17,20 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-
 public enum SizeCategory{
+	TINY(0.85F),
+	REGULAR(1F),
+	LARGE(1.25F),
+	GIANT(1.35F),
+	OVERSIZE(1.6F);
 	
-	TINY(1.5F),
-	REGULAR(1.5F),
-	LARGE(4),
-	GIANT(5),
-	OVERSIZE(12);
-	
-	private float modifier;
+	private final float modifier;
 	
 	SizeCategory(float modifier){
 		this.modifier = modifier;
 	}
 	
-	public float getStartWalk(PetType petType){
-		return (EchoPet.getConfig().getInt("pets." + petType.getConfigKeyName() + ".startFollowDistance", 12) * this.modifier) / 2;
-	}
-	
-	public float getStopWalk(PetType petType){
-		return (EchoPet.getConfig().getInt("pets." + petType.getConfigKeyName() + ".stopFollowDistance", 4) * this.modifier) / 2;
-	}
-	
-	public float getTeleport(PetType petType){
-		return (EchoPet.getConfig().getInt("pets." + petType.getConfigKeyName() + ".teleportDistance", 40) * this.modifier) / 2;
+	public float getModifier(){
+		return modifier;
 	}
 }

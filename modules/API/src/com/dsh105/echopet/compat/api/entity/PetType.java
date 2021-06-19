@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.entity;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,14 +107,14 @@ public enum PetType{
 	
 	public static final PetType[] values = values();
 	
-	private String classIdentifier;
+	private final String classIdentifier;
 	private Class<? extends IEntityPet> entityClass;
 	private Class<? extends IPet> petClass;
-	private String defaultName;
-	private String minecraftEntityName;
-	private List<PetDataCategory> allowedCategories = new ArrayList<>();
-	private List<PetData> allowedData = new ArrayList<>();
-	private Version version;
+	private final String defaultName;
+	private final String minecraftEntityName;
+	private final List<PetDataCategory> allowedCategories = new ArrayList<>();
+	private final List<PetData> allowedData = new ArrayList<>();
+	private final Version version;
 	private Material uiMaterial;
 	
 	//This is a fucking mess
@@ -266,6 +265,22 @@ public enum PetType{
 		return name().toLowerCase().replace("_", "");
 	}
 	
+	public double getStartFollowDistance(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".startFollowDistance", 6);
+	}
+	
+	public double getStopFollowDistance(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".stopFollowDistance", 2);
+	}
+	
+	public double getTeleportDistance(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".teleportDistance", 10);
+	}
+	
+	public double getFollowSpeedModifier(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".followSpeedModifier", 1);
+	}
+	
 	private static void outputInfo(){
 		String[] petTypes = new String[PetType.values.length];
 		int pos = 0;
@@ -273,7 +288,7 @@ public enum PetType{
 			petTypes[pos++] = type.getConfigKeyName();
 		}
 		Arrays.sort(petTypes);
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File("perms.yml")))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("perms.yml"))){
 			for(String petTypeName : petTypes){
 				bw.write("    echopet.pet.type." + petTypeName + ":\n");
 				bw.write("        default: op\n");
