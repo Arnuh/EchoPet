@@ -34,13 +34,14 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVindicatorPet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.VINDICATOR)
-public class EntityVindicatorPet extends EntityIllagerAbstractPet implements IEntityVindicatorPet{
+public class EntityVindicatorPet extends EntityAbstractIllagerPet implements IEntityVindicatorPet{
 	
 	public EntityVindicatorPet(Level world){
 		super(EntityType.VINDICATOR, world);
@@ -48,5 +49,10 @@ public class EntityVindicatorPet extends EntityIllagerAbstractPet implements IEn
 	
 	public EntityVindicatorPet(Level world, IPet pet){
 		super(EntityType.VINDICATOR, world, pet);
+	}
+	
+	@Override
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
 	}
 }

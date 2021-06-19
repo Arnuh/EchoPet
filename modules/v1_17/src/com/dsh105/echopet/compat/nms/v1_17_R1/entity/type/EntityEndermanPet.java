@@ -50,8 +50,12 @@ import net.minecraft.world.level.block.state.BlockState;
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	
-	private static final EntityDataAccessor<Optional<BlockState>> BLOCK = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BLOCK_STATE);
-	private static final EntityDataAccessor<Boolean> SCREAMING = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Optional<BlockState>> DATA_CARRY_STATE = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BLOCK_STATE);
+	// Changes ambient sound to scream
+	private static final EntityDataAccessor<Boolean> DATA_CREEPY = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BOOLEAN);
+	// Plays an initial sound when set as true
+	// SoundEvents.ENDERMAN_STARE
+	private static final EntityDataAccessor<Boolean> DATA_STARED_AT = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityEndermanPet(Level world){
 		super(EntityType.ENDERMAN, world);
@@ -62,26 +66,27 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	}
 	
 	public void setScreaming(boolean flag){
-		this.entityData.set(SCREAMING, Boolean.valueOf(flag));
+		this.entityData.set(DATA_CREEPY, flag);
 	}
 	
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(BLOCK, Optional.empty());
-		this.entityData.define(SCREAMING, Boolean.valueOf(false));
+		this.entityData.define(DATA_CARRY_STATE, Optional.empty());
+		this.entityData.define(DATA_CREEPY, false);
+		this.entityData.define(DATA_STARED_AT, false);
 	}
 	
 	public boolean isScreaming(){
-		return this.entityData.get(SCREAMING);
+		return this.entityData.get(DATA_CREEPY);
 	}
 	
 	public void setCarried(BlockState iblockdata){
-		this.entityData.set(BLOCK, Optional.ofNullable(iblockdata));
+		this.entityData.set(DATA_CARRY_STATE, Optional.ofNullable(iblockdata));
 	}
 	
 	public BlockState getCarried(){
-		return this.entityData.get(BLOCK).orElse(null);
+		return this.entityData.get(DATA_CARRY_STATE).orElse(null);
 	}
 	
 	@Override

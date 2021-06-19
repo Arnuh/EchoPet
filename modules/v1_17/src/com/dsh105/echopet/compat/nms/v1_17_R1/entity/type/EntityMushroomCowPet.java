@@ -47,7 +47,7 @@ import org.bukkit.entity.MushroomCow;
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
 	
-	private static final EntityDataAccessor<String> Type = SynchedEntityData.defineId(EntityMushroomCowPet.class, EntityDataSerializers.STRING);
+	private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(EntityMushroomCowPet.class, EntityDataSerializers.STRING);
 	
 	public EntityMushroomCowPet(Level world){
 		super(EntityType.MOOSHROOM, world);
@@ -60,11 +60,11 @@ public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroo
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(Type, MushroomCow.Variant.RED.name().toLowerCase());// Mojang grabs the string variable but we can't
+		this.entityData.define(DATA_TYPE, MushroomCow.Variant.RED.name().toLowerCase());// Mojang grabs the string variable but we can't
 	}
 	
 	@Override
 	public void setType(MushroomCowType type){
-		entityData.set(Type, type.name().toLowerCase());
+		entityData.set(DATA_TYPE, type.name().toLowerCase());
 	}
 }

@@ -40,6 +40,7 @@ import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
@@ -48,7 +49,9 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.SLIME)
 public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	
-	private static final EntityDataAccessor<Integer> SIZE = SynchedEntityData.defineId(EntitySlimePet.class, EntityDataSerializers.INT);
+	public static final int MIN_SIZE = 1;
+	public static final int MAX_SIZE = 127;
+	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(EntitySlimePet.class, EntityDataSerializers.INT);
 	int jumpDelay;
 	
 	public EntitySlimePet(EntityType<? extends Mob> type, Level world){
@@ -79,7 +82,8 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	
 	@Override
 	public void setSize(int i){
-		this.entityData.set(SIZE, i);
+		int j = Mth.clamp(i, MIN_SIZE, MAX_SIZE);
+		this.entityData.set(ID_SIZE, j);
 		//EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		//this.a(es.width() * (float) i, es.height() * (float) i);
 		this.setPos(getX(), getY(), getZ());
@@ -87,13 +91,13 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	}
 	
 	public int getSize(){
-		return this.entityData.get(SIZE);
+		return this.entityData.get(ID_SIZE);
 	}
 	
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(SIZE, 1);
+		this.entityData.define(ID_SIZE, 1);
 	}
 	
 	@Override

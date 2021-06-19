@@ -36,19 +36,13 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEvokerPet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.EVOKER)
-public class EntityEvokerPet extends EntityIllagerAbstractPet implements IEntityEvokerPet{
-	
-	// EntityIllagerWizard
-	private static final EntityDataAccessor<Byte> c = SynchedEntityData.defineId(EntityEvokerPet.class, EntityDataSerializers.BYTE);// some sorta spell shit
+public class EntityEvokerPet extends EntitySpellcasterIllagerPet implements IEntityEvokerPet{
 	
 	public EntityEvokerPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -64,12 +58,6 @@ public class EntityEvokerPet extends EntityIllagerAbstractPet implements IEntity
 	
 	public EntityEvokerPet(Level world, IPet pet){
 		this(EntityType.EVOKER, world, pet);
-	}
-	
-	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(c, (byte) 0);
 	}
 	
 	@Override

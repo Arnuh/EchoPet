@@ -21,8 +21,8 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -31,12 +31,11 @@ import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.PIGLIN)
-public class EntityPiglinPet extends EntityAgeablePet implements IEntityPiglinPet{
+public class EntityPiglinPet extends EntityAbstractPiglinPet implements IEntityPiglinPet{
 	
 	//Technically not an animal/ageable but its the first datawatcher so we can take advantage of that.
-	private static final EntityDataAccessor<Boolean> immuneToZombification = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> crossbowCharged = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> dancing = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING_CROSSBOW = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityPiglinPet(Level world){
 		super(EntityType.PIGLIN, world);
@@ -46,15 +45,19 @@ public class EntityPiglinPet extends EntityAgeablePet implements IEntityPiglinPe
 		super(EntityType.PIGLIN, world, pet);
 	}
 	
+	@Override
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
+	}
+	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(crossbowCharged, false);
-		this.entityData.define(immuneToZombification, true);//Default to true to fix shaking when in overworld.
-		this.entityData.define(dancing, false);
+		this.entityData.define(DATA_IS_CHARGING_CROSSBOW, false);
+		this.entityData.define(DATA_IS_DANCING, false);
 	}
 	
 	@Override
 	public void setDancing(boolean flag){
-		entityData.set(dancing, flag);
+		entityData.set(DATA_IS_DANCING, flag);
 	}
 }

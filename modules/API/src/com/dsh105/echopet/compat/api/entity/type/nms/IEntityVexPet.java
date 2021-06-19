@@ -23,5 +23,5 @@ import com.dsh105.echopet.compat.api.entity.IEntityPet;
  */
 public interface IEntityVexPet extends IEntityPet{
 	
-	void setPowered(boolean flag);
+	void setIsCharging(boolean flag);
 }

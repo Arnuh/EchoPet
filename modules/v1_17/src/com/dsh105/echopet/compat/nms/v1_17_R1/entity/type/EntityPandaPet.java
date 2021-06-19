@@ -47,15 +47,15 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.PANDA)
 public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	
-	private static final EntityDataAccessor<Integer> bA = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);//Doesn't look like something we care about
-	private static final EntityDataAccessor<Integer> bB = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Integer> bC = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);//clears mainhand if 100?
-	private static final EntityDataAccessor<Byte> MainGene = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Byte> HiddenGene = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
-	//Unknown1 is some green particles
-	private static final int Unknown1 = 0x2, Roll = 0x4, Sit = 0x8, LayOnBack = 0x10;
-	private static int testStage = 1;
+	//Doesn't look like something we care about
+	private static final EntityDataAccessor<Integer> UNHAPPY_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> SNEEZE_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
+	//clears mainhand if 100?
+	private static final EntityDataAccessor<Integer> EAT_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Byte> MAIN_GENE_ID = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> HIDDEN_GENE_ID = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
+	private static final int Sneeze = 0x2, Roll = 0x4, Sit = 0x8, OnBack = 0x10;
 	
 	public EntityPandaPet(Level world){
 		super(EntityType.PANDA, world);
@@ -68,22 +68,22 @@ public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(bA, 0);
-		this.entityData.define(bB, 0);
-		this.entityData.define(MainGene, (byte) 0);
-		this.entityData.define(HiddenGene, (byte) 0);
-		this.entityData.define(Flag, (byte) 0);
-		this.entityData.define(bC, 0);
+		this.entityData.define(UNHAPPY_COUNTER, 0);
+		this.entityData.define(SNEEZE_COUNTER, 0);
+		this.entityData.define(MAIN_GENE_ID, (byte) 0);
+		this.entityData.define(HIDDEN_GENE_ID, (byte) 0);
+		this.entityData.define(DATA_ID_FLAGS, (byte) 0);
+		this.entityData.define(EAT_COUNTER, 0);
 	}
 	
 	@Override
 	public void setMainGene(PandaGene gene){
-		entityData.set(MainGene, (byte) gene.ordinal());
+		entityData.set(MAIN_GENE_ID, (byte) gene.ordinal());
 	}
 	
 	@Override
 	public void setHiddenGene(PandaGene gene){
-		entityData.set(HiddenGene, (byte) gene.ordinal());
+		entityData.set(HIDDEN_GENE_ID, (byte) gene.ordinal());
 	}
 	
 	@Override
@@ -100,19 +100,19 @@ public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	
 	@Override
 	public void setLayingDown(boolean layingDown){
-		if(layingDown) addFlag(LayOnBack);
-		else removeFlag(LayOnBack);
+		if(layingDown) addFlag(OnBack);
+		else removeFlag(OnBack);
 	}
 	
 	private void addFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(DATA_ID_FLAGS, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(DATA_ID_FLAGS, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return entityData.get(Flag);
+		return entityData.get(DATA_ID_FLAGS);
 	}
 }

@@ -37,7 +37,7 @@ public class VexPet extends Pet implements IVexPet{
 	
 	@Override
 	public void setPowered(boolean flag){
-		((IEntityVexPet) getEntityPet()).setPowered(flag);
+		((IEntityVexPet) getEntityPet()).setIsCharging(flag);
 		powered = flag;
 	}
 	

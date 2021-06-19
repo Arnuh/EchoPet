@@ -35,13 +35,9 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.BEE)
 public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 	
-	private static final int Stung = 0x4, Nectar = 0x8;
-	//0x1 is set by
-	//final boolean flag = this.isAngry() && !this.hasStung() && this.getGoalTarget() != null && this.getGoalTarget().h(this) < 4.0;
-	//this.t(flag);
-	//0x2 is skipped? ok
-	private static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Integer> Anger = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.INT);
+	private static final int Rolling = 0x2, Stung = 0x4, Nectar = 0x8;
+	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.INT);
 	
 	public EntityBeePet(Level world){
 		super(EntityType.BEE, world);
@@ -53,8 +49,8 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(Flag, (byte) 0);
-		this.entityData.define(Anger, 0);
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
 	}
 	
 	@Override
@@ -71,19 +67,19 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 	
 	@Override
 	public void setAngry(boolean angry){
-		entityData.set(Anger, angry ? 1 : 0);
+		entityData.set(DATA_REMAINING_ANGER_TIME, angry ? 1 : 0);
 	}
 	
 	private void addFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() | flag));
 	}
 	
 	private void removeFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() & ~flag));
 	}
 	
 	public int getFlag(){
-		return entityData.get(Flag);
+		return entityData.get(DATA_FLAGS_ID);
 	}
 	
 	@Override

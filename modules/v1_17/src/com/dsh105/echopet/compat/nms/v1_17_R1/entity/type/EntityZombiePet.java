@@ -48,8 +48,8 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.ZOMBIE)
 public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePet{
 	
-	private static final EntityDataAccessor<Integer> bx = SynchedEntityData.defineId(EntityZombiePet.class, EntityDataSerializers.INT);// gets registered and that is it.
-	private static final EntityDataAccessor<Boolean> by = SynchedEntityData.defineId(EntityZombiePet.class, EntityDataSerializers.BOOLEAN);// DROWN_CONVERTING
+	private static final EntityDataAccessor<Integer> DATA_SPECIAL_TYPE_ID = SynchedEntityData.defineId(EntityZombiePet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_DROWNED_CONVERSION_ID = SynchedEntityData.defineId(EntityZombiePet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityZombiePet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -77,8 +77,8 @@ public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePe
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		entityData.define(bx, 0);
-		entityData.define(by, false);
+		entityData.define(DATA_SPECIAL_TYPE_ID, 0);
+		entityData.define(DATA_DROWNED_CONVERSION_ID, false);
 	}
 	
 	@Override

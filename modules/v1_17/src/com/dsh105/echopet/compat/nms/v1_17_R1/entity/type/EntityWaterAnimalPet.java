@@ -23,7 +23,6 @@ import net.minecraft.world.level.Level;
 
 public abstract class EntityWaterAnimalPet extends EntityPet implements IEntityWaterAnimalPet{
 	
-	
 	public EntityWaterAnimalPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}

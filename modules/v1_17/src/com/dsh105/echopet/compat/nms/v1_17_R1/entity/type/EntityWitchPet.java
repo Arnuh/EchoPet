@@ -47,7 +47,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.WITCH)
 public class EntityWitchPet extends EntityPet implements IEntityWitchPet{
 	
-	private static final EntityDataAccessor<Boolean> POTION = SynchedEntityData.defineId(EntityWitchPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_USING_ITEM = SynchedEntityData.defineId(EntityWitchPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityWitchPet(Level world){
 		super(EntityType.WITCH, world);
@@ -60,7 +60,7 @@ public class EntityWitchPet extends EntityPet implements IEntityWitchPet{
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		entityData.define(POTION, true);
+		entityData.define(DATA_USING_ITEM, true);
 	}
 	
 	@Override

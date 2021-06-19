@@ -47,7 +47,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.VEX)
 public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	
-	protected static final EntityDataAccessor<Byte> DATA = SynchedEntityData.defineId(EntityVexPet.class, EntityDataSerializers.BYTE);
+	protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityVexPet.class, EntityDataSerializers.BYTE);
 	// Has the ability to have multiple settings.. but it seems to only use 1 for 'charged' which is 'attack mode'
 	
 	public EntityVexPet(Level world){
@@ -60,32 +60,31 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		entityData.define(DATA, (byte) 0);
+		entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 	
-	private void a(int i, boolean flag){
-		byte b0 = this.entityData.get(DATA).byteValue();
+	private void setVexFlag(int i, boolean flag){
+		byte b0 = this.entityData.get(DATA_FLAGS_ID);
 		int j;
 		if(flag){
 			j = b0 | i;
 		}else{
-			j = b0 & (i ^ 0xFFFFFFFF);
+			j = b0 & ~i;
 		}
-		this.entityData.set(DATA, Byte.valueOf((byte) (j & 0xFF)));
+		this.entityData.set(DATA_FLAGS_ID, (byte) (j & 0xFF));
 	}
 	
-	public boolean isPowered(){
-		return b(1);// below method
+	public boolean isCharging(){
+		return getVexFlag(1);
 	}
 	
-	private boolean b(int i){// just check EntityVex
-		byte b0 = this.entityData.get(DATA).byteValue();
+	private boolean getVexFlag(int i){// just check EntityVex
+		byte b0 = this.entityData.get(DATA_FLAGS_ID);
 		return (b0 & i) != 0;
 	}
 	
-	public void setPowered(boolean flag){
-		a(1, flag);
-		// noClip(!flag);
+	public void setIsCharging(boolean flag){
+		setVexFlag(1, flag);
 	}
 	
 	@Override

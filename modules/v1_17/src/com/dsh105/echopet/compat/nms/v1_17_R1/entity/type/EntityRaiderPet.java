@@ -40,7 +40,7 @@ import net.minecraft.world.level.Level;
 
 public abstract class EntityRaiderPet extends EntityPet implements IEntityRaiderPet{
 	
-	protected static final EntityDataAccessor<Boolean> c = SynchedEntityData.defineId(EntityRaiderPet.class, EntityDataSerializers.BOOLEAN);//unknown, gets set but not grabbed in EntityRaider.
+	protected static final EntityDataAccessor<Boolean> IS_CELEBRATING = SynchedEntityData.defineId(EntityRaiderPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityRaiderPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -52,6 +52,6 @@ public abstract class EntityRaiderPet extends EntityPet implements IEntityRaider
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(c, false);
+		this.entityData.define(IS_CELEBRATING, false);
 	}
 }

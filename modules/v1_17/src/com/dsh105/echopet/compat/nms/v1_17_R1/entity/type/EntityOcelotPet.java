@@ -46,7 +46,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.OCELOT)
 public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPet{
 	
-	private static final EntityDataAccessor<Boolean> TRUSTING = SynchedEntityData.defineId(EntityOcelotPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_TRUSTING = SynchedEntityData.defineId(EntityOcelotPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityOcelotPet(Level world){
 		super(EntityType.OCELOT, world);
@@ -60,7 +60,7 @@ public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPe
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(TRUSTING, false);
+		this.entityData.define(DATA_TRUSTING, false);
 	}
 	
 	@Override

@@ -51,7 +51,8 @@ import net.minecraft.world.phys.Vec3;
 @EntityPetType(petType = PetType.BAT)
 public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	
-	private static final EntityDataAccessor<Byte> a = SynchedEntityData.defineId(EntityBatPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(EntityBatPet.class, EntityDataSerializers.BYTE);
+	private static final int FLAG_RESTING = 0x1;
 	
 	public EntityBatPet(Level world){
 		super(EntityType.BAT, world);
@@ -62,17 +63,17 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	public void setHanging(boolean flag){
-		int i = this.entityData.get(a);
+		int i = this.entityData.get(DATA_ID_FLAGS);
 		if(flag){
-			this.entityData.set(a, (byte) (i | 0x1));
+			this.entityData.set(DATA_ID_FLAGS, (byte) (i | 0x1));
 		}else{
-			this.entityData.set(a, (byte) (i & -2));
+			this.entityData.set(DATA_ID_FLAGS, (byte) (i & -0x2));
 		}
 	}
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(a, (byte) 0);
+		this.entityData.define(DATA_ID_FLAGS, (byte) 0);
 	}
 	
 	public SoundEvent getAmbientSound(){
@@ -90,7 +91,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	public boolean isResting(){
-		return (this.entityData.get(a) & 0x1) != 0;
+		return (this.entityData.get(DATA_ID_FLAGS) & FLAG_RESTING) != 0;
 	}
 	
 	public SizeCategory getSizeCategory(){

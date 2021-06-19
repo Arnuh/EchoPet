@@ -47,7 +47,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.POLARBEAR)
 public class EntityPolarBearPet extends EntityAgeablePet implements IEntityPolarBearPet{
 	
-	private static final EntityDataAccessor<Boolean> STANDING_UP = SynchedEntityData.defineId(EntityPolarBearPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_STANDING_ID = SynchedEntityData.defineId(EntityPolarBearPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityPolarBearPet(Level world){
 		super(EntityType.POLAR_BEAR, world);
@@ -59,11 +59,11 @@ public class EntityPolarBearPet extends EntityAgeablePet implements IEntityPolar
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(STANDING_UP, false);
+		this.entityData.define(DATA_STANDING_ID, false);
 	}
 	
 	public void setStandingUp(boolean flag){
-		entityData.set(STANDING_UP, flag);
+		entityData.set(DATA_STANDING_ID, flag);
 	}
 	
 	public SizeCategory getSizeCategory(){

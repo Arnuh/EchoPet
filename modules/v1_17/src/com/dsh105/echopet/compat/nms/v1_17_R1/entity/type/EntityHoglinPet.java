@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.HOGLIN)
 public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPet{
 	
-	private static final EntityDataAccessor<Boolean> immuneToZombification = SynchedEntityData.defineId(EntityHoglinPet.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_IMMUNE_TO_ZOMBIFICATION = SynchedEntityData.defineId(EntityHoglinPet.class, EntityDataSerializers.BOOLEAN);
 	
 	public EntityHoglinPet(Level world){
 		super(EntityType.HOGLIN, world);
@@ -45,7 +45,7 @@ public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPe
 	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(immuneToZombification, true);//Default to true to fix shaking when in overworld.
+		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true);//Default to true to fix shaking when in overworld.
 	}
 	
 	@Override

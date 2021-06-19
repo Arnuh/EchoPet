@@ -14,47 +14,30 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.7F, height = 0.7F)
-@EntityPetType(petType = PetType.PUFFERFISH)
-public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferFishPet{
+public abstract class EntitySpellcasterIllagerPet extends EntityAbstractIllagerPet{
 	
-	private static final EntityDataAccessor<Integer> PUFF_STATE = SynchedEntityData.defineId(EntityPufferFishPet.class, EntityDataSerializers.INT);
+	//SpellcasterIllager.IllagerSpell
+	private static final EntityDataAccessor<Byte> DATA_SPELL_CASTING_ID = SynchedEntityData.defineId(EntitySpellcasterIllagerPet.class, EntityDataSerializers.BYTE);
 	
-	//private static final int STATE_SMALL = 0, STATE_MID = 1, STATE_FULL = 2;
-	
-	public EntityPufferFishPet(Level world){
-		super(EntityType.PUFFERFISH, world);
+	public EntitySpellcasterIllagerPet(EntityType<? extends Mob> type, Level world){
+		super(type, world);
 	}
 	
-	public EntityPufferFishPet(Level world, IPet pet){
-		super(EntityType.PUFFERFISH, world, pet);
+	public EntitySpellcasterIllagerPet(EntityType<? extends Mob> type, Level world, IPet pet){
+		super(type, world, pet);
 	}
 	
-	@Override
+	
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(PUFF_STATE, 0);
-	}
-	
-	@Override
-	public void setPuffState(int state){
-		entityData.set(PUFF_STATE, state);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.TINY;
+		this.entityData.define(DATA_SPELL_CASTING_ID, (byte) 0);
 	}
 }

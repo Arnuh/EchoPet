@@ -47,7 +47,8 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.IRONGOLEM)
 public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet{
 	
-	protected static final EntityDataAccessor<Byte> PLAYER_CREATED = SynchedEntityData.defineId(EntityIronGolemPet.class, EntityDataSerializers.BYTE);
+	// Flag but with only 1 value
+	protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityIronGolemPet.class, EntityDataSerializers.BYTE);
 	
 	public EntityIronGolemPet(Level world){
 		super(EntityType.IRON_GOLEM, world);
@@ -60,7 +61,7 @@ public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(PLAYER_CREATED, Byte.valueOf((byte) 0));
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 	
 	

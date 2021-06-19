@@ -30,32 +30,49 @@
  */
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-public class EntityVillagerAbstractPet extends EntityAgeablePet implements IEntityVillagerAbstractPet{
+@EntitySize(width = 0.4F, height = 1.8F)
+@EntityPetType(petType = PetType.SNOWMAN)
+public class EntitySnowGolemPet extends EntityPet implements IEntitySnowmanPet{
 	
-	//Some tick thing? Gets - 1 every time tick() is called.
-	private static final EntityDataAccessor<Integer> bx = SynchedEntityData.defineId(EntityVillagerAbstractPet.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Byte> DATA_PUMPKIN_ID = SynchedEntityData.defineId(EntitySnowGolemPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityVillagerAbstractPet(EntityType<? extends Mob> type, Level world){
-		super(type, world);
+	public EntitySnowGolemPet(Level world){
+		super(EntityType.SNOW_GOLEM, world);
 	}
 	
-	public EntityVillagerAbstractPet(EntityType<? extends Mob> type, Level world, IPet pet){
-		super(type, world, pet);
+	public EntitySnowGolemPet(Level world, IPet pet){
+		super(EntityType.SNOW_GOLEM, world, pet);
+	}
+	
+	protected void defineSynchedData(){
+		super.defineSynchedData();
+		this.entityData.define(DATA_PUMPKIN_ID, (byte) 16);
 	}
 	
 	@Override
-	public void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(bx, 0);
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
+	}
+	
+	public void setSheared(boolean flag){
+		byte b0 = this.entityData.get(DATA_PUMPKIN_ID);
+		if(!flag){
+			this.entityData.set(DATA_PUMPKIN_ID, (byte) (b0 | 0x10));
+		}else{
+			this.entityData.set(DATA_PUMPKIN_ID, (byte) (b0 & -0x11));
+		}
 	}
 }

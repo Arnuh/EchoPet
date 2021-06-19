@@ -37,11 +37,13 @@ import net.minecraft.world.phys.Vec3;
 public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements IEntityHorseAbstractPet{
 	
 	// EntityHorseAbstract: Zombie, Skeleton
-	private static final EntityDataAccessor<Byte> VISUAL = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.BYTE);// feet kicking, whatev
-	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.BYTE);// feet kicking, whatev
+	private static final EntityDataAccessor<Optional<UUID>> DATA_ID_OWNER_UUID = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.OPTIONAL_UUID);
 	private int rearingCounter = 0;
 	private int gallopSoundCounter = 0;
 	protected boolean canGallop = true;
+	
+	private static final int FLAG_TAME = 0x2, FLAG_SADDLE = 0x4, FLAG_BRED = 0x8, FLAG_EATING = 0x10, FLAG_STANDING = 0x20, FLAG_OPEN_MOUTH = 0x40;
 	
 	public EntityHorseAbstractPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -54,8 +56,8 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(VISUAL, (byte) 0);
-		this.entityData.define(OWNER, Optional.empty());
+		this.entityData.define(DATA_ID_FLAGS, (byte) 0);
+		this.entityData.define(DATA_ID_OWNER_UUID, Optional.empty());
 	}
 	
 	@Override
@@ -108,7 +110,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	public void onLive(){
 		super.onLive();
 		if(rearingCounter > 0 && ++rearingCounter > 20){
-			setHorseVisual(64, false);
+			setHorseVisual(FLAG_OPEN_MOUTH, false);
 		}
 	}
 	
@@ -116,42 +118,24 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	protected void doJumpAnimation(){
 		makeSound("entity.horse.gallop", 0.4F, 1.0F);
 		this.rearingCounter = 1;
-		setHorseVisual(64, true);
+		setHorseVisual(FLAG_OPEN_MOUTH, true);
 	}
 	
 	@Override
 	public void setSaddled(boolean flag){
-		this.setHorseVisual(4, flag);
+		this.setHorseVisual(FLAG_SADDLE, flag);
 	}
 	
-	/**
-	 * 2: Is tamed
-	 * 4: Saddle
-	 * 8: Has Chest - Separate datawatcher in 1.11+
-	 * 16: Bred - 8 in 1.11+
-	 * 32: Eating haystack
-	 * 64: Rear
-	 * 128: Mouth open
-	 */
 	public boolean getHorseVisual(int i){
-		return (this.entityData.get(VISUAL).byteValue() & i) != 0;
+		return (this.entityData.get(DATA_ID_FLAGS) & i) != 0;
 	}
 	
-	/**
-	 * 2: Is tamed
-	 * 4: Saddle
-	 * 8: Has Chest - Separate datawatcher in 1.11+
-	 * 16: Bred - 8 in 1.11+
-	 * 32: Eating haystack
-	 * 64: Rear
-	 * 128: Mouth open
-	 */
 	public void setHorseVisual(int i, boolean flag){
-		byte b0 = this.entityData.get(VISUAL).byteValue();
+		byte b0 = this.entityData.get(DATA_ID_FLAGS);
 		if(flag){
-			this.entityData.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
+			this.entityData.set(DATA_ID_FLAGS, (byte) (b0 | i));
 		}else{
-			this.entityData.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
+			this.entityData.set(DATA_ID_FLAGS, (byte) (b0 & ~i));
 		}
 	}
 	

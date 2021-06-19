@@ -52,7 +52,7 @@ import org.bukkit.entity.Horse;
 public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHorsePet{
 	
 	// EntityHorse
-	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(EntityHorsePet.class, EntityDataSerializers.INT);// Pattern
+	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(EntityHorsePet.class, EntityDataSerializers.INT);// Pattern
 	
 	public EntityHorsePet(Level world){
 		super(EntityType.HORSE, world);
@@ -63,15 +63,15 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	}
 	
 	public int getVariant(){
-		return entityData.get(VARIANT);
+		return entityData.get(DATA_ID_TYPE_VARIANT);
 	}
 	
 	public void setColor(Horse.Color color){
-		entityData.set(VARIANT, (color.ordinal() & 0xFF | getStyle().ordinal() << 8));
+		entityData.set(DATA_ID_TYPE_VARIANT, (color.ordinal() & 0xFF | getStyle().ordinal() << 8));
 	}
 	
 	public void setStyle(Horse.Style style){
-		entityData.set(VARIANT, getColor().ordinal() & 0xFF | style.ordinal() << 8);
+		entityData.set(DATA_ID_TYPE_VARIANT, getColor().ordinal() & 0xFF | style.ordinal() << 8);
 	}
 	
 	public Horse.Style getStyle(){
@@ -106,7 +106,7 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(VARIANT, 0);
+		this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
 		
 		// this.entityData.define(ARMOR, EnumHorseArmor.NONE.a());
 	}

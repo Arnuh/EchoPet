@@ -48,9 +48,9 @@ import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEntityVillagerPet, IEntityVillagerDataHolder{
+public class EntityVillagerPet extends EntityAbstractVillagerPet implements IEntityVillagerPet, IEntityVillagerDataHolder{
 	
-	private static final EntityDataAccessor<VillagerData> DATA = SynchedEntityData.defineId(EntityVillagerPet.class, EntityDataSerializers.VILLAGER_DATA);
+	private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(EntityVillagerPet.class, EntityDataSerializers.VILLAGER_DATA);
 	
 	public EntityVillagerPet(Level world){
 		super(EntityType.VILLAGER, world);
@@ -63,7 +63,7 @@ public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEnt
 	@Override
 	public void setProfession(int i){
 		try{
-			this.entityData.set(DATA, getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
 		}catch(Exception ignored){
 		}
 	}
@@ -71,7 +71,7 @@ public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEnt
 	@Override
 	public void setType(int type){
 		try{
-			this.entityData.set(DATA, getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
 		}catch(Exception ignored){
 		}
 	}
@@ -79,18 +79,18 @@ public class EntityVillagerPet extends EntityVillagerAbstractPet implements IEnt
 	@Override
 	public void setLevel(int level){
 		try{
-			this.entityData.set(DATA, getVillagerData().setLevel(level));
+			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setLevel(level));
 		}catch(Exception ignored){
 		}
 	}
 	
 	public VillagerData getVillagerData(){
-		return this.entityData.get(DATA);
+		return this.entityData.get(DATA_VILLAGER_DATA);
 	}
 	
 	@Override
 	public void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, VillagerLevel.NOVICE.ordinal()));
+		this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, VillagerLevel.NOVICE.ordinal()));
 	}
 }

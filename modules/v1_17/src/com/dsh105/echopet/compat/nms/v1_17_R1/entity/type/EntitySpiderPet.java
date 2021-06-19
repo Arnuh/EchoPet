@@ -48,7 +48,8 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.SPIDER)
 public class EntitySpiderPet extends EntityPet implements IEntitySpiderPet{
 	
-	private static final EntityDataAccessor<Byte> a = SynchedEntityData.defineId(EntitySpiderPet.class, EntityDataSerializers.BYTE);// Some position changed or shit..
+	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntitySpiderPet.class, EntityDataSerializers.BYTE);
+	// climbing flag is 0x1
 	
 	public EntitySpiderPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -69,7 +70,7 @@ public class EntitySpiderPet extends EntityPet implements IEntitySpiderPet{
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(a, Byte.valueOf((byte) 0));
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 	
 	@Override
