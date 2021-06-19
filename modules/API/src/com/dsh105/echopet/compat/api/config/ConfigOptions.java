@@ -218,16 +218,10 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".tagVisible", true);
 			set("pets." + configOption + ".defaultName", petType.getDefaultName());
 			set("pets." + configOption + ".interactMenu", true);
-			set("pets." + configOption + ".startFollowDistance", 12);
-			set("pets." + configOption + ".stopFollowDistance", 4);
-			set("pets." + configOption + ".teleportDistance", 40);
-
-			/*set("pets." + configOption + ".attack.canDamagePlayers", false);
-			set("pets." + configOption + ".attack.lockRange", 10);
-			set("pets." + configOption + ".attack.ticksBetweenAttacks", 20);
-			set("pets." + configOption + ".attack.damage", petType.getAttackDamage());
-			set("pets." + configOption + ".attack.loseHealth", false);
-			set("pets." + configOption + ".attack.health", petType.getMaxHealth());*/
+			set("pets." + configOption + ".startFollowDistance", 6);
+			set("pets." + configOption + ".stopFollowDistance", 2);
+			set("pets." + configOption + ".teleportDistance", 10);
+			set("pets." + configOption + ".followSpeedModifier", 1);
 			
 			set("pets." + configOption + ".rideSpeed", 0.2D);
 			set("pets." + configOption + ".flySpeed", 0.5D);

@@ -57,6 +57,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
@@ -92,6 +93,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
 		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
+		getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
 		this.setPathfinding();
 	}
 	
@@ -103,6 +105,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return null;
 	}
 	
+	@Override
 	public void resizeBoundingBox(boolean flag){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
@@ -110,6 +113,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public void resetEntitySize(){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
@@ -117,6 +121,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public void setEntitySize(float width, float height){
 		// this.setSize(width, height);
 	}
@@ -125,6 +130,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return true;
 	}
 	
+	@Override
 	public IPet getPet(){
 		return this.pet;
 	}
@@ -146,10 +152,12 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return this.random;
 	}
 	
+	@Override
 	public PetGoalSelector getPetGoalSelector(){
 		return petGoalSelector;
 	}
 	
+	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -158,11 +166,13 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.shouldVanish = flag;
 	}
 	
+	@Override
 	public void setOwnerShoulderEntityLeft(){
 		//
 	}
 	
 	
+	@Override
 	public void setOwnerShoulderEntityRight(){
 		//
 	}
@@ -172,7 +182,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 			NMSEntityUtil.clearGoals(this);
 			petGoalSelector = new PetGoalSelector();
 			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
-			petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
+			petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
 			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, ServerPlayer.class), 2);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -180,10 +190,12 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public CraftLivingEntity getBukkitEntity(){
 		return (CraftLivingEntity) super.getBukkitEntity();
 	}
 	
+	@Override
 	public boolean onInteract(Player p){
 		if(p.getUniqueId().equals(getPlayerOwner().getUniqueId())){
 			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
@@ -208,6 +220,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.getPet().getCraftPet().teleport(l);
 	}
 	
+	@Override
 	public void remove(boolean makeSound){
 		if(getBukkitEntity() != null){
 			getBukkitEntity().leaveVehicle();
@@ -271,6 +284,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	}
 	
 	//AbstractHorse
+	@Override
 	public void travel(Vec3 vec3d){
 		Entity passenger = getFirstPassenger();
 		if(!(passenger instanceof ServerPlayer) || ((ServerPlayer) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer()){
@@ -291,7 +305,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
-		this.flyingSpeed = getWaterSlowDown() * 0.1F;
+		this.flyingSpeed = getSpeed() * 0.1F;
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
@@ -335,14 +349,17 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		super.travel(new Vec3(motX, motY, motZ));
 	}
 	
+	@Override
 	protected SoundEvent getAmbientSound(){
 		return getSoundFromString(getAmbientSoundString());
 	}
 	
+	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSource){
 		return getSoundFromString(getHurtSoundString());
 	}
 	
+	@Override
 	protected SoundEvent getDeathSound(){
 		return getSoundFromString(getDeathSoundString());
 	}
@@ -374,9 +391,11 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return "entity." + pet.getPetType().getMinecraftName() + ".death";
 	}
 	
+	@Override
 	public abstract SizeCategory getSizeCategory();
 	
 	// Entity
+	@Override
 	public void tick(){// Search for "entityBaseTick". The method its in.
 		super.tick();
 		onLive();
@@ -387,6 +406,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		if(!isPassenger() || getPet().getRider() == null) this.petGoalSelector.updateGoals();
 	}
 	
+	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 	}
@@ -400,11 +420,13 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return false;
 	}
 	
+	@Override
 	public void addAdditionalSaveData(CompoundTag nbttagcompound){
 		// Do nothing with NBT
 		// Pets should not be stored to world save files
 	}
 	
+	@Override
 	public void readAdditionalSaveData(CompoundTag nbttagcompound){// Loading
 		//
 	}

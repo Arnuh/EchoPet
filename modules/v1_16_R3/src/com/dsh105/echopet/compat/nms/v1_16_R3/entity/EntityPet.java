@@ -123,6 +123,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return null;
 	}
 	
+	@Override
 	public void resizeBoundingBox(boolean flag){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
@@ -130,6 +131,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public void resetEntitySize(){
 		EntitySize es = this.getClass().getAnnotation(EntitySize.class);
 		if(es != null){
@@ -137,14 +139,17 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public void setEntitySize(float width, float height){
 		// this.setSize(width, height);
 	}
 	
+	@Override
 	public boolean isPersistent(){
 		return true;
 	}
 	
+	@Override
 	public IPet getPet(){
 		return this.pet;
 	}
@@ -166,10 +171,12 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return this.random;
 	}
 	
+	@Override
 	public PetGoalSelector getPetGoalSelector(){
 		return petGoalSelector;
 	}
 	
+	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -186,11 +193,13 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return (LivingEntity) this.getGoalTarget().getBukkitEntity();
 	}
 	
+	@Override
 	public void setOwnerShoulderEntityLeft(){
 		//
 	}
 	
 	
+	@Override
 	public void setOwnerShoulderEntityRight(){
 		//
 	}
@@ -222,7 +231,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 			NMSEntityUtil.clearGoals(this);
 			petGoalSelector = new PetGoalSelector();
 			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
-			petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
+			petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
 			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, EntityHuman.class), 2);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -230,40 +239,12 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 	}
 	
+	@Override
 	public CraftLivingEntity getBukkitEntity(){
 		return (CraftLivingEntity) super.getBukkitEntity();
 	}
 	
-	// well then...it's now 'final'
-	/*
-	// Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
-	
-	protected final void doTick() {
-	    super.doTick();
-	    ++this.ticksFarFromPlayer;
-	
-	    this.D();
-	
-	    this.getEntitySenses().a();
-	
-	    // If this ever happens...
-	    if (this.petGoalSelector == null) {
-	        this.remove(false);
-	        return;
-	    }
-	    this.petGoalSelector.updateGoals();
-	
-	    this.navigation.k();
-	
-	    this.E();
-	
-	    this.getControllerMove().c();
-	
-	    this.getControllerLook().a();
-	
-	    this.getControllerJump().b();
-	}
-	*/
+	@Override
 	public boolean onInteract(Player p){
 		if(p.getUniqueId().equals(getPlayerOwner().getUniqueId())){
 			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
@@ -279,6 +260,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return onInteract((Player) human.getBukkitEntity()) ? EnumInteractionResult.SUCCESS : EnumInteractionResult.FAIL;
 	}
 	
+	@Override
 	public void setPositionRotation(double d0, double d1, double d2, float f, float f1){
 		super.setPositionRotation(d0, d1, d2, f, f1);
 	}
@@ -292,6 +274,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		this.getPet().getCraftPet().teleport(l);
 	}
 	
+	@Override
 	public void remove(boolean makeSound){
 		if(getBukkitEntity() != null){
 			getBukkitEntity().leaveVehicle();
@@ -362,6 +345,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 	
 	//Tbh just look at EntityHorseAbstract.
+	@Override
 	public void g(Vec3D motion){
 		if(passengers.isEmpty()){
 			this.G = 0.5F;// Above noclip
@@ -435,14 +419,17 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		super.g(new Vec3D(motX, motY, motZ));
 	}
 	
+	@Override
 	protected SoundEffect getSoundAmbient(){
 		return getSoundFromString(getIdleSound());
 	}
 	
+	@Override
 	protected SoundEffect getSoundHurt(DamageSource damageSource){
 		return getSoundFromString(getHurtSound());
 	}
 	
+	@Override
 	protected SoundEffect getSoundDeath(){
 		return getSoundFromString(getDeathSound());
 	}
@@ -488,9 +475,11 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return "entity." + pet.getPetType().getMinecraftName() + ".step";
 	}
 	
+	@Override
 	public abstract SizeCategory getSizeCategory();
 	
 	// Entity
+	@Override
 	public void tick(){// Search for "entityBaseTick". The method its in.
 		super.tick();
 		onLive();
@@ -501,6 +490,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		if(!isPassenger() || getPet().getRider() == null) this.petGoalSelector.updateGoals();
 	}
 	
+	@Override
 	protected void initDatawatcher(){// Registers all the values into datawatcher
 		super.initDatawatcher();
 		// initDatawatcher();
@@ -543,6 +533,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		return false;
 	}
 	
+	@Override
 	public boolean d(NBTTagCompound nbttagcompound){// Calls e
 		// Do nothing with NBT
 		// Pets should not be stored to world save files

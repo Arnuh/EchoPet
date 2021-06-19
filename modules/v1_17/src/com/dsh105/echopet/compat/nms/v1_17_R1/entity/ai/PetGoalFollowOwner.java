@@ -35,11 +35,9 @@ import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.type.EntityGhastPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.type.EntityVexPet;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.level.pathfinder.Path;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
@@ -48,16 +46,24 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	private final EntityPet pet;
 	private final PathNavigation nav;
 	private int timeToRecalcPath = 0;
+	private final double speedModifier;
 	private final double startDistanceSqr;
 	private final double stopDistanceSqr;
 	private final double teleportDistanceSqr;
 	
-	public PetGoalFollowOwner(EntityPet pet, double startDistance, double stopDistance, double teleportDistance){
+	public PetGoalFollowOwner(EntityPet pet){
 		this.pet = pet;
 		this.nav = pet.getNavigation();
+		
+		double sizeModifier = pet.getSizeCategory().getModifier();
+		double startDistance = pet.getPet().getPetType().getStartFollowDistance() * sizeModifier;
+		double stopDistance = pet.getPet().getPetType().getStopFollowDistance() * sizeModifier;
+		double teleportDistance = pet.getPet().getPetType().getTeleportDistance() * sizeModifier;
+		
+		this.speedModifier = pet.getPet().getPetType().getFollowSpeedModifier();
 		this.startDistanceSqr = startDistance * startDistance;
 		this.stopDistanceSqr = stopDistance * stopDistance;
-		this.teleportDistanceSqr = teleportDistance * teleportDistance; // Mojang uses 144(12)
+		this.teleportDistanceSqr = teleportDistance * teleportDistance;
 	}
 	
 	@Override
@@ -92,8 +98,10 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
+		}else if(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < stopDistanceSqr){
+			return false;
 		}else{
-			return !(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= stopDistanceSqr);
+			return true;
 		}
 	}
 	
@@ -101,12 +109,12 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	public void start(){
 		this.timeToRecalcPath = 0;
 		// Set pathfinding radius
-		//pet.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(this.teleportDistanceSqr);
+		pet.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.teleportDistanceSqr);
 	}
 	
 	@Override
 	public void finish(){
-		this.nav.stop();
+		getNavigation().stop();
 	}
 	
 	@Override
@@ -120,8 +128,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    //Don't move pet when owner flying
 			    return;
 			}*/
-			double speed = 0.6F;
-			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.distanceToSqr(owner) > (this.teleportDistanceSqr) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
@@ -130,16 +137,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			if(moveEvent.isCancelled()){
 				return;
 			}
-			
-			Path path;
-			int followDistance = 3;//Required distance between the owner and target before it paths.
-			if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
-				path = pet.getNavigation().createPath(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), followDistance);
-			}else{
-				path = pet.getNavigation().createPath(owner, followDistance);
-			}
-			// Smooth path finding to entity instead of location
-			pet.getNavigation().moveTo(path, speed);
+			getNavigation().moveTo(owner, speedModifier);
 		}
 	}
 	
