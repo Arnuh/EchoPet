@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.api.reflection;
@@ -24,6 +24,7 @@ public abstract class SafeDirectField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	public T transfer(Object from, Object to){
 		T old = get(to);
 		set(to, get(from));

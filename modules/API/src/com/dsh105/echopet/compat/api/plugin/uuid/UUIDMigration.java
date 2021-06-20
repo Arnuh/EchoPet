@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.api.plugin.uuid;
@@ -228,6 +228,7 @@ public class UUIDMigration{
 			new BukkitRunnable(){
 				
 				
+				@Override
 				public void run(){
 					try{
 						final Map<String, UUID> uuidMap = new UUIDFetcher(new ArrayList<String>(keyToValueMap.keySet())).call();
@@ -235,6 +236,7 @@ public class UUIDMigration{
 						new BukkitRunnable(){
 							
 							
+							@Override
 							public void run(){
 								for(Map.Entry<String, UUID> entry : uuidMap.entrySet()){
 									for(Map.Entry<String, Object> valueEntries : keyToValueMap.get(entry.getKey()).entrySet()){

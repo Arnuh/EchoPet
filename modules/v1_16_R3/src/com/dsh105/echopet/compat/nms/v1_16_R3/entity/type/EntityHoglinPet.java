@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.dsh105.echopet.compat.nms.v1_16_R3.entity.type;
 
@@ -43,6 +43,7 @@ public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPe
 		super(EntityTypes.HOGLIN, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(immuneToZombification, true);//Default to true to fix shaking when in overworld.
