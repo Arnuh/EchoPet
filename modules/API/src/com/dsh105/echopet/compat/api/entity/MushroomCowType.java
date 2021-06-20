@@ -14,10 +14,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-/**
- * @author Arnah
- * @since Nov 28, 2019
- */
 public enum MushroomCowType{
 	Red,
 	Brown

@@ -38,10 +38,6 @@ import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 public abstract class EntityRaiderPet extends EntityPet implements IEntityRaiderPet{
 	
 	protected static final DataWatcherObject<Boolean> c = DataWatcher.a(EntityRaiderPet.class, DataWatcherRegistry.i);//unknown, gets set but not grabbed in EntityRaider.
@@ -54,6 +50,7 @@ public abstract class EntityRaiderPet extends EntityPet implements IEntityRaider
 		super(type, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(c, false);

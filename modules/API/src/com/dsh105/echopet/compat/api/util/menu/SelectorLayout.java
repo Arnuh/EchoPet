@@ -36,7 +36,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class SelectorLayout{
 	
-	private static List<SelectorIcon> selectorLayout = new ArrayList<>();
+	private static final List<SelectorIcon> selectorLayout = new ArrayList<>();
 	
 	private static ItemStack selectorItem;
 	
@@ -46,9 +46,6 @@ public class SelectorLayout{
 		String name = config.getString("petSelector.item.name", "&aPets");
 		String material = config.getString("petSelector.item.material", Material.BONE.name());
 		List<String> lore = config.config().getStringList("petSelector.item.lore");
-		if(lore == null){
-			lore = new ArrayList<>();
-		}
 		ItemStack i = new ItemStack(Material.valueOf(material), 1);
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
@@ -102,9 +99,6 @@ public class SelectorLayout{
 					continue;
 				}
 				List<String> lore = config.config().getStringList(s + ".page-" + page + "." + slot + ".lore");
-				if(lore == null){
-					lore = new ArrayList<>();
-				}
 				ArrayList<String> loreList = new ArrayList<>();
 				if(lore.size() > 0){
 					for(String part : lore){
@@ -112,11 +106,13 @@ public class SelectorLayout{
 					}
 				}
 				if(material == null) return;
-				if(material.name().equalsIgnoreCase("MONSTER_EGG") || material.name().endsWith("SPAWN_EGG")) selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList));
-				else selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, name, loreList));
+				if(material.name().equalsIgnoreCase("MONSTER_EGG") || material.name().endsWith("SPAWN_EGG")){
+					selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, entityTag, name, loreList));
+				}else{
+					selectorLayout.add(new SelectorIcon(page, slot, cmd, pt, material, name, loreList));
+				}
 			}
 		}
-		
 	}
 	
 	public static Map<Integer, Map<Integer, SelectorIcon>> getLoadedLayout(){

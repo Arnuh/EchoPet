@@ -16,8 +16,4 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 public interface IEntityRaiderPet extends IEntityPet{}

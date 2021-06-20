@@ -74,9 +74,7 @@ public class ClassTemplate<T>{
 		
 		try{
 			return getType().newInstance();
-		}catch(InstantiationException e){
-			e.printStackTrace();
-		}catch(IllegalAccessException e){
+		}catch(InstantiationException | IllegalAccessException e){
 			e.printStackTrace();
 		}
 		return null;

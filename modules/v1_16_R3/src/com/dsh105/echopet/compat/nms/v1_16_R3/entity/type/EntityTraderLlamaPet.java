@@ -36,10 +36,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityTraderLlamaPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 30, 2019
- */
 @EntitySize(width = 0.9F, height = 1.87F)
 @EntityPetType(petType = PetType.TRADERLLAMA)
 public class EntityTraderLlamaPet extends EntityLlamaPet implements IEntityTraderLlamaPet{

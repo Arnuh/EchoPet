@@ -19,10 +19,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITraderLlamaPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Aug 30, 2019
- */
 @EntityPetType(petType = PetType.TRADERLLAMA)
 public class TraderLlamaPet extends LlamaPet implements ITraderLlamaPet{
 	

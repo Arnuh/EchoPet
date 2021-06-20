@@ -39,10 +39,6 @@ import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.PILLAGER)
 public class EntityPillagerPet extends EntityIllagerAbstractPet implements IEntityPillagerPet{

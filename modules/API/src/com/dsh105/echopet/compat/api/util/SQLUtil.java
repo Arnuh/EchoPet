@@ -27,7 +27,7 @@ public class SQLUtil{
 		long bitmask = 0;
 		for(PetData petData : data){
 			if(petData.ignoreSaving()) continue;
-			bitmask |= (1 << petData.ordinal());
+			bitmask |= (1L << petData.ordinal());
 		}
 		return bitmask;
 	}
@@ -35,7 +35,7 @@ public class SQLUtil{
 	public static List<PetData> deserializePetData(long bitmask){
 		List<PetData> result = new ArrayList<PetData>();
 		for(PetData petData : PetData.values){
-			if((bitmask & (1 << petData.ordinal())) != 0){
+			if((bitmask & (1L << petData.ordinal())) != 0){
 				result.add(petData);
 			}
 		}

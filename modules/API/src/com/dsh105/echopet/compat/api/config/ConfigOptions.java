@@ -18,7 +18,7 @@
 package com.dsh105.echopet.compat.api.config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,7 +154,7 @@ public class ConfigOptions extends Options{
 			//@formatter:on
 			set("trails.test.particleName", "FLAME", trailInfo);
 			set("trails.test.permission", "echopet.pet.trail.test");
-			set("trails.test.subtrails", Arrays.asList("test2"));
+			set("trails.test.subtrails", Collections.singletonList("test2"));
 			set("trails.test.interval", 1);
 			set("trails.test.speed", 0);
 			set("trails.test.count", 2);

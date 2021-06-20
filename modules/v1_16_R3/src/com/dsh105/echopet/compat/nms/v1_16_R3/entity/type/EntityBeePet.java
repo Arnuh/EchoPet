@@ -27,10 +27,6 @@ import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Jan 05, 2020
- */
 @EntitySize(width = 0.7F, height = 0.6F)
 @EntityPetType(petType = PetType.BEE)
 public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
@@ -51,6 +47,7 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 		super(EntityTypes.BEE, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(Flag, (byte) 0);

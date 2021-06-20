@@ -6,10 +6,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Aug 12, 2018
- */
 @EntityPetType(petType = PetType.PHANTOM)
 public class PhantomPet extends Pet implements IPhantomPet{
 	

@@ -59,6 +59,7 @@ public class SelectorIcon extends MenuIcon{
 		return petType;
 	}
 	
+	@Override
 	public ItemStack getIcon(Player viewer){
 		ItemStack i = super.getIcon(viewer);
 		ItemMeta meta = i.getItemMeta();
@@ -66,9 +67,8 @@ public class SelectorIcon extends MenuIcon{
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', c + this.getName()));// NPE
 		i.setItemMeta(meta);
 		
-		if(this.petType == PetType.HUMAN && i.getItemMeta() instanceof SkullMeta){
-			SkullMeta sm = (SkullMeta) i.getItemMeta();
-			sm.setOwner(viewer.getName());
+		if(this.petType == PetType.HUMAN && i.getItemMeta() instanceof SkullMeta sm){
+			sm.setOwningPlayer(viewer);
 			i.setItemMeta(sm);
 		}
 		return i;

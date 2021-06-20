@@ -16,10 +16,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-/**
- * @author Arnah
- * @since Jul 03, 2019
- */
 public enum PandaGene{
 	Normal,
 	Lazy,
@@ -28,5 +24,4 @@ public enum PandaGene{
 	Brown,
 	Weak,
 	Aggressive,
-	;
 }

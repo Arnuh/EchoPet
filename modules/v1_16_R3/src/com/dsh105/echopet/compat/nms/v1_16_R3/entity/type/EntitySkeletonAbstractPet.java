@@ -25,10 +25,6 @@ import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 public class EntitySkeletonAbstractPet extends EntityPet implements IEntitySkeletonAbstractPet{
 	
 	private static final DataWatcherObject<Boolean> b = DataWatcher.a(EntitySkeletonPet.class, DataWatcherRegistry.i);// Something for PathfinderGoalMeleeAttack
@@ -47,18 +43,22 @@ public class EntitySkeletonAbstractPet extends EntityPet implements IEntitySkele
 		this.datawatcher.register(b, Boolean.valueOf(false));
 	}
 	
+	@Override
 	protected String getIdleSound(){
 		return "entity.skeleton.ambient";
 	}
 	
+	@Override
 	protected String getHurtSound(){
 		return "entity.skeleton.hurt";
 	}
 	
+	@Override
 	protected String getDeathSound(){
 		return "entity.skeleton.death";
 	}
 	
+	@Override
 	protected String getStepSound(){
 		return "entity.skeleton.step";
 	}

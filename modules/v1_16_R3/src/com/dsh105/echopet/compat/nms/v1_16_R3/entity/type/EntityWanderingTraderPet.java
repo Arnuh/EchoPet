@@ -36,10 +36,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWanderingTraderPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 30, 2019
- */
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.WANDERINGTRADER)
 public class EntityWanderingTraderPet extends EntityVillagerAbstractPet implements IEntityWanderingTraderPet{

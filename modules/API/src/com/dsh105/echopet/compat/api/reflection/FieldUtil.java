@@ -3,10 +3,6 @@ package com.dsh105.echopet.compat.api.reflection;
 import java.lang.reflect.Field;
 import sun.misc.Unsafe;
 
-/**
- * @author Arnah
- * @since Feb 21, 2021
- **/
 public class FieldUtil{
 	
 	private static Unsafe unsafe;

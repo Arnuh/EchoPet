@@ -37,10 +37,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRavagerPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 @EntitySize(width = 1.95F, height = 2.2F)
 @EntityPetType(petType = PetType.RAVAGER)
 public class EntityRavagerPet extends EntityRaiderPet implements IEntityRavagerPet{

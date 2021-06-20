@@ -23,11 +23,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCodPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 @EntitySize(width = 0.5F, height = 0.3F)
 @EntityPetType(petType = PetType.COD)
 public class EntityCodPet extends EntityFishPet implements IEntityCodPet{

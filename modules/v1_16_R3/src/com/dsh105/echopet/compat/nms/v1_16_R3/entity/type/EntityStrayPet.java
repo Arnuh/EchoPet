@@ -22,10 +22,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityStrayPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Nov 19, 2016
- */
 @EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.STRAY)
 public class EntityStrayPet extends EntitySkeletonAbstractPet implements IEntityStrayPet{

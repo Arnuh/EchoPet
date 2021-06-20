@@ -131,7 +131,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public boolean getHorseVisual(int i){
-		return (this.datawatcher.get(VISUAL).byteValue() & i) != 0;
+		return (this.datawatcher.get(VISUAL) & i) != 0;
 	}
 	
 	/**
@@ -144,13 +144,14 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	 * 128: Mouth open
 	 */
 	public void setHorseVisual(int i, boolean flag){
-		byte b0 = this.datawatcher.get(VISUAL).byteValue();
+		byte b0 = this.datawatcher.get(VISUAL);
 		if(flag){
-			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 | i)));
+			this.datawatcher.set(VISUAL, (byte) (b0 | i));
 		}else{
-			this.datawatcher.set(VISUAL, Byte.valueOf((byte) (b0 & (i ^ 0xFFFFFFFF))));
+			this.datawatcher.set(VISUAL, (byte) (b0 & ~i));
 		}
 	}
 	
+	@Override
 	public void setVariant(HorseVariant variant){}
 }

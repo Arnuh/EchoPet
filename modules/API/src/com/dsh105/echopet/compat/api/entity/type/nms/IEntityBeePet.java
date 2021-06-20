@@ -16,10 +16,6 @@ package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 
-/**
- * @author Arnah
- * @since Jan 05, 2020
- */
 public interface IEntityBeePet extends IEntityAgeablePet, IEntityBirdPet{
 	
 	void setHasStung(boolean hasStung);
