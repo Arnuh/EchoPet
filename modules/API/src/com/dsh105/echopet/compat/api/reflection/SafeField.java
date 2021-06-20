@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.api.reflection;
@@ -55,11 +55,13 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	public Field getField(){
 		return this.field;
 	}
 	
 	
+	@Override
 	public boolean set(Object instance, T value){
 		if(!isStatic && instance == null){
 			throw new UnsupportedOperationException("Non-static fields require a valid instance passed in!");
@@ -76,6 +78,7 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public T get(Object instance){
 		if(!isStatic && instance == null){
@@ -91,6 +94,7 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	public T transfer(Object from, Object to){
 		if(this.field == null){
 			return null;
@@ -105,6 +109,7 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	public String toString(){
 		StringBuilder string = new StringBuilder(75);
 		int mod = this.field.getModifiers();
@@ -126,16 +131,19 @@ public class SafeField<T> implements FieldAccessor<T>{
 	}
 	
 	
+	@Override
 	public boolean isPublic(){
 		return Modifier.isPublic(field.getModifiers());
 	}
 	
 	
+	@Override
 	public boolean isReadOnly(){
 		return Modifier.isFinal(field.getModifiers());
 	}
 	
 	
+	@Override
 	@Deprecated
 	public void setReadOnly(Object target, boolean value){
 		if(value){

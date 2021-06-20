@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.api.reflection;
@@ -58,6 +58,7 @@ public class SafeMethod<T> implements MethodAccessor<T>{
 	}
 	
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public T invoke(Object instance, Object... args){
 		if(this.method != null){
@@ -85,6 +86,7 @@ public class SafeMethod<T> implements MethodAccessor<T>{
 	}
 	
 	
+	@Override
 	public Class<?> getReturnType(){
 		if(this.method == null){
 			throw new RuntimeException("Method handle is NULL!");
@@ -93,6 +95,7 @@ public class SafeMethod<T> implements MethodAccessor<T>{
 	}
 	
 	
+	@Override
 	public Class<?>[] getArguments(){
 		if(this.method == null){
 			throw new RuntimeException("Method handle is NULL!");

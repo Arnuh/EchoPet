@@ -1,33 +1,20 @@
 /*
  * This file is part of EchoPet.
+ *
  * EchoPet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
+ *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
+ *
  * You should have received a copy of the GNU General Public License
- *  along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of EchoPet.
- *
- * EchoPet is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * EchoPet is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsh105.echopet.compat.nms.v1_16_R3.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
@@ -58,6 +45,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		super(EntityTypes.BAT, world, pet);
 	}
 	
+	@Override
 	public void setHanging(boolean flag){
 		int i = this.datawatcher.get(a).byteValue();
 		if(flag){
@@ -67,11 +55,13 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		}
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(a, Byte.valueOf((byte) 0));
 	}
 	
+	@Override
 	protected String getIdleSound(){
 		if((!isStartled()) && (this.random.nextInt(4) != 0)){
 			return null;
@@ -79,6 +69,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		return "entity.bat.ambient";
 	}
 	
+	@Override
 	public void onLive(){
 		super.onLive();
 		if(this.isStartled()){
@@ -93,6 +84,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		return (this.datawatcher.get(a).byteValue() & 0x1) != 0;
 	}
 	
+	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
 	}

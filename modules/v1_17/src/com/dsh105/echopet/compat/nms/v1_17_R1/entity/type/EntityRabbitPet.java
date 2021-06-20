@@ -1,15 +1,18 @@
 /*
  * This file is part of EchoPet.
+ *
  * EchoPet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
+ *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
+ *
  * You should have received a copy of the GNU General Public License
- *  along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
@@ -70,6 +73,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		this.entityData.define(DATA_TYPE_ID, 0);
 	}
 	
+	@Override
 	public void setJumping(boolean flag){
 		super.setJumping(flag);
 		if(flag){
@@ -142,6 +146,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		this.disableJumpControl();
 	}
 	
+	@Override
 	public void aiStep(){
 		super.aiStep();
 		if(this.jumpTicks != this.jumpDuration){
@@ -179,6 +184,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			this.canJump = flag;
 		}
 		
+		@Override
 		public void tick(){
 			if(this.jump){
 				this.rabbit.startJumping();

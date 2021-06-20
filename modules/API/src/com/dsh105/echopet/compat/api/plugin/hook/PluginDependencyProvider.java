@@ -8,11 +8,11 @@
  *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.dsh105.echopet.compat.api.plugin.hook;
@@ -91,6 +91,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	public abstract void onUnhook();
 	
 	
+	@Override
 	public T getDependency(){
 		if(this.dependency == null){
 			throw new RuntimeException("Dependency is NULL!");
@@ -99,11 +100,13 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	}
 	
 	
+	@Override
 	public boolean isHooked(){
 		return this.hooked;
 	}
 	
 	
+	@Override
 	public Plugin getHandlingPlugin(){
 		if(this.myPluginInstance == null){
 			throw new RuntimeException("HandlingPlugin is NULL!");
@@ -112,6 +115,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	}
 	
 	
+	@Override
 	public String getDependencyName(){
 		if(this.dependencyName == null){
 			throw new RuntimeException("Dependency name is NULL!");

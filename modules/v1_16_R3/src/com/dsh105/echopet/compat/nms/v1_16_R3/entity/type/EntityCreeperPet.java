@@ -1,33 +1,20 @@
 /*
  * This file is part of EchoPet.
+ *
  * EchoPet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
+ *
  * EchoPet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
+ *
  * You should have received a copy of the GNU General Public License
- *  along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
+ * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of EchoPet.
- *
- * EchoPet is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * EchoPet is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsh105.echopet.compat.nms.v1_16_R3.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
@@ -59,14 +46,17 @@ public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 		super(EntityTypes.CREEPER, world, pet);
 	}
 	
+	@Override
 	public void setPowered(boolean flag){
 		this.datawatcher.set(POWERED, flag);
 	}
 	
+	@Override
 	public void setIgnited(boolean flag){
 		this.datawatcher.set(IGNITED, flag);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(a, Integer.valueOf(-1));
@@ -74,6 +64,7 @@ public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 		this.datawatcher.register(IGNITED, Boolean.valueOf(false));
 	}
 	
+	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.REGULAR;
 	}
