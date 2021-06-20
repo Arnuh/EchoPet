@@ -21,10 +21,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Jan 05, 2020
- */
 @EntityPetType(petType = PetType.BEE)
 public class BeePet extends AgeablePet implements IBeePet{
 	

@@ -27,10 +27,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Jan 05, 2020
- */
 @EntitySize(width = 0.7F, height = 0.6F)
 @EntityPetType(petType = PetType.BEE)
 public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
@@ -47,6 +43,7 @@ public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
 		super(EntityType.BEE, world, pet);
 	}
 	
+	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_FLAGS_ID, (byte) 0);

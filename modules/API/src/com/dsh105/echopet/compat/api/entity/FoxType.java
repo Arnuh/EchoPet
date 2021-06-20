@@ -16,9 +16,7 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
-
 public enum FoxType{
 	Red,
 	Snow,
-	;
 }

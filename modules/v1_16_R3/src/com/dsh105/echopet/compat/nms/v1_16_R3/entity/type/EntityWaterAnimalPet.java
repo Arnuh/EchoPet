@@ -21,10 +21,6 @@ import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 public abstract class EntityWaterAnimalPet extends EntityPet implements IEntityWaterAnimalPet{
 	
 	
@@ -36,6 +32,7 @@ public abstract class EntityWaterAnimalPet extends EntityPet implements IEntityW
 		super(type, world, pet);
 	}
 	
+	@Override
 	protected String getStepSound(){
 		return "entity." + pet.getPetType().getMinecraftName() + ".swim";
 	}

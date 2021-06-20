@@ -9,10 +9,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Jun 19, 2021
- **/
 public abstract class EntityAbstractPiglinPet extends EntityPet{
 	
 	protected static final EntityDataAccessor<Boolean> DATA_IMMUNE_TO_ZOMBIFICATION = SynchedEntityData.defineId(EntityAbstractPiglinPet.class, EntityDataSerializers.BOOLEAN);
@@ -25,6 +21,7 @@ public abstract class EntityAbstractPiglinPet extends EntityPet{
 		super(type, world, pet);
 	}
 	
+	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true); // Default to true to remove shaking

@@ -32,10 +32,6 @@ import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRaiderPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 public class RaiderPet extends Pet implements IRaiderPet{
 	
 	public RaiderPet(Player owner){

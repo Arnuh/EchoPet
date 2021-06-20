@@ -43,10 +43,6 @@ import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Jul 03, 2019
- */
 @EntitySize(width = 1.3F, height = 1.25F)
 @EntityPetType(petType = PetType.PANDA)
 public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{

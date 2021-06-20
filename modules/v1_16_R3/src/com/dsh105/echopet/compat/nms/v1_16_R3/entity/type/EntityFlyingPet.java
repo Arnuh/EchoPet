@@ -21,10 +21,6 @@ import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 12, 2018
- */
 public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPet{
 	
 	public EntityFlyingPet(EntityTypes<? extends EntityInsentient> type, World world){

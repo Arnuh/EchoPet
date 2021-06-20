@@ -11,10 +11,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
 import net.minecraft.world.phys.AABB;
 
-/**
- * @author Arnah
- * @since Feb 21, 2021
- **/
 public class FakeSensorNearestLivingEntities extends NearestLivingEntitySensor{
 	
 	public FakeSensorNearestLivingEntities(){}
@@ -22,6 +18,7 @@ public class FakeSensorNearestLivingEntities extends NearestLivingEntitySensor{
 	// Straight up copied from NearestLivingEntitySensor except with an extra instanceof check
 	// I just used intellij for the code.
 	
+	@Override
 	protected void doTick(ServerLevel var0, LivingEntity var1){
 		AABB var2 = var1.getBoundingBox().inflate(16.0D, 16.0D, 16.0D);
 		List<LivingEntity> var3 = var0.getEntitiesOfClass(LivingEntity.class, var2, (var1x)->{

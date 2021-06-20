@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,9 +98,10 @@ public class UUIDFetcher implements Callable<Map<String, UUID>>{
 	}
 	
 	public static UUID getUUIDOf(String name) throws Exception{
-		return new UUIDFetcher(Arrays.asList(name)).call().get(name);
+		return new UUIDFetcher(Collections.singletonList(name)).call().get(name);
 	}
 	
+	@Override
 	public Map<String, UUID> call() throws Exception{
 		Map<String, UUID> uuidMap = new HashMap<String, UUID>();
 		int requests = (int) Math.ceil(names.size() / PROFILES_PER_REQUEST);

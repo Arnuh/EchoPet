@@ -21,10 +21,6 @@ import net.minecraft.server.v1_16_R3.EntityInsentient;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 public abstract class EntityBirdPet extends EntityPet implements IEntityBirdPet{
 	
 	public EntityBirdPet(EntityTypes<? extends EntityInsentient> type, World world){

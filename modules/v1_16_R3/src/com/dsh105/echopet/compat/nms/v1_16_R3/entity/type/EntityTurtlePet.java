@@ -27,10 +27,6 @@ import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 11, 2018
- */
 @EntitySize(width = 1.2F, height = 0.4F)
 @EntityPetType(petType = PetType.TURTLE)
 public class EntityTurtlePet extends EntityAgeablePet implements IEntityTurtlePet{
@@ -50,6 +46,7 @@ public class EntityTurtlePet extends EntityAgeablePet implements IEntityTurtlePe
 		super(EntityTypes.TURTLE, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(bD, BlockPosition.ZERO);

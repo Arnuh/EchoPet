@@ -23,10 +23,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 12, 2018
- */
 @EntitySize(width = 0.9F, height = 0.5F)
 @EntityPetType(petType = PetType.PHANTOM)
 public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomPet{

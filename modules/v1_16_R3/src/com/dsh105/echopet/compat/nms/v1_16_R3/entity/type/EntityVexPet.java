@@ -61,20 +61,21 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 		super(EntityTypes.VEX, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		getDataWatcher().register(DATA, (byte) 0);
 	}
 	
 	private void a(int i, boolean flag){
-		byte b0 = this.datawatcher.get(DATA).byteValue();
+		byte b0 = this.datawatcher.get(DATA);
 		int j;
 		if(flag){
 			j = b0 | i;
 		}else{
-			j = b0 & (i ^ 0xFFFFFFFF);
+			j = b0 & ~i;
 		}
-		this.datawatcher.set(DATA, Byte.valueOf((byte) (j & 0xFF)));
+		this.datawatcher.set(DATA, (byte) (j & 0xFF));
 	}
 	
 	public boolean isPowered(){
@@ -82,10 +83,11 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	}
 	
 	private boolean b(int i){// just check EntityVex
-		byte b0 = this.datawatcher.get(DATA).byteValue();
+		byte b0 = this.datawatcher.get(DATA);
 		return (b0 & i) != 0;
 	}
 	
+	@Override
 	public void setIsCharging(boolean flag){
 		a(1, flag);
 		// noClip(!flag);

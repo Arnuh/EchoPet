@@ -21,10 +21,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 public abstract class EntityBirdPet extends EntityPet implements IEntityBirdPet{
 	
 	public EntityBirdPet(EntityType<? extends Mob> type, Level world){

@@ -11,10 +11,6 @@ import net.minecraft.server.v1_16_R3.MemoryModuleType;
 import net.minecraft.server.v1_16_R3.SensorNearestLivingEntities;
 import net.minecraft.server.v1_16_R3.WorldServer;
 
-/**
- * @author Arnah
- * @since Feb 21, 2021
- **/
 public class FakeSensorNearestLivingEntities extends SensorNearestLivingEntities{
 	
 	public FakeSensorNearestLivingEntities(){}
@@ -22,6 +18,7 @@ public class FakeSensorNearestLivingEntities extends SensorNearestLivingEntities
 	// Straight up copied from SensorNearestLivingEntities except with an extra instanceof check
 	// I just used intellij for the code.
 	
+	@Override
 	protected void a(WorldServer var0, EntityLiving var1){
 		AxisAlignedBB var2 = var1.getBoundingBox().grow(16.0D, 16.0D, 16.0D);
 		List<EntityLiving> var3 = var0.a(EntityLiving.class, var2, (var1x)->{

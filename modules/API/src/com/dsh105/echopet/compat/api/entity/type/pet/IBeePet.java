@@ -16,10 +16,6 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 
-/**
- * @author Arnah
- * @since Jan 05, 2020
- */
 public interface IBeePet extends IAgeablePet, IBirdPet{
 	
 	void setHasStung(boolean hasStung);

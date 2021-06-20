@@ -56,6 +56,7 @@ public class EntityIllagerAbstractPet extends EntityPet implements IEntityIllage
 		super(type, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(a, (byte) 0);
@@ -66,7 +67,7 @@ public class EntityIllagerAbstractPet extends EntityPet implements IEntityIllage
 		if(paramBoolean){
 			i |= paramInt;
 		}else{
-			i &= (paramInt ^ 0xFFFFFFFF);
+			i &= ~paramInt;
 		}
 		this.datawatcher.set(a, (byte) (i & 0xFF));
 	}

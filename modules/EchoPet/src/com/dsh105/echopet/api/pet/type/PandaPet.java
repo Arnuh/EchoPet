@@ -24,10 +24,6 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Jul 03, 2019
- */
 @EntityPetType(petType = PetType.PANDA)
 public class PandaPet extends AgeablePet implements IPandaPet{
 	

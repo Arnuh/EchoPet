@@ -19,10 +19,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPillagerPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Jul 24, 2019
- */
 @EntityPetType(petType = PetType.PILLAGER)
 public class PillagerPet extends IllagerAbstractPet implements IPillagerPet{
 	

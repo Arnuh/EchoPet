@@ -5,10 +5,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IDolphinPet;
 import org.bukkit.entity.Player;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 @EntityPetType(petType = PetType.DOLPHIN)
 public class DolphinPet extends WaterAnimalPet implements IDolphinPet{
 	

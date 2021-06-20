@@ -27,10 +27,6 @@ import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.World;
 
-/**
- * @author Arnah
- * @since Aug 2, 2018
- */
 @EntitySize(width = 0.9F, height = 0.6F)
 @EntityPetType(petType = PetType.COD)
 public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDolphinPet{
@@ -47,6 +43,7 @@ public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDol
 		super(EntityTypes.DOLPHIN, world, pet);
 	}
 	
+	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
 		this.datawatcher.register(b, BlockPosition.ZERO);

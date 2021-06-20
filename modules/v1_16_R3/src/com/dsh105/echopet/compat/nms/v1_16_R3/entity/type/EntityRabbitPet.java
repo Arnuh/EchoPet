@@ -99,6 +99,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		this.onGroundLastTick = this.onGround;
 	}
 	
+	@Override
 	protected void jump(){// has movecontroller in it, 4 above datawatcher register.
 		super.jump();
 		double d0 = this.moveController.c();
@@ -126,7 +127,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 		setJumping(true);// Plays ambient sound if true, does super.l(flag);
 	}
 	
-	public class ControllerJumpRabbit extends ControllerJump{// Copied from EntityRabbit
+	public static class ControllerJumpRabbit extends ControllerJump{// Copied from EntityRabbit
 		
 		private EntityRabbitPet c;
 		private boolean d = false;
@@ -148,6 +149,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			this.d = flag;
 		}
 		
+		@Override
 		public void b(){
 			if(this.a){
 				this.c.dl();// this is the method above ^

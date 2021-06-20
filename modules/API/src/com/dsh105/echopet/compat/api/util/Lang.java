@@ -168,7 +168,7 @@ public enum Lang{
 	@Override
 	public String toString(){
 		String result = EchoPet.getPlugin().getLangConfig().getString(this.path, this.def);
-		if(result != null && result != "" && result != "none"){
+		if(result != null && !result.equals("") && !result.equals("none")){
 			return ChatColor.translateAlternateColorCodes('&', EchoPet.getPlugin().getLangConfig().getString(this.path, this.def));
 		}else{
 			return "";
