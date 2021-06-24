@@ -26,6 +26,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
@@ -104,8 +105,11 @@ public enum PetData{
 		return false;
 	}, Material.BEACON, "Powered"),
 	SCREAMING("screaming", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.ENDERMAN)){
-			((IEndermanPet) pet).setScreaming(flag);
+		if(pet instanceof IEndermanPet enderman){
+			enderman.setScreaming(flag);
+			return true;
+		}else if(pet instanceof IGoatPet goat){
+			goat.setScreaming(flag);
 			return true;
 		}
 		return false;
