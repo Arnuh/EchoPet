@@ -45,5 +45,7 @@ public interface IEntityPet{
 	
 	void setEntitySize(float width, float height);
 	
+	double getMovementSpeed();
+	
 	IPet getPet();
 }
