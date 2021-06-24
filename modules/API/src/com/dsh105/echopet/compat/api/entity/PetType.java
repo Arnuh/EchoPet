@@ -100,6 +100,7 @@ public enum PetType{
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
 	WOLF("Wolf", "Wolf Pet", "wolf", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR}, PetData.ANGRY),
+	ZOGLIN("Zoglin", "Zoglin Pet", "zoglin"),
 	ZOMBIE("Zombie", "Zombie Pet", "zombie"),
 	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", PetData.SADDLE),
 	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
