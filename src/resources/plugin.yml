@@ -914,6 +914,8 @@ permissions:
         default: op
     echopet.pet.type.strider.baby:
         default: op
+    echopet.pet.type.strider.saddle:
+        default: op
     echopet.pet.type.traderllama.hat:
         default: op
     echopet.pet.type.traderllama.ride:
@@ -2967,6 +2969,7 @@ permissions:
             echopet.pet.type.strider.hat: true
             echopet.pet.type.strider.ride: true
             echopet.pet.type.strider.baby: true
+            echopet.pet.type.strider.saddle: true
     echopet.pet.type.traderllama.*:
         default: op
         description: 'All traderllama pet data permissions'

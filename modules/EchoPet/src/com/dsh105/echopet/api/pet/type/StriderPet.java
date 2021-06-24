@@ -20,13 +20,22 @@ package com.dsh105.echopet.api.pet.type;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityStriderPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.STRIDER)
 public class StriderPet extends AgeablePet implements IStriderPet{
 	
+	private boolean hasSaddle;
+	
 	public StriderPet(Player owner){
 		super(owner);
+	}
+	
+	@Override
+	public void setHasSaddle(boolean flag){
+		((IEntityStriderPet) getEntityPet()).setHasSaddle(flag);
+		this.hasSaddle = flag;
 	}
 }

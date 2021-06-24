@@ -52,4 +52,9 @@ public class EntityStriderPet extends EntityAgeablePet implements IEntityStrider
 		this.datawatcher.register(isShivering, false);
 		this.datawatcher.register(hasSaddle, false);
 	}
+	
+	@Override
+	public void setHasSaddle(boolean flag){
+		datawatcher.set(hasSaddle, flag);
+	}
 }

@@ -42,6 +42,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITropicalFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
@@ -117,11 +118,14 @@ public enum PetData{
 		return false;
 	}, Material.GLASS, "Shield"),
 	SADDLE("saddle", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PIG)){
-			((IPigPet) pet).setSaddle(flag);
+		if(pet instanceof IPigPet pig){
+			pig.setSaddle(flag);
 			return true;
-		}else if(pet instanceof IHorseAbstractPet){
-			((IHorseAbstractPet) pet).setSaddled(flag);
+		}else if(pet instanceof IHorseAbstractPet horseAbstract){
+			horseAbstract.setSaddled(flag);
+			return true;
+		}else if(pet instanceof IStriderPet strider){
+			strider.setHasSaddle(flag);
 			return true;
 		}
 		return false;
