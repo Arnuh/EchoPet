@@ -46,19 +46,9 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	@Override
-	public void setResting(boolean flag){
-		int i = this.datawatcher.get(a).byteValue();
-		if(flag){
-			this.datawatcher.set(a, Byte.valueOf((byte) (i | 0x1)));
-		}else{
-			this.datawatcher.set(a, Byte.valueOf((byte) (i & -2)));
-		}
-	}
-	
-	@Override
 	protected void initDatawatcher(){
 		super.initDatawatcher();
-		this.datawatcher.register(a, Byte.valueOf((byte) 0));
+		this.datawatcher.register(a, (byte) 0);
 	}
 	
 	@Override
@@ -81,11 +71,25 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	public boolean isStartled(){
-		return (this.datawatcher.get(a).byteValue() & 0x1) != 0;
+		return (this.datawatcher.get(a) & 0x1) != 0;
+	}
+	
+	public void setResting(boolean flag){
+		int i = this.datawatcher.get(a);
+		if(flag){
+			this.datawatcher.set(a, (byte) (i | 0x1));
+		}else{
+			this.datawatcher.set(a, (byte) (i & ~0x1));
+		}
 	}
 	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
+	}
+	
+	@Override
+	public void setWandering(boolean flag){
+		
 	}
 }
