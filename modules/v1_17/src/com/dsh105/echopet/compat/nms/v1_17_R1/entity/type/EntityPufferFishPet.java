@@ -26,7 +26,10 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.7F, height = 0.7F)
@@ -51,13 +54,37 @@ public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferF
 		this.entityData.define(PUFF_STATE, 0);
 	}
 	
+	public int getPuffState(){
+		return this.entityData.get(PUFF_STATE);
+	}
+	
 	@Override
 	public void setPuffState(int state){
+		int currentState = getPuffState();
+		if(currentState > state){
+			playSound(SoundEvents.PUFFER_FISH_BLOW_OUT, this.getSoundVolume(), this.getVoicePitch());
+		}else if(state > currentState){
+			playSound(SoundEvents.PUFFER_FISH_BLOW_UP, this.getSoundVolume(), this.getVoicePitch());
+		}
 		entityData.set(PUFF_STATE, state);
+		refreshDimensions();
 	}
 	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
+	}
+	
+	@Override
+	public EntityDimensions getDimensions(Pose entitypose){
+		return super.getDimensions(entitypose).scale(getScale(getPuffState()));
+	}
+	
+	private static float getScale(int i){
+		return switch(i){
+			case 0 -> 0.5F;
+			case 1 -> 0.7F;
+			default -> 1.0F;
+		};
 	}
 }

@@ -90,6 +90,6 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	
 	@Override
 	public void setWandering(boolean flag){
-		
+	
 	}
 }

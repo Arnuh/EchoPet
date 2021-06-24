@@ -27,6 +27,7 @@ import net.minecraft.server.v1_16_R3.DataWatcher;
 import net.minecraft.server.v1_16_R3.DataWatcherObject;
 import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
 import net.minecraft.server.v1_16_R3.EntityTypes;
+import net.minecraft.server.v1_16_R3.SoundEffects;
 import net.minecraft.server.v1_16_R3.World;
 
 @EntitySize(width = 0.7F, height = 0.7F)
@@ -49,9 +50,20 @@ public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferF
 		this.datawatcher.register(STATE, 0);
 	}
 	
+	public int getPuffState(){
+		return this.datawatcher.get(STATE);
+	}
+	
 	@Override
 	public void setPuffState(int state){
+		int currentState = getPuffState();
+		if(currentState > state){
+			playSound(SoundEffects.ENTITY_PUFFER_FISH_BLOW_UP, this.getSoundVolume(), this.dH());
+		}else if(state > currentState){
+			playSound(SoundEffects.ENTITY_PUFFER_FISH_BLOW_OUT, this.getSoundVolume(), this.dH());
+		}
 		datawatcher.set(STATE, state);
+		updateSize();
 	}
 	
 	@Override
