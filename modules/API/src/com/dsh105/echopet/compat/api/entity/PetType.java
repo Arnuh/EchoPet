@@ -54,6 +54,7 @@ public enum PetType{
 	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
+	GOAT("Goat", "Goat Pet", "goat", new Version("1.17-R1"), PetData.SCREAMING),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
 	HOGLIN("Hoglin", "Hoglin Pet", "hoglin"),
 	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR, PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
