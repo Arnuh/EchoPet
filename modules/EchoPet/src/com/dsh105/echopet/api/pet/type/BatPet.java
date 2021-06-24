@@ -27,20 +27,15 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.BAT)
 public class BatPet extends Pet implements IBatPet{
 	
-	boolean hanging;
+	private boolean wandering;
 	
 	public BatPet(Player owner){
 		super(owner);
 	}
 	
 	@Override
-	public void setHanging(boolean flag){
-		((IEntityBatPet) getEntityPet()).setHanging(flag);
-		this.hanging = flag;
-	}
-	
-	@Override
-	public boolean isHanging(){
-		return this.hanging;
+	public void setWandering(boolean flag){
+		((IEntityBatPet) getEntityPet()).setWandering(flag);
+		this.wandering = flag;
 	}
 }

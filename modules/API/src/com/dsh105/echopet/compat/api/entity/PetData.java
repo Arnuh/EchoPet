@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
@@ -283,14 +284,43 @@ public enum PetData{
 		}
 		return Material.SLIME_BALL;
 	}, "Large"),
-	CREAMY("creamy", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.HORSE)){
-			return setHorseColor(pet, Horse.Color.CREAMY);
-		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
-			return setLlamaColor(pet, Llama.Color.CREAMY);
-		}
-		return false;
-	}, Material.YELLOW_WOOL, "Creamy"),
+	//Panda Types, Brown is normal brown wool.
+	NORMAL("normal", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Normal);
+		}else return false;
+	}, Material.WHITE_WOOL, "Normal"),
+	LAZY("lazy", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Lazy);
+		}else return false;
+	}, Material.CAKE, "Lazy"),
+	WORRIED("worried", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Worried);
+		}else return false;
+	}, Material.SLIME_BALL, "Worried"),
+	PLAYFUL("playful", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Playful);
+		}else return false;
+	}, Material.COOKED_SALMON, "Playful"),
+	AGGRESSIVE("aggressive", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Aggressive);
+		}else return false;
+	}, Material.RED_WOOL, "Aggressive"),
+	WEAK("weak", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.PANDA)){
+			return setGene(pet, category, PandaGene.Weak);
+		}else return false;
+	}, Material.WOODEN_SWORD, "Weak"),
+	WANDER("wander", (player, pet, category, flag)->{
+		if(pet instanceof IBatPet bat){
+			bat.setWandering(flag);
+			return true;
+		}else return false;
+	}, Material.ELYTRA, "Wander"),
 	// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, and certain Rabbit Types.
 	WHITE("white", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
@@ -690,37 +720,14 @@ public enum PetData{
 			return setFoxType(pet, FoxType.Snow);
 		}else return false;
 	}, Material.SNOW_BLOCK, "Snow"),
-	//Panda Types, Brown is normal brown wool.
-	NORMAL("normal", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Normal);
-		}else return false;
-	}, Material.WHITE_WOOL, "Normal"),
-	LAZY("lazy", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Lazy);
-		}else return false;
-	}, Material.CAKE, "Lazy"),
-	WORRIED("worried", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Worried);
-		}else return false;
-	}, Material.SLIME_BALL, "Worried"),
-	PLAYFUL("playful", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Playful);
-		}else return false;
-	}, Material.COOKED_SALMON, "Playful"),
-	AGGRESSIVE("aggressive", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Aggressive);
-		}else return false;
-	}, Material.RED_WOOL, "Aggressive"),
-	WEAK("weak", (player, pet, category, flag)->{
-		if(pet.getPetType().equals(PetType.PANDA)){
-			return setGene(pet, category, PandaGene.Weak);
-		}else return false;
-	}, Material.WOODEN_SWORD, "Weak"),
+	CREAMY("creamy", (player, pet, category, flag)->{
+		if(pet.getPetType().equals(PetType.HORSE)){
+			return setHorseColor(pet, Horse.Color.CREAMY);
+		}else if(pet.getPetType().equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
+			return setLlamaColor(pet, Llama.Color.CREAMY);
+		}
+		return false;
+	}, Material.YELLOW_WOOL, "Creamy"),
 	;
 	
 	public static final PetData[] values = values();

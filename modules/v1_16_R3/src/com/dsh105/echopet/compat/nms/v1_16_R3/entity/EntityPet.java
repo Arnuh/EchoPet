@@ -132,6 +132,11 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	}
 	
 	@Override
+	public double getMovementSpeed(){
+		return 0.20000000298023224D;
+	}
+	
+	@Override
 	public boolean isPersistent(){
 		return true;
 	}

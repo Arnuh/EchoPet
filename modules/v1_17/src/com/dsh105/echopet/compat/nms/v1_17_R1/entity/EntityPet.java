@@ -44,6 +44,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -80,7 +81,10 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
 		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
-		getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
+		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
+		if(attributeInstance != null){
+			attributeInstance.setBaseValue(getMovementSpeed());
+		}
 		this.setPathfinding();
 	}
 	
@@ -113,7 +117,13 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		// this.setSize(width, height);
 	}
 	
-	public boolean isPersistent(){
+	@Override
+	public double getMovementSpeed(){
+		return 0.20000000298023224D;
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
 		return true;
 	}
 	
@@ -270,11 +280,22 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		}
 	}
 	
+	public ServerPlayer getValidRider(){
+		Entity passenger = getFirstPassenger();
+		if(!(passenger instanceof ServerPlayer serverPlayer)){
+			return null;
+		}
+		if(serverPlayer.getBukkitEntity() != this.getPlayerOwner().getPlayer()){
+			return null;
+		}
+		return serverPlayer;
+	}
+	
 	//AbstractHorse
 	@Override
 	public void travel(Vec3 vec3d){
-		Entity passenger = getFirstPassenger();
-		if(!(passenger instanceof ServerPlayer) || ((ServerPlayer) passenger).getBukkitEntity() != this.getPlayerOwner().getPlayer()){
+		ServerPlayer passenger = getValidRider();
+		if(passenger == null){
 			this.maxUpStep = 0.5F;
 			this.flyingSpeed = 0.02F;
 			super.travel(vec3d);
@@ -286,9 +307,9 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.setRot(this.getYRot(), this.getXRot());
 		this.yHeadRot = this.yBodyRot = this.getYRot();
 		
-		double motX = ((ServerPlayer) passenger).xxa * 0.5;
+		double motX = passenger.xxa * 0.5;
 		double motY = vec3d.y;
-		double motZ = ((ServerPlayer) passenger).zza;
+		double motZ = passenger.zza;
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
@@ -304,8 +325,8 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 					speed = flySpeed;
 				}
 				try{
-					if(((Player) (passenger.getBukkitEntity())).isFlying()){
-						((Player) (passenger.getBukkitEntity())).setFlying(false);
+					if(getPlayerOwner().isFlying()){
+						getPlayerOwner().setFlying(false);
 					}
 					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
