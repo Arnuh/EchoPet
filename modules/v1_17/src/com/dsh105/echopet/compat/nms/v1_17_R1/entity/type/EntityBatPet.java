@@ -24,15 +24,19 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.BAT)
@@ -41,22 +45,18 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(EntityBatPet.class, EntityDataSerializers.BYTE);
 	private static final int FLAG_RESTING = 0x1;
 	
+	private boolean wandering;
+	private BlockPos targetPosition;
+	private int flyRange = 7;
+	
 	public EntityBatPet(Level world){
 		super(EntityType.BAT, world);
 	}
 	
 	public EntityBatPet(Level world, IPet pet){
 		super(EntityType.BAT, world, pet);
-	}
-	
-	@Override
-	public void setHanging(boolean flag){
-		int i = this.entityData.get(DATA_ID_FLAGS);
-		if(flag){
-			this.entityData.set(DATA_ID_FLAGS, (byte) (i | 0x1));
-		}else{
-			this.entityData.set(DATA_ID_FLAGS, (byte) (i & -0x2));
-		}
+		double sizeModifier = getSizeCategory().getModifier();
+		flyRange = (int) Math.max(1, Math.ceil(pet.getPetType().getStartFollowDistance() * sizeModifier));
 	}
 	
 	@Override
@@ -81,12 +81,77 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		}
 	}
 	
+	@Override
+	protected void customServerAiStep(){
+		super.customServerAiStep();
+		if(!wandering){
+			return;
+		}
+		BlockPos blockposition = this.blockPosition();
+		BlockPos blockposition1 = blockposition.up();
+		if(isResting()){
+			boolean flag = this.isSilent();
+			if(this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition)){
+				if(this.random.nextInt(200) == 0){
+					this.yHeadRot = (float) this.random.nextInt(360);
+				}
+			}else{
+				this.setResting(false);
+				if(!flag){
+					this.level.levelEvent(null, 1025, blockposition, 0);
+				}
+			}
+		}else{
+			if(this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level.getMinBuildHeight())){
+				this.targetPosition = null;
+			}
+			
+			Location ownerLoc = getPlayerOwner().getLocation();
+			
+			// closerThan squares it internally
+			// I think it checking if its too close to the player is better.
+			ServerPlayer owner = ((CraftPlayer) getPlayerOwner()).getHandle();
+			if(this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerThan(owner.position(), 2.0D)){
+				// Use to be off mob x,y,z but he just tries to fly away constantly.
+				this.targetPosition = new BlockPos(ownerLoc.getX() + random.nextInt(flyRange) - random.nextInt(flyRange), ownerLoc.getY() + random.nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + this.random.nextInt(flyRange) - this.random.nextInt(flyRange));
+			}
+			
+			double d0 = (double) this.targetPosition.getX() + 0.5D - this.getX();// Should these values be off the player loc
+			double d1 = (double) this.targetPosition.getY() + 0.1D - this.getY();
+			double d2 = (double) this.targetPosition.getZ() + 0.5D - this.getZ();
+			Vec3 vec3d = this.getDeltaMovement();
+			Vec3 vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * 0.10000000149011612D, (Math.signum(d1) * 0.699999988079071D - vec3d.y) * 0.10000000149011612D, (Math.signum(d2) * 0.5D - vec3d.z) * 0.10000000149011612D);
+			this.setDeltaMovement(vec3d1);
+			float f = (float) (Mth.atan2(vec3d1.z, vec3d1.x) * 57.2957763671875D) - 90.0F;
+			float f1 = Mth.wrapDegrees(f - this.getYRot());
+			this.zza = 0.5F;
+			this.setYRot(this.getYRot() + f1);
+			if(this.random.nextInt(100) == 0 && this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition1)){
+				this.setResting(true);
+			}
+		}
+	}
+	
 	public boolean isResting(){
 		return (this.entityData.get(DATA_ID_FLAGS) & FLAG_RESTING) != 0;
+	}
+	
+	public void setResting(boolean flag){
+		int i = this.entityData.get(DATA_ID_FLAGS);
+		if(flag){
+			this.entityData.set(DATA_ID_FLAGS, (byte) (i | 0x1));
+		}else{
+			this.entityData.set(DATA_ID_FLAGS, (byte) (i & ~0x1));
+		}
 	}
 	
 	@Override
 	public SizeCategory getSizeCategory(){
 		return SizeCategory.TINY;
+	}
+	
+	@Override
+	public void setWandering(boolean flag){
+		this.wandering = flag;
 	}
 }

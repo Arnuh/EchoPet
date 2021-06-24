@@ -46,7 +46,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	@Override
-	public void setHanging(boolean flag){
+	public void setResting(boolean flag){
 		int i = this.datawatcher.get(a).byteValue();
 		if(flag){
 			this.datawatcher.set(a, Byte.valueOf((byte) (i | 0x1)));

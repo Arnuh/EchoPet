@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 
 public enum PetType{
 	
-	BAT("Bat", "Bat Pet", "bat"),
+	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", new Version("1.15-R1"), PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
 	CAT("Cat", "Cat Pet", "cat", new Version("1.14-R1"), new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}),
