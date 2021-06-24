@@ -52,4 +52,9 @@ public class EntityStriderPet extends EntityAgeablePet implements IEntityStrider
 		this.entityData.define(DATA_SUFFOCATING, false);
 		this.entityData.define(DATA_SADDLE_ID, false);
 	}
+	
+	@Override
+	public void setHasSaddle(boolean flag){
+		entityData.set(DATA_SADDLE_ID, flag);
+	}
 }
