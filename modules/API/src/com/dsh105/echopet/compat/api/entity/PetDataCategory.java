@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public enum PetDataCategory{
+	AXOLOTL_VARIANT(Material.getMaterial("AXOLOTL_BUCKET"), "Axolotl Variant", PetData.LUCY, PetData.WILD, PetData.GOLD, PetData.CYAN, PetData.BLUE),
 	CAT_TYPE(Material.SALMON, "Cat Type", PetData.TABBY, PetData.TUXEDO, PetData.CAT_RED, PetData.SIAMESE, PetData.BRITISH_SHORTHAIR, PetData.CALICO, PetData.PERSIAN, PetData.RAGDOLL, PetData.CAT_WHITE, PetData.JELLIE, PetData.CAT_BLACK),
 	OCELOT_TYPE(Material.WHITE_WOOL, "Ocelot Type"),
 	WOOL_COLOR(Material.WHITE_WOOL, "Wool Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),

@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
@@ -329,7 +330,7 @@ public enum PetData{
 			return true;
 		}else return false;
 	}, Material.ELYTRA, "Wander"),
-	// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, and certain Rabbit Types.
+	// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, certain Rabbit Types, Axolotl.
 	WHITE("white", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.RABBIT)){
 			return setRabbitType(pet, Rabbit.Type.WHITE);
@@ -371,12 +372,20 @@ public enum PetData{
 		return setColorByDye(pet, category, DyeColor.LIGHT_GRAY);
 	}, Material.LIGHT_GRAY_WOOL, "Light Gray"),
 	CYAN("cyan", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setVariant(IAxolotlPet.Variant.Cyan);
+			return true;
+		}
 		return setColorByDye(pet, category, DyeColor.CYAN);
 	}, Material.CYAN_WOOL, "Cyan"),
 	PURPLE("purple", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.PURPLE);
 	}, Material.PURPLE_WOOL, "Purple"),
 	BLUE("blue", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setVariant(IAxolotlPet.Variant.Blue);
+			return true;
+		}
 		return setColorByDye(pet, category, DyeColor.BLUE);
 	}, Material.BLUE_WOOL, "Blue"),
 	BROWN("brown", (player, pet, category, flag)->{
@@ -412,6 +421,13 @@ public enum PetData{
 		}
 		return setColorByDye(pet, category, DyeColor.BLACK);
 	}, Material.BLACK_WOOL, "Black"),
+	GOLD("gold", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setVariant(IAxolotlPet.Variant.Gold);
+			return true;
+		}
+		return setRabbitType(pet, Rabbit.Type.GOLD);
+	}, Material.GOLD_BLOCK, "Gold"),
 	// Copypaste of all above colors but using Carpet instead of Wool. Used for Llama
 	WHITE_CARPET("white_carpet", (player, pet, category, flag)->{
 		return setColorByDye(pet, category, DyeColor.WHITE);
@@ -550,9 +566,6 @@ public enum PetData{
 	BLACK_AND_WHITE("black_and_white", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.BLACK_AND_WHITE);
 	}, Material.GRAY_WOOL, "Black and White"),
-	GOLD("gold", (player, pet, category, flag)->{
-		return setRabbitType(pet, Rabbit.Type.GOLD);
-	}, Material.GOLD_BLOCK, "Gold"),
 	SALT_AND_PEPPER("salt_and_pepper", (player, pet, category, flag)->{
 		return setRabbitType(pet, Rabbit.Type.SALT_AND_PEPPER);
 	}, Material.YELLOW_WOOL, "Salt and Pepper"),
@@ -736,7 +749,28 @@ public enum PetData{
 		}
 		return false;
 	}, Material.YELLOW_WOOL, "Creamy"),
-	;
+	// Axolotl Variants that aren't colors. Gold, Cyan, Blue are in the color section
+	LUCY("lucy", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setVariant(IAxolotlPet.Variant.Lucy);
+			return true;
+		}
+		return false;
+	}, Material.PINK_WOOL, "Lucy"),
+	WILD("wild", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setVariant(IAxolotlPet.Variant.Wild);
+			return true;
+		}
+		return false;
+	}, Material.BROWN_WOOL, "Wild"),
+	PLAYING_DEAD("playing_dead", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setPlayingDead(flag);
+			return true;
+		}
+		return false;
+	}, Material.HEART_OF_THE_SEA, "Playing Dead");;
 	
 	public static final PetData[] values = values();
 	

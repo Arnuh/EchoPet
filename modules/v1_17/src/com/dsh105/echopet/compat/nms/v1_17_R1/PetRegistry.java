@@ -43,8 +43,12 @@ public class PetRegistry implements IPetRegistry{
 		for(PetType petType : PetType.values){
 			if(petType.isCompatible()){
 				if(petType.equals(PetType.VILLAGER)){
-					if(!NMSEntityUtil.doVillagerFix()){
+					if(!NMSEntityUtil.fixVillagerSensor()){
 						continue;// Fix failed, prevent villagers.
+					}
+				}else if(petType.equals(PetType.AXOLOTL)){
+					if(!NMSEntityUtil.fixAxolotlSensor()){
+						continue;
 					}
 				}
 				try{
@@ -76,13 +80,7 @@ public class PetRegistry implements IPetRegistry{
 			// Pet type not registered
 			return null;
 		}
-		return performRegistration(registrationEntry, new Callable<IPet>(){
-			
-			@Override
-			public IPet call() throws Exception{
-				return registrationEntry.createFor(owner);
-			}
-		});
+		return performRegistration(registrationEntry, ()->registrationEntry.createFor(owner));
 	}
 	
 	public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable){

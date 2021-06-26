@@ -40,4 +40,10 @@ public class FieldUtil{
 		
 		unsafe.putObject(fieldBase, fieldOffset, value);
 	}
+	
+	public static void setFinalField(Object object, Field field, Object value) throws Exception{
+		long fieldOffset = unsafe.objectFieldOffset(field);
+		
+		unsafe.putObject(object, fieldOffset, value);
+	}
 }

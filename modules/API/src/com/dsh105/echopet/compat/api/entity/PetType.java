@@ -33,7 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public enum PetType{
-	
+	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17-R1"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),

@@ -15,10 +15,11 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_17_R1;
+package com.dsh105.echopet.compat.nms.v1_17_R1.entity.sensor;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.server.level.ServerLevel;
@@ -28,9 +29,9 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
 import net.minecraft.world.phys.AABB;
 
-public class FakeSensorNearestLivingEntities extends NearestLivingEntitySensor{
+public class FakeNearestLivingEntitySensor extends NearestLivingEntitySensor{
 	
-	public FakeSensorNearestLivingEntities(){}
+	public FakeNearestLivingEntitySensor(){}
 	
 	// Straight up copied from NearestLivingEntitySensor except with an extra instanceof check
 	// I just used intellij for the code.
@@ -41,6 +42,7 @@ public class FakeSensorNearestLivingEntities extends NearestLivingEntitySensor{
 		List<LivingEntity> var3 = var0.getEntitiesOfClass(LivingEntity.class, var2, (var1x)->{
 			return var1x != var1 && var1x.isAlive() && !(var1x instanceof EntityPet);
 		});
+		Objects.requireNonNull(var1);
 		var3.sort(Comparator.comparingDouble(var1::distanceToSqr));
 		Brain<?> var4 = var1.getBrain();
 		var4.setMemory(MemoryModuleType.NEAREST_LIVING_ENTITIES, var3);
