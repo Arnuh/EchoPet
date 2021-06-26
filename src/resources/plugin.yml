@@ -104,6 +104,8 @@ permissions:
     echopet.petadmin.selector:
         default: op
         description: Give yourself the Pet Selector
+    echopet.pet.type.axolotl:
+        default: op
     echopet.pet.type.bat:
         default: op
     echopet.pet.type.bee:
@@ -244,6 +246,8 @@ permissions:
         default: op
     echopet.pet.type.zombievillager:
         default: op
+    echopet.pet.default.set.type.axolotl:
+        default: op
     echopet.pet.default.set.type.bat:
         default: op
     echopet.pet.default.set.type.bee:
@@ -383,6 +387,24 @@ permissions:
     echopet.pet.default.set.type.zombiehorse:
         default: op
     echopet.pet.default.set.type.zombievillager:
+        default: op
+    echopet.pet.type.axolotl.hat:
+        default: op
+    echopet.pet.type.axolotl.ride:
+        default: op
+    echopet.pet.type.axolotl.baby:
+        default: op
+    echopet.pet.type.axolotl.playing_dead:
+        default: op
+    echopet.pet.type.axolotl.lucy:
+        default: op
+    echopet.pet.type.axolotl.wild:
+        default: op
+    echopet.pet.type.axolotl.gold:
+        default: op
+    echopet.pet.type.axolotl.cyan:
+        default: op
+    echopet.pet.type.axolotl.blue:
         default: op
     echopet.pet.type.bat.hat:
         default: op
@@ -1290,6 +1312,8 @@ permissions:
         default: op
     echopet.pet.type.zombievillager.master:
         default: op
+    echopet.petadmin.type.axolotl:
+        default: op
     echopet.petadmin.type.bat:
         default: op
     echopet.petadmin.type.bee:
@@ -1429,6 +1453,8 @@ permissions:
     echopet.petadmin.type.zombiehorse:
         default: op
     echopet.petadmin.type.zombievillager:
+        default: op
+    echopet.petadmin.hat.axolotl:
         default: op
     echopet.petadmin.hat.bat:
         default: op
@@ -1570,6 +1596,8 @@ permissions:
         default: op
     echopet.petadmin.hat.zombievillager:
         default: op
+    echopet.petadmin.ride.axolotl:
+        default: op
     echopet.petadmin.ride.bat:
         default: op
     echopet.petadmin.ride.bee:
@@ -1709,6 +1737,8 @@ permissions:
     echopet.petadmin.ride.zombiehorse:
         default: op
     echopet.petadmin.ride.zombievillager:
+        default: op
+    echopet.petadmin.default.set.type.axolotl:
         default: op
     echopet.petadmin.default.set.type.bat:
         default: op
@@ -1880,6 +1910,7 @@ permissions:
         default: op
         description: 'All pet type permissions'
         children:
+            echopet.pet.type.axolotl: true
             echopet.pet.type.bat: true
             echopet.pet.type.bee: true
             echopet.pet.type.blaze: true
@@ -1954,6 +1985,7 @@ permissions:
         default: op
         description: 'All hat permissions'
         children:
+            echopet.pet.type.axolotl.hat: true
             echopet.pet.type.bat.hat: true
             echopet.pet.type.bee.hat: true
             echopet.pet.type.blaze.hat: true
@@ -2028,6 +2060,7 @@ permissions:
         default: op
         description: 'All ride permissions'
         children:
+            echopet.pet.type.axolotl.ride: true
             echopet.pet.type.bat.ride: true
             echopet.pet.type.bee.ride: true
             echopet.pet.type.blaze.ride: true
@@ -2102,6 +2135,7 @@ permissions:
         default: op
         description: 'All baby permissions'
         children:
+            echopet.pet.type.axolotl.baby: true
             echopet.pet.type.bee.baby: true
             echopet.pet.type.cat.baby: true
             echopet.pet.type.chicken.baby: true
@@ -2146,6 +2180,7 @@ permissions:
         default: op
         description: 'All pet types for /pet default set <...>'
         children:
+            echopet.pet.default.set.type.axolotl: true
             echopet.pet.default.set.type.bat: true
             echopet.pet.default.set.type.bee: true
             echopet.pet.default.set.type.blaze: true
@@ -2241,6 +2276,7 @@ permissions:
         default: op
         description: 'All pet type permissions for PetAdmin commands'
         children:
+            echopet.petadmin.type.axolotl: true
             echopet.petadmin.type.bat: true
             echopet.petadmin.type.bee: true
             echopet.petadmin.type.blaze: true
@@ -2315,6 +2351,7 @@ permissions:
         default: op
         description: 'All pet hat permissions for PetAdmin commands'
         children:
+            echopet.petadmin.hat.axolotl: true
             echopet.petadmin.hat.bat: true
             echopet.petadmin.hat.bee: true
             echopet.petadmin.hat.blaze: true
@@ -2389,6 +2426,7 @@ permissions:
         default: op
         description: 'All pet ride permissions for PetAdmin commands'
         children:
+            echopet.petadmin.ride.axolotl: true
             echopet.petadmin.ride.bat: true
             echopet.petadmin.ride.bee: true
             echopet.petadmin.ride.blaze: true
@@ -2470,6 +2508,7 @@ permissions:
         default: op
         description: 'All pet types for /petadmin default set <...>'
         children:
+            echopet.petadmin.default.set.type.axolotl: true
             echopet.petadmin.default.set.type.bat: true
             echopet.petadmin.default.set.type.bee: true
             echopet.petadmin.default.set.type.blaze: true
@@ -2540,6 +2579,19 @@ permissions:
             echopet.petadmin.default.set.type.zombie: true
             echopet.petadmin.default.set.type.zombiehorse: true
             echopet.petadmin.default.set.type.zombievillager: true
+    echopet.pet.type.axolotl.*:
+        default: op
+        description: 'All axolotl pet data permissions'
+        children:
+            echopet.pet.type.axolotl.hat: true
+            echopet.pet.type.axolotl.ride: true
+            echopet.pet.type.axolotl.baby: true
+            echopet.pet.type.axolotl.playing_dead: true
+            echopet.pet.type.axolotl.lucy: true
+            echopet.pet.type.axolotl.wild: true
+            echopet.pet.type.axolotl.gold: true
+            echopet.pet.type.axolotl.cyan: true
+            echopet.pet.type.axolotl.blue: true
     echopet.pet.type.bat.*:
         default: op
         description: 'All bat pet data permissions'

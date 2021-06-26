@@ -17,26 +17,27 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
-import java.util.function.Supplier;
+import java.util.Objects;
 import com.dsh105.echopet.compat.api.reflection.FieldUtil;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.sensor.CustomSensorTypes;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 
 /*
  * From EntityAPI :)
  */
+@SuppressWarnings("unchecked")
 public class NMSEntityUtil{
 	
 	private static Field jumpField;
@@ -94,139 +95,6 @@ public class NMSEntityUtil{
 		}
 	}
 	
-	/*public static NavigationAbstract getNavigation(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){
-			return getNavigation(((CraftLivingEntity) livingEntity).getHandle());
-		}
-		return null;
-	}
-	
-	public static NavigationAbstract getNavigation(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){
-			return ((EntityInsentient) entityLiving).getNavigation();
-		}
-		return null;
-	}
-	
-	public static EntitySenses getEntitySenses(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){
-			return getEntitySenses(((CraftLivingEntity) livingEntity).getHandle());
-		}
-		return null;
-	}
-	
-	public static EntitySenses getEntitySenses(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){
-			return ((EntityInsentient) entityLiving).getEntitySenses();
-		}
-		return null;
-	}
-	
-	public static ControllerJump getControllerJump(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){
-			return getControllerJump(((CraftLivingEntity) livingEntity).getHandle());
-		}
-		return null;
-	}
-	
-	public static ControllerJump getControllerJump(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){
-			return ((EntityInsentient) entityLiving).getControllerJump();
-		}
-		return null;
-	}
-	
-	public static ControllerMove getControllerMove(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){
-			return getControllerMove(((CraftLivingEntity) livingEntity).getHandle());
-		}
-		return null;
-	}
-	
-	public static ControllerMove getControllerMove(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){
-			return ((EntityInsentient) entityLiving).getControllerMove();
-		}
-		return null;
-	}
-	
-	public static ControllerLook getControllerLook(LivingEntity livingEntity){
-		if(livingEntity instanceof CraftLivingEntity){
-			return getControllerLook(((CraftLivingEntity) livingEntity).getHandle());
-		}
-		return null;
-	}
-	
-	public static ControllerLook getControllerLook(EntityLiving entityLiving){
-		if(entityLiving instanceof EntityInsentient){
-			return ((EntityInsentient) entityLiving).getControllerLook();
-		}
-		return null;
-	}
-	
-	public static boolean isInGuardedAreaOf(EntityLiving entityLiving, int x, int y, int z){
-		// TODO: not used currently
-		return false;
-		/*if (entityLiving instanceof EntityCreature) {
-		    return ((EntityCreature) entityLiving).d(new BlockPosition(x, y, z));
-		} else {
-		    return false;
-		}*//*
-	}*/
-	
-	/*
-	 * Hacky stuff to get around doTick() becoming final
-	 */
-	// protected static FieldAccessor<Set<?>> GOALS;
-	// protected static FieldAccessor<Set<?>> ACTIVE_GOALS;
-	// protected static MethodAccessor<Void> ADD_GOAL;
-	// protected static FieldAccessor<Object> GOAL_SELECTOR;
-	
-	public static void clearGoals(Object nmsEntityHandle){
-		/*if(GOALS == null || ACTIVE_GOALS == null || GOAL_SELECTOR == null){
-			initializeFields();
-		}
-		GOALS.get(GOAL_SELECTOR.get(nmsEntityHandle)).clear();
-		ACTIVE_GOALS.get(GOAL_SELECTOR.get(nmsEntityHandle)).clear();*/
-	}
-	
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	protected static void initializeFields(){
-		/*try{
-			ClassTemplate goalTemplate = new Reflection().reflect(MinecraftReflection.getMinecraftClass("PathfinderGoalSelector"));
-			List<SafeMethod<Void>> methodCandidates = goalTemplate.getSafeMethods(withArguments(int.class, MinecraftReflection.getMinecraftClass("PathfinderGoal")));
-			if(methodCandidates.size() > 0){
-				ADD_GOAL = methodCandidates.get(0).getAccessor();
-			}else{
-				throw new RuntimeException("Failed to get the addGoal method!");
-			}
-			List<SafeField<Set<?>>> fieldCandidates = goalTemplate.getSafeFields(withType(Set.class));
-			if(fieldCandidates.size() > 1){
-				GOALS = fieldCandidates.get(0).getAccessor();
-				ACTIVE_GOALS = fieldCandidates.get(0).getAccessor();
-			}else{
-				throw new RuntimeException("Failed to initialize the goal-lists!");
-			}
-			// The GoalSelector
-			ClassTemplate entityTemplate = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityInsentient"));
-			List<SafeField<Object>> candidates = entityTemplate.getSafeFields(withType(goalTemplate.getReflectedClass()));
-			if(candidates.size() > 0){
-				GOAL_SELECTOR = candidates.get(0).getAccessor(); // the normal selector is the first one
-			}else{
-				throw new RuntimeException("Failed to initialize the GoalSelector field for the entities");
-			}
-		}catch(Exception ಠ_ಠ){
-			throw new RuntimeException("Failed to initialize the goal-related fields!", ಠ_ಠ);
-		}*/
-	}
-	
-	private static final Supplier<NearestLivingEntitySensor> sensorSupplier = FakeSensorNearestLivingEntities::new;
-	
-	private static ImmutableList<SensorType<? extends Sensor<? super Villager>>> getSensors(){
-		// From EntityVillager
-		return ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, SensorType.NEAREST_ITEMS, SensorType.NEAREST_BED, SensorType.HURT_BY, SensorType.VILLAGER_HOSTILES, SensorType.VILLAGER_BABIES, SensorType.SECONDARY_POIS, SensorType.GOLEM_DETECTED);
-	}
-	
 	/** Villager behavior does casts on behavior memory "INTERACTION_TARGET"<br>
 	 * These casts assume the result is a EntityVillager, and when its not, we crash<br>
 	 * If we take control of SensorNearestLivingEntities we can attempt to prevent our custom entities from appearing in behavior memory.<br>
@@ -234,34 +102,40 @@ public class NMSEntityUtil{
 	 *<br>
 	 * This requires the plugin to load before worlds or else villagers can be created before the fix is applied.
 	 */
-	public static boolean doVillagerFix(){
-		
+	public static boolean fixVillagerSensor(){
+		return fix(Villager.class, CustomSensorTypes.ORG_NEAREST_LIVING_ENTITIES, CustomSensorTypes.NEAREST_LIVING_ENTITIES);
+	}
+	
+	public static boolean fixAxolotlSensor(){
+		return fix(Axolotl.class, CustomSensorTypes.ORG_NEAREST_ADULT, CustomSensorTypes.NEAREST_ADULT);
+	}
+	
+	private static boolean fix(Class<?> entityClass, SensorType<?> originalSensor, SensorType<?> customSensor){
 		try{
-			// Probably have a cleaner way to do this but I want to get rid of most the reflection util classes and depends anyway.
-			
-			Constructor<?> constructor = SensorType.class.getDeclaredConstructors()[0];
-			constructor.setAccessible(true);
+			//System.out.println(entityClass.getSimpleName() + " - " + (originalSensor != null));
+			for(Field field : entityClass.getDeclaredFields()){
+				if(!(field.getGenericType() instanceof ParameterizedType type)){
+					continue;
+				}
+				String typeName = type.getActualTypeArguments()[0].getTypeName();
+				if(!typeName.contains(SensorType.class.getSimpleName())){// meh
+					continue;
+				}
+				field.setAccessible(true);
+				ImmutableList<? extends SensorType<? extends Sensor<?>>> sensors = (ImmutableList<? extends SensorType<? extends Sensor<?>>>) field.get(null);
+				
+				FieldUtil.setFinalStatic(field, copyAndReplace(sensors, originalSensor, customSensor));
+				field.setAccessible(false);
+			}
 			
 			// Replace the field in the class enum in case its for some reason grabbed later.
 			for(Field field : SensorType.class.getDeclaredFields()){
+				if(Modifier.isPrivate(field.getModifiers())) continue;
 				SensorType<?> sensor = (SensorType<?>) field.get(null);
-				if(sensor.create() instanceof NearestLivingEntitySensor){
-					FieldUtil.setFinalStatic(field, constructor.newInstance(sensorSupplier));
-					//System.out.println("Found sensor field: " + field.getName());
-					break;
-				}
-			}
-			
-			// Replace the cached list of sensors for villagers.
-			for(Field field : Villager.class.getDeclaredFields()){
-				if(!(field.getGenericType() instanceof ParameterizedType)){
-					continue;
-				}
-				ParameterizedType type = (ParameterizedType) field.getGenericType();
-				String typeName = type.getActualTypeArguments()[0].getTypeName();
-				if(typeName.contains(SensorType.class.getSimpleName())){// meh
-					FieldUtil.setFinalStatic(field, getSensors());
-					//System.out.println("Found sensor list: " + field.getName());
+				//System.out.println(field.getName() + " - " + (sensor != null));
+				if(Objects.equals(sensor, originalSensor)){
+					FieldUtil.setFinalStatic(field, customSensor);
+					//System.out.println("Fixed SensorType enum");
 					break;
 				}
 			}
@@ -270,5 +144,19 @@ public class NMSEntityUtil{
 			ex.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static ImmutableList<Object> copyAndReplace(ImmutableList<? extends SensorType<?>> copyFrom, SensorType<?> replace, SensorType<?> replaceWith){
+		// Safest? way to replace only the sensor we need to.
+		// Supports if Mojang ever changes the list without anyone realizing.
+		ImmutableList.Builder<Object> builder = ImmutableList.builder();
+		for(Object o : copyFrom){
+			if(Objects.equals(o, replace)){
+				builder.add(replaceWith);
+			}else{
+				builder.add(o);
+			}
+		}
+		return builder.build();
 	}
 }

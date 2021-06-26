@@ -176,7 +176,6 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	
 	public void setPathfinding(){
 		try{
-			NMSEntityUtil.clearGoals(this);
 			petGoalSelector = new PetGoalSelector();
 			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
 			petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
