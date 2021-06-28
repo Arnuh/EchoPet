@@ -73,6 +73,10 @@ public class ConfigOptions extends Options{
 		return this.config.getString("commandString", "pet");
 	}
 	
+	public double getWalkSpeed(PetType petType){
+		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".walkSpeed", 0.37D);
+	}
+	
 	public float getRideSpeed(PetType petType){
 		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
 	}
@@ -223,6 +227,7 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".teleportDistance", 10);
 			set("pets." + configOption + ".followSpeedModifier", 1);
 			
+			set("pets." + configOption + ".walkSpeed", 0.37D);
 			set("pets." + configOption + ".rideSpeed", 0.2D);
 			set("pets." + configOption + ".flySpeed", 0.5D);
 			set("pets." + configOption + ".jumpHeight", 0.6D);

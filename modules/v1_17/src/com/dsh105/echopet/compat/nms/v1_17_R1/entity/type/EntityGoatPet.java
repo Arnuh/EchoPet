@@ -50,11 +50,6 @@ public class EntityGoatPet extends EntityAgeablePet implements IEntityGoatPet{
 	}
 	
 	@Override
-	public double getMovementSpeed(){
-		return 0.20000000298023224D;
-	}
-	
-	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_IS_SCREAMING_GOAT, false);

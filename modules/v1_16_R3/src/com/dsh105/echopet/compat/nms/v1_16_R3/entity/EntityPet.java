@@ -37,6 +37,7 @@ import com.dsh105.echopet.compat.nms.v1_16_R3.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_16_R3.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_16_R3.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_16_R3.entity.ai.PetGoalLookAtPlayer;
+import net.minecraft.server.v1_16_R3.AttributeModifiable;
 import net.minecraft.server.v1_16_R3.Block;
 import net.minecraft.server.v1_16_R3.BlockPosition;
 import net.minecraft.server.v1_16_R3.DamageSource;
@@ -48,6 +49,7 @@ import net.minecraft.server.v1_16_R3.EntityPlayer;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.EnumHand;
 import net.minecraft.server.v1_16_R3.EnumInteractionResult;
+import net.minecraft.server.v1_16_R3.GenericAttributes;
 import net.minecraft.server.v1_16_R3.IRegistry;
 import net.minecraft.server.v1_16_R3.ItemStack;
 import net.minecraft.server.v1_16_R3.MinecraftKey;
@@ -99,6 +101,10 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
 		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
+		AttributeModifiable attributeInstance = getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
+		if(attributeInstance != null){
+			attributeInstance.setValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
+		}
 		this.setPathfinding();
 	}
 	
@@ -129,11 +135,6 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	@Override
 	public void setEntitySize(float width, float height){
 		// this.setSize(width, height);
-	}
-	
-	@Override
-	public double getMovementSpeed(){
-		return 0.20000000298023224D;
 	}
 	
 	@Override
@@ -406,7 +407,6 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 			}
 		}
 		//Could just check if motY != 0.0 and do setMot for jumps?
-		//getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).getValue() for horses?
 		this.q(speed);// before "looting" methodProfiler
 		super.g(new Vec3D(motX, motY, motZ));
 	}
