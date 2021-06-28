@@ -33,6 +33,8 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 
 /*
  * From EntityAPI :)
@@ -42,36 +44,39 @@ public class NMSEntityUtil{
 	
 	private static Field jumpField;
 	
-	static{
-		try{
-			FakeEntity fakeEntity = new FakeEntity();
-			fakeEntity.setJumping(true);
-			for(Field field : LivingEntity.class.getDeclaredFields()){
-				if(!Modifier.isProtected(field.getModifiers())){
-					continue;
-				}
-				if(boolean.class.isAssignableFrom(field.getType())){
-					field.setAccessible(true);
-					if(field.getBoolean(fakeEntity)){
-						jumpField = field;
-						break;
-					}
-					field.setAccessible(false);
-				}
-			}
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
-	
 	public static Field getJumpingField(){
+		if(jumpField == null){
+			// How should this be handled if it fails?
+			try{
+				FakeEntity fakeEntity = new FakeEntity();
+				fakeEntity.setJumping(true);
+				for(Field field : LivingEntity.class.getDeclaredFields()){
+					if(!Modifier.isProtected(field.getModifiers())){
+						continue;
+					}
+					if(boolean.class.isAssignableFrom(field.getType())){
+						field.setAccessible(true);
+						boolean ret = field.getBoolean(fakeEntity);
+						field.setAccessible(false);
+						if(ret){
+							jumpField = field;
+							break;
+						}
+					}
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
 		return jumpField;
 	}
 	
 	private static class FakeEntity extends LivingEntity{
 		
 		protected FakeEntity(){
-			super(EntityType.BAT, null);
+			// Paper requires a World in the Entity class
+			// shieldBlockingDelay = this.level.paperConfig.shieldBlockingDelay;
+			super(EntityType.BAT, Bukkit.getWorlds().stream().findFirst().map(CraftWorld.class::cast).map(CraftWorld::getHandle).orElse(null));
 		}
 		
 		@Override
