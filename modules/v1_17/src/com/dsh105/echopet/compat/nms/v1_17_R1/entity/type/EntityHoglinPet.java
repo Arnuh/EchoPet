@@ -44,11 +44,6 @@ public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPe
 	}
 	
 	@Override
-	public double getMovementSpeed(){
-		return 0.30000001192092896D;
-	}
-	
-	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true);//Default to true to fix shaking when in overworld.

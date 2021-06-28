@@ -39,9 +39,4 @@ public class EntityZoglinPet extends EntityAgeablePet implements IEntityZoglinPe
 	public EntityZoglinPet(World world, IPet pet){
 		super(EntityTypes.ZOGLIN, world, pet);
 	}
-	
-	@Override
-	public double getMovementSpeed(){
-		return 0.30000001192092896D;
-	}
 }

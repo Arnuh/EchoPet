@@ -78,12 +78,12 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		// this.fireProof = true;
 		// this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
 		// this.setHealth((float) pet.getPetType().getMaxHealth());
-		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
 		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
+		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(getMovementSpeed());
+			attributeInstance.setBaseValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
 		}
 		this.setPathfinding();
 	}
@@ -115,11 +115,6 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	@Override
 	public void setEntitySize(float width, float height){
 		// this.setSize(width, height);
-	}
-	
-	@Override
-	public double getMovementSpeed(){
-		return 0.20000000298023224D;
 	}
 	
 	@Override
