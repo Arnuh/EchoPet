@@ -78,11 +78,13 @@ public abstract class Pet implements IPet{
 		}
 	}
 	
+	@Override
 	public boolean isSpawned(){
 		if(entityPet == null) return false;
 		return !entityPet.isDead();
 	}
 	
+	@Override
 	public IEntityPet spawnPet(Player owner, boolean ignoreHidden){
 		if(entityPet != null) return entityPet;
 		if(owner != null){
@@ -93,7 +95,8 @@ public abstract class Pet implements IPet{
 				this.applyPetName();
 				this.teleportToOwner();
 				for(PetData pd : getPetData()){
-					if(pd.getAction() != null) pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
+					if(pd.getAction() == null) continue;
+					pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 				}
 				for(Trail t : trails){
 					t.start(this);
@@ -354,26 +357,30 @@ public abstract class Pet implements IPet{
 		if(!flag){
 			if(getCraftPet() != null){
 				getCraftPet().eject();
-				if(this.getEntityPet() instanceof IEntityNoClipPet){
-					((IEntityNoClipPet) this.getEntityPet()).noClip(true);
+				if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
+					noClipPet.noClip(true);
 				}
 			}
 			ownerIsMounting = false;
 		}else{
 			if(getCraftPet() != null){
-				if(getRider() != null && getRider().isSpawned()) getRider().removePet(false, true);
+				if(getRider() != null && getRider().isSpawned()){
+					getRider().removePet(false, true);
+				}
 				new BukkitRunnable(){
 					
 					@Override
 					public void run(){
 						getCraftPet().addPassenger(getOwner());
 						ownerIsMounting = false;
-						if(getEntityPet() instanceof IEntityNoClipPet){
-							((IEntityNoClipPet) getEntityPet()).noClip(false);
+						if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
+							noClipPet.noClip(false);
 						}
 					}
 				}.runTaskLater(EchoPet.getPlugin(), 5L);
-			}else ownerIsMounting = false;
+			}else{
+				ownerIsMounting = false;
+			}
 		}
 		this.teleportToOwner();
 		this.getEntityPet().resizeBoundingBox(flag);
@@ -381,8 +388,7 @@ public abstract class Pet implements IPet{
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		Location l = this.getLocation().clone();
 		l.setY(l.getY() - 1D);
-		// getLocation().getWorld().spawnParticle(Particle.BLOCK_DUST, getLocation(), 1);
-		// Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
+		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
 	@Override
@@ -404,11 +410,11 @@ public abstract class Pet implements IPet{
 		this.getEntityPet().resizeBoundingBox(flag);
 		this.isHat = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		// Particle.PORTAL.builder().at(getLocation()).show();
 		Location l = this.getLocation().clone();
 		l.setY(l.getY() - 1D);
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		// Particle.PORTAL.builder().at(getLocation()).show();
+		// Lots of ways call setAsHat, might as well properly sync the petdata in here.
+		EchoPet.getManager().setData(this, PetData.HAT, isHat);
 	}
 	
 	@Override
@@ -447,6 +453,7 @@ public abstract class Pet implements IPet{
 		return this.rider;
 	}
 	
+	@Override
 	public void setRider(IPet newRider){
 		if(!isSpawned()) return;
 		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
@@ -465,30 +472,37 @@ public abstract class Pet implements IPet{
 		getCraftPet().addPassenger(rider.getCraftPet());
 	}
 	
+	@Override
 	public InventoryView getInventoryView(){
 		return dataMenu;
 	}
 	
+	@Override
 	public void setInventoryView(InventoryView dataMenu){
 		this.dataMenu = dataMenu;
 	}
 	
+	@Override
 	public List<Trail> getTrails(){
 		return this.trails;
 	}
 	
+	@Override
 	public void addTrail(Trail trail){
 		trails.add(trail);
 	}
 	
+	@Override
 	public void removeTrail(Trail trail){
 		trails.remove(trail);
 	}
 	
+	@Override
 	public boolean isHidden(){
 		return isHidden;
 	}
 	
+	@Override
 	public void setHidden(boolean isHidden){
 		this.isHidden = isHidden;
 	}

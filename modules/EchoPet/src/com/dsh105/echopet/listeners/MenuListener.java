@@ -43,11 +43,10 @@ public class MenuListener implements Listener{
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onInventoryClick(InventoryClickEvent event){
-		if(!(event.getWhoClicked() instanceof Player)){
+		if(!(event.getWhoClicked() instanceof Player player)){
 			return;
 		}
 		
-		Player player = (Player) event.getWhoClicked();
 		if(event.getView().getTitle().contains("EchoPet DataMenu")){
 			event.setCancelled(true);
 			event.setResult(Event.Result.DENY);
@@ -157,7 +156,9 @@ public class MenuListener implements Listener{
 			IPet pet = EchoPet.getManager().getPet(player);
 			if(pet == null) return;
 			pet.setInventoryView(null);
-			if(pet.getRider() != null) pet.getRider().setInventoryView(null);
+			if(pet.getRider() != null){
+				pet.getRider().setInventoryView(null);
+			}
 		}
 	}
 }
