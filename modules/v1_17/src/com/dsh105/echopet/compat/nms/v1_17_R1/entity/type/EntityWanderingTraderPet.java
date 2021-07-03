@@ -27,13 +27,13 @@ import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.6F, height = 1.95F)
 @EntityPetType(petType = PetType.WANDERINGTRADER)
-public class EntityWanderingTraderVillagerPet extends EntityAbstractVillagerPet implements IEntityWanderingTraderPet{
+public class EntityWanderingTraderPet extends EntityAbstractVillagerPet implements IEntityWanderingTraderPet{
 	
-	public EntityWanderingTraderVillagerPet(Level world){
+	public EntityWanderingTraderPet(Level world){
 		super(EntityType.WANDERING_TRADER, world);
 	}
 	
-	public EntityWanderingTraderVillagerPet(Level world, IPet pet){
+	public EntityWanderingTraderPet(Level world, IPet pet){
 		super(EntityType.WANDERING_TRADER, world, pet);
 	}
 }
