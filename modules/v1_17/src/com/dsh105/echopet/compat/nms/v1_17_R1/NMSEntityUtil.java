@@ -49,18 +49,22 @@ public class NMSEntityUtil{
 			// How should this be handled if it fails?
 			try{
 				FakeEntity fakeEntity = new FakeEntity();
-				fakeEntity.setJumping(true);
 				for(Field field : LivingEntity.class.getDeclaredFields()){
-					if(!Modifier.isProtected(field.getModifiers())){
+					// Paper makes it public in 1.17
+					/*if(!Modifier.isProtected(field.getModifiers())){
 						continue;
-					}
+					}*/
 					if(boolean.class.isAssignableFrom(field.getType())){
 						field.setAccessible(true);
+						fakeEntity.setJumping(true);
 						boolean ret = field.getBoolean(fakeEntity);
-						field.setAccessible(false);
-						if(ret){
+						fakeEntity.setJumping(false);
+						boolean ret2 = field.getBoolean(fakeEntity);
+						if(ret != ret2){
 							jumpField = field;
 							break;
+						}else{ // Leave it accessible if its the proper field
+							field.setAccessible(false);
 						}
 					}
 				}
