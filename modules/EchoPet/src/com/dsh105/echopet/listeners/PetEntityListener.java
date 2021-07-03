@@ -18,6 +18,8 @@
 package com.dsh105.echopet.listeners;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.event.PetDamageEvent;
 import com.dsh105.echopet.compat.api.event.PetInteractEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -36,6 +38,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
+import org.spigotmc.event.entity.EntityDismountEvent;
 
 public class PetEntityListener implements Listener{
 	
@@ -58,15 +61,36 @@ public class PetEntityListener implements Listener{
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onDismount(VehicleExitEvent event){
-		Entity e = event.getVehicle();
-		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet){
-			IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
-			if(entityPet.getPet().isOwnerRiding() && !entityPet.getPet().isOwnerInMountingProcess()){
-				Lang.sendTo(entityPet.getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
-				entityPet.getPet().ownerRidePet(false);
-			}
+	public void onVehicleDismount(VehicleExitEvent event){
+		// Leaving this incase you can use a Vehicle as a pet one day.
+		if(!(event.getExited() instanceof Player)){
+			return;
 		}
+		if(!(ReflectionUtil.getEntityHandle(event.getVehicle()) instanceof IEntityPet entityPet)){
+			return;
+		}
+		handleDismount(entityPet.getPet());
+	}
+	
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onEntityDismount(EntityDismountEvent event){
+		if(!(event.getEntity() instanceof Player)){
+			return;
+		}
+		if(!(ReflectionUtil.getEntityHandle(event.getDismounted()) instanceof IEntityPet entityPet)){
+			return;
+		}
+		handleDismount(entityPet.getPet());
+	}
+	
+	private void handleDismount(IPet pet){
+		// I assume the dismount is called via eject which means the mounting process is true?
+		// Guess I will see if this isn't safe.
+		if(!pet.isOwnerRiding()/* || pet.isOwnerInMountingProcess()*/){
+			return;
+		}
+		Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_OFF.toString());
+		pet.ownerRidePet(false);
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -80,8 +104,7 @@ public class PetEntityListener implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true) // Highest because we don't want to trust other plugins modifying it.
 	public void onEntityDamage(EntityDamageEvent event){
 		Entity e = event.getEntity();
-		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet){
-			IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet entityPet){
 			PetDamageEvent damageEvent = new PetDamageEvent(entityPet.getPet(), event.getCause(), event.getDamage());
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(damageEvent);
 			event.setDamage(damageEvent.getDamage());
@@ -92,8 +115,7 @@ public class PetEntityListener implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event){
 		Entity e = event.getEntity();
-		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet){
-			IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet entityPet){
 			Entity damager = event.getDamager();
 			if(damager instanceof Player){
 				PetInteractEvent iEvent = new PetInteractEvent(entityPet.getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);

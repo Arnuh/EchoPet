@@ -129,8 +129,7 @@ public class PetOwnerListener implements Listener{
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerDamage(EntityDamageEvent event){
-		if(event.getEntity() instanceof Player){
-			Player p = (Player) event.getEntity();
+		if(event.getEntity() instanceof Player p){
 			if(event.getCause() == EntityDamageEvent.DamageCause.FALL){
 				IPet pet = EchoPet.getManager().getPet(p);
 				if(pet != null && pet.isOwnerRiding()){
