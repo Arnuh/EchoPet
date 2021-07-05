@@ -144,6 +144,8 @@ permissions:
         default: op
     echopet.pet.type.giant:
         default: op
+    echopet.pet.type.glowsquid:
+        default: op
     echopet.pet.type.goat:
         default: op
     echopet.pet.type.guardian:
@@ -285,6 +287,8 @@ permissions:
     echopet.pet.default.set.type.ghast:
         default: op
     echopet.pet.default.set.type.giant:
+        default: op
+    echopet.pet.default.set.type.glowsquid:
         default: op
     echopet.pet.default.set.type.goat:
         default: op
@@ -585,6 +589,12 @@ permissions:
     echopet.pet.type.giant.hat:
         default: op
     echopet.pet.type.giant.ride:
+        default: op
+    echopet.pet.type.glowsquid.hat:
+        default: op
+    echopet.pet.type.glowsquid.ride:
+        default: op
+    echopet.pet.type.glowsquid.dark:
         default: op
     echopet.pet.type.goat.hat:
         default: op
@@ -1352,6 +1362,8 @@ permissions:
         default: op
     echopet.petadmin.type.giant:
         default: op
+    echopet.petadmin.type.glowsquid:
+        default: op
     echopet.petadmin.type.goat:
         default: op
     echopet.petadmin.type.guardian:
@@ -1493,6 +1505,8 @@ permissions:
     echopet.petadmin.hat.ghast:
         default: op
     echopet.petadmin.hat.giant:
+        default: op
+    echopet.petadmin.hat.glowsquid:
         default: op
     echopet.petadmin.hat.goat:
         default: op
@@ -1636,6 +1650,8 @@ permissions:
         default: op
     echopet.petadmin.ride.giant:
         default: op
+    echopet.petadmin.ride.glowsquid:
+        default: op
     echopet.petadmin.ride.goat:
         default: op
     echopet.petadmin.ride.guardian:
@@ -1777,6 +1793,8 @@ permissions:
     echopet.petadmin.default.set.type.ghast:
         default: op
     echopet.petadmin.default.set.type.giant:
+        default: op
+    echopet.petadmin.default.set.type.glowsquid:
         default: op
     echopet.petadmin.default.set.type.goat:
         default: op
@@ -1930,6 +1948,7 @@ permissions:
             echopet.pet.type.fox: true
             echopet.pet.type.ghast: true
             echopet.pet.type.giant: true
+            echopet.pet.type.glowsquid: true
             echopet.pet.type.goat: true
             echopet.pet.type.guardian: true
             echopet.pet.type.hoglin: true
@@ -2005,6 +2024,7 @@ permissions:
             echopet.pet.type.fox.hat: true
             echopet.pet.type.ghast.hat: true
             echopet.pet.type.giant.hat: true
+            echopet.pet.type.glowsquid.hat: true
             echopet.pet.type.goat.hat: true
             echopet.pet.type.guardian.hat: true
             echopet.pet.type.hoglin.hat: true
@@ -2080,6 +2100,7 @@ permissions:
             echopet.pet.type.fox.ride: true
             echopet.pet.type.ghast.ride: true
             echopet.pet.type.giant.ride: true
+            echopet.pet.type.glowsquid.ride: true
             echopet.pet.type.goat.ride: true
             echopet.pet.type.guardian.ride: true
             echopet.pet.type.hoglin.ride: true
@@ -2200,6 +2221,7 @@ permissions:
             echopet.pet.default.set.type.fox: true
             echopet.pet.default.set.type.ghast: true
             echopet.pet.default.set.type.giant: true
+            echopet.pet.default.set.type.glowsquid: true
             echopet.pet.default.set.type.goat: true
             echopet.pet.default.set.type.guardian: true
             echopet.pet.default.set.type.hoglin: true
@@ -2296,6 +2318,7 @@ permissions:
             echopet.petadmin.type.fox: true
             echopet.petadmin.type.ghast: true
             echopet.petadmin.type.giant: true
+            echopet.petadmin.type.glowsquid: true
             echopet.petadmin.type.goat: true
             echopet.petadmin.type.guardian: true
             echopet.petadmin.type.hoglin: true
@@ -2371,6 +2394,7 @@ permissions:
             echopet.petadmin.hat.fox: true
             echopet.petadmin.hat.ghast: true
             echopet.petadmin.hat.giant: true
+            echopet.petadmin.hat.glowsquid: true
             echopet.petadmin.hat.goat: true
             echopet.petadmin.hat.guardian: true
             echopet.petadmin.hat.hoglin: true
@@ -2446,6 +2470,7 @@ permissions:
             echopet.petadmin.ride.fox: true
             echopet.petadmin.ride.ghast: true
             echopet.petadmin.ride.giant: true
+            echopet.petadmin.ride.glowsquid: true
             echopet.petadmin.ride.goat: true
             echopet.petadmin.ride.guardian: true
             echopet.petadmin.ride.hoglin: true
@@ -2528,6 +2553,7 @@ permissions:
             echopet.petadmin.default.set.type.fox: true
             echopet.petadmin.default.set.type.ghast: true
             echopet.petadmin.default.set.type.giant: true
+            echopet.petadmin.default.set.type.glowsquid: true
             echopet.petadmin.default.set.type.goat: true
             echopet.petadmin.default.set.type.guardian: true
             echopet.petadmin.default.set.type.hoglin: true
@@ -2758,6 +2784,13 @@ permissions:
         children:
             echopet.pet.type.giant.hat: true
             echopet.pet.type.giant.ride: true
+    echopet.pet.type.glowsquid.*:
+        default: op
+        description: 'All glowsquid pet data permissions'
+        children:
+            echopet.pet.type.glowsquid.hat: true
+            echopet.pet.type.glowsquid.ride: true
+            echopet.pet.type.glowsquid.dark: true
     echopet.pet.type.goat.*:
         default: op
         description: 'All goat pet data permissions'

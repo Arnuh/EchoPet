@@ -27,6 +27,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IGlowSquidPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
@@ -252,6 +253,20 @@ public enum PetData{
 			return true;
 		}else return false;
 	}, Material.GOLD_INGOT, "Dance"),
+	PLAYING_DEAD("playing_dead", (player, pet, category, flag)->{
+		if(pet instanceof IAxolotlPet axolotl){
+			axolotl.setPlayingDead(flag);
+			return true;
+		}
+		return false;
+	}, Material.HEART_OF_THE_SEA, "Playing Dead"),
+	DARK("dark", (player, pet, category, flag)->{
+		if(pet instanceof IGlowSquidPet glowSquid){
+			glowSquid.setDark(flag);
+			return true;
+		}
+		return false;
+	}, Material.INK_SAC, "Dark"),
 	SIZE_SMALL("size_small", (player, pet, category, flag)->{
 		if(pet.getPetType().equals(PetType.SLIME) || pet.getPetType().equals(PetType.MAGMACUBE)){
 			return setSlimeSize(pet, 1);
@@ -763,14 +778,7 @@ public enum PetData{
 			return true;
 		}
 		return false;
-	}, Material.BROWN_WOOL, "Wild"),
-	PLAYING_DEAD("playing_dead", (player, pet, category, flag)->{
-		if(pet instanceof IAxolotlPet axolotl){
-			axolotl.setPlayingDead(flag);
-			return true;
-		}
-		return false;
-	}, Material.HEART_OF_THE_SEA, "Playing Dead");;
+	}, Material.BROWN_WOOL, "Wild");
 	
 	public static final PetData[] values = values();
 	

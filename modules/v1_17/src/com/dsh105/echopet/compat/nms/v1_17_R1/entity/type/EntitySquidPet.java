@@ -25,18 +25,27 @@ import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySquidPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.95F, height = 0.95F)
 @EntityPetType(petType = PetType.SQUID)
 public class EntitySquidPet extends EntityPet implements IEntitySquidPet{
 	
+	public EntitySquidPet(EntityType<? extends Mob> type, Level world){
+		super(type, world);
+	}
+	
+	public EntitySquidPet(EntityType<? extends Mob> type, Level world, IPet pet){
+		super(type, world, pet);
+	}
+	
 	public EntitySquidPet(Level world){
-		super(EntityType.SQUID, world);
+		this(EntityType.SQUID, world);
 	}
 	
 	public EntitySquidPet(Level world, IPet pet){
-		super(EntityType.SQUID, world, pet);
+		this(EntityType.SQUID, world, pet);
 	}
 	
 	@Override
