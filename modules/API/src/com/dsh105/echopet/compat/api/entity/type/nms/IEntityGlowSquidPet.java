@@ -15,18 +15,9 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import javax.annotation.Nullable;
-import org.bukkit.entity.Player;
-
-public interface PetDataAction{
+public interface IEntityGlowSquidPet extends IEntitySquidPet{
 	
-	/**
-	 * Turns on or off the respective PetData for the provided Pet.<br>
-	 * This method assumes you will call {@link com.dsh105.echopet.compat.api.plugin.IPetManager#setData(IPet, PetData, boolean)}
-	 * to properly save the state of the flag across restarts, logouts, or respawns.<br>
-	 * @return If the PetData was properly processed for the respective Pet Type.
-	 */
-	boolean click(Player player, IPet pet, @Nullable PetDataCategory category, boolean flag);
+	void setDark(boolean flag);
 }
