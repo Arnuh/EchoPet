@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.PIGLIN)
 public class EntityPiglinPet extends EntityAbstractPiglinPet implements IEntityPiglinPet{
 	
-	//Technically not an animal/ageable but its the first datawatcher so we can take advantage of that.
+	private static final EntityDataAccessor<Boolean> DATA_BABY_ID = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING_CROSSBOW = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(EntityPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	
@@ -53,8 +53,14 @@ public class EntityPiglinPet extends EntityAbstractPiglinPet implements IEntityP
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
+		this.entityData.define(DATA_BABY_ID, false);
 		this.entityData.define(DATA_IS_CHARGING_CROSSBOW, false);
 		this.entityData.define(DATA_IS_DANCING, false);
+	}
+	
+	@Override
+	public void setBaby(boolean flag){
+		getEntityData().set(DATA_BABY_ID, flag);
 	}
 	
 	@Override

@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAbstractPiglinPet;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -26,7 +27,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-public abstract class EntityAbstractPiglinPet extends EntityPet{
+public abstract class EntityAbstractPiglinPet extends EntityPet implements IEntityAbstractPiglinPet{
 	
 	protected static final EntityDataAccessor<Boolean> DATA_IMMUNE_TO_ZOMBIFICATION = SynchedEntityData.defineId(EntityAbstractPiglinPet.class, EntityDataSerializers.BOOLEAN);
 	
