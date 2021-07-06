@@ -15,11 +15,8 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.pet;
+package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IAgeablePet;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 
-public interface IPiglinPet extends IAbstractPiglinPet, IAgeablePet{
-	
-	void setDancing(boolean flag);
-}
+public interface IEntityAbstractPiglinPet extends IEntityPet{}
