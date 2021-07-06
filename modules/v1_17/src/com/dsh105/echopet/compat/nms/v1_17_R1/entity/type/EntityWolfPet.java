@@ -28,10 +28,14 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.royawesome.jlibnoise.MathHelper;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
@@ -41,9 +45,9 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(EntityWolfPet.class, EntityDataSerializers.INT);
-	private boolean wet;
-	private boolean shaking;
-	private float shakeCount;
+	private boolean isWet;
+	private boolean isShaking;
+	private float shakeAnim;
 	
 	public EntityWolfPet(Level world){
 		super(EntityType.WOLF, world);
@@ -66,20 +70,27 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		if(isTamed() && angry){
 			setTamed(false);
 		}
-		if(angry) addFlag(Angry);
-		else removeFlag(Angry);
+		setRemainingPersistentAngerTime(angry ? 1 : 0);
 	}
 	
 	@Override
 	public void setTamed(boolean tamed){
+		super.setTamed(tamed);
 		if(isAngry() && tamed){
 			setAngry(false);
 		}
-		super.setTamed(tamed);
 	}
 	
 	public boolean isAngry(){
-		return (getFlag() & Angry) != 0;
+		return getRemainingPersistentAngerTime() > 0;
+	}
+	
+	public int getRemainingPersistentAngerTime(){
+		return entityData.get(DATA_REMAINING_ANGER_TIME);
+	}
+	
+	public void setRemainingPersistentAngerTime(int i){
+		entityData.set(DATA_REMAINING_ANGER_TIME, i);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -90,39 +101,76 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		}
 	}
 	
+	public boolean isPathFinding(){
+		return !getNavigation().isDone();
+	}
+	
+	@Override
+	public void aiStep(){
+		super.aiStep();
+		if(!this.level.isClientSide && this.isWet && !this.isShaking && !this.isPathFinding() && this.onGround){
+			this.isShaking = true;
+			this.shakeAnim = 0.0F;
+			this.level.broadcastEntityEvent(this, (byte) 8);
+		}
+	}
+	
 	@Override
 	public void onLive(){
 		super.onLive();
-		if(this.isInWater()){
-			this.wet = true;
-			this.shaking = false;
-			this.shakeCount = 0.0F;
-		}else if((this.wet || this.shaking) && this.shaking){
-			if(this.shakeCount == 0.0F){
-				// After sounds
-				makeSound("entity.wolf.shake", getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);// just search for '0.2F + 1.0F'
+		if(isInWaterRainOrBubble()){
+			isWet = true;
+			if(isShaking && !level.isClientSide){
+				this.level.broadcastEntityEvent(this, (byte) 56);
+				cancelShake();
 			}
-			this.shakeCount += 0.05F;
-			if(this.shakeCount - 0.05F >= 2.0F){
-				this.wet = false;
-				this.shaking = false;
-				this.shakeCount = 0.0F;
+		}else if((isWet || isShaking) && isShaking){
+			if(this.shakeAnim == 0.0F){
+				playSound(SoundEvents.WOLF_SHAKE, getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				this.gameEvent(GameEvent.WOLF_SHAKING);
 			}
-			if(this.shakeCount > 0.4F){
-				float f = (float) this.getBoundingBox().minY;
-				int i = (int) (MathHelper.sin((this.shakeCount - 0.4F) * 3.1415927F) * 7.0F);
-				Vec3 mot = getDeltaMovement();
+			this.shakeAnim += 0.05F;
+			if(this.shakeAnim - 0.05F >= 2.0F){
+				this.isWet = false;
+				this.isShaking = false;
+				this.shakeAnim = 0.0F;
+			}
+			if(this.shakeAnim > 0.4F){
+				float f = (float) this.getY();
+				int i = (int) (Mth.sin((shakeAnim - 0.4F) * 3.1415927F) * 7.0F);
+				Vec3 vec3d = this.getDeltaMovement();
+				
 				for(int j = 0; j < i; ++j){
-					float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-					float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-					this.level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, this.getZ() + (double) f2, mot.x, mot.y, mot.z);
+					float f1 = (random.nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
+					float f2 = (random.nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
+					this.level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, getZ() + (double) f2, vec3d.x, vec3d.y, vec3d.z);
 				}
 			}
 		}
 	}
 	
+	private void cancelShake(){
+		this.isShaking = false;
+		this.shakeAnim = 0.0F;
+	}
+	
 	@Override
-	protected String getAmbientSoundString(){
-		return this.random.nextInt(3) == 0 ? "entity.wolf.pant" : (isTamed() && getHealth() < 10.0F) ? "entity.wolf.whine" : isAngry() ? "entity.wolf.growl" : "entity.wolf.ambient";
+	protected float getSoundVolume(){
+		return 0.4F;
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		return this.isAngry() ? SoundEvents.WOLF_GROWL : (random.nextInt(3) == 0 ? (isTamed() && getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT) : SoundEvents.WOLF_AMBIENT);
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damagesource){
+		return SoundEvents.WOLF_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		return SoundEvents.WOLF_DEATH;
 	}
 }
