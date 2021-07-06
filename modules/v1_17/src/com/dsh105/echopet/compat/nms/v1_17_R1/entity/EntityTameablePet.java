@@ -33,9 +33,9 @@ import net.minecraft.world.level.Level;
  */
 public class EntityTameablePet extends EntityAgeablePet implements IEntityTameablePet{
 	
-	protected static final int Sitting = 0x1, Angry = 0x2, Tamed = 0x4;
-	protected static final EntityDataAccessor<Byte> Flag = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.BYTE);
-	protected static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.OPTIONAL_UUID);
+	protected static final int Sitting = 0x1, Tamed = 0x4;
+	protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.BYTE);
+	protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(EntityTameablePet.class, EntityDataSerializers.OPTIONAL_UUID);
 	
 	public EntityTameablePet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
@@ -48,8 +48,8 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(Flag, (byte) 0);
-		this.entityData.define(OWNER, Optional.empty());
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+		this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
 	}
 	
 	public boolean isTamed(){
@@ -69,14 +69,14 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	}
 	
 	protected void addFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() | flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() | flag));
 	}
 	
 	protected void removeFlag(int flag){
-		entityData.set(Flag, (byte) (getFlag() & ~flag));
+		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() & ~flag));
 	}
 	
 	protected int getFlag(){
-		return entityData.get(Flag);
+		return entityData.get(DATA_FLAGS_ID);
 	}
 }
