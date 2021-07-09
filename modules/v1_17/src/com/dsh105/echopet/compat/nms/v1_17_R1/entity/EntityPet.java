@@ -173,7 +173,11 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		try{
 			petGoalSelector = new PetGoalSelector();
 			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
-			petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
+			if(pet.getPetType().equals(PetType.BEE)){
+				petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
+			}else{
+				petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
+			}
 			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, ServerPlayer.class), 2);
 		}catch(Exception e){
 			e.printStackTrace();

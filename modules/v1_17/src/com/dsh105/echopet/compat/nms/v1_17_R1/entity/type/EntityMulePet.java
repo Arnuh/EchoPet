@@ -17,11 +17,15 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMulePet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -35,5 +39,40 @@ public class EntityMulePet extends EntityHorseChestedAbstractPet implements IEnt
 	
 	public EntityMulePet(Level world, IPet pet){
 		super(EntityType.MULE, world, pet);
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		super.getAmbientSound();
+		return SoundEvents.MULE_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getAngrySound(){
+		super.getAngrySound();
+		return SoundEvents.MULE_ANGRY;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		super.getDeathSound();
+		return SoundEvents.MULE_DEATH;
+	}
+	
+	@Override
+	@Nullable
+	protected SoundEvent getEatingSound(){
+		return SoundEvents.MULE_EAT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		super.getHurtSound(var0);
+		return SoundEvents.MULE_HURT;
+	}
+	
+	@Override
+	protected void playChestEquipsSound(){
+		this.playSound(SoundEvents.MULE_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 	}
 }

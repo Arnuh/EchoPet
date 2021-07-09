@@ -22,6 +22,10 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonHorsePet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -35,5 +39,71 @@ public class EntitySkeletonHorsePet extends EntityHorseAbstractPet implements IE
 	
 	public EntitySkeletonHorsePet(Level world, IPet pet){
 		super(EntityType.SKELETON_HORSE, world, pet);
+	}
+	
+	@Override
+	public boolean rideableUnderWater(){
+		return true;
+	}
+	
+	@Override
+	protected float getWaterSlowDown(){
+		return 0.96F;
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		super.getAmbientSound();
+		return isEyeInFluid(FluidTags.WATER) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		super.getDeathSound();
+		return SoundEvents.SKELETON_HORSE_DEATH;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		super.getHurtSound(var0);
+		return SoundEvents.SKELETON_HORSE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getSwimSound(){
+		if(onGround){
+			if(!isVehicle()){
+				return SoundEvents.SKELETON_HORSE_STEP_WATER;
+			}
+			
+			++gallopSoundCounter;
+			if(gallopSoundCounter > 5 && gallopSoundCounter % 3 == 0){
+				return SoundEvents.SKELETON_HORSE_GALLOP_WATER;
+			}
+			
+			if(gallopSoundCounter <= 5){
+				return SoundEvents.SKELETON_HORSE_STEP_WATER;
+			}
+		}
+		
+		return SoundEvents.SKELETON_HORSE_SWIM;
+	}
+	
+	@Override
+	protected void playSwimSound(float var0){
+		if(onGround){
+			super.playSwimSound(0.3F);
+		}else{
+			super.playSwimSound(Math.min(0.1F, var0 * 25.0F));
+		}
+	}
+	
+	@Override
+	protected void playJumpSound(){
+		if(isInWater()){
+			playSound(SoundEvents.SKELETON_HORSE_JUMP_WATER, 0.4F, 1.0F);
+		}else{
+			super.playJumpSound();
+		}
 	}
 }

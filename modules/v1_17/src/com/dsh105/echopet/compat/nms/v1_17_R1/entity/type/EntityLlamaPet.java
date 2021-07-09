@@ -17,17 +17,23 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Llama;
 
@@ -71,5 +77,61 @@ public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEn
 	@Override
 	public void setSkinColor(Llama.Color skinColor){
 		this.entityData.set(DATA_VARIANT_ID, skinColor.ordinal());
+	}
+	
+	@Override
+	protected boolean isImmobile(){
+		return this.isDeadOrDying() || this.isEating();
+	}
+	
+	@Override
+	public boolean canBeControlledByRider(){
+		return false;
+	}
+	
+	@Override
+	public boolean hasCustomTravel(){
+		return false;
+	}
+	
+	@Override
+	public boolean canEatGrass(){
+		return false;
+	}
+	
+	@Override
+	protected SoundEvent getAngrySound(){
+		return SoundEvents.LLAMA_ANGRY;
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		return SoundEvents.LLAMA_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		return SoundEvents.LLAMA_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		return SoundEvents.LLAMA_DEATH;
+	}
+	
+	@Override
+	@Nullable
+	protected SoundEvent getEatingSound(){
+		return SoundEvents.LLAMA_EAT;
+	}
+	
+	@Override
+	protected void playStepSound(BlockPos var0, BlockState var1){
+		this.playSound(SoundEvents.LLAMA_STEP, 0.15F, 1.0F);
+	}
+	
+	@Override
+	protected void playChestEquipsSound(){
+		this.playSound(SoundEvents.LLAMA_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 	}
 }
