@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstract
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
@@ -48,5 +49,10 @@ public abstract class EntityHorseChestedAbstractPet extends EntityHorseAbstractP
 	@Override
 	public void setChested(boolean flag){
 		entityData.set(DATA_ID_CHEST, flag);
+		// playChestEquipsSound();
+	}
+	
+	protected void playChestEquipsSound(){
+		this.playSound(SoundEvents.DONKEY_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 	}
 }

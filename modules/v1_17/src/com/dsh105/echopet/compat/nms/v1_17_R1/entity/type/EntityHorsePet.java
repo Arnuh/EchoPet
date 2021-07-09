@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.HorseArmor;
@@ -26,12 +27,16 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import org.bukkit.entity.Horse;
 
 @EntitySize(width = 1.4F, height = 1.6F)
@@ -39,7 +44,7 @@ import org.bukkit.entity.Horse;
 public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHorsePet{
 	
 	// EntityHorse
-	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(EntityHorsePet.class, EntityDataSerializers.INT);// Pattern
+	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(EntityHorsePet.class, EntityDataSerializers.INT);
 	
 	public EntityHorsePet(Level world){
 		super(EntityType.HORSE, world);
@@ -73,21 +78,12 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	
 	@Override
 	public void setArmour(HorseArmor a){
-		Item item;
-		switch(a){
-			case Iron:
-				item = Items.IRON_HORSE_ARMOR;
-				break;
-			case Gold:
-				item = Items.GOLDEN_HORSE_ARMOR;
-				break;
-			case Diamond:
-				item = Items.DIAMOND_HORSE_ARMOR;
-				break;
-			default:
-				item = Items.AIR;
-				break;
-		}
+		Item item = switch(a){
+			case Iron -> Items.IRON_HORSE_ARMOR;
+			case Gold -> Items.GOLDEN_HORSE_ARMOR;
+			case Diamond -> Items.DIAMOND_HORSE_ARMOR;
+			default -> Items.AIR;
+		};
 		setSlot(EquipmentSlot.CHEST, item == null ? null : new ItemStack(item), true);
 		setDropChance(EquipmentSlot.CHEST, 0);
 	}
@@ -96,7 +92,43 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
-		
-		// this.entityData.define(ARMOR, EnumHorseArmor.NONE.a());
+	}
+	
+	@Override
+	protected void playGallopSound(SoundType var0){
+		super.playGallopSound(var0);
+		if(random.nextInt(10) == 0){
+			playSound(SoundEvents.HORSE_BREATHE, var0.getVolume() * 0.6F, var0.getPitch());
+		}
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		super.getAmbientSound();
+		return SoundEvents.HORSE_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		super.getDeathSound();
+		return SoundEvents.HORSE_DEATH;
+	}
+	
+	@Override
+	@Nullable
+	protected SoundEvent getEatingSound(){
+		return SoundEvents.HORSE_EAT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		super.getHurtSound(var0);
+		return SoundEvents.HORSE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getAngrySound(){
+		super.getAngrySound();
+		return SoundEvents.HORSE_ANGRY;
 	}
 }

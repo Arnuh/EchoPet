@@ -102,11 +102,6 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			if(!jumpController.wantJump()){
 				if(this.moveControl.hasWanted() && this.jumpDelayTicks == 0){
 					Path pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().getPath();// Gets path towards the player.
-					// if(pathentity != null && pathentity.e() < pathentity.d()){
-					// Vec3D vec3d = pathentity.a(this);
-					// a(vec3d.x, vec3d.z);
-					// dl();
-					// }
 					Vec3 vec3d = new Vec3(this.moveControl.getWantedX(), this.moveControl.getWantedY(), this.moveControl.getWantedZ());
 					if(pathentity != null && !pathentity.isDone()){
 						vec3d = pathentity.getNextEntityPos(this);

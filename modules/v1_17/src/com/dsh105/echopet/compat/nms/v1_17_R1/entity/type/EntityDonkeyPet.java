@@ -17,11 +17,15 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDonkeyPet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -35,5 +39,35 @@ public class EntityDonkeyPet extends EntityHorseChestedAbstractPet implements IE
 	
 	public EntityDonkeyPet(Level world, IPet pet){
 		super(EntityType.DONKEY, world, pet);
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		super.getAmbientSound();
+		return SoundEvents.DONKEY_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getAngrySound(){
+		super.getAngrySound();
+		return SoundEvents.DONKEY_ANGRY;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		super.getDeathSound();
+		return SoundEvents.DONKEY_DEATH;
+	}
+	
+	@Override
+	@Nullable
+	protected SoundEvent getEatingSound(){
+		return SoundEvents.DONKEY_EAT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		super.getHurtSound(var0);
+		return SoundEvents.DONKEY_HURT;
 	}
 }

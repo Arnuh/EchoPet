@@ -22,6 +22,9 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombieHorsePet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -35,5 +38,23 @@ public class EntityZombieHorsePet extends EntityHorseAbstractPet implements IEnt
 	
 	public EntityZombieHorsePet(Level world, IPet pet){
 		super(EntityType.ZOMBIE_HORSE, world, pet);
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		super.getAmbientSound();
+		return SoundEvents.ZOMBIE_HORSE_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound(){
+		super.getDeathSound();
+		return SoundEvents.ZOMBIE_HORSE_DEATH;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource var0){
+		super.getHurtSound(var0);
+		return SoundEvents.ZOMBIE_HORSE_HURT;
 	}
 }
