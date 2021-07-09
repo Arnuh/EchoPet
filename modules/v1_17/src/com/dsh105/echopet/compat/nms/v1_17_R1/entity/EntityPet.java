@@ -35,6 +35,7 @@ import com.dsh105.echopet.compat.nms.v1_17_R1.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalLookAtPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -47,6 +48,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
@@ -73,19 +75,20 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		this.initiateEntityPet();
 	}
 	
-	private void initiateEntityPet(){
+	protected void initiateEntityPet(){
 		this.resetEntitySize();
 		// this.fireProof = true;
 		// this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
 		// this.setHealth((float) pet.getPetType().getMaxHealth());
-		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
+		this.rideSpeed = EchoPet.getOptions().getRideSpeed(getPet().getPetType());
 		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
-		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
+		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(getPet().getPetType());
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
 			attributeInstance.setBaseValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
 		}
 		this.setPathfinding();
+		this.maxUpStep = getMaxUpStep();
 	}
 	
 	public PetType getEntityPetType(){
@@ -169,15 +172,28 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		//
 	}
 	
+	public float getWalkTargetValue(BlockPos blockposition){
+		return this.getWalkTargetValue(blockposition, this.level);
+	}
+	
+	public float getWalkTargetValue(BlockPos blockposition, LevelReader iworldreader){
+		return 0.0F;
+	}
+	
+	public float getMaxUpStep(){
+		return 0.5F;
+	}
+	
 	public void setPathfinding(){
 		try{
 			petGoalSelector = new PetGoalSelector();
 			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
-			if(pet.getPetType().equals(PetType.BEE)){
+			/*if(pet.getPetType().equals(PetType.BEE)){
 				petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
 			}else{
 				petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
-			}
+			}*/
+			petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
 			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, ServerPlayer.class), 2);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -289,12 +305,19 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		return serverPlayer;
 	}
 	
-	//AbstractHorse
+	public boolean hasCustomTravel(){
+		return false;
+	}
+	
 	@Override
 	public void travel(Vec3 vec3d){
+		if(hasCustomTravel()){
+			this.flyingSpeed = 0.02F;
+			super.travel(vec3d);
+			return;
+		}
 		ServerPlayer passenger = getValidRider();
 		if(passenger == null){
-			this.maxUpStep = 0.5F;
 			this.flyingSpeed = 0.02F;
 			super.travel(vec3d);
 			return;
@@ -343,7 +366,6 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
 							setDeltaMovement(getDeltaMovement().x, rideEvent.getJumpHeight(), getDeltaMovement().z);
-							doJumpAnimation();
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
@@ -416,10 +438,6 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 	}
-	
-	// protected void defineSynchedData(){}
-	
-	protected void doJumpAnimation(){}
 	
 	@Override
 	public boolean startRiding(Entity entity){
