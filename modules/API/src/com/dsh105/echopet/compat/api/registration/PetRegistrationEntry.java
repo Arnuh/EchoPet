@@ -46,6 +46,8 @@ public class PetRegistrationEntry{
 			this.petConstructor = this.petClass.getConstructor(Player.class);
 			for(Constructor<?> con : this.entityClass.getConstructors()){
 				if(con.getParameterCount() != 2) continue;
+				Class<?>[] parameterTypes = con.getParameterTypes();
+				if(!IPet.class.isAssignableFrom(parameterTypes[1])) continue;
 				this.entityPetConstructor = (Constructor<? extends IEntityPet>) con;
 				break;
 			}
