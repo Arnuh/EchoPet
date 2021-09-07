@@ -33,10 +33,8 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	protected PluginDependencyProvider<T> instance;
 	private T dependency;
 	protected boolean hooked;
-	private Plugin myPluginInstance;
-	private String dependencyName;
-	
-	// TODO: add more utils, plugin stuff mostly.
+	private final Plugin myPluginInstance;
+	private final String dependencyName;
 	
 	@SuppressWarnings("unchecked")
 	public PluginDependencyProvider(Plugin myPluginInstance, String dependencyName){
@@ -44,25 +42,23 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 		this.myPluginInstance = myPluginInstance;
 		this.dependencyName = dependencyName;
 		
-		if(dependency == null && !this.hooked){
-			try{
-				dependency = (T) Bukkit.getPluginManager().getPlugin(getDependencyName());
-				
-				if(this.dependency != null && this.dependency.isEnabled()){
-					onHook();
-					this.hooked = true;
-					EchoPet.LOG.info("[" + this.dependency.getName() + "] Successfully hooked");
-				}
-			}catch(Exception e){
-				EchoPet.LOG.warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?) - " + e.getMessage());
+		try{
+			T plugin = (T) Bukkit.getPluginManager().getPlugin(getDependencyName());
+			if(plugin != null && plugin.isEnabled()){// Does a downside exist to hooking before being enabled?
+				dependency = plugin;
+				onHook();
+				this.hooked = true;
+				EchoPet.LOG.info("[" + dependency.getName() + "] Successfully hooked");
 			}
+		}catch(Exception e){
+			EchoPet.LOG.warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?) - " + e.getMessage());
 		}
 		
 		Bukkit.getPluginManager().registerEvents(new Listener(){
 			
 			@EventHandler
-			protected void onEnable(PluginEnableEvent event){
-				if((dependency == null) && (event.getPlugin().getName().equalsIgnoreCase(getDependencyName()))){
+			private void onEnable(PluginEnableEvent event){
+				if(dependency == null && event.getPlugin().getName().equalsIgnoreCase(getDependencyName())){
 					try{
 						dependency = (T) event.getPlugin();
 						onHook();
@@ -75,8 +71,8 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 			}
 			
 			@EventHandler
-			protected void onDisable(PluginDisableEvent event){
-				if((dependency != null) && (event.getPlugin().getName().equalsIgnoreCase(getDependencyName()))){
+			private void onDisable(PluginDisableEvent event){
+				if(dependency != null && event.getPlugin().getName().equalsIgnoreCase(getDependencyName())){
 					dependency = null;
 					onUnhook();
 					hooked = false;

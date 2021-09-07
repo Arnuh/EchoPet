@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import java.util.Set;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -37,45 +38,39 @@ public class WorldUtil{
 	}
 	
 	public static boolean allowRegion(Location location){
-		if(EchoPet.getPlugin().getWorldGuardProvider().isHooked()){
-			WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();// is this even used in worldguard anymore? Keeping it cause it's how we hook
-			if(wg == null){
-				return true;
-			}
-			
-			WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
-			RegionContainer container = platform.getRegionContainer();
-			RegionManager regionManager = container.get(BukkitAdapter.adapt(location.getWorld()));
-			if(regionManager == null){
-				return true;
-			}
-			ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
-			
-			if(set.size() <= 0){
-				return true;
-			}
-			
-			boolean result = true;
-			boolean hasSet = false;
-			boolean def = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
-			
+		if(!EchoPet.getPlugin().getWorldGuardProvider().isHooked()){
+			return true;
+		}
+		
+		if(location.getWorld() == null){
+			return true;// ?
+		}
+		
+		WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();// is this even used in worldguard anymore? Keeping it because it's how we hook
+		if(wg == null){
+			return true;
+		}
+		
+		WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
+		RegionContainer container = platform.getRegionContainer();
+		RegionManager regionManager = container.get(BukkitAdapter.adapt(location.getWorld()));
+		if(regionManager == null){
+			return true;
+		}
+		ApplicableRegionSet set = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
+		
+		if(set.size() > 0){
 			ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
+			Set<String> regions = cs.getKeys(false);
 			
 			for(ProtectedRegion region : set){
-				for(String key : cs.getKeys(false)){
-					if(!key.equalsIgnoreCase("allowByDefault") && !key.equalsIgnoreCase("regionEnterCheck")){
-						if(region.getId().equals(key)){
-							if(!hasSet){
-								result = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions." + key, true);
-								hasSet = true;
-							}
-						}
-					}
+				// if(key.equalsIgnoreCase("allowByDefault") || key.equalsIgnoreCase("regionEnterCheck")) continue;
+				if(!regions.contains(region.getId())){
+					continue;
 				}
+				return EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions." + region.getId(), true);
 			}
-			
-			return hasSet ? result : def;
 		}
-		return true;
+		return EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
 	}
 }
