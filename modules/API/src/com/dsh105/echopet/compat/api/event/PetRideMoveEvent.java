@@ -19,35 +19,24 @@ package com.dsh105.echopet.compat.api.event;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link com.dsh105.echopet.api.pet.Pet} moves when their owner is riding
+ * Called when a {@link IPet} moves when their owner is riding
  */
 
-public class PetRideMoveEvent extends Event implements Cancellable{
+public class PetRideMoveEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private IPet pet;
 	private float forwardSpeed;
 	private float sidewardSpeed;
 	
 	public PetRideMoveEvent(IPet pet, float forwardSpeed, float sidewardSpeed){
-		this.pet = pet;
+		super(pet);
 		this.forwardSpeed = forwardSpeed;
 		this.sidewardSpeed = sidewardSpeed;
-	}
-	
-	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
 	}
 	
 	/**
@@ -93,6 +82,7 @@ public class PetRideMoveEvent extends Event implements Cancellable{
 	 * @return true if this event is cancelled
 	 */
 	
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -104,11 +94,13 @@ public class PetRideMoveEvent extends Event implements Cancellable{
 	 * @param cancel true if you wish to cancel this event
 	 */
 	
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}
 	
 	
+	@Override
 	public HandlerList getHandlers(){
 		return handlers;
 	}

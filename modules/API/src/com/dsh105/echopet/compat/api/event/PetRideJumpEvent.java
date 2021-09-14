@@ -19,37 +19,26 @@ package com.dsh105.echopet.compat.api.event;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link com.dsh105.echopet.api.pet.Pet} jumps when their owner is riding
+ * Called when a {@link IPet} jumps when their owner is riding
  */
 
-public class PetRideJumpEvent extends Event implements Cancellable{
+public class PetRideJumpEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private IPet pet;
 	private double jumpHeight;
 	
 	public PetRideJumpEvent(IPet pet, final double jumpHeight){
-		this.pet = pet;
+		super(pet);
 		this.jumpHeight = jumpHeight;
 	}
 	
 	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
-	}
-	
-	/**
-	 * Gets the height jumped by this {@link com.dsh105.echopet.api.pet.Pet}
+	 * Gets the height jumped by this {@link IPet}
 	 *
 	 * @return height jumped
 	 */
@@ -58,7 +47,7 @@ public class PetRideJumpEvent extends Event implements Cancellable{
 	}
 	
 	/**
-	 * Sets the height this {@link com.dsh105.echopet.api.pet.Pet} jumped
+	 * Sets the height this {@link IPet} jumped
 	 *
 	 * @param jumpHeight new jump height for this event
 	 */
@@ -73,6 +62,7 @@ public class PetRideJumpEvent extends Event implements Cancellable{
 	 * @return true if this event is cancelled
 	 */
 	
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -84,11 +74,13 @@ public class PetRideJumpEvent extends Event implements Cancellable{
 	 * @param cancel true if you wish to cancel this event
 	 */
 	
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}
 	
 	
+	@Override
 	public HandlerList getHandlers(){
 		return handlers;
 	}

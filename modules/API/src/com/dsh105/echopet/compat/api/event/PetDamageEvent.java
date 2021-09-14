@@ -19,31 +19,29 @@ package com.dsh105.echopet.compat.api.event;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
- * Called when a {@link com.dsh105.echopet.api.pet.Pet} damages another {@link org.bukkit.entity.Entity}
+ * Called when a {@link IPet} damages another {@link org.bukkit.entity.Entity}
  */
 
-public class PetDamageEvent extends Event implements Cancellable{
+public class PetDamageEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = true; // cancelled by default
 	
-	private IPet pet;
 	private double damage;
-	private DamageCause damageCause;
+	private final DamageCause damageCause;
 	
 	public PetDamageEvent(IPet pet, DamageCause damageCause, final double damage){
-		this.pet = pet;
+		super(pet);
 		this.damage = damage;
 		this.damageCause = damageCause;
 	}
 	
 	/**
-	 * Gets the damage dealt by the {@link com.dsh105.echopet.api.pet.Pet}
+	 * Gets the damage dealt by the {@link IPet}
 	 *
 	 * @return damage dealt
 	 */
@@ -60,15 +58,6 @@ public class PetDamageEvent extends Event implements Cancellable{
 		this.damage = damage;
 	}
 	
-	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
-	}
-	
 	public DamageCause getDamageCause(){
 		return this.damageCause;
 	}
@@ -79,6 +68,7 @@ public class PetDamageEvent extends Event implements Cancellable{
 	 *
 	 * @return true if this event is cancelled
 	 */
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -89,6 +79,7 @@ public class PetDamageEvent extends Event implements Cancellable{
 	 *
 	 * @param cancel true if you wish to cancel this event
 	 */
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}

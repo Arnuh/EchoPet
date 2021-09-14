@@ -21,37 +21,26 @@ package com.dsh105.echopet.compat.api.event;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link com.dsh105.echopet.api.pet.Pet} spawns
+ * Called when a {@link IPet} spawn is attempted.
  */
 
-public class PetPreSpawnEvent extends Event implements Cancellable{
+public class PetPreSpawnEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private IPet pet;
 	private Location spawnLocation;
 	
 	public PetPreSpawnEvent(IPet pet, Location spawnLocation){
-		this.pet = pet;
+		super(pet);
 		this.spawnLocation = spawnLocation;
 	}
 	
 	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
-	}
-	
-	/**
-	 * Gets the spawn {@link org.bukkit.Location} of the {@link com.dsh105.echopet.api.pet.Pet}
+	 * Gets the spawn {@link org.bukkit.Location} of the {@link IPet}
 	 * <p/>
 	 * This {@link org.bukkit.Location} is most likely going to be the owner's {@link org.bukkit.Location}
 	 *
@@ -62,9 +51,9 @@ public class PetPreSpawnEvent extends Event implements Cancellable{
 	}
 	
 	/**
-	 * Sets the spawn Location of this {@link com.dsh105.echopet.api.pet.Pet}
+	 * Sets the spawn Location of this {@link IPet}
 	 *
-	 * @param spawnLocation new {@link org.bukkit.Location} to spawn the {@link com.dsh105.echopet.api.pet.Pet}
+	 * @param spawnLocation new {@link org.bukkit.Location} to spawn the {@link IPet}
 	 */
 	public void setSpawnLocation(Location spawnLocation){
 		this.spawnLocation = spawnLocation;
@@ -77,6 +66,7 @@ public class PetPreSpawnEvent extends Event implements Cancellable{
 	 * @return true if this event is cancelled
 	 */
 	
+	@Override
 	public boolean isCancelled(){
 		return this.cancelled;
 	}
@@ -88,11 +78,13 @@ public class PetPreSpawnEvent extends Event implements Cancellable{
 	 * @param cancel true if you wish to cancel this event
 	 */
 	
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}
 	
 	
+	@Override
 	public HandlerList getHandlers(){
 		return handlers;
 	}

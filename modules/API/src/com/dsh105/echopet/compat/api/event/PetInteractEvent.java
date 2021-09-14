@@ -21,42 +21,30 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link Player} interacts with a {@link com.dsh105.echopet.api.pet.Pet}
+ * Called when a {@link Player} interacts with a {@link IPet}
  */
 
-public class PetInteractEvent extends Event implements Cancellable{
+public class PetInteractEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private IPet pet;
-	private Player player;
-	private Action action;
+	private final Player player;
+	private final Action action;
 	
 	public PetInteractEvent(IPet pet, Player player, Action action, boolean cancelledByDefault){
-		this.pet = pet;
+		super(pet);
 		this.action = action;
 		this.player = player;
 		this.cancelled = cancelledByDefault;
 	}
 	
 	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
-	}
-	
-	/**
 	 * Gets the player that interacted with the LivingPet
 	 *
-	 * @return
 	 */
 	public Player getPlayer(){
 		return this.player;
@@ -77,7 +65,7 @@ public class PetInteractEvent extends Event implements Cancellable{
 	 * @return true if it is the owner
 	 */
 	public boolean isPlayerOwner(){
-		return UUIDMigration.getIdentificationFor(this.player).equals(UUIDMigration.getIdentificationFor(this.pet.getOwner()));
+		return UUIDMigration.getIdentificationFor(this.player).equals(UUIDMigration.getIdentificationFor(getPet().getOwner()));
 	}
 	
 	/**
@@ -86,6 +74,7 @@ public class PetInteractEvent extends Event implements Cancellable{
 	 *
 	 * @return true if this event is cancelled
 	 */
+	@Override
 	public boolean isCancelled(){
 		return this.cancelled;
 	}
@@ -96,6 +85,7 @@ public class PetInteractEvent extends Event implements Cancellable{
 	 *
 	 * @param cancel true if you wish to cancel this event
 	 */
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}

@@ -82,6 +82,7 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable{
 	 *
 	 * @return true if this event is cancelled
 	 */
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -92,6 +93,7 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable{
 	 *
 	 * @param cancel true if you wish to cancel this event
 	 */
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}
