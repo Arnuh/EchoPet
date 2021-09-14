@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.compat.api.event;
 
+import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link com.dsh105.echopet.api.pet.Pet}
+ * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link IPet}
  */
 
 public class PetMenuOpenEvent extends Event implements Cancellable{
@@ -31,19 +32,14 @@ public class PetMenuOpenEvent extends Event implements Cancellable{
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private Player viewer;
-	private MenuType menuType;
+	private final Player viewer;
+	private final MenuType menuType;
 	
 	public PetMenuOpenEvent(Player viewer, MenuType menuType){
 		this.viewer = viewer;
 		this.menuType = menuType;
 	}
 	
-	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
 	public Player getViewer(){
 		return this.viewer;
 	}
@@ -63,6 +59,7 @@ public class PetMenuOpenEvent extends Event implements Cancellable{
 	 *
 	 * @return true if this event is cancelled
 	 */
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -73,6 +70,7 @@ public class PetMenuOpenEvent extends Event implements Cancellable{
 	 *
 	 * @param cancel true if you wish to cancel this event
 	 */
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}

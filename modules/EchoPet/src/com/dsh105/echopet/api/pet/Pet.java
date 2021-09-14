@@ -28,6 +28,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -86,10 +87,14 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public IEntityPet spawnPet(Player owner, boolean ignoreHidden){
-		if(entityPet != null) return entityPet;
+		if(entityPet != null){
+			return entityPet;
+		}
 		if(owner != null){
 			// if(!EchoPet.getPlugin().getVanishProvider().isVanished(owner)){// We don't spawn pets at all if the player is vanished due to bounding boxes.
-			if(isHidden && !ignoreHidden) return null;
+			if(isHidden && !ignoreHidden){
+				return null;
+			}
 			this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
 			if(this.entityPet != null){
 				this.applyPetName();
@@ -98,6 +103,7 @@ public abstract class Pet implements IPet{
 					if(pd.getAction() == null) continue;
 					pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 				}
+				EchoPet.getPlugin().getServer().getPluginManager().callEvent(new PetSpawnEvent(this));
 				for(Trail t : trails){
 					t.start(this);
 				}

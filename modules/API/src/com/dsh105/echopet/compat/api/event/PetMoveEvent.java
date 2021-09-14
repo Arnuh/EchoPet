@@ -20,30 +20,28 @@ package com.dsh105.echopet.compat.api.event;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link com.dsh105.echopet.api.pet.Pet} moves
+ * Called when a {@link IPet} moves
  */
 
-public class PetMoveEvent extends Event implements Cancellable{
+public class PetMoveEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private IPet pet;
-	private Location from;
+	private final Location from;
 	private Location to;
 	
 	public PetMoveEvent(IPet pet, Location from, Location to){
-		this.pet = pet;
+		super(pet);
 		this.from = from;
 		this.to = to;
 	}
 	
 	/**
-	 * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved to
+	 * Gets the {@link org.bukkit.Location} this {@link IPet} moved to
 	 *
 	 * @return {@link org.bukkit.Location} moved to
 	 */
@@ -52,7 +50,7 @@ public class PetMoveEvent extends Event implements Cancellable{
 	}
 	
 	/**
-	 * Gets the {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} moved from
+	 * Gets the {@link org.bukkit.Location} this {@link IPet} moved from
 	 *
 	 * @return {@link org.bukkit.Location} moved from
 	 */
@@ -61,21 +59,12 @@ public class PetMoveEvent extends Event implements Cancellable{
 	}
 	
 	/**
-	 * Sets the {@link org.bukkit.Location} that this {@link com.dsh105.echopet.api.pet.Pet} will move to
+	 * Sets the {@link org.bukkit.Location} that this {@link IPet} will move to
 	 *
-	 * @param to new {@link org.bukkit.Location} this {@link com.dsh105.echopet.api.pet.Pet} will move to
+	 * @param to new {@link org.bukkit.Location} this {@link IPet} will move to
 	 */
 	public void setTo(Location to){
 		this.to = to;
-	}
-	
-	/**
-	 * Gets the {@link com.dsh105.echopet.api.pet.Pet} involved in this event
-	 *
-	 * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
-	 */
-	public IPet getPet(){
-		return this.pet;
 	}
 	
 	/**
@@ -84,6 +73,7 @@ public class PetMoveEvent extends Event implements Cancellable{
 	 *
 	 * @return true if this event is cancelled
 	 */
+	@Override
 	public boolean isCancelled(){
 		return cancelled;
 	}
@@ -94,6 +84,7 @@ public class PetMoveEvent extends Event implements Cancellable{
 	 *
 	 * @param cancel true if you wish to cancel this event
 	 */
+	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
 	}
