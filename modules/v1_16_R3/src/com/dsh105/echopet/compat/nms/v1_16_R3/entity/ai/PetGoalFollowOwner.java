@@ -116,7 +116,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    //Don't move pet when owner flying
 			    return;
 			}*/
-			if(/*!(this.pet instanceof EntityEnderDragonPet) && */this.pet.h(owner) > teleportDistanceSqr && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(this.pet.h(owner) > teleportDistanceSqr && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}

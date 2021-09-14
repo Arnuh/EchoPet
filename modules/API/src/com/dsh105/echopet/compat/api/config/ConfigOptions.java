@@ -47,9 +47,6 @@ public class ConfigOptions extends Options{
 	}
 	
 	public boolean allowRidersFor(PetType petType){
-		/*if(petType == PetType.ENDERDRAGON){
-			return false;
-		}*/
 		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".allow.riders", true);
 	}
 	
@@ -234,11 +231,9 @@ public class ConfigOptions extends Options{
 			
 			set("pets." + configOption + ".ignoreFallDamage", true);
 			
-			// if(petType != PetType.ENDERDRAGON){
-			boolean canFly = (petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX);
+			boolean canFly = petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX;
 			set("pets." + configOption + ".canFly", canFly);
 			set("pets." + configOption + ".allow.riders", true);
-			// }
 			
 			for(PetData pd : PetData.values){
 				if(petType.isDataAllowed(pd)){

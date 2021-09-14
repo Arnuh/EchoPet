@@ -311,7 +311,6 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 			this.setSprinting(!this.isSprinting());
 		}
 		if(this.getPet().isHat()){
-			// this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
 			this.lastYaw = this.yaw = this.getPlayerOwner().getLocation().getYaw();
 		}
 		if(this.getPlayerOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())){
