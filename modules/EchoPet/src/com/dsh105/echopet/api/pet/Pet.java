@@ -128,7 +128,7 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public LivingEntity getCraftPet(){
-		return this.getEntityPet().getBukkitEntity();
+		return this.getEntityPet().getEntity();
 	}
 	
 	@Override
@@ -389,7 +389,6 @@ public abstract class Pet implements IPet{
 			}
 		}
 		this.teleportToOwner();
-		this.getEntityPet().resizeBoundingBox(flag);
 		this.ownerRiding = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		Location l = this.getLocation().clone();
@@ -413,7 +412,6 @@ public abstract class Pet implements IPet{
 		}else{
 			getOwner().addPassenger(getCraftPet());
 		}
-		this.getEntityPet().resizeBoundingBox(flag);
 		this.isHat = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		Location l = this.getLocation().clone();

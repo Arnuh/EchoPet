@@ -53,7 +53,7 @@ public class PetGoalBeeWander extends APetGoalFloat{
 	
 	@Override
 	public boolean shouldStart(){
-		return getNavigation().isDone() && pet.random().nextInt(10) == 0;
+		return getNavigation().isDone() && pet.getRandom().nextInt(10) == 0;
 	}
 	
 	@Override
@@ -78,7 +78,7 @@ public class PetGoalBeeWander extends APetGoalFloat{
 	
 	private Vec3 findPos(){
 		Vec3 vec3d;
-		ServerPlayer owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
+		ServerPlayer owner = ((CraftPlayer) pet.getOwner()).getHandle();
 		if(!pet.closerThan(owner, 22)){
 			Vec3 vec3d1 = atCenterOf(owner.position());
 			vec3d = vec3d1.subtract(pet.position()).normalize();
