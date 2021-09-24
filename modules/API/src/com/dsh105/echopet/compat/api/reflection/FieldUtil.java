@@ -46,4 +46,14 @@ public class FieldUtil{
 		
 		unsafe.putObject(object, fieldOffset, value);
 	}
+	
+	public static <T> T getField(Class<?> clazz, String fieldName){
+		try{
+			Field field = clazz.getDeclaredField(fieldName);
+			field.setAccessible(true);
+			return (T) field.get(null);
+		}catch(Exception ex){
+			return null;
+		}
+	}
 }

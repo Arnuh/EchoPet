@@ -19,10 +19,11 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai;
 
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
@@ -30,17 +31,17 @@ import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	// FollowOwnerGoal
-	private final EntityPet pet;
-	private final PathNavigation nav;
+	private final IEntityPet pet;
+	private final Mob mob;
 	private int timeToRecalcPath = 0;
 	private final double speedModifier;
 	private final double startDistanceSqr;
 	private final double stopDistanceSqr;
 	private final double teleportDistanceSqr;
 	
-	public PetGoalFollowOwner(EntityPet pet){
+	public PetGoalFollowOwner(IEntityPet pet, Mob mob){
 		this.pet = pet;
-		this.nav = pet.getNavigation();
+		this.mob = mob;
 		
 		double sizeModifier = pet.getSizeCategory().getModifier();
 		double startDistance = pet.getPet().getPetType().getStartFollowDistance() * sizeModifier;
@@ -65,13 +66,13 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public boolean shouldStart(){
-		if(!this.pet.isAlive()){
+		if(!this.mob.isAlive()){
 			return false;
-		}else if(this.pet.getPlayerOwner() == null){
+		}else if(this.pet.getOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistanceSqr){
+		}else if(mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) < this.startDistanceSqr){
 			return false;
 		}
 		return true;
@@ -79,13 +80,13 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public boolean shouldContinue(){
-		if(this.nav.isDone()){// Navigation - bottom of class, just returns another method.
+		if(mob.getNavigation().isDone()){// Navigation - bottom of class, just returns another method.
 			return false;
-		}else if(this.pet.getPlayerOwner() == null){
+		}else if(this.pet.getOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(this.pet.distanceToSqr(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < stopDistanceSqr){
+		}else if(mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) < stopDistanceSqr){
 			return false;
 		}else{
 			return true;
@@ -96,7 +97,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	public void start(){
 		this.timeToRecalcPath = 0;
 		// Set pathfinding radius
-		pet.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.teleportDistanceSqr);
+		mob.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.teleportDistanceSqr);
 	}
 	
 	@Override
@@ -106,20 +107,20 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public void tick(){
-		ServerPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
+		ServerPlayer owner = ((CraftPlayer) this.pet.getOwner()).getHandle();
 		
-		this.pet.getLookControl().setLookAt(owner, 10.0F, (float) this.pet.getMaxHeadXRot());
+		mob.getLookControl().setLookAt(owner, 10.0F, (float) mob.getMaxHeadXRot());
 		if(--this.timeToRecalcPath <= 0){
 			this.timeToRecalcPath = 10;
 			/*if (this.pet.getPlayerOwner().isFlying()) {
 			    //Don't move pet when owner flying
 			    return;
 			}*/
-			if(this.pet.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getOwner()).getHandle().isOnGround() || this.pet.getOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
-			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getPlayerOwner().getLocation());
+			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getPet().getLocation(), this.pet.getOwner().getLocation());
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 			if(moveEvent.isCancelled()){
 				return;
@@ -129,6 +130,6 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	}
 	
 	public PathNavigation getNavigation(){
-		return nav;
+		return mob.getNavigation();
 	}
 }

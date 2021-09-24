@@ -106,11 +106,11 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 				this.targetPosition = null;
 			}
 			
-			Location ownerLoc = getPlayerOwner().getLocation();
+			Location ownerLoc = getOwner().getLocation();
 			
 			// closerThan squares it internally
 			// I think it checking if its too close to the player is better.
-			ServerPlayer owner = ((CraftPlayer) getPlayerOwner()).getHandle();
+			ServerPlayer owner = ((CraftPlayer) getOwner()).getHandle();
 			if(this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerThan(owner.position(), 2.0D)){
 				// Use to be off mob x,y,z but he just tries to fly away constantly.
 				this.targetPosition = new BlockPos(ownerLoc.getX() + random.nextInt(flyRange) - random.nextInt(flyRange), ownerLoc.getY() + random.nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + this.random.nextInt(flyRange) - this.random.nextInt(flyRange));

@@ -68,11 +68,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	public boolean shouldStart(){
 		if(!this.pet.isAlive()){
 			return false;
-		}else if(this.pet.getPlayerOwner() == null){
+		}else if(this.pet.getOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistanceSqr){
+		}else if(this.pet.h(((CraftPlayer) this.pet.getOwner()).getHandle()) < this.startDistanceSqr){
 			return false;
 		}else{
 			return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
@@ -83,11 +83,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	public boolean shouldContinue(){
 		if(this.nav.f()){// Navigation - bottom of class, just returns another method.
 			return false;
-		}else if(this.pet.getPlayerOwner() == null){
+		}else if(this.pet.getOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else return !(this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistanceSqr);
+		}else return !(this.pet.h(((CraftPlayer) this.pet.getOwner()).getHandle()) <= this.stopDistanceSqr);
 		// PetGoalMeleeAttack attackGoal = (PetGoalMeleeAttack) this.pet.petGoalSelector.getGoal("Attack");
 		// return !(attackGoal != null && attackGoal.isActive);
 	}
@@ -107,7 +107,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	@Override
 	public void tick(){
 		// PathfinderGoalFollowOwner
-		EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
+		EntityPlayer owner = ((CraftPlayer) this.pet.getOwner()).getHandle();
 		// 1.9: this.d.getControllerLook().a(this.e, 10.0F, this.d.N());
 		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.O());
 		if(--this.timer <= 0){
@@ -116,11 +116,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 			    //Don't move pet when owner flying
 			    return;
 			}*/
-			if(this.pet.h(owner) > teleportDistanceSqr && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().isOnGround() || this.pet.getPlayerOwner().isInsideVehicle()){
+			if(this.pet.h(owner) > teleportDistanceSqr && ((CraftPlayer) this.pet.getOwner()).getHandle().isOnGround() || this.pet.getOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
-			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getPlayerOwner().getLocation());
+			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 			if(moveEvent.isCancelled()){
 				return;
@@ -129,7 +129,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 				PathEntity path;
 				int followDistance = 3;//Required distance between the owner and target before it paths.
 				if(pet instanceof EntityGhastPet || pet instanceof EntityVexPet){
-					path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), followDistance);
+					path = pet.getNavigation().a(pet.getOwner().getLocation().getBlockX(), pet.getOwner().getLocation().getBlockY() + 5, pet.getOwner().getLocation().getBlockZ(), followDistance);
 				}else{
 					path = pet.getNavigation().a(owner, followDistance);
 				}

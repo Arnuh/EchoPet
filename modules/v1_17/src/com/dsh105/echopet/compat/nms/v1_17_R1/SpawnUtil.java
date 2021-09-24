@@ -22,7 +22,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -31,6 +30,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -53,12 +53,12 @@ public class SpawnUtil implements ISpawnUtil{
 		l = spawnEvent.getSpawnLocation();
 		Level mcWorld = ((CraftWorld) l.getWorld()).getHandle();
 		EchoPet.getPetRegistry().enablePet(pet.getPetType());
-		EntityPet entityPet = (EntityPet) pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
+		IEntityPet entityPet = pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
 		entityPet.setLocation(new Location(mcWorld.getWorld(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch()));
 		if(!l.getChunk().isLoaded()){
 			l.getChunk().load();
 		}
-		if(!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)){
+		if(!mcWorld.addEntity(((CraftLivingEntity) entityPet.getEntity()).getHandle(), CreatureSpawnEvent.SpawnReason.CUSTOM)){
 			owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
 			EchoPet.getManager().removePet(pet, true);
 		}else{

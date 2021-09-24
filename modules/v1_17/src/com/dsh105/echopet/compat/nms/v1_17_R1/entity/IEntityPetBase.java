@@ -15,34 +15,26 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import net.minecraft.world.phys.Vec3;
 import org.bukkit.entity.Player;
 
-public interface IEntityPet{
+public interface IEntityPetBase{
 	
-	IPet getPet();
+	IEntityPet getEntityPet();
 	
 	IPetGoalSelector getPetGoalSelector();
 	
-	SizeCategory getSizeCategory();
-	
-	LivingEntity getEntity();
-	
-	Player getOwner();
-	
-	boolean onInteract(Player p);
+	boolean onInteract(Player player);
 	
 	void remove(boolean makeSound);
 	
-	boolean isDead();
+	void tick();
 	
-	default float getMaxUpStep(){
-		return 0.5F;
-	}
+	float getSpeed();
 	
-	void setLocation(Location location);
+	Vec3 travel(Vec3 vec3d);
 }
