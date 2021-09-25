@@ -28,22 +28,22 @@ import org.bukkit.plugin.Plugin;
 /**
  * Needs some optimization
  */
-public abstract class PluginDependencyProvider<T extends Plugin> implements IPluginDependencyProvider<T>{
+public abstract class PluginDependencyProvider<P extends Plugin, D extends Plugin> implements IPluginDependencyProvider<P, D>{
 	
-	protected PluginDependencyProvider<T> instance;
-	private T dependency;
+	protected PluginDependencyProvider<P, D> instance;
+	private D dependency;
 	protected boolean hooked;
-	private final Plugin myPluginInstance;
+	private final P myPluginInstance;
 	private final String dependencyName;
 	
 	@SuppressWarnings("unchecked")
-	public PluginDependencyProvider(Plugin myPluginInstance, String dependencyName){
+	public PluginDependencyProvider(P myPluginInstance, String dependencyName){
 		this.instance = this;
 		this.myPluginInstance = myPluginInstance;
 		this.dependencyName = dependencyName;
 		
 		try{
-			T plugin = (T) Bukkit.getPluginManager().getPlugin(getDependencyName());
+			D plugin = (D) Bukkit.getPluginManager().getPlugin(getDependencyName());
 			if(plugin != null && plugin.isEnabled()){// Does a downside exist to hooking before being enabled?
 				dependency = plugin;
 				onHook();
@@ -60,7 +60,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 			private void onEnable(PluginEnableEvent event){
 				if(dependency == null && event.getPlugin().getName().equalsIgnoreCase(getDependencyName())){
 					try{
-						dependency = (T) event.getPlugin();
+						dependency = (D) event.getPlugin();
 						onHook();
 						hooked = true;
 						EchoPet.LOG.info("[" + getDependencyName() + "] Successfully hooked");
@@ -88,7 +88,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	
 	
 	@Override
-	public T getDependency(){
+	public D getDependency(){
 		if(this.dependency == null){
 			throw new RuntimeException("Dependency is NULL!");
 		}
@@ -103,7 +103,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
 	
 	
 	@Override
-	public Plugin getHandlingPlugin(){
+	public P getHandlingPlugin(){
 		if(this.myPluginInstance == null){
 			throw new RuntimeException("HandlingPlugin is NULL!");
 		}

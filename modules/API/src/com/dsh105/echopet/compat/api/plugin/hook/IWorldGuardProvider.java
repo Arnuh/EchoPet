@@ -17,8 +17,9 @@
 
 package com.dsh105.echopet.compat.api.plugin.hook;
 
+import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-public interface IWorldGuardProvider extends IPluginDependencyProvider<WorldGuardPlugin>{
+public interface IWorldGuardProvider extends IPluginDependencyProvider<IEchoPetPlugin, WorldGuardPlugin>{
 
 }
