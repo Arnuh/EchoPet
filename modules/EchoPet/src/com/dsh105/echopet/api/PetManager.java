@@ -23,6 +23,7 @@ import java.util.List;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -101,7 +102,7 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail){
+	public IPet createPet(Player owner, IPetType petType, boolean sendMessageOnFail){
 		if(ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN){
 			if(sendMessageOnFail){
 				Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
@@ -134,7 +135,7 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public IPet createPet(Player owner, PetType petType, PetType riderType){
+	public IPet createPet(Player owner, IPetType petType, IPetType riderType){
 		if(ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN){
 			Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
 			return null;
@@ -343,7 +344,7 @@ public class PetManager implements IPetManager{
 		clearFileData(type, pet);
 		
 		String path = type + "." + pet.getOwnerIdentification();
-		PetType petType = pet.getPetType();
+		IPetType petType = pet.getPetType();
 		
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.serialisePetName());
@@ -357,7 +358,7 @@ public class PetManager implements IPetManager{
 		}
 		
 		if(pet.getRider() != null){
-			PetType riderType = pet.getRider().getPetType();
+			IPetType riderType = pet.getRider().getPetType();
 			
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().serialisePetName());
@@ -372,12 +373,12 @@ public class PetManager implements IPetManager{
 	@Override
 	public void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD){
 		clearFileData(type, p);
-		PetType pt = UPD.petType;
+		IPetType pt = UPD.petType;
 		String petName = UPD.petName;
 		if(UPD.petName == null || UPD.petName.equalsIgnoreCase("")){
 			petName = pt.getDefaultName(p.getName());
 		}
-		PetType riderType = UMD.petType;
+		IPetType riderType = UMD.petType;
 		String riderName = UMD.petName;
 		if(UMD.petName == null || UMD.petName.equalsIgnoreCase("")){
 			riderName = pt.getDefaultName(p.getName());
@@ -407,7 +408,7 @@ public class PetManager implements IPetManager{
 	@Override
 	public void saveFileData(String type, Player p, PetStorage UPD){
 		clearFileData(type, p);
-		PetType pt = UPD.petType;
+		IPetType pt = UPD.petType;
 		String petName = UPD.petName;
 		
 		String path = type + "." + UUIDMigration.getIdentificationFor(p);

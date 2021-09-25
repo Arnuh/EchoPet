@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
@@ -37,7 +38,7 @@ import org.bukkit.entity.Player;
  */
 public class PetRegistry implements IPetRegistry{
 	
-	private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
+	private final Map<IPetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
 	
 	public PetRegistry(){
 		for(PetType petType : PetType.values){
@@ -53,7 +54,7 @@ public class PetRegistry implements IPetRegistry{
 				}
 				try{
 					PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
-					registrationEntries.put(petType, registrationEntry);
+					register(petType, registrationEntry);
 				}catch(PetRegistrationException e){
 					// not found = not compatible with this server version
 				}
@@ -62,9 +63,15 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	@Override
-	public PetRegistrationEntry getRegistrationEntry(PetType petType){
+	public void register(IPetType petType, PetRegistrationEntry registrationEntry){
+		registrationEntries.put(petType, registrationEntry);
+	}
+	
+	@Override
+	public PetRegistrationEntry getRegistrationEntry(IPetType petType){
 		return registrationEntries.get(petType);
 	}
+	
 	
 	@Override
 	public void shutdown(){
@@ -72,7 +79,7 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	@Override
-	public IPet spawn(PetType petType, final Player owner){
+	public IPet spawn(IPetType petType, final Player owner){
 		Preconditions.checkNotNull(petType, "Pet type must not be null.");
 		Preconditions.checkNotNull(owner, "Owner type must not be null.");
 		final PetRegistrationEntry registrationEntry = getRegistrationEntry(petType);
@@ -92,7 +99,7 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	@Override
-	public void enablePet(PetType petType){
+	public void enablePet(IPetType petType){
 		/*if(petType.isCompatible()){
 			EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
 			if(entity == null){
@@ -112,7 +119,7 @@ public class PetRegistry implements IPetRegistry{
 	}
 	
 	@Override
-	public void disablePet(PetType petType){
+	public void disablePet(IPetType petType){
 		/*try{
 			if(petType.isCompatible()){
 				Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);

@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.registration;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Player;
 
@@ -26,13 +27,15 @@ import org.bukkit.entity.Player;
  */
 public interface IPetRegistry{
 	
-	PetRegistrationEntry getRegistrationEntry(PetType petType);
+	
+	void register(IPetType petType, PetRegistrationEntry registrationEntry);
+	PetRegistrationEntry getRegistrationEntry(IPetType petType);
 	
 	void shutdown();
 	
-	IPet spawn(PetType petType, final Player owner);
+	IPet spawn(IPetType petType, final Player owner);
 	
-	void enablePet(PetType petType);
+	void enablePet(IPetType petType);
 	
-	void disablePet(PetType petType);
+	void disablePet(IPetType petType);
 }

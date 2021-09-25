@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -45,7 +46,7 @@ public class SqlPetManager implements ISqlPetManager{
 	}
 	
 	@Override
-	public void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider){
+	public void saveToDatabase(String playerIdent, IPetType petType, String petName, List<PetData> petData, boolean isRider){
 		if(EchoPet.getOptions().useSql()){
 			
 			if(EchoPet.getPlugin().getDbPool() != null){

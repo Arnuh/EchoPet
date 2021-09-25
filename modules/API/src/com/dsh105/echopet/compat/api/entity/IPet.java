@@ -46,7 +46,7 @@ public interface IPet{
 	
 	Object getOwnerIdentification();
 	
-	PetType getPetType();
+	IPetType getPetType();
 	
 	boolean isRider();
 	
@@ -89,7 +89,7 @@ public interface IPet{
 	
 	void setAsHat(boolean flag);
 	
-	IPet createRider(final PetType pt, boolean sendFailMessage);
+	IPet createRider(final IPetType pt, boolean sendFailMessage);
 	
 	void setRider(IPet rider);
 	

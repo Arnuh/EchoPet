@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.api.util;
 import java.util.LinkedList;
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.google.common.collect.ImmutableList;
 import net.md_5.bungee.api.ChatColor;
@@ -53,7 +54,7 @@ public class MenuUtil{
 	}
 	
 	public static List<Object> createOptionList(IPet pet){
-		PetType pt = pet.getPetType();
+		IPetType pt = pet.getPetType();
 		List<Object> options = new LinkedList<>();
 		options.addAll(pt.getAllowedDataTypes());
 		options.addAll(pt.getAllowedCategories());

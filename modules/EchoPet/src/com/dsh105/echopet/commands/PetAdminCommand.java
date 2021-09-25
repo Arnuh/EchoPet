@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -412,7 +413,7 @@ public class PetAdminCommand implements CommandExecutor{
 				if(UPD == null){
 					return true;
 				}
-				PetType petType = UPD.petType;
+				IPetType petType = UPD.petType;
 				ArrayList<PetData> petDataList = UPD.petDataList;
 				
 				if(petType == null || petDataList == null){
@@ -498,7 +499,7 @@ public class PetAdminCommand implements CommandExecutor{
 					if(UPD == null){
 						return true;
 					}
-					PetType petType = UPD.petType;
+					IPetType petType = UPD.petType;
 					ArrayList<PetData> petDataList = UPD.petDataList;
 					
 					if(petType == null || petDataList == null){
@@ -523,14 +524,14 @@ public class PetAdminCommand implements CommandExecutor{
 				if(UPD == null){
 					return true;
 				}
-				PetType petType = UPD.petType;
+				IPetType petType = UPD.petType;
 				ArrayList<PetData> petDataList = UPD.petDataList;
 				
 				PetStorage UMD = PetUtil.formPetFromArgs(sender, args[3], false);
 				if(UMD == null){
 					return true;
 				}
-				PetType riderType = UMD.petType;
+				IPetType riderType = UMD.petType;
 				ArrayList<PetData> riderDataList = UMD.petDataList;
 				
 				if(petType == null || petDataList == null || riderType == null || riderDataList == null){
@@ -605,7 +606,7 @@ public class PetAdminCommand implements CommandExecutor{
 					if(UPD == null){
 						return true;
 					}
-					PetType petType = UPD.petType;
+					IPetType petType = UPD.petType;
 					ArrayList<PetData> petDataList = UPD.petDataList;
 					
 					if(petType == null || petDataList == null){
@@ -654,14 +655,14 @@ public class PetAdminCommand implements CommandExecutor{
 				if(UPD == null){
 					return true;
 				}
-				PetType petType = UPD.petType;
+				IPetType petType = UPD.petType;
 				ArrayList<PetData> petDataList = UPD.petDataList;
 				
 				PetStorage UMD = PetUtil.formPetFromArgs(sender, args[2], false);
 				if(UMD == null){
 					return true;
 				}
-				PetType riderType = UMD.petType;
+				IPetType riderType = UMD.petType;
 				ArrayList<PetData> riderDataList = UMD.petDataList;
 				
 				if(petType == null || petDataList == null || riderType == null || riderDataList == null){

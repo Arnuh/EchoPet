@@ -21,6 +21,7 @@ import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
@@ -248,7 +249,7 @@ public class EntityPetBase implements IEntityPetBase{
 		if(moveEvent.isCancelled()){
 			return null;
 		}
-		PetType pt = this.getPet().getPetType();
+		IPetType pt = this.getPet().getPetType();
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
 				try{
