@@ -19,13 +19,12 @@ package com.dsh105.echopet.compat.api.plugin.hook;
 
 import org.bukkit.plugin.Plugin;
 
-public interface IPluginDependencyProvider<T extends Plugin>{
+public interface IPluginDependencyProvider<P extends Plugin, D extends Plugin>{
 	
-	T getDependency();
+	P getHandlingPlugin();
+	D getDependency();
 	
 	boolean isHooked();
-	
-	Plugin getHandlingPlugin();
 	
 	String getDependencyName();
 }

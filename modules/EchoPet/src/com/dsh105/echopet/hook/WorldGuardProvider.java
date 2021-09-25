@@ -17,7 +17,9 @@
 
 package com.dsh105.echopet.hook;
 
+import com.dsh105.echopet.EchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.PluginDependencyProvider;
 import com.dsh105.echopet.compat.api.util.Version;
@@ -25,9 +27,9 @@ import com.dsh105.echopet.listeners.RegionListener;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.plugin.Plugin;
 
-public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugin> implements IWorldGuardProvider{
+public class WorldGuardProvider extends PluginDependencyProvider<IEchoPetPlugin, WorldGuardPlugin> implements IWorldGuardProvider{
 	
-	public WorldGuardProvider(Plugin myPluginInstance){
+	public WorldGuardProvider(EchoPetPlugin myPluginInstance){
 		super(myPluginInstance, "WorldGuard");
 	}
 	
