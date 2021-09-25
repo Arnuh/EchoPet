@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
@@ -42,27 +43,27 @@ public class ConfigOptions extends Options{
 		SelectorLayout.loadLayout();
 	}
 	
-	public boolean allowPetType(PetType petType){
+	public boolean allowPetType(IPetType petType){
 		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".enable", true);
 	}
 	
-	public boolean allowRidersFor(PetType petType){
+	public boolean allowRidersFor(IPetType petType){
 		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".allow.riders", true);
 	}
 	
-	public boolean allowData(PetType type, PetData data){
+	public boolean allowData(IPetType type, PetData data){
 		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
 	}
 	
-	public boolean forceData(PetType type, PetData data){
+	public boolean forceData(IPetType type, PetData data){
 		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
 	}
 	
-	public boolean canFly(PetType petType){
+	public boolean canFly(IPetType petType){
 		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".canFly", false);
 	}
 	
-	public boolean canIgnoreFallDamage(PetType petType){
+	public boolean canIgnoreFallDamage(IPetType petType){
 		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".ignoreFallDamage", true);
 	}
 	
@@ -70,19 +71,19 @@ public class ConfigOptions extends Options{
 		return this.config.getString("commandString", "pet");
 	}
 	
-	public double getWalkSpeed(PetType petType){
+	public double getWalkSpeed(IPetType petType){
 		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".walkSpeed", 0.37D);
 	}
 	
-	public float getRideSpeed(PetType petType){
+	public float getRideSpeed(IPetType petType){
 		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
 	}
 	
-	public float getFlySpeed(PetType petType){
+	public float getFlySpeed(IPetType petType){
 		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".flySpeed", 0.5D);
 	}
 	
-	public double getRideJumpHeight(PetType petType){
+	public double getRideJumpHeight(IPetType petType){
 		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideJump", 0.6D);
 	}
 	

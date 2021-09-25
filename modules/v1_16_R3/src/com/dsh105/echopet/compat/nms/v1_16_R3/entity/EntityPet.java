@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
@@ -104,14 +105,6 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 			attributeInstance.setValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
 		}
 		this.setPathfinding();
-	}
-	
-	public PetType getEntityPetType(){
-		EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
-		if(entityPetType != null){
-			return entityPetType.petType();
-		}
-		return null;
 	}
 	
 	@Override
@@ -337,7 +330,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
-		PetType pt = this.getPet().getPetType();
+		IPetType pt = this.getPet().getPetType();
 		float speed = rideSpeed;
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){

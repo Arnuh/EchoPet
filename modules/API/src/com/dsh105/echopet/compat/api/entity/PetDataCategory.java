@@ -82,7 +82,7 @@ public enum PetDataCategory{
 		return item;
 	}
 	
-	public static PetDataCategory getByData(PetType type, PetData data){
+	public static PetDataCategory getByData(IPetType type, PetData data){
 		for(PetDataCategory category : type.getAllowedCategories()){
 			if(category.hasData(data)) return category;
 		}
