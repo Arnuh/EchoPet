@@ -32,7 +32,7 @@ import com.google.common.collect.ImmutableList;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public enum PetType{
+public enum PetType implements IPetType{
 	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17-R1"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
@@ -110,7 +110,11 @@ public enum PetType{
 	
 	public static final PetType[] values = values();
 	
-	private final String classIdentifier;
+	public static final List<IPetType> pets = new ArrayList<>();
+	static{
+		pets.addAll(List.of(values));
+	}
+	
 	private Class<? extends IEntityPet> entityClass;
 	private Class<? extends IPet> petClass;
 	private final String defaultName;
@@ -141,9 +145,8 @@ public enum PetType{
 		this(classIdentifier, defaultName, minecraftEntityName, version, null, categories, allowedData);
 	}
 	
-	@SuppressWarnings({"unchecked"})
+	@SuppressWarnings("unchecked")
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData... allowedData){
-		this.classIdentifier = classIdentifier;
 		try{
 			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
@@ -195,10 +198,6 @@ public enum PetType{
 		if(categories != null){
 			this.allowedCategories.addAll(ImmutableList.copyOf(categories));
 		}
-	}
-	
-	public String getClassIdentifier(){
-		return classIdentifier;
 	}
 	
 	public String getDefaultName(String name){
@@ -253,12 +252,12 @@ public enum PetType{
 		return version;
 	}
 	
-	public Material getUIMaterial(){
-		return uiMaterial;
-	}
-	
 	public boolean isCompatible(){
 		return version.isCompatible(new Version());
+	}
+	
+	public Material getUIMaterial(){
+		return uiMaterial;
 	}
 	
 	/**
@@ -282,6 +281,15 @@ public enum PetType{
 	
 	public double getFollowSpeedModifier(){
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".followSpeedModifier", 1);
+	}
+	
+	public static IPetType get(String name){
+		for(IPetType pet : pets){
+			if(pet.name().equalsIgnoreCase(name)){
+				return pet;
+			}
+		}
+		return null;
 	}
 	
 	private static void outputInfo(){

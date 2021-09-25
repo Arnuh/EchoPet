@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
@@ -44,6 +45,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
@@ -277,7 +279,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
-		PetType pt = this.getPet().getPetType();
+		IPetType pt = this.getPet().getPetType();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !passengers.isEmpty()){
 			if(EchoPet.getOptions().canFly(pt)){
@@ -370,7 +372,9 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 			this.remove(false);
 			return;
 		}
-		if(!isPassenger() || getPet().getRider() == null) this.petGoalSelector.updateGoals();
+		if(!isPassenger() || getPet().getRider() == null){
+			this.petGoalSelector.updateGoals();
+		}
 	}
 	
 	@Override

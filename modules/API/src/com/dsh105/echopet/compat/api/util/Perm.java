@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.command.CommandSender;
@@ -88,7 +89,7 @@ public enum Perm{
 		}
 	}
 	
-	public static boolean hasTypePerm(CommandSender sender, boolean sendMessage, Perm base, boolean allowConsole, PetType petType){
+	public static boolean hasTypePerm(CommandSender sender, boolean sendMessage, Perm base, boolean allowConsole, IPetType petType){
 		if(sender instanceof Player){
 			return hasTypePerm(((Player) sender), sendMessage, base, petType);
 		}else{
@@ -99,7 +100,7 @@ public enum Perm{
 		}
 	}
 	
-	public static boolean hasDataPerm(CommandSender sender, boolean sendMessage, PetType petType, PetData petData, boolean allowConsole){
+	public static boolean hasDataPerm(CommandSender sender, boolean sendMessage, IPetType petType, PetData petData, boolean allowConsole){
 		if(sender instanceof Player){
 			return hasDataPerm(((Player) sender), sendMessage, petType, petData);
 		}else{
@@ -132,7 +133,7 @@ public enum Perm{
 		return false;
 	}
 	
-	private static boolean hasTypePerm(Player player, boolean sendMessage, Perm base, PetType petType){
+	private static boolean hasTypePerm(Player player, boolean sendMessage, Perm base, IPetType petType){
 		String perm = base.perm + "." + petType.getConfigKeyName();
 		if(player.hasPermission(perm)){
 			return true;
@@ -144,7 +145,7 @@ public enum Perm{
 		return false;
 	}
 	
-	private static boolean hasDataPerm(Player player, boolean sendMessage, PetType petType, PetData petData){
+	private static boolean hasDataPerm(Player player, boolean sendMessage, IPetType petType, PetData petData){
 		boolean hasTypePerm = hasTypePerm(player, sendMessage, Perm.BASE_PETTYPE, petType);
 		if(!hasTypePerm){
 			return false;

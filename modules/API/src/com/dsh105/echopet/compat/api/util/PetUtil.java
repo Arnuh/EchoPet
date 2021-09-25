@@ -24,6 +24,7 @@ import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
@@ -144,10 +145,8 @@ public class PetUtil{
 		}
 		
 		ArrayList<PetData> petDataList = new ArrayList<PetData>();
-		PetType petType = null;
-		if(GeneralUtil.isEnumType(PetType.class, petString)){
-			petType = PetType.valueOf(petString.toUpperCase());
-		}
+		IPetType petType = PetType.get(petString);
+
 		if(petType == null){
 			Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(petString)));
 			return null;
