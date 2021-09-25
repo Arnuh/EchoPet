@@ -533,34 +533,6 @@ public enum PetType implements IPetType{
 	}
 	
 	public static void main(String[] args){
-		//outputInfo();
-		String[] petTypes = new String[PetType.values.length];
-		int pos = 0;
-		for(PetType type : PetType.values){
-			petTypes[pos++] = type.getConfigKeyName();
-		}
-		Arrays.sort(petTypes);
-		for(String petTypeName : petTypes){
-			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-			System.out.println(petType.name());
-			System.out.print("\t");
-			int i = 0;
-			for(PetData data : petType.getAllowedDataTypes()){
-				if(data.equals(PetData.RIDE) || data.equals(PetData.HAT)) continue;
-				if(i++ != 0){
-					System.out.print(", ");
-				}
-				System.out.print(data.getItemName());
-			}
-			for(PetDataCategory category : petType.getAllowedCategories()){
-				for(PetData data : category.getData()){
-					if(i++ != 0){
-						System.out.print(", ");
-					}
-					System.out.print(data.getItemName());
-				}
-			}
-			System.out.print("\n");
-		}
+		outputInfo();
 	}
 }
