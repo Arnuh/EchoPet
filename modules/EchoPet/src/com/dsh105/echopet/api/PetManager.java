@@ -229,7 +229,10 @@ public class PetManager implements IPetManager{
 		if(EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
 			String path = type + "." + UUIDMigration.getIdentificationFor(p);
 			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path) != null){
-				PetType petType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
+				IPetType petType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
+				if(petType == null){
+					return null;
+				}
 				String name = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.name");
 				if(name == null || name.equalsIgnoreCase("")){
 					name = petType.getDefaultName(p.getName());
@@ -289,7 +292,10 @@ public class PetManager implements IPetManager{
 		if(pet.getOwner() != null){
 			String path = type + "." + pet.getOwnerIdentification() + ".rider";
 			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".type") != null){
-				PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
+				IPetType riderPetType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
+				if(riderPetType == null){
+					return;
+				}
 				String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".name");
 				if(riderName == null || riderName.equalsIgnoreCase("")){
 					riderName = riderPetType.getDefaultName(pet.getNameOfOwner());

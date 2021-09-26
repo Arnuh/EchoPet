@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
@@ -79,10 +80,7 @@ public class SelectorLayout{
 				int slot = Integer.parseInt(slotStr);
 				String cmd = config.getString(s + ".page-" + page + "." + slot + ".command");
 				String petType = config.getString(s + ".page-" + page + "." + slot + ".petType");
-				PetType pt = null;
-				if(petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())){
-					pt = PetType.valueOf(petType.toUpperCase());
-				}
+				IPetType pt = PetType.get(petType);
 				Material material = Material.getMaterial(config.getString(s + ".page-" + page + "." + slot + ".material"));
 				int data = config.getInt(s + ".page-" + page + "." + slot + ".materialData", -1);// Support old configs
 				String entityTag = "Pig";
