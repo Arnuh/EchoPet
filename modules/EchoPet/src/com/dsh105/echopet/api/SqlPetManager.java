@@ -92,7 +92,7 @@ public class SqlPetManager implements ISqlPetManager{
 		if(EchoPet.getOptions().useSql()){
 			IPet pet = null;
 			Player owner;
-			PetType pt;
+			IPetType pt;
 			String name;
 			
 			if(EchoPet.getPlugin().getDbPool() != null){
@@ -106,7 +106,7 @@ public class SqlPetManager implements ISqlPetManager{
 									return null;
 								}
 								
-								pt = findPetType(rs.getString("PetType"));
+								pt = PetType.get(rs.getString("PetType"));
 								if(pt == null){
 									return null;
 								}
@@ -123,7 +123,7 @@ public class SqlPetManager implements ISqlPetManager{
 									EchoPet.getManager().setData(pet, data, true);
 								}
 								if(rs.getString("RiderPetType") != null){
-									PetType mt = findPetType(rs.getString("RiderPetType"));
+									IPetType mt = PetType.get(rs.getString("RiderPetType"));
 									if(mt == null){
 										return null;
 									}
@@ -149,14 +149,6 @@ public class SqlPetManager implements ISqlPetManager{
 			return pet;
 		}
 		return null;
-	}
-	
-	private PetType findPetType(String s){
-		try{
-			return PetType.valueOf(s.toUpperCase());
-		}catch(Exception e){
-			return null;
-		}
 	}
 	
 	@Override
