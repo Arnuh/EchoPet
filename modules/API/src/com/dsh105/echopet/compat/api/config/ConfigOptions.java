@@ -112,11 +112,12 @@ public class ConfigOptions extends Options{
 		set("sql.username", "none");
 		set("sql.password", "none");
 		
-		set("petNames.My Pet", "allow");
+		set("petNames.My Pet", "allow", "List of Pet Names which are `deny` or `allow`.");
 		set("petNamesRegexMatching", true);
-		List<HashMap<String, String>> petNamesRegex = new ArrayList<>();
+		List<Map<String, String>> petNamesRegex = new ArrayList<>();
 		Map<String, String> nameRegex = new HashMap<>();
 		nameRegex.put(".*administrator.*", "deny");
+		petNamesRegex.add(nameRegex);
 		set("petNamesRegex", petNamesRegex);
 		
 		set("stripDiacriticsFromNames", true);
@@ -129,7 +130,7 @@ public class ConfigOptions extends Options{
 		set("sendForceMessage", true, "For all data values forced, EchoPet will notify the player", "(if set to true).");
 		
 		set("worlds.world", true);
-		set("worlds.enableByDefault", true);
+		set("worlds.enableByDefault", true, "Allow/disallow Pets for any worlds not mentioned.");
 		
 		if(config.getConfigurationSection("worldguard.regions") == null){
 			set("worldguard.regions.echopet", true);
@@ -186,7 +187,6 @@ public class ConfigOptions extends Options{
 		set("petSelector.item.name", "&aPets");
 		set("petSelector.item.lore", "&7Right click to open");
 		set("petSelector.item.material", Material.BONE.name());
-		set("petSelector.item.materialData", 0);
 		
 		boolean loadDefault = this.config.get("petSelector.menu.slots") == null;
 		int pageCount = SelectorLayout.getTotalPageCount();
