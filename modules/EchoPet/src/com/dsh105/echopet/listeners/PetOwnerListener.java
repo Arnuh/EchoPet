@@ -90,7 +90,8 @@ public class PetOwnerListener implements Listener{
 		ItemStack itemStack = event.getItem();
 		if(itemStack != null && itemStack.isSimilar(SelectorLayout.getSelectorItem())){
 			//https://hub.spigotmc.org/jira/browse/SPIGOT-6008
-			if(!p.getOpenInventory().getType().equals(InventoryType.CRAFTING)){
+			InventoryType inventoryType = p.getOpenInventory().getType();
+			if(!inventoryType.equals(InventoryType.CRAFTING) && !inventoryType.equals(InventoryType.CREATIVE)){
 				//LEFT_CLICK_AIR gets called when you open an Inventory while an Inventory is still open
 				//Since the Selector is in your hand this results in being stuck on page 1 whenever you try to move to page 2.
 				//Another fix is to check if the action is left click air/block and just don't let those items open the inventory anymore.
