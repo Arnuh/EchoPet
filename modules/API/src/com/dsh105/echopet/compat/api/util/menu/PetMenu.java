@@ -33,8 +33,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class PetMenu{
 	
-	Inventory inv;
-	private IPet pet;
+	private final Inventory inv;
+	private final IPet pet;
 	
 	public PetMenu(IPet pet){
 		this.pet = pet;
