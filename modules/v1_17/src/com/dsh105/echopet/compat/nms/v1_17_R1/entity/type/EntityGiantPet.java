@@ -26,7 +26,7 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGiantPet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 5.5F, height = 5.5F)
+@EntitySize(width = 3.6F, height = 12F)
 @EntityPetType(petType = PetType.GIANT)
 public class EntityGiantPet extends EntityZombiePet implements IEntityGiantPet{
 	
