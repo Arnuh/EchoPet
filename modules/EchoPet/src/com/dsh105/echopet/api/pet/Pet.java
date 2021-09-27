@@ -55,15 +55,15 @@ public abstract class Pet implements IPet{
 	private Object ownerIdentification;
 	private Pet rider, lastRider;
 	private String name;
-	private final ArrayList<PetData> petData = new ArrayList<PetData>();
+	private final ArrayList<PetData> petData = new ArrayList<>();
 	private InventoryView dataMenu;
 	private final List<com.dsh105.echopet.compat.api.particle.Trail> trails = Lists.newArrayList();
 	
 	private boolean isRider = false;
 	
-	public boolean ownerIsMounting = false;
-	private boolean ownerRiding = false, isHat = false;
-	private boolean isHidden = false;
+	protected boolean ownerIsMounting = false;
+	protected boolean ownerRiding = false, isHat = false;
+	protected boolean isHidden = false;
 	
 	public Pet(Player owner){
 		if(owner != null){
@@ -396,8 +396,6 @@ public abstract class Pet implements IPet{
 		this.teleportToOwner();
 		this.ownerRiding = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		Location l = this.getLocation().clone();
-		l.setY(l.getY() - 1D);
 		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	

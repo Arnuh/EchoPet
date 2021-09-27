@@ -111,6 +111,7 @@ public enum PetType implements IPetType{
 	public static final PetType[] values = values();
 	
 	public static final List<IPetType> pets = new ArrayList<>();
+	
 	static{
 		pets.addAll(List.of(values));
 	}
