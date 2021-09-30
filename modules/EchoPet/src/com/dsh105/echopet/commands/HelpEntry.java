@@ -18,16 +18,21 @@
 package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.powermessage.core.PowerMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 
 public enum HelpEntry{
 	
 	PET("<type>:[data],[data];[name]", false, new String[]{"echopet.pet.type.<type>"}, "Changes your current pet", "Each data value is separated by a comma", "Pet names can be entered using a semi-colon"),
-	WITH_MOUNT("<type>:[data],[data];[name]", false, new String[]{"echopet.pet.type.<type>", "echopet.pet.type.<rider_type>"}, "Changes your current pet and adds a rider", "Each data value is separated by a comma", "Pet names can be entered using a semi-colon"),
+	WITH_MOUNT("<type>:[data],[data];[name] <rider>:[data],[data];[name]", false, new String[]{"echopet.pet.type.<type>", "echopet.pet.type.<rider_type>"}, "Changes your current pet and adds a rider", "Each data value is separated by a comma", "Pet names can be entered using a semi-colon"),
 	NAME("name [name]", true, new String[]{"echopet.pet.name"}, "Set the name of your pet", "If no arguments are provided, EchoPet will ask for one separately", "Names can be more than one word but no longer than 64 characters"),
 	REMOVE("remove", true, new String[]{"echopet.pet.remove"}, "Removes your current pet"),
 	RIDER("rider <type>:[data],[data];name", false, new String[]{"echopet.pet.type.<rider_type>"}, "Changes the rider of your pet", "Each data value is separated by a comma", "Pet names can be entered using a semi-colon"),
@@ -51,10 +56,10 @@ public enum HelpEntry{
 	
 	public static final HelpEntry[] values = values();
 	
-	private String commandArguments;
-	private boolean canCheckPerm;
-	private String[] permission;
-	private String[] description;
+	private final String commandArguments;
+	private final boolean canCheckPerm;
+	private final String[] permission;
+	private final String[] description;
 	
 	HelpEntry(String commandArguments, boolean canCheckPerm, String[] permission, String... description){
 		this.commandArguments = commandArguments;
@@ -75,10 +80,10 @@ public enum HelpEntry{
 		return description;
 	}
 	
-	public PowerMessage getPowerMessage(CommandSender sender){
+	private String getDescription(CommandSender sender){
 		ArrayList<String> description = new ArrayList<String>();
 		description.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Usage for /" + EchoPet.getPlugin().getCommandString() + " " + this.getCommandArguments() + ":");
-		for(String s : this.getDescription()){
+		for(String s : getDescription()){
 			description.add("• " + ChatColor.YELLOW + s);
 		}
 		if(sender != null && this.canCheckPerm){
@@ -89,15 +94,23 @@ public enum HelpEntry{
 					break;
 				}
 			}
-			if(hasPerm){
-				description.add(hasPerm ? ChatColor.GREEN + "You may use this command" : ChatColor.RED + "You do not have permission to use this command");
-			}
+			description.add(hasPerm ? ChatColor.GREEN + "You may use this command" : ChatColor.RED + "You do not have permission to use this command");
 		}
-		String cmd = "/" + EchoPet.getPlugin().getCommandString() + " " + this.getCommandArguments();
-		return new PowerMessage(ChatColor.YELLOW + "• " + ChatColor.GOLD + cmd).tooltip(description.toArray(new String[0])).suggest(cmd);
+		String[] data = description.toArray(new String[0]);
+		return data.length == 1 ? data[0] : StringUtil.combineArray(0, "\n", data);
 	}
 	
-	public PowerMessage getPowerMessage(){
-		return this.getPowerMessage(null);
+	public BaseComponent get(CommandSender sender){
+		TextComponent comp = new TextComponent();
+		comp.setColor(ChatColor.YELLOW);
+		comp.setText("• ");
+		String cmd = "/" + EchoPet.getPlugin().getCommandString() + " " + this.getCommandArguments();
+		TextComponent cmdComp = new TextComponent();
+		cmdComp.setColor(ChatColor.GOLD);
+		cmdComp.setText(cmd);
+		comp.addExtra(cmdComp);
+		comp.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, cmd));
+		comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(getDescription(sender))));
+		return comp;
 	}
 }

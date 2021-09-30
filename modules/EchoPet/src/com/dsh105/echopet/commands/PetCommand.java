@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.commodus.paginator.Paginator;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -30,15 +29,18 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.MiscUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.PetUtil;
-import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import com.dsh105.echopet.conversation.NameFactory;
-import com.dsh105.powermessage.core.PowerMessage;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,12 +55,12 @@ public class PetCommand implements CommandExecutor{
 		// this.cmdLabel = commandLabel;
 	}
 	
-	private Paginator<PowerMessage> getHelp(CommandSender sender){
-		ArrayList<PowerMessage> helpMessages = new ArrayList<PowerMessage>();
+	private List<BaseComponent> getHelp(CommandSender sender, int page){
+		List<BaseComponent> helpMessages = new ArrayList<>();
 		for(HelpEntry he : HelpEntry.values){
-			helpMessages.add(he.getPowerMessage(sender));
+			helpMessages.add(he.get(sender));
 		}
-		return new Paginator<PowerMessage>(helpMessages, 5);
+		return MiscUtil.getPage(helpMessages, 5, page);
 	}
 	
 	@Override
@@ -300,11 +302,13 @@ public class PetCommand implements CommandExecutor{
 			// Help page 1
 			else if(args[0].equalsIgnoreCase("help")){
 				if(Perm.BASE.hasPerm(sender, true, true)){
-					if(sender instanceof Player && EchoPet.isUsingNetty()){
-						Paginator<PowerMessage> paginator = this.getHelp(sender);
-						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
+					if(sender instanceof Player player){
+						int pageCount = MiscUtil.getPageCount(HelpEntry.values.length, 5);
+						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + pageCount + " ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-						paginator.sendPage(sender, 1);
+						for(BaseComponent component : getHelp(sender, 1)){
+							player.spigot().sendMessage(component);
+						}
 						sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
 					}else{
 						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
@@ -322,16 +326,17 @@ public class PetCommand implements CommandExecutor{
 			// List of all pet types
 			else if(args[0].equalsIgnoreCase("list")){
 				if(Perm.LIST.hasPerm(sender, true, true)){
-					boolean is1dot7 = new Version("1.7").isSupported(new Version());
-					boolean inline = !(sender instanceof Player && is1dot7);
+					boolean inline = !(sender instanceof Player);
 					
-					PowerMessage message = new PowerMessage(Lang.VALID_PET_TYPES.toString() + " ");
-					
+					TextComponent message = new TextComponent(Lang.VALID_PET_TYPES.toString() + " ");
+					// Should I be using a component builder here??
 					for(PetType type : PetType.values){
 						boolean access = Perm.hasTypePerm(sender, false, Perm.BASE_PETTYPE, true, type);
-						ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
-						ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
-						message.then(highlight + StringUtil.capitalise(type.toString().replace("_", " ")));
+						net.md_5.bungee.api.ChatColor format = access ? net.md_5.bungee.api.ChatColor.DARK_GREEN : net.md_5.bungee.api.ChatColor.DARK_RED;
+						net.md_5.bungee.api.ChatColor highlight = access ? net.md_5.bungee.api.ChatColor.GREEN : net.md_5.bungee.api.ChatColor.RED;
+						TextComponent petMessage = new TextComponent();
+						petMessage.setColor(highlight);
+						petMessage.setText(StringUtil.capitalise(type.toString().replace("_", " ")));
 						
 						List<PetData> registeredData = type.getAllowedDataTypes();
 						List<String> registeredStringData = new ArrayList<String>();
@@ -353,20 +358,30 @@ public class PetCommand implements CommandExecutor{
 							}
 						}
 						
-						if(registeredStringData.size() <= 0){
-							message.tooltip(format + "No valid data types.");
+						if(registeredStringData.isEmpty()){
+							petMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(format + "No valid data types.")));
 						}else{
-							String data = dataBuilder.substring(0, dataBuilder.length() - 2);
-							message.tooltip(data);
-							if(inline){
-								message.then(" (" + StringUtil.combine(", ", registeredStringData) + ")").colour(format);
+							if(inline){// Console
+								TextComponent reg = new TextComponent(" (" + StringUtil.combine(", ", registeredStringData) + ")");
+								reg.setColor(format);
+								petMessage.addExtra(reg);
+							}else{
+								String data = dataBuilder.substring(0, dataBuilder.length() - 2);
+								// Make data a component?
+								petMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(data)));
 							}
 						}
-						message.then(format + ", " + highlight);
+						message.addExtra(petMessage);
+						
+						TextComponent sep = new TextComponent(", ");
+						sep.setColor(format);
+						message.addExtra(sep);
 					}
-					message.send(sender);
-					if(!inline){
+					if(sender instanceof Player player){
+						player.spigot().sendMessage(message);
 						sender.sendMessage(Lang.TIP_HOVER_LIST_PREVIEW.toString());
+					}else{
+						sender.sendMessage(message.toLegacyText());
 					}
 					return true;
 				}else{
@@ -562,36 +577,26 @@ public class PetCommand implements CommandExecutor{
 			// Help pages 1 through to 3
 			else if(args[0].equalsIgnoreCase("help")){
 				if(Perm.BASE.hasPerm(sender, true, true)){
+					int page = 1;
 					if(GeneralUtil.isInt(args[1])){
-						if(sender instanceof Player && EchoPet.isUsingNetty()){
-							Paginator<PowerMessage> paginator = this.getHelp(sender);
-							sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getPages() + " ------------");
-							sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-							if(Integer.parseInt(args[1]) > paginator.getPages()){
-								Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
-								return true;
-							}
-							paginator.sendPage(sender, Integer.parseInt(args[1]));
-							sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
-						}else{
-							sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
-							sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-							for(String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))){
-								sender.sendMessage(s);
-							}
-						}
-						return true;
+						page = Integer.parseInt(args[1]);
 					}
-					if(sender instanceof Player && EchoPet.isUsingNetty()){
-						Paginator<PowerMessage> paginator = this.getHelp(sender);
-						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
+					int pageCount = MiscUtil.getPageCount(HelpEntry.values.length, 5);
+					if(sender instanceof Player player){
+						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + page + "/" + pageCount + " ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-						paginator.sendPage(sender, 1);
+						if(page > pageCount){
+							Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
+							return true;
+						}
+						for(BaseComponent component : getHelp(sender, page)){
+							player.spigot().sendMessage(component);
+						}
 						sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
 					}else{
-						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
+						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + page + "/" + pageCount + " ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-						for(String s : HelpPage.getHelpPage(1)){
+						for(String s : HelpPage.getHelpPage(page)){
 							sender.sendMessage(s);
 						}
 					}

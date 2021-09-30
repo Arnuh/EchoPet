@@ -56,8 +56,8 @@
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>PowerMessage</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.4</version>
         </dependency>
     </dependencies>
 </project>

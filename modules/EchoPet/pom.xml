@@ -51,10 +51,6 @@
                     <artifactId>Commodus</artifactId>
                     <groupId>com.dsh105</groupId>
                 </exclusion>
-                <exclusion>
-                    <artifactId>PowerMessage</artifactId>
-                    <groupId>com.dsh105</groupId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -80,17 +76,6 @@
                 </exclusion>
             </exclusions>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>PowerMessage</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>Commodus</artifactId>
-                    <groupId>com.dsh105</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
@@ -191,7 +176,6 @@
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
                                     <include>com.dsh105:Commodus</include>
-                                    <include>com.dsh105:PowerMessage</include>
                                     <include>com.codingforcookies:robert</include>
                                 </includes>
                             </artifactSet>
@@ -207,10 +191,6 @@
                                 <relocation>
                                     <pattern>com.dsh105.commodus</pattern>
                                     <shadedPattern>com.dsh105.echopet.libs.com.dsh105.commodus</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.dsh105.powermessage</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.com.dsh105.powermessage</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.codingforcookies.robert</pattern>

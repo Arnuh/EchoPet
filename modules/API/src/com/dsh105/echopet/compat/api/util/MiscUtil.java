@@ -17,6 +17,8 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import com.google.common.collect.BiMap;
 
@@ -32,5 +34,26 @@ public class MiscUtil{
 			}
 		}
 		return null;
+	}
+	
+	
+	public static int getPageCount(int size, int perPage){
+		return (int) Math.ceil((double) size / perPage);
+	}
+	
+	public static <T> List<T> getPage(List<T> data, int perPage, int pageNumber){
+		if(pageNumber > getPageCount(data.size(), perPage)){
+			throw new IllegalArgumentException("Page does not exist!");
+		}else{
+			int index = perPage * (Math.abs(pageNumber) - 1);
+			List<T> list = new ArrayList<>();
+			// Just sublist this? Idk, just copypasted so everything works.
+			for(int i = index; i < index + perPage; ++i){
+				if(data.size() > i){
+					list.add(data.get(i));
+				}
+			}
+			return list;
+		}
 	}
 }
