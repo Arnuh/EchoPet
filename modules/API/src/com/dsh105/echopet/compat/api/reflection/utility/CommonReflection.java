@@ -251,20 +251,6 @@ public class CommonReflection{
 		return CRAFTBUKKIT_HANDLER.getClass(className);
 	}
 	
-	public static boolean isUsingNetty(){
-		try{
-			Class<?> enumProtocol = getMinecraftClass("EnumProtocol");
-			
-			if(enumProtocol != null){   // Better be safe then sorry...
-				return true;
-			}
-			
-		}catch(Exception e){
-			return false;
-		}
-		return false;
-	}
-	
 	// Usefull classes here
 	
 	/**

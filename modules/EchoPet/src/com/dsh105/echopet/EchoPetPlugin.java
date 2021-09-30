@@ -42,7 +42,6 @@ import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.plugin.ModuleLogger;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -65,8 +64,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.DumperOptions;
 
 public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
-	
-	private static boolean isUsingNetty;
 	
 	private static ISpawnUtil SPAWN_UTIL;
 	private static PetManager MANAGER;
@@ -103,7 +100,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public void onEnable(){
 		EchoPet.setPlugin(this);
-		isUsingNetty = CommonReflection.isUsingNetty();
 		
 		this.configManager = new YAMLConfigManager(this);
 		COMMAND_MANAGER = new CommandManager(this);
@@ -405,11 +401,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public String getAdminCommandString(){
 		return adminCmdString;
-	}
-	
-	@Override
-	public boolean isUsingNetty(){
-		return isUsingNetty;
 	}
 	
 	@Override

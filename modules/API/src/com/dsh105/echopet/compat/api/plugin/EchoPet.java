@@ -59,10 +59,6 @@ public final class EchoPet{
 		return PLUGIN.getOptions();
 	}
 	
-	public static boolean isUsingNetty(){
-		return PLUGIN.isUsingNetty();
-	}
-	
 	public static YAMLConfig getConfig(){
 		return getConfig(ConfigType.MAIN);
 	}

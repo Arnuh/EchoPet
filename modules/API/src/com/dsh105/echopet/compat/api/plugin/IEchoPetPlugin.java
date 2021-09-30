@@ -56,8 +56,6 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	ConfigOptions getOptions();
 	
-	boolean isUsingNetty();
-	
 	boolean isUpdateAvailable();
 	
 	String getUpdateName();
