@@ -116,7 +116,7 @@ public class PetManager implements IPetManager{
 			}
 			return null;
 		}
-		if(!EchoPet.getOptions().allowPetType(petType)){
+		if(!petType.isEnabled()){
 			if(sendMessageOnFail){
 				Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
@@ -145,7 +145,7 @@ public class PetManager implements IPetManager{
 			Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
 			return null;
 		}
-		if(!EchoPet.getOptions().allowPetType(petType)){
+		if(!petType.isEnabled()){
 			Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			return null;
 		}
@@ -189,7 +189,7 @@ public class PetManager implements IPetManager{
 	public void forceAllValidData(IPet pi){
 		List<PetData> tempData = new ArrayList<>();
 		for(PetData data : PetData.values){
-			if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
+			if(pi.getPetType().isDataForced(data)){
 				tempData.add(data);
 			}
 		}
@@ -198,7 +198,7 @@ public class PetManager implements IPetManager{
 		List<PetData> tempRiderData = new ArrayList<>();
 		if(pi.getRider() != null){
 			for(PetData data : PetData.values){
-				if(EchoPet.getOptions().forceData(pi.getPetType(), data)){
+				if(pi.getPetType().isDataForced(data)){
 					tempRiderData.add(data);
 				}
 			}
@@ -237,7 +237,7 @@ public class PetManager implements IPetManager{
 				if(name == null || name.equalsIgnoreCase("")){
 					name = petType.getDefaultName(p.getName());
 				}
-				if(!EchoPet.getOptions().allowPetType(petType)){
+				if(!petType.isEnabled()){
 					return null;
 				}
 				IPet pet = this.createPet(p, petType, true);
@@ -300,7 +300,7 @@ public class PetManager implements IPetManager{
 				if(riderName == null || riderName.equalsIgnoreCase("")){
 					riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
 				}
-				if(EchoPet.getOptions().allowRidersFor(pet.getPetType())){
+				if(pet.getPetType().allowRidersFor()){
 					IPet rider = pet.createRider(riderPetType, true);
 					if(rider != null){
 						rider.setPetName(riderName);

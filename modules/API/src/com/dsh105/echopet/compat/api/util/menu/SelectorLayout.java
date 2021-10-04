@@ -116,7 +116,7 @@ public class SelectorLayout{
 		Map<Integer, Map<Integer, SelectorIcon>> layout = new HashMap<>();
 		for(SelectorIcon icon : selectorLayout){
 			if(!ConfigOptions.instance.getConfig().getBoolean("petSelector.showDisabledPets", true) && icon.getPetType() != null){
-				if(!ConfigOptions.instance.allowPetType(icon.getPetType())){
+				if(!icon.getPetType().isEnabled()){
 					continue;
 				}
 			}

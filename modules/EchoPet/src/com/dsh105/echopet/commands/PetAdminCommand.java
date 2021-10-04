@@ -23,7 +23,6 @@ import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
@@ -613,7 +612,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					
-					if(!EchoPet.getOptions().allowRidersFor(petType)){
+					if(!petType.allowRidersFor()){
 						Lang.sendTo(sender, Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return true;
 					}

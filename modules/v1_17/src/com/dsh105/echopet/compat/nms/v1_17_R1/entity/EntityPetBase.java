@@ -22,7 +22,6 @@ import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -74,12 +73,12 @@ public class EntityPetBase implements IEntityPetBase{
 	}
 	
 	protected void initiateEntityPet(){
-		this.rideSpeed = EchoPet.getOptions().getRideSpeed(getPet().getPetType());
-		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
-		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(getPet().getPetType());
+		this.rideSpeed = getPet().getPetType().getRideSpeed();
+		this.flySpeed = getPet().getPetType().getFlySpeed();
+		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
 		AttributeInstance attributeInstance = getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
+			attributeInstance.setBaseValue(getPet().getPetType().getWalkSpeed());
 		}
 		this.setPathfinding();
 		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
@@ -112,7 +111,7 @@ public class EntityPetBase implements IEntityPetBase{
 	@Override
 	public boolean onInteract(Player player){
 		if(player.getUniqueId().equals(getPet().getOwner().getUniqueId())){
-			if(EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().getConfigKeyName() + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(getPet().getOwner(), false, false)){
+			if(getPet().getPetType().isInteractMenuEnabled() && Perm.BASE_MENU.hasPerm(getPet().getOwner(), false, false)){
 				new PetMenu(getPet()).open(false);
 			}
 			return true;
@@ -169,7 +168,7 @@ public class EntityPetBase implements IEntityPetBase{
 			entity.setYRot(owner.getLocation().getYaw());
 			entity.yRotO = entity.getYRot();
 		}
-		if(owner.isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())){
+		if(owner.isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 			Location petLoc = entity.getBukkitEntity().getLocation();
 			Location ownerLoc = owner.getLocation();
@@ -213,7 +212,7 @@ public class EntityPetBase implements IEntityPetBase{
 		LivingEntity entity = getEntity();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
-			if(EchoPet.getOptions().canFly(getPet().getPetType())){
+			if(getPet().getPetType().canFly()){
 				if(!entity.isOnGround()){
 					speed = flySpeed;
 				}
@@ -251,7 +250,7 @@ public class EntityPetBase implements IEntityPetBase{
 		}
 		IPetType pt = this.getPet().getPetType();
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
-			if(EchoPet.getOptions().canFly(pt)){
+			if(pt.canFly()){
 				try{
 					if(player.isFlying()){
 						player.setFlying(false);
