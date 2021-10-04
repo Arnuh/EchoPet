@@ -196,7 +196,7 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".allow.riders", true);
 			
 			for(PetData pd : PetData.values){
-				if(petType.isDataAllowed(pd)){
+				if(petType.isValidData(pd)){
 					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
 					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
 				}
