@@ -250,7 +250,7 @@ public abstract class Pet implements IPet{
 	private void applyPetName(){
 		if(this.getEntityPet() != null && this.getCraftPet() != null){
 			this.getCraftPet().setCustomName(this.name);
-			this.getCraftPet().setCustomNameVisible(EchoPet.getConfig().getBoolean("pets." + getPetType().getConfigKeyName() + ".tagVisible", true));
+			this.getCraftPet().setCustomNameVisible(getPetType().isTagVisible());
 		}
 	}
 	
@@ -432,7 +432,7 @@ public abstract class Pet implements IPet{
 			}
 			return null;
 		}
-		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
+		if(!getPetType().allowRidersFor()){
 			if(sendFailMessage){
 				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			}
@@ -463,7 +463,7 @@ public abstract class Pet implements IPet{
 	@Override
 	public void setRider(IPet newRider){
 		if(!isSpawned()) return;
-		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
+		if(!getPetType().allowRidersFor()){
 			Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			return;
 		}

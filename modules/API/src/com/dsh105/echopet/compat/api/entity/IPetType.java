@@ -36,7 +36,20 @@ public interface IPetType{
 	
 	List<PetData> getAllowedDataTypes();
 	
-	boolean isDataAllowed(PetData data);
+	/**
+	 * If the specified PetData is in the pets {@link #getAllowedCategories()} or {@link #getAllowedDataTypes()}.<br>
+	 * This method does not check if such PetData is enabled in the pet config. For that, please use {@link #isDataAllowed(PetData)}
+	 *
+	 * @return true if the pet data is an allowed category or data type.
+	 */
+	default boolean isValidData(PetData data){
+		for(PetDataCategory category : getAllowedCategories()){
+			for(PetData d : category.getData()){
+				if(d.equals(data)) return true;
+			}
+		}
+		return getAllowedDataTypes().contains(data);
+	}
 	
 	IEntityPet getNewEntityPetInstance(Object world, IPet pet);
 	
@@ -53,6 +66,30 @@ public interface IPetType{
 	Material getUIMaterial();
 	
 	String getConfigKeyName();
+	
+	boolean isEnabled();
+	
+	boolean isTagVisible();
+	
+	boolean isInteractMenuEnabled();
+	
+	boolean allowRidersFor();
+	
+	boolean isDataAllowed(PetData data);
+	
+	boolean isDataForced(PetData data);
+	
+	boolean canFly();
+	
+	boolean canIgnoreFallDamage();
+	
+	double getWalkSpeed();
+	
+	float getRideSpeed();
+	
+	float getFlySpeed();
+	
+	double getRideJumpHeight();
 	
 	double getStartFollowDistance();
 	
