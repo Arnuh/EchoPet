@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
@@ -43,48 +42,8 @@ public class ConfigOptions extends Options{
 		SelectorLayout.loadLayout();
 	}
 	
-	public boolean allowPetType(IPetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".enable", true);
-	}
-	
-	public boolean allowRidersFor(IPetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".allow.riders", true);
-	}
-	
-	public boolean allowData(IPetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
-	}
-	
-	public boolean forceData(IPetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
-	}
-	
-	public boolean canFly(IPetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".canFly", false);
-	}
-	
-	public boolean canIgnoreFallDamage(IPetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".ignoreFallDamage", true);
-	}
-	
 	public String getCommandString(){
 		return this.config.getString("commandString", "pet");
-	}
-	
-	public double getWalkSpeed(IPetType petType){
-		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".walkSpeed", 0.37D);
-	}
-	
-	public float getRideSpeed(IPetType petType){
-		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
-	}
-	
-	public float getFlySpeed(IPetType petType){
-		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".flySpeed", 0.5D);
-	}
-	
-	public double getRideJumpHeight(IPetType petType){
-		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideJump", 0.6D);
 	}
 	
 	public boolean useSql(){
@@ -237,7 +196,7 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".allow.riders", true);
 			
 			for(PetData pd : PetData.values){
-				if(petType.isDataAllowed(pd)){
+				if(petType.isValidData(pd)){
 					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
 					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
 				}

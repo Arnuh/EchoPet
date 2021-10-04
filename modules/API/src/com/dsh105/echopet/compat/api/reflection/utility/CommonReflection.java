@@ -55,7 +55,7 @@ public class CommonReflection{
 	/**
 	 * The Version tag
 	 */
-	private static String VERSION_TAG = "";
+	private static String VERSION_TAG;
 	
 	/**
 	 * Pattern
@@ -112,22 +112,20 @@ public class CommonReflection{
 		Server bukkitServer = Bukkit.getServer();
 		
 		if(bukkitServer != null){
-			
 			// Handle CraftBukkit package
 			Class<?> craftServerClass = bukkitServer.getClass();
-			CRAFTBUKKIT_PACKAGE = trimPackageName(craftServerClass.getCanonicalName());
+			CRAFTBUKKIT_PACKAGE = trimPackageName(craftServerClass.getCanonicalName());// org.bukkit.craftbukkit.v1_17_R1
 			
 			Matcher matcher = PACKAGE_VERSION_MATCHER.matcher(CRAFTBUKKIT_PACKAGE);
 			
 			if(matcher.matches()){
-				VERSION_TAG = matcher.group(1);
+				VERSION_TAG = matcher.group(1);// v1_17_R1
 			}
 			
 			// Handle NMS-Package
 			Class<?> craftEntityClass = getCraftEntityClass();
 			MethodAccessor<Object> getHandle = ClassTemplate.create(craftEntityClass).getMethod("getHandle");
-			MINECARFT_PACKAGE = trimPackageName(getHandle.getReturnType().getCanonicalName());
-			
+			MINECARFT_PACKAGE = trimPackageName(getHandle.getReturnType().getCanonicalName());// net.minecraft.world.entity
 			if(!MINECARFT_PACKAGE.startsWith(MINECARFT_PACKAGE_PREFIX)){
 				
 				// We're dealing with a Forge server.

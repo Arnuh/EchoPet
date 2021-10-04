@@ -512,7 +512,7 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					
-					if(!EchoPet.getOptions().allowRidersFor(petType)){
+					if(!petType.allowRidersFor()){
 						Lang.sendTo(sender, Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return true;
 					}

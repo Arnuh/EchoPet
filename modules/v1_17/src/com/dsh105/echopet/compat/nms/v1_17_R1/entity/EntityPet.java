@@ -21,7 +21,6 @@ import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
@@ -45,7 +44,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
@@ -75,12 +73,12 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	}
 	
 	protected void initiateEntityPet(){
-		this.rideSpeed = EchoPet.getOptions().getRideSpeed(getPet().getPetType());
-		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
-		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(getPet().getPetType());
+		this.rideSpeed = getPet().getPetType().getRideSpeed();
+		this.flySpeed = getPet().getPetType().getFlySpeed();
+		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
+			attributeInstance.setBaseValue(getPet().getPetType().getWalkSpeed());
 		}
 		this.setPathfinding();
 		this.maxUpStep = getMaxUpStep();
@@ -157,8 +155,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	@Override
 	public boolean onInteract(Player p){
 		if(p.getUniqueId().equals(getOwner().getUniqueId())){
-			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
-			if(EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().getConfigKeyName() + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getOwner(), false, false)){
+			if(getPet().getPetType().isInteractMenuEnabled() && Perm.BASE_MENU.hasPerm(this.getOwner(), false, false)){
 				new PetMenu(getPet()).open(false);
 			}
 			return true;
@@ -212,7 +209,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 			setYRot(this.getOwner().getLocation().getYaw());
 			this.yRotO = getYRot();
 		}
-		if(this.getOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())){
+		if(this.getOwner().isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 			Location petLoc = this.getLocation();
 			Location ownerLoc = this.getOwner().getLocation();
@@ -282,7 +279,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 		IPetType pt = this.getPet().getPetType();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !passengers.isEmpty()){
-			if(EchoPet.getOptions().canFly(pt)){
+			if(pt.canFly()){
 				if(!onGround){
 					speed = flySpeed;
 				}

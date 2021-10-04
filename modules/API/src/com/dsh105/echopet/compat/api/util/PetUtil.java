@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
@@ -46,7 +45,6 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -146,7 +144,7 @@ public class PetUtil{
 		
 		ArrayList<PetData> petDataList = new ArrayList<PetData>();
 		IPetType petType = PetType.get(petString);
-
+		
 		if(petType == null){
 			Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(petString)));
 			return null;
@@ -175,11 +173,11 @@ public class PetUtil{
 		if(!petDataList.isEmpty()){
 			for(PetData dataTemp : petDataList){
 				if(dataTemp != null){
-					if(!petType.isDataAllowed(dataTemp)){
+					if(!petType.isValidData(dataTemp)){
 						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return null;
 					}
-					if(!EchoPet.getOptions().allowData(petType, dataTemp)){
+					if(!petType.isDataAllowed(dataTemp)){
 						Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
 						return null;
 					}
@@ -187,7 +185,7 @@ public class PetUtil{
 			}
 		}
 		
-		if(!EchoPet.getOptions().allowPetType(petType)){
+		if(!petType.isEnabled()){
 			Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 			return null;
 		}
