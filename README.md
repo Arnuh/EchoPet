@@ -8,3 +8,8 @@
 
 
 # Join us on [Discord](https://discord.gg/VxPqHmG) to get updates or help
+----
+
+# EchoPet Extensions
+
+[Model Engine](https://github.com/Arnuh/EchoPet-ModelEngine)
