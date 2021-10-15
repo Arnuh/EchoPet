@@ -32,7 +32,7 @@ import com.google.common.collect.ImmutableList;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public enum PetType{
+public enum PetType implements IPetType{
 	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17-R1"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
@@ -110,7 +110,12 @@ public enum PetType{
 	
 	public static final PetType[] values = values();
 	
-	private final String classIdentifier;
+	public static final List<IPetType> pets = new ArrayList<>();
+	
+	static{
+		pets.addAll(List.of(values));
+	}
+	
 	private Class<? extends IEntityPet> entityClass;
 	private Class<? extends IPet> petClass;
 	private final String defaultName;
@@ -141,9 +146,8 @@ public enum PetType{
 		this(classIdentifier, defaultName, minecraftEntityName, version, null, categories, allowedData);
 	}
 	
-	@SuppressWarnings({"unchecked"})
+	@SuppressWarnings("unchecked")
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData... allowedData){
-		this.classIdentifier = classIdentifier;
 		try{
 			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
@@ -197,43 +201,37 @@ public enum PetType{
 		}
 	}
 	
-	public String getClassIdentifier(){
-		return classIdentifier;
-	}
-	
+	@Override
 	public String getDefaultName(String name){
 		return EchoPet.getConfig().getString("pets." + getConfigKeyName() + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
 	}
 	
+	@Override
 	public String getDefaultName(){
 		return this.defaultName;
 	}
 	
+	@Override
 	public String getMinecraftName(){
 		return minecraftEntityName;
 	}
 	
+	@Override
 	public List<PetDataCategory> getAllowedCategories(){
 		return allowedCategories;
 	}
 	
+	@Override
 	public List<PetData> getAllowedDataTypes(){
 		return this.allowedData;
 	}
 	
-	public boolean isDataAllowed(PetData data){
-		for(PetDataCategory category : allowedCategories){
-			for(PetData d : category.getData()){
-				if(d.equals(data)) return true;
-			}
-		}
-		return getAllowedDataTypes().contains(data);
-	}
-	
+	@Override
 	public IEntityPet getNewEntityPetInstance(Object world, IPet pet){
 		return EchoPet.getPetRegistry().getRegistrationEntry(pet.getPetType()).createEntityPet(world, pet);
 	}
 	
+	@Override
 	public IPet getNewPetInstance(Player owner){
 		if(owner != null){
 			return EchoPet.getPetRegistry().spawn(this, owner);
@@ -241,47 +239,126 @@ public enum PetType{
 		return null;
 	}
 	
+	@Override
 	public Class<? extends IEntityPet> getEntityClass(){
 		return this.entityClass;
 	}
 	
+	@Override
 	public Class<? extends IPet> getPetClass(){
 		return this.petClass;
 	}
 	
+	@Override
 	public Version getVersion(){
 		return version;
 	}
 	
-	public Material getUIMaterial(){
-		return uiMaterial;
-	}
-	
+	@Override
 	public boolean isCompatible(){
 		return version.isCompatible(new Version());
+	}
+	
+	@Override
+	public Material getUIMaterial(){
+		return uiMaterial;
 	}
 	
 	/**
 	 * @return String used for both configs & permissions to identify this pet.
 	 */
+	@Override
 	public String getConfigKeyName(){
 		return name().toLowerCase().replace("_", "");
 	}
 	
+	@Override
+	public boolean isEnabled(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".enable", true);
+	}
+	
+	@Override
+	public boolean isTagVisible(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".tagVisible", true);
+	}
+	
+	@Override
+	public boolean isInteractMenuEnabled(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".interactMenu", true);
+	}
+	
+	@Override
+	public boolean allowRidersFor(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".allow.riders", true);
+	}
+	
+	@Override
+	public boolean isDataAllowed(PetData data){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
+	}
+	
+	@Override
+	public boolean isDataForced(PetData data){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
+	}
+	
+	@Override
+	public boolean canFly(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".canFly", false);
+	}
+	
+	@Override
+	public boolean canIgnoreFallDamage(){
+		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".ignoreFallDamage", true);
+	}
+	
+	@Override
+	public double getWalkSpeed(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".walkSpeed", 0.37D);
+	}
+	
+	@Override
+	public float getRideSpeed(){
+		return (float) EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".rideSpeed", 0.2D);
+	}
+	
+	@Override
+	public float getFlySpeed(){
+		return (float) EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".flySpeed", 0.5D);
+	}
+	
+	@Override
+	public double getRideJumpHeight(){
+		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".rideJump", 0.6D);
+	}
+	
+	@Override
 	public double getStartFollowDistance(){
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".startFollowDistance", 6);
 	}
 	
+	@Override
 	public double getStopFollowDistance(){
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".stopFollowDistance", 2);
 	}
 	
+	@Override
 	public double getTeleportDistance(){
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".teleportDistance", 10);
 	}
 	
+	@Override
 	public double getFollowSpeedModifier(){
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".followSpeedModifier", 1);
+	}
+	
+	public static IPetType get(String name){
+		for(IPetType pet : pets){
+			if(pet.name().equalsIgnoreCase(name)){
+				return pet;
+			}
+		}
+		return null;
 	}
 	
 	private static void outputInfo(){
@@ -456,6 +533,34 @@ public enum PetType{
 	}
 	
 	public static void main(String[] args){
-		outputInfo();
+		//outputInfo();
+		String[] petTypes = new String[PetType.values.length];
+		int pos = 0;
+		for(PetType type : PetType.values){
+			petTypes[pos++] = type.getConfigKeyName();
+		}
+		Arrays.sort(petTypes);
+		for(String petTypeName : petTypes){
+			PetType petType = PetType.valueOf(petTypeName.toUpperCase());
+			System.out.println(petType.name());
+			System.out.print("\t");
+			int i = 0;
+			for(PetData data : petType.getAllowedDataTypes()){
+				if(data.equals(PetData.RIDE) || data.equals(PetData.HAT)) continue;
+				if(i++ != 0){
+					System.out.print(", ");
+				}
+				System.out.print(data.getItemName());
+			}
+			for(PetDataCategory category : petType.getAllowedCategories()){
+				for(PetData data : category.getData()){
+					if(i++ != 0){
+						System.out.print(", ");
+					}
+					System.out.print(data.getItemName());
+				}
+			}
+			System.out.print("\n");
+		}
 	}
 }

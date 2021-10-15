@@ -25,6 +25,7 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -49,34 +50,38 @@ import org.bukkit.scheduler.BukkitRunnable;
 public abstract class Pet implements IPet{
 	
 	private IEntityPet entityPet;
-	private PetType petType;
+	private IPetType petType;
 	
 	private Object ownerIdentification;
 	private Pet rider, lastRider;
 	private String name;
-	private ArrayList<PetData> petData = new ArrayList<PetData>();
+	private final ArrayList<PetData> petData = new ArrayList<>();
 	private InventoryView dataMenu;
-	private List<com.dsh105.echopet.compat.api.particle.Trail> trails = Lists.newArrayList();
+	private final List<com.dsh105.echopet.compat.api.particle.Trail> trails = Lists.newArrayList();
 	
 	private boolean isRider = false;
 	
-	public boolean ownerIsMounting = false;
-	private boolean ownerRiding = false, isHat = false;
-	private boolean isHidden = false;
+	protected boolean ownerIsMounting = false;
+	protected boolean ownerRiding = false, isHat = false;
+	protected boolean isHidden = false;
 	
 	public Pet(Player owner){
 		if(owner != null){
 			this.ownerIdentification = UUIDMigration.getIdentificationFor(owner);
-			this.setPetType();
-			this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
+			setPetType();
 		}
 	}
 	
-	protected final void setPetType(){
+	protected void setPetType(){
 		EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
 		if(entityPetType != null){
-			this.petType = entityPetType.petType();
+			setPetType(entityPetType.petType());
 		}
+	}
+	
+	protected void setPetType(IPetType petType){
+		this.petType = petType;
+		setPetName(getPetType().getDefaultName(getNameOfOwner()));
 	}
 	
 	@Override
@@ -172,7 +177,7 @@ public abstract class Pet implements IPet{
 	}
 	
 	@Override
-	public PetType getPetType(){
+	public IPetType getPetType(){
 		return this.petType;
 	}
 	
@@ -245,7 +250,7 @@ public abstract class Pet implements IPet{
 	private void applyPetName(){
 		if(this.getEntityPet() != null && this.getCraftPet() != null){
 			this.getCraftPet().setCustomName(this.name);
-			this.getCraftPet().setCustomNameVisible(EchoPet.getConfig().getBoolean("pets." + getPetType().getConfigKeyName() + ".tagVisible", true));
+			this.getCraftPet().setCustomNameVisible(getPetType().isTagVisible());
 		}
 	}
 	
@@ -391,8 +396,6 @@ public abstract class Pet implements IPet{
 		this.teleportToOwner();
 		this.ownerRiding = flag;
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		Location l = this.getLocation().clone();
-		l.setY(l.getY() - 1D);
 		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
@@ -422,14 +425,14 @@ public abstract class Pet implements IPet{
 	}
 	
 	@Override
-	public Pet createRider(final PetType pt, boolean sendFailMessage){
+	public Pet createRider(final IPetType pt, boolean sendFailMessage){
 		if(pt == PetType.HUMAN){
 			if(sendFailMessage){
 				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			}
 			return null;
 		}
-		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
+		if(!getPetType().allowRidersFor()){
 			if(sendFailMessage){
 				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			}
@@ -460,7 +463,7 @@ public abstract class Pet implements IPet{
 	@Override
 	public void setRider(IPet newRider){
 		if(!isSpawned()) return;
-		if(!EchoPet.getOptions().allowRidersFor(this.getPetType())){
+		if(!getPetType().allowRidersFor()){
 			Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			return;
 		}

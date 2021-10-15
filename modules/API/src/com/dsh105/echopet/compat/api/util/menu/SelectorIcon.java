@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util.menu;
 
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.inventory.MenuIcon;
 import org.bukkit.ChatColor;
@@ -29,18 +30,18 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class SelectorIcon extends MenuIcon{
 	
-	private String command;
-	private PetType petType;
-	private int page;
+	private final String command;
+	private final IPetType petType;
+	private final int page;
 	
-	public SelectorIcon(int page, int slot, String command, PetType petType, Material material, String name, List<String> lore){
+	public SelectorIcon(int page, int slot, String command, IPetType petType, Material material, String name, List<String> lore){
 		super(slot, material, name, lore);
 		this.page = page;
 		this.command = command;
 		this.petType = petType;
 	}
 	
-	public SelectorIcon(int page, int slot, String command, PetType petType, Material material, String entityTag, String name, List<String> lore){
+	public SelectorIcon(int page, int slot, String command, IPetType petType, Material material, String entityTag, String name, List<String> lore){
 		super(slot, material, entityTag, name, lore);
 		this.page = page;
 		this.command = command;
@@ -55,7 +56,7 @@ public class SelectorIcon extends MenuIcon{
 		return command;
 	}
 	
-	public PetType getPetType(){
+	public IPetType getPetType(){
 		return petType;
 	}
 	

@@ -19,6 +19,7 @@ package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.command.Command;
@@ -31,22 +32,33 @@ public class CommandComplete implements TabCompleter{
 	private static final String[] basic = {"name", "rider", "list", "info", "default", "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
 	
 	private static final String[] commands;
-	private static final String[] firstArgs;
+	private static String[] firstArgs;
 	private static final String[] blankArray = new String[0];
+	private static int knownPetSize = 0;
 	
 	static{
 		//handles /pet and /petadmin autocomplete
 		commands = new String[]{EchoPet.getPlugin().getCommandString(), EchoPet.getPlugin().getCommandString() + "admin"};
-		//handles /pet <pettype, all values in the basic array>
-		firstArgs = new String[basic.length + PetType.values.length];
-		System.arraycopy(basic, 0, firstArgs, 0, basic.length);
-		for(int i = basic.length; i < firstArgs.length; i++){
-			firstArgs[i] = PetType.values[i - basic.length].name().toLowerCase();
+		loadArgs();
+	}
+	
+	private static void loadArgs(){
+		if(knownPetSize == PetType.pets.size()){
+			return;// This is kinda a hacky setup, but I don't know how I would best expose this to EchoPet API.
 		}
+		//handles /pet <pettype, all values in the basic array>
+		firstArgs = new String[basic.length + PetType.pets.size()];
+		System.arraycopy(basic, 0, firstArgs, 0, basic.length);
+		int i = basic.length;
+		for(IPetType petType : PetType.pets){
+			firstArgs[i++] = petType.name().toLowerCase();
+		}
+		knownPetSize = PetType.pets.size();
 	}
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
+		loadArgs();
 		List<String> list = new ArrayList<>();
 		String cmdString = EchoPet.getPlugin().getCommandString();
 		if(cmd.getName().equalsIgnoreCase(cmdString)){
@@ -66,13 +78,11 @@ public class CommandComplete implements TabCompleter{
 	}
 	
 	private String[] getCompletions(int i){
-		switch(i){
-			case 0:
-				return commands;
-			case 1:
-				return firstArgs;
-		}
-		return blankArray;
+		return switch(i){
+			case 0 -> commands;
+			case 1 -> firstArgs;
+			default -> blankArray;
+		};
 	}
 	
 	private String[] getCompletions(int i, String argBefore){
@@ -81,8 +91,8 @@ public class CommandComplete implements TabCompleter{
 			case 1:
 				return getCompletions(i);
 			case 2:
-				ArrayList<String> list = new ArrayList<String>();
-				for(PetType pt : PetType.values){
+				ArrayList<String> list = new ArrayList<>();
+				for(IPetType pt : PetType.pets){
 					if(argBefore.equalsIgnoreCase(pt.toString().toLowerCase())){
 						list.add(pt.toString().toLowerCase());
 					}
@@ -92,7 +102,7 @@ public class CommandComplete implements TabCompleter{
 					list.add("rider");
 				}else if(argBefore.equalsIgnoreCase("rider")){
 					list.add("remove");
-					for(PetType pt : PetType.values){
+					for(IPetType pt : PetType.pets){
 						list.add(pt.toString().toLowerCase());
 					}
 				}else if(argBefore.equalsIgnoreCase("default")){

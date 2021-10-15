@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.api.plugin;
 import java.util.ArrayList;
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Entity;
@@ -33,9 +34,9 @@ public interface IPetManager{
 	
 	void removeAllPets();
 	
-	IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail);
+	IPet createPet(Player owner, IPetType petType, boolean sendMessageOnFail);
 	
-	IPet createPet(Player owner, PetType petType, PetType riderType);
+	IPet createPet(Player owner, IPetType petType, IPetType riderType);
 	
 	IPet getPet(Player player);
 	

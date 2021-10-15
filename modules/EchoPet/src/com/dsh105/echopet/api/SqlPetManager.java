@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -45,7 +46,7 @@ public class SqlPetManager implements ISqlPetManager{
 	}
 	
 	@Override
-	public void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider){
+	public void saveToDatabase(String playerIdent, IPetType petType, String petName, List<PetData> petData, boolean isRider){
 		if(EchoPet.getOptions().useSql()){
 			
 			if(EchoPet.getPlugin().getDbPool() != null){
@@ -91,7 +92,7 @@ public class SqlPetManager implements ISqlPetManager{
 		if(EchoPet.getOptions().useSql()){
 			IPet pet = null;
 			Player owner;
-			PetType pt;
+			IPetType pt;
 			String name;
 			
 			if(EchoPet.getPlugin().getDbPool() != null){
@@ -105,7 +106,7 @@ public class SqlPetManager implements ISqlPetManager{
 									return null;
 								}
 								
-								pt = findPetType(rs.getString("PetType"));
+								pt = PetType.get(rs.getString("PetType"));
 								if(pt == null){
 									return null;
 								}
@@ -122,7 +123,7 @@ public class SqlPetManager implements ISqlPetManager{
 									EchoPet.getManager().setData(pet, data, true);
 								}
 								if(rs.getString("RiderPetType") != null){
-									PetType mt = findPetType(rs.getString("RiderPetType"));
+									IPetType mt = PetType.get(rs.getString("RiderPetType"));
 									if(mt == null){
 										return null;
 									}
@@ -148,14 +149,6 @@ public class SqlPetManager implements ISqlPetManager{
 			return pet;
 		}
 		return null;
-	}
-	
-	private PetType findPetType(String s){
-		try{
-			return PetType.valueOf(s.toUpperCase());
-		}catch(Exception e){
-			return null;
-		}
 	}
 	
 	@Override

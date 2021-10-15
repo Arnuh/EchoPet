@@ -861,7 +861,7 @@ public enum PetData{
 	}
 	
 	private static boolean setColorByDye(IPet pet, PetDataCategory category, DyeColor color){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.SHEEP)){
 			((ISheepPet) pet).setDyeColor(color);
 		}else if(type.equals(PetType.WOLF)){
@@ -884,7 +884,7 @@ public enum PetData{
 	}
 	
 	private static boolean setSlimeSize(IPet pet, int size){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.SLIME)){
 			((ISlimePet) pet).setSize(size);
 			return true;
@@ -896,7 +896,7 @@ public enum PetData{
 	}
 	
 	private static boolean setPufferFishState(IPet pet, int state){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.PUFFERFISH)){
 			((IPufferFishPet) pet).setPuffState(state);
 			return true;
@@ -905,7 +905,7 @@ public enum PetData{
 	}
 	
 	private static boolean setVillagerType(IPet pet, VillagerType villagerType){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
 			((IVillagerDataHolder) pet).setType(villagerType);
 		}
@@ -913,7 +913,7 @@ public enum PetData{
 	}
 	
 	private static boolean setVillagerLevel(IPet pet, VillagerLevel villagerLevel){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
 			((IVillagerDataHolder) pet).setLevel(villagerLevel);
 		}
@@ -921,7 +921,7 @@ public enum PetData{
 	}
 	
 	private static boolean setProfession(IPet pet, Profession profession){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.VILLAGER) || type.equals(PetType.ZOMBIEVILLAGER)){
 			((IVillagerDataHolder) pet).setProfession(profession);
 		}
@@ -929,7 +929,7 @@ public enum PetData{
 	}
 	
 	private static boolean setRabbitType(IPet pet, Rabbit.Type rabbitType){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.RABBIT)){
 			((IRabbitPet) pet).setRabbitType(rabbitType);
 		}
@@ -937,7 +937,7 @@ public enum PetData{
 	}
 	
 	private static boolean setHorseColor(IPet pet, Horse.Color color){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
 			((IHorsePet) pet).setColor(color);
 		}
@@ -945,7 +945,7 @@ public enum PetData{
 	}
 	
 	private static boolean setHorseStyle(IPet pet, Horse.Style style){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
 			((IHorsePet) pet).setStyle(style);
 		}
@@ -953,7 +953,7 @@ public enum PetData{
 	}
 	
 	private static boolean setHorseArmor(IPet pet, HorseArmor armor){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
 			((IHorsePet) pet).setArmour(armor);
 		}
@@ -961,7 +961,7 @@ public enum PetData{
 	}
 	
 	private static boolean setLlamaColor(IPet pet, Llama.Color color){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.LLAMA) || pet.getPetType().equals(PetType.TRADERLLAMA)){
 			((ILlamaPet) pet).setSkinColor(color);
 		}
@@ -969,7 +969,7 @@ public enum PetData{
 	}
 	
 	private static boolean setTropicalFishPattern(IPet pet, TropicalFish.Pattern pattern){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.TROPICALFISH)){
 			((ITropicalFishPet) pet).setPattern(pattern);
 			((ITropicalFishPet) pet).setLarge(pattern.ordinal() > 5);
@@ -978,7 +978,7 @@ public enum PetData{
 	}
 	
 	private static boolean setTropicalFishLarge(IPet pet, boolean large){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.TROPICALFISH)){
 			((ITropicalFishPet) pet).setLarge(large);
 		}
@@ -986,7 +986,7 @@ public enum PetData{
 	}
 	
 	private static boolean setCatType(IPet pet, CatType catType){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.CAT)){
 			((ICatPet) pet).setType(catType);
 		}
@@ -994,7 +994,7 @@ public enum PetData{
 	}
 	
 	private static boolean setFoxType(IPet pet, FoxType foxType){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.FOX)){
 			((IFoxPet) pet).setType(foxType);
 		}
@@ -1013,7 +1013,7 @@ public enum PetData{
 	}
 	
 	private static boolean setMushroomCowType(IPet pet, MushroomCowType cowType){
-		PetType type = pet.getPetType();
+		IPetType type = pet.getPetType();
 		if(type.equals(PetType.MUSHROOMCOW)){
 			((IMushroomCowPet) pet).setType(cowType);
 		}

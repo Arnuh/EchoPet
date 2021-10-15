@@ -20,10 +20,9 @@ package com.dsh105.echopet.compat.nms.v1_16_R3.entity;
 import java.lang.reflect.Field;
 import java.util.Random;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
@@ -96,22 +95,14 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		}
 		// this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
 		// this.setHealth((float) pet.getPetType().getMaxHealth());
-		this.jumpHeight = EchoPet.getOptions().getRideJumpHeight(this.getPet().getPetType());
-		this.rideSpeed = EchoPet.getOptions().getRideSpeed(this.getPet().getPetType());
-		this.flySpeed = EchoPet.getOptions().getFlySpeed(getPet().getPetType());
+		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
+		this.rideSpeed = getPet().getPetType().getRideSpeed();
+		this.flySpeed = getPet().getPetType().getFlySpeed();
 		AttributeModifiable attributeInstance = getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setValue(EchoPet.getOptions().getWalkSpeed(getPet().getPetType()));
+			attributeInstance.setValue(getPet().getPetType().getWalkSpeed());
 		}
 		this.setPathfinding();
-	}
-	
-	public PetType getEntityPetType(){
-		EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
-		if(entityPetType != null){
-			return entityPetType.petType();
-		}
-		return null;
 	}
 	
 	@Override
@@ -207,8 +198,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	@Override
 	public boolean onInteract(Player p){
 		if(p.getUniqueId().equals(getOwner().getUniqueId())){
-			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
-			if(EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().getConfigKeyName() + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getOwner(), false, false)){
+			if(getPet().getPetType().isInteractMenuEnabled() && Perm.BASE_MENU.hasPerm(this.getOwner(), false, false)){
 				new PetMenu(getPet()).open(false);
 			}
 			return true;
@@ -281,7 +271,7 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		if(this.getPet().isHat()){
 			this.lastYaw = this.yaw = this.getOwner().getLocation().getYaw();
 		}
-		if(this.getOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())){
+		if(this.getOwner().isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 			Location petLoc = this.getLocation();
 			Location ownerLoc = this.getOwner().getLocation();
@@ -337,10 +327,10 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
-		PetType pt = this.getPet().getPetType();
+		IPetType pt = this.getPet().getPetType();
 		float speed = rideSpeed;
 		if(FIELD_JUMP != null && !passengers.isEmpty()){
-			if(EchoPet.getOptions().canFly(pt)){
+			if(pt.canFly()){
 				if(!onGround){
 					speed = flySpeed;
 				}

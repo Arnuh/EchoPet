@@ -42,48 +42,8 @@ public class ConfigOptions extends Options{
 		SelectorLayout.loadLayout();
 	}
 	
-	public boolean allowPetType(PetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".enable", true);
-	}
-	
-	public boolean allowRidersFor(PetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".allow.riders", true);
-	}
-	
-	public boolean allowData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
-	}
-	
-	public boolean forceData(PetType type, PetData data){
-		return this.config.getBoolean("pets." + type.getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
-	}
-	
-	public boolean canFly(PetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".canFly", false);
-	}
-	
-	public boolean canIgnoreFallDamage(PetType petType){
-		return this.config.getBoolean("pets." + petType.getConfigKeyName() + ".ignoreFallDamage", true);
-	}
-	
 	public String getCommandString(){
 		return this.config.getString("commandString", "pet");
-	}
-	
-	public double getWalkSpeed(PetType petType){
-		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".walkSpeed", 0.37D);
-	}
-	
-	public float getRideSpeed(PetType petType){
-		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideSpeed", 0.2D);
-	}
-	
-	public float getFlySpeed(PetType petType){
-		return (float) this.config.getDouble("pets." + petType.getConfigKeyName() + ".flySpeed", 0.5D);
-	}
-	
-	public double getRideJumpHeight(PetType petType){
-		return this.config.getDouble("pets." + petType.getConfigKeyName() + ".rideJump", 0.6D);
 	}
 	
 	public boolean useSql(){
@@ -236,7 +196,7 @@ public class ConfigOptions extends Options{
 			set("pets." + configOption + ".allow.riders", true);
 			
 			for(PetData pd : PetData.values){
-				if(petType.isDataAllowed(pd)){
+				if(petType.isValidData(pd)){
 					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
 					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
 				}

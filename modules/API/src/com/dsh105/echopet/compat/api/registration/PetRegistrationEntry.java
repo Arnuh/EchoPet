@@ -26,14 +26,13 @@ import org.bukkit.entity.Player;
 
 public class PetRegistrationEntry{
 	
-	private String name;
-	private Class<? extends IPet> petClass;
-	private Class<? extends IEntityPet> entityClass;
+	private final String name;
+	private final Class<? extends IPet> petClass;
+	private final Class<? extends IEntityPet> entityClass;
 	
-	private Constructor<? extends IPet> petConstructor;
-	private Constructor<? extends IEntityPet> entityPetConstructor;
+	private final Constructor<? extends IPet> petConstructor;
+	private final Constructor<? extends IEntityPet> entityPetConstructor;
 	
-	@SuppressWarnings("unchecked")
 	public PetRegistrationEntry(String name, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass){
 		if(entityClass == null) throw new PetRegistrationException("Invalid Entity Class. Pet type is not supported by this server version.");
 		if(petClass == null) throw new PetRegistrationException("Invalid Pet Class. Pet type is not supported by this server version.");
@@ -43,18 +42,26 @@ public class PetRegistrationEntry{
 		this.petClass = petClass;
 		
 		try{
-			this.petConstructor = this.petClass.getConstructor(Player.class);
-			for(Constructor<?> con : this.entityClass.getConstructors()){
-				if(con.getParameterCount() != 2) continue;
-				Class<?>[] parameterTypes = con.getParameterTypes();
-				if(!IPet.class.isAssignableFrom(parameterTypes[1])) continue;
-				this.entityPetConstructor = (Constructor<? extends IEntityPet>) con;
-				break;
-			}
-			//this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
+			this.petConstructor = lookupPetConstructor();
+			this.entityPetConstructor = lookupEntityPetConstructor();
 		}catch(NoSuchMethodException e){
 			throw new PetRegistrationException("Failed to create pet constructors!", e);
 		}
+	}
+	
+	protected Constructor<? extends IPet> lookupPetConstructor()throws NoSuchMethodException{
+		return this.petClass.getConstructor(Player.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected Constructor<? extends IEntityPet> lookupEntityPetConstructor()throws NoSuchMethodException{
+		for(Constructor<?> con : this.entityClass.getConstructors()){
+			if(con.getParameterCount() != 2) continue;
+			Class<?>[] parameterTypes = con.getParameterTypes();
+			if(!IPet.class.isAssignableFrom(parameterTypes[1])) continue;
+			return (Constructor<? extends IEntityPet>) con;
+		}
+		throw new NoSuchMethodException();
 	}
 	
 	public String getName(){
@@ -67,6 +74,10 @@ public class PetRegistrationEntry{
 	
 	public Class<? extends IEntityPet> getEntityClass(){
 		return entityClass;
+	}
+	
+	public Constructor<? extends IPet> getPetConstructor(){
+		return petConstructor;
 	}
 	
 	public IPet createFor(Player owner){
