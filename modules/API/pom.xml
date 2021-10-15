@@ -15,49 +15,50 @@
   ~ along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.dsh105</groupId>
-        <artifactId>EchoPet-Parent</artifactId>
-        <version>1</version>
-        <relativePath>../../</relativePath>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>EchoPet-API</artifactId>
-    <name>EchoPet-API-${project.version}</name>
-    <packaging>jar</packaging>
-    <version>1.0.0</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>com.dsh105</groupId>
+		<artifactId>EchoPet-Parent</artifactId>
+		<version>1</version>
+		<relativePath>../../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>EchoPet-API</artifactId>
+	<name>EchoPet-API-${project.version}</name>
+	<packaging>jar</packaging>
+	<version>1.0.1-SNAPSHOT</version>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${jdk.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk.version}</maven.compiler.target>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>${jdk.version}</maven.compiler.source>
+		<maven.compiler.target>${jdk.version}</maven.compiler.target>
+	</properties>
 
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-        <finalName>${project.name}</finalName>
-    </build>
-    <dependencies>
-        <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-legacy</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>bukkit</artifactId>
-                    <groupId>org.bukkit</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bstats</groupId>
-                    <artifactId>bstats-bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Commodus</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-    </dependencies>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<finalName>${project.name}</finalName>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.sk89q.worldguard</groupId>
+			<artifactId>worldguard-legacy</artifactId>
+			<version>7.0.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>bukkit</artifactId>
+					<groupId>org.bukkit</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bstats</groupId>
+					<artifactId>bstats-bukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.dsh105</groupId>
+			<artifactId>Commodus</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+	</dependencies>
 </project>
