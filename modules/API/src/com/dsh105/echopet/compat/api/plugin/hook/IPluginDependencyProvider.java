@@ -22,6 +22,7 @@ import org.bukkit.plugin.Plugin;
 public interface IPluginDependencyProvider<P extends Plugin, D extends Plugin>{
 	
 	P getHandlingPlugin();
+	
 	D getDependency();
 	
 	boolean isHooked();

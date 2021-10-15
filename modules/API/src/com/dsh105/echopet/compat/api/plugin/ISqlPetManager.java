@@ -21,7 +21,6 @@ import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Player;
 
 public interface ISqlPetManager{

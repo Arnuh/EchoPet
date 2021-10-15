@@ -49,12 +49,12 @@ public class PetRegistrationEntry{
 		}
 	}
 	
-	protected Constructor<? extends IPet> lookupPetConstructor()throws NoSuchMethodException{
+	protected Constructor<? extends IPet> lookupPetConstructor() throws NoSuchMethodException{
 		return this.petClass.getConstructor(Player.class);
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected Constructor<? extends IEntityPet> lookupEntityPetConstructor()throws NoSuchMethodException{
+	protected Constructor<? extends IEntityPet> lookupEntityPetConstructor() throws NoSuchMethodException{
 		for(Constructor<?> con : this.entityClass.getConstructors()){
 			if(con.getParameterCount() != 2) continue;
 			Class<?>[] parameterTypes = con.getParameterTypes();
