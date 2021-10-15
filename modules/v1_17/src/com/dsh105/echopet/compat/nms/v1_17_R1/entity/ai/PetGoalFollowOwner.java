@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai;
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,11 +45,12 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		this.mob = mob;
 		
 		double sizeModifier = pet.getSizeCategory().getModifier();
-		double startDistance = pet.getPet().getPetType().getStartFollowDistance() * sizeModifier;
-		double stopDistance = pet.getPet().getPetType().getStopFollowDistance() * sizeModifier;
-		double teleportDistance = pet.getPet().getPetType().getTeleportDistance() * sizeModifier;
+		IPetType petType = pet.getPet().getPetType();
+		double startDistance = petType.getStartFollowDistance() * sizeModifier;
+		double stopDistance = petType.getStopFollowDistance() * sizeModifier;
+		double teleportDistance = petType.getTeleportDistance() * sizeModifier;
 		
-		this.speedModifier = pet.getPet().getPetType().getFollowSpeedModifier();
+		this.speedModifier = petType.getFollowSpeedModifier();
 		this.startDistanceSqr = startDistance * startDistance;
 		this.stopDistanceSqr = stopDistance * stopDistance;
 		this.teleportDistanceSqr = teleportDistance * teleportDistance;
