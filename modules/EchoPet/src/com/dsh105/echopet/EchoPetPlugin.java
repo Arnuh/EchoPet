@@ -49,6 +49,7 @@ import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
 import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
+import com.dsh105.echopet.hook.PlaceHolderAPIProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
@@ -153,6 +154,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		// this.vanishProvider = new VanishProvider(this);
 		this.worldGuardProvider = new WorldGuardProvider(this);
+		new PlaceHolderAPIProvider(this);
 		
 		try{
 			Metrics metrics = new Metrics(this);

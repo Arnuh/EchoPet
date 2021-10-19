@@ -247,7 +247,7 @@ public abstract class Pet implements IPet{
 		}
 	}
 	
-	private void applyPetName(){
+	protected void applyPetName(){
 		if(this.getEntityPet() != null && this.getCraftPet() != null){
 			this.getCraftPet().setCustomName(this.name);
 			this.getCraftPet().setCustomNameVisible(getPetType().isTagVisible());
