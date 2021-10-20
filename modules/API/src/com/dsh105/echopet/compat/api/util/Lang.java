@@ -92,6 +92,11 @@ public enum Lang{
 	SET_DEFAULT_WITH_RIDER("set_default_with_rider", "&eYour default pet has been set to &6%type%&e with a &6%mtype% &erider."),
 	SET_DEFAULT_TO_CURRENT("set_default_current", "&eYour default pet has been set to your current pet"),
 	
+	// PlaceholderAPI language settings
+	PLACEHOLDER_TYPE_NO_PET("placeholder_type_nopet", "None"),
+	PLACEHOLDER_NAME_NO_PET("placeholder_name_nopet", "Unknown"),
+	PLACEHOLDER_DEFAULT_NAME_NO_PET("placeholder_default_name_nopet", "Unknown"),
+	
 	ADMIN_CHANGE_RIDER("admin_change_rider", "&6%player%&e's pet's rider has been changed to a &6%type%&e."),
 	ADMIN_SET_DEFAULT_WITH_RIDER("admin_set_default_with_rider", "&6%player%&e's default pet has been set to &6%type%&e with a &6%mtype% &erider."),
 	ADMIN_SET_DEFAULT("admin_set_default", "&6%player%&e's default pet has been set to &6%type%&e."),
@@ -125,9 +130,9 @@ public enum Lang{
 	
 	public static final Lang[] values = values();
 	
-	private String path;
-	private String def;
-	private String[] desc;
+	private final String path;
+	private final String def;
+	private final String[] desc;
 	
 	Lang(String path, String def, String... desc){
 		this.path = path;
@@ -167,15 +172,14 @@ public enum Lang{
 	
 	@Override
 	public String toString(){
-		String result = EchoPet.getPlugin().getLangConfig().getString(this.path, this.def);
-		if(result != null && !result.equals("") && !result.equals("none")){
-			return ChatColor.translateAlternateColorCodes('&', EchoPet.getPlugin().getLangConfig().getString(this.path, this.def));
-		}else{
+		String result = getConfigValue();
+		if(result == null || result.isBlank()){
 			return "";
 		}
+		return ChatColor.translateAlternateColorCodes('&', result);
 	}
 	
-	public String toString_(){
+	public String getConfigValue(){
 		return EchoPet.getPlugin().getLangConfig().getString(this.path, this.def);
 	}
 }

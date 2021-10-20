@@ -19,6 +19,7 @@ package com.dsh105.echopet.hook;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
+import com.dsh105.echopet.compat.api.util.Lang;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -55,19 +56,19 @@ public class EchoPetExpansion extends PlaceholderExpansion{
 		if(params.equalsIgnoreCase("type")){
 			IPet pet = plugin.getPetManager().getPet(player);
 			if(pet == null){
-				return null;
+				return Lang.PLACEHOLDER_TYPE_NO_PET.toString();
 			}
 			return pet.getPetType().name();
 		}else if(params.equalsIgnoreCase("name")){
 			IPet pet = plugin.getPetManager().getPet(player);
 			if(pet == null){
-				return null;
+				return Lang.PLACEHOLDER_NAME_NO_PET.toString();
 			}
 			return pet.getPetName();
 		}else if(params.equalsIgnoreCase("default_name")){
 			IPet pet = plugin.getPetManager().getPet(player);
 			if(pet == null){
-				return null;
+				return Lang.PLACEHOLDER_DEFAULT_NAME_NO_PET.toString();
 			}
 			return pet.getPetType().getDefaultName(pet.getNameOfOwner());
 		}
