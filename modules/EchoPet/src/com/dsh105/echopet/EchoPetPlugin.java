@@ -212,7 +212,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			try{
 				for(Lang l : Lang.values){
 					String[] desc = l.getDescription();
-					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.toString_()), desc);
+					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.getConfigValue()), desc);
 				}
 				langConfig.saveConfig();
 			}catch(Exception e){
@@ -224,7 +224,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		}
 		langConfig.reloadConfig();
 		
-		if(Lang.PREFIX.toString_().equals("&4[&cEchoPet&4]&r")){
+		if(Lang.PREFIX.getConfigValue().equals("&4[&cEchoPet&4]&r")){
 			langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
 		}
 		this.prefix = Lang.PREFIX.toString();
