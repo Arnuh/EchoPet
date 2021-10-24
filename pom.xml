@@ -44,6 +44,36 @@
 		<maven>${maven.version}</maven>
 	</prerequisites>
 
+	<!-- Temp until maven-shade-plugin has a non snapshot version for jdk 16 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>apache.snapshots</id>
+			<url>https://repository.apache.org/snapshots/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>arnah-snapshots</id>
+			<url>https://repo.arnah.ca/repository/maven-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>arnah-releases</id>
+			<url>https://repo.arnah.ca/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>sk89q-repo</id>
+			<url>https://maven.sk89q.com/repo/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
@@ -84,25 +114,6 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
-			<id>sk89q-repo</id>
-			<url>https://maven.sk89q.com/repo/</url>
-		</repository>
-	</repositories>
-
-	<!-- Temp until maven-shade-plugin has a non snapshot version for jdk 16 -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<url>https://repository.apache.org/snapshots/</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<build>
 		<finalName>${project.name}</finalName>
