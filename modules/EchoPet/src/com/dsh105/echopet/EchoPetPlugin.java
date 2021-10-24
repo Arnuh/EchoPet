@@ -17,14 +17,12 @@
 
 package com.dsh105.echopet;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.config.YAMLConfigManager;
-import com.dsh105.commodus.data.Metrics;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SqlPetManager;
 import com.dsh105.echopet.api.pet.particle.TrailManager;
@@ -56,6 +54,7 @@ import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -156,12 +155,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		this.worldGuardProvider = new WorldGuardProvider(this);
 		new PlaceHolderAPIProvider(this);
 		
-		try{
-			Metrics metrics = new Metrics(this);
-			metrics.start();
-		}catch(IOException e){
-			// Failed to submit the stats :(
-		}
+		new Metrics(this, 12900);
 		this.checkUpdates();
 	}
 	

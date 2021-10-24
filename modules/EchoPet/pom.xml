@@ -95,6 +95,12 @@
 			<version>2.10.10</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.bstats</groupId>
+			<artifactId>bstats-bukkit</artifactId>
+			<version>2.2.1</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<directory>../../target</directory>
@@ -190,6 +196,7 @@
 									<include>org.slf4j:slf4j-jdk14</include>
 									<include>com.dsh105:Commodus</include>
 									<include>com.codingforcookies:robert</include>
+									<include>org.bstats:bstats*</include>
 								</includes>
 							</artifactSet>
 							<relocations>
@@ -208,6 +215,10 @@
 								<relocation>
 									<pattern>com.codingforcookies.robert</pattern>
 									<shadedPattern>com.dsh105.echopet.libs.com.codingforcookies.robert</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.bstats</pattern>
+									<shadedPattern>com.dsh105.echopet.libs.org.bstats</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
