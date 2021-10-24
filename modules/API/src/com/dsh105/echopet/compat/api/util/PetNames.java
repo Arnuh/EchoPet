@@ -19,8 +19,8 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.List;
 import java.util.Map;
-import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;

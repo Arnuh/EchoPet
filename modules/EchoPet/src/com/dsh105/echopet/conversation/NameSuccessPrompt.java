@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;

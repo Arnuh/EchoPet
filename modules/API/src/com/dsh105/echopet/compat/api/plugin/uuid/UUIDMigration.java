@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
-import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

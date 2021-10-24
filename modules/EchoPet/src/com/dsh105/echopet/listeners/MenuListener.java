@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
@@ -25,6 +24,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
 import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
+import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;

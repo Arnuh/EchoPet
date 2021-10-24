@@ -18,9 +18,9 @@
 package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
+import com.dsh105.echopet.compat.api.util.StringUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;

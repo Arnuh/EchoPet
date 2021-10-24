@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;

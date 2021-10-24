@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.particle.Trails;
 import com.google.common.collect.Lists;
@@ -94,10 +94,12 @@ public class TrailManager implements Trails{
 		}
 	}
 	
+	@Override
 	public List<Trail> getTrails(){
 		return trails.stream().map(t->(Trail) t).collect(Collectors.toList());
 	}
 	
+	@Override
 	public Trail getTrailByName(String name){
 		for(Trail particle : getTrails()){
 			if(particle.getName().equalsIgnoreCase(name)) return particle;

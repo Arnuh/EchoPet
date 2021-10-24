@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api;
 
 import java.util.ArrayList;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
@@ -31,6 +30,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import org.bukkit.Location;

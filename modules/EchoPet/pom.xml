@@ -54,10 +54,6 @@
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
 				</exclusion>
-				<exclusion>
-					<artifactId>Commodus</artifactId>
-					<groupId>com.dsh105</groupId>
-				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -83,11 +79,6 @@
 				</exclusion>
 			</exclusions>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.dsh105</groupId>
-			<artifactId>Commodus</artifactId>
-			<version>1.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>me.clip</groupId>
@@ -194,7 +185,6 @@
 									<include>com.jolbox:bonecp</include>
 									<include>org.slf4j:slf4j-api</include>
 									<include>org.slf4j:slf4j-jdk14</include>
-									<include>com.dsh105:Commodus</include>
 									<include>com.codingforcookies:robert</include>
 									<include>org.bstats:bstats*</include>
 								</includes>
@@ -207,10 +197,6 @@
 								<relocation>
 									<pattern>org.slf4j</pattern>
 									<shadedPattern>com.dsh105.echopet.libs.org.slf4j</shadedPattern>
-								</relocation>
-								<relocation>
-									<pattern>com.dsh105.commodus</pattern>
-									<shadedPattern>com.dsh105.echopet.libs.com.dsh105.commodus</shadedPattern>
 								</relocation>
 								<relocation>
 									<pattern>com.codingforcookies.robert</pattern>
