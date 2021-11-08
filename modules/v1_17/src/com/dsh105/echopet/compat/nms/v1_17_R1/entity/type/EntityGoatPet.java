@@ -17,75 +17,160 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
 
+import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGoatPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetHandle;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.IEntityPetBase;
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 @EntitySize(width = 1.3F, height = 0.9F)
 @EntityPetType(petType = PetType.GOAT)
-public class EntityGoatPet extends EntityAgeablePet implements IEntityGoatPet{
+public class EntityGoatPet extends Goat implements IEntityPet, EntityPetHandle, IEntityGoatPet{
 	
-	private static final EntityDataAccessor<Boolean> DATA_IS_SCREAMING_GOAT = SynchedEntityData.defineId(EntityGoatPet.class, EntityDataSerializers.BOOLEAN);
+	protected IGoatPet pet;
+	private final IEntityPetBase petBase;
 	
-	public EntityGoatPet(Level world){
+	private static final ImmutableList<SensorType<? extends Sensor<? super Goat>>> SENSOR_TYPES = ImmutableList.of();
+	
+	public EntityGoatPet(Level world, IGoatPet pet){
 		super(EntityType.GOAT, world);
-	}
-	
-	public EntityGoatPet(Level world, IPet pet){
-		super(EntityType.GOAT, world, pet);
-	}
-	
-	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(DATA_IS_SCREAMING_GOAT, false);
-	}
-	
-	public boolean isScreamingGoat(){
-		return this.entityData.get(DATA_IS_SCREAMING_GOAT);
+		this.pet = pet;
+		this.petBase = new EntityPetBase(this);
 	}
 	
 	@Override
 	public void setScreaming(boolean flag){
-		this.entityData.set(DATA_IS_SCREAMING_GOAT, flag);
+		setScreamingGoat(flag);
+	}
+	//TODO: Maybe can implement some of goats custom AI?
+	//Look at GoatAi. stuff like looking at sinks, randomly running, support long jumping? Probably not ramming but idk
+	
+	@Override
+	protected Brain.Provider<Goat> brainProvider(){
+		// Use goat memory types because other goats will try to access it usually.
+		// Empty sensors tho because we don't need that handling.
+		return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
 	}
 	
 	@Override
-	protected SoundEvent getAmbientSound(){
-		return this.isScreamingGoat() ? SoundEvents.GOAT_SCREAMING_AMBIENT : SoundEvents.GOAT_AMBIENT;
+	protected Brain<?> makeBrain(Dynamic<?> dynamic){
+		// This info is put into a GoatAI which adds some other things like ramming, long jump, etc
+		return brainProvider().makeBrain(dynamic);
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damagesource){
-		return this.isScreamingGoat() ? SoundEvents.GOAT_SCREAMING_HURT : SoundEvents.GOAT_HURT;
+	protected void customServerAiStep(){
+		//disable brain / goat specific ai
 	}
 	
 	@Override
-	protected SoundEvent getDeathSound(){
-		return this.isScreamingGoat() ? SoundEvents.GOAT_SCREAMING_DEATH : SoundEvents.GOAT_DEATH;
+	public @Nullable
+	AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
+		return null;
 	}
 	
 	@Override
-	protected void playStepSound(BlockPos blockposition, BlockState iblockdata){
-		this.playSound(SoundEvents.GOAT_STEP, 0.15F, 1.0F);
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
 	}
 	
 	@Override
-	public SoundEvent getEatingSound(ItemStack itemstack){
-		return this.isScreamingGoat() ? SoundEvents.GOAT_SCREAMING_EAT : SoundEvents.GOAT_EAT;
+	public LivingEntity getEntity(){
+		return (LivingEntity) getBukkitEntity();
 	}
+	
+	@Override
+	public void remove(boolean makeSound){
+		petBase.remove(makeSound);
+	}
+	
+	@Override
+	public boolean isDead(){
+		return dead;
+	}
+	
+	@Override
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
+	}
+	
+	@Override
+	public boolean onInteract(Player player){
+		return petBase.onInteract(player);
+	}
+	
+	@Override
+	public IPet getPet(){
+		return pet;
+	}
+	
+	@Override
+	public IPetGoalSelector getPetGoalSelector(){
+		return petBase.getPetGoalSelector();
+	}
+	
+	@Override
+	public Player getOwner(){
+		return pet.getOwner();
+	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
+		return true;
+	}
+	
+	@Override
+	public void tick(){
+		super.tick();
+		petBase.tick();
+	}
+	
+	@Override
+	public void travel(Vec3 vec3d){
+		Vec3 result = petBase.travel(vec3d);
+		if(result == null){
+			this.flyingSpeed = 0.02F;
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petBase.getSpeed());
+		super.travel(result);
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }
