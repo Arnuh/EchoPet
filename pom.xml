@@ -28,6 +28,7 @@
 		<module>./modules/EchoPet</module>
 		<module>./modules/v1_16_R3</module>
 		<module>./modules/v1_17</module>
+		<module>./modules/v1_18</module>
 	</modules>
 
 	<properties>
@@ -64,6 +65,10 @@
 	</distributionManagement>
 
 	<repositories>
+		<repository>
+			<id>arnah-group</id>
+			<url>https://repo.arnah.ca/repository/maven-group/</url>
+		</repository>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
