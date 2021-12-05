@@ -53,6 +53,7 @@
 			<artifactId>spigot-api</artifactId>
 			<version>1.18-R0.1-SNAPSHOT</version>
 			<type>jar</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>

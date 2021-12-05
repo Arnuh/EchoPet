@@ -26,7 +26,6 @@
 	<modules>
 		<module>./modules/API</module>
 		<module>./modules/EchoPet</module>
-		<module>./modules/v1_16_R3</module>
 		<module>./modules/v1_17</module>
 		<module>./modules/v1_18</module>
 	</modules>
@@ -83,7 +82,8 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.16.5-R0.1-SNAPSHOT</version>
+			<version>1.17.1-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 		<!--<dependency>
 			<groupId>org.kitteh</groupId>
