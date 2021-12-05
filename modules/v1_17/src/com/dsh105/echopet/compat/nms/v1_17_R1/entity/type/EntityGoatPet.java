@@ -22,14 +22,15 @@ import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetBase;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetHandle;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.IEntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePetBase;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.INMSEntityPetBase;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
@@ -50,17 +51,17 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 1.3F, height = 0.9F)
 @EntityPetType(petType = PetType.GOAT)
-public class EntityGoatPet extends Goat implements IEntityPet, EntityPetHandle, IEntityGoatPet{
+public class EntityGoatPet extends Goat implements IEntityPet, EntityPetGiveMeAccess, IEntityGoatPet{
 	
 	protected IGoatPet pet;
-	private final IEntityPetBase petBase;
+	private final INMSEntityPetBase petBase;
 	
 	private static final ImmutableList<SensorType<? extends Sensor<? super Goat>>> SENSOR_TYPES = ImmutableList.of();
 	
 	public EntityGoatPet(Level world, IGoatPet pet){
 		super(EntityType.GOAT, world);
 		this.pet = pet;
-		this.petBase = new EntityPetBase(this);
+		this.petBase = new EntityAgeablePetBase(this);
 	}
 	
 	@Override
@@ -128,6 +129,11 @@ public class EntityGoatPet extends Goat implements IEntityPet, EntityPetHandle, 
 	@Override
 	public IPet getPet(){
 		return pet;
+	}
+	
+	@Override
+	public IEntityPetBase getHandle(){
+		return petBase;
 	}
 	
 	@Override

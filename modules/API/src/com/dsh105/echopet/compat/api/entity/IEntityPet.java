@@ -26,6 +26,8 @@ public interface IEntityPet{
 	
 	IPet getPet();
 	
+	IEntityPetBase getHandle();
+	
 	IPetGoalSelector getPetGoalSelector();
 	
 	SizeCategory getSizeCategory();

@@ -15,26 +15,15 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
 
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import net.minecraft.world.phys.Vec3;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import net.minecraft.sounds.SoundEvent;
 
-public interface IEntityPetBase{
+/**
+ * For use of exposing protected methods that are required in a {@link IEntityPetBase}
+ */
+public interface EntityPetGiveMeAccess{
 	
-	IEntityPet getEntityPet();
-	
-	IPetGoalSelector getPetGoalSelector();
-	
-	boolean onInteract(Player player);
-	
-	void remove(boolean makeSound);
-	
-	void tick();
-	
-	float getSpeed();
-	
-	Vec3 travel(Vec3 vec3d);
+	SoundEvent publicDeathSound();
 }

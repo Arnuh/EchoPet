@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
 
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
@@ -57,19 +58,27 @@ import org.bukkit.util.Vector;
 public abstract class EntityPet extends Mob implements IEntityPet{
 	
 	protected IPet pet;
+	private final INMSEntityPetBase petBase;
 	public PetGoalSelector petGoalSelector;
 	protected double jumpHeight;
 	protected float rideSpeed, flySpeed;
 	public boolean shouldVanish;
 	
+	@Deprecated
 	public EntityPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
+		this.petBase = createPetBase();
 	}
 	
 	public EntityPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world);
 		this.pet = pet;
+		this.petBase = createPetBase();
 		this.initiateEntityPet();
+	}
+	
+	public INMSEntityPetBase createPetBase(){
+		return new EntityPetBase(this);
 	}
 	
 	protected void initiateEntityPet(){
@@ -92,6 +101,11 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 	@Override
 	public IPet getPet(){
 		return this.pet;
+	}
+	
+	@Override
+	public IEntityPetBase getHandle(){
+		return petBase;
 	}
 	
 	@Override

@@ -18,7 +18,7 @@
 package com.dsh105.echopet.api.pet;
 
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import org.bukkit.entity.Player;
 
 
@@ -32,7 +32,7 @@ public class AgeablePet extends Pet implements IAgeablePet{
 	
 	@Override
 	public void setBaby(boolean flag){
-		((IEntityAgeablePet) getEntityPet()).setBaby(flag);
+		((IEntityAgeablePetBase) getEntityPet().getHandle()).setBaby(flag);
 		this.baby = flag;
 	}
 	

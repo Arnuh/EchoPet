@@ -15,9 +15,24 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
 
-@Deprecated
-public interface IEntityAgeablePet extends IEntityPet{
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import net.minecraft.world.entity.Mob;
 
+public class EntityAgeablePetBase extends EntityPetBase implements IEntityAgeablePetBase{
+	
+	public EntityAgeablePetBase(IEntityPet entityPet){
+		super(entityPet);
+	}
+	
+	public Mob get(){// Swap to ageable
+		return (Mob) getEntity();
+	}
+	
+	@Override
+	public void setBaby(boolean flag){
+		get().setBaby(flag);
+	}
 }

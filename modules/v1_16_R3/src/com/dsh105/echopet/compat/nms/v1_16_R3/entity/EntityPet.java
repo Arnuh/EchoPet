@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
@@ -113,6 +114,11 @@ public abstract class EntityPet extends EntityInsentient implements IEntityPet{
 	@Override
 	public IPet getPet(){
 		return this.pet;
+	}
+	
+	@Override
+	public IEntityPetBase getHandle(){
+		return null;
 	}
 	
 	@Override

@@ -23,6 +23,8 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityAgeablePetBase;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.INMSEntityPetBase;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -43,6 +45,11 @@ public class EntityPiglinPet extends EntityAbstractPiglinPet implements IEntityP
 	
 	public EntityPiglinPet(Level world, IPet pet){
 		super(EntityType.PIGLIN, world, pet);
+	}
+	
+	@Override
+	public INMSEntityPetBase createPetBase(){
+		return new EntityAgeablePetBase(this);
 	}
 	
 	@Override

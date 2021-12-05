@@ -27,7 +27,7 @@
 	<artifactId>EchoPet-API</artifactId>
 	<name>EchoPet-API-${project.version}</name>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>${api.version}</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

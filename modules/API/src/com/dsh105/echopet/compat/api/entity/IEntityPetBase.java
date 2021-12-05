@@ -17,7 +17,20 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-@Deprecated
-public interface IEntityAgeablePet extends IEntityPet{
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
+import org.bukkit.entity.Player;
 
+public interface IEntityPetBase{
+	
+	IEntityPet getEntityPet();
+	
+	IPetGoalSelector getPetGoalSelector();
+	
+	boolean onInteract(Player player);
+	
+	void remove(boolean makeSound);
+	
+	void tick();
+	
+	float getSpeed();
 }

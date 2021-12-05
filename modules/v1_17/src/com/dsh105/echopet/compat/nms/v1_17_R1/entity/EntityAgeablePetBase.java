@@ -15,26 +15,24 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
+package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import net.minecraft.world.phys.Vec3;
-import org.bukkit.entity.Player;
+import net.minecraft.world.entity.Mob;
 
-public interface IEntityPetBase{
+public class EntityAgeablePetBase extends EntityPetBase implements IEntityAgeablePetBase{
 	
-	IEntityPet getEntityPet();
+	public EntityAgeablePetBase(IEntityPet entityPet){
+		super(entityPet);
+	}
 	
-	IPetGoalSelector getPetGoalSelector();
+	public Mob get(){// Swap to ageable
+		return (Mob) getEntity();
+	}
 	
-	boolean onInteract(Player player);
-	
-	void remove(boolean makeSound);
-	
-	void tick();
-	
-	float getSpeed();
-	
-	Vec3 travel(Vec3 vec3d);
+	@Override
+	public void setBaby(boolean flag){
+		get().setBaby(flag);
+	}
 }

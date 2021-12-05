@@ -70,10 +70,6 @@ public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePe
 	
 	@Override
 	public SizeCategory getSizeCategory(){
-		if(this.isBaby()){
-			return SizeCategory.TINY;
-		}else{
-			return SizeCategory.REGULAR;
-		}
+		return SizeCategory.REGULAR;
 	}
 }

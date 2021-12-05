@@ -46,7 +46,7 @@ import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class EntityPetBase implements IEntityPetBase{
+public class EntityPetBase implements INMSEntityPetBase{
 	
 	private final IEntityPet entityPet;
 	private PetGoalSelector petGoalSelector;
@@ -127,7 +127,7 @@ public class EntityPetBase implements IEntityPetBase{
 			craftEntity.remove();
 		}
 		if(makeSound){
-			if(getEntityPet() instanceof EntityPetHandle handle){
+			if(getEntityPet() instanceof EntityPetGiveMeAccess handle){
 				SoundEvent sound = handle.publicDeathSound();
 				if(sound != null){
 					getEntity().playSound(sound, 1.0F, 1.0F);// was makeSound in 1.8
@@ -286,5 +286,11 @@ public class EntityPetBase implements IEntityPetBase{
 		LivingEntity entity = getEntity();
 		entity.setDeltaMovement(vel.getX(), vel.getY(), vel.getZ());
 		entity.hurtMarked = true;
+	}
+	
+	public void setBaby(boolean flag){
+		if(getEntity() instanceof Mob mob){
+			mob.setBaby(flag);
+		}
 	}
 }

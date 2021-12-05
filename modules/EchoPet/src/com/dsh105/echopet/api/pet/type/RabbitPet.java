@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
@@ -26,20 +26,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
 
 @EntityPetType(petType = PetType.RABBIT)
-public class RabbitPet extends Pet implements IRabbitPet{
+public class RabbitPet extends AgeablePet implements IRabbitPet{
 	
 	public RabbitPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public boolean isBaby(){
-		return ((IEntityRabbitPet) getEntityPet()).isBaby();
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		((IEntityRabbitPet) getEntityPet()).setBaby(flag);
 	}
 	
 	@Override

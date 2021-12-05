@@ -104,10 +104,6 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	
 	@Override
 	public SizeCategory getSizeCategory(){
-		if(this.isBaby()){
-			return SizeCategory.TINY;
-		}else{
-			return SizeCategory.REGULAR;
-		}
+		return SizeCategory.REGULAR;
 	}
 }

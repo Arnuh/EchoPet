@@ -15,9 +15,12 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
 
-@Deprecated
-public interface IEntityAgeablePet extends IEntityPet{
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import net.minecraft.world.phys.Vec3;
 
+public interface INMSEntityPetBase extends IEntityPetBase{
+	
+	Vec3 travel(Vec3 vec3d);
 }

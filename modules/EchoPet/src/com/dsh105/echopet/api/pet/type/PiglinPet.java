@@ -18,6 +18,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPiglinPet;
@@ -35,7 +36,7 @@ public class PiglinPet extends AbstractPiglinPet implements IPiglinPet{
 	
 	@Override
 	public void setBaby(boolean flag){
-		((IEntityPiglinPet) getEntityPet()).setBaby(flag);
+		((IEntityAgeablePetBase) getEntityPet().getHandle()).setBaby(flag);
 		this.baby = flag;
 	}
 	

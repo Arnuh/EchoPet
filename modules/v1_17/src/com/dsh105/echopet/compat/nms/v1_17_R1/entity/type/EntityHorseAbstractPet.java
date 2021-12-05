@@ -102,11 +102,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	
 	@Override
 	public SizeCategory getSizeCategory(){
-		if(isBaby()){
-			return SizeCategory.TINY;
-		}else{
-			return SizeCategory.LARGE;
-		}
+		return SizeCategory.LARGE;
 	}
 	
 	@Override

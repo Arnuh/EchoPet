@@ -18,9 +18,13 @@
 package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 
 
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import net.minecraft.sounds.SoundEvent;
 
-public interface EntityPetHandle{
+/**
+ * For use of exposing protected methods that are required in a {@link IEntityPetBase}
+ */
+public interface EntityPetGiveMeAccess{
 	
 	SoundEvent publicDeathSound();
 }

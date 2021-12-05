@@ -27,6 +27,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
+@Deprecated
 public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeablePet{
 	
 	private static final EntityDataAccessor<Boolean> DATA_BABY_ID = SynchedEntityData.defineId(EntityAgeablePet.class, EntityDataSerializers.BOOLEAN);
@@ -39,6 +40,11 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	
 	public EntityAgeablePet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world, pet);
+	}
+	
+	@Override
+	public INMSEntityPetBase createPetBase(){
+		return new EntityAgeablePetBase(this);
 	}
 	
 	public int getAge(){
@@ -104,10 +110,6 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	
 	@Override
 	public SizeCategory getSizeCategory(){
-		if(this.isBaby()){
-			return SizeCategory.TINY;
-		}else{
-			return SizeCategory.REGULAR;
-		}
+		return SizeCategory.REGULAR;
 	}
 }
