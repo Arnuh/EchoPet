@@ -24,7 +24,9 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,23 +35,33 @@ import org.yaml.snakeyaml.DumperOptions;
 
 public class YAMLConfig{
 	
-	private static Field yamlOptionsField;
+	private static final Field yamlOptionsField;
 	
 	static{
-		try{//Spigot API doesn't expose this so fuck them.
-			yamlOptionsField = YamlConfiguration.class.getDeclaredField("yamlOptions");
-			yamlOptionsField.setAccessible(true);
-		}catch(NoSuchFieldException e){
-			e.printStackTrace();
+		//Spigot API doesn't expose this so fuck them.
+		yamlOptionsField = Stream.of("yamlOptions", "yamlDumperOptions")
+			.map(YAMLConfig::getYamlConfigurationField)
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.findFirst()
+			.orElseThrow(()->new IllegalStateException("Cannot find yaml options."));
+		yamlOptionsField.setAccessible(true);
+	}
+	
+	private static Optional<Field> getYamlConfigurationField(String field){
+		try{
+			return Optional.of(YamlConfiguration.class.getDeclaredField(field));
+		}catch(Exception ex){
+			return Optional.empty();
 		}
 	}
 	
 	private int comments;
-	private YAMLConfigManager manager;
+	private final YAMLConfigManager manager;
 	
-	private File file;
+	private final File file;
 	private YamlConfiguration config;
-	private JavaPlugin plugin;
+	private final JavaPlugin plugin;
 	
 	public YAMLConfig(InputStream configStream, File configFile, int comments, JavaPlugin plugin){
 		this.comments = comments;
