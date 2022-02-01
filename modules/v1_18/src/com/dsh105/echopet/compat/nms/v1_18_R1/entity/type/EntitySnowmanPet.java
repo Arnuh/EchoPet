@@ -15,7 +15,7 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_17_R1.entity.type;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPet;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -32,15 +32,15 @@ import net.minecraft.world.level.Level;
 
 @EntitySize(width = 0.4F, height = 1.8F)
 @EntityPetType(petType = PetType.SNOWMAN)
-public class EntitySnowGolemPet extends EntityPet implements IEntitySnowmanPet{
+public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet{
 	
-	private static final EntityDataAccessor<Byte> DATA_PUMPKIN_ID = SynchedEntityData.defineId(EntitySnowGolemPet.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> DATA_PUMPKIN_ID = SynchedEntityData.defineId(EntitySnowmanPet.class, EntityDataSerializers.BYTE);
 	
-	public EntitySnowGolemPet(Level world){
+	public EntitySnowmanPet(Level world){
 		super(EntityType.SNOW_GOLEM, world);
 	}
 	
-	public EntitySnowGolemPet(Level world, IPet pet){
+	public EntitySnowmanPet(Level world, IPet pet){
 		super(EntityType.SNOW_GOLEM, world, pet);
 	}
 	
