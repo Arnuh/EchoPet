@@ -8,7 +8,6 @@ website: ${project.url}
 main: com.dsh105.echopet.EchoPetPlugin
 softdepend: [WorldGuard, VanishNoPacket, PlaceholderAPI]
 api-version: 1.13
-load: STARTUP
 
 commands:
     ecupdate:

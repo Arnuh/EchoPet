@@ -17,79 +17,160 @@
 
 package com.dsh105.echopet.compat.nms.v1_18_R1.entity.type;
 
+import java.util.List;
 import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPet;
+import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
-import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityAgeablePet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.INMSEntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.base.EntityAxolotlPetBase;
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 @EntitySize(width = 1.3F, height = 0.6F)
 @EntityPetType(petType = PetType.AXOLOTL)
-public class EntityAxolotlPet extends EntityAgeablePet implements IEntityAxolotlPet{
+public class EntityAxolotlPet extends Axolotl implements IEntityPet, EntityPetGiveMeAccess{
 	
-	private static final EntityDataAccessor<Integer> DATA_VARIANT = SynchedEntityData.defineId(EntityAxolotlPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> DATA_PLAYING_DEAD = SynchedEntityData.defineId(EntityAxolotlPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(EntityAxolotlPet.class, EntityDataSerializers.BOOLEAN);
+	private static final List<? extends SensorType<? extends Sensor<? super Axolotl>>> SENSOR_TYPES = ImmutableList.of();
 	
-	public EntityAxolotlPet(Level world){
+	protected IAxolotlPet pet;
+	private final INMSEntityPetBase petBase;
+	
+	public EntityAxolotlPet(Level world, IAxolotlPet pet){
 		super(EntityType.AXOLOTL, world);
+		this.pet = pet;
+		this.petBase = new EntityAxolotlPetBase(this);
 	}
 	
-	public EntityAxolotlPet(Level world, IPet pet){
-		super(EntityType.AXOLOTL, world, pet);
+	// Prevent from making random noises outside of water?
+	@Override
+	protected void handleAirSupply(int i){}
+	
+	@Override
+	public @Nullable AgeableMob getBreedOffspring(ServerLevel worldserver, AgeableMob entityageable){
+		return null;
 	}
 	
 	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT, IAxolotlPet.Variant.Lucy.ordinal());
-		this.entityData.define(DATA_PLAYING_DEAD, false);
-		this.entityData.define(FROM_BUCKET, false);
+	protected void customServerAiStep(){}
+	
+	@Override
+	protected Brain.Provider<Axolotl> brainProvider(){
+		return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
 	}
 	
 	@Override
-	public void setVariant(IAxolotlPet.Variant variant){
-		this.entityData.set(DATA_VARIANT, variant.ordinal());
+	protected Brain<?> makeBrain(Dynamic<?> dynamic){
+		return this.brainProvider().makeBrain(dynamic);
 	}
 	
 	@Override
-	public void setPlayingDead(boolean flag){
-		this.entityData.set(DATA_PLAYING_DEAD, flag);
-	}
+	public void applySupportingEffects(net.minecraft.world.entity.player.Player entityhuman){}
 	
-	public boolean isPlayingDead(){
-		return this.entityData.get(DATA_PLAYING_DEAD);
+	@Override
+	public SizeCategory getSizeCategory(){
+		return SizeCategory.REGULAR;
 	}
 	
 	@Override
-	@Nullable
-	protected SoundEvent getDeathSound(){
-		return SoundEvents.AXOLOTL_DEATH;
+	public LivingEntity getEntity(){
+		return (LivingEntity) getBukkitEntity();
 	}
 	
 	@Override
-	@Nullable
-	protected SoundEvent getAmbientSound(){
-		return this.isInWater() ? SoundEvents.AXOLOTL_IDLE_WATER : SoundEvents.AXOLOTL_IDLE_AIR;
+	public void remove(boolean makeSound){
+		petBase.remove(makeSound);
 	}
 	
 	@Override
-	protected SoundEvent getSwimSplashSound(){
-		return SoundEvents.AXOLOTL_SPLASH;
+	public boolean isDead(){
+		return dead;
 	}
 	
 	@Override
-	protected SoundEvent getSwimSound(){
-		return SoundEvents.AXOLOTL_SWIM;
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
 	}
+	
+	@Override
+	public boolean onInteract(Player player){
+		return petBase.onInteract(player);
+	}
+	
+	@Override
+	public IPet getPet(){
+		return pet;
+	}
+	
+	@Override
+	public IEntityPetBase getHandle(){
+		return petBase;
+	}
+	
+	@Override
+	public IPetGoalSelector getPetGoalSelector(){
+		return petBase.getPetGoalSelector();
+	}
+	
+	@Override
+	public Player getOwner(){
+		return pet.getOwner();
+	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
+		return true;
+	}
+	
+	@Override
+	public void tick(){
+		super.tick();
+		petBase.tick();
+	}
+	
+	@Override
+	public void travel(Vec3 vec3d){
+		Vec3 result = petBase.travel(vec3d);
+		if(result == null){
+			this.flyingSpeed = 0.02F;
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petBase.getSpeed());
+		super.travel(result);
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }

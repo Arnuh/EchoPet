@@ -15,14 +15,32 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.nms;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity.base;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPetBase;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 
-public interface IEntityAxolotlPet extends IEntityAgeablePet{
+public class EntityAxolotlPetBase extends EntityAgeablePetBase implements IEntityAxolotlPetBase{
 	
-	void setVariant(IAxolotlPet.Variant variant);
+	public EntityAxolotlPetBase(IEntityPet entityPet){
+		super(entityPet);
+	}
 	
-	void setPlayingDead(boolean flag);
+	@Override
+	public Axolotl get(){
+		return (Axolotl) getEntity();
+	}
+	
+	@Override
+	public void setVariant(IAxolotlPet.Variant variant){
+		get().setVariant(Axolotl.Variant.BY_ID[variant.ordinal()]);
+	}
+	
+	@Override
+	public void setPlayingDead(boolean flag){
+		get().setPlayingDead(flag);
+	}
 }

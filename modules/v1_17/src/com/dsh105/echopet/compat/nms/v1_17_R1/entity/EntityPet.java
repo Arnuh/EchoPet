@@ -33,6 +33,7 @@ import com.dsh105.echopet.compat.nms.v1_17_R1.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalLookAtPlayer;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.base.EntityPetBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;

@@ -28,9 +28,9 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
-import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityAgeablePetBase;
 import com.dsh105.echopet.compat.nms.v1_18_R1.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.compat.nms.v1_18_R1.entity.INMSEntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_18_R1.entity.base.EntityAgeablePetBase;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
@@ -68,8 +68,8 @@ public class EntityGoatPet extends Goat implements IEntityPet, EntityPetGiveMeAc
 	public void setScreaming(boolean flag){
 		setScreamingGoat(flag);
 	}
-	//TODO: Maybe can implement some of goats custom AI?
-	//Look at GoatAi. stuff like looking at sinks, randomly running, support long jumping? Probably not ramming but idk
+	// TODO: Maybe can implement some of goats custom AI?
+	// Look at GoatAi. stuff like looking at sinks, randomly running, support long jumping? Probably not ramming but idk
 	
 	@Override
 	protected Brain.Provider<Goat> brainProvider(){
@@ -86,12 +86,11 @@ public class EntityGoatPet extends Goat implements IEntityPet, EntityPetGiveMeAc
 	
 	@Override
 	protected void customServerAiStep(){
-		//disable brain / goat specific ai
+		// disable brain / goat specific ai
 	}
 	
 	@Override
-	public @Nullable
-	Goat getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
+	public @Nullable Goat getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
 		return null;
 	}
 	

@@ -15,7 +15,7 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
+package com.dsh105.echopet.compat.nms.v1_17_R1.entity.base;
 
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
@@ -28,10 +28,12 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
-import com.dsh105.echopet.compat.nms.v1_18_R1.NMSEntityUtil;
-import com.dsh105.echopet.compat.nms.v1_18_R1.entity.ai.PetGoalFloat;
-import com.dsh105.echopet.compat.nms.v1_18_R1.entity.ai.PetGoalFollowOwner;
-import com.dsh105.echopet.compat.nms.v1_18_R1.entity.ai.PetGoalLookAtPlayer;
+import com.dsh105.echopet.compat.nms.v1_17_R1.NMSEntityUtil;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.INMSEntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFloat;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalFollowOwner;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.ai.PetGoalLookAtPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -41,8 +43,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -232,7 +234,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 		entity.setYRot(passenger.getYRot());
 		entity.yRotO = entity.getYRot();
 		entity.setXRot(passenger.getXRot() * 0.5F);
-		//entity.setRot(entity.getYRot(), entity.getXRot());
+		// entity.setRot(entity.getYRot(), entity.getXRot());
 		entity.setYBodyRot(entity.getYRot());
 		entity.setYHeadRot(entity.getYRot());
 		
@@ -286,11 +288,5 @@ public class EntityPetBase implements INMSEntityPetBase{
 		LivingEntity entity = getEntity();
 		entity.setDeltaMovement(vel.getX(), vel.getY(), vel.getZ());
 		entity.hurtMarked = true;
-	}
-	
-	public void setBaby(boolean flag){
-		if(getEntity() instanceof Mob mob){
-			mob.setBaby(flag);
-		}
 	}
 }

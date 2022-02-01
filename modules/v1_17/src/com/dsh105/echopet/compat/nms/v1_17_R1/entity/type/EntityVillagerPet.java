@@ -30,9 +30,9 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
-import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityAgeablePetBase;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.compat.nms.v1_17_R1.entity.INMSEntityPetBase;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.base.EntityAgeablePetBase;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
@@ -90,8 +90,7 @@ public class EntityVillagerPet extends Villager implements IEntityPet, EntityPet
 	}
 	
 	@Override
-	public @Nullable
-	AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
+	public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
 		return null;
 	}
 	

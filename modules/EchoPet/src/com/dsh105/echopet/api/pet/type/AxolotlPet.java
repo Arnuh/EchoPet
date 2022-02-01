@@ -20,7 +20,7 @@ package com.dsh105.echopet.api.pet.type;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPetBase;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import org.bukkit.entity.Player;
 
@@ -36,13 +36,13 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
 	@Override
 	public void setVariant(Variant variant){
-		((IEntityAxolotlPet) getEntityPet()).setVariant(variant);
+		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setVariant(variant);
 		this.variant = variant;
 	}
 	
 	@Override
 	public void setPlayingDead(boolean flag){
-		((IEntityAxolotlPet) getEntityPet()).setPlayingDead(flag);
+		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setPlayingDead(flag);
 		this.playingDead = flag;
 	}
 }

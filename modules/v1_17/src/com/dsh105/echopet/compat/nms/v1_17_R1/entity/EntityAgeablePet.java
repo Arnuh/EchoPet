@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.nms.v1_17_R1.entity.base.EntityAgeablePetBase;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

@@ -15,7 +15,7 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_18_R1.entity;
+package com.dsh105.echopet.compat.nms.v1_18_R1.entity.base;
 
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;

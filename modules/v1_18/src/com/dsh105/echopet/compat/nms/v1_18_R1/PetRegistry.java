@@ -43,15 +43,6 @@ public class PetRegistry implements IPetRegistry{
 	public PetRegistry(){
 		for(PetType petType : PetType.values){
 			if(petType.isCompatible()){
-				if(petType.equals(PetType.VILLAGER)){
-					if(!NMSEntityUtil.fixVillagerSensor()){
-						continue;// Fix failed, prevent villagers.
-					}
-				}else if(petType.equals(PetType.AXOLOTL)){
-					if(!NMSEntityUtil.fixAxolotlSensor()){
-						continue;
-					}
-				}
 				try{
 					PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
 					register(petType, registrationEntry);

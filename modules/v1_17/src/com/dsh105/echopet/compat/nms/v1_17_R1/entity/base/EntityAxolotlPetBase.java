@@ -15,24 +15,31 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_17_R1.entity;
+package com.dsh105.echopet.compat.nms.v1_17_R1.entity.base;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import net.minecraft.world.entity.Mob;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPetBase;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 
-public class EntityAgeablePetBase extends EntityPetBase implements IEntityAgeablePetBase{
+public class EntityAxolotlPetBase extends EntityAgeablePetBase implements IEntityAxolotlPetBase{
 	
-	public EntityAgeablePetBase(IEntityPet entityPet){
+	public EntityAxolotlPetBase(IEntityPet entityPet){
 		super(entityPet);
 	}
 	
-	public Mob get(){// Swap to ageable
-		return (Mob) getEntity();
+	@Override
+	public Axolotl get(){
+		return (Axolotl) getEntity();
 	}
 	
 	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
+	public void setVariant(IAxolotlPet.Variant variant){
+		get().setVariant(Axolotl.Variant.BY_ID[variant.ordinal()]);
+	}
+	
+	@Override
+	public void setPlayingDead(boolean flag){
+		get().setPlayingDead(flag);
 	}
 }
