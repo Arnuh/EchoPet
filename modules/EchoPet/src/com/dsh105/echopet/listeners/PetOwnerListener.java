@@ -89,12 +89,12 @@ public class PetOwnerListener implements Listener{
 		Player p = event.getPlayer();
 		ItemStack itemStack = event.getItem();
 		if(itemStack != null && itemStack.isSimilar(SelectorLayout.getSelectorItem())){
-			//https://hub.spigotmc.org/jira/browse/SPIGOT-6008
+			// https://hub.spigotmc.org/jira/browse/SPIGOT-6008
 			InventoryType inventoryType = p.getOpenInventory().getType();
 			if(!inventoryType.equals(InventoryType.CRAFTING) && !inventoryType.equals(InventoryType.CREATIVE)){
-				//LEFT_CLICK_AIR gets called when you open an Inventory while an Inventory is still open
-				//Since the Selector is in your hand this results in being stuck on page 1 whenever you try to move to page 2.
-				//Another fix is to check if the action is left click air/block and just don't let those items open the inventory anymore.
+				// LEFT_CLICK_AIR gets called when you open an Inventory while an Inventory is still open
+				// Since the Selector is in your hand this results in being stuck on page 1 whenever you try to move to page 2.
+				// Another fix is to check if the action is left click air/block and just don't let those items open the inventory anymore.
 				return;
 			}
 			event.setCancelled(true);
@@ -201,9 +201,10 @@ public class PetOwnerListener implements Listener{
 	public void onPlayerJoin(final PlayerJoinEvent event){
 		final Player p = event.getPlayer();
 		Inventory inv = p.getInventory();
-		if(EchoPet.getPlugin().isUpdateAvailable() && p.hasPermission("echopet.update")){
-			p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "An update is available: " + EchoPet.getPlugin().getUpdateName() + " (" + EchoPet.getPlugin().getUpdateSize() + " bytes).");
-			p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "Type /ecupdate to update.");
+		var updater = EchoPet.getPlugin().getUpdater();
+		if(updater != null && updater.isUpdateFound() && p.hasPermission("echopet.update")){
+			p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "An update is available at " + updater.getManualUpdateURL());
+			// p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "Type /ecupdate to update.");
 		}
 		
 		for(ItemStack item : inv.getContents()){

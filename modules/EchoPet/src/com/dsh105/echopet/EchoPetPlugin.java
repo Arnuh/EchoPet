@@ -24,6 +24,7 @@ import com.codingforcookies.robert.core.Robert;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SqlPetManager;
 import com.dsh105.echopet.api.pet.particle.TrailManager;
+import com.dsh105.echopet.api.updater.JenkinsUpdater;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
 import com.dsh105.echopet.commands.PetCommand;
@@ -42,6 +43,7 @@ import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
+import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -92,10 +94,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	public String adminCmdString = "petadmin";
 	
 	// Update data
-	public boolean update = false;
-	public String name = "";
-	public long size = 0;
-	public boolean updateChecked = false;
+	private IUpdater updater;
 	
 	@Override
 	public void onEnable(){
@@ -149,14 +148,14 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		manager.registerEvents(new MenuListener(), this);
 		manager.registerEvents(new PetEntityListener(), this);
 		manager.registerEvents(new PetOwnerListener(), this);
-		//manager.registerEvents(new ChunkListener(), this);
+		// manager.registerEvents(new ChunkListener(), this);
 		
 		// this.vanishProvider = new VanishProvider(this);
 		this.worldGuardProvider = new WorldGuardProvider(this);
 		new PlaceHolderAPIProvider(this);
 		
 		new Metrics(this, 12900);
-		this.checkUpdates();
+		this.updater = new JenkinsUpdater(this);
 	}
 	
 	@Override
@@ -272,45 +271,20 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 	}
 	
-	protected void checkUpdates(){
-		/*if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
-		    final File file = this.getFile();
-		    final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD;
-		    getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
-		        @Override
-		        public void run() {
-		            Updater updater = new Updater(EchoPet.getPlugin(), 53655, file, updateType, false);
-		            update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
-		            if (update) {
-		                name = updater.getLatestName();
-		                EchoPet.LOG.log(ChatColor.GOLD + "An update is available: " + name);
-		                EchoPet.LOG.log(ChatColor.GOLD + "Type /ecupdate to update.");
-		                if (!updateChecked) {
-		                    updateChecked = true;
-		                }
-		            }
-		        }
-		    });
-		}*/
-	}
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		/*if (commandLabel.equalsIgnoreCase("ecupdate")) {
-		    if (sender.hasPermission("echopet.update")) {
-		        if (updateChecked) {
-		            @SuppressWarnings("unused")
-		            Updater updater = new Updater(this, 53655, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-		            return true;
-		        } else {
-		            sender.sendMessage(this.prefix + ChatColor.GOLD + " An update is not available.");
-		            return true;
-		        }
-		    } else {
-		        Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
-		        return true;
-		    }
-		} else */
+		/*if(commandLabel.equalsIgnoreCase("ecupdate")){
+			if(sender.hasPermission("echopet.update")){
+				if(updater.isUpdateFound()){
+					updater.update();
+				}else{
+					sender.sendMessage(this.prefix + ChatColor.GOLD + " An update is not available.");
+				}
+			}else{
+				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
+			}
+			return true;
+		}else */
 		if(commandLabel.equalsIgnoreCase("echopet")){
 			if(sender.hasPermission("echopet.petadmin")){
 				PluginDescriptionFile pdFile = this.getDescription();
@@ -400,18 +374,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	}
 	
 	@Override
-	public boolean isUpdateAvailable(){
-		return update;
-	}
-	
-	@Override
-	public String getUpdateName(){
-		return name;
-	}
-	
-	@Override
-	public long getUpdateSize(){
-		return size;
+	public IUpdater getUpdater(){
+		return updater;
 	}
 	
 	@Override

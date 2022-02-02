@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.particle.Trails;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
+import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.Plugin;
 
@@ -56,11 +57,7 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	ConfigOptions getOptions();
 	
-	boolean isUpdateAvailable();
-	
-	String getUpdateName();
-	
-	long getUpdateSize();
+	IUpdater getUpdater();
 	
 	Trails getTrailManager();
 }

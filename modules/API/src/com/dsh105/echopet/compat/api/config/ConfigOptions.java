@@ -59,8 +59,7 @@ public class ConfigOptions extends Options{
 	public void setDefaults(){
 		set("commandString", "pet");
 		
-		set("autoUpdate", false, "If set to true, EchoPet will automatically download and install", "new updates.");
-		set("checkForUpdates", false, "If -autoUpdate- is set to false, EchoPet will notify certain", "players of new updates if they are available (if set to true).");
+		set("checkForUpdates", true, "EchoPet will notify certain", "players of new updates if they are available.");
 		
 		set("sql.overrideFile", true, "If true, Pets saved to a MySQL Database will override", "those saved to a file (Default and AutoSave Pets)");
 		set("sql.use", false);
