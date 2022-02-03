@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,45 +93,6 @@ public class ConfigOptions extends Options{
 			set("worldguard.regions.allowByDefault", true);
 		}
 		set("worldguard.regionEnterCheck", true);
-		
-		if(config.getConfigurationSection("trails") == null){
-			//@formatter:off
-			String[] trailInfo = {
-					"Test is the trail name",
-					"particleName - Name of Particle that we display.",
-					"canToggle - Ability to toggle the trail using a command",
-					"canToggle is used for subtrails. Default - true",
-					"subtrails - List of trails which will be active with the parent",
-					"interval - Delay in ticks between particle spawns. Default - 0",
-					"count - Amount of particles to display. Default - 1",
-					"speed - Speed of the particle(or extra data)",
-					"x, y, z - Offset from the pets location. Default - 0",
-					"x, y, z Offset - Maximum random offset. Default - 0",
-					"Everything but particleName is OPTIONAL."
-			};
-			//@formatter:on
-			set("trails.test.particleName", "FLAME", trailInfo);
-			set("trails.test.permission", "echopet.pet.trail.test");
-			set("trails.test.subtrails", Collections.singletonList("test2"));
-			set("trails.test.interval", 1);
-			set("trails.test.speed", 0);
-			set("trails.test.count", 2);
-			set("trails.test.speed", 0);
-			set("trails.test.x", 0);
-			set("trails.test.y", 0);
-			set("trails.test.z", 0);
-			set("trails.test.xOffset", 0);
-			set("trails.test.yOffset", 0);
-			set("trails.test.zOffset", 0);
-			//
-			set("trails.test2.particleName", "WATER_SPLASH");
-			set("trails.test2.permission", "echopet.pet.trail.test2");
-			set("trails.test2.canToggle", false);
-			set("trails.test2.interval", 2);
-			set("trails.test2.speed", 1);
-			set("trails.test2.count", 5);
-			set("trails.test2.y", 3);
-		}
 		
 		set("petSelector.allowDrop", true);
 		set("petSelector.showDisabledPets", true);

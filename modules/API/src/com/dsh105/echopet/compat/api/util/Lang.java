@@ -68,8 +68,6 @@ public enum Lang{
 	OPEN_MENU("open_menu", "&eOpening Data Menu for your &6%type%&e..."),
 	OPEN_SELECTOR("open_selector", "&eOpening Pet Selector..."),
 	ADD_SELECTOR("add_selector", "&eThe &6Pet Selector &ehas been added to your inventory."),
-	ACTIVATE_PARTICLETRAIL("activate_particletrail", "&e%trail% is now activated."),
-	DEACTIVATE_PARTICLETRAIL("deactivate_particletrail", "&e%trail% is now deactivated."),
 	
 	DATA_FORCE_MESSAGE("data_force_message", "&eThe following data types have been forced by the server: &6%data%"),
 	
@@ -82,9 +80,6 @@ public enum Lang{
 	INVALID_PET_DATA_TYPE_FOR_PET("invalid_pet_data_type_for_pet", "&6%data% &e is invalid for the &6%type% &epet type."),
 	VALID_PET_TYPES("valid_pet_types", "&eValid pet types:"),
 	PET_TYPE_NOT_COMPATIBLE("pet_type_not_compatible", "&6%type% &epet type is not compatible with this server version."),
-	INVALID_PARTICLETRAIL("invalid_particletrail", "&6%trail% &e is an invalid particle trail type."),
-	TRAIL_DISABLED("trail_disabled", "&6%trail% &e is currently disabled."),
-	TRAIL_TOGGLE_DISABLED("trail_toggle_disabled", "&6%trail% &e can not be enabled."),
 	
 	NO_DEFAULT("no_default", "&eYou do not currently have a default pet set."),
 	REMOVE_DEFAULT("remove_default", "&eDefault pet removed successfully."),

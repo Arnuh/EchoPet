@@ -23,7 +23,6 @@ import java.sql.Statement;
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SqlPetManager;
-import com.dsh105.echopet.api.pet.particle.TrailManager;
 import com.dsh105.echopet.api.updater.JenkinsUpdater;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
@@ -33,7 +32,6 @@ import com.dsh105.echopet.commands.util.DynamicPluginCommand;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.YAMLConfigManager;
-import com.dsh105.echopet.compat.api.particle.Trails;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
@@ -76,7 +74,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
 	
 	private IPetRegistry petRegistry;
-	private TrailManager trailManager;
 	
 	private CommandManager COMMAND_MANAGER;
 	private YAMLConfigManager configManager;
@@ -120,8 +117,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(ReflectionUtil.getVersionedClass("SpawnUtil")).newInstance();
 		
 		this.loadConfiguration();
-		
-		trailManager = new TrailManager(OPTIONS.getConfig());
 		
 		PluginManager manager = getServer().getPluginManager();
 		
@@ -376,10 +371,5 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public IUpdater getUpdater(){
 		return updater;
-	}
-	
-	@Override
-	public Trails getTrailManager(){
-		return trailManager;
 	}
 }

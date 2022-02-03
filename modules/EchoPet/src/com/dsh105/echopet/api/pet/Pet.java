@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api.pet;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
@@ -30,14 +29,12 @@ import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
-import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetNames;
 import com.dsh105.echopet.compat.api.util.StringSimplifier;
 import com.dsh105.echopet.compat.api.util.StringUtil;
-import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -57,7 +54,6 @@ public abstract class Pet implements IPet{
 	private String name;
 	private final ArrayList<PetData> petData = new ArrayList<>();
 	private InventoryView dataMenu;
-	private final List<com.dsh105.echopet.compat.api.particle.Trail> trails = Lists.newArrayList();
 	
 	private boolean isRider = false;
 	
@@ -109,9 +105,6 @@ public abstract class Pet implements IPet{
 					pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 				}
 				EchoPet.getPlugin().getServer().getPluginManager().callEvent(new PetSpawnEvent(this));
-				for(Trail t : trails){
-					t.start(this);
-				}
 				if(lastRider != null && !lastRider.isSpawned()){
 					setRider(lastRider);
 					setLastRider(null);
@@ -283,9 +276,6 @@ public abstract class Pet implements IPet{
 		}
 		setAsHat(false);
 		removeRider(makeSound, makeParticles);
-		for(com.dsh105.echopet.compat.api.particle.Trail trail : trails){
-			trail.cancel();
-		}
 		if(this.getEntityPet() != null){
 			this.getEntityPet().remove(makeSound);
 			this.entityPet = null;
@@ -487,21 +477,6 @@ public abstract class Pet implements IPet{
 	@Override
 	public void setInventoryView(InventoryView dataMenu){
 		this.dataMenu = dataMenu;
-	}
-	
-	@Override
-	public List<Trail> getTrails(){
-		return this.trails;
-	}
-	
-	@Override
-	public void addTrail(Trail trail){
-		trails.add(trail);
-	}
-	
-	@Override
-	public void removeTrail(Trail trail){
-		trails.remove(trail);
 	}
 	
 	@Override

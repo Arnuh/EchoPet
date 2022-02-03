@@ -25,7 +25,6 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
@@ -245,16 +244,6 @@ public class PetManager implements IPetManager{
 					return null;
 				}
 				pet.setPetName(name);
-				ConfigurationSection trails = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.trail");
-				if(trails != null){
-					for(String key : trails.getKeys(false)){
-						Trail trail = EchoPet.getPlugin().getTrailManager().getTrailByName(key);
-						if(trail == null) continue;
-						Trail newTrail = trail.clone();
-						newTrail.start(pet);
-						pet.addTrail(newTrail);
-					}
-				}
 				
 				List<PetData> data = new ArrayList<>();
 				ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
@@ -355,9 +344,6 @@ public class PetManager implements IPetManager{
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
 		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.serialisePetName());
 		
-		for(Trail trail : pet.getTrails()){
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.trail." + trail.getName(), true);
-		}
 		for(PetData pd : pet.getPetData()){
 			if(pd.ignoreSaving()) continue;
 			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);

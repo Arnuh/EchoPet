@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.particle.Trail;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
@@ -343,7 +342,8 @@ public class PetCommand implements CommandExecutor{
 						List<String> registeredStringData = new ArrayList<String>();
 						
 						StringBuilder dataBuilder = new StringBuilder();
-						dataBuilder.append(format).append("Valid data types: ");
+						dataBuilder.append(format)
+							.append("Valid data types: ");
 						int length = 0;
 						for(PetData data : registeredData){
 							String dataName = StringUtil.capitalise(data.toString().replace("_", " "));
@@ -354,7 +354,10 @@ public class PetCommand implements CommandExecutor{
 									dataBuilder.append("\n");
 									length = 0;
 								}
-								dataBuilder.append(highlight).append(dataName).append(format).append(", ");
+								dataBuilder.append(highlight)
+									.append(dataName)
+									.append(format)
+									.append(", ");
 								length += dataName.length();
 							}
 						}
@@ -542,37 +545,6 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 				}
-			}else if(args[0].equalsIgnoreCase("trail")){
-				String trailName = args[1];
-				Trail trail = EchoPet.getPlugin().getTrailManager().getTrailByName(trailName);
-				if(trail == null){
-					Lang.sendTo(sender, Lang.INVALID_PARTICLETRAIL.toString().replace("%trail%", trailName));
-					return true;
-				}
-				if(!trail.canToggle()){
-					Lang.sendTo(sender, Lang.TRAIL_TOGGLE_DISABLED.toString().replace("%trail%", trailName));
-					return true;
-				}
-				if(sender.hasPermission(trail.getPermission())){
-					trail = trail.clone();
-					IPet pi = EchoPet.getManager().getPet((Player) sender);
-					if(pi == null){
-						Lang.sendTo(sender, Lang.NO_PET.toString());
-						return true;
-					}
-					for(Trail t : pi.getTrails()){
-						if(t.getName().equals(trail.getName())){
-							t.cancel();
-							pi.removeTrail(t);
-							Lang.sendTo(sender, Lang.DEACTIVATE_PARTICLETRAIL.toString().replace("%trail%", trail.getName()));
-							return true;
-						}
-					}
-					trail.start(pi);
-					pi.addTrail(trail);
-					Lang.sendTo(sender, Lang.ACTIVATE_PARTICLETRAIL.toString().replace("%trail%", trail.getName()));
-				}
-				return true;
 			}
 			
 			// Help pages 1 through to 3

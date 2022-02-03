@@ -38,7 +38,7 @@ public class YAMLConfig{
 	private static final Field yamlOptionsField;
 	
 	static{
-		//Spigot API doesn't expose this so fuck them.
+		// Spigot API doesn't expose this so fuck them.
 		yamlOptionsField = Stream.of("yamlOptions", "yamlDumperOptions")
 			.map(YAMLConfig::getYamlConfigurationField)
 			.filter(Optional::isPresent)

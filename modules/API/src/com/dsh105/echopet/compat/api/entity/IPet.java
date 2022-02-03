@@ -18,9 +18,7 @@
 package com.dsh105.echopet.compat.api.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import com.dsh105.echopet.compat.api.particle.Trail;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -96,12 +94,6 @@ public interface IPet{
 	InventoryView getInventoryView();
 	
 	void setInventoryView(InventoryView dataMenu);
-	
-	List<Trail> getTrails();
-	
-	void addTrail(Trail trail);
-	
-	void removeTrail(Trail trail);
 	
 	/**
 	 * Check if a pet was removed(hidden) by the player. Usually done by commands
