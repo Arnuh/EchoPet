@@ -159,7 +159,5 @@ public class ConfigOptions extends Options{
 				}
 			}
 		}
-		
-		config.saveConfig();
 	}
 }

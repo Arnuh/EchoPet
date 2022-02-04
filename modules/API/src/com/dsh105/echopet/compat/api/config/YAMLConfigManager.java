@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -27,7 +26,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class YAMLConfigManager{
@@ -48,10 +46,9 @@ public class YAMLConfigManager{
 			if(header != null && header.length != 0){
 				this.setHeader(file, header);
 			}
-			
 		}
 		
-		return new YAMLConfig(this.getConfigContent(filePath), file, this.getCommentsNum(file), plugin);
+		return new YAMLConfig(getConfigContent(filePath), file, this.getCommentsNum(file), plugin);
 	}
 	
 	public YAMLConfig getNewConfig(String filePath){
@@ -89,13 +86,13 @@ public class YAMLConfigManager{
 			file.createNewFile();
 			
 			if(resource != null && !resource.isEmpty()){
-				this.copyResource(plugin.getResource(resource), file);
+				try(InputStream stream = plugin.getResource(resource)){
+					copyResource(stream, file);
+				}
 			}
-			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void prepareFile(String filePath){
@@ -110,13 +107,12 @@ public class YAMLConfigManager{
 		try{
 			String currentLine;
 			StringBuilder config = new StringBuilder("");
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			
-			while((currentLine = reader.readLine()) != null){
-				config.append(currentLine + "\n");
+			try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+				while((currentLine = reader.readLine()) != null){
+					config.append(currentLine)
+						.append("\n");
+				}
 			}
-			
-			reader.close();
 			config.append("# +----------------------------------------------------+ #\n");
 			
 			for(String line : header){
@@ -139,24 +135,24 @@ public class YAMLConfigManager{
 					finalLine.append(" ");
 				}
 				
-				config.append("# < ").append(finalLine.toString()).append(" > #\n");
+				config.append("# < ")
+					.append(finalLine.toString())
+					.append(" > #\n");
 				
 			}
 			
 			config.append("# +----------------------------------------------------+ #");
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(this.prepareConfigString(config.toString()));
-			writer.flush();
-			writer.close();
-			
+			try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
+				writer.write(prepareConfigString(config.toString()));
+				writer.flush();
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public InputStream getConfigContent(File file){
+	public String getConfigContent(File file){
 		if(!file.exists()){
 			return null;
 		}
@@ -164,32 +160,28 @@ public class YAMLConfigManager{
 		try{
 			int commentNum = 0;
 			
-			String addLine;
-			String currentLine;
 			String pluginName = this.getPluginName();
 			
-			StringBuilder whole = new StringBuilder("");
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			
-			while((currentLine = reader.readLine()) != null){
-				
-				if(currentLine.startsWith("#")){
-					addLine = currentLine.replaceFirst("#", pluginName + "_COMMENT_" + commentNum + ":");
-					whole.append(addLine + "\n");
-					commentNum++;
-					
-				}else{
-					whole.append(currentLine + "\n");
+			StringBuilder whole = new StringBuilder();
+			try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+				String currentLine;
+				while((currentLine = reader.readLine()) != null){
+					if(!currentLine.isBlank()){
+						if(currentLine.endsWith(System.lineSeparator())){
+							System.out.println("Test");
+						}
+					}
+					if(currentLine.startsWith("#")){
+						String commentKey = pluginName + "_COMMENT_" + commentNum++ + ":";
+						whole.append(currentLine.replaceFirst("#", commentKey))
+							.append("\n");
+					}else{
+						whole.append(currentLine)
+							.append("\n");
+					}
 				}
-				
 			}
-			
-			String config = whole.toString();
-			InputStream configStream = new ByteArrayInputStream(config.getBytes(Charset.forName("UTF-8")));
-			
-			reader.close();
-			return configStream;
-			
+			return whole.toString();
 		}catch(IOException e){
 			e.printStackTrace();
 			return null;
@@ -201,72 +193,60 @@ public class YAMLConfigManager{
 			return 0;
 		}
 		
-		try{
+		try(BufferedReader reader = new BufferedReader(new FileReader(file))){
 			int comments = 0;
 			String currentLine;
 			
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			
 			while((currentLine = reader.readLine()) != null){
-				
 				if(currentLine.startsWith("#")){
 					comments++;
 				}
-				
 			}
-			
-			reader.close();
 			return comments;
-			
 		}catch(IOException e){
 			e.printStackTrace();
 			return 0;
 		}
 	}
 	
-	public InputStream getConfigContent(String filePath){
-		return this.getConfigContent(this.getConfigFile(filePath));
+	public String getConfigContent(String filePath){
+		return getConfigContent(getConfigFile(filePath));
 	}
 	
 	private String prepareConfigString(String configString){
 		int lastLine = 0;
 		int headerLine = 0;
 		
+		String commentKey = getPluginName() + "_COMMENT";
+		
 		String[] lines = configString.split("\n");
-		StringBuilder config = new StringBuilder("");
+		StringBuilder config = new StringBuilder();
 		
 		for(String line : lines){
-			
-			if(line.startsWith(this.getPluginName() + "_COMMENT")){
+			if(line.startsWith(commentKey)){
 				String comment = "#" + line.trim().substring(line.indexOf(":") + 1);
 				
 				if(comment.startsWith("# +-")){
-					
 					/*
 					 * If header line = 0 then it is header start, if it's equal
 					 * to 1 it's the end of header
 					 */
-					
 					if(headerLine == 0){
-						config.append(comment).append("\n");
+						config.append(comment)
+							.append("\n");
 						
 						lastLine = 0;
 						headerLine = 1;
-						
-					}else if(headerLine == 1){
-						config.append(comment).append("\n\n");
-						
+					}else{
+						config.append(comment)
+							.append("\n\n");
 						lastLine = 0;
 						headerLine = 0;
-						
 					}
-					
 				}else{
-					
 					/*
 					 * Last line = 0 - Comment Last line = 1 - Normal path
 					 */
-					
 					String normalComment;
 					
 					if(comment.startsWith("# ' ")){
@@ -276,38 +256,33 @@ public class YAMLConfigManager{
 					}
 					
 					if(lastLine == 0){
-						config.append(normalComment).append("\n");
-					}else if(lastLine == 1){
-						config.append("\n").append(normalComment).append("\n");
+						config.append(normalComment)
+							.append("\n");
+					}else{
+						config.append("\n")
+							.append(normalComment)
+							.append("\n");
 					}
-					
 					lastLine = 0;
-					
 				}
-				
 			}else{
-				config.append(line).append("\n");
-				lastLine = 1;
+				config.append(line)
+					.append("\n");
+				lastLine = 1; // Notes that we need to add an extra newline if next line is adding comments.
 			}
-			
 		}
-		
 		return config.toString();
 	}
 	
 	public void saveConfig(String configString, File file){
 		String configuration = this.prepareConfigString(configString);
 		
-		try{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
 			writer.write(configuration);
 			writer.flush();
-			writer.close();
-			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public String getPluginName(){
@@ -315,19 +290,13 @@ public class YAMLConfigManager{
 	}
 	
 	private void copyResource(InputStream resource, File file){
-		try{
-			OutputStream out = new FileOutputStream(file);
-			
+		try(OutputStream out = new FileOutputStream(file)){
 			int lenght;
 			byte[] buf = new byte[1024];
 			
 			while((lenght = resource.read(buf)) > 0){
 				out.write(buf, 0, lenght);
 			}
-			
-			out.close();
-			resource.close();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

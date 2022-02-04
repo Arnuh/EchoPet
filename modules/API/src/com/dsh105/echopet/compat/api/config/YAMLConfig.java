@@ -18,26 +18,29 @@
 package com.dsh105.echopet.compat.api.config;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.stream.Stream;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.YamlConfigurationOptions;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.DumperOptions;
 
 public class YAMLConfig{
 	
 	private static final Field yamlOptionsField;
+	private static final Method parseComments;
 	
 	static{
+		parseComments = getParseComments(); // TODO: Remove when dropping 1.17 support
 		// Spigot API doesn't expose this so fuck them.
 		yamlOptionsField = Stream.of("yamlOptions", "yamlDumperOptions")
 			.map(YAMLConfig::getYamlConfigurationField)
@@ -56,24 +59,26 @@ public class YAMLConfig{
 		}
 	}
 	
+	private static Method getParseComments(){
+		try{
+			return YamlConfigurationOptions.class.getDeclaredMethod("parseComments", boolean.class);
+		}catch(Exception ex){
+			return null;
+		}
+	}
+	
 	private int comments;
 	private final YAMLConfigManager manager;
 	
 	private final File file;
 	private YamlConfiguration config;
-	private final JavaPlugin plugin;
 	
-	public YAMLConfig(InputStream configStream, File configFile, int comments, JavaPlugin plugin){
+	public YAMLConfig(String configContents, File configFile, int comments, JavaPlugin plugin){
 		this.comments = comments;
 		this.manager = new YAMLConfigManager(plugin);
 		
 		this.file = configFile;
-		try{
-			this.config = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, StandardCharsets.UTF_8));
-		}catch(NoSuchMethodError e){
-			this.config = YamlConfiguration.loadConfiguration(file);
-		}
-		this.plugin = plugin;
+		this.config = loadConfiguration(configContents);
 	}
 	
 	public FileConfiguration config(){
@@ -175,21 +180,38 @@ public class YAMLConfig{
 	}
 	
 	public void reloadConfig(){
-		InputStream configStream = manager.getConfigContent(file);
-		try(Reader reader = new InputStreamReader(configStream, StandardCharsets.UTF_8)){
-			this.config = YamlConfiguration.loadConfiguration(reader);
-		}catch(Exception ignore){
-			this.config = YamlConfiguration.loadConfiguration(file);
-		}
+		this.config = loadConfiguration(manager.getConfigContent(file));
 	}
 	
 	public void saveConfig(){
-		String config = this.config.saveToString();
-		manager.saveConfig(config, this.file);
-		this.reloadConfig();
+		String contents = config.saveToString();
+		manager.saveConfig(contents, this.file);
+		reloadConfig();
 	}
 	
 	public Set<String> getKeys(boolean deep){
 		return this.config.getKeys(deep);
+	}
+	
+	public static void parseComments(YamlConfiguration config, boolean parse){
+		if(parseComments != null){
+			try{
+				// We do our own comment handling, ignore spigot/yamls handling(Started since 1.18)
+				parseComments.invoke(config.options(), parse);
+				// config.options().parseComments(false);
+			}catch(Exception ignore){
+			}
+		}
+	}
+	
+	public static YamlConfiguration loadConfiguration(String contents){
+		YamlConfiguration config = new YamlConfiguration();
+		parseComments(config, false);
+		try{
+			config.loadFromString(contents);
+		}catch(InvalidConfigurationException var3){
+			Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", var3);
+		}
+		return config;
 	}
 }

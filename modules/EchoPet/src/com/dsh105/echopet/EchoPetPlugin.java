@@ -176,8 +176,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		OPTIONS = new ConfigOptions(mainConfig);
 		
-		mainConfig.reloadConfig();
-		
 		try{
 			petConfig = this.configManager.getNewConfig("pets.yml");
 			petConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
@@ -202,15 +200,14 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 					String[] desc = l.getDescription();
 					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.getConfigValue()), desc);
 				}
-				langConfig.saveConfig();
 			}catch(Exception e){
 				Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
+			}finally{
+				langConfig.saveConfig();
 			}
-			
 		}catch(Exception e){
 			Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
 		}
-		langConfig.reloadConfig();
 		
 		if(Lang.PREFIX.getConfigValue().equals("&4[&cEchoPet&4]&r")){
 			langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
