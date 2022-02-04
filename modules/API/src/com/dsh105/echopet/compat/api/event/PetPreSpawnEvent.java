@@ -39,7 +39,6 @@ public class PetPreSpawnEvent extends PetEvent implements Cancellable{
 		super(pet);
 		this.spawnLocation = spawnLocation;
 		this.cancelMessage = cancelMessage;
-		setCancelled(true);
 	}
 	
 	/**
