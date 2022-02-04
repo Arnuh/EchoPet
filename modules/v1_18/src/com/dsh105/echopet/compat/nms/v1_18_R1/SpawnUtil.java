@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
+import com.dsh105.echopet.compat.api.util.Lang;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,10 +44,12 @@ public class SpawnUtil implements ISpawnUtil{
 	public IEntityPet spawn(IPet pet, Player owner){
 		Location l = owner.getLocation();
 		// if(EchoPet.getPlugin().getVanishProvider().isVanished(owner)) return null;
-		PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, l);
+		PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, l, Lang.PET_PRE_SPAWN_CANCELLED.toString());
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(spawnEvent);
 		if(spawnEvent.isCancelled()){
-			owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Pet spawn was cancelled externally.");
+			if(spawnEvent.getCancellationMessage() != null){
+				Lang.sendTo(owner, spawnEvent.getCancellationMessage());
+			}
 			EchoPet.getManager().removePet(pet, true);
 			return null;
 		}

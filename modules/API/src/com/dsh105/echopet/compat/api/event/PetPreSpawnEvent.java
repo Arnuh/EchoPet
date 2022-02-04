@@ -33,10 +33,13 @@ public class PetPreSpawnEvent extends PetEvent implements Cancellable{
 	private boolean cancelled = false;
 	
 	private Location spawnLocation;
+	private String cancelMessage;
 	
-	public PetPreSpawnEvent(IPet pet, Location spawnLocation){
+	public PetPreSpawnEvent(IPet pet, Location spawnLocation, String cancelMessage){
 		super(pet);
 		this.spawnLocation = spawnLocation;
+		this.cancelMessage = cancelMessage;
+		setCancelled(true);
 	}
 	
 	/**
@@ -57,6 +60,24 @@ public class PetPreSpawnEvent extends PetEvent implements Cancellable{
 	 */
 	public void setSpawnLocation(Location spawnLocation){
 		this.spawnLocation = spawnLocation;
+	}
+	
+	/**
+	 * Gets the cancellation message.
+	 *
+	 * @return The message to display when the event is cancelled
+	 */
+	public String getCancellationMessage(){
+		return cancelMessage;
+	}
+	
+	/**
+	 * Sets the cancellation message. Null to send no message.
+	 *
+	 * @param cancelMessage The new message to display when the event is cancelled
+	 */
+	public void setCancellationMessage(String cancelMessage){
+		this.cancelMessage = cancelMessage;
 	}
 	
 	/**
