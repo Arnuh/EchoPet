@@ -250,7 +250,6 @@ public class PetOwnerListener implements Listener{
 					}
 				}
 			}.runTaskLater(EchoPet.getPlugin(), 20);
-			
 			// we're searching for at least 1 perm... (wouldn't want to load pet for every permission since player can have only 1 pet at the time)
 			break;
 		}

@@ -39,6 +39,7 @@ import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class PetManager implements IPetManager{
 	
@@ -95,7 +96,6 @@ public class PetManager implements IPetManager{
 			saveFileData("autosave", p);
 			EchoPet.getSqlManager().saveToDatabase(p, false);
 			p.removePet(true, true);
-			p.setLastRider(null);
 			i.remove();
 		}
 	}
@@ -134,7 +134,7 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public IPet createPet(Player owner, IPetType petType, IPetType riderType){
+	public @Nullable IPet createPet(Player owner, IPetType petType, IPetType riderType){
 		if(ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN){
 			Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
 			return null;
@@ -321,7 +321,6 @@ public class PetManager implements IPetManager{
 			IPet p = i.next();
 			if(UUIDMigration.getIdentificationFor(player).equals(p.getOwnerIdentification())){
 				p.removePet(makeDeathSound, true);
-				p.setLastRider(null);
 				i.remove();
 			}
 		}
@@ -330,7 +329,6 @@ public class PetManager implements IPetManager{
 	@Override
 	public void removePet(IPet pi, boolean makeDeathSound){
 		pi.removePet(makeDeathSound, true);
-		pi.setLastRider(null);
 		pets.remove(pi);
 	}
 	

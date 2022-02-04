@@ -26,8 +26,17 @@ import org.bukkit.inventory.InventoryView;
 
 public interface IPet{
 	
+	/**
+	 * Spawns the respective {@link IEntityPet}, applies pet name, pet data, and spawns rider for any applicable data is available.<br>
+	 * <br>
+	 * @return The {@link IEntityPet} spawned, current {@link IEntityPet} if it is already spawned, or null if failed to spawn.
+	 */
 	IEntityPet spawnPet(Player owner, boolean ignoreHidden);
 	
+	/**
+	 *
+	 * @return If the {@link #getEntityPet()} is not null and not set as dead.
+	 */
 	boolean isSpawned();
 	
 	IEntityPet getEntityPet();
@@ -50,12 +59,7 @@ public interface IPet{
 	
 	IPet getRider();
 	
-	/**
-	 * @return The last despawned rider(Null if no rider, or rider was removed)
-	 */
-	IPet getLastRider();
-	
-	void setLastRider(IPet lastRider);
+	void setIsRider();
 	
 	boolean isOwnerInMountingProcess();
 	
@@ -70,6 +74,17 @@ public interface IPet{
 	boolean setPetName(String name, boolean sendFailMessage);
 	
 	ArrayList<PetData> getPetData();
+	
+	IPet createRider(final IPetType pt, boolean sendFailMessage);
+	
+	void setRider(IPet rider);
+	
+	/**
+	 * Usually for respawning after calling {@link #despawnRider(boolean, boolean)}
+	 */
+	boolean spawnRider();
+	
+	void despawnRider(boolean makeSound, boolean makeParticles);
 	
 	void removeRider(boolean makeSound, boolean makeParticles);
 	
@@ -86,10 +101,6 @@ public interface IPet{
 	void ownerRidePet(boolean flag);
 	
 	void setAsHat(boolean flag);
-	
-	IPet createRider(final IPetType pt, boolean sendFailMessage);
-	
-	void setRider(IPet rider);
 	
 	InventoryView getInventoryView();
 	

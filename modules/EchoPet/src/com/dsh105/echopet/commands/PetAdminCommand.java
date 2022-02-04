@@ -467,7 +467,7 @@ public class PetAdminCommand implements CommandExecutor{
 				}else{
 					return true;
 				}
-			}else if(args.length == 4 && args[2].equalsIgnoreCase("set")){ //args[3] == pet info
+			}else if(args.length == 4 && args[2].equalsIgnoreCase("set")){ // args[3] == pet info
 				if(args[3].equalsIgnoreCase("current")){
 					if(Perm.ADMIN_DEFAULT_SET_CURRENT.hasPerm(sender, true, true)){
 						Player target = Bukkit.getPlayer(args[1]);
@@ -699,8 +699,13 @@ public class PetAdminCommand implements CommandExecutor{
 					}
 					EchoPet.getManager().saveFileData("autosave", pi);
 					EchoPet.getSqlManager().saveToDatabase(pi, false);
-					Lang.sendTo(target, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
-					Lang.sendTo(sender, Lang.ADMIN_CREATE_PET_WITH_RIDER.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
+					if(pi.getRider().isSpawned()){
+						Lang.sendTo(target, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
+						Lang.sendTo(sender, Lang.ADMIN_CREATE_PET_WITH_RIDER.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
+					}else{
+						Lang.sendTo(target, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+						Lang.sendTo(sender, Lang.ADMIN_CREATE_PET.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+					}
 					return true;
 				}else{
 					return true;

@@ -191,7 +191,8 @@ public class EntityPetBase implements INMSEntityPetBase{
 			}
 			setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));
 		}
-		if(!entity.isPassenger() || pet.getRider() == null){
+		IPet rider = pet.getRider();
+		if(!entity.isPassenger() || (rider == null || !rider.isSpawned())){
 			this.petGoalSelector.updateGoals();
 		}
 	}

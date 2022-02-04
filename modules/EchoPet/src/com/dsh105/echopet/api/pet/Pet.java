@@ -50,7 +50,7 @@ public abstract class Pet implements IPet{
 	private IPetType petType;
 	
 	private Object ownerIdentification;
-	private Pet rider, lastRider;
+	private IPet rider;
 	private String name;
 	private final ArrayList<PetData> petData = new ArrayList<>();
 	private InventoryView dataMenu;
@@ -99,18 +99,17 @@ public abstract class Pet implements IPet{
 			this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
 			if(this.entityPet != null){
 				this.applyPetName();
-				this.teleportToOwner();
+				// If we got here, a new entity was  spawned on our position anyway.
+				// this.teleportToOwner();
 				for(PetData pd : getPetData()){
 					if(pd.getAction() == null) continue;
 					pd.getAction().click(owner, this, PetDataCategory.getByData(getPetType(), pd), true);
 				}
 				EchoPet.getPlugin().getServer().getPluginManager().callEvent(new PetSpawnEvent(this));
-				if(lastRider != null && !lastRider.isSpawned()){
-					setRider(lastRider);
-					setLastRider(null);
+				if(rider != null && !rider.isSpawned()){
+					spawnRider();
 				}
 			}
-			// }
 		}else{
 			EchoPet.getManager().saveFileData("autosave", this);
 			EchoPet.getSqlManager().saveToDatabase(this, false);
@@ -179,7 +178,8 @@ public abstract class Pet implements IPet{
 		return this.isRider;
 	}
 	
-	protected void setRider(){
+	@Override
+	public void setIsRider(){
 		this.isRider = true;
 	}
 	
@@ -189,13 +189,8 @@ public abstract class Pet implements IPet{
 	}
 	
 	@Override
-	public Pet getRider(){
+	public IPet getRider(){
 		return this.rider;
-	}
-	
-	@Override
-	public Pet getLastRider(){
-		return this.lastRider;
 	}
 	
 	@Override
@@ -253,19 +248,96 @@ public abstract class Pet implements IPet{
 	}
 	
 	@Override
-	public void setLastRider(IPet lastRider){
-		if(lastRider == null) this.lastRider = null;
-		else this.lastRider = (Pet) lastRider;
+	public IPet createRider(final IPetType pt, boolean sendFailMessage){
+		if(pt == PetType.HUMAN){
+			if(sendFailMessage){
+				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+			}
+			return null;
+		}
+		if(!getPetType().allowRidersFor()){
+			if(sendFailMessage){
+				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+			}
+			return null;
+		}
+		if(this.isOwnerRiding()){
+			this.ownerRidePet(false);
+		}
+		if(this.rider != null){
+			this.removeRider(true, true);
+		}
+		IPet newRider = pt.getNewPetInstance(this.getOwner());
+		if(newRider == null){
+			if(sendFailMessage){
+				Lang.sendTo(getOwner(), Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
+			}
+			return null;
+		}
+		if(isSpawned()){
+			newRider.spawnPet(getOwner(), false);
+		}
+		this.rider = newRider;
+		this.rider.setIsRider();
+		if(isSpawned() && rider.isSpawned()){
+			getCraftPet().addPassenger(rider.getCraftPet());
+		}
+		EchoPet.getSqlManager().saveToDatabase(rider, true);
+		
+		return this.rider;
+	}
+	
+	@Override
+	public void setRider(IPet newRider){
+		if(!isSpawned()) return;
+		if(!getPetType().allowRidersFor()){
+			Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+			return;
+		}
+		if(this.isOwnerRiding()){
+			this.ownerRidePet(false);
+		}
+		if(rider != null){
+			this.removeRider(true, true);
+		}
+		this.rider = newRider;
+		this.rider.setIsRider();
+		spawnRider();
+	}
+	
+	@Override
+	public boolean spawnRider(){
+		if(rider == null || rider.isSpawned()){
+			return false;
+		}
+		IEntityPet entityPet = rider.spawnPet(getOwner(), false);
+		if(entityPet == null){
+			return false;
+		}
+		getCraftPet().addPassenger(rider.getCraftPet());
+		return true;
+	}
+	
+	@Override
+	public void despawnRider(boolean makeSound, boolean makeParticles){
+		if(rider == null){
+			return;
+		}
+		rider.removePet(makeSound, makeParticles);
+		// It's possible for a rider to be set before the pet being ridden is spawned
+		// Due to how rider spawning currently works.
+		if(getEntityPet() != null && getCraftPet() != null){
+			getCraftPet().eject();
+		}
 	}
 	
 	@Override
 	public void removeRider(boolean makeSound, boolean makeParticles){
-		if(rider != null){
-			lastRider = rider;
-			rider.removePet(makeSound, makeParticles);
-			rider = null;
-			getCraftPet().eject();
+		if(rider == null){
+			return;
 		}
+		despawnRider(makeSound, makeParticles);
+		rider = null;
 	}
 	
 	@Override
@@ -276,9 +348,9 @@ public abstract class Pet implements IPet{
 		}
 		setAsHat(false);
 		removeRider(makeSound, makeParticles);
-		if(this.getEntityPet() != null){
-			this.getEntityPet().remove(makeSound);
-			this.entityPet = null;
+		if(getEntityPet() != null){
+			getEntityPet().remove(makeSound);
+			entityPet = null;
 		}
 	}
 	
@@ -291,14 +363,15 @@ public abstract class Pet implements IPet{
 			return false;
 		}
 		if(!isSpawned()) return false;
-		Pet rider = getRider();
+		IPet rider = getRider();
 		removeRider(false, false);
 		boolean tele = teleport(this.getOwner().getLocation());
 		if(tele && rider != null){
 			this.rider = rider;
-			this.rider.spawnPet(getOwner(), true);
-			getCraftPet().addPassenger(rider.getCraftPet());
-			EchoPet.getSqlManager().saveToDatabase(rider, true);
+			if(rider.spawnPet(getOwner(), true) != null){
+				getCraftPet().addPassenger(rider.getCraftPet());
+				EchoPet.getSqlManager().saveToDatabase(rider, true);
+			}
 		}
 		return tele;
 	}
@@ -317,12 +390,12 @@ public abstract class Pet implements IPet{
 		if(teleportEvent.isCancelled()) return false;
 		Location l = teleportEvent.getTo();
 		if(l.getWorld() == this.getLocation().getWorld()){
-			if(this.getRider() != null){
+			if(getRider() != null && getRider().isSpawned()){
 				this.getRider().getCraftPet().eject();
 				this.getRider().getCraftPet().teleport(l);
 			}
 			this.getCraftPet().teleport(l);
-			if(this.getRider() != null){
+			if(getRider() != null && getRider().isSpawned()){
 				this.getCraftPet().addPassenger(this.getRider().getCraftPet());
 			}
 			return true;
@@ -412,61 +485,6 @@ public abstract class Pet implements IPet{
 		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		// Lots of ways call setAsHat, might as well properly sync the petdata in here.
 		EchoPet.getManager().setData(this, PetData.HAT, isHat);
-	}
-	
-	@Override
-	public Pet createRider(final IPetType pt, boolean sendFailMessage){
-		if(pt == PetType.HUMAN){
-			if(sendFailMessage){
-				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
-			}
-			return null;
-		}
-		if(!getPetType().allowRidersFor()){
-			if(sendFailMessage){
-				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
-			}
-			return null;
-		}
-		if(this.isOwnerRiding()){
-			this.ownerRidePet(false);
-		}
-		if(this.rider != null){
-			this.removeRider(true, true);
-		}
-		IPet newRider = pt.getNewPetInstance(this.getOwner());
-		if(newRider == null){
-			if(sendFailMessage){
-				Lang.sendTo(getOwner(), Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
-			}
-			return null;
-		}
-		if(isSpawned()) newRider.spawnPet(getOwner(), false);
-		this.rider = (Pet) newRider;
-		this.rider.setRider();
-		if(isSpawned()) getCraftPet().addPassenger(newRider.getCraftPet());
-		EchoPet.getSqlManager().saveToDatabase(rider, true);
-		
-		return this.rider;
-	}
-	
-	@Override
-	public void setRider(IPet newRider){
-		if(!isSpawned()) return;
-		if(!getPetType().allowRidersFor()){
-			Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
-			return;
-		}
-		if(this.isOwnerRiding()){
-			this.ownerRidePet(false);
-		}
-		if(this.rider != null){
-			this.removeRider(true, true);
-		}
-		if(!newRider.isSpawned()) newRider.spawnPet(getOwner(), false);
-		this.rider = (Pet) newRider;
-		this.rider.setRider();
-		getCraftPet().addPassenger(rider.getCraftPet());
 	}
 	
 	@Override

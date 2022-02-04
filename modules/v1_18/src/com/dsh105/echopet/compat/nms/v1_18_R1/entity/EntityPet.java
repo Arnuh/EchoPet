@@ -384,7 +384,8 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 			this.remove(false);
 			return;
 		}
-		if(!isPassenger() || getPet().getRider() == null){
+		IPet rider = getPet().getRider();
+		if(!isPassenger() || (rider == null || !rider.isSpawned())){
 			this.petGoalSelector.updateGoals();
 		}
 	}

@@ -459,10 +459,11 @@ public class PetCommand implements CommandExecutor{
 						}
 					}
 					pi.setHidden(false);
-					pi.spawnPet((Player) sender, true);
-					EchoPet.getManager().saveFileData("autosave", pi);
-					EchoPet.getSqlManager().saveToDatabase(pi, false);
-					Lang.sendTo(sender, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+					if(pi.spawnPet((Player) sender, true) != null){
+						EchoPet.getManager().saveFileData("autosave", pi);
+						EchoPet.getSqlManager().saveToDatabase(pi, false);
+						Lang.sendTo(sender, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+					}
 					return true;
 				}else{
 					return true;
@@ -483,7 +484,6 @@ public class PetCommand implements CommandExecutor{
 							return true;
 						}
 						pi.removeRider(true, true);
-						pi.setLastRider(null);
 						EchoPet.getManager().saveFileData("autosave", pi);
 						EchoPet.getSqlManager().saveToDatabase(pi, false);
 						Lang.sendTo(sender, Lang.REMOVE_RIDER.toString());
@@ -642,10 +642,15 @@ public class PetCommand implements CommandExecutor{
 							}
 						}
 					}
-					pi.spawnPet(((Player) sender), false);
-					EchoPet.getManager().saveFileData("autosave", pi);
-					EchoPet.getSqlManager().saveToDatabase(pi, false);
-					Lang.sendTo(sender, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
+					if(pi.spawnPet(((Player) sender), false) != null){
+						EchoPet.getManager().saveFileData("autosave", pi);
+						EchoPet.getSqlManager().saveToDatabase(pi, false);
+						if(pi.getRider().isSpawned()){
+							Lang.sendTo(sender, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
+						}else{
+							Lang.sendTo(sender, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+						}
+					}
 					return true;
 				}else{
 					return true;

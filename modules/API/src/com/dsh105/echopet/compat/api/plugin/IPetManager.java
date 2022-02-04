@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.plugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -35,6 +36,7 @@ public interface IPetManager{
 	
 	IPet createPet(Player owner, IPetType petType, boolean sendMessageOnFail);
 	
+	@Nullable
 	IPet createPet(Player owner, IPetType petType, IPetType riderType);
 	
 	IPet getPet(Player player);
