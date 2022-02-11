@@ -7,3 +7,7 @@
 ### Need help? Visit the [Wiki](https://github.com/Arnuh/EchoPet/wiki)!
 
 # Join us on [Discord](https://discord.gg/WCkPxEg9W2) to get updates or help
+
+# EchoPet Extensions
+
+[Model Engine](https://github.com/Arnuh/EchoPet-ModelEngine)
