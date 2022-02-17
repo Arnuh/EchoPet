@@ -50,7 +50,7 @@ public class EchoPetAPI{
 	
 	/**
 	 * Gives a {@link com.dsh105.echopet.api.pet.Pet} to the specified {@link Player}
-	 * <p/>
+	 * <p>
 	 * Pets will be spawned immediately next to the target player, linked until it is removed.
 	 *
 	 * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link
@@ -348,7 +348,7 @@ public class EchoPetAPI{
 	
 	/**
 	 * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
-	 * <p/>
+	 * <p>
 	 * The goal is identified using a string, initiated when the goal is added to the {@link
 	 * com.dsh105.echopet.api.pet.Pet}
 	 *

@@ -47,7 +47,7 @@ public class Version{
 	
 	/**
 	 * Constructs a new Version from the given numeric server version
-	 * <p/>
+	 * <p>
 	 * <strong>Not recommended for public API consumption</strong>
 	 *
 	 * @param numericVersion numeric server version e.g. 1.7.10-R0.1 would be 171001
@@ -128,7 +128,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not this version is identical to the given version
-	 * <p/>
+	 * <p>
 	 * For example: 1.7-R1 matches 1.7-R1, but not 1.7-R2 or 1.7-R3
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R1
@@ -140,7 +140,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not the given version is compatible with this version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
 	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
 	 * compatible, whereas 1.7-R1 will not
@@ -154,7 +154,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not the given version is compatible with this version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
 	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
 	 * compatible, whereas 1.7-R1 will not
@@ -168,7 +168,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not this version is identical to the given version
-	 * <p/>
+	 * <p>
 	 * For example: 1.7-R1 matches 1.7-R1, but not 1.7-R2 or 1.7-R3
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R1
@@ -180,7 +180,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not the given version is compatible with this version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
 	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
 	 * compatible, whereas 1.7-R1 will not
@@ -194,7 +194,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not this version supports the given version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the version given is earlier (supported) or identical
 	 * to than this version. For example, if this version is 1.7-R3, a version of 1.7-R2 or 1.7-R1 will be considered
 	 * supported, whereas 1.7-R4 will not
@@ -208,7 +208,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not this version is identical to the given version
-	 * <p/>
+	 * <p>
 	 * For example: 1.7-R1 matches 1.7-R1, but not 1.7-R2 or 1.7-R3
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R1
@@ -225,7 +225,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not the given version is compatible with this version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
 	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
 	 * compatible, whereas 1.7-R1 will not
@@ -245,7 +245,7 @@ public class Version{
 	
 	/**
 	 * Returns whether or not this version supports the given version
-	 * <p/>
+	 * <p>
 	 * Makes a comparison to see if the version given is earlier (supported) or identical
 	 * to than this version. For example, if this version is 1.7-R3, a version of 1.7-R2 or 1.7-R1 will be considered
 	 * supported, whereas 1.7-R4 will not

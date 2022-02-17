@@ -125,7 +125,7 @@ public enum PetType implements IPetType{
 	private final Version version;
 	private Material uiMaterial;
 	
-	//This is a fucking mess
+	// This is a fucking mess
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, allowedData);
 	}
@@ -153,7 +153,7 @@ public enum PetType implements IPetType{
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
 		}catch(ClassNotFoundException ignored){
 		}
-		if(name().equals("PIGZOMBIE")){//hacky fix for now
+		if(name().equals("PIGZOMBIE")){// hacky fix for now
 			if(new Version("1.16-R1").isCompatible(new Version())){
 				defaultName = "Zombified Piglin Pet";
 				minecraftEntityName = "zombified_piglin";
@@ -172,8 +172,8 @@ public enum PetType implements IPetType{
 				}
 			}
 		}
-		if(!name().equalsIgnoreCase("HUMAN")){//Humans ignore the config.
-			if(this.uiMaterial == null){//Plugin probably wont work
+		if(!name().equalsIgnoreCase("HUMAN")){// Humans ignore the config.
+			if(this.uiMaterial == null){// Plugin probably wont work
 				System.out.println("Found no Material for pet type " + name());
 			}
 		}
@@ -265,7 +265,7 @@ public enum PetType implements IPetType{
 	}
 	
 	/**
-	 * @return String used for both configs & permissions to identify this pet.
+	 * @return String used for both configs and permissions to identify this pet.
 	 */
 	@Override
 	public String getConfigKeyName(){
@@ -519,7 +519,7 @@ public enum PetType implements IPetType{
 				for(PetDataCategory category : petType.getAllowedCategories()){
 					for(PetData data : category.getData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
-							//System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
+							// System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
 						}
 						alreadyHad.add(data.getConfigKeyName());
@@ -533,7 +533,7 @@ public enum PetType implements IPetType{
 	}
 	
 	public static void main(String[] args){
-		//outputInfo();
+		// outputInfo();
 		String[] petTypes = new String[PetType.values.length];
 		int pos = 0;
 		for(PetType type : PetType.values){

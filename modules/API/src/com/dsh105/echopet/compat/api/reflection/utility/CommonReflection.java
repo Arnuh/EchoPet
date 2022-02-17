@@ -188,7 +188,7 @@ public class CommonReflection{
 	
 	/**
 	 * Returns the Default ClassHandler.
-	 * <p/>
+	 * <p>
 	 * The ClassHandler is a utility class which allows us to easily access MCPC+ classes.
 	 * (Because they are remapped)
 	 *

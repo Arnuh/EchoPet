@@ -43,7 +43,7 @@ public class PetPreSpawnEvent extends PetEvent implements Cancellable{
 	
 	/**
 	 * Gets the spawn {@link org.bukkit.Location} of the {@link IPet}
-	 * <p/>
+	 * <p>
 	 * This {@link org.bukkit.Location} is most likely going to be the owner's {@link org.bukkit.Location}
 	 *
 	 * @return the Location this LivingPet spawned

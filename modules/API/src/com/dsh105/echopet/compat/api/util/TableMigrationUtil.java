@@ -31,7 +31,7 @@ import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 
 /**
  * Coordinates migration between table schemas.
- * <p/>
+ * <p>
  * Table migration strategies are intended to be incremental: if a user has a table two-versions-old,
  * the table will be migrated twice (once for each version).
  */
@@ -156,7 +156,7 @@ public class TableMigrationUtil{
 	
 	/**
 	 * Migrate old tables using EchoPet's SQL connection pool
-	 * <p/>
+	 * <p>
 	 * In the process of migration, old tables will be dropped
 	 */
 	public static void migrateTables(){

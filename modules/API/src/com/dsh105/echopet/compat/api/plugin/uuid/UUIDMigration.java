@@ -38,7 +38,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Returns whether the server version currently running primarily uses UUIDs instead of player names
-	 * <p/>
+	 * <p>
 	 * UUIDs were introduced into the Bukkit API in 1.7.5
 	 *
 	 * @return true if the server supports the switch to UUIDs
@@ -91,7 +91,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Returns the identification for a given player name
-	 * <p/>
+	 * <p>
 	 * <strong>This call fetches UUIDs from Mojang servers</strong>
 	 *
 	 * @param playerName name of the player to retrieve a UUID for
@@ -129,7 +129,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Returns the identification for a given player
-	 * <p/>
+	 * <p>
 	 * This call fetches results from Mojang servers if the provided player is offline
 	 *
 	 * @param player player to fetch a UUID for
@@ -141,7 +141,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Returns the identification for a given player in string format
-	 * <p/>
+	 * <p>
 	 * This call fetches results from Mojang servers if the provided player is offline
 	 *
 	 * @param player player to fetch a UUID for
@@ -165,7 +165,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Returns the player represented by the given identification (retrieved by using this class)
-	 * <p/>
+	 * <p>
 	 * This method makes use of both player names and UUIDs to find the required online player
 	 *
 	 * @param identification identification to search with
@@ -186,7 +186,7 @@ public class UUIDMigration{
 	
 	/**
 	 * Convert a String to a UUID
-	 * <p/>
+	 * <p>
 	 * This method will add the required dashes, if not found in String
 	 *
 	 * @param input UUID to convert

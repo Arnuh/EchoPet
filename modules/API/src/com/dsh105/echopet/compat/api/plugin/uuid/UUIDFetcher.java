@@ -35,9 +35,9 @@ import org.json.simple.parser.JSONParser;
 
 /**
  * @author evilmidget38
- *         <p/>
+ *         <p>
  *         http://forums.bukkit.org/threads/250926/
- *         <p/>
+ *         <p>
  *         https://gist.github.com/evilmidget38/26d70114b834f71fb3b4
  */
 

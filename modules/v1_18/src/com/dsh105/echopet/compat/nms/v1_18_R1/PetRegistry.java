@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings
  * so
  * that custom pet entities can be spawned.
- * <p/>
+ * <p>
  * NOTE: This class is a modified version of the registry used in EchoPet v3.
  */
 public class PetRegistry implements IPetRegistry{
