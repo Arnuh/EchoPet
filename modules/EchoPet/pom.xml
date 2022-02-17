@@ -183,20 +183,14 @@
 								<includes>
 									<artifact>com.dsh105:EchoPet*</artifact>
 									<include>com.zaxxer:HikariCP</include>
-									<include>org.slf4j:slf4j-api</include>
-									<include>org.slf4j:slf4j-jdk14</include>
 									<include>com.codingforcookies:robert</include>
 									<include>org.bstats:bstats*</include>
 								</includes>
 							</artifactSet>
 							<relocations>
 								<relocation>
-									<pattern>com.jolbox</pattern>
-									<shadedPattern>com.dsh105.echopet.libs.com.jolbox</shadedPattern>
-								</relocation>
-								<relocation>
-									<pattern>org.slf4j</pattern>
-									<shadedPattern>com.dsh105.echopet.libs.org.slf4j</shadedPattern>
+									<pattern>com.zaxxer</pattern>
+									<shadedPattern>com.dsh105.echopet.libs.com.zaxxer</shadedPattern>
 								</relocation>
 								<relocation>
 									<pattern>com.codingforcookies.robert</pattern>
