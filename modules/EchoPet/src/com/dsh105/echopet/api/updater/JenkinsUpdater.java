@@ -81,8 +81,8 @@ public class JenkinsUpdater implements IUpdater{
 			}else{
 				plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, this::checkForUpdates, TimeUnit.DAYS.toMillis(1));
 			}
-		}catch(Exception ex){
-			ex.printStackTrace();
+		}catch(Exception ignored){
+			// Assume jenkins is down, who cares.
 		}
 	}
 	

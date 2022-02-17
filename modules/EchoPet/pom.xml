@@ -182,7 +182,7 @@
 							<artifactSet>
 								<includes>
 									<artifact>com.dsh105:EchoPet*</artifact>
-									<include>com.jolbox:bonecp</include>
+									<include>com.zaxxer:HikariCP</include>
 									<include>org.slf4j:slf4j-api</include>
 									<include>org.slf4j:slf4j-jdk14</include>
 									<include>com.codingforcookies:robert</include>

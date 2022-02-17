@@ -65,8 +65,8 @@ public class ConfigOptions extends Options{
 		set("sql.host", "localhost");
 		set("sql.port", 3306);
 		set("sql.database", "EchoPet");
-		set("sql.username", "none");
-		set("sql.password", "none");
+		set("sql.username", "root");
+		set("sql.password", "");
 		
 		set("petNames.My Pet", "allow", "List of Pet Names which are `deny` or `allow`.");
 		set("petNamesRegexMatching", true);

@@ -103,9 +103,9 @@
 			<version>1.8.0-beta4</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jolbox</groupId>
-			<artifactId>bonecp</artifactId>
-			<version>0.8.0.RELEASE</version>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.codingforcookies</groupId>

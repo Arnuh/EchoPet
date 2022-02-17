@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
-import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.Plugin;
 
 public interface IEchoPetPlugin extends Plugin{
@@ -42,7 +43,7 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	ISqlPetManager getSqlPetManager();
 	
-	BoneCP getDbPool();
+	Connection getConnection() throws SQLException;
 	
 	// public IVanishProvider getVanishProvider();
 	

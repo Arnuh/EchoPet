@@ -160,27 +160,16 @@ public class TableMigrationUtil{
 	 * In the process of migration, old tables will be dropped
 	 */
 	public static void migrateTables(){
-		Connection conn = null;
-		
-		try{
-			conn = EchoPet.getPlugin().getDbPool().getConnection();
+		try(Connection con = EchoPet.getPlugin().getConnection()){
 			for(MigrationStrategy strategy : tableMigrationStrategies){
-				if(conn.getMetaData().getTables(null, null, strategy.getTableName(), null).next()){
-					strategy.createTargetTable(conn);
-					strategy.migrate(conn);
-					strategy.dropOldTable(conn);
+				if(con.getMetaData().getTables(null, null, strategy.getTableName(), null).next()){
+					strategy.createTargetTable(con);
+					strategy.migrate(con);
+					strategy.dropOldTable(con);
 				}
 			}
-			
 		}catch(SQLException e){
 			Logger.log(Logger.LogLevel.SEVERE, "Failed to migrate old SQL table(s)", e, true);
-		}finally{
-			if(conn != null){
-				try{
-					conn.close();
-				}catch(SQLException ignored){
-				}
-			}
 		}
 	}
 	
