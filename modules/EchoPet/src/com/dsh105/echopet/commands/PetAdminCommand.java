@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
+import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -238,8 +239,7 @@ public class PetAdminCommand implements CommandExecutor{
 						Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 						return true;
 					}
-					EchoPet.getManager().saveFileData("autosave", pet);
-					EchoPet.getSqlManager().saveToDatabase(pet, false);
+					EchoPet.getDataManager().save(target, pet, SavedType.Auto);
 					EchoPet.getManager().removePet(pet, true);
 					Lang.sendTo(target, Lang.HIDE_PET.toString());
 					Lang.sendTo(sender, Lang.ADMIN_HIDE_PET.toString().replace("%player%", target.getName()));
@@ -326,12 +326,9 @@ public class PetAdminCommand implements CommandExecutor{
 						String path = "autosave." + UUIDMigration.getIdentificationFor(target);
 						if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".pet.type") == null){
 							Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
-							return true;
 						}else{
-							EchoPet.getManager().clearFileData("autosave", target);
-							EchoPet.getSqlManager().clearFromDatabase(target);
+							EchoPet.getDataManager().remove(target, SavedType.Auto);
 							Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", args[1]));
-							return true;
 						}
 					}else{
 						IPet pet = EchoPet.getManager().getPet(target);
@@ -341,17 +338,14 @@ public class PetAdminCommand implements CommandExecutor{
 							return true;
 						}
 						
-						EchoPet.getManager().clearFileData("autosave", pet);
-						EchoPet.getSqlManager().clearFromDatabase(target);
+						EchoPet.getDataManager().remove(target, SavedType.Auto);
 						EchoPet.getManager().removePet(pet, true);
 						
 						Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
 						Lang.sendTo(target, Lang.REMOVE_PET.toString());
-						return true;
 					}
-				}else{
-					return true;
 				}
+				return true;
 			}else if(args[0].equalsIgnoreCase("hat")){
 				Player target = Bukkit.getPlayer(args[1]);
 				if(target == null || !target.isOnline()){
@@ -436,8 +430,7 @@ public class PetAdminCommand implements CommandExecutor{
 							}
 						}
 					}
-					EchoPet.getManager().saveFileData("autosave", pet);
-					EchoPet.getSqlManager().saveToDatabase(pet, false);
+					EchoPet.getDataManager().save(target, pet, SavedType.Auto);
 					Lang.sendTo(target, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 					Lang.sendTo(sender, Lang.ADMIN_CREATE_PET.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 					return true;
@@ -460,8 +453,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					
-					EchoPet.getManager().clearFileData("default", target);
-					EchoPet.getSqlManager().clearFromDatabase(target);
+					EchoPet.getDataManager().remove(target, SavedType.Default);
 					Lang.sendTo(sender, Lang.ADMIN_REMOVE_DEFAULT.toString().replace("%player%", name));
 					return true;
 				}else{
@@ -482,7 +474,7 @@ public class PetAdminCommand implements CommandExecutor{
 							return true;
 						}
 						
-						EchoPet.getManager().saveFileData("default", pet);
+						EchoPet.getDataManager().save(target, pet, SavedType.Default);
 						Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT_TO_CURRENT.toString().replace("%player%", args[2]));
 						return true;
 					}else{
@@ -506,12 +498,10 @@ public class PetAdminCommand implements CommandExecutor{
 					}
 					
 					if(Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, petType)){
-						EchoPet.getManager().saveFileData("default", Bukkit.getPlayer(args[1]), UPD);
+						EchoPet.getDataManager().save(Bukkit.getPlayer(args[1]), UPD, null, SavedType.Default);
 						Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%player%", name));
-						return true;
-					}else{
-						return true;
 					}
+					return true;
 				}
 			}else if(args.length == 5 && args[2].equalsIgnoreCase("set")){
 				String name = args[1];
@@ -538,12 +528,10 @@ public class PetAdminCommand implements CommandExecutor{
 				}
 				
 				if(Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, petType) && Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, riderType)){
-					EchoPet.getManager().saveFileData("default", Bukkit.getPlayer(args[1]), UPD, UMD);
+					EchoPet.getDataManager().save(Bukkit.getPlayer(args[1]), UPD, UMD, SavedType.Default);
 					Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))).replace("%player%", name));
-					return true;
-				}else{
-					return true;
 				}
+				return true;
 			}
 		}else if(args.length == 3){
 			if(args[0].equalsIgnoreCase("rider")){
@@ -551,19 +539,7 @@ public class PetAdminCommand implements CommandExecutor{
 					if(Perm.ADMIN_REMOVE.hasPerm(sender, true, true)){
 						Player target = Bukkit.getPlayer(args[2]);
 						if(target == null){
-							String path = "autosave." + "." + UUIDMigration.getIdentificationFor(target);
-							if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") == null){
-								Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[2]));
-								return true;
-							}else{
-								for(String key : EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".rider").getKeys(false)){
-									EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider" + key, null);
-								}
-								
-								EchoPet.getSqlManager().clearRiderFromDatabase(target);
-								Lang.sendTo(sender, Lang.ADMIN_REMOVE_RIDER.toString().replace("%player%", args[2]));
-								return true;
-							}
+							Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 						}else{
 							IPet pet = EchoPet.getManager().getPet(target);
 							
@@ -577,17 +553,14 @@ public class PetAdminCommand implements CommandExecutor{
 								return true;
 							}
 							
-							EchoPet.getManager().clearFileData("autosave", pet);
-							EchoPet.getSqlManager().clearFromDatabase(target);
+							EchoPet.getDataManager().remove(target, SavedType.Auto);
 							EchoPet.getManager().removePet(pet, true);
 							
 							Lang.sendTo(sender, Lang.ADMIN_REMOVE_RIDER.toString().replace("%player%", target.getName()));
 							Lang.sendTo(target, Lang.REMOVE_RIDER.toString());
-							return true;
 						}
-					}else{
-						return true;
 					}
+					return true;
 				}else{
 					Player target = Bukkit.getPlayer(args[1]);
 					if(target == null){
@@ -634,8 +607,7 @@ public class PetAdminCommand implements CommandExecutor{
 								}
 							}
 						}
-						EchoPet.getManager().saveFileData("autosave", pet);
-						EchoPet.getSqlManager().saveToDatabase(pet, false);
+						EchoPet.getDataManager().save(target, pet, SavedType.Auto);
 						Lang.sendTo(target, Lang.CHANGE_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						Lang.sendTo(sender, Lang.ADMIN_CHANGE_RIDER.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						return true;
@@ -697,8 +669,7 @@ public class PetAdminCommand implements CommandExecutor{
 							}
 						}
 					}
-					EchoPet.getManager().saveFileData("autosave", pi);
-					EchoPet.getSqlManager().saveToDatabase(pi, false);
+					EchoPet.getDataManager().save(target, pi, SavedType.Auto);
 					if(pi.getRider().isSpawned()){
 						Lang.sendTo(target, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
 						Lang.sendTo(sender, Lang.ADMIN_CREATE_PET_WITH_RIDER.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));

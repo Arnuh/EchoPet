@@ -47,20 +47,12 @@ public class ConfigOptions extends Options{
 		return this.config.getBoolean("sql.use", false);
 	}
 	
-	public boolean sqlOverride(){
-		if(useSql()){
-			return this.config.getBoolean("sql.overrideFile");
-		}
-		return false;
-	}
-	
 	@Override
 	public void setDefaults(){
 		set("commandString", "pet");
 		
 		set("checkForUpdates", true, "EchoPet will notify certain", "players of new updates if they are available.");
 		
-		set("sql.overrideFile", true, "If true, Pets saved to a MySQL Database will override", "those saved to a file (Default and AutoSave Pets)");
 		set("sql.use", false);
 		set("sql.host", "localhost");
 		set("sql.port", 3306);

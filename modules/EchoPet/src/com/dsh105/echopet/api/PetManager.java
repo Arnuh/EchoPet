@@ -27,16 +27,15 @@ import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
-import com.dsh105.echopet.compat.api.plugin.PetStorage;
+import com.dsh105.echopet.compat.api.plugin.SavedType;
+import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
+import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.PetUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -51,41 +50,26 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public IPet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride){
-		if(EchoPet.getOptions().sqlOverride()){
-			IPet pet = EchoPet.getSqlManager().createPetFromDatabase(p);
-			if(pet == null){
-				return null;
-			}else{
-				if(sendMessage){
-					Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
-				}
-			}
-			return pet;
-		}else if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get("default." + UUIDMigration.getIdentificationFor(p) + ".pet.type") != null && findDefault){
-			IPet pi = this.createPetFromFile("default", p);
-			if(pi == null){
-				return null;
-			}else{
-				if(sendMessage){
-					Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName()));
-				}
-			}
-			return pi;
-		}else if((checkWorldOverride && EchoPet.getOptions().getConfig().getBoolean("multiworldLoadOverride", true)) || EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
-			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get("autosave." + UUIDMigration.getIdentificationFor(p) + ".pet.type") != null){
-				IPet pi = this.createPetFromFile("autosave", p);
-				if(pi == null){
-					return null;
-				}else{
-					if(sendMessage){
-						Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName()));
-					}
-				}
-				return pi;
-			}
+	public ActionChain<IPet> loadPets(Player player, SavedType savedType, boolean sendMessage, boolean checkWorldOverride){
+		SyncBukkitAction<IPet> action = new SyncBukkitAction<>(null);
+		if((!checkWorldOverride || !EchoPet.getOptions().getConfig().getBoolean("multiworldLoadOverride", true)) && !EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
+			return action::setAction;
 		}
-		return null;
+		EchoPet.getDataManager().load(player, savedType).andThen(pet->{
+			if(pet == null){
+				return;
+			}
+			if(sendMessage){
+				if(savedType.equals(SavedType.Default)){
+					Lang.sendTo(player, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
+				}else{
+					Lang.sendTo(player, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
+				}
+			}
+			forceAllValidData(pet);
+			action.execute(pet);
+		});
+		return action::setAction;
 	}
 	
 	@Override
@@ -93,8 +77,7 @@ public class PetManager implements IPetManager{
 		Iterator<IPet> i = pets.listIterator();
 		while(i.hasNext()){
 			IPet p = i.next();
-			saveFileData("autosave", p);
-			EchoPet.getSqlManager().saveToDatabase(p, false);
+			EchoPet.getDataManager().save(p.getOwner(), p, SavedType.Auto);
 			p.removePet(true, true);
 			i.remove();
 		}
@@ -183,7 +166,9 @@ public class PetManager implements IPetManager{
 		return null;
 	}
 	
-	// Force all data specified in config file and notify player.
+	/**
+	 * Force all data specified in config file and notify player.
+	 */
 	@Override
 	public void forceAllValidData(IPet pi){
 		List<PetData> tempData = new ArrayList<>();
@@ -213,108 +198,6 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b){
-		EchoPet.getSqlManager().saveToDatabase(pet, pet.isRider());
-		String w = pet.getOwner().getWorld().getName();
-		String path = type + "." + w + "." + pet.getOwnerIdentification();
-		for(PetData pd : list){
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), b);
-		}
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public IPet createPetFromFile(String type, Player p){
-		if(EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
-			String path = type + "." + UUIDMigration.getIdentificationFor(p);
-			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path) != null){
-				IPetType petType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
-				if(petType == null){
-					return null;
-				}
-				String name = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.name");
-				if(name == null || name.equalsIgnoreCase("")){
-					name = petType.getDefaultName(p.getName());
-				}
-				if(!petType.isEnabled()){
-					return null;
-				}
-				IPet pet = this.createPet(p, petType, true);
-				if(pet == null){
-					return null;
-				}
-				pet.setPetName(name);
-				
-				List<PetData> data = new ArrayList<>();
-				ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
-				if(cs != null){
-					for(String key : cs.getKeys(false)){
-						if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
-							PetData pd = PetData.valueOf(key.toUpperCase());
-							data.add(pd);
-						}else{
-							Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
-						}
-					}
-				}
-				
-				if(!data.isEmpty()){
-					setData(pet, data, true);
-				}
-				
-				this.loadRiderFromFile(type, pet);
-				
-				forceAllValidData(pet);
-				return pet;
-			}
-		}
-		return null;
-	}
-	
-	@Override
-	public void loadRiderFromFile(IPet pet){
-		this.loadRiderFromFile("autosave", pet);
-	}
-	
-	@Override
-	public void loadRiderFromFile(String type, IPet pet){
-		if(pet.getOwner() != null){
-			String path = type + "." + pet.getOwnerIdentification() + ".rider";
-			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".type") != null){
-				IPetType riderPetType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
-				if(riderPetType == null){
-					return;
-				}
-				String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".name");
-				if(riderName == null || riderName.equalsIgnoreCase("")){
-					riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
-				}
-				if(pet.getPetType().allowRidersFor()){
-					IPet rider = pet.createRider(riderPetType, true);
-					if(rider != null){
-						rider.setPetName(riderName);
-						List<PetData> riderData = new ArrayList<>();
-						ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".data");
-						if(mcs != null){
-							for(String key : mcs.getKeys(false)){
-								if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
-									PetData pd = PetData.valueOf(key.toUpperCase());
-									riderData.add(pd);
-								}else{
-									Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
-								}
-							}
-						}
-						if(!riderData.isEmpty()){
-							setData(rider, riderData, true);
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	@Override
 	public void removePets(Player player, boolean makeDeathSound){
 		Iterator<IPet> i = pets.listIterator();
 		while(i.hasNext()){
@@ -330,107 +213,6 @@ public class PetManager implements IPetManager{
 	public void removePet(IPet pi, boolean makeDeathSound){
 		pi.removePet(makeDeathSound, true);
 		pets.remove(pi);
-	}
-	
-	@Override
-	public void saveFileData(String type, IPet pet){
-		clearFileData(type, pet);
-		
-		String path = type + "." + pet.getOwnerIdentification();
-		IPetType petType = pet.getPetType();
-		
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.serialisePetName());
-		
-		for(PetData pd : pet.getPetData()){
-			if(pd.ignoreSaving()) continue;
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
-		}
-		
-		if(pet.getRider() != null){
-			IPetType riderType = pet.getRider().getPetType();
-			
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().serialisePetName());
-			for(PetData pd : pet.getRider().getPetData()){
-				if(pd.ignoreSaving()) continue;
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
-			}
-		}
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD){
-		clearFileData(type, p);
-		IPetType pt = UPD.petType;
-		String petName = UPD.petName;
-		if(UPD.petName == null || UPD.petName.equalsIgnoreCase("")){
-			petName = pt.getDefaultName(p.getName());
-		}
-		IPetType riderType = UMD.petType;
-		String riderName = UMD.petName;
-		if(UMD.petName == null || UMD.petName.equalsIgnoreCase("")){
-			riderName = pt.getDefaultName(p.getName());
-		}
-		
-		String path = type + "." + UUIDMigration.getIdentificationFor(p);
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
-		
-		for(PetData pd : UPD.petDataList){
-			if(pd.ignoreSaving()) continue;
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
-		}
-		
-		if(riderType != null){
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", riderName);
-			for(PetData pd : UMD.petDataList){
-				if(pd.ignoreSaving()) continue;
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
-			}
-			
-		}
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public void saveFileData(String type, Player p, PetStorage UPD){
-		clearFileData(type, p);
-		IPetType pt = UPD.petType;
-		String petName = UPD.petName;
-		
-		String path = type + "." + UUIDMigration.getIdentificationFor(p);
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
-		
-		for(PetData pd : UPD.petDataList){
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
-		}
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public void clearAllFileData(){
-		for(String key : EchoPet.getConfig(EchoPet.ConfigType.DATA).getKeys(true)){
-			if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(key) != null){
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(key, null);
-			}
-		}
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public void clearFileData(String type, IPet pi){
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(type + "." + pi.getOwnerIdentification(), null);
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
-	}
-	
-	@Override
-	public void clearFileData(String type, Player p){
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).set(type + "." + UUIDMigration.getIdentificationFor(p), null);
-		EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
 	}
 	
 	@Override

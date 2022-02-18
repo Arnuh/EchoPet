@@ -27,8 +27,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import javax.sql.DataSource;
 import com.codingforcookies.robert.core.Robert;
+import com.dsh105.echopet.api.FileDataManager;
 import com.dsh105.echopet.api.PetManager;
-import com.dsh105.echopet.api.SqlPetManager;
+import com.dsh105.echopet.api.SQLDataManager;
 import com.dsh105.echopet.api.updater.JenkinsUpdater;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
@@ -39,9 +40,9 @@ import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.YAMLConfigManager;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.IDataManager;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
-import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
@@ -73,9 +74,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
 	private static ISpawnUtil SPAWN_UTIL;
 	private static PetManager MANAGER;
-	private static SqlPetManager SQL_MANAGER;
 	private static ConfigOptions OPTIONS;
 	
+	private IDataManager dataManager;
 	private IPetRegistry petRegistry;
 	
 	private CommandManager COMMAND_MANAGER;
@@ -124,13 +125,15 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		PluginManager manager = getServer().getPluginManager();
 		
 		MANAGER = new PetManager();
-		SQL_MANAGER = new SqlPetManager();
 		
 		if(OPTIONS.useSql()){
 			if(!prepareSqlDatabase()){
 				manager.disablePlugin(this);
 				return;
 			}
+			dataManager = new SQLDataManager(this);
+		}else{
+			dataManager = new FileDataManager(this);
 		}
 		
 		// Register custom commands
@@ -149,9 +152,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		manager.registerEvents(new MenuListener(), this);
 		manager.registerEvents(new PetEntityListener(), this);
 		manager.registerEvents(new PetOwnerListener(), this);
-		// manager.registerEvents(new ChunkListener(), this);
 		
-		// this.vanishProvider = new VanishProvider(this);
 		this.worldGuardProvider = new WorldGuardProvider(this);
 		new PlaceHolderAPIProvider(this);
 		
@@ -350,8 +351,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	}
 	
 	@Override
-	public ISqlPetManager getSqlPetManager(){
-		return SQL_MANAGER;
+	public IDataManager getDataManager(){
+		return dataManager;
 	}
 	
 	@Override

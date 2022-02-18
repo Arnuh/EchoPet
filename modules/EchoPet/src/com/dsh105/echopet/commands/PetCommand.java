@@ -25,6 +25,7 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
+import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -168,20 +169,20 @@ public class PetCommand implements CommandExecutor{
 					Player player = (Player) sender;
 					IPet p = EchoPet.getManager().getPet(player);
 					if(p == null){// no pet hidden, load it.
-						IPet pet = EchoPet.getManager().loadPets(player, false, false, false);
-						if(pet == null){
-							Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
-							return true;
-						}
-						if(WorldUtil.allowPets(player.getLocation())){
-							Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
-							pet.setHidden(false);
-							pet.spawnPet(player, true);
-							return true;
-						}else{
-							Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
-							return true;
-						}
+						EchoPet.getManager().loadPets(player, SavedType.Auto, false, false).andThen(pet->{
+							if(pet == null){
+								Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
+								return;
+							}
+							if(WorldUtil.allowPets(player.getLocation())){
+								Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+								pet.setHidden(false);
+								pet.spawnPet(player, true);
+							}else{
+								Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
+							}
+						});
+						return true;
 					}else{
 						if(p.isSpawned()){
 							p.setHidden(true);
@@ -225,7 +226,7 @@ public class PetCommand implements CommandExecutor{
 					Player player = (Player) sender;
 					EchoPet.getManager().removePets(player, true);
 					IPet pet = EchoPet.getManager().getPet(player);
-					if(pet == null) pet = EchoPet.getManager().loadPets(player, false, false, false);
+					// if(pet == null) pet = EchoPet.getManager().loadPets(player, false, false, false);
 					if(pet == null){
 						Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
 						return true;
@@ -416,8 +417,7 @@ public class PetCommand implements CommandExecutor{
 						Lang.sendTo(sender, Lang.NO_PET.toString());
 						return true;
 					}
-					EchoPet.getManager().clearFileData("autosave", pi);
-					EchoPet.getSqlManager().clearFromDatabase(pi.getOwner());
+					EchoPet.getDataManager().remove(pi.getOwner(), SavedType.Auto);
 					EchoPet.getManager().removePet(pi, true);
 					Lang.sendTo(sender, Lang.REMOVE_PET.toString());
 					return true;
@@ -442,7 +442,8 @@ public class PetCommand implements CommandExecutor{
 				}
 				
 				if(Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType)){
-					IPet pi = EchoPet.getManager().createPet((Player) sender, petType, true);
+					Player owner = (Player) sender;
+					IPet pi = EchoPet.getManager().createPet(owner, petType, true);
 					if(pi == null){
 						return true;
 					}
@@ -460,8 +461,7 @@ public class PetCommand implements CommandExecutor{
 					}
 					pi.setHidden(false);
 					if(pi.spawnPet((Player) sender, true) != null){
-						EchoPet.getManager().saveFileData("autosave", pi);
-						EchoPet.getSqlManager().saveToDatabase(pi, false);
+						EchoPet.getDataManager().save(owner, pi, SavedType.Auto);
 						Lang.sendTo(sender, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 					}
 					return true;
@@ -474,7 +474,8 @@ public class PetCommand implements CommandExecutor{
 			if(args[0].equalsIgnoreCase("rider")){
 				if(args[1].equalsIgnoreCase("remove")){
 					if(Perm.BASE_REMOVE.hasPerm(sender, true, false)){
-						IPet pi = EchoPet.getManager().getPet((Player) sender);
+						Player owner = (Player) sender;
+						IPet pi = EchoPet.getManager().getPet(owner);
 						if(pi == null){
 							Lang.sendTo(sender, Lang.NO_PET.toString());
 							return true;
@@ -484,20 +485,19 @@ public class PetCommand implements CommandExecutor{
 							return true;
 						}
 						pi.removeRider(true, true);
-						EchoPet.getManager().saveFileData("autosave", pi);
-						EchoPet.getSqlManager().saveToDatabase(pi, false);
+						EchoPet.getDataManager().save(owner, pi, SavedType.Auto);
 						Lang.sendTo(sender, Lang.REMOVE_RIDER.toString());
 						return true;
 					}else{
 						return true;
 					}
 				}else{
-					if(!(sender instanceof Player)){
+					if(!(sender instanceof Player owner)){
 						Lang.sendTo(sender, Lang.IN_GAME_ONLY.toString().replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil.combineArray(0, " ", args))));
 						return true;
 					}
 					
-					IPet pi = EchoPet.getManager().getPet((Player) sender);
+					IPet pi = EchoPet.getManager().getPet(owner);
 					
 					if(pi == null){
 						Lang.sendTo(sender, Lang.NO_PET.toString());
@@ -537,8 +537,7 @@ public class PetCommand implements CommandExecutor{
 								}
 							}
 						}
-						EchoPet.getManager().saveFileData("autosave", pi);
-						EchoPet.getSqlManager().saveToDatabase(pi, false);
+						EchoPet.getDataManager().save(owner, pi, SavedType.Auto);
 						Lang.sendTo(sender, Lang.CHANGE_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						return true;
 					}else{
@@ -586,13 +585,10 @@ public class PetCommand implements CommandExecutor{
 							return true;
 						}
 						
-						EchoPet.getManager().clearFileData("default", (Player) sender);
-						EchoPet.getSqlManager().clearFromDatabase((Player) sender);
+						EchoPet.getDataManager().remove((Player) sender, SavedType.Default);
 						Lang.sendTo(sender, Lang.REMOVE_DEFAULT.toString());
-						return true;
-					}else{
-						return true;
 					}
+					return true;
 				}
 			}else{
 				PetStorage UPD = PetUtil.formPetFromArgs(sender, args[0], false);
@@ -614,7 +610,8 @@ public class PetCommand implements CommandExecutor{
 				}
 				
 				if(Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, riderType)){
-					IPet pi = EchoPet.getManager().createPet(((Player) sender), petType, riderType);
+					Player owner = (Player) sender;
+					IPet pi = EchoPet.getManager().createPet(owner, petType, riderType);
 					if(pi == null){
 						return true;
 					}
@@ -642,9 +639,8 @@ public class PetCommand implements CommandExecutor{
 							}
 						}
 					}
-					if(pi.spawnPet(((Player) sender), false) != null){
-						EchoPet.getManager().saveFileData("autosave", pi);
-						EchoPet.getSqlManager().saveToDatabase(pi, false);
+					if(pi.spawnPet(owner, false) != null){
+						EchoPet.getDataManager().save(owner, pi, SavedType.Auto);
 						if(pi.getRider().isSpawned()){
 							Lang.sendTo(sender, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
 						}else{
@@ -662,18 +658,17 @@ public class PetCommand implements CommandExecutor{
 				if(args[1].equalsIgnoreCase("set")){
 					if(args[2].equalsIgnoreCase("current")){
 						if(Perm.BASE_DEFAULT_SET_CURRENT.hasPerm(sender, true, false)){
-							IPet pi = EchoPet.getManager().getPet(((Player) sender));
+							Player owner = (Player) sender;
+							IPet pi = EchoPet.getManager().getPet(owner);
 							if(pi == null){
 								Lang.sendTo(sender, Lang.NO_PET.toString());
 								return true;
 							}
 							
-							EchoPet.getManager().saveFileData("default", pi);
+							EchoPet.getDataManager().save(owner, pi, SavedType.Default);
 							Lang.sendTo(sender, Lang.SET_DEFAULT_TO_CURRENT.toString());
-							return true;
-						}else{
-							return true;
 						}
+						return true;
 					}else{
 						PetStorage UPD = PetUtil.formPetFromArgs(sender, args[2], false);
 						if(UPD == null){
@@ -687,12 +682,10 @@ public class PetCommand implements CommandExecutor{
 						}
 						
 						if(Perm.hasTypePerm(sender, true, Perm.BASE_DEFAULT_SET_PETTYPE, false, petType)){
-							EchoPet.getManager().saveFileData("default", (Player) sender, UPD);
+							EchoPet.getDataManager().save((Player) sender, UPD, null, SavedType.Default);
 							Lang.sendTo(sender, Lang.SET_DEFAULT.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
-							return true;
-						}else{
-							return true;
 						}
+						return true;
 					}
 				}
 			}
@@ -718,12 +711,10 @@ public class PetCommand implements CommandExecutor{
 					}
 					
 					if(Perm.hasTypePerm(sender, true, Perm.BASE_DEFAULT_SET_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_DEFAULT_SET_PETTYPE, false, petType)){
-						EchoPet.getManager().saveFileData("default", (Player) sender, UPD, UMD);
+						EchoPet.getDataManager().save((Player) sender, UPD, UMD, SavedType.Default);
 						Lang.sendTo(sender, Lang.SET_DEFAULT_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
-						return true;
-					}else{
-						return true;
 					}
+					return true;
 				}
 			}
 		}

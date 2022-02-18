@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -352,7 +353,7 @@ public enum PetType implements IPetType{
 		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".followSpeedModifier", 1);
 	}
 	
-	public static IPetType get(String name){
+	public static @Nullable IPetType get(String name){
 		for(IPetType pet : pets){
 			if(pet.name().equalsIgnoreCase(name)){
 				return pet;

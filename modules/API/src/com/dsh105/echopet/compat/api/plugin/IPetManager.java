@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -30,10 +31,11 @@ public interface IPetManager{
 	
 	ArrayList<IPet> getPets();
 	
-	IPet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride);
+	ActionChain<IPet> loadPets(Player player, SavedType savedType, boolean sendMessage, boolean checkWorldOverride);
 	
 	void removeAllPets();
 	
+	@Nullable
 	IPet createPet(Player owner, IPetType petType, boolean sendMessageOnFail);
 	
 	@Nullable
@@ -45,29 +47,9 @@ public interface IPetManager{
 	
 	void forceAllValidData(IPet pet);
 	
-	void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b);
-	
-	IPet createPetFromFile(String type, Player p);
-	
-	void loadRiderFromFile(IPet pet);
-	
-	void loadRiderFromFile(String type, IPet pet);
-	
 	void removePets(Player player, boolean makeDeathSound);
 	
 	void removePet(IPet pet, boolean makeDeathSound);
-	
-	void saveFileData(String type, IPet pet);
-	
-	void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD);
-	
-	void saveFileData(String type, Player p, PetStorage UPD);
-	
-	void clearAllFileData();
-	
-	void clearFileData(String type, IPet pet);
-	
-	void clearFileData(String type, Player p);
 	
 	void setData(IPet pet, List<PetData> data, boolean b);
 	

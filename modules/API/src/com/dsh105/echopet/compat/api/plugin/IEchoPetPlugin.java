@@ -41,7 +41,7 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	IPetManager getPetManager();
 	
-	ISqlPetManager getSqlPetManager();
+	IDataManager getDataManager();
 	
 	Connection getConnection() throws SQLException;
 	

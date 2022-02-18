@@ -24,6 +24,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetInteractEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.util.GeometryUtil;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -147,9 +148,9 @@ public class PetOwnerListener implements Listener{
 		final Player p = event.getPlayer();
 		final IPet pi = EchoPet.getManager().getPet(p);
 		for(IPet pet : EchoPet.getManager().getPets()){
-			if(pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()){
+			if(pet.getEntityPet() instanceof IEntityPacketPet packetPet && packetPet.hasInititiated()){
 				if(GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)){
-					((IEntityPacketPet) pet.getEntityPet()).updatePosition();
+					packetPet.updatePosition();
 				}
 			}
 		}
@@ -183,8 +184,7 @@ public class PetOwnerListener implements Listener{
 		Player p = event.getPlayer();
 		IPet pi = EchoPet.getManager().getPet(p);
 		if(pi != null){
-			EchoPet.getManager().saveFileData("autosave", pi);
-			EchoPet.getSqlManager().saveToDatabase(pi, false);
+			EchoPet.getDataManager().save(p, pi, SavedType.Auto);
 			EchoPet.getManager().removePet(pi, true);
 		}
 	}
@@ -229,35 +229,32 @@ public class PetOwnerListener implements Listener{
 			}
 		}
 		
-		// TODO MAKE THIS ASYNC, maybe? one day?
-		// only load pets for players with permissions (otherwise RIP mysql users)
-		for(PetType type : PetType.values){
-			boolean access = Perm.hasTypePerm(p, false, Perm.BASE_PETTYPE, true, type);
-			
-			// no perms? no fun!
-			if(!access) continue;
-			
-			// delayed loading if the player has at least 1 perm
-			final boolean sendMessage = EchoPet.getConfig().getBoolean("sendLoadMessage", true);
-			new BukkitRunnable(){
-				@Override
-				public void run(){
-					if(p != null && p.isOnline()){
-						IPet pet = EchoPet.getManager().loadPets(p, true, sendMessage, false);
-						if(pet != null){
-							pet.spawnPet(p, false);
-						}
+		if(EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
+			// only load pets for players with permissions
+			for(PetType type : PetType.values){
+				boolean access = Perm.hasTypePerm(p, false, Perm.BASE_PETTYPE, true, type);
+				
+				// no perms? no fun!
+				if(!access) continue;
+				
+				// delayed loading if the player has at least 1 perm
+				final boolean sendMessage = EchoPet.getConfig().getBoolean("sendLoadMessage", true);
+				
+				EchoPet.getManager().loadPets(p, SavedType.Default, sendMessage, false).andThen(pet->{
+					if(pet != null){
+						pet.spawnPet(p, false);
 					}
-				}
-			}.runTaskLater(EchoPet.getPlugin(), 20);
-			// we're searching for at least 1 perm... (wouldn't want to load pet for every permission since player can have only 1 pet at the time)
-			break;
+				});
+				
+				// we're searching for at least 1 perm... (wouldn't want to load pet for every permission since player can have only 1 pet at the time)
+				break;
+			}
 		}
 		
 		for(IPet pet : EchoPet.getManager().getPets()){
-			if(pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()){
+			if(pet.getEntityPet() instanceof IEntityPacketPet packetPet && packetPet.hasInititiated()){
 				if(GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)){
-					((IEntityPacketPet) pet.getEntityPet()).updatePosition();
+					packetPet.updatePosition();
 				}
 			}
 		}

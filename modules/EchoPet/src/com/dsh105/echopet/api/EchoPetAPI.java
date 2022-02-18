@@ -27,6 +27,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -85,9 +86,9 @@ public class EchoPetAPI{
 	public void removePet(Player player, boolean sendMessage, boolean save){
 		EchoPet.getManager().removePets(player, true);
 		if(save){
-			if(hasPet(player)){
-				EchoPet.getManager().saveFileData("autosave", EchoPet.getManager().getPet(player));
-				EchoPet.getSqlManager().saveToDatabase(EchoPet.getManager().getPet(player), false);
+			IPet pet = getPet(player);
+			if(pet != null){
+				EchoPet.getDataManager().save(player, pet, SavedType.Auto);
 			}
 		}
 		if(sendMessage){
@@ -142,27 +143,6 @@ public class EchoPetAPI{
 			return false;
 		}
 		return pet.teleport(location);
-	}
-	
-	/**
-	 * Save a {@link com.dsh105.echopet.api.pet.Pet} to file or an SQL Database
-	 *
-	 * @param pet      {@link com.dsh105.echopet.api.pet.Pet} to be saved
-	 * @param saveType whether to save to file or SQL database
-	 * @return success of save
-	 */
-	public boolean savePet(IPet pet, SaveType saveType){
-		if(pet == null){
-			EchoPet.LOG.severe("Failed to save Pet file through the EchoPetAPI. Pet cannot be null.");
-			return false;
-		}
-		
-		if(saveType == SaveType.SQL){
-			EchoPet.getSqlManager().saveToDatabase(pet, false);
-		}else if(saveType == SaveType.FILE){
-			EchoPet.getManager().saveFileData("autosave", pet);
-		}
-		return true;
 	}
 	
 	/**

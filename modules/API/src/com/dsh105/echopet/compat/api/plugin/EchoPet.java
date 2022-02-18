@@ -47,8 +47,8 @@ public final class EchoPet{
 		return PLUGIN.getPetManager();
 	}
 	
-	public static ISqlPetManager getSqlManager(){
-		return PLUGIN.getSqlPetManager();
+	public static IDataManager getDataManager(){
+		return PLUGIN.getDataManager();
 	}
 	
 	public static IPetRegistry getPetRegistry(){

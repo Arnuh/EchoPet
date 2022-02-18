@@ -17,27 +17,19 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import org.bukkit.entity.Player;
 
-public interface ISqlPetManager{
+public interface IDataManager{
 	
-	void saveToDatabase(IPet p, boolean isRider);
+	ActionChain<IPet> save(Player player, IPet pet, SavedType savedType);
 	
-	void saveToDatabase(String playerIdent, IPetType petType, String petName, List<PetData> petData, boolean isRider);
+	ActionChain<Boolean> save(Player player, PetStorage pet, PetStorage rider, SavedType savedType);
 	
-	IPet createPetFromDatabase(Player player);
+	ActionChain<IPet> load(Player player, SavedType savedType);
 	
-	IPet createPetFromDatabase(String playerIdent);
+	ActionChain<Boolean> remove(Player player, SavedType savedType);
 	
-	void clearFromDatabase(Player player);
-	
-	void clearFromDatabase(String playerIdent);
-	
-	void clearRiderFromDatabase(Player player);
-	
-	void clearRiderFromDatabase(String playerIdent);
+	ActionChain<Boolean> removeAll();
 }

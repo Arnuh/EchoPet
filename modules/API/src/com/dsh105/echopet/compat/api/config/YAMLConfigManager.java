@@ -166,11 +166,6 @@ public class YAMLConfigManager{
 			try(BufferedReader reader = new BufferedReader(new FileReader(file))){
 				String currentLine;
 				while((currentLine = reader.readLine()) != null){
-					if(!currentLine.isBlank()){
-						if(currentLine.endsWith(System.lineSeparator())){
-							System.out.println("Test");
-						}
-					}
 					if(currentLine.startsWith("#")){
 						String commentKey = pluginName + "_COMMENT_" + commentNum++ + ":";
 						whole.append(currentLine.replaceFirst("#", commentKey))

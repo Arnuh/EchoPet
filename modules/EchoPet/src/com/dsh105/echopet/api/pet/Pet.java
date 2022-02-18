@@ -111,8 +111,6 @@ public abstract class Pet implements IPet{
 				}
 			}
 		}else{
-			EchoPet.getManager().saveFileData("autosave", this);
-			EchoPet.getSqlManager().saveToDatabase(this, false);
 			EchoPet.getManager().removePet(this, false);
 		}
 		return entityPet;
@@ -249,15 +247,16 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public IPet createRider(final IPetType pt, boolean sendFailMessage){
+		Player owner = getOwner();
 		if(pt == PetType.HUMAN){
 			if(sendFailMessage){
-				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+				Lang.sendTo(owner, Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
 			}
 			return null;
 		}
 		if(!getPetType().allowRidersFor()){
 			if(sendFailMessage){
-				Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+				Lang.sendTo(owner, Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
 			}
 			return null;
 		}
@@ -267,23 +266,21 @@ public abstract class Pet implements IPet{
 		if(this.rider != null){
 			this.removeRider(true, true);
 		}
-		IPet newRider = pt.getNewPetInstance(this.getOwner());
+		IPet newRider = pt.getNewPetInstance(owner);
 		if(newRider == null){
 			if(sendFailMessage){
-				Lang.sendTo(getOwner(), Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
+				Lang.sendTo(owner, Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
 			}
 			return null;
 		}
 		if(isSpawned()){
-			newRider.spawnPet(getOwner(), false);
+			newRider.spawnPet(owner, false);
 		}
 		this.rider = newRider;
 		this.rider.setIsRider();
 		if(isSpawned() && rider.isSpawned()){
 			getCraftPet().addPassenger(rider.getCraftPet());
 		}
-		EchoPet.getSqlManager().saveToDatabase(rider, true);
-		
 		return this.rider;
 	}
 	
@@ -357,8 +354,6 @@ public abstract class Pet implements IPet{
 	@Override
 	public boolean teleportToOwner(){
 		if(this.getOwner() == null || this.getOwner().getLocation() == null){
-			EchoPet.getManager().saveFileData("autosave", this);
-			EchoPet.getSqlManager().saveToDatabase(this, false);
 			EchoPet.getManager().removePet(this, true);
 			return false;
 		}
@@ -370,7 +365,6 @@ public abstract class Pet implements IPet{
 			this.rider = rider;
 			if(rider.spawnPet(getOwner(), true) != null){
 				getCraftPet().addPassenger(rider.getCraftPet());
-				EchoPet.getSqlManager().saveToDatabase(rider, true);
 			}
 		}
 		return tele;
@@ -379,8 +373,6 @@ public abstract class Pet implements IPet{
 	@Override
 	public boolean teleport(Location to){
 		if(this.getOwner() == null || this.getOwner().getLocation() == null){
-			EchoPet.getManager().saveFileData("autosave", this);
-			EchoPet.getSqlManager().saveToDatabase(this, false);
 			EchoPet.getManager().removePet(this, false);
 			return false;
 		}

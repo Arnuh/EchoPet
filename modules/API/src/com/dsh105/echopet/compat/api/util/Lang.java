@@ -42,7 +42,6 @@ public enum Lang{
 	DIMENSION_CHANGE("dimension_change", "&eDimension change initiated. Warping space and time to retrieve your Pet..."),
 	AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) now follows close behind you."),
 	DEFAULT_PET_LOAD("default_pet_load", "&eYour default pet &e(&6%petname%&e) now follows close behind you."),
-	DATABASE_PET_LOAD("sql_pet_load", "&eYour Saved Pet (&6%petname%&e) now follows close behind you."),
 	
 	NO_PET("no_pet", "&eYou don't currently have a pet."),
 	PET_CALL("pet_call", "&eYour Pet has been called to your side."),
