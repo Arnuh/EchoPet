@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -72,7 +71,7 @@ public class SelectorLayout{
 		for(int page = 0; page <= pageCount; page++){
 			ConfigurationSection slots = config.getConfigurationSection(s + ".page-" + page);
 			if(slots == null){
-				EchoPet.getPlugin().getLogger().log(Level.SEVERE, "No slots for page: " + page + ". Please regenerate the config.yml");
+				EchoPet.getPlugin().getLogger().severe("No slots for page: " + page + ". Please regenerate the config.yml");
 				continue;
 			}
 			for(String slotStr : slots.getKeys(false)){

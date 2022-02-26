@@ -31,7 +31,6 @@ import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
 import com.dsh105.echopet.compat.api.util.GeneralUtil;
-import com.dsh105.echopet.compat.api.util.Logger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -175,7 +174,7 @@ public class FileDataManager implements IDataManager{
 					PetData pd = PetData.valueOf(key.toUpperCase());
 					data.add(pd);
 				}else{
-					Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
 				}
 			}
 		}
@@ -213,7 +212,7 @@ public class FileDataManager implements IDataManager{
 								PetData pd = PetData.valueOf(key.toUpperCase());
 								riderData.add(pd);
 							}else{
-								Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+								plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
 							}
 						}
 					}

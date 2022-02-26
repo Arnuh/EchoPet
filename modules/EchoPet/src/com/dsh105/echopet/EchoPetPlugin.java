@@ -48,7 +48,6 @@ import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.SQLMigrationHandler;
 import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
@@ -107,8 +106,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		try{
 			Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
 		}catch(ClassNotFoundException e){
-			EchoPet.LOG.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
-			EchoPet.LOG.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
+			getLogger().info("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
+			getLogger().info("Initialisation failed. Please update the plugin.");
 			
 			DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "", new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW + "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
 			COMMAND_MANAGER.register(cmd);
@@ -181,7 +180,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		try{
 			mainConfig = this.configManager.getNewConfig("config.yml", header);
 		}catch(Exception e){
-			Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
+			getLogger().log(Level.WARNING, "Configuration File [config.yml] generation failed.", e);
 		}
 		
 		OPTIONS = new ConfigOptions(mainConfig);
@@ -191,7 +190,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			petConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
 			petConfig.reloadConfig();
 		}catch(Exception e){
-			Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
+			getLogger().log(Level.WARNING, "Configuration File [pets.yml] generation failed.", e);
 		}
 		
 		String[] langHeader = {"EchoPet By DSH105", "Updated by Borlea", "& NobleProductions <3", "---------------------", "Language Configuration File"};
@@ -203,12 +202,12 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.getConfigValue()), desc);
 				}
 			}catch(Exception e){
-				Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
+				getLogger().log(Level.WARNING, "Configuration File [language.yml] generation failed.", e);
 			}finally{
 				langConfig.saveConfig();
 			}
 		}catch(Exception e){
-			Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
+			getLogger().log(Level.WARNING, "Configuration File [language.yml] generation failed.", e);
 		}
 		
 		if(Lang.PREFIX.getConfigValue().equals("&4[&cEchoPet&4]&r")){

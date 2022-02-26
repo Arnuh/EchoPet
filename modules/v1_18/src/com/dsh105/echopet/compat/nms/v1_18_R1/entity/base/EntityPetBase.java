@@ -25,7 +25,6 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.nms.v1_18_R1.NMSEntityUtil;
@@ -100,8 +99,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 				petGoalSelector.addGoal(new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class), 2);
 			}
 		}catch(Exception e){
-			e.printStackTrace();
-			Logger.log(Logger.LogLevel.WARNING, "Could not add PetGoals to Pet AI.", e, true);
+			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
 		}
 	}
 	
@@ -266,7 +264,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e, true);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}else if(entity.isOnGround()){
 				try{
@@ -278,7 +276,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + player.getName() + "'s Pet.", e, true);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}
 		}

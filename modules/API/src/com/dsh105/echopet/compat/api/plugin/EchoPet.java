@@ -17,22 +17,22 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
+import java.util.logging.Logger;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.logging.Log;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 
 public final class EchoPet{
 	
 	private static IEchoPetPlugin PLUGIN;
-	public static final Log LOG = new Log("EchoPet");
+	public static Logger LOG;
 	
 	public static void setPlugin(IEchoPetPlugin plugin){
 		if(PLUGIN != null){
 			return;
 		}
 		PLUGIN = plugin;
-		
+		LOG = plugin.getLogger();
 	}
 	
 	public static IEchoPetPlugin getPlugin(){
@@ -64,14 +64,11 @@ public final class EchoPet{
 	}
 	
 	public static YAMLConfig getConfig(ConfigType type){
-		switch(type){
-			case DATA:
-				return PLUGIN.getPetConfig();
-			case LANG:
-				return PLUGIN.getLangConfig();
-			default:
-				return PLUGIN.getMainConfig();
-		}
+		return switch(type){
+			case DATA -> PLUGIN.getPetConfig();
+			case LANG -> PLUGIN.getLangConfig();
+			default -> PLUGIN.getMainConfig();
+		};
 	}
 	
 	public enum ConfigType{

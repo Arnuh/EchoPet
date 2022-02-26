@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.util.menu;
 
 import java.util.Map;
-import java.util.logging.Level;
 import com.codingforcookies.robert.core.GUI;
 import com.codingforcookies.robert.slot.ISlotAction;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
@@ -38,7 +37,7 @@ public class SelectorMenu extends GUI{
 		final Map<Integer, Map<Integer, SelectorIcon>> layout = SelectorLayout.getLoadedLayout();
 		final Map<Integer, SelectorIcon> pageItems = layout.get(page);
 		if(pageItems == null){
-			EchoPet.getPlugin().getLogger().log(Level.SEVERE, "No Config data for page: " + page + ". Please regenerate the config.yml");
+			EchoPet.getPlugin().getLogger().severe("No Config data for page: " + page + ". Please regenerate the config.yml");
 			return;
 		}
 		for(final int slot : pageItems.keySet()){
@@ -53,6 +52,7 @@ public class SelectorMenu extends GUI{
 				
 				private final SelectorIcon icon = pageItems.get(slot);
 				
+				@Override
 				public void doAction(GUI gui, final Player p, ClickType type){
 					if(icon.getPage() == page){
 						if(icon.getName().equals(SelectorItem.BACK.getName().replace(ChatColor.COLOR_CHAR, '&'))){
@@ -68,6 +68,7 @@ public class SelectorMenu extends GUI{
 							if(icon.getCommand().equalsIgnoreCase(EchoPet.getPlugin().getCommandString() + " menu")){
 								new BukkitRunnable(){
 									
+									@Override
 									public void run(){
 										p.performCommand(icon.getCommand());
 									}

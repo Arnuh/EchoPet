@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.listeners;
 
+import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu;
@@ -116,7 +116,7 @@ public class MenuListener implements Listener{
 							}
 						}
 					}
-					PetData[] values = category != null ? category.getData() : PetData.values;//Pretty sure this is fine.
+					PetData[] values = category != null ? category.getData() : PetData.values;// Pretty sure this is fine.
 					for(PetData data : values){
 						ItemStack item = data.toItem(pet);
 						if(item == null){// If no item = boolean toggle
@@ -143,8 +143,7 @@ public class MenuListener implements Listener{
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
-				Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
+				EchoPet.LOG.log(Level.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e);
 			}
 		}
 	}

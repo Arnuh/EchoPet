@@ -26,7 +26,6 @@ import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.nms.v1_17_R1.NMSEntityUtil;
@@ -157,8 +156,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 			petGoalSelector.addGoal(new PetGoalFollowOwner(this, this), 1);
 			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, this, ServerPlayer.class), 2);
 		}catch(Exception e){
-			e.printStackTrace();
-			Logger.log(Logger.LogLevel.WARNING, "Could not add PetGoals to Pet AI.", e, true);
+			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
 		}
 	}
 	
@@ -310,7 +308,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.", e, true);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.", e);
 				}
 			}else if(this.onGround){
 				try{
@@ -322,7 +320,7 @@ public abstract class EntityPet extends Mob implements IEntityPet{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.", e, true);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.", e);
 				}
 			}
 		}
