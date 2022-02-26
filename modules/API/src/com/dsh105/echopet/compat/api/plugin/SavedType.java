@@ -23,12 +23,18 @@ public enum SavedType{
 	;
 	
 	private final String oldFileStuff;
+	private final int id;
 	
 	SavedType(String oldFileStuff){
 		this.oldFileStuff = oldFileStuff;
+		this.id = ordinal();// futureproof
 	}
 	
 	public String getOldFileStuff(){
 		return oldFileStuff;
+	}
+	
+	public int getId(){
+		return id;
 	}
 }

@@ -35,16 +35,17 @@ import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.AsyncBukkitAction;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
-import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class SQLDataManager implements IDataManager{
 	
 	private final Plugin plugin;
+	private final String tablePrefix;
 	
 	public SQLDataManager(Plugin plugin){
 		this.plugin = plugin;
+		this.tablePrefix = EchoPet.getPlugin().getMainConfig().getString("sql.prefix", "echopet");
 	}
 	
 	@Override
@@ -55,20 +56,27 @@ public class SQLDataManager implements IDataManager{
 		final IPet rider = pet.getRider();
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("INSERT INTO " + TableMigrationUtil.LATEST_TABLE + " (OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE PetType = VALUES(PetType), PetName = VALUES(PetName), PetData = VALUES(PetData), RiderPetType = VALUES(RiderPetType), RiderPetName = VALUES(RiderPetName), RiderPetData = VALUES(RiderPetData);")){
+				try(PreparedStatement ps = con.prepareStatement("""
+					INSERT INTO %s_pets (uuid, saved_type, type, name, data, rider_type, rider_name, rider_data)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE
+					saved_type = VALUES(saved_type),
+					type = VALUES(type), name = VALUES(name), data = VALUES(data),
+					rider_type = VALUES(rider_type), rider_name = VALUES(rider_name), rider_data = VALUES(rider_data);
+					""".formatted(tablePrefix))){
 					ps.setString(1, player.getUniqueId().toString());
-					ps.setString(2, pet.getPetType().toString());
-					ps.setString(3, pet.getPetName());
-					ps.setLong(4, SQLUtil.serializePetData(pet.getPetData()));
+					ps.setInt(2, savedType.getId());
+					ps.setString(3, pet.getPetType().toString());
+					ps.setString(4, pet.getPetName());
+					ps.setLong(5, SQLUtil.serializePetData(pet.getPetData()));
 					// IPet rider = pet.getRider();
 					if(rider != null){
-						ps.setString(5, rider.getPetType().toString());
-						ps.setString(6, rider.getPetName());
-						ps.setLong(7, SQLUtil.serializePetData(rider.getPetData()));
+						ps.setString(6, rider.getPetType().toString());
+						ps.setString(7, rider.getPetName());
+						ps.setLong(8, SQLUtil.serializePetData(rider.getPetData()));
 					}else{
-						ps.setString(5, null);
 						ps.setString(6, null);
-						ps.setLong(7, 0);
+						ps.setString(7, null);
+						ps.setLong(8, 0);
 					}
 					ps.executeUpdate();
 				}
@@ -83,19 +91,26 @@ public class SQLDataManager implements IDataManager{
 	public ActionChain<Boolean> save(Player player, PetStorage pet, PetStorage rider, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("INSERT INTO " + TableMigrationUtil.LATEST_TABLE + " (OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE PetType = VALUES(PetType), PetName = VALUES(PetName), PetData = VALUES(PetData), RiderPetType = VALUES(RiderPetType), RiderPetName = VALUES(RiderPetName), RiderPetData = VALUES(RiderPetData);")){
+				try(PreparedStatement ps = con.prepareStatement("""
+					INSERT INTO %s_pets (uuid, saved_type, type, name, data, rider_type, rider_name, rider_data)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE
+					saved_type = VALUES(saved_type),
+					type = VALUES(type), name = VALUES(name), data = VALUES(data),
+					rider_type = VALUES(rider_type), rider_name = VALUES(rider_name), rider_data = VALUES(rider_data);
+					""".formatted(tablePrefix))){
 					ps.setString(1, player.getUniqueId().toString());
-					ps.setString(2, pet.petType.toString());
-					ps.setString(3, pet.petName);
-					ps.setLong(4, SQLUtil.serializePetData(pet.petDataList));
+					ps.setInt(2, savedType.getId());
+					ps.setString(3, pet.petType.toString());
+					ps.setString(4, pet.petName);
+					ps.setLong(5, SQLUtil.serializePetData(pet.petDataList));
 					if(rider != null){
-						ps.setString(5, rider.petType.toString());
-						ps.setString(6, rider.petName);
-						ps.setLong(7, SQLUtil.serializePetData(rider.petDataList));
+						ps.setString(6, rider.petType.toString());
+						ps.setString(7, rider.petName);
+						ps.setLong(8, SQLUtil.serializePetData(rider.petDataList));
 					}else{
-						ps.setString(5, null);
 						ps.setString(6, null);
-						ps.setLong(7, 0);
+						ps.setString(7, null);
+						ps.setLong(8, 0);
 					}
 					ps.executeUpdate();
 					return true;
@@ -111,13 +126,14 @@ public class SQLDataManager implements IDataManager{
 	public ActionChain<IPet> load(Player player, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("SELECT PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData FROM " + TableMigrationUtil.LATEST_TABLE + " WHERE OwnerName = ?;")){
+				try(PreparedStatement ps = con.prepareStatement("""
+					SELECT type, name, data, rider_type, rider_name, rider_data
+					FROM %s_pets WHERE uuid = ? ORDER BY saved_type DESC;""".formatted(tablePrefix))){
 					ps.setString(1, player.getUniqueId().toString());
 					try(ResultSet rs = ps.executeQuery()){
-						if(!rs.next()){
-							return null;
+						if(rs.next()){
+							return create(player, rs);
 						}
-						return create(player, rs);
 					}
 				}
 			}catch(Exception ex){
@@ -128,7 +144,7 @@ public class SQLDataManager implements IDataManager{
 	}
 	
 	private IPet create(Player player, ResultSet rs) throws SQLException{
-		IPetType type = PetType.get(rs.getString("PetType"));
+		IPetType type = PetType.get(rs.getString("type"));
 		if(type == null){
 			return null;
 		}
@@ -136,22 +152,22 @@ public class SQLDataManager implements IDataManager{
 		if(pet == null){
 			return null;
 		}
-		pet.setPetName(rs.getString("PetName"));
+		pet.setPetName(rs.getString("name"));
 		
-		List<PetData> dataList = SQLUtil.deserializePetData(rs.getLong("PetData"));
+		List<PetData> dataList = SQLUtil.deserializePetData(rs.getLong("data"));
 		for(PetData data : dataList){
 			EchoPet.getManager().setData(pet, data, true);
 		}
 		
-		if(rs.getString("RiderPetType") != null){
-			IPetType mt = PetType.get(rs.getString("RiderPetType"));
+		if(rs.getString("rider_type") != null){
+			IPetType mt = PetType.get(rs.getString("rider_type"));
 			if(mt == null){
 				return null;
 			}
 			IPet rider = pet.createRider(mt, false);
 			if(rider != null){
-				rider.setPetName(rs.getString("RiderPetName"));
-				List<PetData> riderDataList = SQLUtil.deserializePetData(rs.getLong("RiderPetData"));
+				rider.setPetName(rs.getString("rider_name"));
+				List<PetData> riderDataList = SQLUtil.deserializePetData(rs.getLong("rider_data"));
 				for(PetData data : riderDataList){
 					EchoPet.getManager().setData(rider, data, true);
 				}
@@ -164,7 +180,7 @@ public class SQLDataManager implements IDataManager{
 	public ActionChain<Boolean> remove(Player player, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("DELETE FROM " + TableMigrationUtil.LATEST_TABLE + " WHERE OwnerName = ?;")){
+				try(PreparedStatement ps = con.prepareStatement("DELETE FROM %s_pets WHERE uuid = ?;".formatted(tablePrefix))){
 					ps.setString(1, player.getUniqueId().toString());
 					ps.executeUpdate();
 				}
@@ -180,7 +196,7 @@ public class SQLDataManager implements IDataManager{
 	public ActionChain<Boolean> removeAll(){
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("DELETE FROM " + TableMigrationUtil.LATEST_TABLE + ";")){
+				try(PreparedStatement ps = con.prepareStatement("DELETE FROM %s_pets;".formatted(tablePrefix))){
 					ps.executeUpdate();
 				}
 				return true;

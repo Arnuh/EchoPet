@@ -33,7 +33,7 @@ public class SQLUtil{
 	}
 	
 	public static List<PetData> deserializePetData(long bitmask){
-		List<PetData> result = new ArrayList<PetData>();
+		List<PetData> result = new ArrayList<>();
 		for(PetData petData : PetData.values){
 			if((bitmask & (1L << petData.ordinal())) != 0){
 				result.add(petData);

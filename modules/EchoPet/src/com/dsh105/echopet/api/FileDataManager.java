@@ -20,11 +20,11 @@ package com.dsh105.echopet.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IDataManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
@@ -36,6 +36,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
+
+
+import static com.dsh105.echopet.compat.api.plugin.EchoPet.ConfigType;
+import static com.dsh105.echopet.compat.api.plugin.EchoPet.getConfig;
+import static com.dsh105.echopet.compat.api.plugin.EchoPet.getManager;
 
 public class FileDataManager implements IDataManager{
 	
@@ -52,15 +57,16 @@ public class FileDataManager implements IDataManager{
 		}
 		final IPet rider = pet.getRider();
 		return SyncBukkitAction.execute(plugin, ()->{
+			YAMLConfig config = getConfig(ConfigType.DATA);
+			
 			String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
 			IPetType petType = pet.getPetType();
-			
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.serialisePetName());
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).removeKey(path + ".pet.data");
+			config.set(path + ".pet.type", petType.toString());
+			config.set(path + ".pet.name", pet.serialisePetName());
+			config.removeKey(path + ".pet.data");
 			for(PetData pd : pet.getPetData()){
 				if(pd.ignoreSaving()) continue;
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
+				config.set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 			}
 			
 			String riderPath = path + ".rider";
@@ -68,16 +74,16 @@ public class FileDataManager implements IDataManager{
 			if(rider != null){
 				IPetType riderType = rider.getPetType();
 				
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".type", riderType.toString());
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".name", rider.serialisePetName());
+				config.set(riderPath + ".type", riderType.toString());
+				config.set(riderPath + ".name", rider.serialisePetName());
 				for(PetData pd : rider.getPetData()){
 					if(pd.ignoreSaving()) continue;
-					EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".data." + pd.toString().toLowerCase(), true);
+					config.set(riderPath + ".data." + pd.toString().toLowerCase(), true);
 				}
 			}else{
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).removeKey(riderPath);
+				config.removeKey(riderPath);
 			}
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
+			config.saveConfig();
 			return pet;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error loading pet data for " + player.getUniqueId(), ex));
 	}
@@ -85,6 +91,8 @@ public class FileDataManager implements IDataManager{
 	@Override
 	public ActionChain<Boolean> save(Player player, PetStorage pet, @Nullable PetStorage rider, SavedType savedType){
 		return SyncBukkitAction.execute(plugin, ()->{
+			YAMLConfig config = getConfig(ConfigType.DATA);
+			
 			IPetType pt = pet.petType;
 			String petName = pet.petName;
 			if(pet.petName == null || pet.petName.equalsIgnoreCase("")){
@@ -92,12 +100,12 @@ public class FileDataManager implements IDataManager{
 			}
 			
 			String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
+			config.set(path + ".pet.type", pt.toString());
+			config.set(path + ".pet.name", petName);
 			
 			for(PetData pd : pet.petDataList){
 				if(pd.ignoreSaving()) continue;
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
+				config.set(path + ".pet.data." + pd.toString().toLowerCase(), true);
 			}
 			
 			String riderPath = path + ".rider";
@@ -109,17 +117,17 @@ public class FileDataManager implements IDataManager{
 				}
 				
 				if(riderType != null){
-					EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".type", riderType.toString());
-					EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".name", riderName);
+					config.set(riderPath + ".type", riderType.toString());
+					config.set(riderPath + ".name", riderName);
 					for(PetData pd : rider.petDataList){
 						if(pd.ignoreSaving()) continue;
-						EchoPet.getConfig(EchoPet.ConfigType.DATA).set(riderPath + ".data." + pd.toString().toLowerCase(), true);
+						config.set(riderPath + ".data." + pd.toString().toLowerCase(), true);
 					}
 				}
 			}else{
-				EchoPet.getConfig(EchoPet.ConfigType.DATA).removeKey(riderPath);
+				config.removeKey(riderPath);
 			}
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
+			config.saveConfig();
 			return true;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error loading pet data for " + player.getUniqueId(), ex));
 	}
@@ -136,56 +144,60 @@ public class FileDataManager implements IDataManager{
 	}
 	
 	private IPet create(Player player, SavedType savedType){
+		YAMLConfig config = getConfig(ConfigType.DATA);
+		
 		String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
-		if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path) != null){
-			IPetType petType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
-			if(petType == null){
-				return null;
-			}
-			String name = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.name");
-			if(name == null || name.equalsIgnoreCase("")){
-				name = petType.getDefaultName(player.getName());
-			}
-			if(!petType.isEnabled()){
-				return null;
-			}
-			IPet pet = EchoPet.getManager().createPet(player, petType, true);
-			if(pet == null){
-				return null;
-			}
-			pet.setPetName(name);
-			
-			List<PetData> data = new ArrayList<>();
-			ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
-			if(cs != null){
-				for(String key : cs.getKeys(false)){
-					if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
-						PetData pd = PetData.valueOf(key.toUpperCase());
-						data.add(pd);
-					}else{
-						Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
-					}
+		if(config.get(path) == null){
+			return null;
+		}
+		IPetType petType = PetType.get(config.getString(path + ".pet.type"));
+		if(petType == null){
+			return null;
+		}
+		String name = config.getString(path + ".pet.name");
+		if(name == null || name.equalsIgnoreCase("")){
+			name = petType.getDefaultName(player.getName());
+		}
+		if(!petType.isEnabled()){
+			return null;
+		}
+		IPet pet = getManager().createPet(player, petType, true);
+		if(pet == null){
+			return null;
+		}
+		pet.setPetName(name);
+		
+		List<PetData> data = new ArrayList<>();
+		ConfigurationSection cs = config.getConfigurationSection(path + ".pet.data");
+		if(cs != null){
+			for(String key : cs.getKeys(false)){
+				if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
+					PetData pd = PetData.valueOf(key.toUpperCase());
+					data.add(pd);
+				}else{
+					Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
 				}
 			}
-			
-			if(!data.isEmpty()){
-				EchoPet.getManager().setData(pet, data, true);
-			}
-			
-			createRider(player, pet, savedType);
-			return pet;
 		}
-		return null;
+		
+		if(!data.isEmpty()){
+			getManager().setData(pet, data, true);
+		}
+		
+		createRider(player, pet, savedType);
+		return pet;
 	}
 	
 	public void createRider(Player player, IPet pet, SavedType savedType){
+		YAMLConfig config = getConfig(ConfigType.DATA);
+		
 		String path = savedType.getOldFileStuff() + "." + player.getUniqueId() + ".rider";
-		if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".type") != null){
-			IPetType riderPetType = PetType.get(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".type"));
+		if(config.get(path + ".type") != null){
+			IPetType riderPetType = PetType.get(config.getString(path + ".type"));
 			if(riderPetType == null){
 				return;
 			}
-			String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".name");
+			String riderName = config.getString(path + ".name");
 			if(riderName == null || riderName.equalsIgnoreCase("")){
 				riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
 			}
@@ -194,7 +206,7 @@ public class FileDataManager implements IDataManager{
 				if(rider != null){
 					rider.setPetName(riderName);
 					List<PetData> riderData = new ArrayList<>();
-					ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".data");
+					ConfigurationSection mcs = config.getConfigurationSection(path + ".data");
 					if(mcs != null){
 						for(String key : mcs.getKeys(false)){
 							if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
@@ -206,7 +218,7 @@ public class FileDataManager implements IDataManager{
 						}
 					}
 					if(!riderData.isEmpty()){
-						EchoPet.getManager().setData(rider, riderData, true);
+						getManager().setData(rider, riderData, true);
 					}
 				}
 			}
@@ -216,8 +228,9 @@ public class FileDataManager implements IDataManager{
 	@Override
 	public ActionChain<Boolean> remove(Player player, SavedType savedType){
 		return SyncBukkitAction.execute(plugin, ()->{
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).set(savedType.getOldFileStuff() + "." + player.getUniqueId(), null);
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
+			YAMLConfig config = getConfig(ConfigType.DATA);
+			config.set(savedType.getOldFileStuff() + "." + player.getUniqueId(), null);
+			config.saveConfig();
 			return true;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error deleting pet data for " + player.getUniqueId(), ex));
 	}
@@ -225,12 +238,13 @@ public class FileDataManager implements IDataManager{
 	@Override
 	public ActionChain<Boolean> removeAll(){
 		return SyncBukkitAction.execute(plugin, ()->{
-			for(String key : EchoPet.getConfig(EchoPet.ConfigType.DATA).getKeys(true)){
-				if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(key) != null){
-					EchoPet.getConfig(EchoPet.ConfigType.DATA).set(key, null);
+			YAMLConfig config = getConfig(ConfigType.DATA);
+			for(String key : config.getKeys(true)){
+				if(config.get(key) != null){
+					config.set(key, null);
 				}
 			}
-			EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
+			config.saveConfig();
 			return true;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error deleting pet data", ex));
 	}

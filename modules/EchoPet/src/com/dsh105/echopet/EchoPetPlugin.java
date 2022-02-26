@@ -51,7 +51,7 @@ import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
+import com.dsh105.echopet.compat.api.util.SQLMigrationHandler;
 import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
 import com.dsh105.echopet.hook.PlaceHolderAPIProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
@@ -232,6 +232,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		String db = mainConfig.getString("sql.database", "echopet");
 		String user = mainConfig.getString("sql.username", "root");
 		String pass = mainConfig.getString("sql.password", "");
+		String prefix = mainConfig.getString("sql.prefix", "echopet");
 		File propertiesFile = new File(getDataFolder(), "hikaricp.properties");
 		HikariConfig config;
 		if(propertiesFile.exists()){
@@ -258,16 +259,26 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		// config.setConnectionTestQuery("SELECT 1");
 		try{
 			dataSource = new HikariDataSource(config);
-			try(Connection connection = getConnection()){
-				try(PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS EchoPet_version3 (" + "OwnerName varchar(36)," + "PetType varchar(255)," + "PetName varchar(255)," + "PetData BIGINT," + "RiderPetType varchar(255)," + "RiderPetName varchar(255), " + "RiderPetData BIGINT," + "PRIMARY KEY (OwnerName)" + ");")){
+			try(Connection con = getConnection()){
+				try(PreparedStatement ps = con.prepareStatement("""
+					CREATE TABLE IF NOT EXISTS `%s_pets` (
+						`uuid` CHAR(36) NOT NULL,
+						`saved_type` TINYINT NOT NULL DEFAULT 0,
+						`type` VARCHAR(255) NOT NULL,
+						`name` VARCHAR(255) NOT NULL,
+						`data` BIGINT NOT NULL DEFAULT 0,
+						`rider_type` VARCHAR(255) NULL DEFAULT NULL,
+						`rider_name` VARCHAR(255) NULL DEFAULT NULL,
+						`rider_data` BIGINT NULL DEFAULT NULL,
+						PRIMARY KEY (`uuid`, `saved_type`)
+					);""".formatted(prefix))){
 					ps.executeUpdate();
-					// Convert previous database versions
-					TableMigrationUtil.migrateTables();
+					SQLMigrationHandler.handle(this, con, prefix);
 				}
 				return true;
 			}
-		}catch(SQLException e){
-			Logger.log(Logger.LogLevel.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", e, true);
+		}catch(SQLException ex){
+			getLogger().log(Level.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", ex);
 			return false;
 		}
 	}
