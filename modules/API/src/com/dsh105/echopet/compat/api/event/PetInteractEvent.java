@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.event;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -65,7 +64,7 @@ public class PetInteractEvent extends PetEvent implements Cancellable{
 	 * @return true if it is the owner
 	 */
 	public boolean isPlayerOwner(){
-		return UUIDMigration.getIdentificationFor(this.player).equals(UUIDMigration.getIdentificationFor(getPet().getOwner()));
+		return this.player == getPet().getOwner();
 	}
 	
 	/**

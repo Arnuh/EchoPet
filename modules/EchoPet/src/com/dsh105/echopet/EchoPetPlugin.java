@@ -43,7 +43,6 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IDataManager;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
@@ -193,14 +192,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			petConfig.reloadConfig();
 		}catch(Exception e){
 			Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
-		}
-		
-		// Make sure to convert those UUIDs!
-		if(ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.supportsUuid() && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null){
-			EchoPet.LOG.info("Converting data files to UUID system...");
-			UUIDMigration.migrateConfig(petConfig);
-			mainConfig.set("convertDataFileToUniqueId", false);
-			mainConfig.saveConfig();
 		}
 		
 		String[] langHeader = {"EchoPet By DSH105", "Updated by Borlea", "& NobleProductions <3", "---------------------", "Language Configuration File"};

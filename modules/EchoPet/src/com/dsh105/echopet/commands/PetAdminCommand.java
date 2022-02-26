@@ -18,13 +18,13 @@
 package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Perm;
@@ -321,9 +321,11 @@ public class PetAdminCommand implements CommandExecutor{
 				}
 			}else if(args[0].equalsIgnoreCase("remove")){
 				if(Perm.ADMIN_REMOVE.hasPerm(sender, true, true)){
-					Player target = Bukkit.getPlayer(args[1]);
-					if(target == null || !target.isOnline()){
-						String path = "autosave." + UUIDMigration.getIdentificationFor(target);
+					Player target = args[1].contains("-") ? Bukkit.getPlayer(UUID.fromString(args[1])) : Bukkit.getPlayer(args[1]);
+					if(target == null){
+						Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+					}else if(!target.isOnline()){
+						String path = "autosave." + target.getUniqueId();
 						if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".pet.type") == null){
 							Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
 						}else{
@@ -444,10 +446,11 @@ public class PetAdminCommand implements CommandExecutor{
 				if(Perm.ADMIN_DEFAULT_REMOVE.hasPerm(sender, true, true)){
 					String name = args[1];
 					Player target = Bukkit.getPlayer(args[1]);
-					if(target != null && target.isOnline()){
-						name = target.getName();
+					if(target == null){
+						Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", name));
+						return true;
 					}
-					String path = "default." + UUIDMigration.getIdentificationFor(target) + ".";
+					String path = "default." + target.getUniqueId() + ".";
 					if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + "pet.type") == null){
 						Lang.sendTo(sender, Lang.ADMIN_NO_DEFAULT.toString().replace("%player%", name));
 						return true;

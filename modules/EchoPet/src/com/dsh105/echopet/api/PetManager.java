@@ -30,7 +30,6 @@ import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -145,7 +144,7 @@ public class PetManager implements IPetManager{
 	@Override
 	public IPet getPet(Player player){
 		for(IPet pi : pets){
-			if(UUIDMigration.getIdentificationFor(player).equals(pi.getOwnerIdentification())){
+			if(player.getUniqueId().equals(pi.getOwnerUUID())){
 				return pi;
 			}
 		}
@@ -202,7 +201,7 @@ public class PetManager implements IPetManager{
 		Iterator<IPet> i = pets.listIterator();
 		while(i.hasNext()){
 			IPet p = i.next();
-			if(UUIDMigration.getIdentificationFor(player).equals(p.getOwnerIdentification())){
+			if(player.getUniqueId().equals(p.getOwnerUUID())){
 				p.removePet(makeDeathSound, true);
 				i.remove();
 			}

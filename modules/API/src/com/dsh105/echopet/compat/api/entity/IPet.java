@@ -51,8 +51,6 @@ public interface IPet{
 	
 	UUID getOwnerUUID();
 	
-	Object getOwnerIdentification();
-	
 	IPetType getPetType();
 	
 	boolean isRider();

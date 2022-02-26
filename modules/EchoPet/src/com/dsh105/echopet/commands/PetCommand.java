@@ -26,7 +26,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.MiscUtil;
@@ -579,13 +578,14 @@ public class PetCommand implements CommandExecutor{
 			}else if(args[0].equalsIgnoreCase("default")){
 				if(args[1].equalsIgnoreCase("remove")){
 					if(Perm.BASE_DEFAULT_REMOVE.hasPerm(sender, true, false)){
-						String path = "default." + UUIDMigration.getIdentificationFor((Player) sender) + ".";
+						Player owner = (Player) sender;
+						String path = "default." + owner.getUniqueId() + ".";
 						if(EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + "pet.type") == null){
 							Lang.sendTo(sender, Lang.NO_DEFAULT.toString());
 							return true;
 						}
 						
-						EchoPet.getDataManager().remove((Player) sender, SavedType.Default);
+						EchoPet.getDataManager().remove(owner, SavedType.Default);
 						Lang.sendTo(sender, Lang.REMOVE_DEFAULT.toString());
 					}
 					return true;

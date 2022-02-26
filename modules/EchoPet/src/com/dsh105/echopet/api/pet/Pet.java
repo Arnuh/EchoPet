@@ -30,7 +30,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetNames;
 import com.dsh105.echopet.compat.api.util.StringSimplifier;
@@ -49,7 +48,7 @@ public abstract class Pet implements IPet{
 	private IEntityPet entityPet;
 	private IPetType petType;
 	
-	private Object ownerIdentification;
+	private UUID ownerUUID;
 	private IPet rider;
 	private String name;
 	private final ArrayList<PetData> petData = new ArrayList<>();
@@ -63,7 +62,7 @@ public abstract class Pet implements IPet{
 	
 	public Pet(Player owner){
 		if(owner != null){
-			this.ownerIdentification = UUIDMigration.getIdentificationFor(owner);
+			this.ownerUUID = owner.getUniqueId();
 			setPetType();
 		}
 	}
@@ -133,37 +132,21 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public Player getOwner(){
-		if(this.ownerIdentification == null){
+		if(this.ownerUUID == null){
 			return null;
 		}
-		if(this.ownerIdentification instanceof UUID){
-			return Bukkit.getPlayer((UUID) ownerIdentification);
-		}else{
-			return Bukkit.getPlayerExact((String) this.ownerIdentification);
-		}
+		return Bukkit.getPlayer(ownerUUID);
 	}
 	
 	@Override
 	public String getNameOfOwner(){
-		if(this.ownerIdentification instanceof String){
-			return (String) this.ownerIdentification;
-		}else{
-			return this.getOwner() == null ? "" : this.getOwner().getName();
-		}
+		Player owner = getOwner();
+		return owner == null ? "" : owner.getName();
 	}
 	
 	@Override
 	public UUID getOwnerUUID(){
-		if(this.ownerIdentification instanceof UUID){
-			return (UUID) this.ownerIdentification;
-		}else{
-			return this.getOwner() == null ? null : this.getOwner().getUniqueId();
-		}
-	}
-	
-	@Override
-	public Object getOwnerIdentification(){
-		return ownerIdentification;
+		return ownerUUID;
 	}
 	
 	@Override
