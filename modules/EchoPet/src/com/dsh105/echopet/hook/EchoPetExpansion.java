@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.hook;
 
+import javax.annotation.Nonnull;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.util.Lang;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class EchoPetExpansion extends PlaceholderExpansion{
 	
@@ -33,22 +33,22 @@ public class EchoPetExpansion extends PlaceholderExpansion{
 	}
 	
 	@Override
-	public @NotNull String getAuthor(){
+	public @Nonnull String getAuthor(){
 		return "Arnah";
 	}
 	
 	@Override
-	public @NotNull String getIdentifier(){
+	public @Nonnull String getIdentifier(){
 		return "echopet";
 	}
 	
 	@Override
-	public @NotNull String getVersion(){
+	public @Nonnull String getVersion(){
 		return "1.0.0";
 	}
 	
 	@Override
-	public String onPlaceholderRequest(Player player, @NotNull String params){
+	public String onPlaceholderRequest(Player player, @Nonnull String params){
 		if(player == null){
 			return null;
 		}

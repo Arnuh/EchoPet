@@ -21,7 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -34,7 +35,6 @@ import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.AsyncBukkitAction;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
-import com.dsh105.echopet.compat.api.util.SQLUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -67,12 +67,12 @@ public class SQLDataManager implements IDataManager{
 					ps.setInt(2, savedType.getId());
 					ps.setString(3, pet.getPetType().toString());
 					ps.setString(4, pet.getPetName());
-					ps.setLong(5, SQLUtil.serializePetData(pet.getPetData()));
+					ps.setString(5, serializePetData(pet.getData()));
 					// IPet rider = pet.getRider();
 					if(rider != null){
 						ps.setString(6, rider.getPetType().toString());
 						ps.setString(7, rider.getPetName());
-						ps.setLong(8, SQLUtil.serializePetData(rider.getPetData()));
+						ps.setString(8, serializePetData(rider.getData()));
 					}else{
 						ps.setString(6, null);
 						ps.setString(7, null);
@@ -102,11 +102,11 @@ public class SQLDataManager implements IDataManager{
 					ps.setInt(2, savedType.getId());
 					ps.setString(3, pet.petType.toString());
 					ps.setString(4, pet.petName);
-					ps.setLong(5, SQLUtil.serializePetData(pet.petDataList));
+					ps.setString(5, serializePetData(pet.petDataList));
 					if(rider != null){
 						ps.setString(6, rider.petType.toString());
 						ps.setString(7, rider.petName);
-						ps.setLong(8, SQLUtil.serializePetData(rider.petDataList));
+						ps.setString(8, serializePetData(rider.petDataList));
 					}else{
 						ps.setString(6, null);
 						ps.setString(7, null);
@@ -154,9 +154,9 @@ public class SQLDataManager implements IDataManager{
 		}
 		pet.setPetName(rs.getString("name"));
 		
-		List<PetData> dataList = SQLUtil.deserializePetData(rs.getLong("data"));
-		for(PetData data : dataList){
-			EchoPet.getManager().setData(pet, data, true);
+		Map<PetData<?>, Object> dataList = deserializePetData(rs.getString("data"));
+		for(Map.Entry<PetData<?>, Object> entry : dataList.entrySet()){
+			EchoPet.getManager().setData(pet, entry.getKey(), entry.getValue());
 		}
 		
 		if(rs.getString("rider_type") != null){
@@ -167,9 +167,9 @@ public class SQLDataManager implements IDataManager{
 			IPet rider = pet.createRider(mt, false);
 			if(rider != null){
 				rider.setPetName(rs.getString("rider_name"));
-				List<PetData> riderDataList = SQLUtil.deserializePetData(rs.getLong("rider_data"));
-				for(PetData data : riderDataList){
-					EchoPet.getManager().setData(rider, data, true);
+				Map<PetData<?>, Object> riderDataList = deserializePetData(rs.getString("rider_data"));
+				for(Map.Entry<PetData<?>, Object> entry : riderDataList.entrySet()){
+					EchoPet.getManager().setData(rider, entry.getKey(), entry.getValue());
 				}
 			}
 		}
@@ -205,5 +205,30 @@ public class SQLDataManager implements IDataManager{
 			}
 			return false;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error deleting pet data", ex));
+	}
+	
+	public String serializePetData(Map<PetData<?>, Object> data){
+		StringBuilder sb = new StringBuilder();
+		for(Map.Entry<PetData<?>, Object> entry : data.entrySet()){
+			if(sb.length() != 0) sb.append(';');
+			sb.append(entry.getKey().getConfigKeyName())
+				.append(':')
+				.append(entry.getValue());
+		}
+		return sb.toString();
+	}
+	
+	public Map<PetData<?>, Object> deserializePetData(String data){
+		Map<PetData<?>, Object> result = new HashMap<>();
+		for(String s : data.split(";")){
+			String[] split = s.split(":");
+			if(split.length != 2) continue;
+			PetData<?> pd = PetData.get(split[0]);
+			if(pd == null) continue;
+			Object value = pd.getParser().parse(split[1]);
+			if(value == null) continue;
+			result.put(pd, value);
+		}
+		return result;
 	}
 }

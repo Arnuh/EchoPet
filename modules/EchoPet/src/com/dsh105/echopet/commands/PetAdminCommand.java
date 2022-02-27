@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.commands;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -409,7 +409,7 @@ public class PetAdminCommand implements CommandExecutor{
 					return true;
 				}
 				IPetType petType = UPD.petType;
-				ArrayList<PetData> petDataList = UPD.petDataList;
+				Map<PetData<?>, Object> petDataList = UPD.petDataList;
 				
 				if(petType == null || petDataList == null){
 					return true;
@@ -421,7 +421,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					if(!petDataList.isEmpty()){
-						EchoPet.getManager().setData(pet, petDataList, true);
+						EchoPet.getManager().setData(pet, petDataList);
 					}
 					if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 						if(Perm.ADMIN_NAME.hasPerm(sender, true, true)){
@@ -494,7 +494,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					IPetType petType = UPD.petType;
-					ArrayList<PetData> petDataList = UPD.petDataList;
+					Map<PetData<?>, Object> petDataList = UPD.petDataList;
 					
 					if(petType == null || petDataList == null){
 						return true;
@@ -517,14 +517,14 @@ public class PetAdminCommand implements CommandExecutor{
 					return true;
 				}
 				IPetType petType = UPD.petType;
-				ArrayList<PetData> petDataList = UPD.petDataList;
+				Map<PetData<?>, Object> petDataList = UPD.petDataList;
 				
 				PetStorage UMD = PetUtil.formPetFromArgs(sender, args[3], false);
 				if(UMD == null){
 					return true;
 				}
 				IPetType riderType = UMD.petType;
-				ArrayList<PetData> riderDataList = UMD.petDataList;
+				Map<PetData<?>, Object> riderDataList = UMD.petDataList;
 				
 				if(petType == null || petDataList == null || riderType == null || riderDataList == null){
 					return true;
@@ -582,7 +582,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					IPetType petType = UPD.petType;
-					ArrayList<PetData> petDataList = UPD.petDataList;
+					Map<PetData<?>, Object> petDataList = UPD.petDataList;
 					
 					if(petType == null || petDataList == null){
 						return true;
@@ -599,7 +599,7 @@ public class PetAdminCommand implements CommandExecutor{
 							return true;
 						}
 						if(!petDataList.isEmpty()){
-							EchoPet.getManager().setData(rider, petDataList, true);
+							EchoPet.getManager().setData(rider, petDataList);
 						}
 						if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 							if(Perm.ADMIN_NAME.hasPerm(sender, true, true)){
@@ -630,14 +630,14 @@ public class PetAdminCommand implements CommandExecutor{
 					return true;
 				}
 				IPetType petType = UPD.petType;
-				ArrayList<PetData> petDataList = UPD.petDataList;
+				Map<PetData<?>, Object> petDataList = UPD.petDataList;
 				
 				PetStorage UMD = PetUtil.formPetFromArgs(sender, args[2], false);
 				if(UMD == null){
 					return true;
 				}
 				IPetType riderType = UMD.petType;
-				ArrayList<PetData> riderDataList = UMD.petDataList;
+				Map<PetData<?>, Object> riderDataList = UMD.petDataList;
 				
 				if(petType == null || petDataList == null || riderType == null || riderDataList == null){
 					return true;
@@ -649,7 +649,7 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					if(!petDataList.isEmpty()){
-						EchoPet.getManager().setData(pi, petDataList, true);
+						EchoPet.getManager().setData(pi, petDataList);
 					}
 					if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 						if(Perm.ADMIN_NAME.hasPerm(sender, true, true)){
@@ -661,7 +661,7 @@ public class PetAdminCommand implements CommandExecutor{
 						}
 					}
 					if(!riderDataList.isEmpty()){
-						EchoPet.getManager().setData(pi.getRider(), riderDataList, true);
+						EchoPet.getManager().setData(pi.getRider(), riderDataList);
 					}
 					if(UMD.petName != null && !UMD.petName.equalsIgnoreCase("")){
 						if(Perm.ADMIN_NAME.hasPerm(sender, true, true)){

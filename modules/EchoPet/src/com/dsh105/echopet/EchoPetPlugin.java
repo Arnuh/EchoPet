@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.echopet.api.FileDataManager;
@@ -65,7 +66,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
 
 public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
@@ -256,10 +256,10 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 						`saved_type` TINYINT NOT NULL DEFAULT 0,
 						`type` VARCHAR(255) NOT NULL,
 						`name` VARCHAR(255) NOT NULL,
-						`data` BIGINT NOT NULL DEFAULT 0,
+						`data` LONGTEXT NOT NULL,
 						`rider_type` VARCHAR(255) NULL DEFAULT NULL,
 						`rider_name` VARCHAR(255) NULL DEFAULT NULL,
-						`rider_data` BIGINT NULL DEFAULT NULL,
+						`rider_data` LONGTEXT NULL DEFAULT NULL,
 						PRIMARY KEY (`uuid`, `saved_type`)
 					);""".formatted(prefix))){
 					ps.executeUpdate();
@@ -274,7 +274,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	}
 	
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, String commandLabel, String[] args){
+	public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command cmd, String commandLabel, String[] args){
 		/*if(commandLabel.equalsIgnoreCase("ecupdate")){
 			if(sender.hasPermission("echopet.update")){
 				if(updater.isUpdateFound()){

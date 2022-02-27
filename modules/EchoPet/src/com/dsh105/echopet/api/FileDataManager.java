@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.api;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -30,11 +30,9 @@ import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
-import com.dsh105.echopet.compat.api.util.GeneralUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.Nullable;
 
 
 import static com.dsh105.echopet.compat.api.plugin.EchoPet.ConfigType;
@@ -63,9 +61,9 @@ public class FileDataManager implements IDataManager{
 			config.set(path + ".pet.type", petType.toString());
 			config.set(path + ".pet.name", pet.serialisePetName());
 			config.removeKey(path + ".pet.data");
-			for(PetData pd : pet.getPetData()){
-				if(pd.ignoreSaving()) continue;
-				config.set(path + ".pet.data." + pd.toString().toLowerCase(), true);
+			for(Map.Entry<PetData<?>, Object> entry : pet.getData().entrySet()){
+				if(entry.getKey().ignoreSaving()) continue;
+				config.set(path + ".pet.data." + entry.getKey().getConfigKeyName(), entry.getValue());
 			}
 			
 			String riderPath = path + ".rider";
@@ -75,9 +73,9 @@ public class FileDataManager implements IDataManager{
 				
 				config.set(riderPath + ".type", riderType.toString());
 				config.set(riderPath + ".name", rider.serialisePetName());
-				for(PetData pd : rider.getPetData()){
-					if(pd.ignoreSaving()) continue;
-					config.set(riderPath + ".data." + pd.toString().toLowerCase(), true);
+				for(Map.Entry<PetData<?>, Object> entry : rider.getData().entrySet()){
+					if(entry.getKey().ignoreSaving()) continue;
+					config.set(riderPath + ".data." + entry.getKey().getConfigKeyName(), entry.getValue());
 				}
 			}else{
 				config.removeKey(riderPath);
@@ -102,9 +100,10 @@ public class FileDataManager implements IDataManager{
 			config.set(path + ".pet.type", pt.toString());
 			config.set(path + ".pet.name", petName);
 			
-			for(PetData pd : pet.petDataList){
-				if(pd.ignoreSaving()) continue;
-				config.set(path + ".pet.data." + pd.toString().toLowerCase(), true);
+			for(Map.Entry<PetData<?>, Object> entry : pet.petDataList.entrySet()){
+				PetData<?> data = entry.getKey();
+				if(data.ignoreSaving()) continue;
+				config.set(path + ".pet.data." + data.getConfigKeyName(), entry.getValue());
 			}
 			
 			String riderPath = path + ".rider";
@@ -118,9 +117,10 @@ public class FileDataManager implements IDataManager{
 				if(riderType != null){
 					config.set(riderPath + ".type", riderType.toString());
 					config.set(riderPath + ".name", riderName);
-					for(PetData pd : rider.petDataList){
-						if(pd.ignoreSaving()) continue;
-						config.set(riderPath + ".data." + pd.toString().toLowerCase(), true);
+					for(Map.Entry<PetData<?>, Object> entry : rider.petDataList.entrySet()){
+						PetData<?> data = entry.getKey();
+						if(data.ignoreSaving()) continue;
+						config.set(riderPath + ".data." + data.getConfigKeyName(), entry.getValue());
 					}
 				}
 			}else{
@@ -166,21 +166,17 @@ public class FileDataManager implements IDataManager{
 		}
 		pet.setPetName(name);
 		
-		List<PetData> data = new ArrayList<>();
 		ConfigurationSection cs = config.getConfigurationSection(path + ".pet.data");
 		if(cs != null){
 			for(String key : cs.getKeys(false)){
-				if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
-					PetData pd = PetData.valueOf(key.toUpperCase());
-					data.add(pd);
-				}else{
-					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+				PetData<?> pd = PetData.get(key);
+				if(pd == null){
+					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".");
+					continue;
 				}
+				Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
+				getManager().setData(pet, pd, value);
 			}
-		}
-		
-		if(!data.isEmpty()){
-			getManager().setData(pet, data, true);
 		}
 		
 		createRider(player, pet, savedType);
@@ -204,20 +200,17 @@ public class FileDataManager implements IDataManager{
 				IPet rider = pet.createRider(riderPetType, true);
 				if(rider != null){
 					rider.setPetName(riderName);
-					List<PetData> riderData = new ArrayList<>();
 					ConfigurationSection mcs = config.getConfigurationSection(path + ".data");
 					if(mcs != null){
 						for(String key : mcs.getKeys(false)){
-							if(GeneralUtil.isEnumType(PetData.class, key.toUpperCase())){
-								PetData pd = PetData.valueOf(key.toUpperCase());
-								riderData.add(pd);
-							}else{
+							PetData<?> pd = PetData.get(key);
+							if(pd == null){
 								plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+								continue;
 							}
+							Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
+							getManager().setData(pet, pd, value);
 						}
-					}
-					if(!riderData.isEmpty()){
-						getManager().setData(rider, riderData, true);
 					}
 				}
 			}

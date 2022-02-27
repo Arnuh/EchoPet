@@ -16,6 +16,7 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -49,23 +50,23 @@ public enum PetDataCategory{
 	;
 	
 	public static final PetDataCategory[] values = values();
-	private final PetData[] data;
+	private final List<PetData<?>> data;
 	private final Material material;
 	private final String name;
 	private ItemStack item;
 	
-	PetDataCategory(Material material, String name, PetData... data){
+	PetDataCategory(Material material, String name, PetData<?>... data){
 		this.material = material;
 		this.name = name;
-		this.data = data;
+		this.data = List.of(data);
 	}
 	
-	public PetData[] getData(){
+	public List<PetData<?>> getData(){
 		return data;
 	}
 	
-	public boolean hasData(PetData petData){
-		for(PetData d : data){
+	public boolean hasData(PetData<?> petData){
+		for(PetData<?> d : data){
 			if(d.equals(petData)) return true;
 		}
 		return false;
@@ -82,7 +83,7 @@ public enum PetDataCategory{
 		return item;
 	}
 	
-	public static PetDataCategory getByData(IPetType type, PetData data){
+	public static PetDataCategory getByData(IPetType type, PetData<?> data){
 		for(PetDataCategory category : type.getAllowedCategories()){
 			if(category.hasData(data)) return category;
 		}

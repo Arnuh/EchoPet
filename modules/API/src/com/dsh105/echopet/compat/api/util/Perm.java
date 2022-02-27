@@ -99,7 +99,7 @@ public enum Perm{
 		}
 	}
 	
-	public static boolean hasDataPerm(CommandSender sender, boolean sendMessage, IPetType petType, PetData petData, boolean allowConsole){
+	public static boolean hasDataPerm(CommandSender sender, boolean sendMessage, IPetType petType, PetData<?> petData, boolean allowConsole){
 		if(sender instanceof Player){
 			return hasDataPerm(((Player) sender), sendMessage, petType, petData);
 		}else{
@@ -117,7 +117,7 @@ public enum Perm{
 		if(sendMessage){
 			Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", this.perm));
 		}
-		//EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+		// EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
 		return false;
 	}
 	
@@ -128,7 +128,7 @@ public enum Perm{
 		if(sendMessage){
 			Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
 		}
-		//EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+		// EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
 		return false;
 	}
 	
@@ -140,11 +140,11 @@ public enum Perm{
 		if(sendMessage){
 			Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
 		}
-		//EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+		// EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
 		return false;
 	}
 	
-	private static boolean hasDataPerm(Player player, boolean sendMessage, IPetType petType, PetData petData){
+	private static boolean hasDataPerm(Player player, boolean sendMessage, IPetType petType, PetData<?> petData){
 		boolean hasTypePerm = hasTypePerm(player, sendMessage, Perm.BASE_PETTYPE, petType);
 		if(!hasTypePerm){
 			return false;
@@ -157,7 +157,7 @@ public enum Perm{
 		if(sendMessage){
 			Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
 		}
-		//EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
+		// EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
 		return false;
 	}
 }

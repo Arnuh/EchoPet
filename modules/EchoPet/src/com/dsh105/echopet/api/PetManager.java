@@ -20,6 +20,8 @@ package com.dsh105.echopet.api;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -37,7 +39,6 @@ import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 public class PetManager implements IPetManager{
 	
@@ -170,22 +171,23 @@ public class PetManager implements IPetManager{
 	 */
 	@Override
 	public void forceAllValidData(IPet pi){
-		List<PetData> tempData = new ArrayList<>();
-		for(PetData data : PetData.values){
+		List<PetData<?>> tempData = new ArrayList<>();
+		for(PetData<?> data : PetData.values){
 			if(pi.getPetType().isDataForced(data)){
+				setData(pi, data, data.getParser().defaultValue());
 				tempData.add(data);
 			}
 		}
-		setData(pi, tempData, true);
 		
-		List<PetData> tempRiderData = new ArrayList<>();
-		if(pi.getRider() != null){
-			for(PetData data : PetData.values){
-				if(pi.getPetType().isDataForced(data)){
+		List<PetData<?>> tempRiderData = new ArrayList<>();
+		IPet rider = pi.getRider();
+		if(rider != null){
+			for(PetData<?> data : PetData.values){
+				if(rider.getPetType().isDataForced(data)){
+					setData(rider, data, data.getParser().defaultValue());
 					tempRiderData.add(data);
 				}
 			}
-			setData(pi.getRider(), tempData, true);
 		}
 		
 		if(EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)){
@@ -215,29 +217,31 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public void setData(IPet pet, List<PetData> data, boolean b){
-		for(PetData pd : data){
-			setData(pet, pd, b);
+	public void setData(IPet pet, Map<PetData<?>, Object> data){
+		for(Map.Entry<PetData<?>, Object> entry : data.entrySet()){
+			setData(pet, entry.getKey(), entry.getValue());
 		}
 	}
 	
 	@Override
-	public void setData(IPet pet, PetData pd, boolean b){
+	public void setData(IPet pet, PetData<?> pd, @Nullable Object value){
 		// Removed others in the same category
 		// Because we can only have 1 active at a time.
 		for(PetDataCategory category : PetDataCategory.values){
 			if(category.hasData(pd)){
-				pet.getPetData().removeIf(data->!pd.equals(data) && category.hasData(data));
+				pet.getData().keySet().removeIf(data->!pd.equals(data) && category.hasData(data));
 				break;
 			}
 		}
-		
-		if(b){
-			if(!pet.getPetData().contains(pd)){
-				pet.getPetData().add(pd);
-			}
-		}else{
-			pet.getPetData().remove(pd);
+		if(value == null){
+			removeData(pet, pd);
+			return;
 		}
+		pet.getData().put(pd, value);
+	}
+	
+	@Override
+	public boolean removeData(IPet pet, PetData<?> data){
+		return pet.getData().remove(data) != null;
 	}
 }

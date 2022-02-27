@@ -19,6 +19,7 @@ package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -338,14 +339,14 @@ public class PetCommand implements CommandExecutor{
 						petMessage.setColor(highlight);
 						petMessage.setText(StringUtil.capitalise(type.toString().replace("_", " ")));
 						
-						List<PetData> registeredData = type.getAllowedDataTypes();
+						List<PetData<?>> registeredData = type.getAllowedDataTypes();
 						List<String> registeredStringData = new ArrayList<String>();
 						
 						StringBuilder dataBuilder = new StringBuilder();
 						dataBuilder.append(format)
 							.append("Valid data types: ");
 						int length = 0;
-						for(PetData data : registeredData){
+						for(PetData<?> data : registeredData){
 							String dataName = StringUtil.capitalise(data.toString().replace("_", " "));
 							boolean dataAccess = Perm.hasDataPerm(sender, false, type, data, true);
 							if(dataAccess){
@@ -434,7 +435,7 @@ public class PetCommand implements CommandExecutor{
 					return true;
 				}
 				IPetType petType = UPD.petType;
-				ArrayList<PetData> petDataList = UPD.petDataList;
+				Map<PetData<?>, Object> petDataList = UPD.petDataList;
 				
 				if(petType == null || petDataList == null){
 					return true;
@@ -447,7 +448,7 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					if(!petDataList.isEmpty()){
-						EchoPet.getManager().setData(pi, petDataList, true);
+						EchoPet.getManager().setData(pi, petDataList);
 					}
 					if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 						if(Perm.BASE_NAME.hasPerm(sender, true, false)){
@@ -508,7 +509,7 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					IPetType petType = UPD.petType;
-					ArrayList<PetData> petDataList = UPD.petDataList;
+					Map<PetData<?>, Object> petDataList = UPD.petDataList;
 					
 					if(petType == null || petDataList == null){
 						return true;
@@ -525,7 +526,7 @@ public class PetCommand implements CommandExecutor{
 							return true;
 						}
 						if(!petDataList.isEmpty()){
-							EchoPet.getManager().setData(rider, petDataList, true);
+							EchoPet.getManager().setData(rider, petDataList);
 						}
 						if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 							if(Perm.BASE_NAME.hasPerm(sender, true, false)){
@@ -596,14 +597,14 @@ public class PetCommand implements CommandExecutor{
 					return true;
 				}
 				IPetType petType = UPD.petType;
-				ArrayList<PetData> petDataList = UPD.petDataList;
+				Map<PetData<?>, Object> petDataList = UPD.petDataList;
 				
 				PetStorage UMD = PetUtil.formPetFromArgs(sender, args[1], false);
 				if(UMD == null){
 					return true;
 				}
 				IPetType riderType = UMD.petType;
-				ArrayList<PetData> riderDataList = UMD.petDataList;
+				Map<PetData<?>, Object> riderDataList = UMD.petDataList;
 				
 				if(petType == null || petDataList == null || riderType == null || riderDataList == null){
 					return true;
@@ -616,7 +617,7 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					if(!petDataList.isEmpty()){
-						EchoPet.getManager().setData(pi, petDataList, true);
+						EchoPet.getManager().setData(pi, petDataList);
 					}
 					if(UPD.petName != null && !UPD.petName.equalsIgnoreCase("")){
 						if(Perm.BASE_NAME.hasPerm(sender, true, false)){
@@ -628,7 +629,7 @@ public class PetCommand implements CommandExecutor{
 						}
 					}
 					if(!riderDataList.isEmpty()){
-						EchoPet.getManager().setData(pi.getRider(), riderDataList, true);
+						EchoPet.getManager().setData(pi.getRider(), riderDataList);
 					}
 					if(UMD.petName != null && !UMD.petName.equalsIgnoreCase("")){
 						if(Perm.BASE_NAME.hasPerm(sender, true, false)){
@@ -675,7 +676,7 @@ public class PetCommand implements CommandExecutor{
 							return true;
 						}
 						IPetType petType = UPD.petType;
-						ArrayList<PetData> petDataList = UPD.petDataList;
+						Map<PetData<?>, Object> petDataList = UPD.petDataList;
 						
 						if(petType == null || petDataList == null){
 							return true;
@@ -697,14 +698,14 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					IPetType petType = UPD.petType;
-					ArrayList<PetData> petDataList = UPD.petDataList;
+					Map<PetData<?>, Object> petDataList = UPD.petDataList;
 					
 					PetStorage UMD = PetUtil.formPetFromArgs(sender, args[3], false);
 					if(UMD == null){
 						return true;
 					}
 					IPetType riderType = UMD.petType;
-					ArrayList<PetData> riderDataList = UMD.petDataList;
+					Map<PetData<?>, Object> riderDataList = UMD.petDataList;
 					
 					if(petType == null || petDataList == null || riderType == null || riderDataList == null){
 						return true;

@@ -30,7 +30,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MenuUtil{
 	
 	public static final ItemStack BACK = new ItemStack(Material.BOOK), CLOSE = new ItemStack(Material.BOOK);
-	public static final ItemStack BOOLEAN_TRUE = new ItemStack(Material.REDSTONE_TORCH), BOOLEAN_FALSE = new ItemStack(Material.REDSTONE_TORCH);
 	
 	static{
 		ItemMeta meta = BACK.getItemMeta();
@@ -41,15 +40,6 @@ public class MenuUtil{
 		meta.setDisplayName(ChatColor.GOLD + "Close");
 		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Close the Pet Menu"));
 		CLOSE.setItemMeta(meta);
-		//
-		meta = BOOLEAN_TRUE.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + "True");
-		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Turn the feature on."));
-		BOOLEAN_TRUE.setItemMeta(meta);
-		meta = BOOLEAN_FALSE.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + "False");
-		meta.setLore(ImmutableList.of(ChatColor.GOLD + "Turn the feature off."));
-		BOOLEAN_FALSE.setItemMeta(meta);
 	}
 	
 	public static List<Object> createOptionList(IPet pet){

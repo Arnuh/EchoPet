@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.listeners;
 
+import java.util.List;
 import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -116,29 +117,10 @@ public class MenuListener implements Listener{
 							}
 						}
 					}
-					PetData[] values = category != null ? category.getData() : PetData.values;// Pretty sure this is fine.
-					for(PetData data : values){
-						ItemStack item = data.toItem(pet);
-						if(item == null){// If no item = boolean toggle
-							if(ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE) || ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_TRUE)){
-								boolean newFlag = ItemUtil.matches(currentlyInSlot, MenuUtil.BOOLEAN_FALSE);
-								if(data.getAction() != null){
-									if(data.getAction().click(player, pet, category, newFlag)){
-										EchoPet.getManager().setData(pet, data, newFlag);
-										inv.setItem(slot, data.toItem(pet, !newFlag));
-									}
-								}
-							}
-						}else{
-							if(ItemUtil.matches(currentlyInSlot, item)){
-								if(data.getAction() != null){
-									boolean newFlag = !pet.getPetData().contains(data);
-									if(data.getAction().click(player, pet, category, newFlag)){
-										EchoPet.getManager().setData(pet, data, newFlag);
-									}
-								}
-								break;
-							}
+					List<PetData<?>> values = category != null ? category.getData() : PetData.values;// Pretty sure this is fine.
+					for(PetData<?> data : values){
+						if(data.attemptInteract(player, pet, category, currentlyInSlot)){
+							break;
 						}
 					}
 				}

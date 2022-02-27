@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -71,7 +71,7 @@ public interface IPet{
 	
 	boolean setPetName(String name, boolean sendFailMessage);
 	
-	ArrayList<PetData> getPetData();
+	Map<PetData<?>, Object> getData();
 	
 	IPet createRider(final IPetType pt, boolean sendFailMessage);
 	

@@ -122,33 +122,33 @@ public enum PetType implements IPetType{
 	private final String defaultName;
 	private final String minecraftEntityName;
 	private final List<PetDataCategory> allowedCategories = new ArrayList<>();
-	private final List<PetData> allowedData = new ArrayList<>();
+	private final List<PetData<?>> allowedData = new ArrayList<>();
 	private final Version version;
 	private Material uiMaterial;
 	
 	// This is a fucking mess
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetData<?>... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, allowedData);
 	}
 	
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Material uiMaterial, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Material uiMaterial, PetData<?>... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), uiMaterial, null, allowedData);
 	}
 	
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetDataCategory[] categories, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, PetDataCategory[] categories, PetData<?>... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, new Version(), null, categories, allowedData);
 	}
 	
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetData<?>... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, version, null, null, allowedData);
 	}
 	
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetDataCategory[] categories, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, PetDataCategory[] categories, PetData<?>... allowedData){
 		this(classIdentifier, defaultName, minecraftEntityName, version, null, categories, allowedData);
 	}
 	
 	@SuppressWarnings("unchecked")
-	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData... allowedData){
+	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData<?>... allowedData){
 		try{
 			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
@@ -223,7 +223,7 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
-	public List<PetData> getAllowedDataTypes(){
+	public List<PetData<?>> getAllowedDataTypes(){
 		return this.allowedData;
 	}
 	
@@ -294,12 +294,12 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
-	public boolean isDataAllowed(PetData data){
+	public boolean isDataAllowed(PetData<?> data){
 		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
 	}
 	
 	@Override
-	public boolean isDataForced(PetData data){
+	public boolean isDataForced(PetData<?> data){
 		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
 	}
 	
@@ -380,13 +380,13 @@ public enum PetType implements IPetType{
 			}
 			for(String petTypeName : petTypes){
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-				for(PetData data : petType.getAllowedDataTypes()){
+				for(PetData<?> data : petType.getAllowedDataTypes()){
 					bw.write("    echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ":\n");
 					bw.write("        default: op\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData data : category.getData()){
+					for(PetData<?> data : category.getData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
 							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from data " + data + " and category " + category);
 							continue;
@@ -513,12 +513,12 @@ public enum PetType implements IPetType{
 				bw.write("        description: 'All " + petTypeName + " pet data permissions'\n");
 				bw.write("        children:\n");
 				PetType petType = PetType.valueOf(petTypeName.toUpperCase());
-				for(PetData data : petType.getAllowedDataTypes()){
+				for(PetData<?> data : petType.getAllowedDataTypes()){
 					bw.write("            echopet.pet.type." + petTypeName + "." + data.getConfigKeyName() + ": true\n");
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData data : category.getData()){
+					for(PetData<?> data : category.getData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
 							// System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
@@ -546,7 +546,7 @@ public enum PetType implements IPetType{
 			System.out.println(petType.name());
 			System.out.print("\t");
 			int i = 0;
-			for(PetData data : petType.getAllowedDataTypes()){
+			for(PetData<?> data : petType.getAllowedDataTypes()){
 				if(data.equals(PetData.RIDE) || data.equals(PetData.HAT)) continue;
 				if(i++ != 0){
 					System.out.print(", ");
@@ -554,7 +554,7 @@ public enum PetType implements IPetType{
 				System.out.print(data.getItemName());
 			}
 			for(PetDataCategory category : petType.getAllowedCategories()){
-				for(PetData data : category.getData()){
+				for(PetData<?> data : category.getData()){
 					if(i++ != 0){
 						System.out.print(", ");
 					}

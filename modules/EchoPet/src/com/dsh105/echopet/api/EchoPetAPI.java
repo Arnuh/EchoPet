@@ -152,7 +152,7 @@ public class EchoPetAPI{
 	 * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link
 	 *                com.dsh105.echopet.api.pet.Pet}
 	 */
-	public void addData(IPet pet, PetData petData){
+	public void addData(IPet pet, PetData<?> petData){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
 			return;
@@ -166,7 +166,7 @@ public class EchoPetAPI{
 	 * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to remove the data from
 	 * @param petData {@link PetData} to remove to the {@link com.dsh105.echopet.api.pet.Pet}
 	 */
-	public void removeData(IPet pet, PetData petData){
+	public void removeData(IPet pet, PetData<?> petData){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to remove PetData [" + petData.toString() + "] from Pet through the EchoPetAPI. Pet cannot be null.");
 			return;
@@ -181,12 +181,12 @@ public class EchoPetAPI{
 	 * @param petData the {@link PetData} searched for in the {@link com.dsh105.echopet.api.pet.Pet} instance
 	 * @return true if the {@link com.dsh105.echopet.api.pet.Pet} has the specified {@link PetData}
 	 */
-	public boolean hasData(IPet pet, PetData petData){
+	public boolean hasData(IPet pet, PetData<?> petData){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to check PetData [" + petData.toString() + "] of Pet through the EchoPetAPI. Pet cannot be null.");
 			return false;
 		}
-		return pet.getPetData().contains(petData);
+		return pet.getData().containsKey(petData);
 	}
 	
 	/**

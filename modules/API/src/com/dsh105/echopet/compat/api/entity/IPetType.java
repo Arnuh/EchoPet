@@ -34,7 +34,7 @@ public interface IPetType{
 	
 	List<PetDataCategory> getAllowedCategories();
 	
-	List<PetData> getAllowedDataTypes();
+	List<PetData<?>> getAllowedDataTypes();
 	
 	/**
 	 * If the specified PetData is in the pets {@link #getAllowedCategories()} or {@link #getAllowedDataTypes()}.<br>
@@ -42,9 +42,9 @@ public interface IPetType{
 	 *
 	 * @return true if the pet data is an allowed category or data type.
 	 */
-	default boolean isValidData(PetData data){
+	default boolean isValidData(PetData<?> data){
 		for(PetDataCategory category : getAllowedCategories()){
-			for(PetData d : category.getData()){
+			for(PetData<?> d : category.getData()){
 				if(d.equals(data)) return true;
 			}
 		}
@@ -75,9 +75,9 @@ public interface IPetType{
 	
 	boolean allowRidersFor();
 	
-	boolean isDataAllowed(PetData data);
+	boolean isDataAllowed(PetData<?> data);
 	
-	boolean isDataForced(PetData data);
+	boolean isDataForced(PetData<?> data);
 	
 	boolean canFly();
 	

@@ -17,16 +17,14 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import org.bukkit.entity.Player;
 
-public interface PetDataAction{
+public interface PetDataAction<T>{
 	
 	/**
-	 * Turns on or off the respective PetData for the provided Pet.<br>
-	 * This method assumes you will call {@link com.dsh105.echopet.compat.api.plugin.IPetManager#setData(IPet, PetData, boolean)}
-	 * to properly save the state of the flag across restarts, logouts, or respawns.<br>
-	 * @return If the PetData was properly processed for the respective Pet Type.
+	 * Provides a setter used for the respective {@link PetData} to set the value of the {@link PetData} on the provided pet.
 	 */
-	boolean click(Player player, IPet pet, @Nullable PetDataCategory category, boolean flag);
+	Consumer<T> get(Player player, IPet pet, @Nullable PetDataCategory category);
 }

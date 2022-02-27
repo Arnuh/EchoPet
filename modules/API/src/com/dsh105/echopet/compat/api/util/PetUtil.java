@@ -18,7 +18,9 @@
 package com.dsh105.echopet.compat.api.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -55,7 +57,7 @@ public class PetUtil{
 	public static PetStorage formPetFromArgs(CommandSender sender, String s, boolean petAdmin){
 		String petString = s;
 		String dataString = "";
-		PetData singlePetData = null;
+		PetData<?> singlePetData = null;
 		String name = "";
 		
 		if(s.contains(";")){
@@ -74,16 +76,8 @@ public class PetUtil{
 				dataString = splitt[1];
 				name = split[1];
 				if(!dataString.contains(",")){
-					if(isPetDataType(dataString)){
-						singlePetData = PetData.valueOf(dataString.toUpperCase());
-						if(singlePetData == null){
-							singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
-						}
-						if(singlePetData == null){
-							Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
-							return null;
-						}
-					}else{
+					singlePetData = PetData.get(dataString);
+					if(singlePetData == null){
 						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
 						return null;
 					}
@@ -98,16 +92,8 @@ public class PetUtil{
 				name = splitt[0];
 				dataString = splitt[1];
 				if(!dataString.contains(",")){
-					if(isPetDataType(dataString)){
-						singlePetData = PetData.valueOf(dataString.toUpperCase());
-						if(singlePetData == null){
-							singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
-						}
-						if(singlePetData == null){
-							Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
-							return null;
-						}
-					}else{
+					singlePetData = PetData.get(dataString);
+					if(singlePetData == null){
 						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
 						return null;
 					}
@@ -125,23 +111,15 @@ public class PetUtil{
 			petString = split[0].toLowerCase();
 			dataString = split[1];
 			if(!dataString.contains(",")){
-				if(isPetDataType(dataString)){
-					singlePetData = PetData.valueOf(dataString.toUpperCase());
-					if(singlePetData == null){
-						singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
-					}
-					if(singlePetData == null){
-						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
-						return null;
-					}
-				}else{
+				singlePetData = PetData.get(dataString);
+				if(singlePetData == null){
 					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
 					return null;
 				}
 			}
 		}
 		
-		ArrayList<PetData> petDataList = new ArrayList<PetData>();
+		Map<PetData<?>, Object> petDataList = new HashMap<>();
 		IPetType petType = PetType.get(petString);
 		
 		if(petType == null){
@@ -149,15 +127,12 @@ public class PetUtil{
 			return null;
 		}
 		
+		// Need to support changing value
 		if(dataString.contains(",")){
 			for(String dataTypeString : dataString.split(",")){
-				if(isPetDataType(dataTypeString)){
-					PetData dataTemp = PetData.valueOf(dataTypeString.toUpperCase());
-					if(dataTemp != null){
-						petDataList.add(dataTemp);
-					}else{
-						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataTypeString)));
-					}
+				PetData<?> dataTemp = PetData.get(dataTypeString);
+				if(dataTemp != null){
+					petDataList.put(dataTemp, dataTemp.getParser().defaultValue());
 				}else{
 					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataTypeString)));
 					return null;
@@ -165,12 +140,12 @@ public class PetUtil{
 			}
 		}else{
 			if(singlePetData != null){
-				petDataList.add(singlePetData);
+				petDataList.put(singlePetData, singlePetData.getParser().defaultValue());
 			}
 		}
 		
 		if(!petDataList.isEmpty()){
-			for(PetData dataTemp : petDataList){
+			for(PetData<?> dataTemp : petDataList.keySet()){
 				if(dataTemp != null){
 					if(!petType.isValidData(dataTemp)){
 						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
@@ -189,7 +164,7 @@ public class PetUtil{
 			return null;
 		}
 		
-		for(PetData dataTemp : petDataList){
+		for(PetData<?> dataTemp : petDataList.keySet()){
 			if(!Perm.hasDataPerm(sender, true, petType, dataTemp, false)){
 				return null;
 			}
@@ -198,15 +173,7 @@ public class PetUtil{
 		return new PetStorage(petDataList, petType, name);
 	}
 	
-	private static boolean isPetDataType(String s){
-		try{
-			PetData.valueOf(s.toUpperCase());
-			return true;
-		}catch(Exception e){
-			return false;
-		}
-	}
-	
+	@Deprecated
 	public static List<String> generatePetInfo(IPet pt){
 		List<String> info = new ArrayList<String>();
 		info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(pt.getPetType().toString()));
@@ -230,6 +197,7 @@ public class PetUtil{
 		return info;
 	}
 	
+	@Deprecated
 	public static List<String> generatePetDataInfo(IPet pt){
 		List<String> info = new ArrayList<String>();
 		if(pt.getPetType() == PetType.BLAZE){
@@ -356,12 +324,16 @@ public class PetUtil{
 				
 				StringBuilder builder = new StringBuilder();
 				
-				builder.append(color1).append("- ").append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+				builder.append(color1)
+					.append("- ")
+					.append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 				
 				if(!pt.getAllowedDataTypes().isEmpty()){
-					builder.append(color2).append("    ");
-					for(PetData data : pt.getAllowedDataTypes()){
-						builder.append(color2).append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+					builder.append(color2)
+						.append("    ");
+					for(PetData<?> data : pt.getAllowedDataTypes()){
+						builder.append(color2)
+							.append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
 						builder.append(separator);
 					}
 					builder.deleteCharAt(builder.length() - separator.length());
@@ -371,16 +343,21 @@ public class PetUtil{
 			}else{
 				StringBuilder builder = new StringBuilder();
 				
-				builder.append(color1).append("- ").append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+				builder.append(color1)
+					.append("- ")
+					.append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 				
 				if(!pt.getAllowedDataTypes().isEmpty()){
-					builder.append(color2).append(" (");
-					for(PetData data : pt.getAllowedDataTypes()){
+					builder.append(color2)
+						.append(" (");
+					for(PetData<?> data : pt.getAllowedDataTypes()){
 						builder.append(separator);
-						builder.append(color2).append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+						builder.append(color2)
+							.append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
 					}
 					builder.deleteCharAt(builder.length() - separator.length());
-					builder.append(color2).append(")");
+					builder.append(color2)
+						.append(")");
 				}
 				
 				list.add(builder.toString().replace(" )", ")"));
@@ -389,12 +366,12 @@ public class PetUtil{
 		return list;
 	}
 	
-	public static String dataToString(List<PetData> data){
+	public static String dataToString(List<PetData<?>> data){
 		if(data.isEmpty()){
 			return null;
 		}
 		StringBuilder builder = new StringBuilder();
-		for(PetData pd : data){
+		for(PetData<?> pd : data){
 			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
@@ -402,16 +379,16 @@ public class PetUtil{
 		return builder.toString();
 	}
 	
-	public static String dataToString(List<PetData> data, List<PetData> riderData){
+	public static String dataToString(List<PetData<?>> data, List<PetData<?>> riderData){
 		if(data.isEmpty()){
 			return null;
 		}
 		StringBuilder builder = new StringBuilder();
-		for(PetData pd : data){
+		for(PetData<?> pd : data){
 			builder.append(pd.getConfigKeyName());
 			builder.append(", ");
 		}
-		for(PetData pd : riderData){
+		for(PetData<?> pd : riderData){
 			builder.append(pd.getConfigKeyName());
 			builder.append("(Rider), ");
 		}

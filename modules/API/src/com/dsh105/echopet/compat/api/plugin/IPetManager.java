@@ -18,7 +18,7 @@
 package com.dsh105.echopet.compat.api.plugin;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -51,7 +51,13 @@ public interface IPetManager{
 	
 	void removePet(IPet pet, boolean makeDeathSound);
 	
-	void setData(IPet pet, List<PetData> data, boolean b);
+	void setData(IPet pet, Map<PetData<?>, Object> data);
 	
-	void setData(IPet pet, PetData pd, boolean b);
+	/**
+	 * Modify a pets data.<br>
+	 * If the {@code value} is null, the data will be removed by {@link #removeData(IPet, PetData)}
+	 */
+	void setData(IPet pet, PetData<?> pd, @Nullable Object value);
+	
+	boolean removeData(IPet pet, PetData<?> data);
 }
