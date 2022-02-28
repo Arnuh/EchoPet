@@ -832,6 +832,7 @@ public class PetData<T>{
 	@SuppressWarnings("unchecked")
 	public boolean attemptInteract(Player player, IPet pet, PetDataCategory category, ItemStack clicked){
 		ItemStack item = toItem(pet);
+		if(item == null) return false;
 		if(ItemUtil.matches(clicked, item)){
 			T current = (T) pet.getData().get(this);
 			Consumer<T> setter = getAction().get(player, pet, category);
@@ -862,7 +863,12 @@ public class PetData<T>{
 		return this == PetData.RIDE || this == PetData.HAT;
 	}
 	
-	public ItemStack toItem(IPet pet){
+	public @Nullable PetDataMaterial getMaterial(){
+		return material;
+	}
+	
+	public @Nullable ItemStack toItem(IPet pet){
+		if(material == null) return null;
 		ItemStack item = new ItemStack(material.get(pet));
 		ItemMeta meta = item.getItemMeta();
 		if(meta == null) return null;

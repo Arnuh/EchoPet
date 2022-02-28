@@ -74,10 +74,10 @@ public class DataMenu{
 	public void setItems(PetDataCategory category, int size){
 		int i = 0;
 		for(PetData<?> data : category.getData()){
-			if(data.isCompatible()){
-				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-					inv.setItem(i++, data.toItem(pet));
-				}
+			if(!data.isCompatible()) continue;
+			if(data.getMaterial() == null) continue;
+			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+				inv.setItem(i++, data.toItem(pet));
 			}
 		}
 		this.inv.setItem((size - 1), MenuUtil.BACK);

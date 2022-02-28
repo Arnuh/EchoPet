@@ -42,15 +42,13 @@ public class PetMenu{
 		this.inv = Bukkit.createInventory(pet.getOwner(), round(options.size(), 9), "EchoPet DataMenu");
 		int index = 0;
 		for(Object obj : options){
-			if(obj instanceof PetData){
-				PetData data = (PetData) obj;
-				if(data.isCompatible()){
-					if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-						inv.setItem(index++, data.toItem(pet));
-					}
+			if(obj instanceof PetData<?> data){
+				if(!data.isCompatible()) continue;
+				if(data.getMaterial() == null) continue;
+				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+					inv.setItem(index++, data.toItem(pet));
 				}
-			}else if(obj instanceof PetDataCategory){
-				PetDataCategory category = (PetDataCategory) obj;
+			}else if(obj instanceof PetDataCategory category){
 				ItemStack item = category.getItem();
 				if(item == null) continue;
 				inv.setItem(index++, item);
