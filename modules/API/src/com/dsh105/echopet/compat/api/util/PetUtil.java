@@ -54,107 +54,89 @@ import org.bukkit.entity.Player;
 
 public class PetUtil{
 	
-	public static PetStorage formPetFromArgs(CommandSender sender, String s, boolean petAdmin){
-		String petString = s;
-		String dataString = "";
-		PetData<?> singlePetData = null;
-		String name = "";
-		
-		if(s.contains(";")){
-			String[] split = s.split(";");
-			if(split.length <= 1){
-				Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", s));
-				return null;
-			}
-			if(split[0].contains(":")){
-				String[] splitt = split[0].split(":");
-				if(splitt.length <= 1){
-					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", split[0]));
+	private static Map<PetData<?>, Object> parseData(CommandSender sender, String input){
+		Map<PetData<?>, Object> result = new HashMap<>();
+		for(String data : input.split(",")){
+			if(!data.contains("=")){
+				PetData<?> petData = PetData.get(data);
+				if(petData == null){
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(data)));
 					return null;
 				}
-				petString = splitt[0].toLowerCase();
-				dataString = splitt[1];
-				name = split[1];
-				if(!dataString.contains(",")){
-					singlePetData = PetData.get(dataString);
-					if(singlePetData == null){
-						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
-						return null;
-					}
-				}
-			}else if(split[1].contains(":")){
-				String[] splitt = split[1].split(":");
-				if(splitt.length <= 1){
-					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", split[1]));
-					return null;
-				}
-				petString = split[0].toLowerCase();
-				name = splitt[0];
-				dataString = splitt[1];
-				if(!dataString.contains(",")){
-					singlePetData = PetData.get(dataString);
-					if(singlePetData == null){
-						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
-						return null;
-					}
-				}
+				result.put(petData, petData.getParser().defaultValue());
 			}else{
-				petString = split[0].toLowerCase();
-				name = split[1];
-			}
-		}else if(s.contains(":")){
-			String[] split = s.split(":");
-			if(split.length <= 1){
-				Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", s));
-				return null;
-			}
-			petString = split[0].toLowerCase();
-			dataString = split[1];
-			if(!dataString.contains(",")){
-				singlePetData = PetData.get(dataString);
-				if(singlePetData == null){
-					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataString)));
+				String[] split = data.split("=");
+				if(split.length != 2){
+					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", data));
+					return null;
+				}
+				PetData<?> petData = PetData.get(split[0]);
+				if(petData == null){
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(split[0])));
+					return null;
+				}
+				try{
+					Object parserResult = petData.getParser().parse(split[1]);
+					if(parserResult == null){
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", StringUtil.capitalise(split[0])).replace("%value%", split[1]));
+						return null;
+					}
+					result.put(petData, parserResult);
+				}catch(Exception ex){
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", StringUtil.capitalise(split[0])).replace("%value%", split[1]));
 					return null;
 				}
 			}
 		}
-		
+		return result;
+	}
+	
+	public static PetStorage formPetFromArgs(CommandSender sender, String input, boolean petAdmin){
+		IPetType petType = null;
+		String name = "";
 		Map<PetData<?>, Object> petDataList = new HashMap<>();
-		IPetType petType = PetType.get(petString);
+		
+		String[] dataValues = input.split("[;:]");
+		if(dataValues.length == 1){
+			petType = PetType.get(input);
+		}else{
+			for(String value : dataValues){
+				if(input.contains(";" + value)){
+					name = value;
+				}else if(value.contains(",") || value.contains("=")){
+					Map<PetData<?>, Object> result = parseData(sender, value);
+					if(result == null) return null;
+					petDataList.putAll(result);
+				}else{
+					IPetType checkType = PetType.get(value);
+					if(checkType != null){
+						petType = checkType;
+					}else if(input.contains(value + ";") || input.contains(value + ":")){
+						Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(value)));
+						return null;
+					}else{
+						Map<PetData<?>, Object> result = parseData(sender, value);
+						if(result == null) return null;
+						petDataList.putAll(result);
+					}
+				}
+			}
+		}
 		
 		if(petType == null){
-			Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(petString)));
+			Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(input)));
 			return null;
-		}
-		
-		// Need to support changing value
-		if(dataString.contains(",")){
-			for(String dataTypeString : dataString.split(",")){
-				PetData<?> dataTemp = PetData.get(dataTypeString);
-				if(dataTemp != null){
-					petDataList.put(dataTemp, dataTemp.getParser().defaultValue());
-				}else{
-					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(dataTypeString)));
-					return null;
-				}
-			}
-		}else{
-			if(singlePetData != null){
-				petDataList.put(singlePetData, singlePetData.getParser().defaultValue());
-			}
 		}
 		
 		if(!petDataList.isEmpty()){
 			for(PetData<?> dataTemp : petDataList.keySet()){
-				if(dataTemp != null){
-					if(!petType.isValidData(dataTemp)){
-						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
-						return null;
-					}
-					if(!petType.isDataAllowed(dataTemp)){
-						Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
-						return null;
-					}
+				if(!petType.isValidData(dataTemp)){
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
+					return null;
+				}
+				if(!petType.isDataAllowed(dataTemp)){
+					Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
+					return null;
 				}
 			}
 		}
