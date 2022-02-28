@@ -21,7 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -219,7 +219,7 @@ public class SQLDataManager implements IDataManager{
 	}
 	
 	public Map<PetData<?>, Object> deserializePetData(String data){
-		Map<PetData<?>, Object> result = new HashMap<>();
+		Map<PetData<?>, Object> result = new LinkedHashMap<>();
 		for(String s : data.split(";")){
 			String[] split = s.split(":");
 			if(split.length != 2) continue;
