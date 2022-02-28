@@ -18,7 +18,7 @@
 package com.dsh105.echopet.compat.api.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
@@ -55,7 +55,7 @@ import org.bukkit.entity.Player;
 public class PetUtil{
 	
 	private static Map<PetData<?>, Object> parseData(CommandSender sender, String input){
-		Map<PetData<?>, Object> result = new HashMap<>();
+		Map<PetData<?>, Object> result = new LinkedHashMap<>();
 		for(String data : input.split(",")){
 			if(!data.contains("=")){
 				PetData<?> petData = PetData.get(data);
@@ -94,7 +94,7 @@ public class PetUtil{
 	public static PetStorage formPetFromArgs(CommandSender sender, String input, boolean petAdmin){
 		IPetType petType = null;
 		String name = "";
-		Map<PetData<?>, Object> petDataList = new HashMap<>();
+		Map<PetData<?>, Object> petDataList = new LinkedHashMap<>();
 		
 		String[] dataValues = input.split("[;:]");
 		if(dataValues.length == 1){

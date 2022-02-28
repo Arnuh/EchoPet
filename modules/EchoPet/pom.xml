@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>com.dsh105</groupId>
 			<artifactId>EchoPet-v1_17</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>${echopet.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bukkit</groupId>
@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>com.dsh105</groupId>
 			<artifactId>EchoPet-v1_18</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>${echopet.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bukkit</groupId>

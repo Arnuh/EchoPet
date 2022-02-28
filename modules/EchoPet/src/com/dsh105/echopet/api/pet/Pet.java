@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.pet;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -54,7 +54,7 @@ public abstract class Pet implements IPet{
 	private UUID ownerUUID;
 	private IPet rider;
 	private String name;
-	private final Map<PetData<?>, Object> petData = new HashMap<>();
+	private final Map<PetData<?>, Object> petData = new LinkedHashMap<>();
 	private InventoryView dataMenu;
 	
 	private boolean isRider = false;
@@ -107,7 +107,6 @@ public abstract class Pet implements IPet{
 				for(Map.Entry<PetData<?>, Object> entry : getData().entrySet()){
 					PetData<Object> pd = (PetData<Object>) entry.getKey();
 					PetDataAction<Object> action = pd.getAction();
-					if(action == null) continue;
 					Consumer<Object> setter = action.get(owner, this, PetDataCategory.getByData(getPetType(), pd));
 					if(setter != null){
 						setter.accept(entry.getValue());

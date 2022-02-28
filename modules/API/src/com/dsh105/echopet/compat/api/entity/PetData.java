@@ -773,6 +773,11 @@ public class PetData<T>{
 			}
 			return null;
 		}, Material.BROWN_WOOL, "Wild");
+	
+	public static final PetData<Double>
+		HEALTH = PetData.create("health", (player, pet, category)->{
+			return value -> pet.getCraftPet().setHealth(value);
+		}, PetDataParser.doubleParser, (PetDataMaterial) null, "Health Pet");
 	//@formatter:on
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, Material material, String name, String... loreArray){
@@ -783,15 +788,15 @@ public class PetData<T>{
 		return new PetData<>(configKeyName, action, PetDataParser.booleanParser, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <T> PetData<T> create(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, Material material, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, Material material, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <T> PetData<T> create(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, PetDataMaterial material, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <T> PetData<T> create(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, material, version, versionCheckType, name, loreArray);
 	}
 	
@@ -1057,5 +1062,10 @@ public class PetData<T>{
 			((IMushroomCowPet) pet).setType(cowType);
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString(){
+		return getConfigKeyName();
 	}
 }

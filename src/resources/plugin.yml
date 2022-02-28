@@ -671,6 +671,8 @@ permissions:
         default: op
     echopet.pet.type.irongolem.ride:
         default: op
+    echopet.pet.type.irongolem.health:
+        default: op
     echopet.pet.type.llama.hat:
         default: op
     echopet.pet.type.llama.ride:
@@ -1208,6 +1210,8 @@ permissions:
     echopet.pet.type.wolf.tamed:
         default: op
     echopet.pet.type.wolf.angry:
+        default: op
+    echopet.pet.type.wolf.health:
         default: op
     echopet.pet.type.wolf.white:
         default: op
@@ -2860,6 +2864,7 @@ permissions:
         children:
             echopet.pet.type.irongolem.hat: true
             echopet.pet.type.irongolem.ride: true
+            echopet.pet.type.irongolem.health: true
     echopet.pet.type.llama.*:
         default: op
         description: 'All llama pet data permissions'
@@ -3285,6 +3290,7 @@ permissions:
             echopet.pet.type.wolf.sit: true
             echopet.pet.type.wolf.tamed: true
             echopet.pet.type.wolf.angry: true
+            echopet.pet.type.wolf.health: true
             echopet.pet.type.wolf.white: true
             echopet.pet.type.wolf.orange: true
             echopet.pet.type.wolf.magenta: true

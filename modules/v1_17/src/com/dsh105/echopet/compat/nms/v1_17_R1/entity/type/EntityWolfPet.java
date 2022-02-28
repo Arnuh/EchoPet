@@ -33,6 +33,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -78,6 +79,11 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		super.setTamed(tamed);
 		if(isAngry() && tamed){
 			setAngry(false);
+		}
+		if(tamed){
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0);
+		}else{
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0);
 		}
 	}
 	

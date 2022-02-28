@@ -28,6 +28,7 @@ public interface PetDataParser<T>{
 	T interact(T current, ItemStack item);
 	
 	PetDataParser<Boolean> booleanParser = new PetDataParser<>(){
+		
 		@Override
 		public Boolean parse(String input){
 			return input.equalsIgnoreCase("true") || input.equalsIgnoreCase("1");
@@ -60,4 +61,21 @@ public interface PetDataParser<T>{
 			return null;
 		}
 	};*/
+	
+	PetDataParser<Double> doubleParser = new PetDataParser<>(){
+		@Override
+		public Double parse(String input){
+			return Double.parseDouble(input);
+		}
+		
+		@Override
+		public Double defaultValue(){
+			return 0d;
+		}
+		
+		@Override
+		public Double interact(Double current, ItemStack item){
+			return null;
+		}
+	};
 }
