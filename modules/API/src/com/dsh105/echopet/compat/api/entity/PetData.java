@@ -56,6 +56,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
+import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.VersionCheckType;
 import org.bukkit.ChatColor;
@@ -775,8 +776,12 @@ public class PetData<T>{
 		}, Material.BROWN_WOOL, "Wild");
 	
 	public static final PetData<Double>
-		HEALTH = PetData.create("health", (player, pet, category)->{
-			return value -> pet.getCraftPet().setHealth(value);
+		HEALTH = PetData.create("health", (player, pet, category)->value->{
+			if(value < 0.1){
+				Lang.sendTo(player, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", "Health").replace("%value%", String.valueOf(value)));
+				return;
+			}
+			pet.getCraftPet().setHealth(value);
 		}, PetDataParser.doubleParser, (PetDataMaterial) null, "Health Pet");
 	//@formatter:on
 	
