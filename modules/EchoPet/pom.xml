@@ -72,25 +72,37 @@
 			<groupId>com.dsh105</groupId>
 			<artifactId>EchoPet-v1_17</artifactId>
 			<version>${echopet.version}</version>
+			<optional>true</optional>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
 				</exclusion>
 			</exclusions>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.dsh105</groupId>
 			<artifactId>EchoPet-v1_18</artifactId>
 			<version>${echopet.version}</version>
+			<optional>true</optional>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.dsh105</groupId>
+			<artifactId>EchoPet-v1_18_R2</artifactId>
+			<version>${echopet.version}</version>
 			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 	<build>

@@ -28,6 +28,7 @@
 		<module>./modules/EchoPet</module>
 		<module>./modules/v1_17</module>
 		<module>./modules/v1_18</module>
+		<module>./modules/v1_18_R2</module>
 	</modules>
 
 	<properties>
