@@ -673,7 +673,8 @@ public class PetAdminCommand implements CommandExecutor{
 						}
 					}
 					EchoPet.getDataManager().save(target, pi, SavedType.Auto);
-					if(pi.getRider().isSpawned()){
+					IPet rider = pi.getRider();
+					if(rider != null && rider.isSpawned()){
 						Lang.sendTo(target, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
 						Lang.sendTo(sender, Lang.ADMIN_CREATE_PET_WITH_RIDER.toString().replace("%player%", target.getName()).replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
 					}else{

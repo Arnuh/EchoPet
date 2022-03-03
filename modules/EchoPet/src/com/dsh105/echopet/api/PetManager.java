@@ -172,21 +172,21 @@ public class PetManager implements IPetManager{
 	@Override
 	public void forceAllValidData(IPet pi){
 		List<PetData<?>> tempData = new ArrayList<>();
+		IPetType petType = pi.getPetType();
 		for(PetData<?> data : PetData.values){
-			if(pi.getPetType().isDataForced(data)){
-				setData(pi, data, data.getParser().defaultValue());
-				tempData.add(data);
-			}
+			if(!petType.isDataForced(data)) continue;
+			setData(pi, data, data.getParser().defaultValue(petType));
+			tempData.add(data);
 		}
 		
 		List<PetData<?>> tempRiderData = new ArrayList<>();
 		IPet rider = pi.getRider();
 		if(rider != null){
+			petType = rider.getPetType();
 			for(PetData<?> data : PetData.values){
-				if(rider.getPetType().isDataForced(data)){
-					setData(rider, data, data.getParser().defaultValue());
-					tempRiderData.add(data);
-				}
+				if(!petType.isDataForced(data)) continue;
+				setData(rider, data, data.getParser().defaultValue(petType));
+				tempRiderData.add(data);
 			}
 		}
 		

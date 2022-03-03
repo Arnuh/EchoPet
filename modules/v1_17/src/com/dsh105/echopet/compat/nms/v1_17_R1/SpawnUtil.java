@@ -17,13 +17,23 @@
 
 package com.dsh105.echopet.compat.nms.v1_17_R1;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.ChatColor;
@@ -81,5 +91,52 @@ public class SpawnUtil implements ISpawnUtil{
 		if(!entityTag.startsWith("minecraft:")) entityTag = "minecraft:" + entityTag;
 		nbt.getCompound("EntityTag").putString("id", entityTag);
 		return CraftItemStack.asCraftMirror(is);
+	}
+	
+	private final Map<String, Class<?>> entityLookup = new HashMap<>();
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T getAttribute(IPetType petType, String attributeKey){
+		Attribute attribute = Registry.ATTRIBUTE.get(ResourceLocation.tryParse(attributeKey));
+		if(attribute == null){
+			return null;
+		}
+		return (T) getEntityClass(petType.getMinecraftName()).map(this::createAttributeSupplier)
+			.map(supplier->supplier.getBaseValue(attribute))
+			.orElse(null);
+	}
+	
+	public Optional<Class<?>> getEntityClass(String typeName){
+		return Optional.ofNullable(entityLookup.computeIfAbsent(typeName, s->{
+			try{
+				for(var field : EntityType.class.getFields()){
+					if(field.getType() == EntityType.class){
+						ParameterizedType listType = (ParameterizedType) field.getGenericType();
+						Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
+						if(EntityType.getKey((EntityType<?>) field.get(null)).getPath().equals(s)){
+							return listClass;
+						}
+					}
+				}
+				return null;
+			}catch(Exception ex){
+				EchoPet.LOG.log(java.util.logging.Level.SEVERE, "Failed to get entity class for " + typeName, ex);
+				return null;
+			}
+		}));
+	}
+	
+	public AttributeSupplier createAttributeSupplier(Class<?> clazz){
+		try{
+			for(var method : clazz.getMethods()){
+				if(method.getReturnType() == AttributeSupplier.Builder.class){
+					return ((AttributeSupplier.Builder) method.invoke(null)).build();
+				}
+			}
+		}catch(Exception ex){
+			EchoPet.LOG.log(java.util.logging.Level.SEVERE, "Failed to create attribute supplier for " + clazz.getName(), ex);
+		}
+		return null;
 	}
 }

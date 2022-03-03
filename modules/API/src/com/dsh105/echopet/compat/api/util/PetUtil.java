@@ -63,7 +63,7 @@ public class PetUtil{
 					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(data)));
 					return null;
 				}
-				result.put(petData, petData.getParser().defaultValue());
+				result.put(petData, null);
 			}else{
 				String[] split = data.split("=");
 				if(split.length != 2){
@@ -128,6 +128,11 @@ public class PetUtil{
 			return null;
 		}
 		
+		if(!petType.isEnabled()){
+			Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
+			return null;
+		}
+		
 		if(!petDataList.isEmpty()){
 			for(PetData<?> dataTemp : petDataList.keySet()){
 				if(!petType.isValidData(dataTemp)){
@@ -138,12 +143,8 @@ public class PetUtil{
 					Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString().replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
 					return null;
 				}
+				petDataList.replace(dataTemp, null, dataTemp.getParser().defaultValue(petType));
 			}
-		}
-		
-		if(!petType.isEnabled()){
-			Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
-			return null;
 		}
 		
 		for(PetData<?> dataTemp : petDataList.keySet()){

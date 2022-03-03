@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -274,83 +275,104 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
+	public YAMLConfig getConfig(){
+		return EchoPet.getConfig();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T getConfigValue(String variable, T defaultValue){
+		return (T) getConfig().get("pets." + getConfigKeyName() + "." + variable, defaultValue);
+	}
+	
+	@Override
+	public <T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue){
+		return getConfigValue(variable + "." + data.getConfigKeyName(), defaultValue);
+	}
+	
+	@Override
 	public boolean isEnabled(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".enable", true);
+		return getConfigValue("enable", true);
 	}
 	
 	@Override
 	public boolean isTagVisible(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".tagVisible", true);
+		return getConfigValue("tagVisible", true);
 	}
 	
 	@Override
 	public boolean isInteractMenuEnabled(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".interactMenu", true);
+		return getConfigValue("interactMenu", true);
 	}
 	
 	@Override
 	public boolean allowRidersFor(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".allow.riders", true);
-	}
-	
-	@Override
-	public boolean isDataAllowed(PetData<?> data){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".allow." + data.getConfigKeyName(), true);
-	}
-	
-	@Override
-	public boolean isDataForced(PetData<?> data){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".force." + data.getConfigKeyName(), false);
+		return getConfigValue("riders", true);
 	}
 	
 	@Override
 	public boolean canFly(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".canFly", false);
+		return getConfigValue("canFly", false);
 	}
 	
 	@Override
 	public boolean canIgnoreFallDamage(){
-		return EchoPet.getConfig().getBoolean("pets." + getConfigKeyName() + ".ignoreFallDamage", true);
+		return getConfigValue("ignoreFallDamage", true);
 	}
 	
 	@Override
 	public double getWalkSpeed(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".walkSpeed", 0.37D);
+		return getConfigValue("walkSpeed", 0.37D);
 	}
 	
 	@Override
 	public float getRideSpeed(){
-		return (float) EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".rideSpeed", 0.2D);
+		return getConfigValue("rideSpeed", 0.2D).floatValue();
 	}
 	
 	@Override
 	public float getFlySpeed(){
-		return (float) EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".flySpeed", 0.5D);
+		return getConfigValue("flySpeed", 0.5D).floatValue();
 	}
 	
 	@Override
 	public double getRideJumpHeight(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".rideJump", 0.6D);
+		return getConfigValue("rideJump", 0.6D);
 	}
 	
 	@Override
 	public double getStartFollowDistance(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".startFollowDistance", 6);
+		return getConfigValue("startFollowDistance", 6);
 	}
 	
 	@Override
 	public double getStopFollowDistance(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".stopFollowDistance", 2);
+		return getConfigValue("stopFollowDistance", 2);
 	}
 	
 	@Override
 	public double getTeleportDistance(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".teleportDistance", 10);
+		return getConfigValue("teleportDistance", 10);
 	}
 	
 	@Override
 	public double getFollowSpeedModifier(){
-		return EchoPet.getConfig().getDouble("pets." + getConfigKeyName() + ".followSpeedModifier", 1);
+		return getConfigValue("followSpeedModifier", 1);
+	}
+	
+	@Override
+	public boolean isDataAllowed(PetData<?> data){
+		return getConfigValue("allow." + data.getConfigKeyName(), true);
+	}
+	
+	@Override
+	public boolean isDataForced(PetData<?> data){
+		return getConfigValue("force." + data.getConfigKeyName(), false);
+	}
+	
+	@Override
+	public <T> T getDataDefaultValue(PetData<?> data, T defaultValue){
+		return getPetDataProperty(data, "default", defaultValue);
 	}
 	
 	public static @Nullable IPetType get(String name){

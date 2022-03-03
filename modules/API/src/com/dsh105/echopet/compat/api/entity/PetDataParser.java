@@ -17,17 +17,31 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.function.Function;
+import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.inventory.ItemStack;
 
 public interface PetDataParser<T>{
 	
 	T parse(String input);
 	
-	T defaultValue();
+	T defaultValue(IPetType petType);
 	
-	T interact(T current, ItemStack item);
+	/**
+	 * For setting an initial default value in configs.
+	 */
+	default T configDefaultValue(IPetType petType){
+		return defaultValue(petType);
+	}
 	
-	PetDataParser<Boolean> booleanParser = new PetDataParser<>(){
+	T interact(@Nullable T current, ItemStack item);
+	
+	class BooleanParser implements PetDataParser<Boolean>{
+		
+		private final PetData<Boolean> data;
+		
+		public BooleanParser(PetData<Boolean> data){this.data = data;}
 		
 		@Override
 		public Boolean parse(String input){
@@ -35,47 +49,56 @@ public interface PetDataParser<T>{
 		}
 		
 		@Override
-		public Boolean defaultValue(){
-			return true;
+		public Boolean defaultValue(IPetType petType){
+			return petType.getDataDefaultValue(data, true);
 		}
 		
 		@Override
 		public Boolean interact(Boolean current, ItemStack item){
 			return current == null || !current;
 		}
-	};
+	}
 	
-	/*PetDataParser<Integer> integerParser = new PetDataParser<>(){
-		@Override
-		public Integer parse(String input){
-			return Integer.parseInt(input);
+	static Function<PetData<Boolean>, PetDataParser<Boolean>> booleanParser(){
+		return BooleanParser::new;
+	}
+	
+	class DoubleParser implements PetDataParser<Double>{
+		
+		private final PetData<Double> data;
+		private final Double defaultValue;
+		
+		public DoubleParser(PetData<Double> data, Double defaultValue){
+			this.data = data;
+			this.defaultValue = defaultValue;
 		}
 		
-		@Override
-		public Integer defaultValue(){
-			return 0;
-		}
-		
-		@Override
-		public Integer interact(Integer current, ItemStack item){
-			return null;
-		}
-	};*/
-	
-	PetDataParser<Double> doubleParser = new PetDataParser<>(){
 		@Override
 		public Double parse(String input){
 			return Double.parseDouble(input);
 		}
 		
 		@Override
-		public Double defaultValue(){
-			return 0d;
+		public Double defaultValue(IPetType petType){
+			return petType.getDataDefaultValue(data, defaultValue);
 		}
 		
 		@Override
 		public Double interact(Double current, ItemStack item){
 			return null;
 		}
-	};
+	}
+	
+	static Function<PetData<Double>, PetDataParser<Double>> doubleParser(double defaultValue){
+		return data->new DoubleParser(data, defaultValue);
+	}
+	
+	static Function<PetData<Double>, PetDataParser<Double>> doubleParser(double defaultValue, String attributeKey){
+		return data->new DoubleParser(data, defaultValue){
+			@Override
+			public Double configDefaultValue(IPetType petType){
+				return EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, attributeKey);
+			}
+		};
+	}
 }

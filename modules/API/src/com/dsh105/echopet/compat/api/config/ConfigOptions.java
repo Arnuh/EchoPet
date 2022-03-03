@@ -125,32 +125,52 @@ public class ConfigOptions extends Options{
 		
 		for(PetType petType : PetType.values){
 			String configOption = petType.getConfigKeyName();
-			set("pets." + configOption + ".enable", true);
-			set("pets." + configOption + ".tagVisible", true);
-			set("pets." + configOption + ".defaultName", petType.getDefaultName());
-			set("pets." + configOption + ".interactMenu", true);
-			set("pets." + configOption + ".startFollowDistance", 6);
-			set("pets." + configOption + ".stopFollowDistance", 2);
-			set("pets." + configOption + ".teleportDistance", 10);
-			set("pets." + configOption + ".followSpeedModifier", 1);
+			String path = "pets." + configOption + ".";
+			set(path + "enable", true);
+			set(path + "tagVisible", true);
+			set(path + "defaultName", petType.getDefaultName());
+			set(path + "interactMenu", true);
+			set(path + "startFollowDistance", 6);
+			set(path + "stopFollowDistance", 2);
+			set(path + "teleportDistance", 10);
+			set(path + "followSpeedModifier", 1);
 			
-			set("pets." + configOption + ".walkSpeed", 0.37D);
-			set("pets." + configOption + ".rideSpeed", 0.2D);
-			set("pets." + configOption + ".flySpeed", 0.5D);
-			set("pets." + configOption + ".jumpHeight", 0.6D);
+			set(path + "walkSpeed", 0.37D);
+			set(path + "rideSpeed", 0.2D);
+			set(path + "flySpeed", 0.5D);
+			set(path + "jumpHeight", 0.6D);
 			
-			set("pets." + configOption + ".ignoreFallDamage", true);
+			set(path + "ignoreFallDamage", true);
 			
 			boolean canFly = petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX;
-			set("pets." + configOption + ".canFly", canFly);
-			set("pets." + configOption + ".allow.riders", true);
+			set(path + "canFly", canFly);
+			if(config.contains(path + "allow.riders")){
+				set(path + "riders", config.getBoolean(path + "allow.riders", true));
+				config.removeKey(path + "allow.riders");
+			}else{
+				set(path + "riders", true);
+			}
 			
+			String dataPath = path + "data.";
 			for(PetData<?> pd : PetData.values){
 				if(petType.isValidData(pd)){
-					set("pets." + configOption + ".allow." + pd.getConfigKeyName(), true);
-					set("pets." + configOption + ".force." + pd.getConfigKeyName(), false);
+					String petData = dataPath + pd.getConfigKeyName() + ".";
+					if(config.contains("pets." + configOption + ".allow." + pd.getConfigKeyName())){
+						set(petData + "allow", config.getBoolean("pets." + configOption + ".allow." + pd.getConfigKeyName(), true));
+						set(petData + "force", config.getBoolean("pets." + configOption + ".force." + pd.getConfigKeyName(), false));
+						config.removeKey("pets." + configOption + ".allow." + pd.getConfigKeyName());
+						config.removeKey("pets." + configOption + ".force." + pd.getConfigKeyName());
+					}else{
+						set(petData + "allow", true);
+						set(petData + "force", false);
+					}
+					Object defaultValue = pd.getParser().configDefaultValue(petType);
+					if(defaultValue == null) defaultValue = pd.getParser().defaultValue(petType);
+					set(petData + "default", defaultValue);
 				}
 			}
+			config.removeKey("pets." + configOption + ".allow");
+			config.removeKey("pets." + configOption + ".force");
 		}
 	}
 }

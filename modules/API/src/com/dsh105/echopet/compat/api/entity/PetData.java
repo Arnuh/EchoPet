@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.api.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
@@ -69,6 +70,10 @@ import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+
+import static com.dsh105.echopet.compat.api.entity.PetDataParser.booleanParser;
+import static com.dsh105.echopet.compat.api.entity.PetDataParser.doubleParser;
 
 public class PetData<T>{
 	
@@ -782,37 +787,27 @@ public class PetData<T>{
 				return;
 			}
 			pet.getCraftPet().setHealth(value);
-		}, PetDataParser.doubleParser, (PetDataMaterial) null, "Health Pet");
+		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health Pet");
 	//@formatter:on
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, Material material, String name, String... loreArray){
-		return new PetData<>(configKeyName, action, PetDataParser.booleanParser, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+		return new PetData<>(configKeyName, action, booleanParser(), (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, PetDataMaterial material, String name, String... loreArray){
-		return new PetData<>(configKeyName, action, PetDataParser.booleanParser, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+		return new PetData<>(configKeyName, action, booleanParser(), material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, Material material, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull Function<PetData<V>, PetDataParser<V>> parser, Material material, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, PetDataMaterial material, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull Function<PetData<V>, PetDataParser<V>> parser, PetDataMaterial material, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
-	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull PetDataParser<V> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull Function<PetData<V>, PetDataParser<V>> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, parser, material, version, versionCheckType, name, loreArray);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static @Nullable <T> PetData<T> get(String name){
-		for(PetData<?> data : values){
-			if(data.getConfigKeyName().equalsIgnoreCase(name)){
-				return (PetData<T>) data;
-			}
-		}
-		return null;
 	}
 	
 	private final String configKeyName;
@@ -824,6 +819,7 @@ public class PetData<T>{
 	private final List<String> lore;
 	private final @Nonnull PetDataParser<T> parser;
 	
+	@Deprecated
 	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
 		this.configKeyName = configKeyName.toLowerCase();// just incase
 		this.action = action;
@@ -837,6 +833,31 @@ public class PetData<T>{
 		}
 		this.parser = parser;
 		values.add(this);
+	}
+	
+	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull Function<PetData<T>, PetDataParser<T>> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+		this.configKeyName = configKeyName.toLowerCase();// just incase
+		this.action = action;
+		this.version = version;
+		this.versionCheckType = versionCheckType;
+		this.material = material;
+		this.name = name;
+		this.lore = new ArrayList<>();
+		for(String s : loreArray){
+			lore.add(ChatColor.GOLD + s);
+		}
+		this.parser = parser.apply(this);
+		values.add(this);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static @Nullable <T> PetData<T> get(String name){
+		for(PetData<?> data : values){
+			if(data.getConfigKeyName().equalsIgnoreCase(name)){
+				return (PetData<T>) data;
+			}
+		}
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")

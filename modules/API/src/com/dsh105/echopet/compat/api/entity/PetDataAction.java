@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import org.bukkit.entity.Player;
 
+@FunctionalInterface
 public interface PetDataAction<T>{
 	
 	/**

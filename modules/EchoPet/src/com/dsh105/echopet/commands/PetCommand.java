@@ -642,7 +642,8 @@ public class PetCommand implements CommandExecutor{
 					}
 					if(pi.spawnPet(owner, false) != null){
 						EchoPet.getDataManager().save(owner, pi, SavedType.Auto);
-						if(pi.getRider().isSpawned()){
+						IPet rider = pi.getRider();
+						if(rider != null && rider.isSpawned()){
 							Lang.sendTo(sender, Lang.CREATE_PET_WITH_RIDER.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))).replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
 						}else{
 							Lang.sendTo(sender, Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));

@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.entity;
 
 import java.util.List;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.util.Version;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -83,6 +84,12 @@ public interface IPetType{
 	
 	boolean canIgnoreFallDamage();
 	
+	YAMLConfig getConfig();
+	
+	<T> T getConfigValue(String variable, T defaultValue);
+	
+	<T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue);
+	
 	double getWalkSpeed();
 	
 	float getRideSpeed();
@@ -98,4 +105,6 @@ public interface IPetType{
 	double getTeleportDistance();
 	
 	double getFollowSpeedModifier();
+	
+	<T> T getDataDefaultValue(PetData<?> data, T defaultValue);
 }
