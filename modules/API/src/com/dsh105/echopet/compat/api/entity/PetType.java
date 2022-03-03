@@ -287,7 +287,7 @@ public enum PetType implements IPetType{
 	
 	@Override
 	public <T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue){
-		return getConfigValue(variable + "." + data.getConfigKeyName(), defaultValue);
+		return getConfigValue("data." + data.getConfigKeyName() + "." + variable, defaultValue);
 	}
 	
 	@Override
@@ -362,12 +362,12 @@ public enum PetType implements IPetType{
 	
 	@Override
 	public boolean isDataAllowed(PetData<?> data){
-		return getConfigValue("allow." + data.getConfigKeyName(), true);
+		return getPetDataProperty(data, "allow", true);
 	}
 	
 	@Override
 	public boolean isDataForced(PetData<?> data){
-		return getConfigValue("force." + data.getConfigKeyName(), false);
+		return getPetDataProperty(data, "force", false);
 	}
 	
 	@Override
