@@ -26,15 +26,14 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
+import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetUtil;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.entity.Entity;
@@ -55,18 +54,36 @@ public class PetManager implements IPetManager{
 		if((!checkWorldOverride || !EchoPet.getOptions().getConfig().getBoolean("multiworldLoadOverride", true)) && !EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)){
 			return action::setAction;
 		}
-		EchoPet.getDataManager().load(player, savedType).andThen(pet->{
+		EchoPet.getDataManager().load(player, savedType).andThen(petStorage->{
+			if(petStorage == null){
+				return;
+			}
+			PetStorage riderStorage = petStorage.rider;
+			IPet pet;
+			if(riderStorage != null){
+				pet = createPet(player, petStorage.petType, riderStorage.petType);
+			}else{
+				pet = createPet(player, petStorage.petType, true);
+			}
 			if(pet == null){
 				return;
 			}
+			pet.setPetName(petStorage.petName);
+			pet.getData().putAll(petStorage.petDataList);
+			if(riderStorage != null){
+				IPet rider = pet.getRider();
+				rider.setPetName(riderStorage.petName);
+				rider.getData().putAll(riderStorage.petDataList);
+			}
 			if(sendMessage){
 				if(savedType.equals(SavedType.Default)){
-					Lang.sendTo(player, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
+					Lang.sendTo(player, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", player.getName()));
 				}else{
-					Lang.sendTo(player, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
+					Lang.sendTo(player, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", player.getName()));
 				}
 			}
-			forceAllValidData(pet);
+			// Should we force after applying saved pet data?
+			// forceAllValidData(pet);
 			action.execute(pet);
 		});
 		return action::setAction;
@@ -85,12 +102,6 @@ public class PetManager implements IPetManager{
 	
 	@Override
 	public IPet createPet(Player owner, IPetType petType, boolean sendMessageOnFail){
-		if(ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN){
-			if(sendMessageOnFail){
-				Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
-			}
-			return null;
-		}
 		removePets(owner, true);
 		if(!WorldUtil.allowPets(owner.getLocation())){
 			if(sendMessageOnFail){
@@ -118,10 +129,6 @@ public class PetManager implements IPetManager{
 	
 	@Override
 	public @Nullable IPet createPet(Player owner, IPetType petType, IPetType riderType){
-		if(ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN){
-			Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
-			return null;
-		}
 		removePets(owner, true);
 		if(!WorldUtil.allowPets(owner.getLocation())){
 			Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
@@ -170,17 +177,17 @@ public class PetManager implements IPetManager{
 	 * Force all data specified in config file and notify player.
 	 */
 	@Override
-	public void forceAllValidData(IPet pi){
+	public void forceAllValidData(IPet pet){
 		List<PetData<?>> tempData = new ArrayList<>();
-		IPetType petType = pi.getPetType();
+		IPetType petType = pet.getPetType();
 		for(PetData<?> data : PetData.values){
 			if(!petType.isDataForced(data)) continue;
-			setData(pi, data, data.getParser().defaultValue(petType));
+			setData(pet, data, data.getParser().defaultValue(petType));
 			tempData.add(data);
 		}
 		
 		List<PetData<?>> tempRiderData = new ArrayList<>();
-		IPet rider = pi.getRider();
+		IPet rider = pet.getRider();
 		if(rider != null){
 			petType = rider.getPetType();
 			for(PetData<?> data : PetData.values){
@@ -193,7 +200,7 @@ public class PetManager implements IPetManager{
 		if(EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)){
 			String dataToString = tempRiderData.isEmpty() ? PetUtil.dataToString(tempData, tempRiderData) : PetUtil.dataToString(tempData);
 			if(dataToString != null){
-				Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
+				Lang.sendTo(pet.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
 			}
 		}
 	}
@@ -211,9 +218,9 @@ public class PetManager implements IPetManager{
 	}
 	
 	@Override
-	public void removePet(IPet pi, boolean makeDeathSound){
-		pi.removePet(makeDeathSound, true);
-		pets.remove(pi);
+	public void removePet(IPet pet, boolean makeDeathSound){
+		pet.removePet(makeDeathSound, true);
+		pets.remove(pet);
 	}
 	
 	@Override

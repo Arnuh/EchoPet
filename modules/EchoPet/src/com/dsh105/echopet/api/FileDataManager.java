@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.api;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
@@ -37,7 +38,6 @@ import org.bukkit.plugin.Plugin;
 
 import static com.dsh105.echopet.compat.api.plugin.EchoPet.ConfigType;
 import static com.dsh105.echopet.compat.api.plugin.EchoPet.getConfig;
-import static com.dsh105.echopet.compat.api.plugin.EchoPet.getManager;
 
 public class FileDataManager implements IDataManager{
 	
@@ -132,9 +132,9 @@ public class FileDataManager implements IDataManager{
 	}
 	
 	@Override
-	public ActionChain<IPet> load(Player player, SavedType savedType){
+	public ActionChain<PetStorage> load(Player player, SavedType savedType){
 		return SyncBukkitAction.execute(plugin, ()->{
-			IPet pet = create(player, savedType);
+			PetStorage pet = create(player, savedType);
 			if(pet == null && savedType.equals(SavedType.Default)){
 				pet = create(player, SavedType.Auto);
 			}
@@ -142,7 +142,7 @@ public class FileDataManager implements IDataManager{
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error loading pet data for " + player.getUniqueId(), ex));
 	}
 	
-	private IPet create(Player player, SavedType savedType){
+	private PetStorage create(Player player, SavedType savedType){
 		YAMLConfig config = getConfig(ConfigType.DATA);
 		
 		String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
@@ -160,61 +160,55 @@ public class FileDataManager implements IDataManager{
 		if(!petType.isEnabled()){
 			return null;
 		}
-		IPet pet = getManager().createPet(player, petType, true);
-		if(pet == null){
-			return null;
-		}
-		pet.setPetName(name);
+		PetStorage pet = new PetStorage(petType, name, new HashMap<>());
 		
 		ConfigurationSection cs = config.getConfigurationSection(path + ".pet.data");
 		if(cs != null){
 			for(String key : cs.getKeys(false)){
 				PetData<?> pd = PetData.get(key);
 				if(pd == null){
-					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".");
+					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + player.getName() + ". Unknown enum type: " + key + ".");
 					continue;
 				}
 				Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
-				getManager().setData(pet, pd, value);
+				pet.petDataList.put(pd, value);
 			}
 		}
 		
-		createRider(player, pet, savedType);
+		pet.rider = createRider(player, pet.petType, savedType);
 		return pet;
 	}
 	
-	public void createRider(Player player, IPet pet, SavedType savedType){
+	public PetStorage createRider(Player player, IPetType parentPetType, SavedType savedType){
 		YAMLConfig config = getConfig(ConfigType.DATA);
 		
 		String path = savedType.getOldFileStuff() + "." + player.getUniqueId() + ".rider";
-		if(config.get(path + ".type") != null){
-			IPetType riderPetType = PetType.get(config.getString(path + ".type"));
-			if(riderPetType == null){
-				return;
-			}
-			String riderName = config.getString(path + ".name");
-			if(riderName == null || riderName.equalsIgnoreCase("")){
-				riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
-			}
-			if(pet.getPetType().allowRidersFor()){
-				IPet rider = pet.createRider(riderPetType, true);
-				if(rider != null){
-					rider.setPetName(riderName);
-					ConfigurationSection mcs = config.getConfigurationSection(path + ".data");
-					if(mcs != null){
-						for(String key : mcs.getKeys(false)){
-							PetData<?> pd = PetData.get(key);
-							if(pd == null){
-								plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
-								continue;
-							}
-							Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
-							getManager().setData(pet, pd, value);
-						}
-					}
+		if(config.get(path + ".type") == null || !parentPetType.allowRidersFor()){
+			return null;
+		}
+		IPetType riderPetType = PetType.get(config.getString(path + ".type"));
+		if(riderPetType == null){
+			return null;
+		}
+		String riderName = config.getString(path + ".name");
+		if(riderName == null || riderName.equalsIgnoreCase("")){
+			riderName = riderPetType.getDefaultName(player.getName());
+		}
+		PetStorage pet = new PetStorage(riderPetType, riderName, new HashMap<>());
+		
+		ConfigurationSection mcs = config.getConfigurationSection(path + ".data");
+		if(mcs != null){
+			for(String key : mcs.getKeys(false)){
+				PetData<?> pd = PetData.get(key);
+				if(pd == null){
+					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + player.getName() + ". Unknown enum type: " + key + ".", true);
+					continue;
 				}
+				Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
+				pet.petDataList.put(pd, value);
 			}
 		}
+		return pet;
 	}
 	
 	@Override

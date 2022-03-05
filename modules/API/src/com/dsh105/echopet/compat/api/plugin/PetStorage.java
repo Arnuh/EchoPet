@@ -23,11 +23,12 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 
 public class PetStorage{
 	
-	public Map<PetData<?>, Object> petDataList;
 	public IPetType petType;
 	public String petName;
+	public Map<PetData<?>, Object> petDataList;
+	public PetStorage rider;
 	
-	public PetStorage(Map<PetData<?>, Object> petDataList, IPetType petType, String petName){
+	public PetStorage(IPetType petType, String petName, Map<PetData<?>, Object> petDataList){
 		this.petDataList = petDataList;
 		this.petType = petType;
 		this.petName = petName;

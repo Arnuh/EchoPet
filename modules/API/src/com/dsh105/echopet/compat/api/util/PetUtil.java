@@ -153,7 +153,7 @@ public class PetUtil{
 			}
 		}
 		
-		return new PetStorage(petDataList, petType, name);
+		return new PetStorage(petType, name, petDataList);
 	}
 	
 	@Deprecated

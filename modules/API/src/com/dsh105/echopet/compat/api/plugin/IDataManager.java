@@ -27,7 +27,7 @@ public interface IDataManager{
 	
 	ActionChain<Boolean> save(Player player, PetStorage pet, PetStorage rider, SavedType savedType);
 	
-	ActionChain<IPet> load(Player player, SavedType savedType);
+	ActionChain<PetStorage> load(Player player, SavedType savedType);
 	
 	ActionChain<Boolean> remove(Player player, SavedType savedType);
 	

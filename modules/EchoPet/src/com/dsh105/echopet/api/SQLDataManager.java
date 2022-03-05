@@ -123,7 +123,7 @@ public class SQLDataManager implements IDataManager{
 	}
 	
 	@Override
-	public ActionChain<IPet> load(Player player, SavedType savedType){
+	public ActionChain<PetStorage> load(Player player, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
 			try(Connection con = EchoPet.getPlugin().getConnection()){
 				try(PreparedStatement ps = con.prepareStatement("""
@@ -132,7 +132,7 @@ public class SQLDataManager implements IDataManager{
 					ps.setString(1, player.getUniqueId().toString());
 					try(ResultSet rs = ps.executeQuery()){
 						if(rs.next()){
-							return create(player, rs);
+							return create(rs);
 						}
 					}
 				}
@@ -143,35 +143,22 @@ public class SQLDataManager implements IDataManager{
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error loading pet data for " + player.getUniqueId(), ex));
 	}
 	
-	private IPet create(Player player, ResultSet rs) throws SQLException{
+	private PetStorage create(ResultSet rs) throws SQLException{
 		IPetType type = PetType.get(rs.getString("type"));
 		if(type == null){
 			return null;
 		}
-		IPet pet = EchoPet.getManager().createPet(player, type, false);
-		if(pet == null){
-			return null;
-		}
-		pet.setPetName(rs.getString("name"));
-		
 		Map<PetData<?>, Object> dataList = deserializePetData(rs.getString("data"));
-		for(Map.Entry<PetData<?>, Object> entry : dataList.entrySet()){
-			EchoPet.getManager().setData(pet, entry.getKey(), entry.getValue());
-		}
 		
-		if(rs.getString("rider_type") != null){
+		PetStorage pet = new PetStorage(type, rs.getString("name"), dataList);
+		
+		if(pet.petType.allowRidersFor() && rs.getString("rider_type") != null){
 			IPetType mt = PetType.get(rs.getString("rider_type"));
 			if(mt == null){
 				return null;
 			}
-			IPet rider = pet.createRider(mt, false);
-			if(rider != null){
-				rider.setPetName(rs.getString("rider_name"));
-				Map<PetData<?>, Object> riderDataList = deserializePetData(rs.getString("rider_data"));
-				for(Map.Entry<PetData<?>, Object> entry : riderDataList.entrySet()){
-					EchoPet.getManager().setData(rider, entry.getKey(), entry.getValue());
-				}
-			}
+			Map<PetData<?>, Object> riderDataList = deserializePetData(rs.getString("rider_data"));
+			pet.rider = new PetStorage(mt, rs.getString("rider_name"), riderDataList);
 		}
 		return pet;
 	}
