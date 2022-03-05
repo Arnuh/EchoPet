@@ -77,9 +77,9 @@ public class PetManager implements IPetManager{
 			}
 			if(sendMessage){
 				if(savedType.equals(SavedType.Default)){
-					Lang.sendTo(player, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", player.getName()));
+					Lang.sendTo(player, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
 				}else{
-					Lang.sendTo(player, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", player.getName()));
+					Lang.sendTo(player, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
 				}
 			}
 			// Should we force after applying saved pet data?
