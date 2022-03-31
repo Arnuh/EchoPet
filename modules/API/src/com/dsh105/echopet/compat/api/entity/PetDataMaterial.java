@@ -20,5 +20,11 @@ import org.bukkit.Material;
 
 public interface PetDataMaterial{
 	
-	Material get(IPet pet);
+	Material defaultMaterial(IPetType petType);
+	
+	default Material get(IPetType petType, PetData<?> petData){
+		String materialName = petType.getPetDataProperty(petData, "item.material", null);
+		if(materialName == null) return defaultMaterial(petType);
+		return Material.getMaterial(materialName);
+	}
 }

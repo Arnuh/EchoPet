@@ -158,8 +158,8 @@ public class PetData<T>{
 				return beePet::setAngry;
 			}
 			return null;
-		}, pet->{
-			if(pet.getPetType().equals(PetType.WOLF)){
+		}, petType->{
+			if(petType.equals(PetType.WOLF)){
 				return Material.PORKCHOP;
 			}
 			return Material.STONE_SWORD;// Bee
@@ -261,8 +261,8 @@ public class PetData<T>{
 				return value->setPufferFishState(pet, 0);
 			}
 			return null;
-		}, pet->{
-			if(pet.getPetType().equals(PetType.PUFFERFISH)){
+		}, petType->{
+			if(petType.equals(PetType.PUFFERFISH)){
 				return Material.PUFFERFISH;
 			}
 			return Material.SLIME_BALL;
@@ -274,8 +274,8 @@ public class PetData<T>{
 				return value->setPufferFishState(pet, 1);
 			}
 			return null;
-		}, pet->{
-			if(pet.getPetType().equals(PetType.PUFFERFISH)){
+		}, petType->{
+			if(petType.equals(PetType.PUFFERFISH)){
 				return Material.PUFFERFISH;
 			}
 			return Material.SLIME_BALL;
@@ -289,8 +289,8 @@ public class PetData<T>{
 				return setTropicalFishLarge(pet);
 			}
 			return null;
-		}, pet->{
-			if(pet.getPetType().equals(PetType.PUFFERFISH)){
+		}, petType->{
+			if(petType.equals(PetType.PUFFERFISH)){
 				return Material.PUFFERFISH;
 			}
 			return Material.SLIME_BALL;
@@ -818,6 +818,8 @@ public class PetData<T>{
 	private final String name;
 	private final List<String> lore;
 	private final @Nonnull PetDataParser<T> parser;
+	//
+	private ItemStack generatedItem;
 	
 	@Deprecated
 	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
@@ -826,7 +828,7 @@ public class PetData<T>{
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = name;
+		this.name = ChatColor.RED + name;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add(ChatColor.GOLD + s);
@@ -841,7 +843,7 @@ public class PetData<T>{
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = name;
+		this.name = ChatColor.RED + name;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add(ChatColor.GOLD + s);
@@ -890,23 +892,28 @@ public class PetData<T>{
 		return name;
 	}
 	
-	public boolean ignoreSaving(){
-		return this == PetData.RIDE || this == PetData.HAT;
-	}
-	
 	public @Nullable PetDataMaterial getMaterial(){
 		return material;
 	}
 	
+	public List<String> getLore(){
+		return lore;
+	}
+	
+	public boolean ignoreSaving(){
+		return this == PetData.RIDE || this == PetData.HAT;
+	}
+	
 	public @Nullable ItemStack toItem(IPet pet){
 		if(material == null) return null;
-		ItemStack item = new ItemStack(material.get(pet));
-		ItemMeta meta = item.getItemMeta();
+		if(generatedItem != null) return generatedItem;
+		generatedItem = new ItemStack(material.get(pet.getPetType(), this));
+		ItemMeta meta = generatedItem.getItemMeta();
 		if(meta == null) return null;
-		meta.setDisplayName(ChatColor.RED + name);
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		return item;
+		meta.setDisplayName(pet.getPetType().getPetDataProperty(this, "item.name", name));
+		meta.setLore(pet.getPetType().getPetDataProperty(this, "item.lore", lore));
+		generatedItem.setItemMeta(meta);
+		return generatedItem;
 	}
 	
 	public boolean isCompatible(){
@@ -927,6 +934,11 @@ public class PetData<T>{
 	@Nonnull
 	public PetDataParser<T> getParser(){
 		return parser;
+	}
+	
+	@Override
+	public String toString(){
+		return getConfigKeyName();
 	}
 	
 	// All the below methods are technically wrong.
@@ -1088,10 +1100,5 @@ public class PetData<T>{
 			((IMushroomCowPet) pet).setType(cowType);
 		}
 		return true;
-	}
-	
-	@Override
-	public String toString(){
-		return getConfigKeyName();
 	}
 }

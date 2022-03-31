@@ -167,6 +167,16 @@ public class ConfigOptions extends Options{
 					Object defaultValue = pd.getParser().configDefaultValue(petType);
 					if(defaultValue == null) defaultValue = pd.getParser().defaultValue(petType);
 					set(petData + "default", defaultValue);
+					
+					String petDataItem = petData + "item.";
+					Material defaultMaterial = pd.getMaterial() != null ? pd.getMaterial().defaultMaterial(petType) : null;
+					if(defaultMaterial != null){
+						set(petDataItem + "material", defaultMaterial.name());
+						set(petDataItem + "name", pd.getItemName());
+						if(!pd.getLore().isEmpty()){
+							set(petDataItem + "lore", pd.getLore());
+						}
+					}
 				}
 			}
 			config.removeKey("pets." + configOption + ".allow");
