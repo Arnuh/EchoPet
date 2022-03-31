@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
@@ -828,10 +829,10 @@ public class PetData<T>{
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = ChatColor.RED + name;
+		this.name = "&c" + name;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
-			lore.add(ChatColor.GOLD + s);
+			lore.add("&6" + s);
 		}
 		this.parser = parser;
 		values.add(this);
@@ -843,10 +844,10 @@ public class PetData<T>{
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = ChatColor.RED + name;
+		this.name = "&c" + name;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
-			lore.add(ChatColor.GOLD + s);
+			lore.add("&6" + s);
 		}
 		this.parser = parser.apply(this);
 		values.add(this);
@@ -910,8 +911,12 @@ public class PetData<T>{
 		generatedItem = new ItemStack(material.get(pet.getPetType(), this));
 		ItemMeta meta = generatedItem.getItemMeta();
 		if(meta == null) return null;
-		meta.setDisplayName(pet.getPetType().getPetDataProperty(this, "item.name", name));
-		meta.setLore(pet.getPetType().getPetDataProperty(this, "item.lore", lore));
+		String displayName = pet.getPetType().getPetDataProperty(this, "item.name", name);
+		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
+		List<String> newLore = pet.getPetType().getPetDataProperty(this, "item.lore", lore).stream()
+			.map(s->ChatColor.translateAlternateColorCodes('&', s))
+			.collect(Collectors.toList());
+		meta.setLore(newLore);
 		generatedItem.setItemMeta(meta);
 		return generatedItem;
 	}

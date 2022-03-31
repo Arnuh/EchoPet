@@ -16,16 +16,19 @@
  */
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import com.dsh105.echopet.compat.api.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public enum PetDataCategory{
-	AXOLOTL_VARIANT(Material.getMaterial("AXOLOTL_BUCKET"), "Axolotl Variant", PetData.LUCY, PetData.WILD, PetData.GOLD, PetData.CYAN, PetData.BLUE),
+	AXOLOTL_VARIANT(Material.AXOLOTL_BUCKET, "Axolotl Variant", PetData.LUCY, PetData.WILD, PetData.GOLD, PetData.CYAN, PetData.BLUE),
 	CAT_TYPE(Material.SALMON, "Cat Type", PetData.TABBY, PetData.TUXEDO, PetData.CAT_RED, PetData.SIAMESE, PetData.BRITISH_SHORTHAIR, PetData.CALICO, PetData.PERSIAN, PetData.RAGDOLL, PetData.CAT_WHITE, PetData.JELLIE, PetData.CAT_BLACK),
-	OCELOT_TYPE(Material.WHITE_WOOL, "Ocelot Type"),
 	WOOL_COLOR(Material.WHITE_WOOL, "Wool Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	COLLAR_COLOR(Material.WHITE_WOOL, "Collar Color", PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	SLIME_SIZE(Material.SLIME_BALL, "Slime Size", PetData.SIZE_SMALL, PetData.SIZE_MEDIUM, PetData.SIZE_LARGE),
@@ -50,15 +53,38 @@ public enum PetDataCategory{
 	;
 	
 	public static final PetDataCategory[] values = values();
-	private final List<PetData<?>> data;
+	private final List<PetData<?>> defaultData, data;
 	private final Material material;
 	private final String name;
+	private final List<String> lore;
 	private ItemStack item;
 	
 	PetDataCategory(Material material, String name, PetData<?>... data){
 		this.material = material;
-		this.name = name;
-		this.data = List.of(data);
+		this.name = "&c" + name;
+		this.defaultData = List.of(data);
+		this.data = new LinkedList<>();
+		this.lore = new LinkedList<>();
+	}
+	
+	public String getConfigKeyName(){
+		return name().toLowerCase().replace("_", "");
+	}
+	
+	public Material getDefaultMaterial(){
+		return material;
+	}
+	
+	public String getDefaultName(){
+		return name;
+	}
+	
+	public List<String> getDefaultLore(){
+		return lore;
+	}
+	
+	public List<PetData<?>> getDefaultData(){
+		return defaultData;
 	}
 	
 	public List<PetData<?>> getData(){
@@ -66,20 +92,27 @@ public enum PetDataCategory{
 	}
 	
 	public boolean hasData(PetData<?> petData){
-		for(PetData<?> d : data){
+		for(PetData<?> d : getData()){
 			if(d.equals(petData)) return true;
 		}
 		return false;
 	}
 	
 	public ItemStack getItem(){
-		if(item == null && material != null){
-			item = new ItemStack(material);
-			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(ChatColor.RED + name);
-			// meta.setLore(this.lore);
-			item.setItemMeta(meta);
-		}
+		if(material == null) return null;
+		if(item != null) return item;
+		String materialName = getConfigValue("item.material", null);
+		if(materialName == null) item = new ItemStack(getDefaultMaterial());
+		else item = new ItemStack(Material.getMaterial(materialName));
+		ItemMeta meta = item.getItemMeta();
+		if(meta == null) return null;
+		String name = getConfigValue("item.name", getDefaultName());
+		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+		List<String> lore = getConfigValue("item.lore", getDefaultLore()).stream()
+			.map(s->ChatColor.translateAlternateColorCodes('&', s))
+			.collect(Collectors.toList());
+		meta.setLore(lore);
+		item.setItemMeta(meta);
 		return item;
 	}
 	
@@ -88,5 +121,24 @@ public enum PetDataCategory{
 			if(category.hasData(data)) return category;
 		}
 		return null;
+	}
+	
+	public YAMLConfig getConfig(){
+		return EchoPet.getConfig(EchoPet.ConfigType.PET_CATEGORY);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T getConfigValue(String variable, T defaultValue){
+		return (T) getConfig().get(getConfigKeyName() + "." + variable, defaultValue);
+	}
+	
+	// Kinda ugly but ima do it for now.
+	public void load(){
+		List<String> petData = getConfig().getStringList(getConfigKeyName() + ".data");
+		for(String s : petData){
+			PetData<?> found = PetData.get(s);
+			if(found == null) continue;
+			this.data.add(found);
+		}
 	}
 }

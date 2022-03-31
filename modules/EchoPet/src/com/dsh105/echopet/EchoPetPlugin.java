@@ -37,6 +37,7 @@ import com.dsh105.echopet.commands.PetAdminCommand;
 import com.dsh105.echopet.commands.PetCommand;
 import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
+import com.dsh105.echopet.compat.api.config.CategoryConfigOptions;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.YAMLConfigManager;
@@ -79,7 +80,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
 	private CommandManager COMMAND_MANAGER;
 	private YAMLConfigManager configManager;
-	private YAMLConfig petConfig;
+	private YAMLConfig petConfig, petCategoryConfig;
 	private YAMLConfig mainConfig;
 	private YAMLConfig langConfig;
 	private DataSource dataSource;
@@ -214,6 +215,13 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
 		}
 		this.prefix = Lang.PREFIX.toString();
+		try{
+			petCategoryConfig = configManager.getNewConfig("pet-categories.yml");
+			petCategoryConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
+			new CategoryConfigOptions(petCategoryConfig);
+		}catch(Exception ex){
+			getLogger().log(Level.WARNING, "Configuration File [pets-categories.yml] generation failed.", ex);
+		}
 	}
 	
 	private boolean prepareSqlDatabase(){
@@ -319,6 +327,11 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public YAMLConfig getLangConfig(){
 		return langConfig;
+	}
+	
+	@Override
+	public YAMLConfig getPetCategoryConfig(){
+		return petCategoryConfig;
 	}
 	
 	@Override

@@ -55,6 +55,8 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	YAMLConfig getLangConfig();
 	
+	YAMLConfig getPetCategoryConfig();
+	
 	ConfigOptions getOptions();
 	
 	IUpdater getUpdater();

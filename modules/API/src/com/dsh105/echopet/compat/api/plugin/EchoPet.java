@@ -67,6 +67,7 @@ public final class EchoPet{
 		return switch(type){
 			case DATA -> PLUGIN.getPetConfig();
 			case LANG -> PLUGIN.getLangConfig();
+			case PET_CATEGORY -> PLUGIN.getPetCategoryConfig();
 			default -> PLUGIN.getMainConfig();
 		};
 	}
@@ -74,6 +75,7 @@ public final class EchoPet{
 	public enum ConfigType{
 		MAIN,
 		DATA,
-		LANG
+		LANG,
+		PET_CATEGORY
 	}
 }
