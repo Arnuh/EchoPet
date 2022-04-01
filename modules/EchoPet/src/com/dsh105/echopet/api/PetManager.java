@@ -181,6 +181,7 @@ public class PetManager implements IPetManager{
 		List<PetData<?>> tempData = new ArrayList<>();
 		IPetType petType = pet.getPetType();
 		for(PetData<?> data : PetData.values){
+			if(!petType.isValidData(data)) continue;
 			if(!petType.isDataForced(data)) continue;
 			setData(pet, data, data.getParser().defaultValue(petType));
 			tempData.add(data);
@@ -191,6 +192,7 @@ public class PetManager implements IPetManager{
 		if(rider != null){
 			petType = rider.getPetType();
 			for(PetData<?> data : PetData.values){
+				if(!petType.isValidData(data)) continue;
 				if(!petType.isDataForced(data)) continue;
 				setData(rider, data, data.getParser().defaultValue(petType));
 				tempRiderData.add(data);

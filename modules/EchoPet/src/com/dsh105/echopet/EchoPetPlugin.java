@@ -178,6 +178,14 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
 	private void loadConfiguration(){
 		String[] header = {"EchoPet By DSH105", "Updated by Borlea", "& NobleProductions <3", "---------------------", "Configuration for EchoPet 2", "See the EchoPet Wiki before editing this file"};
+		// Load categories first because PetData default config is dependent on category petdata being loaded.
+		try{
+			petCategoryConfig = configManager.getNewConfig("pet-categories.yml");
+			petCategoryConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
+			new CategoryConfigOptions(petCategoryConfig);
+		}catch(Exception ex){
+			getLogger().log(Level.WARNING, "Configuration File [pets-categories.yml] generation failed.", ex);
+		}
 		try{
 			mainConfig = this.configManager.getNewConfig("config.yml", header);
 		}catch(Exception e){
@@ -215,13 +223,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
 		}
 		this.prefix = Lang.PREFIX.toString();
-		try{
-			petCategoryConfig = configManager.getNewConfig("pet-categories.yml");
-			petCategoryConfig.setScalarStyle(DumperOptions.ScalarStyle.SINGLE_QUOTED);
-			new CategoryConfigOptions(petCategoryConfig);
-		}catch(Exception ex){
-			getLogger().log(Level.WARNING, "Configuration File [pets-categories.yml] generation failed.", ex);
-		}
 	}
 	
 	private boolean prepareSqlDatabase(){

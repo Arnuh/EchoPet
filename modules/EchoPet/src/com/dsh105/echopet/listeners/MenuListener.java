@@ -94,7 +94,7 @@ public class MenuListener implements Listener{
 						player.closeInventory();
 						return;
 					}
-					for(PetDataCategory category : PetDataCategory.values){
+					for(PetDataCategory category : pet.getPetType().getAllowedCategories()){
 						if(ItemUtil.matches(currentlyInSlot, category.getItem())){
 							new DataMenu(category, pet).open(false);
 							return;
@@ -110,14 +110,14 @@ public class MenuListener implements Listener{
 					PetDataCategory category = null;
 					if(title.contains(" - ")){
 						String[] split = title.split(" - ");
-						for(PetDataCategory cat : PetDataCategory.values){
+						for(PetDataCategory cat : pet.getPetType().getAllowedCategories()){
 							if(split[split.length - 1].equals(StringUtil.capitalise(cat.toString().replace("_", " ")))){
 								category = cat;
 								break;
 							}
 						}
 					}
-					List<PetData<?>> values = category != null ? category.getData() : PetData.values;// Pretty sure this is fine.
+					List<PetData<?>> values = category != null ? category.getData() : pet.getPetType().getAllowedDataTypes();// Pretty sure this is fine.
 					for(PetData<?> data : values){
 						if(data.attemptInteract(player, pet, category, currentlyInSlot)){
 							break;
