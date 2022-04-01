@@ -21,6 +21,7 @@ import java.util.List;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.util.Version;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public interface IPetType{
@@ -87,6 +88,8 @@ public interface IPetType{
 	YAMLConfig getConfig();
 	
 	<T> T getConfigValue(String variable, T defaultValue);
+	
+	ConfigurationSection getPetDataSection(PetData<?> data);
 	
 	<T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue);
 	

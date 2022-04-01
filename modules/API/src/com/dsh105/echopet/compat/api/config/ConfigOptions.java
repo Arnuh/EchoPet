@@ -153,29 +153,31 @@ public class ConfigOptions extends Options{
 			
 			String dataPath = path + "data.";
 			for(PetData<?> pd : PetData.values){
-				if(petType.isValidData(pd)){
-					String petData = dataPath + pd.getConfigKeyName() + ".";
-					if(config.contains("pets." + configOption + ".allow." + pd.getConfigKeyName())){
-						set(petData + "allow", config.getBoolean("pets." + configOption + ".allow." + pd.getConfigKeyName(), true));
-						set(petData + "force", config.getBoolean("pets." + configOption + ".force." + pd.getConfigKeyName(), false));
-						config.removeKey("pets." + configOption + ".allow." + pd.getConfigKeyName());
-						config.removeKey("pets." + configOption + ".force." + pd.getConfigKeyName());
-					}else{
-						set(petData + "allow", true);
-						set(petData + "force", false);
-					}
-					Object defaultValue = pd.getParser().configDefaultValue(petType);
-					if(defaultValue == null) defaultValue = pd.getParser().defaultValue(petType);
-					set(petData + "default", defaultValue);
-					
-					String petDataItem = petData + "item.";
-					Material defaultMaterial = pd.getMaterial() != null ? pd.getMaterial().defaultMaterial(petType) : null;
-					if(defaultMaterial != null){
-						set(petDataItem + "material", defaultMaterial.name());
-						set(petDataItem + "name", pd.getItemName());
-						if(!pd.getLore().isEmpty()){
-							set(petDataItem + "lore", pd.getLore());
-						}
+				if(!petType.isValidData(pd)){
+					continue;
+				}
+				
+				String petData = dataPath + pd.getConfigKeyName() + ".";
+				if(config.contains("pets." + configOption + ".allow." + pd.getConfigKeyName())){
+					set(petData + "allow", config.getBoolean("pets." + configOption + ".allow." + pd.getConfigKeyName(), true));
+					set(petData + "force", config.getBoolean("pets." + configOption + ".force." + pd.getConfigKeyName(), false));
+					config.removeKey("pets." + configOption + ".allow." + pd.getConfigKeyName());
+					config.removeKey("pets." + configOption + ".force." + pd.getConfigKeyName());
+				}else{
+					set(petData + "allow", true);
+					set(petData + "force", false);
+				}
+				Object defaultValue = pd.getParser().configDefaultValue(petType);
+				if(defaultValue == null) defaultValue = pd.getParser().defaultValue(petType);
+				set(petData + "default", defaultValue);
+				
+				String petDataItem = petData + "item.";
+				Material defaultMaterial = pd.getMaterial() != null ? pd.getMaterial().defaultMaterial(petType) : null;
+				if(defaultMaterial != null){
+					set(petDataItem + "material", defaultMaterial.name());
+					set(petDataItem + "name", pd.getItemName());
+					if(!pd.getLore().isEmpty()){
+						set(petDataItem + "lore", pd.getLore());
 					}
 				}
 			}

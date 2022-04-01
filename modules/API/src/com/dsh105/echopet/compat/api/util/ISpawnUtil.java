@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public interface ISpawnUtil{
 	
@@ -30,4 +31,6 @@ public interface ISpawnUtil{
 	ItemStack getSpawnEgg(ItemStack i, String entityTag);
 	
 	<T> T getAttribute(IPetType petType, String attributeKey);
+	
+	void setSkullTexture(SkullMeta meta, String data);
 }

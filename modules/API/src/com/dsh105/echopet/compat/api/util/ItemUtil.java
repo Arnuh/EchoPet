@@ -17,7 +17,16 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class ItemUtil{
 	
@@ -45,8 +54,42 @@ public class ItemUtil{
 		if(itemStack1.hasItemMeta() != itemStack2.hasItemMeta()){
 			return false;
 		}
+		ItemMeta meta1 = itemStack1.getItemMeta();
+		ItemMeta meta2 = itemStack2.getItemMeta();
+		if(meta1 == null || meta2 == null){
+			return false;
+		}
 		
-		return !itemStack1.hasItemMeta() || !itemStack2.hasItemMeta() || itemStack1.getItemMeta().equals(itemStack2.getItemMeta());
+		if(meta1.hasDisplayName() != meta2.hasDisplayName()){
+			return false;
+		}
+		return Objects.equals(meta1.getDisplayName(), meta2.getDisplayName());
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static ItemStack parseFromConfig(ConfigurationSection section, Material defaultMaterial, String defaultName, List<String> defaultLore){
+		ItemStack item;
+		String materialName = section.getString("material", null);
+		if(materialName == null) item = new ItemStack(defaultMaterial);
+		else item = new ItemStack(Material.getMaterial(materialName));
+		
+		ItemMeta meta = item.getItemMeta();
+		if(meta == null) return null;
+		String name = section.getString("name", defaultName);
+		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+		List<String> lore = ((List<String>) section.get("item.lore", defaultLore)).stream()
+			.map(s->ChatColor.translateAlternateColorCodes('&', s))
+			.collect(Collectors.toList());
+		meta.setLore(lore);
+		int customModelData = section.getInt("customModelData", -1);
+		meta.setCustomModelData(customModelData == -1 ? null : customModelData);
+		if(meta instanceof SkullMeta skullMeta){
+			String texture = section.getString("texture", null);
+			if(texture != null){
+				EchoPet.getPlugin().getSpawnUtil().setSkullTexture(skullMeta, texture);
+			}
+		}
+		item.setItemMeta(meta);
+		return item;
+	}
 }

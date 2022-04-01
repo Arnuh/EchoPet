@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
@@ -61,7 +60,6 @@ import com.dsh105.echopet.compat.api.util.ItemUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.dsh105.echopet.compat.api.util.VersionCheckType;
-import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Horse;
@@ -70,7 +68,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 
 import static com.dsh105.echopet.compat.api.entity.PetDataParser.booleanParser;
@@ -908,16 +905,11 @@ public class PetData<T>{
 	public @Nullable ItemStack toItem(IPet pet){
 		if(material == null) return null;
 		if(generatedItem != null) return generatedItem;
-		generatedItem = new ItemStack(material.get(pet.getPetType(), this));
-		ItemMeta meta = generatedItem.getItemMeta();
-		if(meta == null) return null;
-		String displayName = pet.getPetType().getPetDataProperty(this, "item.name", name);
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
-		List<String> newLore = pet.getPetType().getPetDataProperty(this, "item.lore", lore).stream()
-			.map(s->ChatColor.translateAlternateColorCodes('&', s))
-			.collect(Collectors.toList());
-		meta.setLore(newLore);
-		generatedItem.setItemMeta(meta);
+		var petDataSection = pet.getPetType().getPetDataSection(this);
+		if(petDataSection == null) return null; // If this happens it's likely a dev error.
+		var section = petDataSection.getConfigurationSection("item");
+		if(section == null) return null;
+		generatedItem = ItemUtil.parseFromConfig(section, material.defaultMaterial(pet.getPetType()), name, lore);
 		return generatedItem;
 	}
 	

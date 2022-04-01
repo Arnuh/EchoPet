@@ -32,6 +32,7 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public enum PetType implements IPetType{
@@ -286,8 +287,16 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
+	public ConfigurationSection getPetDataSection(PetData<?> data){
+		return getConfig().getConfigurationSection("pets." + getConfigKeyName() + ".data." + data.getConfigKeyName());
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
 	public <T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue){
-		return getConfigValue("data." + data.getConfigKeyName() + "." + variable, defaultValue);
+		ConfigurationSection section = getPetDataSection(data);
+		if(section == null) return defaultValue;
+		return (T) section.get("." + variable, defaultValue);
 	}
 	
 	@Override

@@ -18,13 +18,11 @@ package com.dsh105.echopet.compat.api.entity;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import org.bukkit.ChatColor;
+import com.dsh105.echopet.compat.api.util.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public enum PetDataCategory{
 	AXOLOTL_VARIANT(Material.AXOLOTL_BUCKET, "Axolotl Variant", PetData.LUCY, PetData.WILD, PetData.GOLD, PetData.CYAN, PetData.BLUE),
@@ -101,18 +99,7 @@ public enum PetDataCategory{
 	public ItemStack getItem(){
 		if(material == null) return null;
 		if(item != null) return item;
-		String materialName = getConfigValue("item.material", null);
-		if(materialName == null) item = new ItemStack(getDefaultMaterial());
-		else item = new ItemStack(Material.getMaterial(materialName));
-		ItemMeta meta = item.getItemMeta();
-		if(meta == null) return null;
-		String name = getConfigValue("item.name", getDefaultName());
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-		List<String> lore = getConfigValue("item.lore", getDefaultLore()).stream()
-			.map(s->ChatColor.translateAlternateColorCodes('&', s))
-			.collect(Collectors.toList());
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		item = ItemUtil.parseFromConfig(getConfig().getConfigurationSection(getConfigKeyName() + ".item"), getDefaultMaterial(), getDefaultName(), getDefaultLore());
 		return item;
 	}
 	
