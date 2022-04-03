@@ -417,7 +417,7 @@ public enum PetType implements IPetType{
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData<?> data : category.getData()){
+					for(PetData<?> data : category.getDefaultData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
 							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from data " + data + " and category " + category);
 							continue;
@@ -549,7 +549,7 @@ public enum PetType implements IPetType{
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData<?> data : category.getData()){
+					for(PetData<?> data : category.getDefaultData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
 							// System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
@@ -582,14 +582,14 @@ public enum PetType implements IPetType{
 				if(i++ != 0){
 					System.out.print(", ");
 				}
-				System.out.print(data.getItemName());
+				System.out.print(data.getDefaultName());
 			}
 			for(PetDataCategory category : petType.getAllowedCategories()){
 				for(PetData<?> data : category.getData()){
 					if(i++ != 0){
 						System.out.print(", ");
 					}
-					System.out.print(data.getItemName());
+					System.out.print(data.getDefaultName());
 				}
 			}
 			System.out.print("\n");

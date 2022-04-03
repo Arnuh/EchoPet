@@ -785,7 +785,7 @@ public class PetData<T>{
 				return;
 			}
 			pet.getCraftPet().setHealth(value);
-		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health Pet");
+		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health");
 	//@formatter:on
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, Material material, String name, String... loreArray){
@@ -813,20 +813,20 @@ public class PetData<T>{
 	private final VersionCheckType versionCheckType;
 	private final @Nonnull PetDataAction<T> action;
 	private final PetDataMaterial material;
-	private final String name;
+	private final String defaultName;
 	private final List<String> lore;
 	private final @Nonnull PetDataParser<T> parser;
 	//
 	private ItemStack generatedItem;
 	
 	@Deprecated
-	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String defaultName, String... loreArray){
 		this.configKeyName = configKeyName.toLowerCase();// just incase
 		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = "&c" + name;
+		this.defaultName = "&c" + defaultName;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add("&6" + s);
@@ -835,13 +835,13 @@ public class PetData<T>{
 		values.add(this);
 	}
 	
-	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull Function<PetData<T>, PetDataParser<T>> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String name, String... loreArray){
+	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull Function<PetData<T>, PetDataParser<T>> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String defaultName, String... loreArray){
 		this.configKeyName = configKeyName.toLowerCase();// just incase
 		this.action = action;
 		this.version = version;
 		this.versionCheckType = versionCheckType;
 		this.material = material;
-		this.name = "&c" + name;
+		this.defaultName = "&c" + defaultName;
 		this.lore = new ArrayList<>();
 		for(String s : loreArray){
 			lore.add("&6" + s);
@@ -886,15 +886,15 @@ public class PetData<T>{
 		return action;
 	}
 	
-	public String getItemName(){
-		return name;
+	public String getDefaultName(){
+		return defaultName;
 	}
 	
 	public @Nullable PetDataMaterial getMaterial(){
 		return material;
 	}
 	
-	public List<String> getLore(){
+	public List<String> getDefaultLore(){
 		return lore;
 	}
 	
@@ -909,7 +909,7 @@ public class PetData<T>{
 		if(petDataSection == null) return null; // If this happens it's likely a dev error.
 		var section = petDataSection.getConfigurationSection("item");
 		if(section == null) return null;
-		generatedItem = ItemUtil.parseFromConfig(section, material.defaultMaterial(pet.getPetType()), name, lore);
+		generatedItem = ItemUtil.parseFromConfig(section, material.defaultMaterial(pet.getPetType()), defaultName, lore);
 		return generatedItem;
 	}
 	

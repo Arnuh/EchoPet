@@ -151,13 +151,31 @@ public class EchoPetAPI{
 	 * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to add the data to
 	 * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link
 	 *                com.dsh105.echopet.api.pet.Pet}
+	 * @deprecated Use {@link #addData(IPet, PetData, Object)} instead
 	 */
+	@Deprecated
 	public void addData(IPet pet, PetData<?> petData){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		EchoPet.getManager().setData(pet, petData, true);
+	}
+	
+	/**
+	 * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
+	 *
+	 * @param pet     The {@link com.dsh105.echopet.api.pet.Pet} to add the data to
+	 * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link com.dsh105.echopet.api.pet.Pet}
+	 * @param value   The value of the {@link com.dsh105.echopet.compat.api.entity.PetData}
+	 */
+	@Deprecated
+	public void addData(IPet pet, PetData<?> petData, Object value){
+		if(pet == null){
+			EchoPet.LOG.severe("Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
+			return;
+		}
+		EchoPet.getManager().setData(pet, petData, value);
 	}
 	
 	/**
