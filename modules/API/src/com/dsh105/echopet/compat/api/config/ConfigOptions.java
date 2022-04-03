@@ -175,9 +175,9 @@ public class ConfigOptions extends Options{
 				Material defaultMaterial = pd.getMaterial() != null ? pd.getMaterial().defaultMaterial(petType) : null;
 				if(defaultMaterial != null){
 					set(petDataItem + "material", defaultMaterial.name());
-					set(petDataItem + "name", pd.getItemName());
-					if(!pd.getLore().isEmpty()){
-						set(petDataItem + "lore", pd.getLore());
+					set(petDataItem + "name", pd.getDefaultName());
+					if(!pd.getDefaultLore().isEmpty()){
+						set(petDataItem + "lore", pd.getDefaultLore());
 					}
 				}
 			}
