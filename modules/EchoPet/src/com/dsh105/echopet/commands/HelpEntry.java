@@ -50,6 +50,7 @@ public enum HelpEntry{
 	SHOW("show", true, new String[]{"echopet.pet.show"}, "Show your hidden pet", "Reloads your pet from the save files"),
 	HIDE("hide", true, new String[]{"echopet.pet.hide"}, "Hides your pet"),
 	TOGGLE("toggle", true, new String[]{"echopet.pet.toggle"}, "Toggles the hide status of your pet"),
+	MODIFY("modify [data]", true, new String[]{"echopet.pet.modify"}, "Modify your pet's data"),
 	SELECT("select", true, new String[]{"echopet.pet.select"}, "Opens the Pet Selection GUI Menu"),
 	SELECTOR("selector", true, new String[]{"echopet.pet.selector"}, "Gives you the Pet Selection GUI Menu item"),
 	;

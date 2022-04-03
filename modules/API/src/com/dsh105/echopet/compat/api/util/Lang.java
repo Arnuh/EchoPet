@@ -67,8 +67,8 @@ public enum Lang{
 	OPEN_MENU("open_menu", "&eOpening Data Menu for your &6%type%&e..."),
 	OPEN_SELECTOR("open_selector", "&eOpening Pet Selector..."),
 	ADD_SELECTOR("add_selector", "&eThe &6Pet Selector &ehas been added to your inventory."),
-	
 	DATA_FORCE_MESSAGE("data_force_message", "&eThe following data types have been forced by the server: &6%data%"),
+	DATA_MODIFY("data_modify", "&6%data% &ehas been modified to &6%value%&e."),
 	
 	RIDERS_DISABLED("riders_disabled", "&eRiders are disabled for &6%type%"),
 	DATA_TYPE_DISABLED("data_type_disabled", "&6%data% &edata type is disabled."),

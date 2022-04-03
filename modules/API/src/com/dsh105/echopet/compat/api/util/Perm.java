@@ -58,9 +58,10 @@ public enum Perm{
 	BASE_SHOW("echopet.pet.show"),
 	BASE_SELECT("echopet.pet.select"),
 	BASE_SELECTOR("echopet.pet.selector"),
-	BASE_TOGGLE("echopet.pet.toggle");
+	BASE_TOGGLE("echopet.pet.toggle"),
+	BASE_MODIFY("echopet.pet.modify");
 	
-	String perm;
+	final String perm;
 	
 	Perm(String perm){
 		this.perm = perm;

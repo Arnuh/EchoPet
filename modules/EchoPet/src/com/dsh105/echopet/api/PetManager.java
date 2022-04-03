@@ -21,10 +21,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataAction;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
@@ -252,5 +254,23 @@ public class PetManager implements IPetManager{
 	@Override
 	public boolean removeData(IPet pet, PetData<?> data){
 		return pet.getData().remove(data) != null;
+	}
+	
+	public void executePetDataAction(Player player, IPet pet, PetData<?> data){
+		executePetDataAction(player, pet, data, pet.getData().get(data));
+	}
+	
+	@Override
+	public void executePetDataAction(Player player, IPet pet, PetData<?> data, Object value){
+		executePetDataAction(player, pet, PetDataCategory.getByData(pet.getPetType(), data), data, value);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void executePetDataAction(Player player, IPet pet, PetDataCategory category, PetData<?> data, Object value){
+		PetDataAction<Object> action = (PetDataAction<Object>) data.getAction();
+		Consumer<Object> setter = action.get(player, pet, category);
+		if(setter != null){
+			setter.accept(value);
+		}
 	}
 }

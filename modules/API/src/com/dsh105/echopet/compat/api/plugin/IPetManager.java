@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -59,5 +60,31 @@ public interface IPetManager{
 	 */
 	void setData(IPet pet, PetData<?> pd, @Nullable Object value);
 	
+	/**
+	 *
+	 * @return If the {@link PetData} was removed.
+	 */
 	boolean removeData(IPet pet, PetData<?> data);
+	
+	/**
+	 * Execute the {@link PetData} action for the given {@link PetData} and value.<br>
+	 * The value for the provided {@link PetData} will be retrieved from the {@link IPet#getData()} map.
+	 * <br>
+	 * No guarantee exists if the {@link PetData} is valid for the given {@link IPet} and thus if the action execution will apply a change.
+	 */
+	void executePetDataAction(Player player, IPet pet, PetData<?> data);
+	
+	/**
+	 * Execute the {@link PetData} action for the given {@link PetData} and value.<br>
+	 * <br>
+	 * No guarantee exists if the {@link PetData} is valid for the given {@link IPet} and thus if the action execution will apply a change.
+	 */
+	void executePetDataAction(Player player, IPet pet, PetData<?> data, Object value);
+	
+	/**
+	 * Execute the {@link PetData} action for the given {@link PetData} and value.<br>
+	 * <br>
+	 * No guarantee exists if the {@link PetData} is valid for the given {@link IPet} and thus if the action execution will apply a change.
+	 */
+	void executePetDataAction(Player player, IPet pet, PetDataCategory category, PetData<?> data, Object value);
 }

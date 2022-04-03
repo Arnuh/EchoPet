@@ -18,26 +18,35 @@
 package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
+import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 
 public class CommandComplete implements TabCompleter{
 	
-	private static final String[] basic = {"name", "rider", "list", "info", "default", "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
+	private static final String[] basic = {"name", "rider", "list", "info", "default", "ride", "hat", "call", "show", "hide", "menu", "select", "remove", "modify"};
+	private static final String[] booleans = new String[]{"true", "false"};
 	
 	private static final String[] commands;
 	private static String[] firstArgs;
 	private static final String[] blankArray = new String[0];
 	private static int knownPetSize = 0;
+	private static final Map<IPetType, String[]> petTypeToValidData = new HashMap<>();
 	
 	static{
-		//handles /pet and /petadmin autocomplete
+		// handles /pet and /petadmin autocomplete
 		commands = new String[]{EchoPet.getPlugin().getCommandString(), EchoPet.getPlugin().getCommandString() + "admin"};
 		loadArgs();
 	}
@@ -46,25 +55,41 @@ public class CommandComplete implements TabCompleter{
 		if(knownPetSize == PetType.pets.size()){
 			return;// This is kinda a hacky setup, but I don't know how I would best expose this to EchoPet API.
 		}
-		//handles /pet <pettype, all values in the basic array>
+		petTypeToValidData.clear();
+		// handles /pet <pettype, all values in the basic array>
 		firstArgs = new String[basic.length + PetType.pets.size()];
 		System.arraycopy(basic, 0, firstArgs, 0, basic.length);
 		int i = basic.length;
 		for(IPetType petType : PetType.pets){
 			firstArgs[i++] = petType.name().toLowerCase();
+			
+			List<String> validData = new ArrayList<>();
+			for(PetData<?> data : PetData.values){
+				if(petType.isValidData(data) && petType.isDataAllowed(data)){// Premake this list on load?
+					validData.add(StringUtil.capitalise(data.getConfigKeyName()));
+				}
+			}
+			petTypeToValidData.put(petType, validData.toArray(new String[0]));
 		}
 		knownPetSize = PetType.pets.size();
 	}
 	
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
+	public List<String> onTabComplete(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args){
 		loadArgs();
 		List<String> list = new ArrayList<>();
 		String cmdString = EchoPet.getPlugin().getCommandString();
 		if(cmd.getName().equalsIgnoreCase(cmdString)){
+			IPetType petType = null;
+			if(sender instanceof Player player){
+				IPet pet = EchoPet.getManager().getPet(player);
+				if(pet != null){
+					petType = pet.getPetType();
+				}
+			}
 			String[] completions;
 			if(args.length >= 2){
-				completions = getCompletions(args.length, args[args.length - 2]);
+				completions = getCompletions(petType, args.length, args[args.length - 2]);
 			}else{
 				completions = getCompletions(args.length);
 			}
@@ -85,13 +110,16 @@ public class CommandComplete implements TabCompleter{
 		};
 	}
 	
-	private String[] getCompletions(int i, String argBefore){
+	private String[] getCompletions(IPetType petType, int i, String argBefore){
 		switch(i){
 			case 0:
 			case 1:
 				return getCompletions(i);
 			case 2:
 				ArrayList<String> list = new ArrayList<>();
+				if(argBefore.equalsIgnoreCase("modify") && petType != null){
+					return petTypeToValidData.get(petType);
+				}
 				for(IPetType pt : PetType.pets){
 					if(argBefore.equalsIgnoreCase(pt.toString().toLowerCase())){
 						list.add(pt.toString().toLowerCase());
@@ -110,6 +138,17 @@ public class CommandComplete implements TabCompleter{
 					list.add("remove");
 				}
 				return list.toArray(new String[0]);
+			case 3:
+				if(petType != null){ // Could cache this like I do with pet data.
+					PetData<?> data = PetData.get(argBefore);
+					if(data != null && petType.isValidData(data)){
+						Object value = data.getParser().defaultValue(petType);
+						if(value instanceof Boolean){
+							return booleans;
+						}
+						return new String[]{data.getParser().defaultValue(petType).toString()};
+					}
+				}
 		}
 		return blankArray;
 	}

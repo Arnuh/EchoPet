@@ -61,6 +61,9 @@ permissions:
     echopet.pet.selector:
         default: op
         description: Give yourself the Pet Selector
+    echopet.pet.modify:
+        default: op
+        description: Modify the Pet data
     echopet.petadmin:
         default: op
         description: View the PetAdmin Help Menu

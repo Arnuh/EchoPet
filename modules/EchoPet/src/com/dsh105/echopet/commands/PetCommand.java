@@ -47,6 +47,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class PetCommand implements CommandExecutor{
 	
@@ -65,7 +66,7 @@ public class PetCommand implements CommandExecutor{
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args){
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String cmdLabel, String[] args){
 		if(args.length == 0){
 			if(Perm.BASE.hasPerm(sender, true, true)){
 				Lang.sendTo(sender, Lang.HELP.toString().replace("%cmd%", "pet help"));
@@ -73,9 +74,51 @@ public class PetCommand implements CommandExecutor{
 			}else{
 				return true;
 			}
-			
+		}else if(args[0].equalsIgnoreCase("modify") && args.length >= 2){
+			if(!Perm.BASE_MODIFY.hasPerm(sender, true, false)){
+				return true;
+			}
+			Player p = (Player) sender;
+			IPet pet = EchoPet.getManager().getPet(p);
+			if(pet == null){
+				Lang.sendTo(sender, Lang.NO_PET.toString());
+				return true;
+			}
+			PetData<?> petData = PetData.get(args[1]);
+			if(petData == null){
+				Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(args[1])));
+				return true;
+			}
+			if(!pet.getPetType().isValidData(petData)){
+				Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString().replace("%data%", StringUtil.capitalise(petData.toString().replace("_", ""))).replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " "))));
+				return true;
+			}
+			if(!pet.getPetType().isDataAllowed(petData)){
+				Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString().replace("%data%", StringUtil.capitalise(petData.toString().replace("_", ""))));
+				return true;
+			}
+			if(!Perm.hasDataPerm(sender, true, pet.getPetType(), petData, false)){
+				return true;
+			}
+			try{
+				Object value;
+				if(args.length > 2){
+					value = petData.getParser().parse(args[2]);
+					if(value == null){
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", StringUtil.capitalise(args[1])).replace("%value%", args[2]));
+						return true;
+					}
+				}else{
+					value = petData.getParser().defaultValue(pet.getPetType());
+				}
+				EchoPet.getManager().setData(pet, petData, value);
+				EchoPet.getManager().executePetDataAction(p, pet, petData, value);
+				Lang.sendTo(sender, Lang.DATA_MODIFY.toString().replace("%data%", StringUtil.capitalise(args[1])).replace("%value%", value.toString()));
+			}catch(Exception ex){
+				Lang.sendTo(sender, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", StringUtil.capitalise(args[1])).replace("%value%", args[2]));
+			}
+			return true;
 		}
-		
 		// Setting the pet and rider names
 		// Supports colour coding
 		else if(args.length >= 1 && args[0].equalsIgnoreCase("name")){

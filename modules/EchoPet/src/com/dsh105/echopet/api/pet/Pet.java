@@ -20,15 +20,12 @@ package com.dsh105.echopet.api.pet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetDataAction;
-import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
@@ -106,11 +103,7 @@ public abstract class Pet implements IPet{
 				// this.teleportToOwner();
 				for(Map.Entry<PetData<?>, Object> entry : getData().entrySet()){
 					PetData<Object> pd = (PetData<Object>) entry.getKey();
-					PetDataAction<Object> action = pd.getAction();
-					Consumer<Object> setter = action.get(owner, this, PetDataCategory.getByData(getPetType(), pd));
-					if(setter != null){
-						setter.accept(entry.getValue());
-					}
+					EchoPet.getManager().executePetDataAction(owner, this, pd, entry.getValue());
 				}
 				EchoPet.getPlugin().getServer().getPluginManager().callEvent(new PetSpawnEvent(this));
 				if(rider != null && !rider.isSpawned()){
