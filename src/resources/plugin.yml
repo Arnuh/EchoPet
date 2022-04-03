@@ -1927,6 +1927,7 @@ permissions:
             echopet.pet.name.override: true
             echopet.pet.select: true
             echopet.pet.selector: true
+            echopet.pet.modify: true
             echopet.pet.type.*: true
             echopet.pet.data.*: true
             echopet.pet.default.*: true

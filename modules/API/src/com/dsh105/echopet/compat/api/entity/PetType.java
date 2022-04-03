@@ -455,7 +455,12 @@ public enum PetType implements IPetType{
 			bw.write("        default: op\n");
 			bw.write("        description: 'All permissions under the /pet command'\n");
 			bw.write("        children:\n");
-			bw.write("            echopet.pet: true\n            echopet.pet.remove: true\n            echopet.pet.list: true\n            echopet.pet.info: true\n            echopet.pet.menu: true\n            echopet.pet.show: true\n            echopet.pet.hide: true\n            echopet.pet.toggle: true\n            echopet.pet.call: true\n            echopet.pet.name: true\n            echopet.pet.name.override: true\n            echopet.pet.select: true\n            echopet.pet.selector: true\n            echopet.pet.type.*: true\n            echopet.pet.data.*: true\n            echopet.pet.default.*: true\n");
+			
+			// Grab from HelpEntry?
+			String[] options = new String[]{"echopet.pet", "echopet.pet.remove", "echopet.pet.list", "echopet.pet.info", "echopet.pet.menu", "echopet.pet.show", "echopet.pet.hide", "echopet.pet.toggle", "echopet.pet.call", "echopet.pet.name", "echopet.pet.name.override", "echopet.pet.select", "echopet.pet.selector", "echopet.pet.modify", "echopet.pet.type.*", "echopet.pet.data.*", "echopet.pet.default.*"};
+			for(String s : options){
+				bw.write("            " + s + ": true\n");
+			}
 			//
 			bw.write("    echopet.pet.type.*:\n");
 			bw.write("        default: op\n");
@@ -565,8 +570,9 @@ public enum PetType implements IPetType{
 	}
 	
 	public static void main(String[] args){
-		// outputInfo();
-		String[] petTypes = new String[PetType.values.length];
+		outputInfo();
+		
+		/*String[] petTypes = new String[PetType.values.length];
 		int pos = 0;
 		for(PetType type : PetType.values){
 			petTypes[pos++] = type.getConfigKeyName();
@@ -593,6 +599,6 @@ public enum PetType implements IPetType{
 				}
 			}
 			System.out.print("\n");
-		}
+		}*/
 	}
 }
