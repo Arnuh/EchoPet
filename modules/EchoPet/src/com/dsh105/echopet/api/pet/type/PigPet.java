@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.PIG)
 public class PigPet extends AgeablePet implements IPigPet{
 	
-	boolean saddle;
+	protected boolean saddle;
 	
 	public PigPet(Player owner){
 		super(owner);

@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  */
 public abstract class HorseChestedAbstractPet extends HorseAbstractPet implements IHorseChestedAbstractPet{
 	
-	boolean chested = false;
+	protected boolean chested = false;
 	
 	public HorseChestedAbstractPet(Player owner){
 		super(owner);

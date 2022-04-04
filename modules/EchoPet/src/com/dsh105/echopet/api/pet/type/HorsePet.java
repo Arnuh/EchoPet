@@ -33,9 +33,9 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends HorseAbstractPet implements IHorsePet{
 	
-	Color color = Horse.Color.WHITE;
-	Style style = Style.NONE;
-	HorseArmor armour = HorseArmor.None;
+	protected Color color = Horse.Color.WHITE;
+	protected Style style = Style.NONE;
+	protected HorseArmor armour = HorseArmor.None;
 	
 	public HorsePet(Player owner){
 		super(owner);
