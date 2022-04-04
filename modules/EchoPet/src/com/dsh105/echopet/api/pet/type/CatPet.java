@@ -32,8 +32,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.CAT)
 public class CatPet extends TameablePet implements ICatPet{
 	
-	private CatType catType = CatType.Tabby;
-	private DyeColor collarCollar = DyeColor.RED;
+	protected CatType catType = CatType.Tabby;
+	protected DyeColor collarCollar = DyeColor.RED;
 	
 	public CatPet(Player owner){
 		super(owner);
@@ -46,16 +46,26 @@ public class CatPet extends TameablePet implements ICatPet{
 	}
 	
 	@Override
+	public CatType getType(){
+		return this.catType;
+	}
+	
+	@Override
 	public void setCollarColor(DyeColor color){
 		((IEntityCatPet) getEntityPet()).setCollarColor(color);
 		this.collarCollar = color;
 	}
 	
 	@Override
+	public DyeColor getCollarColor(){
+		return this.collarCollar;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + catType);
-		info.add(ChatColor.GOLD + " - Collar Color: " + ChatColor.YELLOW + StringUtil.capitalise(collarCollar.name().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + getType());
+		info.add(ChatColor.GOLD + " - Collar Color: " + ChatColor.YELLOW + StringUtil.capitalise(getCollarColor().name().replace("_", " ")));
 	}
 	
 }

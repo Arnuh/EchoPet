@@ -30,8 +30,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.PANDA)
 public class PandaPet extends AgeablePet implements IPandaPet{
 	
-	private PandaGene mainGene = PandaGene.Normal, hiddenGene = PandaGene.Normal;
-	private boolean rolling, sitting, layingDown;
+	protected PandaGene mainGene = PandaGene.Normal, hiddenGene = PandaGene.Normal;
+	protected boolean rolling, sitting, layingDown;
 	
 	public PandaPet(Player owner){
 		super(owner);
@@ -44,9 +44,19 @@ public class PandaPet extends AgeablePet implements IPandaPet{
 	}
 	
 	@Override
+	public PandaGene getMainGene(){
+		return this.mainGene;
+	}
+	
+	@Override
 	public void setHiddenGene(PandaGene gene){
 		this.hiddenGene = gene;
 		((IEntityPandaPet) getEntityPet()).setHiddenGene(gene);
+	}
+	
+	@Override
+	public PandaGene getHiddenGene(){
+		return this.hiddenGene;
 	}
 	
 	@Override
@@ -56,9 +66,19 @@ public class PandaPet extends AgeablePet implements IPandaPet{
 	}
 	
 	@Override
+	public boolean isRolling(){
+		return this.rolling;
+	}
+	
+	@Override
 	public void setSitting(boolean sitting){
 		this.sitting = sitting;
 		((IEntityPandaPet) getEntityPet()).setSitting(sitting);
+	}
+	
+	@Override
+	public boolean isSitting(){
+		return this.sitting;
 	}
 	
 	@Override
@@ -68,12 +88,17 @@ public class PandaPet extends AgeablePet implements IPandaPet{
 	}
 	
 	@Override
+	public boolean isLayingDown(){
+		return this.layingDown;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Main Gene: " + ChatColor.YELLOW + mainGene.toString());
-		info.add(ChatColor.GOLD + " - Hidden Gene: " + ChatColor.YELLOW + hiddenGene.toString());
-		info.add(ChatColor.GOLD + " - Rolling: " + ChatColor.YELLOW + rolling);
-		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + sitting);
-		info.add(ChatColor.GOLD + " - Laying Down: " + ChatColor.YELLOW + layingDown);
+		info.add(ChatColor.GOLD + " - Main Gene: " + ChatColor.YELLOW + getMainGene().toString());
+		info.add(ChatColor.GOLD + " - Hidden Gene: " + ChatColor.YELLOW + getHiddenGene().toString());
+		info.add(ChatColor.GOLD + " - Rolling: " + ChatColor.YELLOW + isRolling());
+		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + isSitting());
+		info.add(ChatColor.GOLD + " - Laying Down: " + ChatColor.YELLOW + isLayingDown());
 	}
 }

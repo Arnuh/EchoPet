@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EndermanPet extends Pet implements IEndermanPet{
 	
-	boolean scream;
+	protected boolean scream;
 	
 	public EndermanPet(Player owner){
 		super(owner);
@@ -49,6 +49,6 @@ public class EndermanPet extends Pet implements IEndermanPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + scream);
+		info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + isScreaming());
 	}
 }

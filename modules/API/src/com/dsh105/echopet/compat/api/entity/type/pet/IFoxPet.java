@@ -23,15 +23,29 @@ public interface IFoxPet extends IAgeablePet{
 	
 	void setType(FoxType type);
 	
+	FoxType getType();
+	
 	void setSitting(boolean sitting);
+	
+	boolean isSitting();
 	
 	void setCrouching(boolean crouching);
 	
+	boolean isCrouching();
+	
 	void setHeadTilt(boolean tilted);
+	
+	boolean isHeadTilted();
 	
 	void setPounce(boolean pounce);
 	
+	boolean isPouncing();
+	
 	void setSleeping(boolean sleeping);
 	
+	boolean isSleeping();
+	
 	void setLegShake(boolean shake);
+	
+	boolean isLegShaking();
 }

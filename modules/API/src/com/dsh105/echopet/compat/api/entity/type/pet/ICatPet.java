@@ -24,5 +24,9 @@ public interface ICatPet extends ITameablePet{
 	
 	void setType(CatType type);
 	
+	CatType getType();
+	
 	void setCollarColor(DyeColor color);
+	
+	DyeColor getCollarColor();
 }

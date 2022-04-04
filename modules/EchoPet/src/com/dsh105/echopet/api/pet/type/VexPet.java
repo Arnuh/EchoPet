@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.VEX)
 public class VexPet extends Pet implements IVexPet{
 	
-	private boolean powered;
+	protected boolean powered;
 	
 	public VexPet(Player owner){
 		super(owner);
@@ -51,6 +51,6 @@ public class VexPet extends Pet implements IVexPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + powered);
+		info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + isPowered());
 	}
 }

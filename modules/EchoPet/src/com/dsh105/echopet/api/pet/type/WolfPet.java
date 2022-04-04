@@ -31,8 +31,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.WOLF)
 public class WolfPet extends TameablePet implements IWolfPet{
 	
-	DyeColor collar = DyeColor.RED;
-	boolean angry = false;
+	protected DyeColor collar = DyeColor.RED;
+	protected boolean angry = false;
 	
 	public WolfPet(Player owner){
 		super(owner);

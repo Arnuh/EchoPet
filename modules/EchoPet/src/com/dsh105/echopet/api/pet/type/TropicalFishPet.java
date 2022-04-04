@@ -33,9 +33,9 @@ import org.bukkit.entity.TropicalFish.Pattern;
 @EntityPetType(petType = PetType.TROPICALFISH)
 public class TropicalFishPet extends FishPet implements ITropicalFishPet{
 	
-	private boolean large = false;
-	private TropicalFish.Pattern pattern = TropicalFish.Pattern.KOB;
-	private DyeColor color = DyeColor.WHITE, patternColor = DyeColor.WHITE;
+	protected boolean large = false;
+	protected TropicalFish.Pattern pattern = TropicalFish.Pattern.KOB;
+	protected DyeColor color = DyeColor.WHITE, patternColor = DyeColor.WHITE;
 	
 	public TropicalFishPet(Player owner){
 		super(owner);
@@ -48,9 +48,19 @@ public class TropicalFishPet extends FishPet implements ITropicalFishPet{
 	}
 	
 	@Override
+	public boolean isLarge(){
+		return large;
+	}
+	
+	@Override
 	public void setPattern(Pattern pattern){
 		this.pattern = pattern;
 		((IEntityTropicalFishPet) getEntityPet()).setVariantData(large, pattern, color, patternColor);
+	}
+	
+	@Override
+	public Pattern getPattern(){
+		return pattern;
 	}
 	
 	@Override
@@ -60,17 +70,27 @@ public class TropicalFishPet extends FishPet implements ITropicalFishPet{
 	}
 	
 	@Override
+	public DyeColor getColor(){
+		return color;
+	}
+	
+	@Override
 	public void setPatternColor(DyeColor patternColor){
 		this.patternColor = patternColor;
 		((IEntityTropicalFishPet) getEntityPet()).setVariantData(large, pattern, color, patternColor);
 	}
 	
 	@Override
+	public DyeColor getPatternColor(){
+		return patternColor;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Large: " + ChatColor.YELLOW + large);
-		info.add(ChatColor.GOLD + " - Pattern: " + ChatColor.YELLOW + StringUtil.capitalise(pattern.toString().replace("_", " ")));
-		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(color.toString().replace("_", " ")));
-		info.add(ChatColor.GOLD + " - Pattern Color: " + ChatColor.YELLOW + StringUtil.capitalise(patternColor.toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Large: " + ChatColor.YELLOW + isLarge());
+		info.add(ChatColor.GOLD + " - Pattern: " + ChatColor.YELLOW + StringUtil.capitalise(getPattern().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(getColor().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Pattern Color: " + ChatColor.YELLOW + StringUtil.capitalise(getPatternColor().toString().replace("_", " ")));
 	}
 }

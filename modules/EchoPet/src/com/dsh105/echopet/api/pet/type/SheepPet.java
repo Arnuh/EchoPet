@@ -32,8 +32,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.SHEEP)
 public class SheepPet extends AgeablePet implements ISheepPet{
 	
-	boolean sheared;
-	Color color;
+	protected boolean sheared;
+	protected Color color;
 	
 	public SheepPet(Player owner){
 		super(owner);
@@ -75,6 +75,7 @@ public class SheepPet extends AgeablePet implements ISheepPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Sheared: " + ChatColor.YELLOW + isSheared());
 		String color = getColor() == null ? "Default" : StringUtil.capitalise(getColor().toString().replace("_", " "));
 		info.add(ChatColor.GOLD + " - Wool Colour: " + ChatColor.YELLOW + color);
 	}

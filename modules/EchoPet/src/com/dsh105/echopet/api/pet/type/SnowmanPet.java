@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.SNOWMAN)
 public class SnowmanPet extends Pet implements ISnowmanPet{
 	
-	boolean sheared;
+	protected boolean sheared;
 	
 	public SnowmanPet(Player owner){
 		super(owner);

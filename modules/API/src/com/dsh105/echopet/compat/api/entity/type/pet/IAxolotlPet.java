@@ -31,5 +31,9 @@ public interface IAxolotlPet extends IAgeablePet{
 	
 	void setVariant(Variant variant);
 	
+	Variant getVariant();
+	
 	void setPlayingDead(boolean flag);
+	
+	boolean isPlayingDead();
 }

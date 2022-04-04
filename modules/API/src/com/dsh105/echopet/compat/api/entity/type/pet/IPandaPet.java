@@ -24,11 +24,21 @@ public interface IPandaPet extends IAgeablePet{
 	
 	void setMainGene(PandaGene gene);
 	
+	PandaGene getMainGene();
+	
 	void setHiddenGene(PandaGene gene);
+	
+	PandaGene getHiddenGene();
 	
 	void setRolling(boolean rolling);
 	
+	boolean isRolling();
+	
 	void setSitting(boolean sitting);
 	
+	boolean isSitting();
+	
 	void setLayingDown(boolean layingDown);
+	
+	boolean isLayingDown();
 }

@@ -23,7 +23,13 @@ public interface IBeePet extends IAgeablePet, IBirdPet{
 	
 	void setHasStung(boolean hasStung);
 	
+	boolean hasStung();
+	
 	void setHasNectar(boolean hasNectar);
 	
+	boolean hasNectar();
+	
 	void setAngry(boolean angry);
+	
+	boolean isAngry();
 }

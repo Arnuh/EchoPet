@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.BLAZE)
 public class BlazePet extends Pet implements IBlazePet{
 	
-	boolean onFire;
+	protected boolean onFire;
 	
 	public BlazePet(Player owner){
 		super(owner);
@@ -49,6 +49,6 @@ public class BlazePet extends Pet implements IBlazePet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + onFire);
+		info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + isOnFire());
 	}
 }

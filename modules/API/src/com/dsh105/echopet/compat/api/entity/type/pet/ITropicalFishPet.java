@@ -24,9 +24,17 @@ public interface ITropicalFishPet extends IFishPet{
 	
 	void setLarge(boolean large);
 	
+	boolean isLarge();
+	
 	void setPattern(TropicalFish.Pattern pattern);
+	
+	TropicalFish.Pattern getPattern();
 	
 	void setColor(DyeColor color);
 	
+	DyeColor getColor();
+	
 	void setPatternColor(DyeColor patternColor);
+	
+	DyeColor getPatternColor();
 }

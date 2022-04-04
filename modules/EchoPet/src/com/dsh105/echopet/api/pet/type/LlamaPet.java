@@ -33,8 +33,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.LLAMA)
 public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	
-	private DyeColor carpetColor = null;
-	private Llama.Color skinColor = Llama.Color.WHITE;
+	protected DyeColor carpetColor = null;
+	protected Llama.Color skinColor = Llama.Color.WHITE;
 	
 	public LlamaPet(Player owner){
 		super(owner);

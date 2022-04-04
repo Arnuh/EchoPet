@@ -29,8 +29,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.FOX)
 public class FoxPet extends AgeablePet implements IFoxPet{
 	
-	private FoxType type = FoxType.Red;
-	private boolean sitting, crouching, headtilt, pounce, sleeping, shake;
+	protected FoxType type = FoxType.Red;
+	protected boolean sitting, crouching, headtilt, pounce, sleeping, shake;
 	
 	public FoxPet(Player owner){
 		super(owner);
@@ -43,9 +43,19 @@ public class FoxPet extends AgeablePet implements IFoxPet{
 	}
 	
 	@Override
+	public FoxType getType(){
+		return this.type;
+	}
+	
+	@Override
 	public void setSitting(boolean sitting){
 		this.sitting = sitting;
 		((IEntityFoxPet) getEntityPet()).setSitting(sitting);
+	}
+	
+	@Override
+	public boolean isSitting(){
+		return this.sitting;
 	}
 	
 	@Override
@@ -55,9 +65,19 @@ public class FoxPet extends AgeablePet implements IFoxPet{
 	}
 	
 	@Override
+	public boolean isCrouching(){
+		return this.crouching;
+	}
+	
+	@Override
 	public void setHeadTilt(boolean tilted){
 		this.headtilt = tilted;
 		((IEntityFoxPet) getEntityPet()).setHeadTilt(tilted);
+	}
+	
+	@Override
+	public boolean isHeadTilted(){
+		return this.headtilt;
 	}
 	
 	@Override
@@ -67,9 +87,19 @@ public class FoxPet extends AgeablePet implements IFoxPet{
 	}
 	
 	@Override
+	public boolean isPouncing(){
+		return this.pounce;
+	}
+	
+	@Override
 	public void setSleeping(boolean sleeping){
 		this.sleeping = sleeping;
 		((IEntityFoxPet) getEntityPet()).setSleeping(sleeping);
+	}
+	
+	@Override
+	public boolean isSleeping(){
+		return this.sleeping;
 	}
 	
 	@Override
@@ -79,14 +109,19 @@ public class FoxPet extends AgeablePet implements IFoxPet{
 	}
 	
 	@Override
+	public boolean isLegShaking(){
+		return this.shake;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + type.toString());
-		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + sitting);
-		info.add(ChatColor.GOLD + " - Crouching: " + ChatColor.YELLOW + crouching);
-		info.add(ChatColor.GOLD + " - Head Tilt: " + ChatColor.YELLOW + headtilt);
-		info.add(ChatColor.GOLD + " - Pouncing: " + ChatColor.YELLOW + pounce);
-		info.add(ChatColor.GOLD + " - Sleeping: " + ChatColor.YELLOW + sleeping);
-		info.add(ChatColor.GOLD + " - Shaking: " + ChatColor.YELLOW + shake);
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + getType().toString());
+		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + isSitting());
+		info.add(ChatColor.GOLD + " - Crouching: " + ChatColor.YELLOW + isCrouching());
+		info.add(ChatColor.GOLD + " - Head Tilt: " + ChatColor.YELLOW + isHeadTilted());
+		info.add(ChatColor.GOLD + " - Pouncing: " + ChatColor.YELLOW + isPouncing());
+		info.add(ChatColor.GOLD + " - Sleeping: " + ChatColor.YELLOW + isSleeping());
+		info.add(ChatColor.GOLD + " - Shaking: " + ChatColor.YELLOW + isLegShaking());
 	}
 }

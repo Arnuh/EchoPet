@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.PUFFERFISH)
 public class PufferFishPet extends FishPet implements IPufferFishPet{
 	
-	private int state = 0;
+	protected int state = 0;
 	
 	public PufferFishPet(Player owner){
 		super(owner);
@@ -43,9 +43,14 @@ public class PufferFishPet extends FishPet implements IPufferFishPet{
 	}
 	
 	@Override
+	public int getPuffState(){
+		return state;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		String size = StringUtil.capitalise(String.valueOf(state));
+		String size = StringUtil.capitalise(String.valueOf(getPuffState()));
 		String s = " (Small)";
 		if(size.equals("1")) s = " (Mid)";
 		if(size.equals("2")) s = " (Full)";

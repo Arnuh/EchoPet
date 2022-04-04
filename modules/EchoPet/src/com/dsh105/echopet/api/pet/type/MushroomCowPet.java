@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class MushroomCowPet extends CowPet implements IMushroomCowPet{
 	
-	private MushroomCowType type;
+	protected MushroomCowType type;
 	
 	public MushroomCowPet(Player owner){
 		super(owner);
@@ -43,8 +43,13 @@ public class MushroomCowPet extends CowPet implements IMushroomCowPet{
 	}
 	
 	@Override
+	public MushroomCowType getType(){
+		return type;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + type.toString());
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + getType().toString());
 	}
 }

@@ -23,4 +23,6 @@ import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 public interface IMushroomCowPet extends IAgeablePet{
 	
 	void setType(MushroomCowType type);
+	
+	MushroomCowType getType();
 }

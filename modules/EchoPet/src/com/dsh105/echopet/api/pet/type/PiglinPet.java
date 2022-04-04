@@ -29,8 +29,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.PIGLIN)
 public class PiglinPet extends AbstractPiglinPet implements IPiglinPet{
 	
-	private boolean baby;
-	private boolean dancing;
+	protected boolean baby;
+	protected boolean dancing;
 	
 	public PiglinPet(Player owner){
 		super(owner);
@@ -54,9 +54,14 @@ public class PiglinPet extends AbstractPiglinPet implements IPiglinPet{
 	}
 	
 	@Override
+	public boolean isDancing(){
+		return this.dancing;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
 		info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + isBaby());
-		info.add(ChatColor.GOLD + " - Dancing: " + ChatColor.YELLOW + dancing);
+		info.add(ChatColor.GOLD + " - Dancing: " + ChatColor.YELLOW + isDancing());
 	}
 }

@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.SLIME)
 public class SlimePet extends Pet implements ISlimePet{
 	
-	private int size = 1;
+	protected int size = 1;
 	
 	public SlimePet(Player owner){
 		super(owner);

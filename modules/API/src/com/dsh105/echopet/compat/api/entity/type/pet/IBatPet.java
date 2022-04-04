@@ -22,4 +22,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 public interface IBatPet extends IPet{
 	
 	void setWandering(boolean flag);
+	
+	boolean isWandering();
 }

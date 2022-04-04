@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.BEE)
 public class BeePet extends AgeablePet implements IBeePet{
 	
-	private boolean hasStung, hasNectar, angry;
+	protected boolean hasStung, hasNectar, angry;
 	
 	public BeePet(Player owner){
 		super(owner);
@@ -42,9 +42,19 @@ public class BeePet extends AgeablePet implements IBeePet{
 	}
 	
 	@Override
+	public boolean hasStung(){
+		return hasStung;
+	}
+	
+	@Override
 	public void setHasNectar(boolean hasNectar){
 		this.hasNectar = hasNectar;
 		((IEntityBeePet) getEntityPet()).setHasNectar(hasNectar);
+	}
+	
+	@Override
+	public boolean hasNectar(){
+		return hasNectar;
 	}
 	
 	@Override
@@ -54,10 +64,15 @@ public class BeePet extends AgeablePet implements IBeePet{
 	}
 	
 	@Override
+	public boolean isAngry(){
+		return angry;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Stinger: " + ChatColor.YELLOW + (!hasStung));
-		info.add(ChatColor.GOLD + " - Nectar: " + ChatColor.YELLOW + hasNectar);
-		info.add(ChatColor.GOLD + " - Angry: " + ChatColor.YELLOW + angry);
+		info.add(ChatColor.GOLD + " - Stinger: " + ChatColor.YELLOW + (!hasStung()));
+		info.add(ChatColor.GOLD + " - Nectar: " + ChatColor.YELLOW + hasNectar());
+		info.add(ChatColor.GOLD + " - Angry: " + ChatColor.YELLOW + isAngry());
 	}
 }

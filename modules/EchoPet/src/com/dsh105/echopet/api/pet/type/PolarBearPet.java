@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.POLARBEAR)
 public class PolarBearPet extends AgeablePet implements IPolarBearPet{
 	
-	boolean standingUp;
+	protected boolean standingUp;
 	
 	public PolarBearPet(Player owner){
 		super(owner);
@@ -48,6 +48,6 @@ public class PolarBearPet extends AgeablePet implements IPolarBearPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + isBaby());
+		info.add(ChatColor.GOLD + " - Standing Up: " + ChatColor.YELLOW + isStandingUp());
 	}
 }

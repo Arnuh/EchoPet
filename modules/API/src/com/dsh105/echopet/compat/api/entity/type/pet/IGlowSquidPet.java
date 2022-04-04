@@ -20,4 +20,6 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 public interface IGlowSquidPet extends ISquidPet{
 	
 	void setDark(boolean flag);
+	
+	boolean isDark();
 }

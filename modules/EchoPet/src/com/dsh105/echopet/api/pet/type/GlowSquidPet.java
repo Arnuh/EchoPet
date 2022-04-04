@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.GLOWSQUID)
 public class GlowSquidPet extends SquidPet implements IGlowSquidPet{
 	
-	private boolean dark;
+	protected boolean dark;
 	
 	public GlowSquidPet(Player owner){
 		super(owner);
@@ -41,8 +41,13 @@ public class GlowSquidPet extends SquidPet implements IGlowSquidPet{
 	}
 	
 	@Override
+	public boolean isDark(){
+		return this.dark;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Dark: " + ChatColor.YELLOW + dark);
+		info.add(ChatColor.GOLD + " - Dark: " + ChatColor.YELLOW + isDark());
 	}
 }

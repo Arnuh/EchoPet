@@ -27,11 +27,11 @@ public interface ISheepPet extends IAgeablePet{
 	
 	boolean isSheared();
 	
-	DyeColor getDyeColor();
-	
-	Color getColor();
-	
 	void setDyeColor(DyeColor c);
 	
+	DyeColor getDyeColor();
+	
 	void setColor(Color b);
+	
+	Color getColor();
 }

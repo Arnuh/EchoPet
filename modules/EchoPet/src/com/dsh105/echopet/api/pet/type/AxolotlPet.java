@@ -29,8 +29,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.AXOLOTL)
 public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
-	private Variant variant;
-	private boolean playingDead;
+	protected Variant variant;
+	protected boolean playingDead;
 	
 	public AxolotlPet(Player owner){
 		super(owner);
@@ -43,15 +43,25 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	}
 	
 	@Override
+	public Variant getVariant(){
+		return variant;
+	}
+	
+	@Override
 	public void setPlayingDead(boolean flag){
 		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setPlayingDead(flag);
 		this.playingDead = flag;
 	}
 	
 	@Override
+	public boolean isPlayingDead(){
+		return playingDead;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + variant);
-		info.add(ChatColor.GOLD + " - Playing Dead: " + ChatColor.YELLOW + playingDead);
+		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + getVariant());
+		info.add(ChatColor.GOLD + " - Playing Dead: " + ChatColor.YELLOW + isPlayingDead());
 	}
 }

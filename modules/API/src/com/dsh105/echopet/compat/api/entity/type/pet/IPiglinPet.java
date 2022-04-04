@@ -22,4 +22,6 @@ import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 public interface IPiglinPet extends IAbstractPiglinPet, IAgeablePet{
 	
 	void setDancing(boolean flag);
+	
+	boolean isDancing();
 }

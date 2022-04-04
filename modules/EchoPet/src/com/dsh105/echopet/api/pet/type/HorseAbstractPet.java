@@ -30,8 +30,8 @@ import org.bukkit.entity.Player;
  */
 public abstract class HorseAbstractPet extends AgeablePet implements IHorseAbstractPet{
 	
-	HorseVariant horseVariant = HorseVariant.HORSE;
-	boolean saddle = false;
+	protected HorseVariant horseVariant = HorseVariant.HORSE;
+	protected boolean saddle = false;
 	
 	public HorseAbstractPet(Player owner){
 		super(owner);
@@ -62,7 +62,7 @@ public abstract class HorseAbstractPet extends AgeablePet implements IHorseAbstr
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + isSaddled());
 		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(getVariant().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + isSaddled());
 	}
 }

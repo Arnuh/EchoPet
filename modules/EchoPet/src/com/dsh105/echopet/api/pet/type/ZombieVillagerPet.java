@@ -33,9 +33,9 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.ZOMBIEVILLAGER)
 public class ZombieVillagerPet extends ZombiePet implements IZombieVillagerPet, IVillagerDataHolder{
 	
-	private VillagerType type = VillagerType.PLAINS;
-	private Profession profession = Profession.NONE;
-	private VillagerLevel level = VillagerLevel.NOVICE;
+	protected VillagerType type = VillagerType.PLAINS;
+	protected Profession profession = Profession.NONE;
+	protected VillagerLevel level = VillagerLevel.NOVICE;
 	
 	public ZombieVillagerPet(Player owner){
 		super(owner);

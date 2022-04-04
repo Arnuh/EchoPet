@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.WITHER)
 public class WitherPet extends Pet implements IWitherPet{
 	
-	boolean shield = false;
+	protected boolean shield = false;
 	
 	public WitherPet(Player owner){
 		super(owner);
@@ -49,6 +49,6 @@ public class WitherPet extends Pet implements IWitherPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Shielded: " + ChatColor.YELLOW + shield);
+		info.add(ChatColor.GOLD + " - Shielded: " + ChatColor.YELLOW + isShielded());
 	}
 }

@@ -29,8 +29,8 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.CREEPER)
 public class CreeperPet extends Pet implements ICreeperPet{
 	
-	boolean powered;
-	boolean ignited;
+	protected boolean powered;
+	protected boolean ignited;
 	
 	public CreeperPet(Player owner){
 		super(owner);
@@ -61,7 +61,7 @@ public class CreeperPet extends Pet implements ICreeperPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + powered);
-		info.add(ChatColor.GOLD + " - Ignited: " + ChatColor.YELLOW + ignited);
+		info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + isPowered());
+		info.add(ChatColor.GOLD + " - Ignited: " + ChatColor.YELLOW + isIgnited());
 	}
 }

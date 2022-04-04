@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.STRIDER)
 public class StriderPet extends AgeablePet implements IStriderPet{
 	
-	private boolean hasSaddle;
+	protected boolean hasSaddle;
 	
 	public StriderPet(Player owner){
 		super(owner);

@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.BAT)
 public class BatPet extends Pet implements IBatPet{
 	
-	private boolean wandering;
+	protected boolean wandering;
 	
 	public BatPet(Player owner){
 		super(owner);
@@ -42,8 +42,13 @@ public class BatPet extends Pet implements IBatPet{
 	}
 	
 	@Override
+	public boolean isWandering(){
+		return this.wandering;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Wandering: " + ChatColor.YELLOW + wandering);
+		info.add(ChatColor.GOLD + " - Wandering: " + ChatColor.YELLOW + isWandering());
 	}
 }
