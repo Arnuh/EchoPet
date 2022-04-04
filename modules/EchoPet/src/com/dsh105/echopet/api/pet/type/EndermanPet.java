@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.ENDERMAN)
@@ -42,5 +44,11 @@ public class EndermanPet extends Pet implements IEndermanPet{
 	@Override
 	public boolean isScreaming(){
 		return this.scream;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + scream);
 	}
 }

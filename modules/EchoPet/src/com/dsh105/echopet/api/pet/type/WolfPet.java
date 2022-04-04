@@ -17,11 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.TameablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
@@ -55,5 +58,13 @@ public class WolfPet extends TameablePet implements IWolfPet{
 	@Override
 	public boolean isAngry(){
 		return this.angry;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Angry: " + ChatColor.YELLOW + isAngry());
+		String color = getCollarColor() == null ? "Red" : StringUtil.capitalise(getCollarColor().toString().replace("_", " "));
+		info.add(ChatColor.GOLD + " - Collar Colour: " + ChatColor.YELLOW + color);
 	}
 }

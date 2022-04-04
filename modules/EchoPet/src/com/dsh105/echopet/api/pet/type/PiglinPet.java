@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPiglinPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.PIGLIN)
@@ -49,5 +51,12 @@ public class PiglinPet extends AbstractPiglinPet implements IPiglinPet{
 	public void setDancing(boolean flag){
 		this.dancing = flag;
 		((IEntityPiglinPet) getEntityPet()).setDancing(flag);
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + isBaby());
+		info.add(ChatColor.GOLD + " - Dancing: " + ChatColor.YELLOW + dancing);
 	}
 }

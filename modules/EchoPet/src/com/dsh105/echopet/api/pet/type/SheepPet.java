@@ -17,11 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
@@ -69,4 +72,10 @@ public class SheepPet extends AgeablePet implements ISheepPet{
 		((IEntitySheepPet) getEntityPet()).setDyeColor(getDyeColor());
 	}
 	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		String color = getColor() == null ? "Default" : StringUtil.capitalise(getColor().toString().replace("_", " "));
+		info.add(ChatColor.GOLD + " - Wool Colour: " + ChatColor.YELLOW + color);
+	}
 }

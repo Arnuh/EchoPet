@@ -17,11 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Llama;
 import org.bukkit.entity.Player;
@@ -62,5 +65,13 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	public void setSkinColor(Llama.Color skinColor){
 		((IEntityLlamaPet) getEntityPet()).setSkinColor(skinColor);
 		this.skinColor = skinColor;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		DyeColor carpetColor = getCarpetColor();
+		info.add(ChatColor.GOLD + " - Carpet Colour: " + ChatColor.YELLOW + (carpetColor == null ? "None" : StringUtil.capitalise(carpetColor.toString().replace("_", " "))));
+		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(getSkinColor().toString().replace("_", " ")));
 	}
 }

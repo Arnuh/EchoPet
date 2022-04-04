@@ -16,11 +16,14 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IShulkerPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
@@ -44,6 +47,7 @@ public class ShulkerPet extends Pet implements IShulkerPet{
 		((IEntityShulkerPet) getEntityPet()).setOpen(open);
 	}
 	
+	@Override
 	public boolean isOpen(){
 		return open;
 	}
@@ -57,5 +61,12 @@ public class ShulkerPet extends Pet implements IShulkerPet{
 	@Override
 	public DyeColor getColor(){
 		return color;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Open: " + ChatColor.YELLOW + isOpen());
+		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(getColor().toString().replace("_", " ")));
 	}
 }

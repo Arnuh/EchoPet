@@ -17,11 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SLIME)
@@ -42,5 +45,15 @@ public class SlimePet extends Pet implements ISlimePet{
 	@Override
 	public int getSize(){
 		return this.size;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		String size = StringUtil.capitalise(String.valueOf(getSize()));
+		String s = " (Small)";
+		if(size.equals("2")) s = " (Medium)";
+		if(size.equals("4")) s = " (Large)";
+		info.add(ChatColor.GOLD + " - Slime Size: " + ChatColor.YELLOW + size + s);
 	}
 }

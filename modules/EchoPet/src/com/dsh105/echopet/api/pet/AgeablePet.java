@@ -17,8 +17,10 @@
 
 package com.dsh105.echopet.api.pet;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 
@@ -39,5 +41,11 @@ public class AgeablePet extends Pet implements IAgeablePet{
 	@Override
 	public boolean isBaby(){
 		return this.baby;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + isBaby());
 	}
 }

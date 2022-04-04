@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityStriderPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.STRIDER)
@@ -37,5 +39,11 @@ public class StriderPet extends AgeablePet implements IStriderPet{
 	public void setHasSaddle(boolean flag){
 		((IEntityStriderPet) getEntityPet()).setHasSaddle(flag);
 		this.hasSaddle = flag;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + hasSaddle);
 	}
 }

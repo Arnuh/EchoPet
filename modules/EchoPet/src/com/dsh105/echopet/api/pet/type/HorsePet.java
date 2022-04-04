@@ -17,11 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.HorseArmor;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
@@ -69,5 +72,13 @@ public class HorsePet extends HorseAbstractPet implements IHorsePet{
 	@Override
 	public HorseArmor getArmour(){
 		return this.armour;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(getColor().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Style: " + ChatColor.YELLOW + StringUtil.capitalise(getStyle().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Armour: " + ChatColor.YELLOW + StringUtil.capitalise(getArmour().toString().replace("_", " ")));
 	}
 }

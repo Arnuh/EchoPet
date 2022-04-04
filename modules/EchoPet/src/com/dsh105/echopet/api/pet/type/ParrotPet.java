@@ -16,12 +16,15 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.ParrotVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityParrotPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -45,5 +48,11 @@ public class ParrotPet extends Pet implements IParrotPet{
 	public void setVariant(ParrotVariant variant){
 		((IEntityParrotPet) getEntityPet()).setVariant(variant);
 		this.variant = variant;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(getVariant().toString().replace("_", " ")));
 	}
 }

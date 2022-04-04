@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.BEE)
@@ -49,5 +51,13 @@ public class BeePet extends AgeablePet implements IBeePet{
 	public void setAngry(boolean angry){
 		this.angry = angry;
 		((IEntityBeePet) getEntityPet()).setAngry(angry);
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Stinger: " + ChatColor.YELLOW + (!hasStung));
+		info.add(ChatColor.GOLD + " - Nectar: " + ChatColor.YELLOW + hasNectar);
+		info.add(ChatColor.GOLD + " - Angry: " + ChatColor.YELLOW + angry);
 	}
 }

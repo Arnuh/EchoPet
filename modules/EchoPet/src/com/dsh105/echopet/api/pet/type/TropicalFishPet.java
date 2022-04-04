@@ -17,10 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityTropicalFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITropicalFishPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TropicalFish;
@@ -62,4 +65,12 @@ public class TropicalFishPet extends FishPet implements ITropicalFishPet{
 		((IEntityTropicalFishPet) getEntityPet()).setVariantData(large, pattern, color, patternColor);
 	}
 	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Large: " + ChatColor.YELLOW + large);
+		info.add(ChatColor.GOLD + " - Pattern: " + ChatColor.YELLOW + StringUtil.capitalise(pattern.toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(color.toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Pattern Color: " + ChatColor.YELLOW + StringUtil.capitalise(patternColor.toString().replace("_", " ")));
+	}
 }

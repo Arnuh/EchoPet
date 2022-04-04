@@ -18,6 +18,7 @@
 package com.dsh105.echopet.api.pet;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
@@ -481,5 +482,11 @@ public abstract class Pet implements IPet{
 	@Override
 	public void setHidden(boolean isHidden){
 		this.isHidden = isHidden;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(getPetType().toString()));
+		info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + getPetName());
 	}
 }

@@ -17,11 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPetBase;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.AXOLOTL)
@@ -44,5 +46,12 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	public void setPlayingDead(boolean flag){
 		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setPlayingDead(flag);
 		this.playingDead = flag;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + variant);
+		info.add(ChatColor.GOLD + " - Playing Dead: " + ChatColor.YELLOW + playingDead);
 	}
 }

@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Location;
@@ -119,4 +120,6 @@ public interface IPet{
 	 * @param isHidden Set if the pet is hidden
 	 */
 	void setHidden(boolean isHidden);
+	
+	void generatePetInfo(List<String> info);
 }

@@ -18,6 +18,7 @@
 package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -446,7 +447,13 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet Info ------------");
-					for(String s : PetUtil.generatePetInfo(pi)){
+					List<String> petInfo = new LinkedList<>();
+					pi.generatePetInfo(petInfo);
+					if(pi.getRider() != null){
+						petInfo.add(ChatColor.RED + "Rider:");
+						pi.getRider().generatePetInfo(petInfo);
+					}
+					for(String s : petInfo){
 						sender.sendMessage(s);
 					}
 					return true;

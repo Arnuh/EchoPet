@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.Profession;
@@ -25,6 +26,8 @@ import com.dsh105.echopet.compat.api.entity.VillagerType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.VILLAGER)
@@ -69,5 +72,16 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet, IV
 	public void setLevel(VillagerLevel level){
 		((IEntityVillagerDataHolder) getEntityPet()).setLevel(level.ordinal());
 		this.level = level;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		String prof = StringUtil.capitalise(getProfession().toString().replace("_", " "));
+		info.add(ChatColor.GOLD + " - Profession: " + ChatColor.YELLOW + prof);
+		prof = StringUtil.capitalise(getType().toString().replace("_", " "));
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + prof);
+		prof = StringUtil.capitalise(getLevel().toString().replace("_", " "));
+		info.add(ChatColor.GOLD + " - Level: " + ChatColor.YELLOW + prof);
 	}
 }

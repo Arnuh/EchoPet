@@ -16,11 +16,13 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVexPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,5 +46,11 @@ public class VexPet extends Pet implements IVexPet{
 	@Override
 	public boolean isPowered(){
 		return powered;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + powered);
 	}
 }

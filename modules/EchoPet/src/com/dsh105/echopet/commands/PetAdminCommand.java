@@ -17,6 +17,8 @@
 
 package com.dsh105.echopet.commands;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -293,7 +295,13 @@ public class PetAdminCommand implements CommandExecutor{
 						return true;
 					}
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet Info ------------");
-					for(String s : PetUtil.generatePetInfo(pet)){
+					List<String> petInfo = new LinkedList<>();
+					pet.generatePetInfo(petInfo);
+					if(pet.getRider() != null){
+						petInfo.add(ChatColor.RED + "Rider:");
+						pet.getRider().generatePetInfo(petInfo);
+					}
+					for(String s : petInfo){
 						sender.sendMessage(s);
 					}
 					return true;

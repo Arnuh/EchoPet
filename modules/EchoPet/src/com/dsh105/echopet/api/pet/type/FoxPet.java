@@ -16,12 +16,14 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.FoxType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFoxPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.FOX)
@@ -74,5 +76,17 @@ public class FoxPet extends AgeablePet implements IFoxPet{
 	public void setLegShake(boolean shake){
 		this.shake = shake;
 		((IEntityFoxPet) getEntityPet()).setLegShake(shake);
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + type.toString());
+		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + sitting);
+		info.add(ChatColor.GOLD + " - Crouching: " + ChatColor.YELLOW + crouching);
+		info.add(ChatColor.GOLD + " - Head Tilt: " + ChatColor.YELLOW + headtilt);
+		info.add(ChatColor.GOLD + " - Pouncing: " + ChatColor.YELLOW + pounce);
+		info.add(ChatColor.GOLD + " - Sleeping: " + ChatColor.YELLOW + sleeping);
+		info.add(ChatColor.GOLD + " - Shaking: " + ChatColor.YELLOW + shake);
 	}
 }

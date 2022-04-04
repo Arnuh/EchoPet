@@ -16,11 +16,13 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPolarBearPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.POLARBEAR)
@@ -41,5 +43,11 @@ public class PolarBearPet extends AgeablePet implements IPolarBearPet{
 	@Override
 	public boolean isStandingUp(){
 		return standingUp;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + isBaby());
 	}
 }

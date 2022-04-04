@@ -17,12 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PandaGene;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.PANDA)
@@ -63,5 +65,15 @@ public class PandaPet extends AgeablePet implements IPandaPet{
 	public void setLayingDown(boolean layingDown){
 		this.layingDown = layingDown;
 		((IEntityPandaPet) getEntityPet()).setLayingDown(layingDown);
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Main Gene: " + ChatColor.YELLOW + mainGene.toString());
+		info.add(ChatColor.GOLD + " - Hidden Gene: " + ChatColor.YELLOW + hiddenGene.toString());
+		info.add(ChatColor.GOLD + " - Rolling: " + ChatColor.YELLOW + rolling);
+		info.add(ChatColor.GOLD + " - Sitting: " + ChatColor.YELLOW + sitting);
+		info.add(ChatColor.GOLD + " - Laying Down: " + ChatColor.YELLOW + layingDown);
 	}
 }

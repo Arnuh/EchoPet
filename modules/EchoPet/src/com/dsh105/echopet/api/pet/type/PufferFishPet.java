@@ -17,10 +17,13 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPufferFishPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 
@@ -37,5 +40,15 @@ public class PufferFishPet extends FishPet implements IPufferFishPet{
 	public void setPuffState(int state){
 		this.state = state;
 		((IEntityPufferFishPet) getEntityPet()).setPuffState(state);
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		String size = StringUtil.capitalise(String.valueOf(state));
+		String s = " (Small)";
+		if(size.equals("1")) s = " (Mid)";
+		if(size.equals("2")) s = " (Full)";
+		info.add(ChatColor.GOLD + " - Slime Size: " + ChatColor.YELLOW + size + s);
 	}
 }

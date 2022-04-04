@@ -17,12 +17,15 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.TameablePet;
 import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
+import com.dsh105.echopet.compat.api.util.StringUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
@@ -46,6 +49,13 @@ public class CatPet extends TameablePet implements ICatPet{
 	public void setCollarColor(DyeColor color){
 		((IEntityCatPet) getEntityPet()).setCollarColor(color);
 		this.collarCollar = color;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + catType);
+		info.add(ChatColor.GOLD + " - Collar Color: " + ChatColor.YELLOW + StringUtil.capitalise(collarCollar.name().replace("_", " ")));
 	}
 	
 }
