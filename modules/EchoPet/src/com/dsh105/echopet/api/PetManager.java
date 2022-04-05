@@ -181,24 +181,12 @@ public class PetManager implements IPetManager{
 	@Override
 	public void forceAllValidData(IPet pet){
 		List<PetData<?>> tempData = new ArrayList<>();
-		IPetType petType = pet.getPetType();
-		for(PetData<?> data : PetData.values){
-			if(!petType.isValidData(data)) continue;
-			if(!petType.isDataForced(data)) continue;
-			setData(pet, data, data.getParser().defaultValue(petType));
-			tempData.add(data);
-		}
+		handlePetData(pet, tempData);
 		
 		List<PetData<?>> tempRiderData = new ArrayList<>();
 		IPet rider = pet.getRider();
 		if(rider != null){
-			petType = rider.getPetType();
-			for(PetData<?> data : PetData.values){
-				if(!petType.isValidData(data)) continue;
-				if(!petType.isDataForced(data)) continue;
-				setData(rider, data, data.getParser().defaultValue(petType));
-				tempRiderData.add(data);
-			}
+			handlePetData(rider, tempRiderData);
 		}
 		
 		if(EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)){
@@ -207,6 +195,24 @@ public class PetManager implements IPetManager{
 				Lang.sendTo(pet.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
 			}
 		}
+	}
+	
+	private void handlePetData(IPet pet, List<PetData<?>> resultData){
+		IPetType petType = pet.getPetType();
+		for(PetData<?> data : petType.getAllowedDataTypes()){
+			attemptPetData(pet, petType, data, resultData);
+		}
+		for(PetDataCategory category : petType.getAllowedCategories()){
+			for(PetData<?> data : category.getData()){
+				attemptPetData(pet, petType, data, resultData);
+			}
+		}
+	}
+	
+	private void attemptPetData(IPet pet, IPetType petType, PetData<?> data, List<PetData<?>> resultData){
+		if(!petType.isDataForced(data)) return;
+		setData(pet, data, data.getParser().defaultValue(petType));
+		resultData.add(data);
 	}
 	
 	@Override
@@ -256,6 +262,7 @@ public class PetManager implements IPetManager{
 		return pet.getData().remove(data) != null;
 	}
 	
+	@Override
 	public void executePetDataAction(Player player, IPet pet, PetData<?> data){
 		executePetDataAction(player, pet, data, pet.getData().get(data));
 	}
@@ -265,6 +272,7 @@ public class PetManager implements IPetManager{
 		executePetDataAction(player, pet, PetDataCategory.getByData(pet.getPetType(), data), data, value);
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public void executePetDataAction(Player player, IPet pet, PetDataCategory category, PetData<?> data, Object value){
 		PetDataAction<Object> action = (PetDataAction<Object>) data.getAction();

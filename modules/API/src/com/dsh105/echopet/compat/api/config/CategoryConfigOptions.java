@@ -31,7 +31,7 @@ public class CategoryConfigOptions extends Options{
 	@Override
 	public void setDefaults(){
 		for(PetDataCategory category : PetDataCategory.values){
-			String path = category.getConfigKeyName() + ".";
+			String path = category.getConfigKey() + ".";
 			if(getConfig().getConfigurationSection(path + "data") == null){
 				set(path + "data", category.getDefaultData().stream()
 					.map(PetData::getConfigKeyName)
@@ -44,7 +44,7 @@ public class CategoryConfigOptions extends Options{
 			if(!category.getDefaultLore().isEmpty()){
 				set(itemPath + "lore", category.getDefaultLore());
 			}
-			category.load();
+			category.load(false);
 		}
 	}
 }

@@ -336,9 +336,11 @@ public class PetData<T>{
 			}
 			return null;
 		}, Material.ELYTRA, "Wander"),
-		// Colors. Used for Collars(Wolf, Cat), Sheep, Llama Color, certain Rabbit Types, Axolotl.
+		// Colors. Used for Collars(Wolf, Cat), Cat, Sheep, Llama Color, certain Rabbit Types, Axolotl.
 		WHITE = create("white", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.RABBIT)){
+			if(pet.getPetType().equals(PetType.CAT) && category != null && category.equals(PetDataCategory.CAT_TYPE)){
+				return value->setCatType(pet, CatType.White);
+			}else if(pet.getPetType().equals(PetType.RABBIT)){
 				return value->setRabbitType(pet, Rabbit.Type.WHITE);
 			}else if(pet.getPetType().equals(PetType.HORSE)){
 				return value->setHorseColor(pet, Horse.Color.WHITE);
@@ -410,7 +412,9 @@ public class PetData<T>{
 			return value->setColorByDye(pet, category, DyeColor.GREEN);
 		}, Material.GREEN_WOOL, "Green"),
 		RED = create("red", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.FOX)){
+			if(pet.getPetType().equals(PetType.CAT) && category != null && category.equals(PetDataCategory.CAT_TYPE)){
+				return value->setCatType(pet, CatType.Red);
+			}else if(pet.getPetType().equals(PetType.FOX)){
 				return value->setFoxType(pet, FoxType.Red);
 			}else if(pet.getPetType().equals(PetType.MUSHROOMCOW)){
 				return value->setMushroomCowType(pet, MushroomCowType.Red);
@@ -418,7 +422,9 @@ public class PetData<T>{
 			return value->setColorByDye(pet, category, DyeColor.RED);
 		}, Material.RED_WOOL, "Red"),
 		BLACK = create("black", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.RABBIT)){
+			if(pet.getPetType().equals(PetType.CAT) && category != null && category.equals(PetDataCategory.CAT_TYPE)){
+				return value->setCatType(pet, CatType.Black);
+			}else if(pet.getPetType().equals(PetType.RABBIT)){
 				return value->setRabbitType(pet, Rabbit.Type.BLACK);
 			}else if(pet.getPetType().equals(PetType.HORSE)){
 				return value->setHorseColor(pet, Horse.Color.BLACK);
@@ -695,12 +701,6 @@ public class PetData<T>{
 			}
 			return null;
 		}, Material.OBSIDIAN, "Tuxedo"),
-		CAT_RED = create("cat_red", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.CAT)){
-				return value->setCatType(pet, CatType.Red);
-			}
-			return null;
-		}, Material.RED_WOOL, "Red"),
 		SIAMESE = create("siamese", (player, pet, category)->{
 			if(pet.getPetType().equals(PetType.CAT)){
 				return value->setCatType(pet, CatType.Siamese);
@@ -731,24 +731,12 @@ public class PetData<T>{
 			}
 			return null;
 		}, Material.WHITE_CARPET, "Ragdoll"),
-		CAT_WHITE = create("cat_white", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.CAT)){
-				return value->setCatType(pet, CatType.White);
-			}
-			return null;
-		}, Material.WHITE_WOOL, "White"),
 		JELLIE = create("jellie", (player, pet, category)->{
 			if(pet.getPetType().equals(PetType.CAT)){
 				return value->setCatType(pet, CatType.Jellie);
 			}
 			return null;
 		}, Material.GRAY_WOOL, "Jellie"),
-		CAT_BLACK = create("cat_black", (player, pet, category)->{
-			if(pet.getPetType().equals(PetType.CAT)){
-				return value->setCatType(pet, CatType.Black);
-			}
-			return null;
-		}, Material.BLACK_WOOL, "Black"),
 		// Fox Type, Red is just normal red wool.
 		SNOW = create("snow", (player, pet, category)->{
 			if(pet.getPetType().equals(PetType.FOX)){
@@ -789,7 +777,7 @@ public class PetData<T>{
 	//@formatter:on
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, Material material, String name, String... loreArray){
-		return new PetData<>(configKeyName, action, booleanParser(), (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+		return new PetData<>(configKeyName, action, booleanParser(), pet->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, PetDataMaterial material, String name, String... loreArray){
@@ -797,7 +785,7 @@ public class PetData<T>{
 	}
 	
 	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull Function<PetData<V>, PetDataParser<V>> parser, Material material, String name, String... loreArray){
-		return new PetData<>(configKeyName, action, parser, (pet)->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
+		return new PetData<>(configKeyName, action, parser, pet->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
 	
 	public static <V> PetData<V> create(String configKeyName, @Nonnull PetDataAction<V> action, @Nonnull Function<PetData<V>, PetDataParser<V>> parser, PetDataMaterial material, String name, String... loreArray){
@@ -815,24 +803,13 @@ public class PetData<T>{
 	private final PetDataMaterial material;
 	private final String defaultName;
 	private final List<String> lore;
+	protected final @Nonnull Function<PetData<T>, PetDataParser<T>> parserFunction;
 	private final @Nonnull PetDataParser<T> parser;
 	//
 	private ItemStack generatedItem;
 	
-	@Deprecated
-	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull PetDataParser<T> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String defaultName, String... loreArray){
-		this.configKeyName = configKeyName.toLowerCase();// just incase
-		this.action = action;
-		this.version = version;
-		this.versionCheckType = versionCheckType;
-		this.material = material;
-		this.defaultName = "&c" + defaultName;
-		this.lore = new ArrayList<>();
-		for(String s : loreArray){
-			lore.add("&6" + s);
-		}
-		this.parser = parser;
-		values.add(this);
+	PetData(@Nonnull PetDataAction<T> action, @Nonnull Function<PetData<T>, PetDataParser<T>> parser){
+		this("", action, parser, null, null, null, null);
 	}
 	
 	PetData(String configKeyName, @Nonnull PetDataAction<T> action, @Nonnull Function<PetData<T>, PetDataParser<T>> parser, PetDataMaterial material, Version version, VersionCheckType versionCheckType, String defaultName, String... loreArray){
@@ -846,12 +823,27 @@ public class PetData<T>{
 		for(String s : loreArray){
 			lore.add("&6" + s);
 		}
+		this.parserFunction = parser;
 		this.parser = parser.apply(this);
-		values.add(this);
+		if(!configKeyName.isBlank()) values.add(this);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static @Nullable <T> PetData<T> get(String name){
+		PetData<?> result = PetDataCategory.getByKey(name);
+		if(result != null){
+			return (PetData<T>) result;
+		}
+		for(PetData<?> data : values){
+			if(data.getConfigKeyName().equalsIgnoreCase(name)){
+				return (PetData<T>) data;
+			}
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static @Nullable <T> PetData<T> getOriginal(String name){
 		for(PetData<?> data : values){
 			if(data.getConfigKeyName().equalsIgnoreCase(name)){
 				return (PetData<T>) data;
@@ -903,13 +895,13 @@ public class PetData<T>{
 	}
 	
 	public @Nullable ItemStack toItem(IPet pet){
-		if(material == null) return null;
+		if(getMaterial() == null) return null;
 		if(generatedItem != null) return generatedItem;
 		var petDataSection = pet.getPetType().getPetDataSection(this);
 		if(petDataSection == null) return null; // If this happens it's likely a dev error.
 		var section = petDataSection.getConfigurationSection("item");
 		if(section == null) return null;
-		generatedItem = ItemUtil.parseFromConfig(section, material.defaultMaterial(pet.getPetType()), defaultName, lore);
+		generatedItem = ItemUtil.parseFromConfig(section, getMaterial().defaultMaterial(pet.getPetType()), getDefaultName(), getDefaultLore());
 		return generatedItem;
 	}
 	
@@ -958,7 +950,9 @@ public class PetData<T>{
 				fish.setPatternColor(color);
 			}
 		}else if(type.equals(PetType.CAT)){
-			((ICatPet) pet).setCollarColor(color);
+			if(category.equals(PetDataCategory.COLLAR_COLOR)){
+				((ICatPet) pet).setCollarColor(color);
+			}
 		}
 		return true;
 	}

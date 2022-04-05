@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.listeners;
 
-import java.util.List;
 import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -117,8 +116,7 @@ public class MenuListener implements Listener{
 							}
 						}
 					}
-					List<PetData<?>> values = category != null ? category.getData() : pet.getPetType().getAllowedDataTypes();// Pretty sure this is fine.
-					for(PetData<?> data : values){
+					for(PetData<?> data : category != null ? category.getData() : pet.getPetType().getAllowedDataTypes()){// Pretty sure this is fine.
 						if(data.attemptInteract(player, pet, category, currentlyInSlot)){
 							break;
 						}

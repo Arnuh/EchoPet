@@ -19,11 +19,15 @@ package com.dsh105.echopet.commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import com.dsh105.echopet.compat.api.entity.CategorizedPetData;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.StringUtil;
@@ -63,10 +67,15 @@ public class CommandComplete implements TabCompleter{
 		for(IPetType petType : PetType.pets){
 			firstArgs[i++] = petType.name().toLowerCase();
 			
-			List<String> validData = new ArrayList<>();
-			for(PetData<?> data : PetData.values){
-				if(petType.isValidData(data) && petType.isDataAllowed(data)){// Premake this list on load?
-					validData.add(StringUtil.capitalise(data.getConfigKeyName()));
+			Set<String> validData = new HashSet<>();
+			for(PetData<?> data : petType.getAllowedDataTypes()){
+				if(!petType.isDataAllowed(data)) continue;
+				validData.add(StringUtil.capitalise(data.getConfigKeyName()));
+			}
+			for(PetDataCategory category : petType.getAllowedCategories()){
+				for(CategorizedPetData<?> data : category.getData()){
+					if(!petType.isDataAllowed(data)) continue;
+					validData.add(StringUtil.capitalise(data.getData().getConfigKeyName()));// Add CategorizedPetData?
 				}
 			}
 			petTypeToValidData.put(petType, validData.toArray(new String[0]));

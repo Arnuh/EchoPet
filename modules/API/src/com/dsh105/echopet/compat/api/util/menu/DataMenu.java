@@ -58,10 +58,9 @@ public class DataMenu{
 	private int countItems(PetDataCategory category){
 		int i = 0;
 		for(PetData<?> data : category.getData()){
-			if(data.isCompatible()){
-				if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
-					i++;
-				}
+			if(!data.isCompatible()) continue;
+			if(Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), data, false)){
+				i++;
 			}
 		}
 		return i + 1;// back

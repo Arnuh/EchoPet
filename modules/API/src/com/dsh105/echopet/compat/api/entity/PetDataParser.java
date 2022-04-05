@@ -37,6 +37,8 @@ public interface PetDataParser<T>{
 	
 	T interact(@Nullable T current, ItemStack item);
 	
+	PetDataParser<T> createNew(PetData<T> data);
+	
 	class BooleanParser implements PetDataParser<Boolean>{
 		
 		private final PetData<Boolean> data;
@@ -56,6 +58,11 @@ public interface PetDataParser<T>{
 		@Override
 		public Boolean interact(Boolean current, ItemStack item){
 			return current == null || !current;
+		}
+		
+		@Override
+		public PetDataParser<Boolean> createNew(PetData<Boolean> data){
+			return new BooleanParser(data);
 		}
 	}
 	
@@ -86,6 +93,11 @@ public interface PetDataParser<T>{
 		@Override
 		public Double interact(Double current, ItemStack item){
 			return null;
+		}
+		
+		@Override
+		public PetDataParser<Double> createNew(PetData<Double> data){
+			return new DoubleParser(data, defaultValue);
 		}
 	}
 	

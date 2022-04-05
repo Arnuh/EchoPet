@@ -150,7 +150,7 @@ public enum Perm{
 		if(!hasTypePerm){
 			return false;
 		}
-		String dataPerm = "echopet.pet.type." + petType.getConfigKeyName() + "." + petData.getConfigKeyName().toLowerCase();
+		String dataPerm = "echopet.pet.type." + petType.getConfigKeyName() + "." + petData.getConfigKeyName();
 		if(player.hasPermission(dataPerm)){
 			return true;
 		}

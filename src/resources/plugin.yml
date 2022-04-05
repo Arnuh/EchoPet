@@ -478,27 +478,27 @@ permissions:
         default: op
     echopet.pet.type.cat.black:
         default: op
-    echopet.pet.type.cat.tabby:
+    echopet.pet.type.cat.type_tabby:
         default: op
-    echopet.pet.type.cat.tuxedo:
+    echopet.pet.type.cat.type_tuxedo:
         default: op
-    echopet.pet.type.cat.cat_red:
+    echopet.pet.type.cat.type_red:
         default: op
-    echopet.pet.type.cat.siamese:
+    echopet.pet.type.cat.type_siamese:
         default: op
-    echopet.pet.type.cat.british_shorthair:
+    echopet.pet.type.cat.type_british_shorthair:
         default: op
-    echopet.pet.type.cat.calico:
+    echopet.pet.type.cat.type_calico:
         default: op
-    echopet.pet.type.cat.persian:
+    echopet.pet.type.cat.type_persian:
         default: op
-    echopet.pet.type.cat.ragdoll:
+    echopet.pet.type.cat.type_ragdoll:
         default: op
-    echopet.pet.type.cat.cat_white:
+    echopet.pet.type.cat.type_white:
         default: op
-    echopet.pet.type.cat.jellie:
+    echopet.pet.type.cat.type_jellie:
         default: op
-    echopet.pet.type.cat.cat_black:
+    echopet.pet.type.cat.type_black:
         default: op
     echopet.pet.type.cavespider.hat:
         default: op
@@ -768,19 +768,33 @@ permissions:
         default: op
     echopet.pet.type.panda.lay_down:
         default: op
-    echopet.pet.type.panda.normal:
+    echopet.pet.type.panda.main_gene_normal:
         default: op
-    echopet.pet.type.panda.lazy:
+    echopet.pet.type.panda.main_gene_lazy:
         default: op
-    echopet.pet.type.panda.worried:
+    echopet.pet.type.panda.main_gene_worried:
         default: op
-    echopet.pet.type.panda.playful:
+    echopet.pet.type.panda.main_gene_playful:
         default: op
-    echopet.pet.type.panda.aggressive:
+    echopet.pet.type.panda.main_gene_aggressive:
         default: op
-    echopet.pet.type.panda.weak:
+    echopet.pet.type.panda.main_gene_weak:
         default: op
-    echopet.pet.type.panda.brown:
+    echopet.pet.type.panda.main_gene_brown:
+        default: op
+    echopet.pet.type.panda.hidden_gene_normal:
+        default: op
+    echopet.pet.type.panda.hidden_gene_lazy:
+        default: op
+    echopet.pet.type.panda.hidden_gene_worried:
+        default: op
+    echopet.pet.type.panda.hidden_gene_playful:
+        default: op
+    echopet.pet.type.panda.hidden_gene_aggressive:
+        default: op
+    echopet.pet.type.panda.hidden_gene_weak:
+        default: op
+    echopet.pet.type.panda.hidden_gene_brown:
         default: op
     echopet.pet.type.parrot.hat:
         default: op
@@ -1020,91 +1034,93 @@ permissions:
         default: op
     echopet.pet.type.tropicalfish.size_large:
         default: op
-    echopet.pet.type.tropicalfish.kob:
+    echopet.pet.type.tropicalfish.pattern_kob:
         default: op
-    echopet.pet.type.tropicalfish.sunstreak:
+    echopet.pet.type.tropicalfish.pattern_sunstreak:
         default: op
-    echopet.pet.type.tropicalfish.snooper:
+    echopet.pet.type.tropicalfish.pattern_snooper:
         default: op
-    echopet.pet.type.tropicalfish.dasher:
+    echopet.pet.type.tropicalfish.pattern_dasher:
         default: op
-    echopet.pet.type.tropicalfish.brinely:
+    echopet.pet.type.tropicalfish.pattern_brinely:
         default: op
-    echopet.pet.type.tropicalfish.spotty:
+    echopet.pet.type.tropicalfish.pattern_spotty:
         default: op
-    echopet.pet.type.tropicalfish.flopper:
+    echopet.pet.type.tropicalfish.pattern_flopper:
         default: op
-    echopet.pet.type.tropicalfish.stripey:
+    echopet.pet.type.tropicalfish.pattern_stripey:
         default: op
-    echopet.pet.type.tropicalfish.glitter:
+    echopet.pet.type.tropicalfish.pattern_glitter:
         default: op
-    echopet.pet.type.tropicalfish.blockfish:
+    echopet.pet.type.tropicalfish.pattern_blockfish:
         default: op
-    echopet.pet.type.tropicalfish.betty:
+    echopet.pet.type.tropicalfish.pattern_betty:
         default: op
-    echopet.pet.type.tropicalfish.clayfish:
+    echopet.pet.type.tropicalfish.pattern_clayfish:
         default: op
-    echopet.pet.type.tropicalfish.white:
+    echopet.pet.type.tropicalfish.color_white:
         default: op
-    echopet.pet.type.tropicalfish.orange:
+    echopet.pet.type.tropicalfish.color_orange:
         default: op
-    echopet.pet.type.tropicalfish.magenta:
+    echopet.pet.type.tropicalfish.color_magenta:
         default: op
-    echopet.pet.type.tropicalfish.light_blue:
+    echopet.pet.type.tropicalfish.color_light_blue:
         default: op
-    echopet.pet.type.tropicalfish.yellow:
+    echopet.pet.type.tropicalfish.color_yellow:
         default: op
-    echopet.pet.type.tropicalfish.lime:
+    echopet.pet.type.tropicalfish.color_lime:
         default: op
-    echopet.pet.type.tropicalfish.pink:
+    echopet.pet.type.tropicalfish.color_pink:
         default: op
-    echopet.pet.type.tropicalfish.gray:
+    echopet.pet.type.tropicalfish.color_gray:
         default: op
-    echopet.pet.type.tropicalfish.light_gray:
+    echopet.pet.type.tropicalfish.color_light_gray:
         default: op
-    echopet.pet.type.tropicalfish.cyan:
+    echopet.pet.type.tropicalfish.color_cyan:
         default: op
-    echopet.pet.type.tropicalfish.purple:
+    echopet.pet.type.tropicalfish.color_purple:
         default: op
-    echopet.pet.type.tropicalfish.blue:
+    echopet.pet.type.tropicalfish.color_blue:
         default: op
-    echopet.pet.type.tropicalfish.brown:
+    echopet.pet.type.tropicalfish.color_brown:
         default: op
-    echopet.pet.type.tropicalfish.green:
+    echopet.pet.type.tropicalfish.color_green:
         default: op
-    echopet.pet.type.tropicalfish.red:
+    echopet.pet.type.tropicalfish.color_red:
         default: op
-    echopet.pet.type.tropicalfish.black:
+    echopet.pet.type.tropicalfish.color_black:
         default: op
-    echopet.pet.type.tropicalfish.white_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_white:
         default: op
-    echopet.pet.type.tropicalfish.orange_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_orange:
         default: op
-    echopet.pet.type.tropicalfish.magenta_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_magenta:
         default: op
-    echopet.pet.type.tropicalfish.light_blue_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_light_blue:
         default: op
-    echopet.pet.type.tropicalfish.yellow_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_yellow:
         default: op
-    echopet.pet.type.tropicalfish.lime_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_lime:
         default: op
-    echopet.pet.type.tropicalfish.pink_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_pink:
         default: op
-    echopet.pet.type.tropicalfish.gray_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_gray:
         default: op
-    echopet.pet.type.tropicalfish.cyan_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_light_gray:
         default: op
-    echopet.pet.type.tropicalfish.purple_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_cyan:
         default: op
-    echopet.pet.type.tropicalfish.blue_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_purple:
         default: op
-    echopet.pet.type.tropicalfish.brown_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_blue:
         default: op
-    echopet.pet.type.tropicalfish.green_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_brown:
         default: op
-    echopet.pet.type.tropicalfish.red_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_green:
         default: op
-    echopet.pet.type.tropicalfish.black_carpet:
+    echopet.pet.type.tropicalfish.pattern_color_red:
+        default: op
+    echopet.pet.type.tropicalfish.pattern_color_black:
         default: op
     echopet.pet.type.turtle.hat:
         default: op
@@ -2674,17 +2690,17 @@ permissions:
             echopet.pet.type.cat.green: true
             echopet.pet.type.cat.red: true
             echopet.pet.type.cat.black: true
-            echopet.pet.type.cat.tabby: true
-            echopet.pet.type.cat.tuxedo: true
-            echopet.pet.type.cat.cat_red: true
-            echopet.pet.type.cat.siamese: true
-            echopet.pet.type.cat.british_shorthair: true
-            echopet.pet.type.cat.calico: true
-            echopet.pet.type.cat.persian: true
-            echopet.pet.type.cat.ragdoll: true
-            echopet.pet.type.cat.cat_white: true
-            echopet.pet.type.cat.jellie: true
-            echopet.pet.type.cat.cat_black: true
+            echopet.pet.type.cat.type_tabby: true
+            echopet.pet.type.cat.type_tuxedo: true
+            echopet.pet.type.cat.type_red: true
+            echopet.pet.type.cat.type_siamese: true
+            echopet.pet.type.cat.type_british_shorthair: true
+            echopet.pet.type.cat.type_calico: true
+            echopet.pet.type.cat.type_persian: true
+            echopet.pet.type.cat.type_ragdoll: true
+            echopet.pet.type.cat.type_white: true
+            echopet.pet.type.cat.type_jellie: true
+            echopet.pet.type.cat.type_black: true
     echopet.pet.type.cavespider.*:
         default: op
         description: 'All cavespider pet data permissions'
@@ -2939,13 +2955,20 @@ permissions:
             echopet.pet.type.panda.roll: true
             echopet.pet.type.panda.sit: true
             echopet.pet.type.panda.lay_down: true
-            echopet.pet.type.panda.normal: true
-            echopet.pet.type.panda.lazy: true
-            echopet.pet.type.panda.worried: true
-            echopet.pet.type.panda.playful: true
-            echopet.pet.type.panda.aggressive: true
-            echopet.pet.type.panda.weak: true
-            echopet.pet.type.panda.brown: true
+            echopet.pet.type.panda.main_gene_normal: true
+            echopet.pet.type.panda.main_gene_lazy: true
+            echopet.pet.type.panda.main_gene_worried: true
+            echopet.pet.type.panda.main_gene_playful: true
+            echopet.pet.type.panda.main_gene_aggressive: true
+            echopet.pet.type.panda.main_gene_weak: true
+            echopet.pet.type.panda.main_gene_brown: true
+            echopet.pet.type.panda.hidden_gene_normal: true
+            echopet.pet.type.panda.hidden_gene_lazy: true
+            echopet.pet.type.panda.hidden_gene_worried: true
+            echopet.pet.type.panda.hidden_gene_playful: true
+            echopet.pet.type.panda.hidden_gene_aggressive: true
+            echopet.pet.type.panda.hidden_gene_weak: true
+            echopet.pet.type.panda.hidden_gene_brown: true
     echopet.pet.type.parrot.*:
         default: op
         description: 'All parrot pet data permissions'
@@ -3161,49 +3184,50 @@ permissions:
             echopet.pet.type.tropicalfish.hat: true
             echopet.pet.type.tropicalfish.ride: true
             echopet.pet.type.tropicalfish.size_large: true
-            echopet.pet.type.tropicalfish.kob: true
-            echopet.pet.type.tropicalfish.sunstreak: true
-            echopet.pet.type.tropicalfish.snooper: true
-            echopet.pet.type.tropicalfish.dasher: true
-            echopet.pet.type.tropicalfish.brinely: true
-            echopet.pet.type.tropicalfish.spotty: true
-            echopet.pet.type.tropicalfish.flopper: true
-            echopet.pet.type.tropicalfish.stripey: true
-            echopet.pet.type.tropicalfish.glitter: true
-            echopet.pet.type.tropicalfish.blockfish: true
-            echopet.pet.type.tropicalfish.betty: true
-            echopet.pet.type.tropicalfish.clayfish: true
-            echopet.pet.type.tropicalfish.white: true
-            echopet.pet.type.tropicalfish.orange: true
-            echopet.pet.type.tropicalfish.magenta: true
-            echopet.pet.type.tropicalfish.light_blue: true
-            echopet.pet.type.tropicalfish.yellow: true
-            echopet.pet.type.tropicalfish.lime: true
-            echopet.pet.type.tropicalfish.pink: true
-            echopet.pet.type.tropicalfish.gray: true
-            echopet.pet.type.tropicalfish.light_gray: true
-            echopet.pet.type.tropicalfish.cyan: true
-            echopet.pet.type.tropicalfish.purple: true
-            echopet.pet.type.tropicalfish.blue: true
-            echopet.pet.type.tropicalfish.brown: true
-            echopet.pet.type.tropicalfish.green: true
-            echopet.pet.type.tropicalfish.red: true
-            echopet.pet.type.tropicalfish.black: true
-            echopet.pet.type.tropicalfish.white_carpet: true
-            echopet.pet.type.tropicalfish.orange_carpet: true
-            echopet.pet.type.tropicalfish.magenta_carpet: true
-            echopet.pet.type.tropicalfish.light_blue_carpet: true
-            echopet.pet.type.tropicalfish.yellow_carpet: true
-            echopet.pet.type.tropicalfish.lime_carpet: true
-            echopet.pet.type.tropicalfish.pink_carpet: true
-            echopet.pet.type.tropicalfish.gray_carpet: true
-            echopet.pet.type.tropicalfish.cyan_carpet: true
-            echopet.pet.type.tropicalfish.purple_carpet: true
-            echopet.pet.type.tropicalfish.blue_carpet: true
-            echopet.pet.type.tropicalfish.brown_carpet: true
-            echopet.pet.type.tropicalfish.green_carpet: true
-            echopet.pet.type.tropicalfish.red_carpet: true
-            echopet.pet.type.tropicalfish.black_carpet: true
+            echopet.pet.type.tropicalfish.pattern_kob: true
+            echopet.pet.type.tropicalfish.pattern_sunstreak: true
+            echopet.pet.type.tropicalfish.pattern_snooper: true
+            echopet.pet.type.tropicalfish.pattern_dasher: true
+            echopet.pet.type.tropicalfish.pattern_brinely: true
+            echopet.pet.type.tropicalfish.pattern_spotty: true
+            echopet.pet.type.tropicalfish.pattern_flopper: true
+            echopet.pet.type.tropicalfish.pattern_stripey: true
+            echopet.pet.type.tropicalfish.pattern_glitter: true
+            echopet.pet.type.tropicalfish.pattern_blockfish: true
+            echopet.pet.type.tropicalfish.pattern_betty: true
+            echopet.pet.type.tropicalfish.pattern_clayfish: true
+            echopet.pet.type.tropicalfish.color_white: true
+            echopet.pet.type.tropicalfish.color_orange: true
+            echopet.pet.type.tropicalfish.color_magenta: true
+            echopet.pet.type.tropicalfish.color_light_blue: true
+            echopet.pet.type.tropicalfish.color_yellow: true
+            echopet.pet.type.tropicalfish.color_lime: true
+            echopet.pet.type.tropicalfish.color_pink: true
+            echopet.pet.type.tropicalfish.color_gray: true
+            echopet.pet.type.tropicalfish.color_light_gray: true
+            echopet.pet.type.tropicalfish.color_cyan: true
+            echopet.pet.type.tropicalfish.color_purple: true
+            echopet.pet.type.tropicalfish.color_blue: true
+            echopet.pet.type.tropicalfish.color_brown: true
+            echopet.pet.type.tropicalfish.color_green: true
+            echopet.pet.type.tropicalfish.color_red: true
+            echopet.pet.type.tropicalfish.color_black: true
+            echopet.pet.type.tropicalfish.pattern_color_white: true
+            echopet.pet.type.tropicalfish.pattern_color_orange: true
+            echopet.pet.type.tropicalfish.pattern_color_magenta: true
+            echopet.pet.type.tropicalfish.pattern_color_light_blue: true
+            echopet.pet.type.tropicalfish.pattern_color_yellow: true
+            echopet.pet.type.tropicalfish.pattern_color_lime: true
+            echopet.pet.type.tropicalfish.pattern_color_pink: true
+            echopet.pet.type.tropicalfish.pattern_color_gray: true
+            echopet.pet.type.tropicalfish.pattern_color_light_gray: true
+            echopet.pet.type.tropicalfish.pattern_color_cyan: true
+            echopet.pet.type.tropicalfish.pattern_color_purple: true
+            echopet.pet.type.tropicalfish.pattern_color_blue: true
+            echopet.pet.type.tropicalfish.pattern_color_brown: true
+            echopet.pet.type.tropicalfish.pattern_color_green: true
+            echopet.pet.type.tropicalfish.pattern_color_red: true
+            echopet.pet.type.tropicalfish.pattern_color_black: true
     echopet.pet.type.turtle.*:
         default: op
         description: 'All turtle pet data permissions'

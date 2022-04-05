@@ -40,14 +40,14 @@ public interface IPetType{
 	
 	/**
 	 * If the specified PetData is in the pets {@link #getAllowedCategories()} or {@link #getAllowedDataTypes()}.<br>
-	 * This method does not check if such PetData is enabled in the pet config. For that, please use {@link #isDataAllowed(PetData)}
+	 * This method does not check if such PetData is enabled in the pet config. For that use {@link #isDataAllowed(PetData)}
 	 *
 	 * @return true if the pet data is an allowed category or data type.
 	 */
 	default boolean isValidData(PetData<?> data){
 		for(PetDataCategory category : getAllowedCategories()){
-			for(PetData<?> d : category.getData()){
-				if(d.equals(data)) return true;
+			for(CategorizedPetData<?> d : category.getData()){
+				if(d == data || d.getData().equals(data)) return true;
 			}
 		}
 		return getAllowedDataTypes().contains(data);

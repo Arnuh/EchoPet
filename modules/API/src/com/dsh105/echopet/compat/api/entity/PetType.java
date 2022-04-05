@@ -417,9 +417,10 @@ public enum PetType implements IPetType{
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData<?> data : category.getDefaultData()){
+					category.load(true);
+					for(PetData<?> data : category.getData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
-							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from data " + data + " and category " + category);
+							System.out.println(petType + " has dupe perm string " + data.getConfigKeyName() + " one from category " + category);
 							continue;
 						}
 						alreadyHad.add(data.getConfigKeyName());
@@ -554,7 +555,7 @@ public enum PetType implements IPetType{
 				}
 				Set<String> alreadyHad = new HashSet<>();
 				for(PetDataCategory category : petType.getAllowedCategories()){
-					for(PetData<?> data : category.getDefaultData()){
+					for(PetData<?> data : category.getData()){
 						if(alreadyHad.contains(data.getConfigKeyName())){
 							// System.out.println(petType + " has dupe perm string " + data.getConfigOptionString() + " one from data " + data + " and category " + category);
 							continue;
