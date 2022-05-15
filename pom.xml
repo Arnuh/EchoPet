@@ -32,8 +32,8 @@
 	</modules>
 
 	<properties>
-		<echopet.version>1.2.0-SNAPSHOT</echopet.version>
-		<api.version>1.2.0-SNAPSHOT</api.version>
+		<echopet.version>1.2.0</echopet.version>
+		<api.version>1.2.0</api.version>
 		<jdk.version>16</jdk.version>
 		<maven.version>3.1.0</maven.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
