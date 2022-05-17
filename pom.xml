@@ -26,6 +26,7 @@
 	<modules>
 		<module>./modules/API</module>
 		<module>./modules/EchoPet</module>
+		<module>./modules/nms</module>
 		<module>./modules/v1_17</module>
 		<module>./modules/v1_18</module>
 		<module>./modules/v1_18_R2</module>
@@ -39,6 +40,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
+		<craftbukkit.package.version>v1.18_R2</craftbukkit.package.version>
 	</properties>
 
 	<prerequisites>

@@ -78,6 +78,10 @@
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.dsh105</groupId>
+					<artifactId>EchoPet-NMS</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -90,6 +94,10 @@
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.dsh105</groupId>
+					<artifactId>EchoPet-NMS</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -101,6 +109,10 @@
 				<exclusion>
 					<groupId>org.bukkit</groupId>
 					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.dsh105</groupId>
+					<artifactId>EchoPet-NMS</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
