@@ -17,7 +17,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVexPet;
@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
  * @since Nov 19, 2016
  */
 @EntityPetType(petType = PetType.VEX)
-public class VexPet extends Pet implements IVexPet{
+public class VexPet extends LivingPet implements IVexPet{
 	
 	protected boolean powered;
 	

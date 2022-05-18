@@ -17,7 +17,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.ParrotVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
  * @since May 23, 2017
  */
 @EntityPetType(petType = PetType.PARROT)
-public class ParrotPet extends Pet implements IParrotPet{
+public class ParrotPet extends LivingPet implements IParrotPet{
 	
 	protected ParrotVariant variant = ParrotVariant.BLUE;// its random?
 	

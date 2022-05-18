@@ -15,10 +15,26 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.pet;
+package com.dsh105.echopet.api.pet;
 
+import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
 import com.dsh105.echopet.compat.api.entity.ILivingPet;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
-public interface IWitchPet extends ILivingPet{
-
+public class LivingPet extends Pet implements ILivingPet{
+	
+	public LivingPet(Player owner){
+		super(owner);
+	}
+	
+	@Override
+	public ILivingEntityPet getEntityPet(){
+		return (ILivingEntityPet) super.getEntityPet();
+	}
+	
+	@Override
+	public LivingEntity getCraftPet(){
+		return (LivingEntity) super.getCraftPet();
+	}
 }

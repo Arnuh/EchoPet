@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
@@ -51,7 +51,7 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 1.3F, height = 0.6F)
 @EntityPetType(petType = PetType.AXOLOTL)
-public class EntityAxolotlPet extends Axolotl implements IEntityPet, EntityPetGiveMeAccess{
+public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, EntityPetGiveMeAccess{
 	
 	private static final List<? extends SensorType<? extends Sensor<? super Axolotl>>> SENSOR_TYPES = ImmutableList.of();
 	

@@ -17,22 +17,35 @@
 
 package com.dsh105.echopet.nms.entity.base;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import net.minecraft.world.entity.Mob;
 
-public class EntityAgeablePetBase extends LivingEntityPetBase implements IEntityAgeablePetBase{
+import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+
+public class LivingEntityPetBase extends EntityPetBase{
 	
-	public EntityAgeablePetBase(ILivingEntityPet entityPet){
+	public LivingEntityPetBase(ILivingEntityPet entityPet){
 		super(entityPet);
 	}
 	
-	public Mob get(){// Swap to ageable
-		return (Mob) getEntity();
+	@Override
+	public LivingEntity getEntity(){
+		return (LivingEntity) getEntityPet();
 	}
 	
 	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
+	protected void initiateEntityPet(){
+		super.initiateEntityPet();
+		AttributeInstance attributeInstance = getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
+		if(attributeInstance != null){
+			attributeInstance.setBaseValue(getPet().getPetType().getWalkSpeed());
+		}
+	}
+	
+	@Override
+	protected void adjustFlyingSpeed(){
+		LivingEntity entity = getEntity();
+		entity.flyingSpeed = entity.getSpeed() * 0.1F;
 	}
 }

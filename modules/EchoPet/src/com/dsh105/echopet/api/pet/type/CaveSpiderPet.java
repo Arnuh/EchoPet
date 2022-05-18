@@ -17,14 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICaveSpiderPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CAVESPIDER)
-public class CaveSpiderPet extends Pet implements ICaveSpiderPet{
+public class CaveSpiderPet extends LivingPet implements ICaveSpiderPet{
 	
 	public CaveSpiderPet(Player owner){
 		super(owner);

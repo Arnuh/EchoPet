@@ -27,19 +27,16 @@ import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
+import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetBase;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.PetGoalLookAtPlayer;
-import com.dsh105.echopet.nms.NMSEntityUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftEntity;
@@ -49,7 +46,7 @@ import org.bukkit.util.Vector;
 
 public class EntityPetBase implements INMSEntityPetBase{
 	
-	private final IEntityPet entityPet;
+	protected final IEntityPet entityPet;
 	private PetGoalSelector petGoalSelector;
 	protected double jumpHeight;
 	protected float rideSpeed, flySpeed;
@@ -69,18 +66,14 @@ public class EntityPetBase implements INMSEntityPetBase{
 		return getEntityPet().getPet();
 	}
 	
-	public LivingEntity getEntity(){
-		return (LivingEntity) entityPet;
+	public Entity getEntity(){
+		return (Entity) getEntityPet();
 	}
 	
 	protected void initiateEntityPet(){
 		this.rideSpeed = getPet().getPetType().getRideSpeed();
 		this.flySpeed = getPet().getPetType().getFlySpeed();
 		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
-		AttributeInstance attributeInstance = getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
-		if(attributeInstance != null){
-			attributeInstance.setBaseValue(getPet().getPetType().getWalkSpeed());
-		}
 		this.setPathfinding();
 		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
 	}
@@ -153,7 +146,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 			return;
 		}
 		ServerPlayer nmsOwner = ((CraftPlayer) owner).getHandle();
-		LivingEntity entity = getEntity();
+		Entity entity = getEntity();
 		if(nmsOwner.isInvisible() != entity.isInvisible() && !this.shouldVanish){
 			entity.setInvisible(!entity.isInvisible());
 		}
@@ -210,7 +203,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 	
 	@Override
 	public float getSpeed(){
-		LivingEntity entity = getEntity();
+		Entity entity = getEntity();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
 			if(getPet().getPetType().canFly()){
@@ -222,6 +215,10 @@ public class EntityPetBase implements INMSEntityPetBase{
 		return speed;
 	}
 	
+	protected void adjustFlyingSpeed(){
+		// Stub for LivingEntity
+	}
+	
 	@Override
 	public Vec3 travel(Vec3 vec3d){
 		ServerPlayer passenger = getValidRider();
@@ -229,7 +226,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 			return null;
 		}
 		Player player = getPet().getOwner();
-		LivingEntity entity = getEntity();
+		Entity entity = getEntity();
 		entity.setYRot(passenger.getYRot());
 		entity.yRotO = entity.getYRot();
 		entity.setXRot(passenger.getXRot() * 0.5F);
@@ -243,7 +240,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
-		entity.flyingSpeed = entity.getSpeed() * 0.1F;
+		adjustFlyingSpeed();
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()){
@@ -284,7 +281,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 	}
 	
 	public void setVelocity(Vector vel){
-		LivingEntity entity = getEntity();
+		Entity entity = getEntity();
 		entity.setDeltaMovement(vel.getX(), vel.getY(), vel.getZ());
 		entity.hurtMarked = true;
 	}

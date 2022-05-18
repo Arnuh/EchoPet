@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractPiglinPet;
 import org.bukkit.entity.Player;
 
-public abstract class AbstractPiglinPet extends Pet implements IAbstractPiglinPet, IAgeablePet{
+public abstract class AbstractPiglinPet extends LivingPet implements IAbstractPiglinPet, IAgeablePet{
 	
 	public AbstractPiglinPet(Player owner){
 		super(owner);

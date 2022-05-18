@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 
@@ -42,7 +42,7 @@ public interface IPet{
 	
 	IEntityPet getEntityPet();
 	
-	LivingEntity getCraftPet();
+	Entity getCraftPet();
 	
 	Location getLocation();
 	

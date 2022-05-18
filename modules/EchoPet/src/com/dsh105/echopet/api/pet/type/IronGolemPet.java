@@ -17,14 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IIronGolemPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.IRONGOLEM)
-public class IronGolemPet extends Pet implements IIronGolemPet{
+public class IronGolemPet extends LivingPet implements IIronGolemPet{
 	
 	public IronGolemPet(Player owner){
 		super(owner);

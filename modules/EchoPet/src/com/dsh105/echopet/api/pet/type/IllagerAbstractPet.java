@@ -16,14 +16,14 @@
  */
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IIllagerAbstractPet;
 import org.bukkit.entity.Player;
 
 /**
  * @since May 23, 2017
  */
-public class IllagerAbstractPet extends Pet implements IIllagerAbstractPet{
+public class IllagerAbstractPet extends LivingPet implements IIllagerAbstractPet{
 	
 	public IllagerAbstractPet(Player owner){
 		super(owner);

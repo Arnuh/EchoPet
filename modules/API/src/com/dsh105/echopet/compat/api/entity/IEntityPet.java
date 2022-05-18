@@ -19,7 +19,7 @@ package com.dsh105.echopet.compat.api.entity;
 
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public interface IEntityPet{
@@ -32,7 +32,7 @@ public interface IEntityPet{
 	
 	SizeCategory getSizeCategory();
 	
-	LivingEntity getEntity();
+	Entity getEntity();
 	
 	Player getOwner();
 	

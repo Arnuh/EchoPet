@@ -18,8 +18,8 @@
 package com.dsh105.echopet.nms.entity;
 
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
@@ -55,7 +55,7 @@ import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public abstract class EntityPet extends Mob implements IEntityPet{
+public abstract class EntityPet extends Mob implements ILivingEntityPet{
 	
 	protected IPet pet;
 	private final INMSEntityPetBase petBase;

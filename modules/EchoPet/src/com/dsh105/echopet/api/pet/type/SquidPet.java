@@ -17,14 +17,14 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISquidPet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SQUID)
-public class SquidPet extends Pet implements ISquidPet{
+public class SquidPet extends LivingPet implements ISquidPet{
 	
 	public SquidPet(Player owner){
 		super(owner);

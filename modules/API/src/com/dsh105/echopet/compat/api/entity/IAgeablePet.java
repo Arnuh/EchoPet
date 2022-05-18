@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-public interface IAgeablePet extends IPet{
+public interface IAgeablePet extends ILivingPet{
 	
 	void setBaby(boolean flag);
 	

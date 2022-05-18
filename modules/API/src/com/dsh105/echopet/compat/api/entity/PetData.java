@@ -772,7 +772,9 @@ public class PetData<T>{
 				Lang.sendTo(player, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", "Health").replace("%value%", String.valueOf(value)));
 				return;
 			}
-			pet.getCraftPet().setHealth(value);
+			if(pet instanceof ILivingPet living){
+				living.getCraftPet().setHealth(value);
+			}
 		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health");
 	//@formatter:on
 	

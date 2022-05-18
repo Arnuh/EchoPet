@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
@@ -56,7 +56,7 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends Villager implements IEntityPet, EntityPetGiveMeAccess, IEntityVillagerAbstractPet, IEntityVillagerPet, IEntityVillagerDataHolder{
+public class EntityVillagerPet extends Villager implements ILivingEntityPet, EntityPetGiveMeAccess, IEntityVillagerAbstractPet, IEntityVillagerPet, IEntityVillagerDataHolder{
 	
 	protected IVillagerPet pet;
 	private final INMSEntityPetBase petBase;

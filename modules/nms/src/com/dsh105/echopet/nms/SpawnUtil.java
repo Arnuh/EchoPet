@@ -46,7 +46,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -77,7 +77,7 @@ public class SpawnUtil implements ISpawnUtil{
 		if(!l.getChunk().isLoaded()){
 			l.getChunk().load();
 		}
-		if(!VersionBreaking.addEntity(mcWorld, ((CraftLivingEntity) entityPet.getEntity()).getHandle(), CreatureSpawnEvent.SpawnReason.CUSTOM)){
+		if(!VersionBreaking.addEntity(mcWorld, ((CraftEntity) entityPet.getEntity()).getHandle(), CreatureSpawnEvent.SpawnReason.CUSTOM)){
 			owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
 			EchoPet.getManager().removePet(pet, true);
 		}else{

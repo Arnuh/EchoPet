@@ -17,7 +17,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
  */
 
 @EntityPetType(petType = PetType.SHULKER)
-public class ShulkerPet extends Pet implements IShulkerPet{
+public class ShulkerPet extends LivingPet implements IShulkerPet{
 	
 	protected boolean open;
 	protected DyeColor color;

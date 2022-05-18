@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRaiderPet;
 import org.bukkit.entity.Player;
 
-public class RaiderPet extends Pet implements IRaiderPet{
+public class RaiderPet extends LivingPet implements IRaiderPet{
 	
 	public RaiderPet(Player owner){
 		super(owner);

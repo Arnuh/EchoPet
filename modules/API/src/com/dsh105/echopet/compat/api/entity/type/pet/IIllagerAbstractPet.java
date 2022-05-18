@@ -16,9 +16,9 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.ILivingPet;
 
 /**
  * @since May 23, 2017
  */
-public interface IIllagerAbstractPet extends IPet{}
+public interface IIllagerAbstractPet extends ILivingPet{}
