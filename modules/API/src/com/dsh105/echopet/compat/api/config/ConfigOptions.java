@@ -17,10 +17,12 @@
 
 package com.dsh105.echopet.compat.api.config;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
@@ -144,7 +146,7 @@ public class ConfigOptions extends Options{
 			
 			set(path + "ignoreFallDamage", true);
 			
-			boolean canFly = petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX;
+			boolean canFly = petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
 			set(path + "canFly", canFly);
 			if(config.contains(path + "allow.riders")){
 				set(path + "riders", config.getBoolean(path + "allow.riders", true));
@@ -164,6 +166,19 @@ public class ConfigOptions extends Options{
 			}
 			config.removeKey("pets." + configOption + ".allow");
 			config.removeKey("pets." + configOption + ".force");
+			for(Class<?> c = petType.getPetClass(); c != null; c = c.getSuperclass()){
+				try{
+					for(Class<?> in : c.getInterfaces()){
+						if(!IPet.class.isAssignableFrom(in)) continue;
+						for(Field f : in.getFields()){
+							Object obj = f.get(null);
+							if(!(obj instanceof PetConfigEntry<?> entry)) continue;
+							set(path + entry.getConfigKey(), entry.getDefaultValue(), entry.getComments());
+						}
+					}
+				}catch(Exception ignored){
+				}
+			}
 		}
 	}
 	

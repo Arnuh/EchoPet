@@ -20,9 +20,12 @@ package com.dsh105.echopet.nms.entity.type;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFishPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPet{
 	
@@ -34,4 +37,37 @@ public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPe
 		super(type, world, pet);
 	}
 	
+	@Override
+	public void travel(Vec3 var0){
+		if(isVehicle()){
+			super.travel(var0);
+			return;
+		}
+		if(this.isInWater()){
+			this.moveRelative(0.02F, var0);
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(0.8F));
+		}else if(this.isInLava()){
+			this.moveRelative(0.02F, var0);
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(0.5));
+		}else{
+			float var1 = 0.91F;
+			if(this.onGround){
+				var1 = this.level.getBlockState(new BlockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
+			}
+			
+			float var2 = 0.16277137F / (var1 * var1 * var1);
+			var1 = 0.91F;
+			if(this.onGround){
+				var1 = this.level.getBlockState(new BlockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
+			}
+			
+			this.moveRelative(this.onGround ? 0.1F * var2 : 0.02F, var0);
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(var1));
+		}
+		
+		this.calculateEntityAnimation(this, false);
+	}
 }
