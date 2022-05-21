@@ -17,8 +17,9 @@
 
 package com.dsh105.echopet.nms.entity.ai.bee;
 
+import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
-import com.dsh105.echopet.compat.api.ai.PetGoalType;
+import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import com.dsh105.echopet.nms.entity.ai.util.PetAirAndWaterRandomPos;
 import com.dsh105.echopet.nms.entity.ai.util.PetHoverRandomPos;
@@ -39,25 +40,16 @@ public class PetGoalBeeWander extends APetGoalFloat{
 		double sizeModifier = pet.getSizeCategory().getModifier();
 		double teleportDistance = pet.getPet().getPetType().getTeleportDistance() * sizeModifier;
 		this.teleportDistanceSqr = teleportDistance * teleportDistance;
+		this.setFlags(EnumSet.of(PetGoal.Flag.MOVE));
 	}
 	
 	@Override
-	public PetGoalType getType(){
-		return PetGoalType.FOUR;
-	}
-	
-	@Override
-	public String getDefaultKey(){
-		return "BeeWander";
-	}
-	
-	@Override
-	public boolean shouldStart(){
+	public boolean canUse(){
 		return getNavigation().isDone() && pet.getRandom().nextInt(10) == 0;
 	}
 	
 	@Override
-	public boolean shouldContinue(){
+	public boolean canContinueToUse(){
 		return getNavigation().isInProgress();
 	}
 	

@@ -17,21 +17,19 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
+import java.util.Set;
+
 public interface IPetGoalSelector{
 	
-	void addGoal(PetGoal petGoal, int priority);
+	void addGoal(int priority, PetGoal petGoal);
 	
-	void addGoal(String key, PetGoal petGoal, int priority);
+	void removeAllGoals();
 	
-	void addAndReplaceGoal(String key, PetGoal petGoal, int priority);
+	void removeGoal(PetGoal goal);
 	
-	void removeGoal(PetGoal petGoal);
+	void tick();
 	
-	void removeGoal(String key);
+	Set<PetGoalWrapper> getAvailableGoals();
 	
-	void clearGoals(String key);
-	
-	PetGoal getGoal(String key);
-	
-	void updateGoals();
+	void setControlFlag(PetGoal.Flag flag, boolean enable);
 }

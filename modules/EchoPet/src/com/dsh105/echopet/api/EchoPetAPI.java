@@ -18,19 +18,13 @@
 package com.dsh105.echopet.api;
 
 import java.util.ArrayList;
-import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
-import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
-import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
-import com.dsh105.echopet.compat.api.ai.APetGoalMeleeAttack;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
@@ -268,9 +262,9 @@ public class EchoPetAPI{
 			EchoPet.LOG.severe("Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
 			return;
 		}
-		if(pet.getEntityPet().getPetGoalSelector().getGoal("Attack") != null){
-			// pet.getCraftPet().setTarget(target);
-		}
+		// if(pet.getEntityPet().getPetGoalSelector().getGoal("Attack") != null){
+		// pet.getCraftPet().setTarget(target);
+		//}
 	}
 	
 	/**
@@ -298,7 +292,7 @@ public class EchoPetAPI{
 			EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
-		if(goalType == GoalType.ATTACK){
+		/*if(goalType == GoalType.ATTACK){
 			pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalMeleeAttack>(ReflectionUtil.getVersionedClass("entity.ai.PetGoalMeleeAttack"), ReflectionUtil.getVersionedClass("entity.EntityPet"), double.class, int.class).newInstance(pet.getEntityPet(), EchoPet.getConfig().getDouble("attack.lockRange", 0.0D), EchoPet.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
 		}else if(goalType == GoalType.FLOAT){
 			pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalFloat>(ReflectionUtil.getVersionedClass("entity.ai.PetGoalFloat"), ReflectionUtil.getVersionedClass("entity.EntityPet")).newInstance(pet.getEntityPet()), 0);
@@ -306,7 +300,7 @@ public class EchoPetAPI{
 			pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalFollowOwner>(ReflectionUtil.getVersionedClass("entity.ai.PetGoalFollowOwner"), ReflectionUtil.getVersionedClass("entity.EntityPet"), double.class, double.class, double.class).newInstance(pet.getEntityPet()), 1);
 		}else if(goalType == GoalType.LOOK_AT_PLAYER){
 			pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalLookAtPlayer>(ReflectionUtil.getVersionedClass("entity.ai.PetGoalLookAtPlayer"), ReflectionUtil.getVersionedClass("entity.EntityPet"), Class.class, float.class).newInstance(pet.getEntityPet(), ReflectionUtil.getNMSClass("EntityHuman"), 8.0F), 2);
-		}
+		}*/
 	}
 	
 	/**
@@ -318,7 +312,7 @@ public class EchoPetAPI{
 	 * @param goal       the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to add
 	 * @param identifier a {@link java.lang.String} to identify the goal
 	 */
-	public void addGoal(IPet pet, PetGoal goal, String identifier, int priority){
+	/*public void addGoal(IPet pet, PetGoal goal, String identifier, int priority){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
@@ -328,7 +322,7 @@ public class EchoPetAPI{
 			return;
 		}
 		pet.getEntityPet().getPetGoalSelector().addGoal(identifier, goal, priority);
-	}
+	}*/
 	
 	/**
 	 * Remove a predefined goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
@@ -336,13 +330,13 @@ public class EchoPetAPI{
 	 * @param pet      {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
 	 * @param goalType type of goal
 	 */
-	public void removeGoal(IPet pet, GoalType goalType){
+	/*public void removeGoal(IPet pet, GoalType goalType){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		pet.getEntityPet().getPetGoalSelector().removeGoal(goalType.getGoalString());
-	}
+	}*/
 	
 	/**
 	 * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
@@ -353,13 +347,13 @@ public class EchoPetAPI{
 	 * @param pet        {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
 	 * @param identifier String that identifies a {@link com.dsh105.echopet.compat.api.ai.PetGoal}
 	 */
-	public void removeGoal(IPet pet, String identifier){
+	/*public void removeGoal(IPet pet, String identifier){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		pet.getEntityPet().getPetGoalSelector().removeGoal(identifier);
-	}
+	}*/
 	
 	/**
 	 * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI

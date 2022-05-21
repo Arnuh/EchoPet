@@ -17,27 +17,67 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
+import java.util.EnumSet;
+
 public abstract class PetGoal{
 	
-	public abstract PetGoalType getType();
+	private final EnumSet<Flag> flags = EnumSet.noneOf(Flag.class);
 	
-	public abstract String getDefaultKey();
+	public abstract boolean canUse();
 	
-	public abstract boolean shouldStart(); //a
-	
-	public boolean shouldContinue(){ //b
-		return shouldStart();
+	public boolean canContinueToUse(){
+		return this.canUse();
 	}
 	
-	public void start(){ //c
-	}
-	
-	public void finish(){ //d
-	}
-	
-	public boolean isContinuous(){
+	public boolean isInterruptable(){
 		return true;
 	}
 	
-	public abstract void tick(); //e
+	public void start(){
+	}
+	
+	public void stop(){
+	}
+	
+	public boolean requiresUpdateEveryTick(){
+		return false;
+	}
+	
+	public void tick(){
+	}
+	
+	public void setFlags(EnumSet<Flag> var0){
+		this.flags.clear();
+		this.flags.addAll(var0);
+	}
+	
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName();
+	}
+	
+	public EnumSet<Flag> getFlags(){
+		return this.flags;
+	}
+	
+	protected int adjustedTickDelay(int delay){
+		return this.requiresUpdateEveryTick() ? delay : reducedTickDelay(delay);
+	}
+	
+	protected static int reducedTickDelay(int delay){
+		return positiveCeilDiv(delay, 2);
+	}
+	
+	public static int positiveCeilDiv(int x, int y){
+		return -Math.floorDiv(-x, y);
+	}
+	
+	public enum Flag{
+		MOVE,
+		LOOK,
+		JUMP,
+		TARGET;
+		
+		public static final Flag[] values = values();
+	}
 }

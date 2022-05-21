@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
+import com.google.common.collect.Sets;
 
 /*
  * From EntityAPI :)
@@ -29,163 +30,114 @@ import java.util.Map;
 
 public class PetGoalSelector implements IPetGoalSelector{
 	
-	private Map<String, PetGoalSelectorItem> goalMap = new HashMap<String, PetGoalSelectorItem>();
-	private ArrayList<PetGoalSelectorItem> goals = new ArrayList<PetGoalSelectorItem>();
-	private ArrayList<PetGoalSelectorItem> activeGoals = new ArrayList<PetGoalSelectorItem>();
-	private int delay = 0;
+	private static final PetGoalWrapper NO_GOAL = new PetGoalWrapper(new PetGoal(){
+		@Override
+		public boolean canUse(){
+			return false;
+		}
+	}, Integer.MAX_VALUE){
+		@Override
+		public boolean isRunning(){
+			return false;
+		}
+	};
+	
+	private final Set<PetGoalWrapper> availableGoals = Sets.newLinkedHashSet();
+	private final Map<PetGoal.Flag, PetGoalWrapper> lockedFlags = new EnumMap(PetGoal.Flag.class);
+	private final EnumSet<PetGoal.Flag> disabledFlags = EnumSet.noneOf(PetGoal.Flag.class);
 	
 	public PetGoalSelector(){
 	}
 	
-	public void addGoal(PetGoal petGoal, int priority){
-		this.addGoal(petGoal.getDefaultKey(), petGoal, priority);
+	@Override
+	public void addGoal(int priority, PetGoal petGoal){
+		availableGoals.add(new PetGoalWrapper(petGoal, priority));
 	}
 	
-	public void addGoal(String key, PetGoal petGoal, int priority){
-		PetGoalSelectorItem goalItem = new PetGoalSelectorItem(priority, petGoal);
-		if(this.goalMap.containsKey(key)){
-			return;
-		}
-		this.goalMap.put(key, goalItem);
-		this.goals.add(goalItem);
+	@Override
+	public void removeAllGoals(){
+		this.availableGoals.clear();
 	}
 	
-	public void addAndReplaceGoal(String key, PetGoal petGoal, int priority){
-		if(this.goalMap.containsKey(key)){
-			this.removeGoal(key);
-		}
-		this.addGoal(key, petGoal, priority);
+	@Override
+	public void removeGoal(PetGoal goal){
+		this.availableGoals.stream()
+			.filter(var1x->var1x.getGoal() == goal)
+			.filter(PetGoalWrapper::isRunning).forEach(PetGoalWrapper::stop);
+		this.availableGoals.removeIf(var1x->var1x.getGoal() == goal);
 	}
 	
-	public void removeGoal(PetGoal petGoal){
-		Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
-		
-		while(iterator.hasNext()){
-			PetGoalSelectorItem goalItem = iterator.next();
-			PetGoal petGoal1 = goalItem.getPetGoal();
-			
-			if(petGoal1 == petGoal){
-				if(this.activeGoals.contains(goalItem)){
-					petGoal1.finish();
-					this.activeGoals.remove(goalItem);
-				}
-				
-				iterator.remove();
+	private static boolean goalContainsAnyFlags(PetGoalWrapper goal, EnumSet<PetGoal.Flag> flags){
+		for(PetGoal.Flag flag : goal.getFlags()){
+			if(flags.contains(flag)){
+				return true;
 			}
 		}
+		return false;
 	}
 	
-	public void removeGoal(String key){
-		Iterator<Map.Entry<String, PetGoalSelectorItem>> iterator = this.goalMap.entrySet().iterator();
-		
-		while(iterator.hasNext()){
-			Map.Entry<String, PetGoalSelectorItem> entry = iterator.next();
-			PetGoalSelectorItem goalItem = entry.getValue();
-			PetGoal petGoal1 = goalItem.getPetGoal();
-			
-			if(key.equals(entry.getKey())){
-				if(this.activeGoals.contains(goalItem)){
-					petGoal1.finish();
-					this.activeGoals.remove(goalItem);
-				}
-				this.goals.remove(goalItem);
-				
-				iterator.remove();
-			}
-		}
-	}
-	
-	public void clearGoals(String key){
-		this.goalMap.clear();
-		this.goals.clear();
-		
-		Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
-		
-		while(iterator.hasNext()){
-			iterator.next().getPetGoal().finish();
-		}
-		this.activeGoals.clear();
-	}
-	
-	public PetGoal getGoal(String key){
-		Iterator<Map.Entry<String, PetGoalSelectorItem>> iterator = this.goalMap.entrySet().iterator();
-		
-		while(iterator.hasNext()){
-			Map.Entry<String, PetGoalSelectorItem> entry = iterator.next();
-			PetGoalSelectorItem goalItem = entry.getValue();
-			PetGoal petGoal = goalItem.getPetGoal();
-			
-			if(key.equals(entry.getKey())){
-				return petGoal;
-			}
-		}
-		return null;
-	}
-	
-	public void updateGoals(){
-		Iterator<PetGoalSelectorItem> iterator;
-		if(this.delay++ % 3 == 0){
-			
-			iterator = this.goals.iterator();
-			
-			while(iterator.hasNext()){
-				PetGoalSelectorItem goalItem = iterator.next();
-				if(this.activeGoals.contains(goalItem)){
-					if(this.canUse(goalItem) && goalItem.getPetGoal().shouldContinue()){
-						continue;
-					}
-					goalItem.getPetGoal().finish();
-					this.activeGoals.remove(goalItem);
-				}else{
-					if(this.canUse(goalItem) && goalItem.getPetGoal().shouldStart()){
-						goalItem.getPetGoal().start();
-						this.activeGoals.add(goalItem);
-					}
-				}
-				
-			}
-			
-			this.delay = 0;
-		}else{
-			iterator = this.activeGoals.iterator();
-			
-			while(iterator.hasNext()){
-				PetGoalSelectorItem goalItem = iterator.next();
-				if(!goalItem.getPetGoal().shouldContinue()){
-					goalItem.getPetGoal().finish();
-					iterator.remove();
-				}
+	private static boolean goalCanBeReplacedForAllFlags(PetGoalWrapper goal, Map<PetGoal.Flag, PetGoalWrapper> flags){
+		for(PetGoal.Flag flag : goal.getFlags()){
+			if(!flags.getOrDefault(flag, NO_GOAL).canBeReplacedBy(goal)){
+				return false;
 			}
 		}
 		
-		iterator = this.activeGoals.iterator();
-		
-		while(iterator.hasNext()){
-			PetGoalSelectorItem goalItem = iterator.next();
-			goalItem.getPetGoal().tick();
-		}
-	}
-	
-	private boolean canUse(PetGoalSelectorItem goalItem){
-		Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
-		
-		while(iterator.hasNext()){
-			PetGoalSelectorItem goalItem1 = iterator.next();
-			if(goalItem1 != goalItem){
-				if(goalItem.getPriority() > goalItem1.getPriority()){
-					if(!this.areCompatible(goalItem, goalItem1) && this.activeGoals.contains(goalItem1)){
-						return false;
-					}
-					//goal.i() -> isContinuous
-				}else if(!goalItem1.getPetGoal().isContinuous() && this.activeGoals.contains(goalItem1)){
-					return false;
-				}
-			}
-		}
 		return true;
 	}
 	
-	protected boolean areCompatible(PetGoalSelectorItem goalItem, PetGoalSelectorItem goalItem1){
-		return goalItem.getPetGoal().getType().isCompatibleWith(goalItem1.getPetGoal().getType());
+	@Override
+	public void tick(){
+		for(PetGoalWrapper goalWrapper : this.availableGoals){
+			if(goalWrapper.isRunning() && (goalContainsAnyFlags(goalWrapper, this.disabledFlags) || !goalWrapper.canContinueToUse())){
+				goalWrapper.stop();
+			}
+		}
+		
+		this.lockedFlags.entrySet().removeIf(entry->!entry.getValue().isRunning());
+		
+		for(PetGoalWrapper goalWrapper : this.availableGoals){
+			if(!goalWrapper.isRunning() && !goalContainsAnyFlags(goalWrapper, this.disabledFlags) && goalCanBeReplacedForAllFlags(goalWrapper, this.lockedFlags) && goalWrapper.canUse()){
+				for(PetGoal.Flag flag : goalWrapper.getFlags()){
+					PetGoalWrapper goal = this.lockedFlags.getOrDefault(flag, NO_GOAL);
+					goal.stop();
+					this.lockedFlags.put(flag, goal); // NO_GOAL gets put in here and then instantly removed next tick.
+				}
+				goalWrapper.start();
+			}
+		}
+		
+		tickRunningGoals(true);
+	}
+	
+	public void tickRunningGoals(boolean forceUpdate){
+		for(PetGoalWrapper goal : this.availableGoals){
+			if(goal.isRunning() && (forceUpdate || goal.requiresUpdateEveryTick())){
+				goal.tick();
+			}
+		}
+	}
+	
+	@Override
+	public Set<PetGoalWrapper> getAvailableGoals(){
+		return this.availableGoals;
+	}
+	
+	public void disableControlFlag(PetGoal.Flag flag){
+		this.disabledFlags.add(flag);
+	}
+	
+	public void enableControlFlag(PetGoal.Flag flag){
+		this.disabledFlags.remove(flag);
+	}
+	
+	@Override
+	public void setControlFlag(PetGoal.Flag flag, boolean enable){
+		if(enable){
+			this.enableControlFlag(flag);
+		}else{
+			this.disableControlFlag(flag);
+		}
+		
 	}
 }

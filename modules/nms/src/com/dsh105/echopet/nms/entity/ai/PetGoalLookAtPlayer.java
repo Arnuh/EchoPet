@@ -17,52 +17,43 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
+import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
-import com.dsh105.echopet.compat.api.ai.PetGoalType;
+import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
-@SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
-	//LookAtPlayerGoal
+	// LookAtPlayerGoal
 	private final IEntityPet pet;
 	private final Mob mob;
 	protected Entity player;
 	private final float lookDistance, lookDistanceSqr;
 	private int lookTime;
 	private final float probability;
-	private final Class clazz;
+	private final Class<? extends LivingEntity> clazz;
 	
-	public PetGoalLookAtPlayer(IEntityPet pet, Mob mob, Class c){
+	public PetGoalLookAtPlayer(IEntityPet pet, Mob mob, Class<? extends LivingEntity> c){
 		this(pet, mob, c, 8.0F, 0.02F);
 	}
 	
-	public PetGoalLookAtPlayer(IEntityPet pet, Mob mob, Class c, float f, float f1){
+	public PetGoalLookAtPlayer(IEntityPet pet, Mob mob, Class<? extends LivingEntity> c, float f, float f1){
 		this.pet = pet;
 		this.mob = mob;
 		this.lookDistance = f;
 		this.lookDistanceSqr = lookDistance * lookDistance;
 		this.probability = f1;
 		this.clazz = c;
+		this.setFlags(EnumSet.of(PetGoal.Flag.LOOK));
 	}
 	
 	@Override
-	public PetGoalType getType(){
-		return PetGoalType.TWO;
-	}
-	
-	@Override
-	public String getDefaultKey(){
-		return "LookAtPlayer";
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean shouldStart(){
+	public boolean canUse(){
 		if(mob.getRandom().nextFloat() >= this.probability){
 			return false;
 		}else if(mob.passengers.size() > 0){
@@ -71,14 +62,16 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 			if(this.clazz == ServerPlayer.class){
 				this.player = mob.level.getNearestPlayer(mob, lookDistance);
 			}else{
-				this.player = (Entity) mob.level.getEntitiesOfClass(this.clazz, mob.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), EntitySelector.notRiding(mob)).stream().findAny().orElse(null);
+				this.player = mob.level.getEntitiesOfClass(this.clazz, mob.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), EntitySelector.notRiding(mob)).stream()
+					.findAny()
+					.orElse(null);
 			}
 			return this.player != null;
 		}
 	}
 	
 	@Override
-	public boolean shouldContinue(){
+	public boolean canContinueToUse(){
 		return this.player.isAlive() && (mob.distanceToSqr(this.player) <= lookDistanceSqr && this.lookTime > 0);
 	}
 	
@@ -88,7 +81,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	}
 	
 	@Override
-	public void finish(){
+	public void stop(){
 		this.player = null;
 	}
 	

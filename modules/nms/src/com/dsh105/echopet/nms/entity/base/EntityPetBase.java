@@ -30,6 +30,7 @@ import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetBase;
+import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.PetGoalLookAtPlayer;
@@ -82,14 +83,15 @@ public class EntityPetBase implements INMSEntityPetBase{
 		try{
 			petGoalSelector = new PetGoalSelector();
 			if(getEntity() instanceof Mob mob){// We support living entities but only mobs have ai.
-				petGoalSelector.addGoal(new PetGoalFloat(mob), 0);
+				mob.goalSelector = new GoalSelectorWrapper(petGoalSelector);
+				petGoalSelector.addGoal(0, new PetGoalFloat(mob));
 				/*if(pet.getPetType().equals(PetType.BEE)){
 					petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
 				}else{
 					petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
 				}*/
-				petGoalSelector.addGoal(new PetGoalFollowOwner(getEntityPet(), mob), 1);
-				petGoalSelector.addGoal(new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class), 2);
+				petGoalSelector.addGoal(1, new PetGoalFollowOwner(getEntityPet(), mob));
+				petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class));
 			}
 		}catch(Exception e){
 			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
@@ -181,10 +183,6 @@ public class EntityPetBase implements INMSEntityPetBase{
 				z += 1.5;
 			}
 			setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));
-		}
-		IPet rider = pet.getRider();
-		if(!entity.isPassenger() || (rider == null || !rider.isSpawned())){
-			this.petGoalSelector.updateGoals();
 		}
 	}
 	

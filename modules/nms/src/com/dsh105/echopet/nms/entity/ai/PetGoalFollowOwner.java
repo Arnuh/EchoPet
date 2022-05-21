@@ -17,8 +17,9 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
+import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
-import com.dsh105.echopet.compat.api.ai.PetGoalType;
+import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
@@ -54,20 +55,12 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		this.startDistanceSqr = startDistance * startDistance;
 		this.stopDistanceSqr = stopDistance * stopDistance;
 		this.teleportDistanceSqr = teleportDistance * teleportDistance;
+		
+		this.setFlags(EnumSet.of(PetGoal.Flag.MOVE, PetGoal.Flag.LOOK));
 	}
 	
 	@Override
-	public PetGoalType getType(){
-		return PetGoalType.THREE;
-	}
-	
-	@Override
-	public String getDefaultKey(){
-		return "FollowOwner";
-	}
-	
-	@Override
-	public boolean shouldStart(){
+	public boolean canUse(){
 		if(!this.mob.isAlive()){
 			return false;
 		}else if(this.pet.getOwner() == null){
@@ -81,18 +74,8 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	}
 	
 	@Override
-	public boolean shouldContinue(){
-		if(mob.getNavigation().isDone()){// Navigation - bottom of class, just returns another method.
-			return false;
-		}else if(this.pet.getOwner() == null){
-			return false;
-		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
-			return false;
-		}else if(mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) < stopDistanceSqr){
-			return false;
-		}else{
-			return true;
-		}
+	public boolean canContinueToUse(){
+		return !getNavigation().isDone() && this.mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) > stopDistanceSqr;
 	}
 	
 	@Override
@@ -103,7 +86,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	}
 	
 	@Override
-	public void finish(){
+	public void stop(){
 		getNavigation().stop();
 	}
 	
@@ -114,10 +97,6 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		mob.getLookControl().setLookAt(owner, 10.0F, (float) mob.getMaxHeadXRot());
 		if(--this.timeToRecalcPath <= 0){
 			this.timeToRecalcPath = 10;
-			/*if (this.pet.getPlayerOwner().isFlying()) {
-			    //Don't move pet when owner flying
-			    return;
-			}*/
 			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getOwner()).getHandle().isOnGround() || this.pet.getOwner().isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;

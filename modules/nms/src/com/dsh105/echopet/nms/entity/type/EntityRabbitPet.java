@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
-import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -101,7 +100,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 			ControllerJumpRabbit jumpController = (ControllerJumpRabbit) getJumpControl();
 			if(!jumpController.wantJump()){
 				if(this.moveControl.hasWanted() && this.jumpDelayTicks == 0){
-					Path pathentity = ((PetGoalFollowOwner) petGoalSelector.getGoal("FollowOwner")).getNavigation().getPath();// Gets path towards the player.
+					Path pathentity = getNavigation().getPath();// Gets path towards the player.
 					Vec3 vec3d = new Vec3(this.moveControl.getWantedX(), this.moveControl.getWantedY(), this.moveControl.getWantedZ());
 					if(pathentity != null && !pathentity.isDone()){
 						vec3d = pathentity.getNextEntityPos(this);

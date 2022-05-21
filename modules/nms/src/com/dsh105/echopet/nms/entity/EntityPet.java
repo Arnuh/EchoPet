@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.nms.entity;
 
+import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
 import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
@@ -29,6 +30,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.nms.NMSEntityUtil;
+import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.PetGoalLookAtPlayer;
@@ -147,14 +149,15 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 	public void setPathfinding(){
 		try{
 			petGoalSelector = new PetGoalSelector();
-			petGoalSelector.addGoal(new PetGoalFloat(this), 0);
+			goalSelector = new GoalSelectorWrapper(petGoalSelector);
+			petGoalSelector.addGoal(0, new PetGoalFloat(this));
 			/*if(pet.getPetType().equals(PetType.BEE)){
 				petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
 			}else{
 				petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
 			}*/
-			petGoalSelector.addGoal(new PetGoalFollowOwner(this, this), 1);
-			petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, this, ServerPlayer.class), 2);
+			petGoalSelector.addGoal(1, new PetGoalFollowOwner(this, this));
+			petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(this, this, ServerPlayer.class));
 		}catch(Exception e){
 			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
 		}
@@ -380,12 +383,18 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 		onLive();
 		if(this.petGoalSelector == null){
 			this.remove(false);
-			return;
 		}
+	}
+	
+	@Override
+	protected void updateControlFlags(){
+		if(petGoalSelector == null) return;
 		IPet rider = getPet().getRider();
-		if(!isPassenger() || (rider == null || !rider.isSpawned())){
-			this.petGoalSelector.updateGoals();
-		}
+		boolean canMove = !isPassenger() && !isVehicle() && (rider == null || !rider.isSpawned());
+		boolean canJump = !isPassenger();
+		petGoalSelector.setControlFlag(PetGoal.Flag.MOVE, canMove);
+		petGoalSelector.setControlFlag(PetGoal.Flag.JUMP, canMove && canJump);
+		petGoalSelector.setControlFlag(PetGoal.Flag.LOOK, canMove);
 	}
 	
 	@Override

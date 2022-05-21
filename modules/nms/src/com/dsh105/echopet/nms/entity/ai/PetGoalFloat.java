@@ -17,32 +17,25 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
+import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
-import com.dsh105.echopet.compat.api.ai.PetGoalType;
+import com.dsh105.echopet.compat.api.ai.PetGoal;
 import net.minecraft.world.entity.Mob;
 
 public class PetGoalFloat extends APetGoalFloat{
 	
-	//FloatGoal
+	// FloatGoal
 	private final Mob entity;
 	
 	public PetGoalFloat(Mob entity){
 		this.entity = entity;
+		setFlags(EnumSet.of(PetGoal.Flag.JUMP));
 		entity.getNavigation().setCanFloat(true);
 	}
 	
 	@Override
-	public PetGoalType getType(){
-		return PetGoalType.FOUR;
-	}
-	
-	@Override
-	public String getDefaultKey(){
-		return "Float";
-	}
-	
-	@Override
-	public boolean shouldStart(){
+	public boolean canUse(){
+		// return this.mob.isInWater() && this.mob.getFluidHeight(FluidTags.WATER) > this.mob.getFluidJumpThreshold() || this.mob.isInLava();
 		return entity.isInWater() || entity.isInLava();
 	}
 	
