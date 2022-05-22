@@ -150,17 +150,17 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 		try{
 			petGoalSelector = new PetGoalSelector();
 			goalSelector = new GoalSelectorWrapper(petGoalSelector);
-			petGoalSelector.addGoal(0, new PetGoalFloat(this));
-			/*if(pet.getPetType().equals(PetType.BEE)){
-				petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
-			}else{
-				petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
-			}*/
-			petGoalSelector.addGoal(1, new PetGoalFollowOwner(this, this));
-			petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(this, this, ServerPlayer.class));
+			setPathfindingGoals();
 		}catch(Exception e){
 			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
 		}
+	}
+	
+	protected void setPathfindingGoals(){
+		petGoalSelector.removeAllGoals();
+		petGoalSelector.addGoal(0, new PetGoalFloat(this));
+		petGoalSelector.addGoal(1, new PetGoalFollowOwner(this, this));
+		petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(this, this, ServerPlayer.class));
 	}
 	
 	@Override

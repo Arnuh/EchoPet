@@ -29,6 +29,8 @@ import net.minecraft.world.phys.Vec3;
 
 public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPet{
 	
+	protected boolean useFlyTravel = false;
+	
 	public EntityFlyingPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
 	}
@@ -39,7 +41,7 @@ public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPe
 	
 	@Override
 	public void travel(Vec3 var0){
-		if(isVehicle()){
+		if(isVehicle() || !useFlyTravel){
 			super.travel(var0);
 			return;
 		}

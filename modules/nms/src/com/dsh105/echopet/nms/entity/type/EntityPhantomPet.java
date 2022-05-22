@@ -49,9 +49,11 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	
 	// Changes size and damage
 	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(EntityPhantomPet.class, EntityDataSerializers.INT);
-	Vec3 moveTargetPoint = Vec3.ZERO;
-	BlockPos anchorPoint = BlockPos.ZERO;
-	AttackPhase attackPhase = AttackPhase.CIRCLE;
+	private Vec3 moveTargetPoint = Vec3.ZERO;
+	private BlockPos anchorPoint = BlockPos.ZERO;
+	private AttackPhase attackPhase = AttackPhase.CIRCLE;
+	private MoveControl originalMoveControl, flyMoveControl;
+	private LookControl originalLookControl, flyLookControl;
 	
 	public EntityPhantomPet(Level world){
 		super(EntityType.PHANTOM, world);
@@ -59,16 +61,15 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	
 	public EntityPhantomPet(Level world, IPet pet){
 		super(EntityType.PHANTOM, world, pet);
-		this.moveControl = new BiMoveControl(this, new PhantomMoveControl(this), new MoveControl(this), Entity::isVehicle);
-		this.lookControl = new PhantomLookControl(this);
+		originalMoveControl = moveControl;
+		originalLookControl = lookControl;
+		flyMoveControl = new BiMoveControl(this, new PhantomMoveControl(this), originalMoveControl, Entity::isVehicle);
+		flyLookControl = new PhantomLookControl(this);
 	}
 	
 	@Override
 	public void setPathfinding(){
 		super.setPathfinding();
-		petGoalSelector.removeAllGoals();
-		petGoalSelector.addGoal(1, new PhantomAttackStrategyGoal());
-		petGoalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
 	}
 	
 	@Override
@@ -93,6 +94,23 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	@Override
 	protected BodyRotationControl createBodyControl(){
 		return new PhantomBodyRotationControl(this);
+	}
+	
+	@Override
+	public void setWandering(boolean flag){
+		if(flag){
+			useFlyTravel = true;
+			petGoalSelector.removeAllGoals();
+			petGoalSelector.addGoal(1, new PhantomAttackStrategyGoal());
+			petGoalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
+			moveControl = flyMoveControl;
+			lookControl = flyLookControl;
+		}else{
+			useFlyTravel = false;
+			setPathfindingGoals();
+			moveControl = originalMoveControl;
+			lookControl = originalLookControl;
+		}
 	}
 	
 	private class PhantomBodyRotationControl extends BodyRotationControl{

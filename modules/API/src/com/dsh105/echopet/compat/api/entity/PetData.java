@@ -41,6 +41,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IParrotPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPiglinPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
@@ -333,6 +334,8 @@ public class PetData<T>{
 		WANDER = create("wander", (player, pet, category)->{
 			if(pet instanceof IBatPet bat){
 				return bat::setWandering;
+			}else if(pet instanceof IPhantomPet phantom){
+				return phantom::setWandering;
 			}
 			return null;
 		}, Material.ELYTRA, "Wander"),

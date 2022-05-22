@@ -17,16 +17,38 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import java.util.List;
 import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.PHANTOM)
 public class PhantomPet extends LivingPet implements IPhantomPet{
 	
+	protected boolean wandering;
+	
 	public PhantomPet(Player owner){
 		super(owner);
+	}
+	
+	@Override
+	public void setWandering(boolean flag){
+		((IEntityPhantomPet) getEntityPet()).setWandering(flag);
+		this.wandering = flag;
+	}
+	
+	@Override
+	public boolean isWandering(){
+		return this.wandering;
+	}
+	
+	@Override
+	public void generatePetInfo(List<String> info){
+		super.generatePetInfo(info);
+		info.add(ChatColor.GOLD + " - Wandering: " + ChatColor.YELLOW + isWandering());
 	}
 }

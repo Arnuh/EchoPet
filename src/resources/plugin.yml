@@ -814,6 +814,8 @@ permissions:
         default: op
     echopet.pet.type.phantom.ride:
         default: op
+    echopet.pet.type.phantom.wander:
+        default: op
     echopet.pet.type.pig.hat:
         default: op
     echopet.pet.type.pig.ride:
@@ -2986,6 +2988,7 @@ permissions:
         children:
             echopet.pet.type.phantom.hat: true
             echopet.pet.type.phantom.ride: true
+            echopet.pet.type.phantom.wander: true
     echopet.pet.type.pig.*:
         default: op
         description: 'All pig pet data permissions'
