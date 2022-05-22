@@ -34,6 +34,10 @@ public interface IPhantomPet extends IFlyingPet{
 	PetConfigEntry<Double> CIRCLE_MIN_HEIGHT = new PetConfigEntry<>("ai.circle.minHeight", 0.0);
 	PetConfigEntry<Double> CIRCLE_MAX_RAND_HEIGHT = new PetConfigEntry<>("ai.circle.maxRandHeight", 9.0);
 	
+	void setSize(int size);
+	
+	int getSize();
+	
 	void setWandering(boolean flag);
 	
 	boolean isWandering();

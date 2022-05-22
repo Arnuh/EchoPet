@@ -73,7 +73,7 @@ public enum PetType implements IPetType{
 	OCELOT("Ocelot", "Ocelot Pet", "ocelot"),
 	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),
-	PHANTOM("Phantom", "Phantom Pet", "phantom", PetData.WANDER),
+	PHANTOM("Phantom", "Phantom Pet", "phantom", PetData.SIZE, PetData.WANDER),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
 	PIGLIN("Piglin", "Piglin Pet", "piglin", PetData.DANCE),
 	PIGZOMBIE("PigZombie", "Pig Zombie Pet", "zombie_pigman"),

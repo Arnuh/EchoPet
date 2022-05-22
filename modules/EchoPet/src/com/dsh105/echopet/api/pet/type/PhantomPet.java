@@ -29,10 +29,22 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.PHANTOM)
 public class PhantomPet extends LivingPet implements IPhantomPet{
 	
+	protected int size;
 	protected boolean wandering;
 	
 	public PhantomPet(Player owner){
 		super(owner);
+	}
+	
+	@Override
+	public void setSize(int size){
+		((IEntityPhantomPet) getEntityPet()).setSize(size);
+		this.size = size;
+	}
+	
+	@Override
+	public int getSize(){
+		return size;
 	}
 	
 	@Override

@@ -814,6 +814,8 @@ permissions:
         default: op
     echopet.pet.type.phantom.ride:
         default: op
+    echopet.pet.type.phantom.size:
+        default: op
     echopet.pet.type.phantom.wander:
         default: op
     echopet.pet.type.pig.hat:
@@ -2988,6 +2990,7 @@ permissions:
         children:
             echopet.pet.type.phantom.hat: true
             echopet.pet.type.phantom.ride: true
+            echopet.pet.type.phantom.size: true
             echopet.pet.type.phantom.wander: true
     echopet.pet.type.pig.*:
         default: op

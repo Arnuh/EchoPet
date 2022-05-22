@@ -83,7 +83,8 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		this.entityData.define(ID_SIZE, 0);
 	}
 	
-	public void setPhantomSize(int i){
+	@Override
+	public void setSize(int i){
 		this.entityData.set(ID_SIZE, Mth.clamp(i, 0, 64));
 	}
 	

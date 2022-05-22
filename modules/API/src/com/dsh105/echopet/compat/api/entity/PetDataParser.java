@@ -70,6 +70,37 @@ public interface PetDataParser<T>{
 		return BooleanParser::new;
 	}
 	
+	class IntegerParser implements PetDataParser<Integer>{
+		
+		private final PetData<Integer> data;
+		
+		public IntegerParser(PetData<Integer> data){this.data = data;}
+		
+		@Override
+		public Integer parse(String input){
+			return Integer.parseInt(input);
+		}
+		
+		@Override
+		public Integer defaultValue(IPetType petType){
+			return petType.getDataDefaultValue(data, 0);
+		}
+		
+		@Override
+		public Integer interact(Integer current, ItemStack item){
+			return null;
+		}
+		
+		@Override
+		public PetDataParser<Integer> createNew(PetData<Integer> data){
+			return new IntegerParser(data);
+		}
+	}
+	
+	static Function<PetData<Integer>, PetDataParser<Integer>> integerParser(){
+		return IntegerParser::new;
+	}
+	
 	class DoubleParser implements PetDataParser<Double>{
 		
 		private final PetData<Double> data;

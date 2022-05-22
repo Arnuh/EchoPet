@@ -73,6 +73,7 @@ import org.bukkit.inventory.ItemStack;
 
 import static com.dsh105.echopet.compat.api.entity.PetDataParser.booleanParser;
 import static com.dsh105.echopet.compat.api.entity.PetDataParser.doubleParser;
+import static com.dsh105.echopet.compat.api.entity.PetDataParser.integerParser;
 
 public class PetData<T>{
 	
@@ -769,6 +770,16 @@ public class PetData<T>{
 			return null;
 		}, Material.BROWN_WOOL, "Wild");
 	
+	public static final PetData<Integer>
+		SIZE = PetData.create("size", (player, pet, category)->value->{
+		if(value < 0 || value > 64){
+			Lang.sendTo(player, Lang.INVALID_PET_DATA_VALUE.toString().replace("%data%", "Size").replace("%value%", String.valueOf(value)));
+			return;
+		}
+		if(pet instanceof IPhantomPet phantom){
+			phantom.setSize(value);
+		}
+	}, integerParser(), (PetDataMaterial) null, "Size");
 	public static final PetData<Double>
 		HEALTH = PetData.create("health", (player, pet, category)->value->{
 			if(value < 0.1){
