@@ -48,6 +48,16 @@ public class FileDataManager implements IDataManager{
 	}
 	
 	@Override
+	public boolean init(){
+		return true;
+	}
+	
+	@Override
+	public void shutdown(){
+	
+	}
+	
+	@Override
 	public ActionChain<IPet> save(Player player, IPet pet, SavedType savedType){
 		if(pet.isRider()){
 			return new SyncBukkitAction<IPet>(plugin)::setAction;

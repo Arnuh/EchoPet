@@ -17,20 +17,13 @@
 
 package com.dsh105.echopet;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
 import javax.annotation.Nonnull;
-import javax.sql.DataSource;
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.echopet.api.FileDataManager;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SQLDataManager;
+import com.dsh105.echopet.api.SQLiteDataManager;
 import com.dsh105.echopet.api.updater.JenkinsUpdater;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
@@ -51,15 +44,12 @@ import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.SQLMigrationHandler;
 import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
 import com.dsh105.echopet.hook.PlaceHolderAPIProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -83,7 +73,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	private YAMLConfig petConfig, petCategoryConfig;
 	private YAMLConfig mainConfig;
 	private YAMLConfig langConfig;
-	private DataSource dataSource;
 	
 	// private VanishProvider vanishProvider;
 	private WorldGuardProvider worldGuardProvider;
@@ -125,14 +114,14 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		MANAGER = new PetManager();
 		
-		if(OPTIONS.useSql()){
-			if(!prepareSqlDatabase()){
-				manager.disablePlugin(this);
-				return;
-			}
-			dataManager = new SQLDataManager(this);
-		}else{
-			dataManager = new FileDataManager(this);
+		switch(OPTIONS.getStorageType()){
+			case YAML -> this.dataManager = new FileDataManager(this);
+			case MySQL -> this.dataManager = new SQLDataManager(this);
+			case SQLite -> this.dataManager = new SQLiteDataManager(this);
+		}
+		if(!dataManager.init()){
+			manager.disablePlugin(this);
+			return;
 		}
 		
 		// Register custom commands
@@ -164,12 +153,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		if(MANAGER != null){
 			MANAGER.removeAllPets();
 		}
-		if(dataSource instanceof Closeable closeable){
-			try{
-				closeable.close();
-			}catch(IOException e){
-				getLogger().log(Level.SEVERE, "Failed to close database connection", e);
-			}
+		if(dataManager != null){
+			dataManager.shutdown();
 		}
 		
 		// Unregister the commands
@@ -223,63 +208,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
 		}
 		this.prefix = Lang.PREFIX.toString();
-	}
-	
-	private boolean prepareSqlDatabase(){
-		String host = mainConfig.getString("sql.host", "localhost");
-		int port = mainConfig.getInt("sql.port", 3306);
-		String db = mainConfig.getString("sql.database", "echopet");
-		String user = mainConfig.getString("sql.username", "root");
-		String pass = mainConfig.getString("sql.password", "");
-		String prefix = mainConfig.getString("sql.prefix", "echopet");
-		File propertiesFile = new File(getDataFolder(), "hikaricp.properties");
-		HikariConfig config;
-		if(propertiesFile.exists()){
-			config = new HikariConfig(propertiesFile.getAbsolutePath());
-		}else{
-			config = new HikariConfig();
-		}
-		
-		// Check if any values are already set to prevent overriding them.
-		if(config.getJdbcUrl() == null) config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db);
-		if(config.getUsername() == null) config.setUsername(user);
-		if(config.getPassword() == null) config.setPassword(pass);
-		
-		Properties properties = config.getDataSourceProperties();
-		if(!properties.containsKey("rewriteBatchedStatements")){
-			config.addDataSourceProperty("rewriteBatchedStatements", "true");
-		}
-		if(!properties.containsKey("cachePrepStmts")){
-			config.addDataSourceProperty("cachePrepStmts", "true");
-		}
-		if(!properties.containsKey("useServerPrepStmts")){
-			config.addDataSourceProperty("useServerPrepStmts", "true");
-		}
-		// config.setConnectionTestQuery("SELECT 1");
-		try{
-			dataSource = new HikariDataSource(config);
-			try(Connection con = getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("""
-					CREATE TABLE IF NOT EXISTS `%s_pets` (
-						`uuid` CHAR(36) NOT NULL,
-						`saved_type` TINYINT NOT NULL DEFAULT 0,
-						`type` VARCHAR(255) NOT NULL,
-						`name` VARCHAR(255) NOT NULL,
-						`data` LONGTEXT NOT NULL,
-						`rider_type` VARCHAR(255) NULL DEFAULT NULL,
-						`rider_name` VARCHAR(255) NULL DEFAULT NULL,
-						`rider_data` LONGTEXT NULL DEFAULT NULL,
-						PRIMARY KEY (`uuid`, `saved_type`)
-					);""".formatted(prefix))){
-					ps.executeUpdate();
-					SQLMigrationHandler.handle(this, con, prefix);
-				}
-				return true;
-			}
-		}catch(SQLException ex){
-			getLogger().log(Level.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", ex);
-			return false;
-		}
 	}
 	
 	@Override
@@ -368,11 +296,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public IDataManager getDataManager(){
 		return dataManager;
-	}
-	
-	@Override
-	public Connection getConnection() throws SQLException{
-		return dataSource.getConnection();
 	}
 	
 	@Override

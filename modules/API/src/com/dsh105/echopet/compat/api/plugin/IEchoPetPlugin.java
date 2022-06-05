@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
@@ -42,8 +40,6 @@ public interface IEchoPetPlugin extends Plugin{
 	IPetManager getPetManager();
 	
 	IDataManager getDataManager();
-	
-	Connection getConnection() throws SQLException;
 	
 	// public IVanishProvider getVanishProvider();
 	

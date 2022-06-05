@@ -27,6 +27,7 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.plugin.StorageType;
 import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import org.bukkit.ChatColor;
@@ -47,8 +48,8 @@ public class ConfigOptions extends Options{
 		return this.config.getString("commandString", "pet");
 	}
 	
-	public boolean useSql(){
-		return this.config.getBoolean("sql.use", false);
+	public StorageType getStorageType(){
+		return StorageType.get(this.config.getString("storage.type", "YAML"));
 	}
 	
 	@Override
@@ -57,7 +58,9 @@ public class ConfigOptions extends Options{
 		
 		set("checkForUpdates", true, "EchoPet will notify certain", "players of new updates if they are available.");
 		
-		set("sql.use", false);
+		StorageType type = config.getBoolean("sql.use", false) ? StorageType.MySQL : StorageType.YAML;
+		config.removeKey("sql.use");
+		set("storage.type", type.name(), "The type of storage EchoPet will use.", "Valid values are YAML, MySQL, SQLite");
 		set("sql.host", "localhost");
 		set("sql.port", 3306);
 		set("sql.database", "echopet");

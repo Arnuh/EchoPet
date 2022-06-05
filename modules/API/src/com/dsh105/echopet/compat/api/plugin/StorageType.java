@@ -17,23 +17,20 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
-import org.bukkit.entity.Player;
 
-public interface IDataManager{
+public enum StorageType{
+	YAML,
+	MySQL,
+	SQLite;
 	
-	boolean init();
+	public static final StorageType[] values = values();
 	
-	void shutdown();
-	
-	ActionChain<IPet> save(Player player, IPet pet, SavedType savedType);
-	
-	ActionChain<Boolean> save(Player player, PetStorage pet, PetStorage rider, SavedType savedType);
-	
-	ActionChain<PetStorage> load(Player player, SavedType savedType);
-	
-	ActionChain<Boolean> remove(Player player, SavedType savedType);
-	
-	ActionChain<Boolean> removeAll();
+	public static StorageType get(String name){
+		for(StorageType type : values){
+			if(type.name().equalsIgnoreCase(name)){
+				return type;
+			}
+		}
+		return null;
+	}
 }

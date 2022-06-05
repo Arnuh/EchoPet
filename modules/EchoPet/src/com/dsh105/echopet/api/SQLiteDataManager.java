@@ -17,17 +17,14 @@
 
 package com.dsh105.echopet.api;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
-import javax.sql.DataSource;
-import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISQLDataManager;
@@ -36,77 +33,51 @@ import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import com.dsh105.echopet.compat.api.plugin.action.AsyncBukkitAction;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
-import com.dsh105.echopet.compat.api.util.SQLMigrationHandler;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class SQLDataManager implements ISQLDataManager{
+
+public class SQLiteDataManager implements ISQLDataManager{
 	
 	protected final Plugin plugin;
 	protected final String tablePrefix;
+	private File dbFile;
+	private Connection connection;
 	
-	private DataSource dataSource;
-	
-	public SQLDataManager(Plugin plugin){
+	public SQLiteDataManager(Plugin plugin){
 		this.plugin = plugin;
 		this.tablePrefix = EchoPet.getPlugin().getMainConfig().getString("sql.prefix", "echopet");
 	}
 	
 	@Override
 	public boolean init(){
-		YAMLConfig mainConfig = EchoPet.getPlugin().getMainConfig();
-		String host = mainConfig.getString("sql.host", "localhost");
-		int port = mainConfig.getInt("sql.port", 3306);
-		String db = mainConfig.getString("sql.database", "echopet");
-		String user = mainConfig.getString("sql.username", "root");
-		String pass = mainConfig.getString("sql.password", "");
-		File propertiesFile = new File(plugin.getDataFolder(), "hikaricp.properties");
-		HikariConfig config;
-		if(propertiesFile.exists()){
-			config = new HikariConfig(propertiesFile.getAbsolutePath());
-		}else{
-			config = new HikariConfig();
+		dbFile = new File(plugin.getDataFolder(), "sqlite.db");
+		if(!dbFile.exists()){
+			try{
+				return dbFile.createNewFile();
+			}catch(IOException e){
+				plugin.getLogger().log(Level.SEVERE, "Failed to create sqlite db file", e);
+				return false;
+			}
 		}
-		
-		// Check if any values are already set to prevent overriding them.
-		if(config.getJdbcUrl() == null) config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db);
-		if(config.getUsername() == null) config.setUsername(user);
-		if(config.getPassword() == null) config.setPassword(pass);
-		
-		Properties properties = config.getDataSourceProperties();
-		if(!properties.containsKey("rewriteBatchedStatements")){
-			config.addDataSourceProperty("rewriteBatchedStatements", "true");
-		}
-		if(!properties.containsKey("cachePrepStmts")){
-			config.addDataSourceProperty("cachePrepStmts", "true");
-		}
-		if(!properties.containsKey("useServerPrepStmts")){
-			config.addDataSourceProperty("useServerPrepStmts", "true");
-		}
-		// config.setConnectionTestQuery("SELECT 1");
 		try{
-			dataSource = new HikariDataSource(config);
-			try(Connection con = getConnection()){
-				try(PreparedStatement ps = con.prepareStatement("""
-					CREATE TABLE IF NOT EXISTS `%s_pets` (
-						`uuid` CHAR(36) NOT NULL,
-						`saved_type` TINYINT NOT NULL DEFAULT 0,
-						`type` VARCHAR(255) NOT NULL,
-						`name` VARCHAR(255) NOT NULL,
-						`data` LONGTEXT NOT NULL,
-						`rider_type` VARCHAR(255) NULL DEFAULT NULL,
-						`rider_name` VARCHAR(255) NULL DEFAULT NULL,
-						`rider_data` LONGTEXT NULL DEFAULT NULL,
-						PRIMARY KEY (`uuid`, `saved_type`)
-					);""".formatted(tablePrefix))){
-					ps.executeUpdate();
-					SQLMigrationHandler.handle(plugin, con, tablePrefix);
-				}
+			Connection con = getConnection();
+			try(PreparedStatement ps = con.prepareStatement("""
+				CREATE TABLE IF NOT EXISTS `%s_pets` (
+					`uuid` CHAR(36) NOT NULL,
+					`saved_type` TINYINT NOT NULL DEFAULT 0,
+					`type` VARCHAR(255) NOT NULL,
+					`name` VARCHAR(255) NOT NULL,
+					`data` TEXT NOT NULL,
+					`rider_type` VARCHAR(255) NULL DEFAULT NULL,
+					`rider_name` VARCHAR(255) NULL DEFAULT NULL,
+					`rider_data` TEXT NULL DEFAULT NULL,
+					PRIMARY KEY (`uuid`, `saved_type`)
+				);""".formatted(tablePrefix))){
+				ps.executeUpdate();
 			}
 		}catch(SQLException ex){
-			plugin.getLogger().log(Level.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", ex);
+			plugin.getLogger().log(Level.SEVERE, "Failed to connect to SQLite", ex);
 			return false;
 		}
 		return true;
@@ -114,18 +85,11 @@ public class SQLDataManager implements ISQLDataManager{
 	
 	@Override
 	public void shutdown(){
-		if(dataSource instanceof Closeable closeable){
-			try{
-				closeable.close();
-			}catch(IOException e){
-				plugin.getLogger().log(Level.SEVERE, "Failed to close database connection", e);
-			}
+		try{
+			connection.close();
+		}catch(SQLException e){
+			plugin.getLogger().log(Level.SEVERE, "Failed to close database connection", e);
 		}
-	}
-	
-	@Override
-	public Connection getConnection() throws SQLException{
-		return dataSource.getConnection();
 	}
 	
 	@Override
@@ -135,13 +99,14 @@ public class SQLDataManager implements ISQLDataManager{
 		}
 		final IPet rider = pet.getRider();
 		return AsyncBukkitAction.execute(plugin, ()->{
-			try(Connection con = getConnection()){
+			try{
+				Connection con = getConnection();
 				try(PreparedStatement ps = con.prepareStatement("""
 					INSERT INTO %s_pets (uuid, saved_type, type, name, data, rider_type, rider_name, rider_data)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE
-					saved_type = VALUES(saved_type),
-					type = VALUES(type), name = VALUES(name), data = VALUES(data),
-					rider_type = VALUES(rider_type), rider_name = VALUES(rider_name), rider_data = VALUES(rider_data);
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(uuid, saved_type) DO UPDATE SET
+					saved_type = excluded.saved_type,
+					type = excluded.type, name = excluded.name, data = excluded.data,
+					rider_type = excluded.rider_type, rider_name = excluded.rider_name, rider_data = excluded.rider_data;
 					""".formatted(tablePrefix))){
 					prepareSave(ps, player, savedType, pet, rider);
 					ps.executeUpdate();
@@ -156,13 +121,14 @@ public class SQLDataManager implements ISQLDataManager{
 	@Override
 	public ActionChain<Boolean> save(Player player, PetStorage pet, PetStorage rider, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
-			try(Connection con = getConnection()){
+			try{
+				Connection con = getConnection();
 				try(PreparedStatement ps = con.prepareStatement("""
 					INSERT INTO %s_pets (uuid, saved_type, type, name, data, rider_type, rider_name, rider_data)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE
-					saved_type = VALUES(saved_type),
-					type = VALUES(type), name = VALUES(name), data = VALUES(data),
-					rider_type = VALUES(rider_type), rider_name = VALUES(rider_name), rider_data = VALUES(rider_data);
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(uuid, saved_type) DO UPDATE SET
+					saved_type = excluded.saved_type,
+					type = excluded.type, name = excluded.name, data = excluded.data,
+					rider_type = excluded.rider_type, rider_name = excluded.rider_name, rider_data = excluded.rider_data;
 					""".formatted(tablePrefix))){
 					prepareSave(ps, player, savedType, pet, rider);
 					ps.executeUpdate();
@@ -175,11 +141,11 @@ public class SQLDataManager implements ISQLDataManager{
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error saving pet data for " + player.getUniqueId(), ex));
 	}
 	
-	
 	@Override
 	public ActionChain<PetStorage> load(Player player, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
-			try(Connection con = getConnection()){
+			try{
+				Connection con = getConnection();
 				try(PreparedStatement ps = con.prepareStatement("""
 					SELECT type, name, data, rider_type, rider_name, rider_data
 					FROM %s_pets WHERE uuid = ? ORDER BY saved_type DESC;""".formatted(tablePrefix))){
@@ -200,7 +166,8 @@ public class SQLDataManager implements ISQLDataManager{
 	@Override
 	public ActionChain<Boolean> remove(Player player, SavedType savedType){
 		return AsyncBukkitAction.execute(plugin, ()->{
-			try(Connection con = getConnection()){
+			try{
+				Connection con = getConnection();
 				try(PreparedStatement ps = con.prepareStatement("DELETE FROM %s_pets WHERE uuid = ?;".formatted(tablePrefix))){
 					ps.setString(1, player.getUniqueId().toString());
 					ps.executeUpdate();
@@ -216,7 +183,8 @@ public class SQLDataManager implements ISQLDataManager{
 	@Override
 	public ActionChain<Boolean> removeAll(){
 		return AsyncBukkitAction.execute(plugin, ()->{
-			try(Connection con = getConnection()){
+			try{
+				Connection con = getConnection();
 				try(PreparedStatement ps = con.prepareStatement("DELETE FROM %s_pets;".formatted(tablePrefix))){
 					ps.executeUpdate();
 				}
@@ -226,5 +194,13 @@ public class SQLDataManager implements ISQLDataManager{
 			}
 			return false;
 		}, ex->plugin.getLogger().log(Level.SEVERE, "Error deleting pet data", ex));
+	}
+	
+	@Override
+	public Connection getConnection() throws SQLException{
+		if(connection == null || connection.isClosed()){
+			connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
+		}
+		return connection;
 	}
 }
