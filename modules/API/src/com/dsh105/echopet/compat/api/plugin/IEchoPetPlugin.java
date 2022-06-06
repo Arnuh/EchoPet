@@ -39,7 +39,7 @@ public interface IEchoPetPlugin extends Plugin{
 	
 	IPetManager getPetManager();
 	
-	IDataManager getDataManager();
+	IStorageManager getStorageManager();
 	
 	// public IVanishProvider getVanishProvider();
 	

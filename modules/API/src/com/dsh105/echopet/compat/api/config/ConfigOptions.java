@@ -60,7 +60,7 @@ public class ConfigOptions extends Options{
 		
 		StorageType type = config.getBoolean("sql.use", false) ? StorageType.MySQL : StorageType.YAML;
 		config.removeKey("sql.use");
-		set("storage.type", type.name(), "The type of storage EchoPet will use.", "Valid values are YAML, MySQL, SQLite");
+		set("storage.type", type.name(), "The type of data storage EchoPet will use.", "Valid values are YAML, MySQL, SQLite");
 		set("sql.host", "localhost");
 		set("sql.port", 3306);
 		set("sql.database", "echopet");

@@ -21,7 +21,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
 import org.bukkit.entity.Player;
 
-public interface IDataManager{
+public interface IStorageManager{
 	
 	boolean init();
 	

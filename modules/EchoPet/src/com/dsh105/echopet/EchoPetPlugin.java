@@ -20,10 +20,10 @@ package com.dsh105.echopet;
 import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import com.codingforcookies.robert.core.Robert;
-import com.dsh105.echopet.api.FileDataManager;
+import com.dsh105.echopet.api.FileStorageManager;
+import com.dsh105.echopet.api.MySQLStorageManager;
 import com.dsh105.echopet.api.PetManager;
-import com.dsh105.echopet.api.SQLDataManager;
-import com.dsh105.echopet.api.SQLiteDataManager;
+import com.dsh105.echopet.api.SQLiteStorageManager;
 import com.dsh105.echopet.api.updater.JenkinsUpdater;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
@@ -35,9 +35,9 @@ import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.YAMLConfigManager;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.IDataManager;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
+import com.dsh105.echopet.compat.api.plugin.IStorageManager;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
@@ -51,6 +51,7 @@ import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -65,7 +66,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	private static PetManager MANAGER;
 	private static ConfigOptions OPTIONS;
 	
-	private IDataManager dataManager;
+	private IStorageManager dataManager;
 	private IPetRegistry petRegistry;
 	
 	private CommandManager COMMAND_MANAGER;
@@ -115,9 +116,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		MANAGER = new PetManager();
 		
 		switch(OPTIONS.getStorageType()){
-			case YAML -> this.dataManager = new FileDataManager(this);
-			case MySQL -> this.dataManager = new SQLDataManager(this);
-			case SQLite -> this.dataManager = new SQLiteDataManager(this);
+			case YAML -> this.dataManager = new FileStorageManager(this);
+			case MySQL -> this.dataManager = new MySQLStorageManager(this);
+			case SQLite -> this.dataManager = new SQLiteStorageManager(this);
 		}
 		if(!dataManager.init()){
 			manager.disablePlugin(this);
@@ -144,7 +145,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		this.worldGuardProvider = new WorldGuardProvider(this);
 		new PlaceHolderAPIProvider(this);
 		
-		new Metrics(this, 12900);
+		Metrics metrics = new Metrics(this, 12900);
+		metrics.addCustomChart(new SimplePie("data_storage_type", ()->OPTIONS.getStorageType().name()));
 		this.updater = new JenkinsUpdater(this);
 	}
 	
@@ -294,7 +296,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	}
 	
 	@Override
-	public IDataManager getDataManager(){
+	public IStorageManager getStorageManager(){
 		return dataManager;
 	}
 	

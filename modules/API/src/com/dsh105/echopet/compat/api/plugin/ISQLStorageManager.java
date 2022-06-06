@@ -29,7 +29,7 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Player;
 
-public interface ISQLDataManager extends IDataManager{
+public interface ISQLStorageManager extends IStorageManager{
 	
 	Connection getConnection() throws SQLException;
 	

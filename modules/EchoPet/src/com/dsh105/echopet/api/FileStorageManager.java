@@ -26,7 +26,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.IDataManager;
+import com.dsh105.echopet.compat.api.plugin.IStorageManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.plugin.action.ActionChain;
@@ -39,11 +39,11 @@ import org.bukkit.plugin.Plugin;
 import static com.dsh105.echopet.compat.api.plugin.EchoPet.ConfigType;
 import static com.dsh105.echopet.compat.api.plugin.EchoPet.getConfig;
 
-public class FileDataManager implements IDataManager{
+public class FileStorageManager implements IStorageManager{
 	
 	private final Plugin plugin;
 	
-	public FileDataManager(Plugin plugin){
+	public FileStorageManager(Plugin plugin){
 		this.plugin = plugin;
 	}
 	
