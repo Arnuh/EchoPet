@@ -99,15 +99,14 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	
 	@Override
 	public void setWandering(boolean flag){
+		useFlyTravel = flag;
 		if(flag){
-			useFlyTravel = true;
 			petGoalSelector.removeAllGoals();
 			petGoalSelector.addGoal(1, new PhantomAttackStrategyGoal());
 			petGoalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
 			moveControl = flyMoveControl;
 			lookControl = flyLookControl;
 		}else{
-			useFlyTravel = false;
 			setPathfindingGoals();
 			moveControl = originalMoveControl;
 			lookControl = originalLookControl;
@@ -122,8 +121,12 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		@Override
 		public void clientTick(){
-			yHeadRot = yBodyRot;
-			yBodyRot = getYRot();
+			if(useFlyTravel){
+				yHeadRot = yBodyRot;
+				yBodyRot = getYRot();
+			}else{
+				super.clientTick();
+			}
 		}
 	}
 	
@@ -176,7 +179,6 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 					// playSound(SoundEvents.PHANTOM_SWOOP, 10.0F, 0.95F + random.nextFloat() * 0.1F);
 				}
 			}
-			
 		}
 		
 		private void setAnchorAboveTarget(){

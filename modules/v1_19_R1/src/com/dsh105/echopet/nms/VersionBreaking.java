@@ -31,7 +31,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 public class VersionBreaking{
 	
 	public static boolean closerToCenterThan(BlockPos targetPosition, Position position, double range){
-		return targetPosition.closerThan(position, range);
+		return targetPosition.closerToCenterThan(position, range);
 	}
 	
 	public static BlockPos getBlockPosBelow(BlockPos pos){
@@ -51,6 +51,6 @@ public class VersionBreaking{
 	}
 	
 	public static void entityShake(LivingEntity entity){
-		entity.gameEvent(GameEvent.WOLF_SHAKING);
+		entity.gameEvent(GameEvent.ENTITY_SHAKE);
 	}
 }

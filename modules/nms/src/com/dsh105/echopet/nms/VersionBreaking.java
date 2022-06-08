@@ -21,9 +21,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class VersionBreaking{
@@ -61,5 +63,12 @@ public class VersionBreaking{
 		return level.addFreshEntity(entity, spawnReason);
 		// 1.17.1
 		// return level.addEntity(entity, spawnReason);
+	}
+	
+	public static void entityShake(LivingEntity entity){
+		// pre 1.19
+		// entity.gameEvent(GameEvent.WOLF_SHAKING);
+		// 1.19
+		entity.gameEvent(GameEvent.ENTITY_SHAKE);
 	}
 }

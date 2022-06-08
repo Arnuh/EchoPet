@@ -221,7 +221,8 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return super.isImmobile() && isVehicle() && isSaddled() || isEating() || isStanding();
 	}
 	
-	@Override
+	// Part of mob in 1.19
+	//@Override
 	public boolean canBeControlledByRider(){
 		return getValidRider() != null;
 	}

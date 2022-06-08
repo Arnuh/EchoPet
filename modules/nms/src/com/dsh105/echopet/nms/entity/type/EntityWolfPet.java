@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityTameablePet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -35,7 +36,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.DyeColor;
 
@@ -133,7 +133,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 		}else if((isWet || isShaking) && isShaking){
 			if(this.shakeAnim == 0.0F){
 				playSound(SoundEvents.WOLF_SHAKE, getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-				this.gameEvent(GameEvent.WOLF_SHAKING);
+				VersionBreaking.entityShake(this);
 			}
 			this.shakeAnim += 0.05F;
 			if(this.shakeAnim - 0.05F >= 2.0F){

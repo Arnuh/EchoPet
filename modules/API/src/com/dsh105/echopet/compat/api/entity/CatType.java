@@ -22,11 +22,25 @@ public enum CatType{
 	Black,
 	Red,
 	Siamese,
-	BritishShortHair,
+	BritishShortHair("british_shorthair"),
 	Calico,
 	Persian,
 	Ragdoll,
 	White,
 	Jellie,
-	AllBlack
+	AllBlack("all_black"),
+	;
+	private final String namespace;
+	
+	CatType(){
+		this.namespace = name().toLowerCase();
+	}
+	
+	CatType(String namespace){
+		this.namespace = namespace;
+	}
+	
+	public String getNamespace(){
+		return namespace;
+	}
 }
