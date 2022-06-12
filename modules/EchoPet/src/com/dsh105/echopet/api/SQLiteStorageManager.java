@@ -54,7 +54,9 @@ public class SQLiteStorageManager implements ISQLStorageManager{
 		dbFile = new File(plugin.getDataFolder(), "sqlite.db");
 		if(!dbFile.exists()){
 			try{
-				return dbFile.createNewFile();
+				if(!dbFile.createNewFile()){
+					return false;
+				}
 			}catch(IOException e){
 				plugin.getLogger().log(Level.SEVERE, "Failed to create sqlite db file", e);
 				return false;
@@ -85,11 +87,15 @@ public class SQLiteStorageManager implements ISQLStorageManager{
 	
 	@Override
 	public void shutdown(){
-		try{
-			connection.close();
-		}catch(SQLException e){
-			plugin.getLogger().log(Level.SEVERE, "Failed to close database connection", e);
-		}
+		AsyncBukkitAction.execute(plugin, ()->{
+			try{
+				connection.close();
+				connection = null;
+			}catch(SQLException e){
+				plugin.getLogger().log(Level.SEVERE, "Failed to close database connection", e);
+			}
+			return true;
+		}, ex->plugin.getLogger().log(Level.SEVERE, "Error shutting down SQLite", ex));
 	}
 	
 	@Override
