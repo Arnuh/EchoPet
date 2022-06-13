@@ -17,12 +17,15 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import java.util.Random;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public interface IEntityPet{
+	
+	Random RANDOM = new Random();
 	
 	IPet getPet();
 	
@@ -47,4 +50,12 @@ public interface IEntityPet{
 	}
 	
 	void setLocation(Location location);
+	
+	/**
+	 * 1.19 changed pet random to a custom "RandomSource" class where before it was javas random.
+	 * Re-add compatibility for single version NMS despite the change as no obvious reason exists for the change.
+	 */
+	default Random random(){
+		return RANDOM;
+	}
 }

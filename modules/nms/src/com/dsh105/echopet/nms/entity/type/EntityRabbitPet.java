@@ -76,7 +76,7 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	public void setJumping(boolean flag){
 		super.setJumping(flag);
 		if(flag){
-			this.playSound(this.getJumpSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+			this.playSound(this.getJumpSound(), this.getSoundVolume(), ((random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 		}
 	}
 	

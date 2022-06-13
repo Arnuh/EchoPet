@@ -132,7 +132,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 			}
 		}else if((isWet || isShaking) && isShaking){
 			if(this.shakeAnim == 0.0F){
-				playSound(SoundEvents.WOLF_SHAKE, getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				playSound(SoundEvents.WOLF_SHAKE, getSoundVolume(), (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
 				VersionBreaking.entityShake(this);
 			}
 			this.shakeAnim += 0.05F;
@@ -147,8 +147,8 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 				Vec3 vec3d = this.getDeltaMovement();
 				
 				for(int j = 0; j < i; ++j){
-					float f1 = (random.nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
-					float f2 = (random.nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
+					float f1 = (random().nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
+					float f2 = (random().nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
 					this.level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, getZ() + (double) f2, vec3d.x, vec3d.y, vec3d.z);
 				}
 			}
@@ -167,7 +167,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	
 	@Override
 	protected SoundEvent getAmbientSound(){
-		return this.isAngry() ? SoundEvents.WOLF_GROWL : (random.nextInt(3) == 0 ? (isTamed() && getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT) : SoundEvents.WOLF_AMBIENT);
+		return this.isAngry() ? SoundEvents.WOLF_GROWL : (random().nextInt(3) == 0 ? (isTamed() && getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT) : SoundEvents.WOLF_AMBIENT);
 	}
 	
 	@Override

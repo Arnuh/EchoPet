@@ -50,7 +50,7 @@ public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet
 		super.onLive();
 		// Is this clientside?
 		for(int i = 0; i < 2; i++){
-			this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+			this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (random().nextDouble() - 0.5D) * 2.0D, -random().nextDouble(), (random().nextDouble() - 0.5D) * 2.0D);
 		}
 	}
 }

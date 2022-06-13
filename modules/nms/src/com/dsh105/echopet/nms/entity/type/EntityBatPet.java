@@ -68,7 +68,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	
 	@Override
 	public SoundEvent getAmbientSound(){
-		return this.isResting() && this.random.nextInt(4) != 0 ? null : SoundEvents.BAT_AMBIENT;
+		return this.isResting() && random().nextInt(4) != 0 ? null : SoundEvents.BAT_AMBIENT;
 	}
 	
 	@Override
@@ -93,8 +93,8 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		if(isResting()){
 			boolean flag = this.isSilent();
 			if(this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition)){
-				if(this.random.nextInt(200) == 0){
-					this.yHeadRot = (float) this.random.nextInt(360);
+				if(random().nextInt(200) == 0){
+					this.yHeadRot = (float) random().nextInt(360);
 				}
 			}else{
 				this.setResting(false);
@@ -112,9 +112,9 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 			// closerThan squares it internally
 			// I think it checking if its too close to the player is better.
 			ServerPlayer owner = ((CraftPlayer) getOwner()).getHandle();
-			if(this.targetPosition == null || this.random.nextInt(30) == 0 || VersionBreaking.closerToCenterThan(targetPosition, owner.position(), 2.0D)){
+			if(this.targetPosition == null || random().nextInt(30) == 0 || VersionBreaking.closerToCenterThan(targetPosition, owner.position(), 2.0D)){
 				// Use to be off mob x,y,z but he just tries to fly away constantly.
-				this.targetPosition = new BlockPos(ownerLoc.getX() + random.nextInt(flyRange) - random.nextInt(flyRange), ownerLoc.getY() + random.nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + this.random.nextInt(flyRange) - this.random.nextInt(flyRange));
+				this.targetPosition = new BlockPos(ownerLoc.getX() + random().nextInt(flyRange) - random().nextInt(flyRange), ownerLoc.getY() + random().nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + random().nextInt(flyRange) - random().nextInt(flyRange));
 			}
 			
 			double d0 = (double) this.targetPosition.getX() + 0.5D - this.getX();// Should these values be off the player loc
@@ -127,7 +127,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 			float f1 = Mth.wrapDegrees(f - this.getYRot());
 			this.zza = 0.5F;
 			this.setYRot(this.getYRot() + f1);
-			if(this.random.nextInt(100) == 0 && this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition1)){
+			if(random().nextInt(100) == 0 && this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition1)){
 				this.setResting(true);
 			}
 		}

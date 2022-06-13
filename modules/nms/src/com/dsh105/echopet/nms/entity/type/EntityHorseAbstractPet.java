@@ -135,7 +135,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	
 	@Override
 	public void aiStep(){
-		if(random.nextInt(200) == 0){
+		if(random().nextInt(200) == 0){
 			moveTail();
 		}
 		
@@ -143,7 +143,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		if(!level.isClientSide && isAlive()){
 			
 			if(canEatGrass()){
-				if(!isEating() && !isVehicle() && random.nextInt(300) == 0 && level.getBlockState(VersionBreaking.getBlockPosBelow(blockPosition())).is(Blocks.GRASS_BLOCK)){
+				if(!isEating() && !isVehicle() && random().nextInt(300) == 0 && level.getBlockState(VersionBreaking.getBlockPosBelow(blockPosition())).is(Blocks.GRASS_BLOCK)){
 					setEating(true);
 				}
 				
@@ -423,7 +423,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	@Override
 	@Nullable
 	protected SoundEvent getHurtSound(DamageSource damagesource){
-		if(random.nextInt(3) == 0){
+		if(random().nextInt(3) == 0){
 			stand();
 		}
 		
@@ -433,7 +433,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	@Override
 	@Nullable
 	protected SoundEvent getAmbientSound(){
-		if(random.nextInt(10) == 0 && !isImmobile()){
+		if(random().nextInt(10) == 0 && !isImmobile()){
 			stand();
 		}
 		

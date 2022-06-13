@@ -165,7 +165,7 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		@Override
 		public void stop(){
-			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(minHeightOffset + random.nextInt(randHeightOffset));
+			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(minHeightOffset + random().nextInt(randHeightOffset));
 		}
 		
 		@Override
@@ -175,8 +175,8 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 				if(this.nextSweepTick <= 0){
 					// attackPhase = AttackPhase.SWOOP;
 					this.setAnchorAboveTarget();
-					this.nextSweepTick = this.adjustedTickDelay((sweepTickNextMin + random.nextInt(sweepTickNextRand)) * 20);
-					// playSound(SoundEvents.PHANTOM_SWOOP, 10.0F, 0.95F + random.nextFloat() * 0.1F);
+					this.nextSweepTick = this.adjustedTickDelay((sweepTickNextMin + random().nextInt(sweepTickNextRand)) * 20);
+					// playSound(SoundEvents.PHANTOM_SWOOP, 10.0F, 0.95F + random().nextFloat() * 0.1F);
 				}
 			}
 		}
@@ -184,7 +184,7 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		private void setAnchorAboveTarget(){
 			Location loc = getOwner().getLocation();
 			BlockPos pos = new BlockPos(loc.getX(), loc.getY(), loc.getZ());
-			anchorPoint = pos.above(minHeightOffset + random.nextInt(randHeightOffset));
+			anchorPoint = pos.above(minHeightOffset + random().nextInt(randHeightOffset));
 		}
 	}
 	
@@ -227,19 +227,19 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		@Override
 		public void start(){
-			this.distance = minDistance + random.nextFloat() * maxRandDistance;
-			this.height = minHeight + random.nextFloat() * maxRandHeight;
-			this.clockwise = random.nextBoolean() ? 1.0F : -1.0F;
+			this.distance = minDistance + random().nextFloat() * maxRandDistance;
+			this.height = minHeight + random().nextFloat() * maxRandHeight;
+			this.clockwise = random().nextBoolean() ? 1.0F : -1.0F;
 			this.selectNext();
 		}
 		
 		@Override
 		public void tick(){
-			if(random.nextInt(this.adjustedTickDelay(350)) == 0){
-				this.height = minHeight + random.nextFloat() * maxRandHeight;
+			if(random().nextInt(this.adjustedTickDelay(350)) == 0){
+				this.height = minHeight + random().nextFloat() * maxRandHeight;
 			}
 			
-			if(random.nextInt(this.adjustedTickDelay(250)) == 0){
+			if(random().nextInt(this.adjustedTickDelay(250)) == 0){
 				++this.distance;
 				if(this.distance > maxDistance){
 					this.distance = maxDistanceReset;
@@ -247,8 +247,8 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 				}
 			}
 			
-			if(random.nextInt(this.adjustedTickDelay(450)) == 0){
-				this.angle = random.nextFloat() * 2.0F * (float) Math.PI;
+			if(random().nextInt(this.adjustedTickDelay(450)) == 0){
+				this.angle = random().nextFloat() * 2.0F * (float) Math.PI;
 				this.selectNext();
 			}
 			

@@ -54,7 +54,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
 	@Override
 	public boolean canUse(){
-		if(mob.getRandom().nextFloat() >= this.probability){
+		if(pet.random().nextFloat() >= this.probability){
 			return false;
 		}else if(mob.passengers.size() > 0){
 			return false;
@@ -77,7 +77,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	
 	@Override
 	public void start(){
-		this.lookTime = 40 + mob.getRandom().nextInt(40);
+		this.lookTime = 40 + pet.random().nextInt(40);
 	}
 	
 	@Override

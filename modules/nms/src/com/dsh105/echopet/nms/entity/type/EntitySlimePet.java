@@ -56,7 +56,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 		}else{
 			this.setSize(2);
 		}*/
-		this.jumpDelay = this.random.nextInt(15) + 10;
+		this.jumpDelay = random().nextInt(15) + 10;
 	}
 	
 	public EntitySlimePet(Level world){
@@ -71,8 +71,8 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	public void setSize(int i){
 		int j = Mth.clamp(i, MIN_SIZE, MAX_SIZE);
 		this.entityData.set(ID_SIZE, j);
-		//EntitySize es = this.getClass().getAnnotation(EntitySize.class);
-		//this.a(es.width() * (float) i, es.height() * (float) i);
+		// EntitySize es = this.getClass().getAnnotation(EntitySize.class);
+		// this.a(es.width() * (float) i, es.height() * (float) i);
 		this.setPos(getX(), getY(), getZ());
 		this.setHealth(this.getMaxHealth());
 	}
@@ -105,8 +105,8 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	public void onLive(){
 		super.onLive();
 		if(this.onGround && this.jumpDelay-- <= 0){
-			this.jumpDelay = this.random.nextInt(15) + 10;
-			makeSound("entity.slime.attack", 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+			this.jumpDelay = random().nextInt(15) + 10;
+			makeSound("entity.slime.attack", 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
 			getJumpControl().jump();
 		}
 	}

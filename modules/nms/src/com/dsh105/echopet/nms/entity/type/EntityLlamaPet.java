@@ -132,6 +132,6 @@ public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEn
 	
 	@Override
 	protected void playChestEquipsSound(){
-		this.playSound(SoundEvents.LLAMA_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+		this.playSound(SoundEvents.LLAMA_CHEST, 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
 	}
 }

@@ -73,6 +73,6 @@ public class EntityMulePet extends EntityHorseChestedAbstractPet implements IEnt
 	
 	@Override
 	protected void playChestEquipsSound(){
-		this.playSound(SoundEvents.MULE_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+		this.playSound(SoundEvents.MULE_CHEST, 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
 	}
 }

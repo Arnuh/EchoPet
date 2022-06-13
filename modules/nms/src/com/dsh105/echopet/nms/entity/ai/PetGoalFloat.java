@@ -20,14 +20,17 @@ package com.dsh105.echopet.nms.entity.ai;
 import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import net.minecraft.world.entity.Mob;
 
 public class PetGoalFloat extends APetGoalFloat{
 	
 	// FloatGoal
+	private final IEntityPet pet;
 	private final Mob entity;
 	
-	public PetGoalFloat(Mob entity){
+	public PetGoalFloat(IEntityPet pet, Mob entity){
+		this.pet = pet;
 		this.entity = entity;
 		setFlags(EnumSet.of(PetGoal.Flag.JUMP));
 		entity.getNavigation().setCanFloat(true);
@@ -41,7 +44,7 @@ public class PetGoalFloat extends APetGoalFloat{
 	
 	@Override
 	public void tick(){
-		if(entity.getRandom().nextFloat() < 0.8F){
+		if(pet.random().nextFloat() < 0.8F){
 			entity.getJumpControl().jump();
 		}
 	}

@@ -52,7 +52,7 @@ public class EntityOcelotPet extends EntityAgeablePet implements IEntityOcelotPe
 	
 	@Override
 	protected String getAmbientSoundString(){
-		return (this.random.nextInt(4) == 0 ? "entity.cat.purreow" : null);
+		return (random().nextInt(4) == 0 ? "entity.cat.purreow" : null);
 	}
 	
 	@Override

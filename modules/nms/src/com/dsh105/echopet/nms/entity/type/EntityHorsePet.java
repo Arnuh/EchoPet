@@ -98,7 +98,7 @@ public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHor
 	@Override
 	protected void playGallopSound(SoundType var0){
 		super.playGallopSound(var0);
-		if(random.nextInt(10) == 0){
+		if(random().nextInt(10) == 0){
 			playSound(SoundEvents.HORSE_BREATHE, var0.getVolume() * 0.6F, var0.getPitch());
 		}
 	}

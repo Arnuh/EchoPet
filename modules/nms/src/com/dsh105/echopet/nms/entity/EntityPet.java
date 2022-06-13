@@ -158,7 +158,7 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 	
 	protected void setPathfindingGoals(){
 		petGoalSelector.removeAllGoals();
-		petGoalSelector.addGoal(0, new PetGoalFloat(this));
+		petGoalSelector.addGoal(0, new PetGoalFloat(this, this));
 		petGoalSelector.addGoal(1, new PetGoalFollowOwner(this, this));
 		petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(this, this, ServerPlayer.class));
 	}

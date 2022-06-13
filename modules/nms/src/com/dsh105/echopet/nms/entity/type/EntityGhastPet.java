@@ -73,7 +73,7 @@ public class EntityGhastPet extends EntityFlyingPet implements IEntityGhastPet{
 		@Override
 		public void tick(){
 			if(this.operation == Operation.MOVE_TO && this.floatDuration-- <= 0){
-				this.floatDuration += this.ghast.getRandom().nextInt(5) + 2;
+				this.floatDuration += ghast.random().nextInt(5) + 2;
 				Vec3 vec3d = new Vec3(this.wantedX - this.ghast.getX(), this.wantedY - this.ghast.getY(), this.wantedZ - this.ghast.getZ());
 				double d0 = vec3d.length();
 				vec3d = vec3d.normalize();
