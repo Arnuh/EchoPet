@@ -606,6 +606,10 @@ permissions:
         default: op
     echopet.pet.type.goat.screaming:
         default: op
+    echopet.pet.type.goat.left_horn:
+        default: op
+    echopet.pet.type.goat.right_horn:
+        default: op
     echopet.pet.type.guardian.hat:
         default: op
     echopet.pet.type.guardian.ride:
@@ -2826,6 +2830,8 @@ permissions:
             echopet.pet.type.goat.ride: true
             echopet.pet.type.goat.baby: true
             echopet.pet.type.goat.screaming: true
+            echopet.pet.type.goat.left_horn: true
+            echopet.pet.type.goat.right_horn: true
     echopet.pet.type.guardian.*:
         default: op
         description: 'All guardian pet data permissions'

@@ -58,7 +58,7 @@ public enum PetType implements IPetType{
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GLOWSQUID("GlowSquid", "Glow Squid Pet", "glow_squid", new Version("1.17-R1"), PetData.DARK),
-	GOAT("Goat", "Goat Pet", "goat", new Version("1.17-R1"), PetData.SCREAMING),
+	GOAT("Goat", "Goat Pet", "goat", new Version("1.17-R1"), PetData.SCREAMING, PetData.LEFT_HORN, PetData.RIGHT_HORN),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
 	HOGLIN("Hoglin", "Hoglin Pet", "hoglin"),
 	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR, PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),

@@ -340,6 +340,18 @@ public class PetData<T>{
 			}
 			return null;
 		}, Material.ELYTRA, "Wander"),
+		LEFT_HORN = new Builder<Boolean>().configKey("left_horn").action((player, pet, category)->{
+			if(pet instanceof IGoatPet goat){
+				return goat::setLeftHorn;
+			}
+			return null;
+		}).material(Material.getMaterial("GOAT_HORN")).version("1.19-R1").name("Left Horn").parser(booleanParser()).create(),
+		RIGHT_HORN = new Builder<Boolean>().configKey("right_horn").action((player, pet, category)->{
+			if(pet instanceof IGoatPet goat){
+				return goat::setRightHorn;
+			}
+			return null;
+		}).material(Material.getMaterial("GOAT_HORN")).version("1.19-R1").name("Right Horn").parser(booleanParser()).create(),
 		// Colors. Used for Collars(Wolf, Cat), Cat, Sheep, Llama Color, certain Rabbit Types, Axolotl.
 		WHITE = create("white", (player, pet, category)->{
 			if(pet.getPetType().equals(PetType.CAT) && category != null && category.equals(PetDataCategory.CAT_TYPE)){
@@ -792,6 +804,77 @@ public class PetData<T>{
 		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health");
 	//@formatter:on
 	
+	public static class Builder<T>{
+		
+		private String configKeyName;
+		private Version version;
+		private VersionCheckType versionCheckType;
+		private PetDataAction<T> action;
+		private PetDataMaterial material;
+		private String defaultName;
+		private String[] lore;
+		private Function<PetData<T>, PetDataParser<T>> parserFunction;
+		
+		public Builder<T> configKey(String configKeyName){
+			this.configKeyName = configKeyName;
+			return this;
+		}
+		
+		public Builder<T> version(Version version){
+			this.version = version;
+			return this;
+		}
+		
+		public Builder<T> version(String version){
+			this.version = new Version(version);
+			return this;
+		}
+		
+		public Builder<T> versionCheckType(VersionCheckType versionCheckType){
+			this.versionCheckType = versionCheckType;
+			return this;
+		}
+		
+		public Builder<T> action(@Nonnull PetDataAction<T> action){
+			this.action = action;
+			return this;
+		}
+		
+		public Builder<T> material(PetDataMaterial material){
+			this.material = material;
+			return this;
+		}
+		
+		public Builder<T> material(Material material){
+			return material(pet->material);
+		}
+		
+		public Builder<T> name(String defaultName){
+			this.defaultName = defaultName;
+			return this;
+		}
+		
+		public Builder<T> lore(String... lore){
+			this.lore = lore;
+			return this;
+		}
+		
+		public Builder<T> parser(@Nonnull Function<PetData<T>, PetDataParser<T>> parserFunction){
+			this.parserFunction = parserFunction;
+			return this;
+		}
+		
+		public PetData<T> create(){
+			if(version == null){
+				version = new Version();
+			}
+			if(versionCheckType == null){
+				versionCheckType = VersionCheckType.COMPATIBLE;
+			}
+			return new PetData<>(configKeyName, action, parserFunction, material, version, versionCheckType, defaultName, lore);
+		}
+	}
+	
 	public static PetData<Boolean> create(String configKeyName, @Nonnull PetDataAction<Boolean> action, Material material, String name, String... loreArray){
 		return new PetData<>(configKeyName, action, booleanParser(), pet->material, new Version(), VersionCheckType.COMPATIBLE, name, loreArray);
 	}
@@ -836,8 +919,10 @@ public class PetData<T>{
 		this.material = material;
 		this.defaultName = "&c" + defaultName;
 		this.lore = new ArrayList<>();
-		for(String s : loreArray){
-			lore.add("&6" + s);
+		if(loreArray != null){
+			for(String s : loreArray){
+				lore.add("&6" + s);
+			}
 		}
 		this.parserFunction = parser;
 		this.parser = parser.apply(this);

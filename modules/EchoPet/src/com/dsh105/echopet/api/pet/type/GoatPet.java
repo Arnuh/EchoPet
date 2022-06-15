@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 public class GoatPet extends AgeablePet implements IGoatPet{
 	
 	protected boolean screaming;
+	protected boolean leftHorn, rightHorn;
 	
 	public GoatPet(Player owner){
 		super(owner);
@@ -43,8 +44,23 @@ public class GoatPet extends AgeablePet implements IGoatPet{
 	}
 	
 	@Override
+	public void setLeftHorn(boolean flag){
+		((IEntityGoatPet) getEntityPet()).setLeftHorn(flag);
+		this.leftHorn = flag;
+		
+	}
+	
+	@Override
+	public void setRightHorn(boolean flag){
+		((IEntityGoatPet) getEntityPet()).setRightHorn(flag);
+		this.rightHorn = flag;
+	}
+	
+	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
 		info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + screaming);
+		info.add(ChatColor.GOLD + " - Left Horn: " + ChatColor.YELLOW + leftHorn);
+		info.add(ChatColor.GOLD + " - Right Horn: " + ChatColor.YELLOW + rightHorn);
 	}
 }

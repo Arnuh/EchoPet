@@ -22,4 +22,8 @@ import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
 public interface IEntityGoatPet extends IEntityAgeablePet{
 	
 	void setScreaming(boolean flag);
+	
+	void setLeftHorn(boolean flag);
+	
+	void setRightHorn(boolean flag);
 }

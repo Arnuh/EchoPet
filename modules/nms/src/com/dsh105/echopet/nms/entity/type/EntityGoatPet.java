@@ -68,6 +68,17 @@ public class EntityGoatPet extends Goat implements ILivingEntityPet, EntityPetGi
 	public void setScreaming(boolean flag){
 		setScreamingGoat(flag);
 	}
+	
+	@Override
+	public void setLeftHorn(boolean flag){
+		getEntityData().set(DATA_HAS_LEFT_HORN, flag);
+	}
+	
+	@Override
+	public void setRightHorn(boolean flag){
+		getEntityData().set(DATA_HAS_RIGHT_HORN, flag);
+	}
+	
 	// TODO: Maybe can implement some of goats custom AI?
 	// Look at GoatAi. stuff like looking at sinks, randomly running, support long jumping? Probably not ramming but idk
 	
