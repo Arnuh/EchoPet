@@ -15,24 +15,8 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.nms.entity.base;
+package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAgeablePetBase;
-import net.minecraft.world.entity.Mob;
+import com.dsh105.echopet.compat.api.entity.ILivingPet;
 
-public class EntityAgeablePetBase extends LivingEntityPetBase implements IEntityAgeablePetBase{
-	
-	public EntityAgeablePetBase(ILivingEntityPet entityPet){
-		super(entityPet);
-	}
-	
-	public Mob get(){// Swap to ageable
-		return (Mob) getEntity();
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
-	}
-}
+public interface IAllayPet extends ILivingPet{}

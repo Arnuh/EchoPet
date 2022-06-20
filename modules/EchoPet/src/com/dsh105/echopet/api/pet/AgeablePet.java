@@ -19,7 +19,7 @@ package com.dsh105.echopet.api.pet;
 
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAgeablePetBase;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

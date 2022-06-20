@@ -223,7 +223,7 @@ public class EntityPetBase implements INMSEntityPetBase{
 		if(passenger == null){
 			return null;
 		}
-		Player player = getPet().getOwner();
+		CraftPlayer player = passenger.getBukkitEntity();
 		Entity entity = getEntity();
 		entity.setYRot(passenger.getYRot());
 		entity.yRotO = entity.getYRot();

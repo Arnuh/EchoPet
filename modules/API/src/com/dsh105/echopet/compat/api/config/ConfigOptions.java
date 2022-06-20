@@ -149,7 +149,7 @@ public class ConfigOptions extends Options{
 			
 			set(path + "ignoreFallDamage", true);
 			
-			boolean canFly = petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
+			boolean canFly = petType == PetType.ALLAY || petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
 			set(path + "canFly", canFly);
 			if(config.contains(path + "allow.riders")){
 				set(path + "riders", config.getBoolean(path + "allow.riders", true));

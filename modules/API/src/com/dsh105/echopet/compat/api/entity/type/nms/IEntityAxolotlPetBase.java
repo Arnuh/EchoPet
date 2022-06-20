@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePetBase;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 
 public interface IEntityAxolotlPetBase extends IEntityAgeablePetBase{

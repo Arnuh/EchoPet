@@ -15,24 +15,18 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.nms.entity.base;
+package com.dsh105.echopet.api.pet.type;
 
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAgeablePetBase;
-import net.minecraft.world.entity.Mob;
+import com.dsh105.echopet.api.pet.LivingPet;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAllayPet;
+import org.bukkit.entity.Player;
 
-public class EntityAgeablePetBase extends LivingEntityPetBase implements IEntityAgeablePetBase{
+@EntityPetType(petType = PetType.ALLAY)
+public class AllayPet extends LivingPet implements IAllayPet{
 	
-	public EntityAgeablePetBase(ILivingEntityPet entityPet){
-		super(entityPet);
-	}
-	
-	public Mob get(){// Swap to ageable
-		return (Mob) getEntity();
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
+	public AllayPet(Player owner){
+		super(owner);
 	}
 }

@@ -204,36 +204,37 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 			this.remove(false);
 			return;
 		}
-		if(this.getOwner() == null || !this.getOwner().isOnline()){
+		CraftPlayer player = (CraftPlayer) getOwner();
+		if(player == null || !player.isOnline()){
 			EchoPet.getManager().removePet(this.getPet(), true);
 			return;
 		}
 		if(pet.isOwnerRiding() && this.passengers.size() == 0 && !pet.isOwnerInMountingProcess()){
 			pet.ownerRidePet(false);
 		}
-		if(((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish){
+		if(player.isInvisible() != this.isInvisible() && !this.shouldVanish){
 			this.setInvisible(!this.isInvisible());
 		}
-		if(((CraftPlayer) this.getOwner()).getHandle().isShiftKeyDown() != this.isShiftKeyDown()){
+		if(player.getHandle().isShiftKeyDown() != this.isShiftKeyDown()){
 			this.setShiftKeyDown(!this.isShiftKeyDown());
 		}
-		if(((CraftPlayer) this.getOwner()).getHandle().isSprinting() != this.isSprinting()){
+		if(player.getHandle().isSprinting() != this.isSprinting()){
 			this.setSprinting(!this.isSprinting());
 		}
 		if(this.getPet().isHat()){
 			// this.lastYaw = this.yRot = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
-			setYRot(this.getOwner().getLocation().getYaw());
+			setYRot(player.getLocation().getYaw());
 			this.yRotO = getYRot();
 		}
-		if(this.getOwner().isFlying() && getPet().getPetType().canFly()){
+		if(player.isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 			Location petLoc = this.getLocation();
-			Location ownerLoc = this.getOwner().getLocation();
+			Location ownerLoc = player.getLocation();
 			Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
 			double x = v.getX();
 			double y = v.getY();
 			double z = v.getZ();
-			Vector vo = this.getOwner().getLocation().getDirection();
+			Vector vo = player.getLocation().getDirection();
 			if(vo.getX() > 0){
 				x -= 1.5;
 			}else if(vo.getX() < 0){
@@ -276,6 +277,7 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 			super.travel(vec3d);
 			return;
 		}
+		CraftPlayer player = passenger.getBukkitEntity();
 		this.setYRot(passenger.getYRot());
 		this.yRotO = this.getYRot();
 		this.setXRot(passenger.getXRot() * 0.5F);
@@ -300,8 +302,8 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 					speed = flySpeed;
 				}
 				try{
-					if(getOwner().isFlying()){
-						getOwner().setFlying(false);
+					if(player.isFlying()){
+						player.setFlying(false);
 					}
 					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
@@ -311,7 +313,7 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.", e);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}else if(this.onGround){
 				try{
@@ -323,7 +325,7 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 						}
 					}
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.", e);
+					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}
 		}

@@ -15,10 +15,13 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.nms.entity;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 
-public interface IEntityAgeablePetBase extends IEntityPetBase{
+public interface INMSLivingEntityPetBase extends INMSEntityPetBase{
 	
-	void setBaby(boolean flag);
+	void originalTravel(LivingEntity entity, Vec3 vec3d);
 }

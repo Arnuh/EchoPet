@@ -106,6 +106,8 @@ permissions:
     echopet.petadmin.selector:
         default: op
         description: Give yourself the Pet Selector
+    echopet.pet.type.allay:
+        default: op
     echopet.pet.type.axolotl:
         default: op
     echopet.pet.type.bat:
@@ -250,6 +252,8 @@ permissions:
         default: op
     echopet.pet.type.zombievillager:
         default: op
+    echopet.pet.default.set.type.allay:
+        default: op
     echopet.pet.default.set.type.axolotl:
         default: op
     echopet.pet.default.set.type.bat:
@@ -393,6 +397,10 @@ permissions:
     echopet.pet.default.set.type.zombiehorse:
         default: op
     echopet.pet.default.set.type.zombievillager:
+        default: op
+    echopet.pet.type.allay.hat:
+        default: op
+    echopet.pet.type.allay.ride:
         default: op
     echopet.pet.type.axolotl.hat:
         default: op
@@ -1352,6 +1360,8 @@ permissions:
         default: op
     echopet.pet.type.zombievillager.master:
         default: op
+    echopet.petadmin.type.allay:
+        default: op
     echopet.petadmin.type.axolotl:
         default: op
     echopet.petadmin.type.bat:
@@ -1495,6 +1505,8 @@ permissions:
     echopet.petadmin.type.zombiehorse:
         default: op
     echopet.petadmin.type.zombievillager:
+        default: op
+    echopet.petadmin.hat.allay:
         default: op
     echopet.petadmin.hat.axolotl:
         default: op
@@ -1640,6 +1652,8 @@ permissions:
         default: op
     echopet.petadmin.hat.zombievillager:
         default: op
+    echopet.petadmin.ride.allay:
+        default: op
     echopet.petadmin.ride.axolotl:
         default: op
     echopet.petadmin.ride.bat:
@@ -1783,6 +1797,8 @@ permissions:
     echopet.petadmin.ride.zombiehorse:
         default: op
     echopet.petadmin.ride.zombievillager:
+        default: op
+    echopet.petadmin.default.set.type.allay:
         default: op
     echopet.petadmin.default.set.type.axolotl:
         default: op
@@ -1959,6 +1975,7 @@ permissions:
         default: op
         description: 'All pet type permissions'
         children:
+            echopet.pet.type.allay: true
             echopet.pet.type.axolotl: true
             echopet.pet.type.bat: true
             echopet.pet.type.bee: true
@@ -2035,6 +2052,7 @@ permissions:
         default: op
         description: 'All hat permissions'
         children:
+            echopet.pet.type.allay.hat: true
             echopet.pet.type.axolotl.hat: true
             echopet.pet.type.bat.hat: true
             echopet.pet.type.bee.hat: true
@@ -2111,6 +2129,7 @@ permissions:
         default: op
         description: 'All ride permissions'
         children:
+            echopet.pet.type.allay.ride: true
             echopet.pet.type.axolotl.ride: true
             echopet.pet.type.bat.ride: true
             echopet.pet.type.bee.ride: true
@@ -2232,6 +2251,7 @@ permissions:
         default: op
         description: 'All pet types for /pet default set <...>'
         children:
+            echopet.pet.default.set.type.allay: true
             echopet.pet.default.set.type.axolotl: true
             echopet.pet.default.set.type.bat: true
             echopet.pet.default.set.type.bee: true
@@ -2329,6 +2349,7 @@ permissions:
         default: op
         description: 'All pet type permissions for PetAdmin commands'
         children:
+            echopet.petadmin.type.allay: true
             echopet.petadmin.type.axolotl: true
             echopet.petadmin.type.bat: true
             echopet.petadmin.type.bee: true
@@ -2405,6 +2426,7 @@ permissions:
         default: op
         description: 'All pet hat permissions for PetAdmin commands'
         children:
+            echopet.petadmin.hat.allay: true
             echopet.petadmin.hat.axolotl: true
             echopet.petadmin.hat.bat: true
             echopet.petadmin.hat.bee: true
@@ -2481,6 +2503,7 @@ permissions:
         default: op
         description: 'All pet ride permissions for PetAdmin commands'
         children:
+            echopet.petadmin.ride.allay: true
             echopet.petadmin.ride.axolotl: true
             echopet.petadmin.ride.bat: true
             echopet.petadmin.ride.bee: true
@@ -2564,6 +2587,7 @@ permissions:
         default: op
         description: 'All pet types for /petadmin default set <...>'
         children:
+            echopet.petadmin.default.set.type.allay: true
             echopet.petadmin.default.set.type.axolotl: true
             echopet.petadmin.default.set.type.bat: true
             echopet.petadmin.default.set.type.bee: true
@@ -2636,6 +2660,12 @@ permissions:
             echopet.petadmin.default.set.type.zombie: true
             echopet.petadmin.default.set.type.zombiehorse: true
             echopet.petadmin.default.set.type.zombievillager: true
+    echopet.pet.type.allay.*:
+        default: op
+        description: 'All allay pet data permissions'
+        children:
+            echopet.pet.type.allay.hat: true
+            echopet.pet.type.allay.ride: true
     echopet.pet.type.axolotl.*:
         default: op
         description: 'All axolotl pet data permissions'
