@@ -17,6 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 
 public interface IEntityAbstractPiglinPet extends IEntityPet{}

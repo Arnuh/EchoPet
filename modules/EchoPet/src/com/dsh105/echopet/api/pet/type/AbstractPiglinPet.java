@@ -18,7 +18,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.LivingPet;
-import com.dsh105.echopet.compat.api.entity.IAgeablePet;
+import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractPiglinPet;
 import org.bukkit.entity.Player;
 

@@ -20,7 +20,7 @@ package com.dsh105.echopet.nms.entity.ai;
 import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import net.minecraft.world.entity.Mob;
 
 public class PetGoalFloat extends APetGoalFloat{

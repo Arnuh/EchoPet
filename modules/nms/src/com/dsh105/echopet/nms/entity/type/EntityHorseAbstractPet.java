@@ -20,7 +20,7 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;

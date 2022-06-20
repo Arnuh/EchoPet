@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;

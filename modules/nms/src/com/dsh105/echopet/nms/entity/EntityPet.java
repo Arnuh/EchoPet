@@ -19,11 +19,11 @@ package com.dsh105.echopet.nms.entity;
 
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -34,7 +34,7 @@ import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.PetGoalLookAtPlayer;
-import com.dsh105.echopet.nms.entity.base.EntityPetBase;
+import com.dsh105.echopet.nms.entity.base.EntityPetHandle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -57,10 +57,10 @@ import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public abstract class EntityPet extends Mob implements ILivingEntityPet{
+public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	protected IPet pet;
-	private final INMSEntityPetBase petBase;
+	private final INMSEntityPetHandle petHandle;
 	public PetGoalSelector petGoalSelector;
 	protected double jumpHeight;
 	protected float rideSpeed, flySpeed;
@@ -69,18 +69,18 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 	@Deprecated
 	public EntityPet(EntityType<? extends Mob> type, Level world){
 		super(type, world);
-		this.petBase = createPetBase();
+		this.petHandle = createPetHandle();
 	}
 	
 	public EntityPet(EntityType<? extends Mob> type, Level world, IPet pet){
 		super(type, world);
 		this.pet = pet;
-		this.petBase = createPetBase();
+		this.petHandle = createPetHandle();
 		this.initiateEntityPet();
 	}
 	
-	public INMSEntityPetBase createPetBase(){
-		return new EntityPetBase(this);
+	public INMSEntityPetHandle createPetHandle(){
+		return new EntityPetHandle(this);
 	}
 	
 	protected void initiateEntityPet(){
@@ -106,8 +106,8 @@ public abstract class EntityPet extends Mob implements ILivingEntityPet{
 	}
 	
 	@Override
-	public IEntityPetBase getHandle(){
-		return petBase;
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override

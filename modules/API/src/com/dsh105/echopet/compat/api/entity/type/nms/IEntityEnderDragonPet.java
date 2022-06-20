@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityNoClipPet;
-
 public interface IEntityEnderDragonPet extends IEntityNoClipPet{
 
 }

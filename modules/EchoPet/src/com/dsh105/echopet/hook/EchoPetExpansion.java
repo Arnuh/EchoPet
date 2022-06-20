@@ -18,7 +18,7 @@
 package com.dsh105.echopet.hook;
 
 import javax.annotation.Nonnull;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.util.Lang;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

@@ -20,7 +20,7 @@ package com.dsh105.echopet.nms.entity.ai;
 import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;

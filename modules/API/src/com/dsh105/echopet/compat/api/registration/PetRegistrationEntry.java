@@ -18,8 +18,8 @@
 package com.dsh105.echopet.compat.api.registration;
 
 import java.lang.reflect.Constructor;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.entity.Player;

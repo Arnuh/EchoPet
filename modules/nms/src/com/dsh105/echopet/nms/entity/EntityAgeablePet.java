@@ -17,10 +17,10 @@
 
 package com.dsh105.echopet.nms.entity;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
-import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
-import com.dsh105.echopet.nms.entity.base.EntityAgeablePetBase;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -44,8 +44,8 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	}
 	
 	@Override
-	public INMSEntityPetBase createPetBase(){
-		return new EntityAgeablePetBase(this);
+	public INMSEntityPetHandle createPetHandle(){
+		return new EntityAgeablePetHandle(this);
 	}
 	
 	public int getAge(){

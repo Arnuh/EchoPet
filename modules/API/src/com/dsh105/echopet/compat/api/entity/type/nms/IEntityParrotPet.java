@@ -16,8 +16,8 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.data.type.ParrotVariant;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 
 /**
  * @since May 23, 2017

@@ -21,7 +21,7 @@ import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAxolotlPetBase;
+import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityAxolotlPetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
 	@Override
 	public void setVariant(Variant variant){
-		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setVariant(variant);
+		((IEntityAxolotlPetHandle) getEntityPet().getHandle()).setVariant(variant);
 		this.variant = variant;
 	}
 	
@@ -49,7 +49,7 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
 	@Override
 	public void setPlayingDead(boolean flag){
-		((IEntityAxolotlPetBase) getEntityPet().getHandle()).setPlayingDead(flag);
+		((IEntityAxolotlPetHandle) getEntityPet().getHandle()).setPlayingDead(flag);
 		this.playingDead = flag;
 	}
 	

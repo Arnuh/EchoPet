@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.nms.entity;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import net.minecraft.sounds.SoundEvent;
 
 /**
- * For use of exposing protected methods that are required in a {@link IEntityPetBase}
+ * For use of exposing protected methods that are required in a {@link IEntityPetHandle}
  */
 public interface EntityPetGiveMeAccess{
 	

@@ -22,15 +22,15 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
-import com.dsh105.echopet.nms.entity.INMSEntityPetBase;
-import com.dsh105.echopet.nms.entity.base.EntityAxolotlPetBase;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.base.EntityAxolotlPetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
@@ -51,17 +51,17 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 1.3F, height = 0.6F)
 @EntityPetType(petType = PetType.AXOLOTL)
-public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, EntityPetGiveMeAccess{
+public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, EntityPetGiveMeAccess{
 	
 	private static final List<? extends SensorType<? extends Sensor<? super Axolotl>>> SENSOR_TYPES = ImmutableList.of();
 	
 	protected IAxolotlPet pet;
-	private final INMSEntityPetBase petBase;
+	private final INMSEntityPetHandle petHandle;
 	
 	public EntityAxolotlPet(Level world, IAxolotlPet pet){
 		super(EntityType.AXOLOTL, world);
 		this.pet = pet;
-		this.petBase = new EntityAxolotlPetBase(this);
+		this.petHandle = new EntityAxolotlPetHandle(this);
 	}
 	
 	// Prevent from making random noises outside of water?
@@ -101,7 +101,7 @@ public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, Entit
 	
 	@Override
 	public void remove(boolean makeSound){
-		petBase.remove(makeSound);
+		petHandle.remove(makeSound);
 	}
 	
 	@Override
@@ -117,7 +117,7 @@ public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, Entit
 	
 	@Override
 	public boolean onInteract(Player player){
-		return petBase.onInteract(player);
+		return petHandle.onInteract(player);
 	}
 	
 	@Override
@@ -126,13 +126,13 @@ public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, Entit
 	}
 	
 	@Override
-	public IEntityPetBase getHandle(){
-		return petBase;
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override
 	public IPetGoalSelector getPetGoalSelector(){
-		return petBase.getPetGoalSelector();
+		return petHandle.getPetGoalSelector();
 	}
 	
 	@Override
@@ -153,18 +153,18 @@ public class EntityAxolotlPet extends Axolotl implements ILivingEntityPet, Entit
 	@Override
 	public void tick(){
 		super.tick();
-		petBase.tick();
+		petHandle.tick();
 	}
 	
 	@Override
 	public void travel(Vec3 vec3d){
-		Vec3 result = petBase.travel(vec3d);
+		Vec3 result = petHandle.travel(vec3d);
 		if(result == null){
 			this.flyingSpeed = 0.02F;
 			super.travel(vec3d);
 			return;
 		}
-		setSpeed(petBase.getSpeed());
+		setSpeed(petHandle.getSpeed());
 		super.travel(result);
 	}
 	

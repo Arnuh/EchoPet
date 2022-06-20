@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.api.pet;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
-import com.dsh105.echopet.compat.api.entity.IPacketPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPacketPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IPacketPet;
 import org.bukkit.entity.Player;
 
 public class PacketPet extends Pet implements IPacketPet{

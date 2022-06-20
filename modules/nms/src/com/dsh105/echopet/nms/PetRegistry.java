@@ -20,7 +20,7 @@ package com.dsh105.echopet.nms;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;

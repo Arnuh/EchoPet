@@ -21,18 +21,18 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
-import com.dsh105.echopet.nms.entity.INMSEntityPetBase;
-import com.dsh105.echopet.nms.entity.base.EntityAgeablePetBase;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
@@ -56,16 +56,16 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends Villager implements ILivingEntityPet, EntityPetGiveMeAccess, IEntityVillagerAbstractPet, IEntityVillagerPet, IEntityVillagerDataHolder{
+public class EntityVillagerPet extends Villager implements IEntityLivingPet, EntityPetGiveMeAccess, IEntityVillagerAbstractPet, IEntityVillagerPet, IEntityVillagerDataHolder{
 	
 	protected IVillagerPet pet;
-	private final INMSEntityPetBase petBase;
+	private final INMSEntityPetHandle petHandle;
 	private static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(MemoryModuleType.HOME, MemoryModuleType.JOB_SITE, MemoryModuleType.POTENTIAL_JOB_SITE, MemoryModuleType.MEETING_POINT, MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.VISIBLE_VILLAGER_BABIES, MemoryModuleType.NEAREST_PLAYERS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, MemoryModuleType.WALK_TARGET, new MemoryModuleType[]{MemoryModuleType.LOOK_TARGET, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.BREED_TARGET, MemoryModuleType.PATH, MemoryModuleType.DOORS_TO_CLOSE, MemoryModuleType.NEAREST_BED, MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.NEAREST_HOSTILE, MemoryModuleType.SECONDARY_JOB_SITE, MemoryModuleType.HIDING_PLACE, MemoryModuleType.HEARD_BELL_TIME, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.LAST_SLEPT, MemoryModuleType.LAST_WOKEN, MemoryModuleType.LAST_WORKED_AT_POI, MemoryModuleType.GOLEM_DETECTED_RECENTLY});
 	
 	public EntityVillagerPet(Level world, IVillagerPet pet){
 		super(EntityType.VILLAGER, world);
 		this.pet = pet;
-		this.petBase = new EntityAgeablePetBase(this);
+		this.petHandle = new EntityAgeablePetHandle(this);
 	}
 	
 	@Override
@@ -146,7 +146,7 @@ public class EntityVillagerPet extends Villager implements ILivingEntityPet, Ent
 	
 	@Override
 	public void remove(boolean makeSound){
-		petBase.remove(makeSound);
+		petHandle.remove(makeSound);
 	}
 	
 	@Override
@@ -162,7 +162,7 @@ public class EntityVillagerPet extends Villager implements ILivingEntityPet, Ent
 	
 	@Override
 	public boolean onInteract(Player player){
-		return petBase.onInteract(player);
+		return petHandle.onInteract(player);
 	}
 	
 	@Override
@@ -171,13 +171,13 @@ public class EntityVillagerPet extends Villager implements ILivingEntityPet, Ent
 	}
 	
 	@Override
-	public IEntityPetBase getHandle(){
-		return petBase;
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override
 	public IPetGoalSelector getPetGoalSelector(){
-		return petBase.getPetGoalSelector();
+		return petHandle.getPetGoalSelector();
 	}
 	
 	@Override
@@ -198,18 +198,18 @@ public class EntityVillagerPet extends Villager implements ILivingEntityPet, Ent
 	@Override
 	public void tick(){
 		super.tick();
-		petBase.tick();
+		petHandle.tick();
 	}
 	
 	@Override
 	public void travel(Vec3 vec3d){
-		Vec3 result = petBase.travel(vec3d);
+		Vec3 result = petHandle.travel(vec3d);
 		if(result == null){
 			this.flyingSpeed = 0.02F;
 			super.travel(vec3d);
 			return;
 		}
-		setSpeed(petBase.getSpeed());
+		setSpeed(petHandle.getSpeed());
 		super.travel(result);
 	}
 	

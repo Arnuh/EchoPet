@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.api.pet;
 
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.ILivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -29,8 +29,8 @@ public class LivingPet extends Pet implements ILivingPet{
 	}
 	
 	@Override
-	public ILivingEntityPet getEntityPet(){
-		return (ILivingEntityPet) super.getEntityPet();
+	public IEntityLivingPet getEntityPet(){
+		return (IEntityLivingPet) super.getEntityPet();
 	}
 	
 	@Override

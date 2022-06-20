@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;

@@ -22,6 +22,8 @@ import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.data.CategorizedPetData;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.util.Version;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

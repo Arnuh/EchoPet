@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFishPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityFishPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;

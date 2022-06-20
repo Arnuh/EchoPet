@@ -28,7 +28,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import javax.sql.DataSource;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISQLStorageManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;

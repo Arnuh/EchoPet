@@ -18,7 +18,7 @@
 package com.dsh105.echopet.compat.api.event;
 
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.event.Event;
 
 public abstract class PetEvent extends Event{

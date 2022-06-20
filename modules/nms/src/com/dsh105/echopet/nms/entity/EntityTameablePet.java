@@ -19,8 +19,8 @@ package com.dsh105.echopet.nms.entity;
 
 import java.util.Optional;
 import java.util.UUID;
-import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

@@ -17,7 +17,7 @@
 package com.dsh105.echopet.compat.api.util.menu;
 
 import java.util.List;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;

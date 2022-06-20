@@ -18,8 +18,8 @@
 package com.dsh105.echopet.api.pet;
 
 import java.util.List;
-import com.dsh105.echopet.compat.api.entity.IAgeablePet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityAgeablePetBase;
+import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAgeablePetHandle;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -34,7 +34,7 @@ public class AgeablePet extends LivingPet implements IAgeablePet{
 	
 	@Override
 	public void setBaby(boolean flag){
-		((IEntityAgeablePetBase) getEntityPet().getHandle()).setBaby(flag);
+		((IEntityAgeablePetHandle) getEntityPet().getHandle()).setBaby(flag);
 		this.baby = flag;
 	}
 	

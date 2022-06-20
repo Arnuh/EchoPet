@@ -16,6 +16,6 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 
 public interface IEntityVillagerAbstractPet extends IEntityAgeablePet{}

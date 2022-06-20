@@ -20,7 +20,7 @@ package com.dsh105.echopet.compat.api.plugin;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;

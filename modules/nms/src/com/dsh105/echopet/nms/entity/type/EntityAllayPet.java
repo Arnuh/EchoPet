@@ -23,16 +23,16 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IEntityPetBase;
-import com.dsh105.echopet.compat.api.entity.ILivingEntityPet;
-import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAllayPet;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
-import com.dsh105.echopet.nms.entity.INMSLivingEntityPetBase;
+import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
-import com.dsh105.echopet.nms.entity.base.LivingEntityPetBase;
+import com.dsh105.echopet.nms.entity.base.LivingEntityPetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
@@ -61,17 +61,17 @@ import org.bukkit.entity.Player;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.ALLAY)
-public class EntityAllayPet extends Allay implements ILivingEntityPet, EntityPetGiveMeAccess{
+public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPetGiveMeAccess{
 	
 	private static final List<? extends SensorType<? extends Sensor<? super Allay>>> SENSOR_TYPES = ImmutableList.of();
 	
 	protected IAllayPet pet;
-	private final INMSLivingEntityPetBase petBase;
+	private final INMSLivingEntityPetHandle petHandle;
 	
 	public EntityAllayPet(Level world, IAllayPet pet){
 		super(EntityType.ALLAY, world);
 		this.pet = pet;
-		this.petBase = new LivingEntityPetBase(this);
+		this.petHandle = new LivingEntityPetHandle(this);
 		setCanPickUpLoot(false);
 		moveControl = new BiMoveControl(this, moveControl, new MoveControl(this), Entity::isVehicle);
 	}
@@ -146,7 +146,7 @@ public class EntityAllayPet extends Allay implements ILivingEntityPet, EntityPet
 	
 	@Override
 	public void remove(boolean makeSound){
-		petBase.remove(makeSound);
+		petHandle.remove(makeSound);
 	}
 	
 	@Override
@@ -162,7 +162,7 @@ public class EntityAllayPet extends Allay implements ILivingEntityPet, EntityPet
 	
 	@Override
 	public boolean onInteract(Player player){
-		return petBase.onInteract(player);
+		return petHandle.onInteract(player);
 	}
 	
 	@Override
@@ -171,13 +171,13 @@ public class EntityAllayPet extends Allay implements ILivingEntityPet, EntityPet
 	}
 	
 	@Override
-	public IEntityPetBase getHandle(){
-		return petBase;
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override
 	public IPetGoalSelector getPetGoalSelector(){
-		return petBase.getPetGoalSelector();
+		return petHandle.getPetGoalSelector();
 	}
 	
 	@Override
@@ -198,20 +198,20 @@ public class EntityAllayPet extends Allay implements ILivingEntityPet, EntityPet
 	@Override
 	public void tick(){
 		super.tick();
-		petBase.tick();
+		petHandle.tick();
 	}
 	
 	@Override
 	public void travel(Vec3 vec3d){
-		Vec3 result = petBase.travel(vec3d);
+		Vec3 result = petHandle.travel(vec3d);
 		if(result == null){
 			this.flyingSpeed = 0.02F;
 			super.travel(vec3d);
 			calculateEntityAnimation(this, false);
 			return;
 		}
-		setSpeed(petBase.getSpeed());
-		petBase.originalTravel(this, result);
+		setSpeed(petHandle.getSpeed());
+		petHandle.originalTravel(this, result);
 		calculateEntityAnimation(this, false);
 	}
 	
