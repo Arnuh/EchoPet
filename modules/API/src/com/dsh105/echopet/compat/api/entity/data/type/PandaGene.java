@@ -15,9 +15,14 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data.type;
 
-public enum MushroomCowType{
-	Red,
-	Brown
+public enum PandaGene{
+	Normal,
+	Lazy,
+	Worried,
+	Playful,
+	Brown,
+	Weak,
+	Aggressive,
 }

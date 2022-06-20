@@ -14,9 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data.type;
 
-public enum FoxType{
-	Red,
-	Snow,
+public enum HorseArmor{
+	
+	None,
+	Iron,
+	Gold,
+	Diamond
 }

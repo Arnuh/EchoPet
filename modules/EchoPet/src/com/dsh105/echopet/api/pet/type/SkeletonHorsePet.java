@@ -17,8 +17,8 @@
 package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonHorsePet;
 import org.bukkit.entity.Player;
 

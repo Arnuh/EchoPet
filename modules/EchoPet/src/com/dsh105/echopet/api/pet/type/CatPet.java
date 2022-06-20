@@ -19,9 +19,9 @@ package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
 import com.dsh105.echopet.api.pet.TameablePet;
-import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.CatType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.util.StringUtil;

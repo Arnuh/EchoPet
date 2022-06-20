@@ -19,8 +19,8 @@ package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.MushroomCowType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.MushroomCowType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import org.bukkit.ChatColor;

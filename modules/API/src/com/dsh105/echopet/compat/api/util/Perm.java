@@ -18,7 +18,7 @@
 package com.dsh105.echopet.compat.api.util;
 
 import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

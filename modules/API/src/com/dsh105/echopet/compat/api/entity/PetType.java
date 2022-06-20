@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
+import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;

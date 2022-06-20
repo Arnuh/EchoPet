@@ -18,7 +18,7 @@ package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
-import com.dsh105.echopet.compat.api.entity.HorseVariant;
+import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.util.StringUtil;

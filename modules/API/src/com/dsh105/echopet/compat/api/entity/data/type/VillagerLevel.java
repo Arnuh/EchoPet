@@ -14,15 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
+package com.dsh105.echopet.compat.api.entity.data.type;
 
-package com.dsh105.echopet.compat.api.entity;
-
-public enum PandaGene{
-	Normal,
-	Lazy,
-	Worried,
-	Playful,
-	Brown,
-	Weak,
-	Aggressive,
+public enum VillagerLevel{
+	BLANK,
+	NOVICE,
+	APPRENTICE,
+	JOURNEYMEN,
+	EXPERT,
+	MASTER
 }

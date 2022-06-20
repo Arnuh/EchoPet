@@ -14,33 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data;
 
+import com.dsh105.echopet.compat.api.entity.IPetType;
+import org.bukkit.Material;
 
-public enum CatType{
-	Tabby,
-	Black,
-	Red,
-	Siamese,
-	BritishShortHair("british_shorthair"),
-	Calico,
-	Persian,
-	Ragdoll,
-	White,
-	Jellie,
-	AllBlack("all_black"),
-	;
-	private final String namespace;
+public interface PetDataMaterial{
 	
-	CatType(){
-		this.namespace = name().toLowerCase();
-	}
+	Material defaultMaterial(IPetType petType);
 	
-	CatType(String namespace){
-		this.namespace = namespace;
-	}
-	
-	public String getNamespace(){
-		return namespace;
+	default Material get(IPetType petType, PetData<?> petData){
+		String materialName = petType.getPetDataProperty(petData, "item.material", null);
+		if(materialName == null) return defaultMaterial(petType);
+		return Material.getMaterial(materialName);
 	}
 }

@@ -19,8 +19,8 @@ package com.dsh105.echopet.compat.api.config;
 
 
 import java.util.stream.Collectors;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetDataCategory;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
+import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 
 public class CategoryConfigOptions extends Options{
 	

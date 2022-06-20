@@ -14,38 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data.type;
 
-/**
- * @since Nov 19, 2016
- */
-public enum HorseVariant{
-	/**
-	 * A normal horse
-	 */
-	HORSE,
-	/**
-	 * A donkey
-	 */
-	DONKEY,
-	/**
-	 * A mule
-	 */
-	MULE,
-	/**
-	 * An undead horse
-	 */
-	UNDEAD_HORSE,
-	/**
-	 * A skeleton horse
-	 */
-	SKELETON_HORSE,
-	/**
-	 * Not really a horse :)
-	 */
-	LLAMA;
-	
-	public boolean hasChest(){
-		return this == DONKEY || this == MULE;
-	}
+public enum VillagerType{
+	DESERT,
+	JUNGLE,
+	PLAINS,
+	SAVANNA,
+	SNOWY,
+	SWAMP,
+	TAIGA
 }

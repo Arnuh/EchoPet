@@ -14,18 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
+package com.dsh105.echopet.compat.api.entity.data.type;
 
-package com.dsh105.echopet.compat.api.entity;
-
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
-import org.bukkit.entity.Player;
-
-@FunctionalInterface
-public interface PetDataAction<T>{
-	
-	/**
-	 * Provides a setter used for the respective {@link PetData} to set the value of the {@link PetData} on the provided pet.
-	 */
-	Consumer<T> get(Player player, IPet pet, @Nullable PetDataCategory category);
+public enum Profession{
+	NONE,
+	ARMORER,
+	BUTCHER,
+	CARTOGRAPHER,
+	CLERIC,
+	FARMER,
+	FISHERMAN,
+	FLETCHER,
+	LEATHERWORKER,
+	LIBRARIAN,
+	MASON,
+	NITWIT,
+	SHEPHERD,
+	TOOLSMITH,
+	WEAPONSMITH,
 }

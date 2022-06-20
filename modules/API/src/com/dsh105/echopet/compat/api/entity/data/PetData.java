@@ -15,7 +15,7 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,21 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.entity.IAgeablePet;
+import com.dsh105.echopet.compat.api.entity.ILivingPet;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.IPetType;
+import com.dsh105.echopet.compat.api.entity.ITameablePet;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.CatType;
+import com.dsh105.echopet.compat.api.entity.data.type.FoxType;
+import com.dsh105.echopet.compat.api.entity.data.type.HorseArmor;
+import com.dsh105.echopet.compat.api.entity.data.type.MushroomCowType;
+import com.dsh105.echopet.compat.api.entity.data.type.PandaGene;
+import com.dsh105.echopet.compat.api.entity.data.type.ParrotVariant;
+import com.dsh105.echopet.compat.api.entity.data.type.Profession;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerLevel;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
@@ -71,9 +86,9 @@ import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.ItemStack;
 
 
-import static com.dsh105.echopet.compat.api.entity.PetDataParser.booleanParser;
-import static com.dsh105.echopet.compat.api.entity.PetDataParser.doubleParser;
-import static com.dsh105.echopet.compat.api.entity.PetDataParser.integerParser;
+import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.booleanParser;
+import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.doubleParser;
+import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.integerParser;
 
 public class PetData<T>{
 	

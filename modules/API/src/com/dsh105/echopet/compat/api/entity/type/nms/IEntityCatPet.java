@@ -16,8 +16,8 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
-import com.dsh105.echopet.compat.api.entity.CatType;
 import com.dsh105.echopet.compat.api.entity.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.data.type.CatType;
 import org.bukkit.DyeColor;
 
 

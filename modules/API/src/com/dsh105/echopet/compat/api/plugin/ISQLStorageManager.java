@@ -25,8 +25,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
 import org.bukkit.entity.Player;
 
 public interface ISQLStorageManager extends IStorageManager{

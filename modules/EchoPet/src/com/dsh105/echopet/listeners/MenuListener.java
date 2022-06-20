@@ -19,8 +19,8 @@ package com.dsh105.echopet.listeners;
 
 import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetDataCategory;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
+import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
 import com.dsh105.echopet.compat.api.util.MenuUtil;

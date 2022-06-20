@@ -20,8 +20,8 @@ package com.dsh105.echopet.api;
 import java.util.ArrayList;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -140,10 +140,10 @@ public class EchoPetAPI{
 	}
 	
 	/**
-	 * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
+	 * Adds {@link PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
 	 *
 	 * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to add the data to
-	 * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link
+	 * @param petData {@link PetData} to add to the {@link
 	 *                com.dsh105.echopet.api.pet.Pet}
 	 * @deprecated Use {@link #addData(IPet, PetData, Object)} instead
 	 */
@@ -157,11 +157,11 @@ public class EchoPetAPI{
 	}
 	
 	/**
-	 * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
+	 * Adds {@link PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
 	 *
 	 * @param pet     The {@link com.dsh105.echopet.api.pet.Pet} to add the data to
-	 * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link com.dsh105.echopet.api.pet.Pet}
-	 * @param value   The value of the {@link com.dsh105.echopet.compat.api.entity.PetData}
+	 * @param petData {@link PetData} to add to the {@link com.dsh105.echopet.api.pet.Pet}
+	 * @param value   The value of the {@link PetData}
 	 */
 	@Deprecated
 	public void addData(IPet pet, PetData<?> petData, Object value){

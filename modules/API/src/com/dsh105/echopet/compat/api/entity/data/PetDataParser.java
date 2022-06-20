@@ -15,10 +15,11 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data;
 
 import java.util.function.Function;
 import javax.annotation.Nullable;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.inventory.ItemStack;
 

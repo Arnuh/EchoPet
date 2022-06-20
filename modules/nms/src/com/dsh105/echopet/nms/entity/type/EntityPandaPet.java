@@ -20,8 +20,8 @@ package com.dsh105.echopet.nms.entity.type;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PandaGene;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.PandaGene;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPandaPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -34,10 +34,10 @@ import net.minecraft.world.level.Level;
 @EntityPetType(petType = PetType.PANDA)
 public class EntityPandaPet extends EntityAgeablePet implements IEntityPandaPet{
 	
-	//Doesn't look like something we care about
+	// Doesn't look like something we care about
 	private static final EntityDataAccessor<Integer> UNHAPPY_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> SNEEZE_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
-	//clears mainhand if 100?
+	// clears mainhand if 100?
 	private static final EntityDataAccessor<Integer> EAT_COUNTER = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Byte> MAIN_GENE_ID = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Byte> HIDDEN_GENE_ID = SynchedEntityData.defineId(EntityPandaPet.class, EntityDataSerializers.BYTE);

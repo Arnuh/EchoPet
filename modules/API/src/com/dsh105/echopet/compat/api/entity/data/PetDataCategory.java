@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity;
+package com.dsh105.echopet.compat.api.entity.data;
 
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
 import org.bukkit.Material;
