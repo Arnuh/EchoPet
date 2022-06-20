@@ -15,8 +15,6 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.nms;
-
-import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+package com.dsh105.echopet.compat.api.entity.nms;
 
 public interface IEntityFlyingPet extends IEntityPet{}

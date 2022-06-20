@@ -16,8 +16,6 @@
  */
 package com.dsh105.echopet.compat.api.entity.pet;
 
-import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
-
 public interface ITameablePet extends IAgeablePet{
 	
 	void setSitting(boolean sitting);

@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.compat.api.registration;
 
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.entity.Player;
 
 /**

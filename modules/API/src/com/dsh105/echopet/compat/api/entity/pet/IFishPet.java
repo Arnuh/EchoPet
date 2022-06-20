@@ -17,6 +17,4 @@
 
 package com.dsh105.echopet.compat.api.entity.pet;
 
-import com.dsh105.echopet.compat.api.entity.pet.IWaterAnimalPet;
-
 public interface IFishPet extends IWaterAnimalPet{}

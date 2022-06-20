@@ -15,8 +15,6 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.pet;
-
-import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
+package com.dsh105.echopet.compat.api.entity.pet;
 
 public interface IFlyingPet extends ILivingPet{}

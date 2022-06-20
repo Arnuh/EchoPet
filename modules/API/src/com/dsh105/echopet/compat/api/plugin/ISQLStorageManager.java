@@ -23,10 +23,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.entity.Player;
 
 public interface ISQLStorageManager extends IStorageManager{

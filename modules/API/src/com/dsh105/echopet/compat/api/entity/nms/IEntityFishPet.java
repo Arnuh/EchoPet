@@ -17,6 +17,4 @@
 
 package com.dsh105.echopet.compat.api.entity.nms;
 
-import com.dsh105.echopet.compat.api.entity.nms.IEntityWaterAnimalPet;
-
 public interface IEntityFishPet extends IEntityWaterAnimalPet{}

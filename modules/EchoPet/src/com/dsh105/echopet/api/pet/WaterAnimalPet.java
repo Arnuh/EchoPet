@@ -15,9 +15,8 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.api.pet.type;
+package com.dsh105.echopet.api.pet;
 
-import com.dsh105.echopet.api.pet.LivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IWaterAnimalPet;
 import org.bukkit.entity.Player;
 

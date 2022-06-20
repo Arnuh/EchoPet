@@ -19,9 +19,9 @@ package com.dsh105.echopet.compat.api.util;
 
 import java.util.LinkedList;
 import java.util.List;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.google.common.collect.ImmutableList;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
