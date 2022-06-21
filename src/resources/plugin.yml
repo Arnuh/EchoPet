@@ -144,6 +144,8 @@ permissions:
         default: op
     echopet.pet.type.fox:
         default: op
+    echopet.pet.type.frog:
+        default: op
     echopet.pet.type.ghast:
         default: op
     echopet.pet.type.giant:
@@ -289,6 +291,8 @@ permissions:
     echopet.pet.default.set.type.evoker:
         default: op
     echopet.pet.default.set.type.fox:
+        default: op
+    echopet.pet.default.set.type.frog:
         default: op
     echopet.pet.default.set.type.ghast:
         default: op
@@ -591,6 +595,16 @@ permissions:
     echopet.pet.type.fox.red:
         default: op
     echopet.pet.type.fox.snow:
+        default: op
+    echopet.pet.type.frog.hat:
+        default: op
+    echopet.pet.type.frog.ride:
+        default: op
+    echopet.pet.type.frog.temperate:
+        default: op
+    echopet.pet.type.frog.warm:
+        default: op
+    echopet.pet.type.frog.cold:
         default: op
     echopet.pet.type.ghast.hat:
         default: op
@@ -1398,6 +1412,8 @@ permissions:
         default: op
     echopet.petadmin.type.fox:
         default: op
+    echopet.petadmin.type.frog:
+        default: op
     echopet.petadmin.type.ghast:
         default: op
     echopet.petadmin.type.giant:
@@ -1543,6 +1559,8 @@ permissions:
     echopet.petadmin.hat.evoker:
         default: op
     echopet.petadmin.hat.fox:
+        default: op
+    echopet.petadmin.hat.frog:
         default: op
     echopet.petadmin.hat.ghast:
         default: op
@@ -1690,6 +1708,8 @@ permissions:
         default: op
     echopet.petadmin.ride.fox:
         default: op
+    echopet.petadmin.ride.frog:
+        default: op
     echopet.petadmin.ride.ghast:
         default: op
     echopet.petadmin.ride.giant:
@@ -1835,6 +1855,8 @@ permissions:
     echopet.petadmin.default.set.type.evoker:
         default: op
     echopet.petadmin.default.set.type.fox:
+        default: op
+    echopet.petadmin.default.set.type.frog:
         default: op
     echopet.petadmin.default.set.type.ghast:
         default: op
@@ -1994,6 +2016,7 @@ permissions:
             echopet.pet.type.endermite: true
             echopet.pet.type.evoker: true
             echopet.pet.type.fox: true
+            echopet.pet.type.frog: true
             echopet.pet.type.ghast: true
             echopet.pet.type.giant: true
             echopet.pet.type.glowsquid: true
@@ -2071,6 +2094,7 @@ permissions:
             echopet.pet.type.endermite.hat: true
             echopet.pet.type.evoker.hat: true
             echopet.pet.type.fox.hat: true
+            echopet.pet.type.frog.hat: true
             echopet.pet.type.ghast.hat: true
             echopet.pet.type.giant.hat: true
             echopet.pet.type.glowsquid.hat: true
@@ -2148,6 +2172,7 @@ permissions:
             echopet.pet.type.endermite.ride: true
             echopet.pet.type.evoker.ride: true
             echopet.pet.type.fox.ride: true
+            echopet.pet.type.frog.ride: true
             echopet.pet.type.ghast.ride: true
             echopet.pet.type.giant.ride: true
             echopet.pet.type.glowsquid.ride: true
@@ -2270,6 +2295,7 @@ permissions:
             echopet.pet.default.set.type.endermite: true
             echopet.pet.default.set.type.evoker: true
             echopet.pet.default.set.type.fox: true
+            echopet.pet.default.set.type.frog: true
             echopet.pet.default.set.type.ghast: true
             echopet.pet.default.set.type.giant: true
             echopet.pet.default.set.type.glowsquid: true
@@ -2368,6 +2394,7 @@ permissions:
             echopet.petadmin.type.endermite: true
             echopet.petadmin.type.evoker: true
             echopet.petadmin.type.fox: true
+            echopet.petadmin.type.frog: true
             echopet.petadmin.type.ghast: true
             echopet.petadmin.type.giant: true
             echopet.petadmin.type.glowsquid: true
@@ -2445,6 +2472,7 @@ permissions:
             echopet.petadmin.hat.endermite: true
             echopet.petadmin.hat.evoker: true
             echopet.petadmin.hat.fox: true
+            echopet.petadmin.hat.frog: true
             echopet.petadmin.hat.ghast: true
             echopet.petadmin.hat.giant: true
             echopet.petadmin.hat.glowsquid: true
@@ -2522,6 +2550,7 @@ permissions:
             echopet.petadmin.ride.endermite: true
             echopet.petadmin.ride.evoker: true
             echopet.petadmin.ride.fox: true
+            echopet.petadmin.ride.frog: true
             echopet.petadmin.ride.ghast: true
             echopet.petadmin.ride.giant: true
             echopet.petadmin.ride.glowsquid: true
@@ -2606,6 +2635,7 @@ permissions:
             echopet.petadmin.default.set.type.endermite: true
             echopet.petadmin.default.set.type.evoker: true
             echopet.petadmin.default.set.type.fox: true
+            echopet.petadmin.default.set.type.frog: true
             echopet.petadmin.default.set.type.ghast: true
             echopet.petadmin.default.set.type.giant: true
             echopet.petadmin.default.set.type.glowsquid: true
@@ -2833,6 +2863,15 @@ permissions:
             echopet.pet.type.fox.leg_shake: true
             echopet.pet.type.fox.red: true
             echopet.pet.type.fox.snow: true
+    echopet.pet.type.frog.*:
+        default: op
+        description: 'All frog pet data permissions'
+        children:
+            echopet.pet.type.frog.hat: true
+            echopet.pet.type.frog.ride: true
+            echopet.pet.type.frog.temperate: true
+            echopet.pet.type.frog.warm: true
+            echopet.pet.type.frog.cold: true
     echopet.pet.type.ghast.*:
         default: op
         description: 'All ghast pet data permissions'

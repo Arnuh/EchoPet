@@ -15,8 +15,13 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.nms;
+package com.dsh105.echopet.compat.api.entity.type.nms.handle;
 
-public interface IEntityAgeablePet extends IEntityLivingPet{
 
+import com.dsh105.echopet.compat.api.entity.nms.handle.ILivingEntityPetHandle;
+import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
+
+public interface IEntityFrogPetHandle extends ILivingEntityPetHandle{
+	
+	void setVariant(IFrogPet.Variant variant);
 }

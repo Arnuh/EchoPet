@@ -62,6 +62,7 @@ public enum PetType implements IPetType{
 	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
 	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
+	FROG("Frog", "Frog Pet", "frog", new Version("1.19-R1"), new PetDataCategory[]{PetDataCategory.FROG_VARIANT}),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
 	GLOWSQUID("GlowSquid", "Glow Squid Pet", "glow_squid", new Version("1.17-R1"), PetData.DARK),

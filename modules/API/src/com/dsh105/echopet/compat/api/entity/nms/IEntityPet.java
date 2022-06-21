@@ -44,6 +44,10 @@ public interface IEntityPet{
 	
 	IPetGoalSelector getPetGoalSelector();
 	
+	default boolean usesBrain(){
+		return false;
+	}
+	
 	SizeCategory getSizeCategory();
 	
 	Entity getEntity();

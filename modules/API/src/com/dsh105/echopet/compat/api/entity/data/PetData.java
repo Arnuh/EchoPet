@@ -46,6 +46,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGlowSquidPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
@@ -795,7 +796,27 @@ public class PetData<T>{
 				return value->axolotl.setVariant(IAxolotlPet.Variant.Wild);
 			}
 			return null;
-		}, Material.BROWN_WOOL, "Wild");
+		}, Material.BROWN_WOOL, "Wild"),
+		// Frog Variants
+		TEMPERATE = create("temperate", (player, pet, category)->{
+			if(pet instanceof IFrogPet frog){
+				return value->frog.setVariant(IFrogPet.Variant.Temperate);
+			}
+			return null;
+		}, Material.WATER_BUCKET, "Temperate"),
+		WARM = create("warm", (player, pet, category)->{
+			if(pet instanceof IFrogPet frog){
+				return value->frog.setVariant(IFrogPet.Variant.Warm);
+			}
+			return null;
+		}, Material.SAND, "Warm"),
+		COLD = create("cold", (player, pet, category)->{
+			if(pet instanceof IFrogPet frog){
+				return value->frog.setVariant(IFrogPet.Variant.Cold);
+			}
+			return null;
+		}, Material.SNOW_BLOCK, "Cold")
+	;
 	
 	public static final PetData<Integer>
 		SIZE = PetData.create("size", (player, pet, category)->value->{

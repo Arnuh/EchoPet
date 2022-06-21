@@ -15,8 +15,22 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.nms;
+package com.dsh105.echopet.compat.api.entity.type.pet;
 
-public interface IEntityAgeablePet extends IEntityLivingPet{
+import com.dsh105.echopet.compat.api.config.PetConfigEntry;
+import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 
+public interface IFrogPet extends ILivingPet{
+	
+	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>("brain.enabled", false);
+	
+	enum Variant{
+		Temperate,
+		Warm,
+		Cold
+	}
+	
+	void setVariant(Variant variant);
+	
+	Variant getVariant();
 }

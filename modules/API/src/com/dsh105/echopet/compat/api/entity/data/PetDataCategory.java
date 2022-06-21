@@ -47,6 +47,7 @@ public enum PetDataCategory{
 	TROPICAL_FISH_COLOR("tropical_fish_", Material.WHITE_WOOL, "Tropical Fish Color", true, PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	TROPICAL_FISH_PATTERN_COLOR("tropical_fish_", Material.WHITE_BANNER, "Tropical Fish Pattern Color", true, PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),
 	FOX_TYPE("fox_", Material.SWEET_BERRIES, "Fox Type", false, PetData.RED, PetData.SNOW),
+	FROG_VARIANT("frog_", Material.LILY_PAD, "Frog Variant", false, PetData.TEMPERATE, PetData.WARM, PetData.COLD),
 	PANDA_MAIN_GENE("panda_", Material.BAMBOO, "Main Gene", true, PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	PANDA_HIDDEN_GENE("panda_", Material.BAMBOO, "Hidden Gene", true, PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	MUSHROOMCOW_TYPE("mushroomcow_", Material.MUSHROOM_STEW, "Mushroom Cow Type", false, PetData.RED, PetData.BROWN),

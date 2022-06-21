@@ -15,8 +15,21 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.nms;
+package com.dsh105.echopet.nms.entity.ai.brain.behavior;
 
-public interface IEntityAgeablePet extends IEntityLivingPet{
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
 
+public class PetEntityTracker extends EntityTracker{
+	
+	public PetEntityTracker(Entity var0, boolean var1){
+		super(var0, var1);
+	}
+	
+	// Just incase..
+	@Override
+	public boolean isVisibleBy(LivingEntity var0){
+		return true;
+	}
 }

@@ -82,14 +82,9 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	public void setPathfinding(){
 		try{
 			petGoalSelector = new PetGoalSelector();
-			if(getEntity() instanceof Mob mob){// We support living entities but only mobs have ai.
+			if(getEntity() instanceof Mob mob && !getEntityPet().usesBrain()){// We support living entities but only mobs have ai.
 				mob.goalSelector = new GoalSelectorWrapper(petGoalSelector);
 				petGoalSelector.addGoal(0, new PetGoalFloat(getEntityPet(), mob));
-				/*if(pet.getPetType().equals(PetType.BEE)){
-					petGoalSelector.addGoal(new PetGoalBeeWander(this), 1);
-				}else{
-					petGoalSelector.addGoal(new PetGoalFollowOwner(this), 1);
-				}*/
 				petGoalSelector.addGoal(1, new PetGoalFollowOwner(getEntityPet(), mob));
 				petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class));
 			}
