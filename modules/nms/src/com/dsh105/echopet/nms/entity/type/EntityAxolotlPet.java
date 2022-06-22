@@ -26,8 +26,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
-import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.base.EntityAxolotlPetHandle;
@@ -113,11 +113,6 @@ public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, Entit
 	public void setLocation(Location location){
 		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 		this.level = ((CraftWorld) location.getWorld()).getHandle();
-	}
-	
-	@Override
-	public boolean onInteract(Player player){
-		return petHandle.onInteract(player);
 	}
 	
 	@Override

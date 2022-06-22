@@ -54,8 +54,6 @@ public interface IEntityPet{
 	
 	Player getOwner();
 	
-	boolean onInteract(Player p);
-	
 	void remove(boolean makeSound);
 	
 	boolean isDead();

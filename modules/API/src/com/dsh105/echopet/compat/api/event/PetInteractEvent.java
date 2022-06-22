@@ -23,13 +23,14 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link Player} interacts with a {@link IPet}
+ * Called when a {@link Player} interacts with a {@link IPet}<br>
+ * The provided Player is not guaranteed to be the owner.
  */
 
 public class PetInteractEvent extends PetEvent implements Cancellable{
 	
 	private static final HandlerList handlers = new HandlerList();
-	private boolean cancelled = false;
+	private boolean cancelled;
 	
 	private final Player player;
 	private final Action action;

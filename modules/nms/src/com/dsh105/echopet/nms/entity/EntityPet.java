@@ -169,17 +169,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	@Override
-	public boolean onInteract(Player p){
-		if(p.getUniqueId().equals(getOwner().getUniqueId())){
-			if(getPet().getPetType().isInteractMenuEnabled() && Perm.BASE_MENU.hasPerm(this.getOwner(), false, false)){
-				new PetMenu(getPet()).open(false);
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
 	public void setLocation(Location l){
 		this.absMoveTo(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
 		this.level = ((CraftWorld) l.getWorld()).getHandle();

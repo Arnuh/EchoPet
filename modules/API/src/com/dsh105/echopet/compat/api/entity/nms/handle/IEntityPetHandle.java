@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.entity.nms.handle;
 
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
-import org.bukkit.entity.Player;
 
 
 /**
@@ -35,8 +34,6 @@ public interface IEntityPetHandle{
 	IEntityPet getEntityPet();
 	
 	IPetGoalSelector getPetGoalSelector();
-	
-	boolean onInteract(Player player);
 	
 	void remove(boolean makeSound);
 	

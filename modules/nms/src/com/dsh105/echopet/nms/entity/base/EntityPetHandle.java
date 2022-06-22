@@ -99,17 +99,6 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	}
 	
 	@Override
-	public boolean onInteract(Player player){
-		if(player.getUniqueId().equals(getPet().getOwner().getUniqueId())){
-			if(getPet().getPetType().isInteractMenuEnabled() && Perm.BASE_MENU.hasPerm(getPet().getOwner(), false, false)){
-				new PetMenu(getPet()).open(false);
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
 	public void remove(boolean makeSound){
 		CraftEntity craftEntity = getEntity().getBukkitEntity();
 		if(craftEntity != null){

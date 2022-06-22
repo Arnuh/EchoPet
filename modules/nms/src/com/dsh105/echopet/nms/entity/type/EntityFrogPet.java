@@ -129,11 +129,6 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	public boolean onInteract(Player player){
-		return petHandle.onInteract(player);
-	}
-	
-	@Override
 	public IPet getPet(){
 		return pet;
 	}

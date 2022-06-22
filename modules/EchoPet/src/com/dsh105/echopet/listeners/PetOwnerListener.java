@@ -32,6 +32,7 @@ import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
+import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import org.bukkit.ChatColor;
@@ -56,6 +57,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -105,27 +107,25 @@ public class PetOwnerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
-		Player p = event.getPlayer();
-		Entity e = event.getRightClicked();
-		int slot = p.getInventory().getHeldItemSlot();
-		if(slot >= 0 && slot < 9){
-			ItemStack itemInHand = p.getInventory().getContents()[slot];
-			if(itemInHand != null && itemInHand.getType() != Material.AIR && itemInHand.isSimilar(SelectorLayout.getSelectorItem())){
-				new SelectorMenu(p, 0).open(p);
-				event.setCancelled(true);
-				return;
-			}
-		}
-		
-		if(ReflectionUtil.getEntityHandle(e) instanceof IEntityPet){
-			IPet pet = ((IEntityPet) ReflectionUtil.getEntityHandle(e)).getPet();
+		Player player = event.getPlayer();
+		Entity entityClicked = event.getRightClicked();
+		ItemStack itemInHand = player.getInventory().getItem(event.getHand());
+		if(itemInHand.getType() != Material.AIR && itemInHand.isSimilar(SelectorLayout.getSelectorItem())){
+			new SelectorMenu(player, 0).open(player);
 			event.setCancelled(true);
-			PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
+			return;
+		}
+		if(!event.getHand().equals(EquipmentSlot.HAND)) return;
+		if(ReflectionUtil.getEntityHandle(entityClicked) instanceof IEntityPet entityPet){
+			IPet pet = entityPet.getPet();
+			event.setCancelled(true);
+			PetInteractEvent iEvent = new PetInteractEvent(pet, player, PetInteractEvent.Action.RIGHT_CLICK, false);
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
-			if(!iEvent.isCancelled()){
-				pet.getEntityPet().onInteract(p);
-				return;
-			}
+			if(iEvent.isCancelled()) return;
+			if(!player.getUniqueId().equals(pet.getOwnerUUID())) return;
+			if(!pet.getPetType().isInteractMenuEnabled()) return;
+			if(!Perm.BASE_MENU.hasPerm(player, false, false)) return;
+			new PetMenu(pet).open(false);
 		}
 	}
 	
