@@ -22,13 +22,10 @@ import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
-import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
 import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
@@ -55,8 +52,8 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
+@Deprecated
 public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	protected IPet pet;
@@ -106,22 +103,13 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	@Override
-	public IEntityPetHandle getHandle(){
+	public INMSEntityPetHandle getHandle(){
 		return petHandle;
 	}
 	
 	@Override
 	public Player getOwner(){
 		return pet.getOwner();
-	}
-	
-	public Location getLocation(){
-		return this.pet.getLocation();
-	}
-	
-	public void setVelocity(Vector vel){
-		this.setDeltaMovement(vel.getX(), vel.getY(), vel.getZ());
-		this.hurtMarked = true;
 	}
 	
 	@Override
@@ -193,8 +181,8 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 			this.remove(false);
 			return;
 		}
-		CraftPlayer player = (CraftPlayer) getOwner();
-		if(player == null || !player.isOnline()){
+		ServerPlayer player = getHandle().getNMSOwner();
+		if(player == null){
 			EchoPet.getManager().removePet(this.getPet(), true);
 			return;
 		}
@@ -204,19 +192,18 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		if(player.isInvisible() != this.isInvisible() && !this.shouldVanish){
 			this.setInvisible(!this.isInvisible());
 		}
-		if(player.getHandle().isShiftKeyDown() != this.isShiftKeyDown()){
+		if(player.isShiftKeyDown() != this.isShiftKeyDown()){
 			this.setShiftKeyDown(!this.isShiftKeyDown());
 		}
-		if(player.getHandle().isSprinting() != this.isSprinting()){
+		if(player.isSprinting() != this.isSprinting()){
 			this.setSprinting(!this.isSprinting());
 		}
 		if(this.getPet().isHat()){
 			// this.lastYaw = this.yRot = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
-			setYRot(player.getLocation().getYaw());
+			setYRot(player.getYRot());
 			this.yRotO = getYRot();
 		}
-		if(player.isFlying() && getPet().getPetType().canFly()){
-			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
+		/*if(player.isFlying() && getPet().getPetType().canFly()){
 			Location petLoc = this.getLocation();
 			Location ownerLoc = player.getLocation();
 			Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
@@ -235,7 +222,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 				z += 1.5;
 			}
 			this.setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));
-		}
+		}*/
 	}
 	
 	public ServerPlayer getValidRider(){
@@ -243,7 +230,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		if(!(passenger instanceof ServerPlayer serverPlayer)){
 			return null;
 		}
-		if(serverPlayer.getBukkitEntity() != this.getOwner().getPlayer()){
+		if(serverPlayer.getBukkitEntity() != getHandle().getCraftOwner()){
 			return null;
 		}
 		return serverPlayer;

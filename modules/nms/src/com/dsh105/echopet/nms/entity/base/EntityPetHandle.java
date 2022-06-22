@@ -25,8 +25,6 @@ import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
@@ -39,7 +37,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -47,6 +44,7 @@ import org.bukkit.util.Vector;
 
 public class EntityPetHandle implements INMSEntityPetHandle{
 	
+	protected final ServerPlayer owner;
 	protected final IEntityPet entityPet;
 	private PetGoalSelector petGoalSelector;
 	protected double jumpHeight;
@@ -55,7 +53,18 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	
 	public EntityPetHandle(IEntityPet entityPet){
 		this.entityPet = entityPet;
+		this.owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
 		initiateEntityPet();
+	}
+	
+	@Override
+	public CraftPlayer getCraftOwner(){
+		return owner.getBukkitEntity();
+	}
+	
+	@Override
+	public ServerPlayer getNMSOwner(){
+		return owner;
 	}
 	
 	@Override
@@ -131,7 +140,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 			EchoPet.getManager().removePet(pet, true);
 			return;
 		}
-		ServerPlayer nmsOwner = ((CraftPlayer) owner).getHandle();
+		ServerPlayer nmsOwner = getNMSOwner();
 		Entity entity = getEntity();
 		if(nmsOwner.isInvisible() != entity.isInvisible() && !this.shouldVanish){
 			entity.setInvisible(!entity.isInvisible());
@@ -147,7 +156,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 			entity.setYRot(owner.getLocation().getYaw());
 			entity.yRotO = entity.getYRot();
 		}
-		if(owner.isFlying() && getPet().getPetType().canFly()){
+		/*if(owner.isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
 			Location petLoc = entity.getBukkitEntity().getLocation();
 			Location ownerLoc = owner.getLocation();
@@ -167,7 +176,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 				z += 1.5;
 			}
 			setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));
-		}
+		}*/
 	}
 	
 	
@@ -177,7 +186,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		if(!(passenger instanceof ServerPlayer serverPlayer)){
 			return null;
 		}
-		if(serverPlayer.getBukkitEntity() != getPet().getOwner().getPlayer()){
+		if(serverPlayer.getBukkitEntity() != getCraftOwner()){
 			return null;
 		}
 		return serverPlayer;
