@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class LivingPet extends Pet implements ILivingPet{
+public abstract class LivingPet extends Pet implements ILivingPet{
 	
 	public LivingPet(Player owner){
 		super(owner);

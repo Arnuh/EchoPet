@@ -24,7 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 
-public class AgeablePet extends LivingPet implements IAgeablePet{
+public abstract class AgeablePet extends LivingPet implements IAgeablePet{
 	
 	public AgeablePet(Player owner){
 		super(owner);

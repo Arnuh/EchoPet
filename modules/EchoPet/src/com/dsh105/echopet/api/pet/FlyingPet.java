@@ -20,7 +20,7 @@ package com.dsh105.echopet.api.pet;
 import com.dsh105.echopet.compat.api.entity.pet.IFlyingPet;
 import org.bukkit.entity.Player;
 
-public class FlyingPet extends LivingPet implements IFlyingPet{
+public abstract class FlyingPet extends LivingPet implements IFlyingPet{
 	
 	public FlyingPet(Player owner){
 		super(owner);

@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class TameablePet extends AgeablePet implements ITameablePet{
+public abstract class TameablePet extends AgeablePet implements ITameablePet{
 	
 	private boolean sitting, tamed;
 	

@@ -20,7 +20,7 @@ package com.dsh105.echopet.api.pet;
 import com.dsh105.echopet.compat.api.entity.pet.IWaterAnimalPet;
 import org.bukkit.entity.Player;
 
-public class WaterAnimalPet extends LivingPet implements IWaterAnimalPet{
+public abstract class WaterAnimalPet extends LivingPet implements IWaterAnimalPet{
 	
 	public WaterAnimalPet(Player owner){
 		super(owner);
