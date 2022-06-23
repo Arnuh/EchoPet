@@ -77,7 +77,6 @@ public class PetFrogAi{
 		frogBrain.setCoreActivities(ImmutableSet.of(Activity.CORE));
 		frogBrain.setDefaultActivity(Activity.IDLE);
 		frogBrain.useDefaultActivity();
-		System.out.println("Made brain");
 		return frogBrain;
 	}
 	

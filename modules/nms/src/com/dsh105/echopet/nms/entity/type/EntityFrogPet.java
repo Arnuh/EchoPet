@@ -29,6 +29,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.brain.PetFrogAi;
+import com.dsh105.echopet.nms.entity.ai.brain.sensing.CustomSensorType;
 import com.dsh105.echopet.nms.entity.base.EntityFrogPetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
@@ -51,7 +52,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.FROG)
 public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGiveMeAccess{
 	
-	protected static final ImmutableList<SensorType<? extends Sensor<? super Frog>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.HURT_BY, SensorType.FROG_ATTACKABLES, SensorType.FROG_TEMPTATIONS, SensorType.IS_IN_WATER);
+	protected static final ImmutableList<SensorType<? extends Sensor<? super Frog>>> SENSOR_TYPES = ImmutableList.of(CustomSensorType.NEAREST_LIVING_ENTITIES/*, SensorType.HURT_BY, SensorType.FROG_ATTACKABLES, SensorType.FROG_TEMPTATIONS*/, SensorType.IS_IN_WATER);
 	protected static final ImmutableList<SensorType<? extends Sensor<? super Frog>>> EMPTY_SENSOR_TYPES = ImmutableList.of();
 	protected IFrogPet pet;
 	private final INMSLivingEntityPetHandle petHandle;
