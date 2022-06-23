@@ -15,6 +15,19 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.nms;
+package com.dsh105.echopet.api.pet.type;
 
-public interface IEntityWaterAnimalPet extends IEntityLivingPet{}
+import com.dsh105.echopet.api.pet.FishPet;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.pet.ITadpolePet;
+import org.bukkit.entity.Player;
+
+
+@EntityPetType(petType = PetType.TADPOLE)
+public class TadpolePet extends FishPet implements ITadpolePet{
+	
+	public TadpolePet(Player owner){
+		super(owner);
+	}
+}

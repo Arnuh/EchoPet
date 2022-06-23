@@ -15,6 +15,12 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.nms;
+package com.dsh105.echopet.compat.api.entity.type.pet;
 
-public interface IEntityWaterAnimalPet extends IEntityLivingPet{}
+import com.dsh105.echopet.compat.api.config.PetConfigEntry;
+import com.dsh105.echopet.compat.api.entity.pet.IWaterAnimalPet;
+
+public interface ITadpolePet extends IWaterAnimalPet{
+	
+	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>("brain.enabled", false);
+}
