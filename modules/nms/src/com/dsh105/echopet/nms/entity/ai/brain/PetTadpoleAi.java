@@ -46,6 +46,8 @@ public class PetTadpoleAi{
 	private static final float SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER = 0.5F;
 	private static final float SPEED_MULTIPLIER_WHEN_TEMPTED = 1.25F;
 	
+	private static final ImmutableList<Activity> ACTIVITIES = ImmutableList.of(Activity.IDLE);
+	
 	public PetTadpoleAi(){
 	}
 	
@@ -98,6 +100,6 @@ public class PetTadpoleAi{
 	}
 	
 	public static void updateActivity(EntityTadpolePet entity){
-		entity.getBrain().setActiveActivityToFirstValid(ImmutableList.of(Activity.IDLE));
+		entity.getBrain().setActiveActivityToFirstValid(ACTIVITIES);
 	}
 }

@@ -51,6 +51,7 @@ public enum PetDataCategory{
 	PANDA_MAIN_GENE("panda_", Material.BAMBOO, "Main Gene", true, PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	PANDA_HIDDEN_GENE("panda_", Material.BAMBOO, "Hidden Gene", true, PetData.NORMAL, PetData.LAZY, PetData.WORRIED, PetData.PLAYFUL, PetData.AGGRESSIVE, PetData.WEAK, PetData.BROWN),
 	MUSHROOMCOW_TYPE("mushroomcow_", Material.MUSHROOM_STEW, "Mushroom Cow Type", false, PetData.RED, PetData.BROWN),
+	WARDEN_ANGER_LEVEL("warden_", Material.getMaterial("SCULK_SHRIEKER"), "Warden Anger Level", false, PetData.CALM, PetData.AGITATED, PetData.ANGRY),
 	;
 	
 	public static final PetDataCategory[] values = values();

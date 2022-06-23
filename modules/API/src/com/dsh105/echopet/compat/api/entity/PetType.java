@@ -110,6 +110,7 @@ public enum PetType implements IPetType{
 	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
 	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
 	WANDERINGTRADER("WanderingTrader", "Wandering Trader Pet", "wandering_trader"),
+	WARDEN("Warden", "Warden Pet", "warden", new Version("1.19-R1"), new PetDataCategory[]{PetDataCategory.WARDEN_ANGER_LEVEL}),
 	WITCH("Witch", "Witch Pet", "witch"),
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),

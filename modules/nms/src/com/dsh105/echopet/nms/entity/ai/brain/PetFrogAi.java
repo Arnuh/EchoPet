@@ -64,6 +64,8 @@ public class PetFrogAi{
 	private static final float MAX_JUMP_VELOCITY = 1.5F;
 	// private static final float SPEED_MULTIPLIER_WHEN_TEMPTED = 1.25F;
 	
+	private static final ImmutableList<Activity> ACTIVITIES = ImmutableList.of(/*Activity.TONGUE, */Activity.LONG_JUMP/*, Activity.SWIM*/, Activity.IDLE);
+	
 	//@formatter:off
 	public PetFrogAi(){
 	}
@@ -190,6 +192,6 @@ public class PetFrogAi{
 	}
 	
 	public static void updateActivity(EntityFrogPet frog){
-		frog.getBrain().setActiveActivityToFirstValid(ImmutableList.of(/*Activity.TONGUE, */Activity.LONG_JUMP/*, Activity.SWIM*/, Activity.IDLE));
+		frog.getBrain().setActiveActivityToFirstValid(ACTIVITIES);
 	}
 }

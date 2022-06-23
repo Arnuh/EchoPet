@@ -70,6 +70,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITropicalFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVexPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerDataHolder;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWardenPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -172,11 +173,15 @@ public class PetData<T>{
 				return wolfPet::setAngry;
 			}else if(pet instanceof IBeePet beePet){
 				return beePet::setAngry;
+			}else if(pet instanceof IWardenPet warden){
+				return value->warden.setAngerLevel(IWardenPet.AngerLevel.Angry);
 			}
 			return null;
 		}, petType->{
 			if(petType.equals(PetType.WOLF)){
 				return Material.PORKCHOP;
+			}else if(petType.equals(PetType.WARDEN)){
+				return Material.SCULK_SENSOR;
 			}
 			return Material.STONE_SWORD;// Bee
 		}, "Angry"),
@@ -815,7 +820,21 @@ public class PetData<T>{
 				return value->frog.setVariant(IFrogPet.Variant.Cold);
 			}
 			return null;
-		}, Material.SNOW_BLOCK, "Cold")
+		}, Material.SNOW_BLOCK, "Cold"),
+		// Warden Anger Levels
+		CALM = create("calm", (player, pet, category)->{
+			if(pet instanceof IWardenPet warden){
+				return value->warden.setAngerLevel(IWardenPet.AngerLevel.Calm);
+			}
+			return null;
+		}, Material.SNOW_BLOCK, "calm"),
+		AGITATED = create("agitated", (player, pet, category)->{
+			if(pet instanceof IWardenPet warden){
+				return value->warden.setAngerLevel(IWardenPet.AngerLevel.Agitated);
+			}
+			return null;
+		}, Material.REDSTONE, "Agitated")
+		// Angry is elsewhere
 	;
 	
 	public static final PetData<Integer>

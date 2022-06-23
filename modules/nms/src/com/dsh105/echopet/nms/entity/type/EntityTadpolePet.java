@@ -61,7 +61,6 @@ import org.bukkit.entity.Player;
 public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityPetGiveMeAccess{
 	
 	protected static final ImmutableList<SensorType<? extends Sensor<? super Tadpole>>> SENSOR_TYPES = ImmutableList.of(CustomSensorType.NEAREST_LIVING_ENTITIES, CustomSensorType.NEAREST_PLAYERS/*, SensorType.HURT_BY, SensorType.FROG_TEMPTATIONS*/);
-	;
 	protected static final ImmutableList<SensorType<? extends Sensor<? super Tadpole>>> EMPTY_SENSOR_TYPES = ImmutableList.of();
 	
 	protected ITadpolePet pet;
