@@ -31,6 +31,9 @@ public class CategoryConfigOptions extends Options{
 	@Override
 	public void setDefaults(){
 		for(PetDataCategory category : PetDataCategory.values){
+			if(!category.isCompatible()){
+				continue;
+			}
 			String path = category.getConfigKey() + ".";
 			if(getConfig().getConfigurationSection(path + "data") == null){
 				set(path + "data", category.getDefaultData().stream()

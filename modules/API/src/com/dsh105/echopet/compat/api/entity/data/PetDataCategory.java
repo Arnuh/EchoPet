@@ -83,6 +83,17 @@ public enum PetDataCategory{
 		this.useCategorizedKey = useCategorizedKey;
 	}
 	
+	/**
+	 * Determines if the category is compatible with current version.<br>
+	 *
+	 * Not a reliable way to check for categories used for versions higher than the current.
+	 *
+	 * @return If the Category is compatible
+	 */
+	public boolean isCompatible(){
+		return material != null;
+	}
+	
 	public String getConfigKey(){
 		return configKey;
 	}

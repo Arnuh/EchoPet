@@ -185,9 +185,9 @@ public enum PetType implements IPetType{
 				}
 			}
 		}
-		if(!name().equalsIgnoreCase("HUMAN")){// Humans ignore the config.
+		if(isCompatible() && !name().equalsIgnoreCase("HUMAN")){// Humans ignore the config.
 			if(this.uiMaterial == null){// Plugin probably wont work
-				System.out.println("Found no Material for pet type " + name());
+				EchoPet.getPlugin().getLogger().warning("Found no Material for pet type " + name());
 			}
 		}
 		//
