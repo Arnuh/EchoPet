@@ -22,6 +22,7 @@ import java.util.UUID;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
+@Deprecated
 public class WrappedGameProfile extends AbstractWrapper{
 	
 	private WrappedGameProfile(Object ident, String name){

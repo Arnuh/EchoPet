@@ -27,10 +27,11 @@
 		<module>./modules/API</module>
 		<module>./modules/EchoPet</module>
 		<module>./modules/nms</module>
-		<module>./modules/v1_17</module>
-		<module>./modules/v1_18</module>
-		<module>./modules/v1_18_R2</module>
-		<module>./modules/v1_19_R1</module>
+		<module>./modules/v1_17_1</module>
+		<module>./modules/v1_18_1</module>
+		<module>./modules/v1_18_2</module>
+		<module>./modules/v1_19</module>
+		<module>./modules/v1_19_1</module>
 	</modules>
 
 	<properties>
@@ -41,7 +42,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
-		<craftbukkit.package.version>v1_19_R1</craftbukkit.package.version>
+		<nmsbase.craftbukkit.package.version>1_19_R1</nmsbase.craftbukkit.package.version>
+		<nmsbase.spigot.version>1.19-R0.1-SNAPSHOT</nmsbase.spigot.version>
 	</properties>
 
 	<prerequisites>

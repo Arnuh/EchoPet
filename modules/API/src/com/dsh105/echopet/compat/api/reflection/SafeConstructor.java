@@ -55,13 +55,7 @@ public class SafeConstructor<T>{
 	public T newInstance(Object... params){
 		try{
 			return (T) this.getConstructor().newInstance(params);
-		}catch(InstantiationException e){
-			throw new RuntimeException(e);
-		}catch(IllegalAccessException e){
-			throw new RuntimeException(e);
-		}catch(IllegalArgumentException e){
-			throw new RuntimeException(e);
-		}catch(InvocationTargetException e){
+		}catch(InstantiationException | InvocationTargetException | IllegalArgumentException | IllegalAccessException e){
 			throw new RuntimeException(e);
 		}
 	}

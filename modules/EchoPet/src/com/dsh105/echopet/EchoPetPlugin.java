@@ -94,8 +94,10 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		COMMAND_MANAGER = new CommandManager(this);
 		// Make sure that the plugin is running under the correct version to prevent errors
 		
+		Class<?> spawnUtil, petRegistry;
 		try{
-			Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
+			spawnUtil = ReflectionUtil.getVersionedClass("SpawnUtil");
+			petRegistry = ReflectionUtil.getVersionedClass("PetRegistry");
 		}catch(ClassNotFoundException e){
 			getLogger().info("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
 			getLogger().info("Initialisation failed. Please update the plugin.");
@@ -105,9 +107,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			return;
 		}
 		
-		this.petRegistry = new SafeConstructor<IPetRegistry>(ReflectionUtil.getVersionedClass("PetRegistry")).newInstance();
+		this.petRegistry = new SafeConstructor<IPetRegistry>(petRegistry).newInstance();
 		
-		SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(ReflectionUtil.getVersionedClass("SpawnUtil")).newInstance();
+		SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(spawnUtil).newInstance();
 		
 		this.loadConfiguration();
 		

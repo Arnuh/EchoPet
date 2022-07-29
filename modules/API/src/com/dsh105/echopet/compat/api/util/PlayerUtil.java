@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import org.bukkit.entity.Player;
 
+@Deprecated
 public class PlayerUtil{
 	
 	private static final Method sendPacket = ReflectionUtil.getMethod(ReflectionUtil.getNMSClass("PlayerConnection"), ReflectionConstants.PLAYER_FUNC_SENDPACKET.getName(), ReflectionUtil.getNMSClass("Packet"));

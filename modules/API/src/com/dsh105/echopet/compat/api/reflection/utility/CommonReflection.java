@@ -32,6 +32,7 @@ import org.bukkit.Server;
 /**
  * Allows us to access several classes and yet be compatible with MCPC+, Bukkit and Spigot
  */
+@Deprecated
 public class CommonReflection{
 	
 	private static ClassHandler DEFAULT_HANDLER;

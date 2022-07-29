@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.reflection;
 
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
+@Deprecated
 public enum ReflectionConstants{
 	
 	PACKET_PARTICLES_FIELD_NAME(new String[]{"a"}, "field_98209_a", "field_149236_a"),

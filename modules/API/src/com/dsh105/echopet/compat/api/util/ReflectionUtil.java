@@ -25,27 +25,81 @@ import java.util.regex.Pattern;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Entity;
 
 @SuppressWarnings("unchecked")
 public class ReflectionUtil{
 	
+	private static final Pattern MINECRAFT_VERSION_MATCHER = Pattern.compile("\\(.*MC.\\s*([a-zA-z0-9\\-\\.]+)\\s*\\)");
+	private static final Pattern PACKAGE_VERSION_MATCHER = Pattern.compile("(\\d+_\\d+_\\w*\\d+)"); // Should \w not be just an R?
+	
+	/**
+	 * com.dsh105.echopet.compat.nms.v1_19_1
+	 */
 	public static String COMPAT_NMS_PATH = prepareCompatNmsPath();
+	private static String MINECRAFT_VERSION = null;
+	private static String CRAFTBUKKIT_PACKAGE_VERSION = null;
 	
-	public static int MC_VERSION_NUMERIC = getServerVersion().length() == 0 ? 0 : Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
-	public static int BUKKIT_VERSION_NUMERIC = getBukkitVersion().length() == 0 ? 0 : Integer.valueOf(getBukkitVersion().replaceAll("[^0-9]", ""));
-	
-	private static String prepareCompatNmsPath(){
-		String versionTag = getServerVersion();
+	/**
+	 * @return Version formatted like "1.19.1"
+	 */
+	public static String getMinecraftVersion(){
+		// Bukkit.getVersion returns a string like "git-Paper-86 (MC: 1.19.1)"
+		// Bukkit.getBukkitVersion returns a string like 1.19.1-R0.1-SNAPSHOT
+		// Need to just assume these are updated properly.
+		if(MINECRAFT_VERSION != null){
+			return MINECRAFT_VERSION;
+		}
+		String version = Bukkit.getVersion();
+		Matcher matcher = MINECRAFT_VERSION_MATCHER.matcher(version);
 		
-		//        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4") && isSpigot1dot8()) {
-		//            // At least it works
-		//            versionTag = "v1_8_Spigot";
-		//        }
+		if(matcher.matches()){
+			return MINECRAFT_VERSION = matcher.group(1);
+		}
 		
-		return "com.dsh105.echopet.compat.nms." + versionTag;
+		version = Bukkit.getBukkitVersion();
+		version = version.substring(0, version.indexOf("-"));
+		return MINECRAFT_VERSION = version;
 	}
 	
+	/**
+	 *
+	 * @return Version formatted like "1_19_R1"
+	 */
+	public static String getCraftBukkitPackageVersion(){
+		if(CRAFTBUKKIT_PACKAGE_VERSION != null){
+			return CRAFTBUKKIT_PACKAGE_VERSION;
+		}
+		Server bukkitServer = Bukkit.getServer();
+		Class<?> craftServerClass = bukkitServer.getClass();
+		String packageName = craftServerClass.getCanonicalName();// org.bukkit.craftbukkit.v1_17_R1
+		Matcher matcher = PACKAGE_VERSION_MATCHER.matcher(packageName);
+		
+		if(matcher.matches()){
+			return CRAFTBUKKIT_PACKAGE_VERSION = matcher.group(1);
+		}else{
+			return null;
+		}
+	}
+	
+	private static String prepareCompatNmsPath(){
+		return "com.dsh105.echopet.compat.nms.v" + getMinecraftVersion().replace(".", "_");
+	}
+	
+	/**
+	 * com.dsh105.echopet.compat.nms.v1_19_1.classPath
+	 */
+	public static Class<?> getVersionedClass(String classPath) throws ClassNotFoundException, NoClassDefFoundError{
+		return Class.forName(COMPAT_NMS_PATH + "." + classPath);
+	}
+	
+	@Deprecated
+	public static int MC_VERSION_NUMERIC = getMinecraftVersion().length() == 0 ? 0 : Integer.valueOf(getMinecraftVersion().replaceAll("[^0-9]", ""));
+	@Deprecated
+	public static int BUKKIT_VERSION_NUMERIC = getBukkitVersion().length() == 0 ? 0 : Integer.valueOf(getBukkitVersion().replaceAll("[^0-9]", ""));
+	
+	@Deprecated
 	public static boolean isSpigot1dot8(){
 		try{
 			// not ideal, but it's the only class needed
@@ -60,11 +114,8 @@ public class ReflectionUtil{
 		return invokeMethod(getMethod(getCBCClass("entity.CraftEntity"), "getHandle"), entity);
 	}
 	
-	public static String getServerVersion(){
-		return CommonReflection.getVersionTag();
-	}
-	
 	// Thanks ProtocolLib <3
+	@Deprecated
 	public static String getBukkitVersion(){
 		try{
 			Pattern versionPattern = Pattern.compile(".*\\(.*MC.\\s*([a-zA-z0-9\\-\\.]+)\\s*\\)");
@@ -79,16 +130,19 @@ public class ReflectionUtil{
 		}
 	}
 	
+	@Deprecated
 	public static boolean isServerMCPC(){
 		return Bukkit.getVersion().contains("MCPC-Plus");
 	}
 	
+	@Deprecated
 	public static String getNMSPackageName(){
-		return "net.minecraft.server." + getServerVersion();
+		return "net.minecraft.server." + getMinecraftVersion();
 	}
 	
+	@Deprecated
 	public static String getCBCPackageName(){
-		return "org.bukkit.craftbukkit." + getServerVersion();
+		return "org.bukkit.craftbukkit." + getMinecraftVersion();
 	}
 	
 	/**
@@ -96,6 +150,7 @@ public class ReflectionUtil{
 	 */
 	
 	@SuppressWarnings("rawtypes")
+	@Deprecated
 	public static Class getClass(String name){
 		try{
 			return Class.forName(name);
@@ -106,18 +161,12 @@ public class ReflectionUtil{
 		}
 	}
 	
-	public static Class<?> getVersionedClass(String classPath){
-		return getClass(COMPAT_NMS_PATH + "." + classPath);
-	}
-	
-	public static Class<?> getPetNMSClass(String classIdentifier){
-		return getVersionedClass("entity.type.Entity" + classIdentifier + "Pet");
-	}
-	
+	@Deprecated
 	public static Class<?> getNMSClass(String className){
 		return CommonReflection.getMinecraftClass(className);
 	}
 	
+	@Deprecated
 	public static Class<?> getCBCClass(String className){
 		return CommonReflection.getCraftBukkitClass(className);
 	}
@@ -125,7 +174,7 @@ public class ReflectionUtil{
 	/**
 	 * Field stuff
 	 */
-	
+	@Deprecated
 	public static Field getField(Class<?> clazz, String fieldName){
 		try{
 			Field field = clazz.getDeclaredField(fieldName);
@@ -142,6 +191,7 @@ public class ReflectionUtil{
 		}
 	}
 	
+	@Deprecated
 	public static <T> T getField(Class<?> clazz, String fieldName, Object instance){
 		try{
 			return (T) getField(clazz, fieldName).get(instance);
@@ -152,6 +202,7 @@ public class ReflectionUtil{
 		}
 	}
 	
+	@Deprecated
 	public static void setField(Class<?> clazz, String fieldName, Object instance, Object value){
 		try{
 			getField(clazz, fieldName).set(instance, value);
@@ -161,6 +212,7 @@ public class ReflectionUtil{
 		}
 	}
 	
+	@Deprecated
 	public static <T> T getField(Field field, Object instance){
 		try{
 			return (T) field.get(instance);
@@ -174,7 +226,7 @@ public class ReflectionUtil{
 	/**
 	 * Method stuff
 	 */
-	
+	@Deprecated
 	public static Method getMethod(Class<?> clazz, String methodName, Class<?>... params){
 		try{
 			return clazz.getDeclaredMethod(methodName, params);
@@ -185,6 +237,7 @@ public class ReflectionUtil{
 		}
 	}
 	
+	@Deprecated
 	public static <T> T invokeMethod(Method method, Object instance, Object... args){
 		try{
 			return (T) method.invoke(instance, args);

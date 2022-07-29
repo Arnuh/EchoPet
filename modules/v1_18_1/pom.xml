@@ -25,8 +25,8 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>EchoPet-v1_18_R2</artifactId>
-	<name>EchoPet-v1_18_R2-${project.version}</name>
+	<artifactId>EchoPet-v1_18_1</artifactId>
+	<name>EchoPet-v1_18_1-${project.version}</name>
 	<version>${echopet.version}</version>
 	<packaging>jar</packaging>
 
@@ -34,6 +34,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
+		<package.version>1_18_1</package.version>
+		<spigot.version>1.18.1-R0.1-SNAPSHOT</spigot.version>
+		<craftbukkit.package.version>1_18_R1</craftbukkit.package.version>
 	</properties>
 
 	<dependencies>
@@ -45,14 +48,14 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.18.2-R0.1-SNAPSHOT</version>
+			<version>${spigot.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
-			<version>1.18.2-R0.1-SNAPSHOT</version>
+			<version>${spigot.version}</version>
 			<classifier>remapped-mojang</classifier>
 			<scope>provided</scope>
 		</dependency>
@@ -87,11 +90,11 @@
 							<relocations>
 								<relocation>
 									<pattern>com.dsh105.echopet.nms</pattern>
-									<shadedPattern>com.dsh105.echopet.compat.nms.v1_18_R2</shadedPattern>
+									<shadedPattern>com.dsh105.echopet.compat.nms.v${package.version}</shadedPattern>
 								</relocation>
 								<relocation>
-									<pattern>org.bukkit.craftbukkit.${craftbukkit.package.version}</pattern>
-									<shadedPattern>org.bukkit.craftbukkit.v1_18_R2</shadedPattern>
+									<pattern>org.bukkit.craftbukkit.v${nmsbase.craftbukkit.package.version}</pattern>
+									<shadedPattern>org.bukkit.craftbukkit.v${craftbukkit.package.version}</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
@@ -101,7 +104,7 @@
 			<plugin>
 				<groupId>net.md-5</groupId>
 				<artifactId>specialsource-maven-plugin</artifactId>
-				<version>1.2.2</version>
+				<version>1.2.4</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -110,9 +113,9 @@
 						</goals>
 						<id>remap-obf</id>
 						<configuration>
-							<srgIn>org.spigotmc:minecraft-server:1.18.2-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
+							<srgIn>org.spigotmc:minecraft-server:${spigot.version}:txt:maps-mojang</srgIn>
 							<reverse>true</reverse>
-							<remappedDependencies>org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
+							<remappedDependencies>org.spigotmc:spigot:${spigot.version}:jar:remapped-mojang</remappedDependencies>
 							<remappedArtifactAttached>true</remappedArtifactAttached>
 							<remappedClassifierName>remapped-obf</remappedClassifierName>
 						</configuration>
@@ -125,8 +128,8 @@
 						<id>remap-spigot</id>
 						<configuration>
 							<inputFile>${project.build.directory}/${project.artifactId}-${project.version}-remapped-obf.jar</inputFile>
-							<srgIn>org.spigotmc:minecraft-server:1.18.2-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-							<remappedDependencies>org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
+							<srgIn>org.spigotmc:minecraft-server:${spigot.version}:csrg:maps-spigot</srgIn>
+							<remappedDependencies>org.spigotmc:spigot:${spigot.version}:jar:remapped-obf</remappedDependencies>
 						</configuration>
 					</execution>
 				</executions>

@@ -51,14 +51,14 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.19-R0.1-SNAPSHOT</version>
+			<version>${nmsbase.spigot.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
-			<version>1.19-R0.1-SNAPSHOT</version>
+			<version>${nmsbase.spigot.version}</version>
 			<classifier>remapped-mojang</classifier>
 			<scope>provided</scope>
 		</dependency>

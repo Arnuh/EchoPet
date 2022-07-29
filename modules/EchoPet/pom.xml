@@ -70,7 +70,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dsh105</groupId>
-			<artifactId>EchoPet-v1_17</artifactId>
+			<artifactId>EchoPet-v1_17_1</artifactId>
 			<version>${echopet.version}</version>
 			<optional>true</optional>
 			<exclusions>
@@ -86,7 +86,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dsh105</groupId>
-			<artifactId>EchoPet-v1_18</artifactId>
+			<artifactId>EchoPet-v1_18_1</artifactId>
 			<version>${echopet.version}</version>
 			<optional>true</optional>
 			<exclusions>
@@ -102,7 +102,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dsh105</groupId>
-			<artifactId>EchoPet-v1_18_R2</artifactId>
+			<artifactId>EchoPet-v1_18_2</artifactId>
 			<version>${echopet.version}</version>
 			<optional>true</optional>
 			<exclusions>
@@ -118,7 +118,23 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dsh105</groupId>
-			<artifactId>EchoPet-v1_19_R1</artifactId>
+			<artifactId>EchoPet-v1_19</artifactId>
+			<version>${echopet.version}</version>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.dsh105</groupId>
+					<artifactId>EchoPet-NMS</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.dsh105</groupId>
+			<artifactId>EchoPet-v1_19_1</artifactId>
 			<version>${echopet.version}</version>
 			<optional>true</optional>
 			<exclusions>

@@ -162,9 +162,9 @@ public enum PetType implements IPetType{
 	@SuppressWarnings("unchecked")
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData<?>... allowedData){
 		try{
-			this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
+			this.entityClass = (Class<? extends IEntityPet>) ReflectionUtil.getVersionedClass("entity.type.Entity" + classIdentifier + "Pet");
 			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-		}catch(ClassNotFoundException ignored){
+		}catch(ClassNotFoundException | NoClassDefFoundError ignored){
 		}
 		if(name().equals("PIGZOMBIE")){// hacky fix for now
 			if(new Version("1.16-R1").isCompatible(new Version())){
