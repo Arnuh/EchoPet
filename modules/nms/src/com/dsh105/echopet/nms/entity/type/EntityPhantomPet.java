@@ -21,9 +21,9 @@ import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
@@ -144,11 +144,11 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		PhantomAttackStrategyGoal(){
 			setFlags(EnumSet.of(PetGoal.Flag.MOVE));
-			this.sweepTickDelayStart = IPhantomPet.SWEEP_NEXT_START_DELAY.getConfigValue(PetType.PHANTOM);
-			this.sweepTickNextMin = IPhantomPet.SWEEP_NEXT_MIN_DELAY.getConfigValue(PetType.PHANTOM);
-			this.sweepTickNextRand = IPhantomPet.SWEEP_NEXT_RAND_DELAY.getConfigValue(PetType.PHANTOM);
-			this.minHeightOffset = IPhantomPet.SWEEP_MIN_HEIGHT_OFFSET.getConfigValue(PetType.PHANTOM);
-			this.randHeightOffset = IPhantomPet.SWEEP_RAND_HEIGHT_OFFSET.getConfigValue(PetType.PHANTOM);
+			this.sweepTickDelayStart = IPhantomPet.SWEEP_NEXT_START_DELAY.get(PetType.PHANTOM);
+			this.sweepTickNextMin = IPhantomPet.SWEEP_NEXT_MIN_DELAY.get(PetType.PHANTOM);
+			this.sweepTickNextRand = IPhantomPet.SWEEP_NEXT_RAND_DELAY.get(PetType.PHANTOM);
+			this.minHeightOffset = IPhantomPet.SWEEP_MIN_HEIGHT_OFFSET.get(PetType.PHANTOM);
+			this.randHeightOffset = IPhantomPet.SWEEP_RAND_HEIGHT_OFFSET.get(PetType.PHANTOM);
 		}
 		
 		@Override
@@ -212,12 +212,12 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		PhantomCircleAroundAnchorGoal(){
 			super();
-			this.minDistance = IPhantomPet.CIRCLE_MIN_DISTANCE.getConfigValue(PetType.PHANTOM).floatValue();
-			this.maxRandDistance = IPhantomPet.CIRCLE_MAX_RAND_DISTANCE.getConfigValue(PetType.PHANTOM).floatValue();
-			this.maxDistance = IPhantomPet.CIRCLE_MAX_DISTANCE.getConfigValue(PetType.PHANTOM).floatValue();
-			this.maxDistanceReset = IPhantomPet.CIRCLE_MAX_DISTANCE_RESET.getConfigValue(PetType.PHANTOM).floatValue();
-			this.minHeight = IPhantomPet.CIRCLE_MIN_HEIGHT.getConfigValue(PetType.PHANTOM).floatValue();
-			this.maxRandHeight = IPhantomPet.CIRCLE_MAX_RAND_HEIGHT.getConfigValue(PetType.PHANTOM).floatValue();
+			this.minDistance = IPhantomPet.CIRCLE_MIN_DISTANCE.get(PetType.PHANTOM).floatValue();
+			this.maxRandDistance = IPhantomPet.CIRCLE_MAX_RAND_DISTANCE.get(PetType.PHANTOM).floatValue();
+			this.maxDistance = IPhantomPet.CIRCLE_MAX_DISTANCE.get(PetType.PHANTOM).floatValue();
+			this.maxDistanceReset = IPhantomPet.CIRCLE_MAX_DISTANCE_RESET.get(PetType.PHANTOM).floatValue();
+			this.minHeight = IPhantomPet.CIRCLE_MIN_HEIGHT.get(PetType.PHANTOM).floatValue();
+			this.maxRandHeight = IPhantomPet.CIRCLE_MAX_RAND_HEIGHT.get(PetType.PHANTOM).floatValue();
 		}
 		
 		@Override

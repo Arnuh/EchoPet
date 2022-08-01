@@ -47,8 +47,9 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	protected final ServerPlayer owner;
 	protected final IEntityPet entityPet;
 	private PetGoalSelector petGoalSelector;
+	protected boolean canFly;
+	protected float rideSpeed, rideFlySpeed;
 	protected double jumpHeight;
-	protected float rideSpeed, flySpeed;
 	public boolean shouldVanish;
 	
 	public EntityPetHandle(IEntityPet entityPet){
@@ -81,9 +82,11 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	}
 	
 	protected void initiateEntityPet(){
-		this.rideSpeed = getPet().getPetType().getRideSpeed();
-		this.flySpeed = getPet().getPetType().getFlySpeed();
-		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
+		IPetType petType = getPet().getPetType();
+		this.canFly = IPet.RIDING_FLY.get(petType);
+		this.rideSpeed = IPet.RIDING_WALK_SPEED.get(petType).floatValue();
+		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.get(petType).floatValue();
+		this.jumpHeight = IPet.RIDING_JUMP_HEIGHT.get(petType);
 		this.setPathfinding();
 		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
 	}
@@ -197,9 +200,9 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		Entity entity = getEntity();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
-			if(getPet().getPetType().canFly()){
+			if(canFly){
 				if(!entity.isOnGround()){
-					speed = flySpeed;
+					speed = rideFlySpeed;
 				}
 			}
 		}
@@ -237,9 +240,8 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		if(moveEvent.isCancelled()){
 			return null;
 		}
-		IPetType pt = this.getPet().getPetType();
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
-			if(pt.canFly()){
+			if(canFly){
 				try{
 					if(player.isFlying()){
 						player.setFlying(false);

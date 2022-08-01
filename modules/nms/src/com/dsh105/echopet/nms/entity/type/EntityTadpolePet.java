@@ -176,7 +176,7 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
-		return usesBrain = IFrogPet.BRAIN_ENABLED.getConfigValue(PetType.TADPOLE);
+		return usesBrain = IFrogPet.BRAIN_ENABLED.get(PetType.TADPOLE);
 	}
 	
 	@Override

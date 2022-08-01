@@ -20,9 +20,9 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
@@ -85,7 +85,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		super.initiateEntityPet();
 		AttributeInstance attributeInstance = getAttribute(Attributes.JUMP_STRENGTH);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(jumpHeight);
+			attributeInstance.setBaseValue(rideJumpHeight);
 		}
 	}
 	

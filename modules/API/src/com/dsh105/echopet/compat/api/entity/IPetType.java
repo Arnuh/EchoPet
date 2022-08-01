@@ -80,15 +80,17 @@ public interface IPetType{
 	
 	boolean isInteractMenuEnabled();
 	
+	/**
+	 * If other Pets are allowed to ride this Pet.<br>
+	 * This method does not determine if the Pet Owner is allowed to ride.
+	 *
+	 * @return If other Pets are allowed to ride this Pet
+	 */
 	boolean allowRidersFor();
 	
 	boolean isDataAllowed(PetData<?> data);
 	
 	boolean isDataForced(PetData<?> data);
-	
-	boolean canFly();
-	
-	boolean canIgnoreFallDamage();
 	
 	YAMLConfig getConfig();
 	
@@ -97,22 +99,6 @@ public interface IPetType{
 	ConfigurationSection getPetDataSection(PetData<?> data);
 	
 	<T> T getPetDataProperty(PetData<?> data, String variable, T defaultValue);
-	
-	double getWalkSpeed();
-	
-	float getRideSpeed();
-	
-	float getFlySpeed();
-	
-	double getRideJumpHeight();
-	
-	double getStartFollowDistance();
-	
-	double getStopFollowDistance();
-	
-	double getTeleportDistance();
-	
-	double getFollowSpeedModifier();
 	
 	<T> T getDataDefaultValue(PetData<?> data, T defaultValue);
 }

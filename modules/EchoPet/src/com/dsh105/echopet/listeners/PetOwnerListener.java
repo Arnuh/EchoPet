@@ -129,18 +129,22 @@ public class PetOwnerListener implements Listener{
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerDamage(EntityDamageEvent event){
-		if(event.getEntity() instanceof Player p){
-			if(event.getCause() == EntityDamageEvent.DamageCause.FALL){
-				IPet pet = EchoPet.getManager().getPet(p);
-				if(pet != null && pet.isOwnerRiding()){
-					if(pet.getPetType().canIgnoreFallDamage()){
-						event.setCancelled(true);
-					}
-				}
-			}
+		if(!(event.getEntity() instanceof Player player)){
+			return;
 		}
+		if(event.getCause() != EntityDamageEvent.DamageCause.FALL){
+			return;
+		}
+		IPet pet = EchoPet.getManager().getPet(player);
+		if(pet == null || !pet.isOwnerRiding()){
+			return;
+		}
+		if(!IPet.RIDING_IGNORE_FALL_DAMAGE.get(pet.getPetType())){
+			return;
+		}
+		event.setCancelled(true);
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -189,7 +193,7 @@ public class PetOwnerListener implements Listener{
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDropItem(PlayerDropItemEvent event){
 		if(event.getItemDrop().getItemStack().isSimilar(SelectorLayout.getSelectorItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))){
 			event.setCancelled(true);

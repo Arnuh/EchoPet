@@ -330,56 +330,6 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
-	public boolean canFly(){
-		return getConfigValue("canFly", false);
-	}
-	
-	@Override
-	public boolean canIgnoreFallDamage(){
-		return getConfigValue("ignoreFallDamage", true);
-	}
-	
-	@Override
-	public double getWalkSpeed(){
-		return getConfigValue("walkSpeed", 0.37D);
-	}
-	
-	@Override
-	public float getRideSpeed(){
-		return getConfigValue("rideSpeed", 0.2D).floatValue();
-	}
-	
-	@Override
-	public float getFlySpeed(){
-		return getConfigValue("flySpeed", 0.5D).floatValue();
-	}
-	
-	@Override
-	public double getRideJumpHeight(){
-		return getConfigValue("rideJump", 0.6D);
-	}
-	
-	@Override
-	public double getStartFollowDistance(){
-		return getConfigValue("startFollowDistance", 6);
-	}
-	
-	@Override
-	public double getStopFollowDistance(){
-		return getConfigValue("stopFollowDistance", 2);
-	}
-	
-	@Override
-	public double getTeleportDistance(){
-		return getConfigValue("teleportDistance", 10);
-	}
-	
-	@Override
-	public double getFollowSpeedModifier(){
-		return getConfigValue("followSpeedModifier", 1);
-	}
-	
-	@Override
 	public boolean isDataAllowed(PetData<?> data){
 		return getPetDataProperty(data, "allow", true);
 	}

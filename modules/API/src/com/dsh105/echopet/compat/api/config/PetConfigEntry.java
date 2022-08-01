@@ -18,7 +18,8 @@
 package com.dsh105.echopet.compat.api.config;
 
 
-import com.dsh105.echopet.compat.api.entity.PetType;
+import java.util.function.Function;
+import com.dsh105.echopet.compat.api.entity.IPetType;
 
 /**
  * A config entry for a specific pet type.
@@ -26,10 +27,16 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 public class PetConfigEntry<T>{
 	
 	public final String configKey;
-	public final T defaultValue;
+	public final Function<IPetType, T> defaultValue;
 	public final String[] comments;
 	
 	public PetConfigEntry(String configKey, T defaultValue, String... comments){
+		this.configKey = configKey;
+		this.defaultValue = petType->defaultValue;
+		this.comments = comments;
+	}
+	
+	public PetConfigEntry(String configKey, Function<IPetType, T> defaultValue, String... comments){
 		this.configKey = configKey;
 		this.defaultValue = defaultValue;
 		this.comments = comments;
@@ -39,15 +46,15 @@ public class PetConfigEntry<T>{
 		return this.configKey;
 	}
 	
-	public T getDefaultValue(){
-		return this.defaultValue;
+	public T getDefaultValue(IPetType petType){
+		return this.defaultValue.apply(petType);
 	}
 	
 	public String[] getComments(){
 		return this.comments;
 	}
 	
-	public T getConfigValue(PetType type){
-		return type.getConfigValue(getConfigKey(), getDefaultValue());
+	public T get(IPetType type){
+		return type.getConfigValue(getConfigKey(), getDefaultValue(type));
 	}
 }

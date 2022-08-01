@@ -133,24 +133,14 @@ public class ConfigOptions extends Options{
 		for(PetType petType : PetType.values){
 			String configOption = petType.getConfigKeyName();
 			String path = "pets." + configOption + ".";
+			
+			attemptConfigUpdates(petType);
+			
 			set(path + "enable", true);
 			set(path + "tagVisible", true);
 			set(path + "defaultName", petType.getDefaultName());
 			set(path + "interactMenu", true);
-			set(path + "startFollowDistance", 6);
-			set(path + "stopFollowDistance", 2);
-			set(path + "teleportDistance", 10);
-			set(path + "followSpeedModifier", 1);
 			
-			set(path + "walkSpeed", 0.37D);
-			set(path + "rideSpeed", 0.2D);
-			set(path + "flySpeed", 0.5D);
-			set(path + "jumpHeight", 0.6D);
-			
-			set(path + "ignoreFallDamage", true);
-			
-			boolean canFly = petType == PetType.ALLAY || petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
-			set(path + "canFly", canFly);
 			if(config.contains(path + "allow.riders")){
 				set(path + "riders", config.getBoolean(path + "allow.riders", true));
 				config.removeKey(path + "allow.riders");
@@ -169,19 +159,25 @@ public class ConfigOptions extends Options{
 			}
 			config.removeKey("pets." + configOption + ".allow");
 			config.removeKey("pets." + configOption + ".force");
+			List<Class<?>> classes = new ArrayList<>();
 			for(Class<?> c = petType.getPetClass(); c != null; c = c.getSuperclass()){
+				classes.add(c);
+			}
+			for(int i = classes.size() - 1; i >= 0; i--){
+				Class<?> c = classes.get(i);
 				try{
 					for(Class<?> in : c.getInterfaces()){
 						if(!IPet.class.isAssignableFrom(in)) continue;
 						for(Field f : in.getFields()){
 							Object obj = f.get(null);
 							if(!(obj instanceof PetConfigEntry<?> entry)) continue;
-							set(path + entry.getConfigKey(), entry.getDefaultValue(), entry.getComments());
+							set(path + entry.getConfigKey(), entry.getDefaultValue(petType), entry.getComments());
 						}
 					}
 				}catch(Exception ignored){
 				}
 			}
+			classes.clear();
 		}
 	}
 	
@@ -208,6 +204,41 @@ public class ConfigOptions extends Options{
 			if(!pd.getDefaultLore().isEmpty()){
 				set(petDataItem + "lore", pd.getDefaultLore());
 			}
+		}
+	}
+	
+	private void attemptConfigUpdates(PetType petType){
+		String configOption = petType.getConfigKeyName();
+		String path = "pets." + configOption + ".";
+		if(config.contains(path + "walkSpeed")){
+			set(path + "riding.ignoreFallDamage", config.getBoolean(path + "ignoreFallDamage", true));
+			
+			set(path + "riding.canFly", config.getBoolean(path + "canFly"));
+			set(path + "riding.walkSpeed", config.getDouble(path + "rideSpeed", 0.2D));
+			set(path + "riding.flySpeed", config.getDouble(path + "flySpeed", 0.5D));
+			set(path + "riding.jumpHeight", config.getDouble(path + "jumpHeight", 0.6D));
+			
+			set(path + "goal.walkSpeed", config.getDouble(path + "walkSpeed", 0.37D));
+			set(path + "goal.flySpeed", config.getDouble(path + "flySpeed"));
+			// set(path + "goal.jumpHeight", config.getDouble(path + "jumpHeight", 0.6D));
+			
+			config.removeKey(path + "ignoreFallDamage");
+			config.removeKey(path + "canFly");
+			config.removeKey(path + "walkSpeed");
+			config.removeKey(path + "rideSpeed");
+			config.removeKey(path + "flySpeed");
+			config.removeKey(path + "jumpHeight");
+		}
+		if(config.contains(path + "startFollowDistance")){
+			set(path + "goal.follow.startDistance", config.getInt(path + "startFollowDistance"));
+			set(path + "goal.follow.stopDistance", config.getInt(path + "stopFollowDistance"));
+			set(path + "goal.follow.teleportDistance", config.getInt(path + "teleportDistance"));
+			set(path + "goal.follow.speedModifier", config.getInt(path + "followSpeedModifier"));
+			
+			config.removeKey(path + "startFollowDistance");
+			config.removeKey(path + "stopFollowDistance");
+			config.removeKey(path + "teleportDistance");
+			config.removeKey(path + "followSpeedModifier");
 		}
 	}
 }

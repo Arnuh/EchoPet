@@ -23,7 +23,6 @@ import org.bukkit.entity.LivingEntity;
 
 public interface ILivingPet extends IPet{
 	
-	
 	@Override
 	IEntityLivingPet getEntityPet();
 	

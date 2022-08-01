@@ -59,8 +59,9 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	protected IPet pet;
 	private final INMSEntityPetHandle petHandle;
 	public PetGoalSelector petGoalSelector;
-	protected double jumpHeight;
-	protected float rideSpeed, flySpeed;
+	protected boolean canFly;
+	protected float rideSpeed, rideFlySpeed;
+	protected double rideJumpHeight;
 	public boolean shouldVanish;
 	
 	@Deprecated
@@ -81,12 +82,17 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	protected void initiateEntityPet(){
-		this.rideSpeed = getPet().getPetType().getRideSpeed();
-		this.flySpeed = getPet().getPetType().getFlySpeed();
-		this.jumpHeight = getPet().getPetType().getRideJumpHeight();
+		IPetType petType = getPet().getPetType();
+		this.rideSpeed = IPet.RIDING_WALK_SPEED.get(petType).floatValue();
+		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.get(petType).floatValue();
+		this.rideJumpHeight = IPet.RIDING_JUMP_HEIGHT.get(petType);
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(getPet().getPetType().getWalkSpeed());
+			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.get(petType));
+		}
+		attributeInstance = getAttribute(Attributes.FLYING_SPEED);
+		if(attributeInstance != null){
+			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.get(petType));
 		}
 		this.setPathfinding();
 		this.maxUpStep = getMaxUpStep();
@@ -270,19 +276,18 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
-		IPetType pt = this.getPet().getPetType();
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !passengers.isEmpty()){
-			if(pt.canFly()){
+			if(canFly){
 				if(!onGround){
-					speed = flySpeed;
+					speed = rideFlySpeed;
 				}
 				try{
 					if(player.isFlying()){
 						player.setFlying(false);
 					}
 					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
 							setDeltaMovement(getDeltaMovement().x, 0.5F, getDeltaMovement().z);
@@ -294,7 +299,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 			}else if(this.onGround){
 				try{
 					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
 						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
 						if(!rideEvent.isCancelled()){
 							setDeltaMovement(getDeltaMovement().x, rideEvent.getJumpHeight(), getDeltaMovement().z);

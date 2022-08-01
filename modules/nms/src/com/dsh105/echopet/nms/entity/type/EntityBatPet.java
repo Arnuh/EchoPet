@@ -19,10 +19,11 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.core.BlockPos;
@@ -57,7 +58,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	public EntityBatPet(Level world, IPet pet){
 		super(EntityType.BAT, world, pet);
 		double sizeModifier = getSizeCategory().getModifier();
-		flyRange = (int) Math.max(1, Math.ceil(pet.getPetType().getStartFollowDistance() * sizeModifier));
+		flyRange = (int) Math.max(1, Math.ceil(IBatPet.GOAL_WANDER_FLY_RANGE.get(PetType.BAT) * sizeModifier));
 	}
 	
 	@Override

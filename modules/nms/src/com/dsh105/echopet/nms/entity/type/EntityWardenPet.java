@@ -196,7 +196,7 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
-		return usesBrain = IWardenPet.BRAIN_ENABLED.getConfigValue(PetType.WARDEN);
+		return usesBrain = IWardenPet.BRAIN_ENABLED.get(PetType.WARDEN);
 	}
 	
 	@Override

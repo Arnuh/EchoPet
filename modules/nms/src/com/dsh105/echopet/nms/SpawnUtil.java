@@ -109,6 +109,7 @@ public class SpawnUtil implements ISpawnUtil{
 			return null;
 		}
 		return (T) getEntityClass(petType.getMinecraftName()).map(this::createAttributeSupplier)
+			.filter(supplier->supplier.hasAttribute(attribute))
 			.map(supplier->supplier.getBaseValue(attribute))
 			.orElse(null);
 	}

@@ -148,7 +148,7 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
-		return usesBrain = IFrogPet.BRAIN_ENABLED.getConfigValue(PetType.FROG);
+		return usesBrain = IFrogPet.BRAIN_ENABLED.get(PetType.FROG);
 	}
 	
 	@Override
