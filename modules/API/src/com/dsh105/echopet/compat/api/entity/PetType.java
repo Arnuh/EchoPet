@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
@@ -32,7 +33,7 @@ import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
@@ -162,9 +163,13 @@ public enum PetType implements IPetType{
 	@SuppressWarnings("unchecked")
 	PetType(String classIdentifier, String defaultName, String minecraftEntityName, Version version, Material uiMaterial, PetDataCategory[] categories, PetData<?>... allowedData){
 		try{
-			this.entityClass = (Class<? extends IEntityPet>) ReflectionUtil.getVersionedClass("entity.type.Entity" + classIdentifier + "Pet");
-			this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
+			this.entityClass = ReflectionUtil.getVersionedClass(IEntityPet.class, "entity.type.Entity" + classIdentifier + "Pet");
 		}catch(ClassNotFoundException | NoClassDefFoundError ignored){
+		}
+		try{
+			this.petClass = ReflectionUtil.getClass(IPet.class, "com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
+		}catch(Exception ex){
+			EchoPet.LOG.log(Level.SEVERE, "", ex);
 		}
 		if(name().equals("PIGZOMBIE")){// hacky fix for now
 			if(new Version("1.16-R1").isCompatible(new Version())){
@@ -193,18 +198,16 @@ public enum PetType implements IPetType{
 		//
 		this.allowedData.add(PetData.HAT);
 		this.allowedData.add(PetData.RIDE);
-		Class<?> clazz = ReflectionUtil.getClass("com.dsh105.echopet.compat.api.entity.type.pet.I" + classIdentifier + "Pet");
-		if(clazz != null){
-			if(IAgeablePet.class.isAssignableFrom(clazz)){
-				this.allowedData.add(PetData.BABY);
-			}
-			if(IEntityHorseChestedAbstractPet.class.isAssignableFrom(clazz)){
-				this.allowedData.add(PetData.CHESTED);
-			}
-			if(ITameablePet.class.isAssignableFrom(clazz)){
-				this.allowedData.add(PetData.SIT);
-				this.allowedData.add(PetData.TAMED);
-			}
+		
+		if(IAgeablePet.class.isAssignableFrom(petClass)){
+			this.allowedData.add(PetData.BABY);
+		}
+		if(IHorseChestedAbstractPet.class.isAssignableFrom(petClass)){
+			this.allowedData.add(PetData.CHESTED);
+		}
+		if(ITameablePet.class.isAssignableFrom(petClass)){
+			this.allowedData.add(PetData.SIT);
+			this.allowedData.add(PetData.TAMED);
 		}
 		if(allowedData != null){
 			this.allowedData.addAll(ImmutableList.copyOf(allowedData));

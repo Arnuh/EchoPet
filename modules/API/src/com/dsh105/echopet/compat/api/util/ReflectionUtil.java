@@ -17,16 +17,11 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.bukkit.entity.Entity;
 
 @SuppressWarnings("unchecked")
 public class ReflectionUtil{
@@ -54,8 +49,10 @@ public class ReflectionUtil{
 		String version = Bukkit.getVersion();
 		Matcher matcher = MINECRAFT_VERSION_MATCHER.matcher(version);
 		
-		if(matcher.matches()){
-			return MINECRAFT_VERSION = matcher.group(1);
+		if(matcher.find()){
+			version = matcher.group();
+			version = version.substring(version.indexOf(": ") + 2, version.lastIndexOf(")"));
+			return MINECRAFT_VERSION = version;
 		}
 		
 		version = Bukkit.getBukkitVersion();
@@ -73,11 +70,10 @@ public class ReflectionUtil{
 		}
 		Server bukkitServer = Bukkit.getServer();
 		Class<?> craftServerClass = bukkitServer.getClass();
-		String packageName = craftServerClass.getCanonicalName();// org.bukkit.craftbukkit.v1_17_R1
+		String packageName = craftServerClass.getCanonicalName();// org.bukkit.craftbukkit.v1_19_R1.CraftServer
 		Matcher matcher = PACKAGE_VERSION_MATCHER.matcher(packageName);
-		
-		if(matcher.matches()){
-			return CRAFTBUKKIT_PACKAGE_VERSION = matcher.group(1);
+		if(matcher.find()){
+			return CRAFTBUKKIT_PACKAGE_VERSION = matcher.group(); // 1_19_R1
 		}else{
 			return null;
 		}
@@ -90,14 +86,12 @@ public class ReflectionUtil{
 	/**
 	 * com.dsh105.echopet.compat.nms.v1_19_1.classPath
 	 */
-	public static Class<?> getVersionedClass(String classPath) throws ClassNotFoundException, NoClassDefFoundError{
-		return Class.forName(COMPAT_NMS_PATH + "." + classPath);
+	public static <T> Class<T> getVersionedClass(Class<T> clazz, String classPath) throws ClassNotFoundException, NoClassDefFoundError{
+		return (Class<T>) Class.forName(COMPAT_NMS_PATH + "." + classPath);
 	}
 	
 	@Deprecated
 	public static int MC_VERSION_NUMERIC = getMinecraftVersion().length() == 0 ? 0 : Integer.valueOf(getMinecraftVersion().replaceAll("[^0-9]", ""));
-	@Deprecated
-	public static int BUKKIT_VERSION_NUMERIC = getBukkitVersion().length() == 0 ? 0 : Integer.valueOf(getBukkitVersion().replaceAll("[^0-9]", ""));
 	
 	@Deprecated
 	public static boolean isSpigot1dot8(){
@@ -108,31 +102,6 @@ public class ReflectionUtil{
 		}catch(ClassNotFoundException e){
 			return false;
 		}
-	}
-	
-	public static Object getEntityHandle(Entity entity){
-		return invokeMethod(getMethod(getCBCClass("entity.CraftEntity"), "getHandle"), entity);
-	}
-	
-	// Thanks ProtocolLib <3
-	@Deprecated
-	public static String getBukkitVersion(){
-		try{
-			Pattern versionPattern = Pattern.compile(".*\\(.*MC.\\s*([a-zA-z0-9\\-\\.]+)\\s*\\)");
-			Matcher version = versionPattern.matcher(Bukkit.getServer().getVersion());
-			if(version.matches() && version.group(1) != null){
-				return version.group(1);
-			}else{
-				return "";
-			}
-		}catch(NullPointerException ex){
-			return "";
-		}
-	}
-	
-	@Deprecated
-	public static boolean isServerMCPC(){
-		return Bukkit.getVersion().contains("MCPC-Plus");
 	}
 	
 	@Deprecated
@@ -149,6 +118,10 @@ public class ReflectionUtil{
 	 * Class stuff
 	 */
 	
+	public static <T> Class<T> getClass(Class<T> clazz, String name) throws ClassNotFoundException{
+		return (Class<T>) Class.forName(name);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Deprecated
 	public static Class getClass(String name){
@@ -156,96 +129,6 @@ public class ReflectionUtil{
 			return Class.forName(name);
 		}catch(ClassNotFoundException e){
 			EchoPet.LOG.warning("Could not find class: " + name + "!");
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@Deprecated
-	public static Class<?> getNMSClass(String className){
-		return CommonReflection.getMinecraftClass(className);
-	}
-	
-	@Deprecated
-	public static Class<?> getCBCClass(String className){
-		return CommonReflection.getCraftBukkitClass(className);
-	}
-	
-	/**
-	 * Field stuff
-	 */
-	@Deprecated
-	public static Field getField(Class<?> clazz, String fieldName){
-		try{
-			Field field = clazz.getDeclaredField(fieldName);
-			
-			if(!field.isAccessible()){
-				field.setAccessible(true);
-			}
-			
-			return field;
-		}catch(NoSuchFieldException e){
-			EchoPet.LOG.warning("No such field: " + fieldName + "!");
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@Deprecated
-	public static <T> T getField(Class<?> clazz, String fieldName, Object instance){
-		try{
-			return (T) getField(clazz, fieldName).get(instance);
-		}catch(IllegalAccessException e){
-			EchoPet.LOG.warning("Failed to access field: " + fieldName + "!");
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@Deprecated
-	public static void setField(Class<?> clazz, String fieldName, Object instance, Object value){
-		try{
-			getField(clazz, fieldName).set(instance, value);
-		}catch(IllegalAccessException e){
-			EchoPet.LOG.warning("Could not set new field value for: " + fieldName);
-			e.printStackTrace();
-		}
-	}
-	
-	@Deprecated
-	public static <T> T getField(Field field, Object instance){
-		try{
-			return (T) field.get(instance);
-		}catch(IllegalAccessException e){
-			EchoPet.LOG.warning("Failed to retrieve field: " + field.getName());
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
-	 * Method stuff
-	 */
-	@Deprecated
-	public static Method getMethod(Class<?> clazz, String methodName, Class<?>... params){
-		try{
-			return clazz.getDeclaredMethod(methodName, params);
-		}catch(NoSuchMethodException e){
-			EchoPet.LOG.warning("No such method: " + methodName + "!");
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@Deprecated
-	public static <T> T invokeMethod(Method method, Object instance, Object... args){
-		try{
-			return (T) method.invoke(instance, args);
-		}catch(IllegalAccessException e){
-			EchoPet.LOG.warning("Failed to access method: " + method.getName() + "!");
-			return null;
-		}catch(InvocationTargetException e){
-			EchoPet.LOG.warning("Failed to invoke method: " + method.getName() + "!");
 			e.printStackTrace();
 			return null;
 		}

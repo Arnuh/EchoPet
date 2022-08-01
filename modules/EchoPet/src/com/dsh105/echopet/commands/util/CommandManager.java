@@ -22,8 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -33,26 +31,40 @@ import org.bukkit.plugin.SimplePluginManager;
 
 public class CommandManager{
 	
-	// This is a very ugly patch for PerWorldPlugins.
-	protected static final FieldAccessor<CommandMap> SERVER_COMMAND_MAP = new SafeField<CommandMap>(Bukkit.getPluginManager().getClass() /*<- ugly because of PWP*/, "commandMap");
-	protected static final FieldAccessor<Map<String, Command>> KNOWN_COMMANDS = new SafeField<Map<String, Command>>(SimpleCommandMap.class, "knownCommands");
 	private final Plugin plugin;
-	private CommandMap fallback;
+	private CommandMap commandMap;
+	private Map<String, Command> knownCommands;
 	
 	public CommandManager(Plugin plugin){
 		this.plugin = plugin;
 	}
 	
-	public void register(DynamicPluginCommand command){
-		getCommandMap().register(this.plugin.getName(), command);
+	@SuppressWarnings("unchecked")
+	public void initialize() throws NoSuchFieldException, IllegalAccessException{
+		if(!(Bukkit.getPluginManager() instanceof SimplePluginManager)){
+			this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");
+		}
+		var field = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
+		field.setAccessible(true);
+		commandMap = (CommandMap) field.get(Bukkit.getPluginManager());
+		if(commandMap == null){
+			plugin.getLogger().warning("Failed to get the PluginManager CommandMap! Let's give it a last shot...");
+			commandMap = new SimpleCommandMap(EchoPet.getPlugin().getServer());
+			Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(commandMap), this.plugin);
+		}
+		field = SimpleCommandMap.class.getDeclaredField("knownCommands");
+		field.setAccessible(true);
+		knownCommands = (Map<String, Command>) field.get(commandMap);
 	}
 	
-	public boolean unregister(){
-		CommandMap commandMap = getCommandMap();
-		List<String> toRemove = new ArrayList<String>();
-		Map<String, Command> knownCommands = KNOWN_COMMANDS.get(commandMap);
+	public void register(DynamicPluginCommand command){
+		commandMap.register(this.plugin.getName(), command);
+	}
+	
+	public void unregister(){
+		List<String> toRemove = new ArrayList<>();
 		if(knownCommands == null){
-			return false;
+			return;
 		}
 		for(Iterator<Command> i = knownCommands.values().iterator(); i.hasNext(); ){
 			Command cmd = i.next();
@@ -69,33 +81,5 @@ public class CommandManager{
 		for(String string : toRemove){
 			knownCommands.remove(string);
 		}
-		return true;
-	}
-	
-	public CommandMap getCommandMap(){
-		if(!(Bukkit.getPluginManager() instanceof SimplePluginManager)){
-			this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");
-		}
-		
-		CommandMap map = null;
-		
-		try{
-			map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
-			
-			if(map == null){
-				if(fallback != null){
-					return fallback;
-				}else{
-					fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
-					Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
-				}
-			}
-		}catch(Exception pie){
-			this.plugin.getLogger().warning("Failed to dynamically register the commands! Let's give it a last shot...");
-			// Hmmm.... Pie...
-			fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
-			Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
-		}
-		return map;
 	}
 }

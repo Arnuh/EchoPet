@@ -38,8 +38,8 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.IStorageManager;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
+import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -68,7 +68,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
 	private IStorageManager dataManager;
 	private IPetRegistry petRegistry;
-	
+	private ICraftBukkitUtil craftBukkitUtil;
 	private CommandManager COMMAND_MANAGER;
 	private YAMLConfigManager configManager;
 	private YAMLConfig petConfig, petCategoryConfig;
@@ -94,22 +94,20 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		COMMAND_MANAGER = new CommandManager(this);
 		// Make sure that the plugin is running under the correct version to prevent errors
 		
-		Class<?> spawnUtil, petRegistry;
+		getLogger().info("Found MC Version %s and CB Version %s".formatted(ReflectionUtil.getMinecraftVersion(), ReflectionUtil.getCraftBukkitPackageVersion()));
 		try{
-			spawnUtil = ReflectionUtil.getVersionedClass("SpawnUtil");
-			petRegistry = ReflectionUtil.getVersionedClass("PetRegistry");
-		}catch(ClassNotFoundException e){
-			getLogger().info("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
-			getLogger().info("Initialisation failed. Please update the plugin.");
+			SPAWN_UTIL = ReflectionUtil.getVersionedClass(ISpawnUtil.class, "SpawnUtil").getConstructor().newInstance();
+			petRegistry = ReflectionUtil.getVersionedClass(IPetRegistry.class, "PetRegistry").getConstructor().newInstance();
+			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();
+			COMMAND_MANAGER.initialize();
+		}catch(Exception ex){
+			getLogger().warning("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
+			getLogger().warning("Initialisation failed. Please update the plugin.");
 			
 			DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "", new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW + "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
 			COMMAND_MANAGER.register(cmd);
 			return;
 		}
-		
-		this.petRegistry = new SafeConstructor<IPetRegistry>(petRegistry).newInstance();
-		
-		SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(spawnUtil).newInstance();
 		
 		this.loadConfiguration();
 		
@@ -141,8 +139,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		Robert.enablePortable(this);
 		// Register listeners
 		manager.registerEvents(new MenuListener(), this);
-		manager.registerEvents(new PetEntityListener(), this);
-		manager.registerEvents(new PetOwnerListener(), this);
+		manager.registerEvents(new PetEntityListener(this), this);
+		manager.registerEvents(new PetOwnerListener(this), this);
 		
 		this.worldGuardProvider = new WorldGuardProvider(this);
 		new PlaceHolderAPIProvider(this);
@@ -285,6 +283,11 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public IPetRegistry getPetRegistry(){
 		return this.petRegistry;
+	}
+	
+	@Override
+	public ICraftBukkitUtil getCraftBukkitUtil(){
+		return craftBukkitUtil;
 	}
 	
 	@Override

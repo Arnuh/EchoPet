@@ -15,13 +15,19 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.reflection;
+package com.dsh105.echopet.nms;
 
-public interface MethodAccessor<T>{
+import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity;
+import org.bukkit.entity.Entity;
+
+public class CraftBukkitUtil implements ICraftBukkitUtil{
 	
-	T invoke(Object instance, Object... args);
-	
-	Class<?> getReturnType();
-	
-	Class<?>[] getArguments();
+	@Override
+	public Object getEntityHandle(Entity entity){
+		if(!(entity instanceof CraftEntity craftEntity)){
+			return null;
+		}
+		return craftEntity.getHandle();
+	}
 }

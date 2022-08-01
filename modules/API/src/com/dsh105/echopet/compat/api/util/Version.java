@@ -17,22 +17,20 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
-
 /**
  * Represents a server version that can be utilised as a comparison
  */
 public class Version{
 	
-	private String version;
-	private int[] numericVersion;
+	private final String version;
+	private final int[] numericVersion;
 	private boolean snapshot;
 	
 	/**
 	 * Constructs a new Version from the current server version running
 	 */
 	public Version(){
-		this(CommonReflection.getVersionTag());
+		this(ReflectionUtil.getCraftBukkitPackageVersion());
 	}
 	
 	/**

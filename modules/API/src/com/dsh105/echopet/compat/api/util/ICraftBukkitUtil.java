@@ -15,24 +15,11 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.reflection.utility;
+package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.echopet.compat.api.reflection.MethodAccessor;
-import com.dsh105.echopet.compat.api.reflection.SafeMethod;
-import com.google.common.base.Preconditions;
 import org.bukkit.entity.Entity;
 
-public class CommonMethods{
+public interface ICraftBukkitUtil{
 	
-	private CommonMethods(){
-		super();
-	}
-	
-	public static Object getVanillaObject(Entity entity){
-		Preconditions.checkNotNull(entity);
-		
-		MethodAccessor<Object> getHandle = new SafeMethod<Object>(CommonReflection.getCraftEntityClass(), "getHandle");
-		
-		return getHandle.invoke(entity);
-	}
+	Object getEntityHandle(Entity entity);
 }

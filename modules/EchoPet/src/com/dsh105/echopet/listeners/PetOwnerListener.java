@@ -24,12 +24,12 @@ import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.event.PetInteractEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
 import com.dsh105.echopet.compat.api.util.GeometryUtil;
 import com.dsh105.echopet.compat.api.util.ItemUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
@@ -63,6 +63,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PetOwnerListener implements Listener{
+	
+	private final IEchoPetPlugin plugin;
+	
+	public PetOwnerListener(IEchoPetPlugin plugin){
+		this.plugin = plugin;
+	}
+	
+	private Object getHandle(Entity entity){
+		return plugin.getCraftBukkitUtil().getEntityHandle(entity);
+	}
 	
 	@EventHandler
 	public void onPrepareItemCraft(PrepareItemCraftEvent event){
@@ -116,7 +126,7 @@ public class PetOwnerListener implements Listener{
 			return;
 		}
 		if(!event.getHand().equals(EquipmentSlot.HAND)) return;
-		if(ReflectionUtil.getEntityHandle(entityClicked) instanceof IEntityPet entityPet){
+		if(getHandle(entityClicked) instanceof IEntityPet entityPet){
 			IPet pet = entityPet.getPet();
 			event.setCancelled(true);
 			PetInteractEvent iEvent = new PetInteractEvent(pet, player, PetInteractEvent.Action.RIGHT_CLICK, false);

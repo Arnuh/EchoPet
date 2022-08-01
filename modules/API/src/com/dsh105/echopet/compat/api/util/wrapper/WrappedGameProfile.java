@@ -17,15 +17,15 @@
 
 package com.dsh105.echopet.compat.api.util.wrapper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
-import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 @Deprecated
 public class WrappedGameProfile extends AbstractWrapper{
 	
 	private WrappedGameProfile(Object ident, String name){
+		// Might remake, need to determine if useless first.
+		throw new UnsupportedOperationException();
+		/*
 		Class<?> gameProfileClass = null;
 		try{
 			gameProfileClass = Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
@@ -45,7 +45,7 @@ public class WrappedGameProfile extends AbstractWrapper{
 			}
 		}catch(InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public WrappedGameProfile(UUID uuid, String name){
@@ -69,6 +69,7 @@ public class WrappedGameProfile extends AbstractWrapper{
 	}
 	
 	private <T> T getId(){
-		return ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.GAMEPROFILE_FUNC_ID.getName()), getHandle());
+		throw new UnsupportedOperationException();
+		// return ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.GAMEPROFILE_FUNC_ID.getName()), getHandle());
 	}
 }

@@ -21,6 +21,7 @@ import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
+import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
 import org.bukkit.plugin.Plugin;
@@ -36,6 +37,8 @@ public interface IEchoPetPlugin extends Plugin{
 	String getAdminCommandString();
 	
 	IPetRegistry getPetRegistry();
+	
+	ICraftBukkitUtil getCraftBukkitUtil();
 	
 	IPetManager getPetManager();
 	
