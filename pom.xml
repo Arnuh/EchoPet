@@ -32,6 +32,7 @@
 		<module>./modules/v1_18_2</module>
 		<module>./modules/v1_19</module>
 		<module>./modules/v1_19_1</module>
+		<module>./modules/v1_19_2</module>
 	</modules>
 
 	<properties>

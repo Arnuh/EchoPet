@@ -96,10 +96,10 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		getLogger().info("Found MC Version %s and CB Version %s".formatted(ReflectionUtil.getMinecraftVersion(), ReflectionUtil.getCraftBukkitPackageVersion()));
 		try{
+			COMMAND_MANAGER.initialize();
 			SPAWN_UTIL = ReflectionUtil.getVersionedClass(ISpawnUtil.class, "SpawnUtil").getConstructor().newInstance();
 			petRegistry = ReflectionUtil.getVersionedClass(IPetRegistry.class, "PetRegistry").getConstructor().newInstance();
 			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();
-			COMMAND_MANAGER.initialize();
 		}catch(Exception ex){
 			getLogger().warning("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
 			getLogger().warning("Initialisation failed. Please update the plugin.");
