@@ -51,14 +51,6 @@
 		<maven>${maven.version}</maven>
 	</prerequisites>
 
-	<!-- Temp until maven-shade-plugin has a non snapshot version for jdk 16 -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<url>https://repository.apache.org/snapshots/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<distributionManagement>
 		<snapshotRepository>
 			<id>arnah-snapshots</id>
@@ -81,7 +73,7 @@
 		</repository>
 		<repository>
 			<id>sk89q-repo</id>
-			<url>https://maven.sk89q.com/repo/</url>
+			<url>https://maven.enginehub.org/repo/</url>
 		</repository>
 	</repositories>
 
@@ -159,7 +151,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0-SNAPSHOT</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
