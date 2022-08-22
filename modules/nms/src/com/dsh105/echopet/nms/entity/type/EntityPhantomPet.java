@@ -144,11 +144,11 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		PhantomAttackStrategyGoal(){
 			setFlags(EnumSet.of(PetGoal.Flag.MOVE));
-			this.sweepTickDelayStart = IPhantomPet.SWEEP_NEXT_START_DELAY.get(PetType.PHANTOM);
-			this.sweepTickNextMin = IPhantomPet.SWEEP_NEXT_MIN_DELAY.get(PetType.PHANTOM);
-			this.sweepTickNextRand = IPhantomPet.SWEEP_NEXT_RAND_DELAY.get(PetType.PHANTOM);
-			this.minHeightOffset = IPhantomPet.SWEEP_MIN_HEIGHT_OFFSET.get(PetType.PHANTOM);
-			this.randHeightOffset = IPhantomPet.SWEEP_RAND_HEIGHT_OFFSET.get(PetType.PHANTOM);
+			this.sweepTickDelayStart = IPhantomPet.SWEEP_NEXT_START_DELAY.getNumber(PetType.PHANTOM).intValue();
+			this.sweepTickNextMin = IPhantomPet.SWEEP_NEXT_MIN_DELAY.getNumber(PetType.PHANTOM).intValue();
+			this.sweepTickNextRand = IPhantomPet.SWEEP_NEXT_RAND_DELAY.getNumber(PetType.PHANTOM).intValue();
+			this.minHeightOffset = IPhantomPet.SWEEP_MIN_HEIGHT_OFFSET.getNumber(PetType.PHANTOM).intValue();
+			this.randHeightOffset = IPhantomPet.SWEEP_RAND_HEIGHT_OFFSET.getNumber(PetType.PHANTOM).intValue();
 		}
 		
 		@Override
@@ -212,12 +212,12 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		PhantomCircleAroundAnchorGoal(){
 			super();
-			this.minDistance = IPhantomPet.CIRCLE_MIN_DISTANCE.get(PetType.PHANTOM).floatValue();
-			this.maxRandDistance = IPhantomPet.CIRCLE_MAX_RAND_DISTANCE.get(PetType.PHANTOM).floatValue();
-			this.maxDistance = IPhantomPet.CIRCLE_MAX_DISTANCE.get(PetType.PHANTOM).floatValue();
-			this.maxDistanceReset = IPhantomPet.CIRCLE_MAX_DISTANCE_RESET.get(PetType.PHANTOM).floatValue();
-			this.minHeight = IPhantomPet.CIRCLE_MIN_HEIGHT.get(PetType.PHANTOM).floatValue();
-			this.maxRandHeight = IPhantomPet.CIRCLE_MAX_RAND_HEIGHT.get(PetType.PHANTOM).floatValue();
+			this.minDistance = IPhantomPet.CIRCLE_MIN_DISTANCE.getNumber(PetType.PHANTOM).floatValue();
+			this.maxRandDistance = IPhantomPet.CIRCLE_MAX_RAND_DISTANCE.getNumber(PetType.PHANTOM).floatValue();
+			this.maxDistance = IPhantomPet.CIRCLE_MAX_DISTANCE.getNumber(PetType.PHANTOM).floatValue();
+			this.maxDistanceReset = IPhantomPet.CIRCLE_MAX_DISTANCE_RESET.getNumber(PetType.PHANTOM).floatValue();
+			this.minHeight = IPhantomPet.CIRCLE_MIN_HEIGHT.getNumber(PetType.PHANTOM).floatValue();
+			this.maxRandHeight = IPhantomPet.CIRCLE_MAX_RAND_HEIGHT.getNumber(PetType.PHANTOM).floatValue();
 		}
 		
 		@Override

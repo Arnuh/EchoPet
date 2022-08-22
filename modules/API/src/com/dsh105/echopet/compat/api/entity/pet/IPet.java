@@ -33,42 +33,42 @@ import org.bukkit.inventory.InventoryView;
 
 public interface IPet{
 	
-	PetConfigEntry<Boolean> RIDING_IGNORE_FALL_DAMAGE = new PetConfigEntry<>("riding.ignoreFallDamage", true);
+	PetConfigEntry<Boolean> RIDING_IGNORE_FALL_DAMAGE = new PetConfigEntry<>(Boolean.class, "riding.ignoreFallDamage", true);
 	
-	PetConfigEntry<Double> RIDING_WALK_SPEED = new PetConfigEntry<>("riding.walkSpeed", petType->{
-		return 0.37D;
+	PetConfigEntry<Float> RIDING_WALK_SPEED = new PetConfigEntry<Float>(Float.class, "riding.walkSpeed", petType->{
+		return 0.37f;
 		/*Double speed = EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, "generic.movement_speed");
 		if(speed == null){
 			return 0.37D;
 		}
 		return speed;*/
 	});
-	PetConfigEntry<Double> RIDING_FLY_SPEED = new PetConfigEntry<>("riding.flySpeed", petType->{
-		return 0.5D;
+	PetConfigEntry<Float> RIDING_FLY_SPEED = new PetConfigEntry<Float>(Float.class, "riding.flySpeed", petType->{
+		return 0.5f;
 		/*Double speed = EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, "generic.flying_speed");
 		if(speed == null){
 			return 0.5D;
 		}
 		return speed;*/
 	});
-	PetConfigEntry<Double> RIDING_JUMP_HEIGHT = new PetConfigEntry<>("riding.jumpHeight", petType->{
+	PetConfigEntry<Double> RIDING_JUMP_HEIGHT = new PetConfigEntry<Double>(Double.class, "riding.jumpHeight", petType->{
 		return 0.6d;
 	});
-	PetConfigEntry<Boolean> RIDING_FLY = new PetConfigEntry<>("riding.canFly", petType->{
+	PetConfigEntry<Boolean> RIDING_FLY = new PetConfigEntry<Boolean>(Boolean.class, "riding.canFly", petType->{
 		// A better way has to exist
 		return petType == PetType.ALLAY || petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
 	});
 	// PetConfigEntry<Boolean> RIDING_HOVER = new PetConfigEntry<>("riding.hover", false);
 	
 	// Goals might get moved to a higher interface. Some pathing will require "PathfinderMob"
-	PetConfigEntry<Double> GOAL_WALK_SPEED = new PetConfigEntry<>("goal.walkSpeed", petType->{
+	PetConfigEntry<Double> GOAL_WALK_SPEED = new PetConfigEntry<Double>(Double.class, "goal.walkSpeed", petType->{
 		Double speed = EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, "generic.movement_speed");
 		if(speed == null){
 			return 0.37D;
 		}
 		return speed;
 	});
-	PetConfigEntry<Double> GOAL_FLY_SPEED = new PetConfigEntry<>("goal.flySpeed", petType->{
+	PetConfigEntry<Double> GOAL_FLY_SPEED = new PetConfigEntry<Double>(Double.class, "goal.flySpeed", petType->{
 		Double speed = EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, "generic.flying_speed");
 		if(speed == null){
 			return 0.5D;
@@ -77,10 +77,10 @@ public interface IPet{
 	});
 	/*PetConfigEntry<Double> GOAL_JUMP_HEIGHT = new PetConfigEntry<>("goal.jumpHeight", petType->{
 		return 0.6d;
-	});*/ PetConfigEntry<Integer> GOAL_FOLLOW_START_DISTANCE = new PetConfigEntry<>("goal.follow.startDistance", 6);
-	PetConfigEntry<Integer> GOAL_FOLLOW_STOP_DISTANCE = new PetConfigEntry<>("goal.follow.stopDistance", 2);
-	PetConfigEntry<Integer> GOAL_FOLLOW_TELEPORT_DISTANCE = new PetConfigEntry<>("goal.follow.teleportDistance", 10);
-	PetConfigEntry<Double> GOAL_FOLLOW_SPEED_MODIFIER = new PetConfigEntry<>("goal.follow.speedModifier", petType->{
+	});*/ PetConfigEntry<Integer> GOAL_FOLLOW_START_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.startDistance", 6);
+	PetConfigEntry<Integer> GOAL_FOLLOW_STOP_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.stopDistance", 2);
+	PetConfigEntry<Integer> GOAL_FOLLOW_TELEPORT_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.teleportDistance", 10);
+	PetConfigEntry<Double> GOAL_FOLLOW_SPEED_MODIFIER = new PetConfigEntry<Double>(Double.class, "goal.follow.speedModifier", petType->{
 		return 1.5d;
 	});
 	

@@ -83,16 +83,16 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	protected void initiateEntityPet(){
 		IPetType petType = getPet().getPetType();
-		this.rideSpeed = IPet.RIDING_WALK_SPEED.get(petType).floatValue();
-		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.get(petType).floatValue();
-		this.rideJumpHeight = IPet.RIDING_JUMP_HEIGHT.get(petType);
+		this.rideSpeed = IPet.RIDING_WALK_SPEED.getNumber(petType).floatValue();
+		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.getNumber(petType).floatValue();
+		this.rideJumpHeight = IPet.RIDING_JUMP_HEIGHT.getNumber(petType).doubleValue();
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.get(petType));
+			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.getNumber(petType).doubleValue());
 		}
 		attributeInstance = getAttribute(Attributes.FLYING_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.get(petType));
+			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
 		}
 		this.setPathfinding();
 		this.maxUpStep = getMaxUpStep();

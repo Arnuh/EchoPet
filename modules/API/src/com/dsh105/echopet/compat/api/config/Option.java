@@ -25,10 +25,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class Option<T>{
 	
-	private FileConfiguration config;
-	private String path;
+	private final FileConfiguration config;
+	private final String path;
 	private T defaultValue;
-	private String[] comments;
+	private final String[] comments;
 	
 	public Option(FileConfiguration configuration, String path, String... comments){
 		this.config = configuration;
@@ -38,7 +38,7 @@ public class Option<T>{
 		for(String comment : comments){
 			Collections.addAll(commentsList, WordUtils.wrap(comment, 30, "\n", false).split("\n"));
 		}
-		this.comments = commentsList.toArray(new String[commentsList.size()]);
+		this.comments = commentsList.toArray(new String[0]);
 	}
 	
 	public Option(FileConfiguration configuration, String path, T defaultValue, String... comments){

@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 
 public interface IWardenPet extends ILivingPet{
 	
-	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>("brain.enabled", false);
+	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>(Boolean.class, "brain.enabled", false);
 	
 	enum AngerLevel{
 		Calm(0),

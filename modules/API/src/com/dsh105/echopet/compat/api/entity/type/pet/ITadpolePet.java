@@ -22,5 +22,5 @@ import com.dsh105.echopet.compat.api.entity.pet.IWaterAnimalPet;
 
 public interface ITadpolePet extends IWaterAnimalPet{
 	
-	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>("brain.enabled", false);
+	PetConfigEntry<Boolean> BRAIN_ENABLED = new PetConfigEntry<>(Boolean.class, "brain.enabled", false);
 }

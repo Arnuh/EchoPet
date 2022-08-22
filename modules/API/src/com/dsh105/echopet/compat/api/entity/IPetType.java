@@ -94,6 +94,8 @@ public interface IPetType{
 	
 	YAMLConfig getConfig();
 	
+	Object getRawConfigValue(String variable, Object defaultValue);
+	
 	<T> T getConfigValue(String variable, T defaultValue);
 	
 	ConfigurationSection getPetDataSection(PetData<?> data);

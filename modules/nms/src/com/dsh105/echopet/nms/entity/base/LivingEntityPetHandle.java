@@ -55,11 +55,11 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 		IPetType petType = getPet().getPetType();
 		AttributeInstance attributeInstance = getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.get(petType));
+			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.getNumber(petType).doubleValue());
 		}
 		attributeInstance = getEntity().getAttribute(Attributes.FLYING_SPEED);
 		if(attributeInstance != null){
-			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.get(petType));
+			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
 		}
 	}
 	

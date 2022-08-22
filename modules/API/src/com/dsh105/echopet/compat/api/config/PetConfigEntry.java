@@ -26,17 +26,20 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
  */
 public class PetConfigEntry<T>{
 	
+	// private final Class<T> valueType;
+	private final boolean isNumber;
 	public final String configKey;
 	public final Function<IPetType, T> defaultValue;
 	public final String[] comments;
 	
-	public PetConfigEntry(String configKey, T defaultValue, String... comments){
-		this.configKey = configKey;
-		this.defaultValue = petType->defaultValue;
-		this.comments = comments;
+	
+	public PetConfigEntry(Class<T> valueType, String configKey, T defaultValue, String... comments){
+		this(valueType, configKey, petType->defaultValue, comments);
 	}
 	
-	public PetConfigEntry(String configKey, Function<IPetType, T> defaultValue, String... comments){
+	public PetConfigEntry(Class<T> valueType, String configKey, Function<IPetType, T> defaultValue, String... comments){
+		// this.valueType = valueType;
+		this.isNumber = Number.class.isAssignableFrom(valueType);
 		this.configKey = configKey;
 		this.defaultValue = defaultValue;
 		this.comments = comments;
@@ -54,7 +57,14 @@ public class PetConfigEntry<T>{
 		return this.comments;
 	}
 	
-	public T get(IPetType type){
-		return type.getConfigValue(getConfigKey(), getDefaultValue(type));
+	public T get(IPetType petType){
+		return petType.getConfigValue(getConfigKey(), getDefaultValue(petType));
+	}
+	
+	public Number getNumber(IPetType petType){
+		if(!isNumber){
+			throw new IllegalStateException();
+		}
+		return (Number) petType.getRawConfigValue(getConfigKey(), getDefaultValue(petType));
 	}
 }

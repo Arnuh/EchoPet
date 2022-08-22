@@ -58,7 +58,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	public EntityBatPet(Level world, IPet pet){
 		super(EntityType.BAT, world, pet);
 		double sizeModifier = getSizeCategory().getModifier();
-		flyRange = (int) Math.max(1, Math.ceil(IBatPet.GOAL_WANDER_FLY_RANGE.get(PetType.BAT) * sizeModifier));
+		flyRange = (int) Math.max(1, Math.ceil(IBatPet.GOAL_WANDER_FLY_RANGE.getNumber(PetType.BAT).doubleValue() * sizeModifier));
 	}
 	
 	@Override

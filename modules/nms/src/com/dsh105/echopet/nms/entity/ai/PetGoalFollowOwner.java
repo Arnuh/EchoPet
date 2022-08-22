@@ -48,11 +48,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		
 		double sizeModifier = pet.getSizeCategory().getModifier();
 		IPetType petType = pet.getPet().getPetType();
-		double startDistance = IPet.GOAL_FOLLOW_START_DISTANCE.get(petType) * sizeModifier;
-		double stopDistance = IPet.GOAL_FOLLOW_STOP_DISTANCE.get(petType) * sizeModifier;
-		double teleportDistance = IPet.GOAL_FOLLOW_TELEPORT_DISTANCE.get(petType) * sizeModifier;
+		double startDistance = IPet.GOAL_FOLLOW_START_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
+		double stopDistance = IPet.GOAL_FOLLOW_STOP_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
+		double teleportDistance = IPet.GOAL_FOLLOW_TELEPORT_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
 		
-		this.speedModifier = IPet.GOAL_FOLLOW_SPEED_MODIFIER.get(petType);
+		this.speedModifier = IPet.GOAL_FOLLOW_SPEED_MODIFIER.getNumber(petType).doubleValue();
 		this.startDistanceSqr = startDistance * startDistance;
 		this.stopDistanceSqr = stopDistance * stopDistance;
 		this.teleportDistanceSqr = teleportDistance * teleportDistance;

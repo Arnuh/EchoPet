@@ -294,9 +294,14 @@ public enum PetType implements IPetType{
 	}
 	
 	@Override
+	public Object getRawConfigValue(String variable, Object defaultValue){
+		return getConfig().get("pets." + getConfigKeyName() + "." + variable, defaultValue);
+	}
+	
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getConfigValue(String variable, T defaultValue){
-		return (T) getConfig().get("pets." + getConfigKeyName() + "." + variable, defaultValue);
+		return (T) getRawConfigValue(variable, defaultValue);
 	}
 	
 	@Override

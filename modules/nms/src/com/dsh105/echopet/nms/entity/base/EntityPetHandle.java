@@ -84,9 +84,9 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	protected void initiateEntityPet(){
 		IPetType petType = getPet().getPetType();
 		this.canFly = IPet.RIDING_FLY.get(petType);
-		this.rideSpeed = IPet.RIDING_WALK_SPEED.get(petType).floatValue();
-		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.get(petType).floatValue();
-		this.jumpHeight = IPet.RIDING_JUMP_HEIGHT.get(petType);
+		this.rideSpeed = IPet.RIDING_WALK_SPEED.getNumber(petType).floatValue();
+		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.getNumber(petType).floatValue();
+		this.jumpHeight = IPet.RIDING_JUMP_HEIGHT.getNumber(petType).doubleValue();
 		this.setPathfinding();
 		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
 	}

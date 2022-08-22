@@ -160,8 +160,7 @@ public class YAMLConfig{
 	public void set(String path, Object value, String... comments){
 		for(String comment : comments){
 			if(!this.config.contains(path)){
-				this.config.set(manager.getPluginName() + "_COMMENT_" + this.comments, " " + comment);
-				this.comments++;
+				this.config.set(manager.getPluginName() + "_COMMENT_" + this.comments++, " " + comment);
 			}
 		}
 		this.config.set(path, value);
