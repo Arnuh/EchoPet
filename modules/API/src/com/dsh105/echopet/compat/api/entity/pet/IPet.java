@@ -58,8 +58,8 @@ public interface IPet{
 		// A better way has to exist
 		return petType == PetType.ALLAY || petType == PetType.BAT || petType.equals(PetType.BEE) || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER || petType == PetType.VEX || petType == PetType.PHANTOM;
 	});
-	// PetConfigEntry<Boolean> RIDING_HOVER = new PetConfigEntry<>("riding.hover", false);
-	
+	PetConfigEntry<Boolean> RIDING_GRAVITY_CONTROL = new PetConfigEntry<Boolean>(Boolean.class, "riding.gravity.enable", IPet.RIDING_FLY::get);
+	PetConfigEntry<Double> RIDING_GRAVITY_MODIFIER = new PetConfigEntry<>(Double.class, "riding.gravity.modifier", 0.6d);
 	// Goals might get moved to a higher interface. Some pathing will require "PathfinderMob"
 	PetConfigEntry<Double> GOAL_WALK_SPEED = new PetConfigEntry<Double>(Double.class, "goal.walkSpeed", petType->{
 		Double speed = EchoPet.getPlugin().getSpawnUtil().getAttribute(petType, "generic.movement_speed");

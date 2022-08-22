@@ -59,9 +59,10 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	protected IPet pet;
 	private final INMSEntityPetHandle petHandle;
 	public PetGoalSelector petGoalSelector;
-	protected boolean canFly;
+	protected boolean canFly, canControlGravity;
 	protected float rideSpeed, rideFlySpeed;
 	protected double rideJumpHeight;
+	protected double gravityModifier;
 	public boolean shouldVanish;
 	
 	@Deprecated
@@ -83,9 +84,12 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	protected void initiateEntityPet(){
 		IPetType petType = getPet().getPetType();
+		this.canFly = IPet.RIDING_FLY.get(petType);
+		this.canControlGravity = IPet.RIDING_GRAVITY_CONTROL.get(petType);
 		this.rideSpeed = IPet.RIDING_WALK_SPEED.getNumber(petType).floatValue();
 		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.getNumber(petType).floatValue();
 		this.rideJumpHeight = IPet.RIDING_JUMP_HEIGHT.getNumber(petType).doubleValue();
+		this.gravityModifier = IPet.RIDING_GRAVITY_MODIFIER.getNumber(petType).doubleValue();
 		AttributeInstance attributeInstance = getAttribute(Attributes.MOVEMENT_SPEED);
 		if(attributeInstance != null){
 			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.getNumber(petType).doubleValue());
@@ -208,6 +212,9 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 			// this.lastYaw = this.yRot = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
 			setYRot(player.getYRot());
 			this.yRotO = getYRot();
+		}
+		if(canFly && canControlGravity && !onGround && getDeltaMovement().y < 0.0){
+			setDeltaMovement(getDeltaMovement().multiply(1.0, gravityModifier, 1.0));
 		}
 		/*if(player.isFlying() && getPet().getPetType().canFly()){
 			Location petLoc = this.getLocation();

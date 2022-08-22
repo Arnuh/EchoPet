@@ -47,9 +47,10 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	protected final ServerPlayer owner;
 	protected final IEntityPet entityPet;
 	private PetGoalSelector petGoalSelector;
-	protected boolean canFly;
+	protected boolean canFly, canControlGravity;
 	protected float rideSpeed, rideFlySpeed;
 	protected double jumpHeight;
+	protected double gravityModifier;
 	public boolean shouldVanish;
 	
 	public EntityPetHandle(IEntityPet entityPet){
@@ -84,9 +85,11 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	protected void initiateEntityPet(){
 		IPetType petType = getPet().getPetType();
 		this.canFly = IPet.RIDING_FLY.get(petType);
+		this.canControlGravity = IPet.RIDING_GRAVITY_CONTROL.get(petType);
 		this.rideSpeed = IPet.RIDING_WALK_SPEED.getNumber(petType).floatValue();
 		this.rideFlySpeed = IPet.RIDING_FLY_SPEED.getNumber(petType).floatValue();
 		this.jumpHeight = IPet.RIDING_JUMP_HEIGHT.getNumber(petType).doubleValue();
+		this.gravityModifier = IPet.RIDING_GRAVITY_MODIFIER.getNumber(petType).doubleValue();
 		this.setPathfinding();
 		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
 	}
@@ -158,6 +161,9 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 			// this.lastYaw = this.yRot = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
 			entity.setYRot(owner.getLocation().getYaw());
 			entity.yRotO = entity.getYRot();
+		}
+		if(canFly && canControlGravity && !entity.onGround && entity.getDeltaMovement().y < 0.0){
+			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, gravityModifier, 1.0));
 		}
 		/*if(owner.isFlying() && getPet().getPetType().canFly()){
 			// if(this.getEntityPetType() == PetType.VEX && !((IVexPet) this.getPet()).isPowered()) return;
