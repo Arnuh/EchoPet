@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDolphinPet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,15 +29,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.9F, height = 0.6F)
 @EntityPetType(petType = PetType.COD)
 public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDolphinPet{
 	
 	// Some target to swim to.
 	private static final EntityDataAccessor<BlockPos> TREASURE_POS = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BLOCK_POS);
-	//Used for the pathfinder goal to go to "TreasurePog"
+	// Used for the pathfinder goal to go to "TreasurePog"
 	private static final EntityDataAccessor<Boolean> GOT_FISH = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.BOOLEAN);
-	//Takes damage when < 0.
+	// Takes damage when < 0.
 	private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(EntityDolphinPet.class, EntityDataSerializers.INT);
 	
 	public EntityDolphinPet(Level world){

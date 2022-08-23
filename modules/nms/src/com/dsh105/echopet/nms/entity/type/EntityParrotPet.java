@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.ParrotVariant;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityParrotPet;
 import com.dsh105.echopet.nms.entity.EntityTameablePet;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +31,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.PARROT)
 public class EntityParrotPet extends EntityTameablePet implements IEntityParrotPet{
 	

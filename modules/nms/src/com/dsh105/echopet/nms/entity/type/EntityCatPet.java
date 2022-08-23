@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.CatType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
 import com.dsh105.echopet.nms.entity.EntityTameablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,7 +30,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 
-@EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.CAT)
 public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
 	

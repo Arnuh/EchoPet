@@ -18,14 +18,12 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherSkeletonPet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.7F, height = 2.4F)
 @EntityPetType(petType = PetType.WITHERSKELETON)
 public class EntityWitherSkeletonPet extends EntitySkeletonAbstractPet implements IEntityWitherSkeletonPet{
 	

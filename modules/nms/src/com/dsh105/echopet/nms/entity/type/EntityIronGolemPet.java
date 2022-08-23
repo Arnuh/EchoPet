@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIronGolemPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,7 +29,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 1.4F, height = 2.9F)
 @EntityPetType(petType = PetType.IRONGOLEM)
 public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet{
 	

@@ -19,10 +19,9 @@ package com.dsh105.echopet.nms.entity.type;
 
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseArmor;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -40,7 +39,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import org.bukkit.entity.Horse;
 
-@EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.HORSE)
 public class EntityHorsePet extends EntityHorseAbstractPet implements IEntityHorsePet{
 	

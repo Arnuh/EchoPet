@@ -19,10 +19,9 @@ package com.dsh105.echopet.nms.entity.type;
 
 import java.util.Optional;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -33,7 +32,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-@EntitySize(width = 0.6F, height = 2.9F)
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	
@@ -74,7 +72,8 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	}
 	
 	public BlockState getCarried(){
-		return this.entityData.get(DATA_CARRY_STATE).orElse(null);
+		return this.entityData.get(DATA_CARRY_STATE)
+			.orElse(null);
 	}
 	
 	@Override

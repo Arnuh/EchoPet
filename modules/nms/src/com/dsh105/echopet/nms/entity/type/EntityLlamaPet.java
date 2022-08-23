@@ -19,9 +19,8 @@ package com.dsh105.echopet.nms.entity.type;
 
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -37,7 +36,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Llama;
 
-@EntitySize(width = 0.9F, height = 1.87F)
 @EntityPetType(petType = PetType.LLAMA)
 public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEntityLlamaPet{
 	

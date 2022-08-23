@@ -18,15 +18,13 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityChickenPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.3F, height = 0.7F)
 @EntityPetType(petType = PetType.CHICKEN)
 public class EntityChickenPet extends EntityAgeablePet implements IEntityChickenPet{
 	

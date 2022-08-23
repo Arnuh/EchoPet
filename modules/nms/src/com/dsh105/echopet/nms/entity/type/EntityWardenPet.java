@@ -26,7 +26,6 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
@@ -60,7 +59,6 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-@EntitySize(width = 0.9F, height = 2.9F)
 @EntityPetType(petType = PetType.WARDEN)
 public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityPetGiveMeAccess{
 	

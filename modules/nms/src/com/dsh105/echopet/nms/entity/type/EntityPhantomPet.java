@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -43,7 +42,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 
-@EntitySize(width = 0.9F, height = 0.5F)
 @EntityPetType(petType = PetType.PHANTOM)
 public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomPet{
 	

@@ -17,10 +17,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHoglinPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,7 +28,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 1.3965F, height = 1.4F)
 @EntityPetType(petType = PetType.HOGLIN)
 public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPet{
 	
@@ -46,11 +44,11 @@ public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPe
 	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
-		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true);//Default to true to fix shaking when in overworld.
+		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true);// Default to true to fix shaking when in overworld.
 	}
 	
 	@Override
 	public SizeCategory getSizeCategory(){
-		return SizeCategory.LARGE;//large kinda too big but idk
+		return SizeCategory.LARGE;// large kinda too big but idk
 	}
 }

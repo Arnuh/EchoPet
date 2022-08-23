@@ -18,9 +18,8 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.nms.VersionBreaking;
@@ -39,7 +38,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.DyeColor;
 
-@EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.WOLF)
 public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	

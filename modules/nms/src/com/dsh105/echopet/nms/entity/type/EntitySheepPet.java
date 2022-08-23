@@ -18,9 +18,8 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,7 +29,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import org.bukkit.DyeColor;
 
-@EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.SHEEP)
 public class EntitySheepPet extends EntityAgeablePet implements IEntitySheepPet{
 	

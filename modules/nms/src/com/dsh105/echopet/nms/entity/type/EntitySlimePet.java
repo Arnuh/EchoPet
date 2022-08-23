@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +31,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.SLIME)
 public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 	

@@ -18,9 +18,8 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombieVillagerPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +31,6 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.ZOMBIEVILLAGER)
 public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZombieVillagerPet, IEntityVillagerDataHolder{
 	

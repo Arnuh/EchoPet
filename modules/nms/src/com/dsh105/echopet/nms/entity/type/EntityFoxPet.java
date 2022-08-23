@@ -20,9 +20,8 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.Optional;
 import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityFoxPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,7 +30,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.FOX)
 public class EntityFoxPet extends EntityAgeablePet implements IEntityFoxPet{
 	

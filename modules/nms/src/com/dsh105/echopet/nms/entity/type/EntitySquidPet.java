@@ -18,17 +18,15 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySquidPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.95F, height = 0.95F)
 @EntityPetType(petType = PetType.SQUID)
 public class EntitySquidPet extends EntityPet implements IEntitySquidPet{
 	

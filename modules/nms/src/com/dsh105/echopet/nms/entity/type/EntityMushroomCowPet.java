@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.MushroomCowType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -30,7 +29,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import org.bukkit.entity.MushroomCow;
 
-@EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class EntityMushroomCowPet extends EntityCowPet implements IEntityMushroomCowPet{
 	

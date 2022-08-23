@@ -18,9 +18,8 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityTurtlePet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.core.BlockPos;
@@ -30,11 +29,10 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 1.2F, height = 0.4F)
 @EntityPetType(petType = PetType.TURTLE)
 public class EntityTurtlePet extends EntityAgeablePet implements IEntityTurtlePet{
 	
-	//beach they spawned at
+	// beach they spawned at
 	private static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(EntityTurtlePet.class, EntityDataSerializers.BOOLEAN);
 	// Set to false when egg is placed("HasEgg" to false right after)

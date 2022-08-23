@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.entity.type;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
@@ -49,7 +48,6 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-@EntitySize(width = 1.3F, height = 0.9F)
 @EntityPetType(petType = PetType.GOAT)
 public class EntityGoatPet extends Goat implements IEntityLivingPet, EntityPetGiveMeAccess, IEntityGoatPet{
 	

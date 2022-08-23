@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
 
 public abstract class EntitySpellcasterIllagerPet extends EntityAbstractIllagerPet{
 	
-	//SpellcasterIllager.IllagerSpell
+	// SpellcasterIllager.IllagerSpell
 	private static final EntityDataAccessor<Byte> DATA_SPELL_CASTING_ID = SynchedEntityData.defineId(EntitySpellcasterIllagerPet.class, EntityDataSerializers.BYTE);
 	
 	public EntitySpellcasterIllagerPet(EntityType<? extends Mob> type, Level world){

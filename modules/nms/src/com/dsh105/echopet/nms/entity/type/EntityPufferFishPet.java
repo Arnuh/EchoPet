@@ -18,10 +18,9 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -32,13 +31,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 
-@EntitySize(width = 0.7F, height = 0.7F)
 @EntityPetType(petType = PetType.PUFFERFISH)
 public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferFishPet{
 	
 	private static final EntityDataAccessor<Integer> PUFF_STATE = SynchedEntityData.defineId(EntityPufferFishPet.class, EntityDataSerializers.INT);
 	
-	//private static final int STATE_SMALL = 0, STATE_MID = 1, STATE_FULL = 2;
+	// private static final int STATE_SMALL = 0, STATE_MID = 1, STATE_FULL = 2;
 	
 	public EntityPufferFishPet(Level world){
 		super(EntityType.PUFFERFISH, world);

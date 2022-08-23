@@ -18,9 +18,8 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -36,7 +35,6 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.entity.Rabbit;
 
-@EntitySize(width = 0.6F, height = 0.7F)
 @EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet{
 	
