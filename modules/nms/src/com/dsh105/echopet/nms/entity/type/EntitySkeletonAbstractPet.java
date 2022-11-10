@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonAbstractPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -52,10 +51,5 @@ public class EntitySkeletonAbstractPet extends EntityPet implements IEntitySkele
 	
 	protected String getStepSoundString(){
 		return "entity.skeleton.step";
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

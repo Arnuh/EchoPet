@@ -21,7 +21,6 @@ import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
@@ -68,11 +67,6 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	@Override
 	public void setPathfinding(){
 		super.setPathfinding();
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 	
 	@Override

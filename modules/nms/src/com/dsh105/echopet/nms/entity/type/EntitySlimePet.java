@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -106,17 +105,6 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet{
 			this.jumpDelay = random().nextInt(15) + 10;
 			makeSound("entity.slime.attack", 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
 			getJumpControl().jump();
-		}
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		if(this.getSize() == 1){
-			return SizeCategory.TINY;
-		}else if(this.getSize() == 4){
-			return SizeCategory.LARGE;
-		}else{
-			return SizeCategory.REGULAR;
 		}
 	}
 }

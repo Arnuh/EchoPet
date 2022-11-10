@@ -32,5 +32,9 @@ public interface ISpawnUtil{
 	
 	<T> T getAttribute(IPetType petType, String attributeKey);
 	
+	float getDefaultWidth(IPetType petType);
+	
+	float getDefaultHeight(IPetType petType);
+	
 	void setSkullTexture(SkullMeta meta, String data);
 }

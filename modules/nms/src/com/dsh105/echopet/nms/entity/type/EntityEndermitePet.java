@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermitePet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -36,11 +35,6 @@ public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet
 	
 	public EntityEndermitePet(Level world, IPet pet){
 		super(EntityType.ENDERMITE, world, pet);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.TINY;
 	}
 	
 	@Override

@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCreeperPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -61,10 +60,5 @@ public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet{
 		this.entityData.define(DATA_SWELL_DIR, -1);
 		this.entityData.define(DATA_IS_POWERED, false);
 		this.entityData.define(DATA_IS_IGNITED, false);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

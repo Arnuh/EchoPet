@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityShulkerPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -52,11 +51,6 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 		this.entityData.define(DATA_ATTACH_FACE_ID, Direction.DOWN);
 		this.entityData.define(DATA_PEEK_ID, (byte) 0);
 		this.entityData.define(DATA_COLOR_ID, (byte) net.minecraft.world.item.DyeColor.PURPLE.getId());
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 	
 	@Override

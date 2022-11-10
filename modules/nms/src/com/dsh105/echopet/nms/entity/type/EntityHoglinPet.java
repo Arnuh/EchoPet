@@ -18,7 +18,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHoglinPet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
@@ -45,10 +44,5 @@ public class EntityHoglinPet extends EntityAgeablePet implements IEntityHoglinPe
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_IMMUNE_TO_ZOMBIFICATION, true);// Default to true to fix shaking when in overworld.
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.LARGE;// large kinda too big but idk
 	}
 }

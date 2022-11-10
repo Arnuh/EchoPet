@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -46,11 +45,6 @@ public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet{
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_PUMPKIN_ID, (byte) 16);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 	
 	@Override

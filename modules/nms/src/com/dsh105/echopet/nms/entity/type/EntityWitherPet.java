@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -59,10 +58,5 @@ public class EntityWitherPet extends EntityPet implements IEntityWitherPet{
 	public void setShielded(boolean flag){
 		this.entityData.set(SHIELDED, Integer.valueOf(flag ? 1 : 0));
 		this.setHealth((float) (flag ? 150 : 300));
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.LARGE;
 	}
 }

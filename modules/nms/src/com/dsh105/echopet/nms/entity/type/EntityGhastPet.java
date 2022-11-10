@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGhastPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -45,11 +44,6 @@ public class EntityGhastPet extends EntityFlyingPet implements IEntityGhastPet{
 	public EntityGhastPet(Level world, IPet pet){
 		super(EntityType.GHAST, world, pet);
 		this.moveControl = new ControllerGhast(this);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.OVERSIZE;
 	}
 	
 	@Override

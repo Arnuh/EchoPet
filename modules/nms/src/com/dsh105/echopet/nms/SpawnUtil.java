@@ -100,6 +100,7 @@ public class SpawnUtil implements ISpawnUtil{
 	}
 	
 	private final Map<String, Class<?>> entityLookup = new HashMap<>();
+	private final Map<String, EntityType<?>> entityTypes = new HashMap<>();
 	
 	@Override
 	@SuppressWarnings("unchecked")
@@ -145,6 +146,40 @@ public class SpawnUtil implements ISpawnUtil{
 			EchoPet.LOG.log(java.util.logging.Level.SEVERE, "Failed to create attribute supplier for " + clazz.getName(), ex);
 		}
 		return null;
+	}
+	
+	public Optional<EntityType<?>> getEntityType(String typeName){
+		return Optional.ofNullable(entityTypes.computeIfAbsent(typeName, s->{
+			try{
+				for(var field : EntityType.class.getFields()){
+					if(field.getType() != EntityType.class){
+						continue;
+					}
+					var entityType = (EntityType<?>) field.get(null);
+					if(EntityType.getKey(entityType).getPath().equals(s)){
+						return entityType;
+					}
+				}
+				return null;
+			}catch(Exception ex){
+				EchoPet.LOG.log(java.util.logging.Level.SEVERE, "Failed to get entity type for " + typeName, ex);
+				return null;
+			}
+		}));
+	}
+	
+	@Override
+	public float getDefaultWidth(IPetType petType){
+		return getEntityType(petType.getMinecraftName()).map(EntityType::getDimensions)
+			.map(d->d.width)
+			.orElse(0f);
+	}
+	
+	@Override
+	public float getDefaultHeight(IPetType petType){
+		return getEntityType(petType.getMinecraftName()).map(EntityType::getDimensions)
+			.map(d->d.height)
+			.orElse(0f);
 	}
 	
 	private Field profileField = null;

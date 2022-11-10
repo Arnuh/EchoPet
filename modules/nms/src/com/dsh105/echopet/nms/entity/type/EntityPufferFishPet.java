@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPufferFishPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -66,11 +65,6 @@ public class EntityPufferFishPet extends EntityFishPet implements IEntityPufferF
 		}
 		entityData.set(PUFF_STATE, state);
 		refreshDimensions();
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.TINY;
 	}
 	
 	@Override

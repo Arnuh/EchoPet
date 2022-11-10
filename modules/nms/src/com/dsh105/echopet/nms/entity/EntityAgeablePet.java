@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms.entity;
 
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
@@ -107,10 +106,5 @@ public abstract class EntityAgeablePet extends EntityPet implements IEntityAgeab
 	@Override
 	public boolean isBaby(){
 		return this.entityData.get(DATA_BABY_ID);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

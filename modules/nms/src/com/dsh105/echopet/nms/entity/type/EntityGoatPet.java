@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -101,11 +100,6 @@ public class EntityGoatPet extends Goat implements IEntityLivingPet, EntityPetGi
 	@Override
 	public @Nullable Goat getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob){
 		return null;
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 	
 	@Override

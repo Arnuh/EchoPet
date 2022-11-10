@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.entity.type;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityFishPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -128,11 +127,6 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	}
 	
 	// Pet handling
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.TINY;
-	}
 	
 	@Override
 	public LivingEntity getEntity(){

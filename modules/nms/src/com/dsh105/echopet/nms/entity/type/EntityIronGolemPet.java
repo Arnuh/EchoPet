@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIronGolemPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -47,11 +46,5 @@ public class EntityIronGolemPet extends EntityPet implements IEntityIronGolemPet
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
-	}
-	
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.LARGE;
 	}
 }

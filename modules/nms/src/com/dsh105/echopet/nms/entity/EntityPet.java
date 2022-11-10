@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.entity;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IPetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
@@ -362,9 +361,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	protected String getDeathSoundString(){
 		return "entity." + pet.getPetType().getMinecraftName() + ".death";
 	}
-	
-	@Override
-	public abstract SizeCategory getSizeCategory();
 	
 	// Entity
 	@Override

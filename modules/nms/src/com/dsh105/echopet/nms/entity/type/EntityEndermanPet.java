@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.Optional;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
@@ -79,10 +78,5 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	@Override
 	protected String getAmbientSoundString(){
 		return ((IEndermanPet) pet).isScreaming() ? "entity.endermen.scream" : "entity.endermen.ambient";
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

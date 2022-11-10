@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
@@ -48,11 +47,6 @@ public class EntityPiglinPet extends EntityAbstractPiglinPet implements IEntityP
 	@Override
 	public INMSEntityPetHandle createPetHandle(){
 		return new EntityAgeablePetHandle(this);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 	
 	@Override

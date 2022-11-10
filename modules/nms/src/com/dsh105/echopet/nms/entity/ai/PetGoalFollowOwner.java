@@ -46,17 +46,15 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		this.pet = pet;
 		this.mob = mob;
 		
-		double sizeModifier = pet.getSizeCategory().getModifier();
 		IPetType petType = pet.getPet().getPetType();
-		double startDistance = IPet.GOAL_FOLLOW_START_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
-		double stopDistance = IPet.GOAL_FOLLOW_STOP_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
-		double teleportDistance = IPet.GOAL_FOLLOW_TELEPORT_DISTANCE.getNumber(petType).doubleValue() * sizeModifier;
+		double startDistance = IPet.GOAL_FOLLOW_START_DISTANCE.getNumber(petType).doubleValue();
+		double stopDistance = IPet.GOAL_FOLLOW_STOP_DISTANCE.getNumber(petType).doubleValue();
+		double teleportDistance = IPet.GOAL_FOLLOW_TELEPORT_DISTANCE.getNumber(petType).doubleValue();
 		
 		this.speedModifier = IPet.GOAL_FOLLOW_SPEED_MODIFIER.getNumber(petType).doubleValue();
 		this.startDistanceSqr = startDistance * startDistance;
-		this.stopDistanceSqr = stopDistance * stopDistance;
+		this.stopDistanceSqr = (stopDistance * stopDistance);
 		this.teleportDistanceSqr = teleportDistance * teleportDistance;
-		
 		this.setFlags(EnumSet.of(PetGoal.Flag.MOVE, PetGoal.Flag.LOOK));
 	}
 	

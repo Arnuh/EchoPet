@@ -77,9 +77,18 @@ public interface IPet{
 	});
 	/*PetConfigEntry<Double> GOAL_JUMP_HEIGHT = new PetConfigEntry<>("goal.jumpHeight", petType->{
 		return 0.6d;
-	});*/ PetConfigEntry<Integer> GOAL_FOLLOW_START_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.startDistance", 6);
-	PetConfigEntry<Integer> GOAL_FOLLOW_STOP_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.stopDistance", 2);
-	PetConfigEntry<Integer> GOAL_FOLLOW_TELEPORT_DISTANCE = new PetConfigEntry<>(Integer.class, "goal.follow.teleportDistance", 10);
+	});*/ PetConfigEntry<Double> GOAL_FOLLOW_START_DISTANCE = new PetConfigEntry<Double>(Double.class, "goal.follow.startDistance", petType->{
+		float width = EchoPet.getPlugin().getSpawnUtil().getDefaultWidth(petType);
+		return 3.5d + (width + width);
+	});
+	PetConfigEntry<Double> GOAL_FOLLOW_STOP_DISTANCE = new PetConfigEntry<Double>(Double.class, "goal.follow.stopDistance", petType->{
+		float width = EchoPet.getPlugin().getSpawnUtil().getDefaultWidth(petType);
+		return 0.5d + (width + width);
+	});
+	PetConfigEntry<Double> GOAL_FOLLOW_TELEPORT_DISTANCE = new PetConfigEntry<Double>(Double.class, "goal.follow.teleportDistance", petType->{
+		float width = EchoPet.getPlugin().getSpawnUtil().getDefaultWidth(petType);
+		return 10d + (width + width);
+	});
 	PetConfigEntry<Double> GOAL_FOLLOW_SPEED_MODIFIER = new PetConfigEntry<Double>(Double.class, "goal.follow.speedModifier", petType->{
 		return 1.5d;
 	});

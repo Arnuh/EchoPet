@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityIllusionerPet;
 import net.minecraft.world.entity.EntityType;
@@ -34,10 +33,5 @@ public class EntityIllusionerPet extends EntitySpellcasterIllagerPet implements 
 	
 	public EntityIllusionerPet(Level world, IPet pet){
 		super(EntityType.ILLUSIONER, world, pet);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

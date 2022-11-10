@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitchPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -46,10 +45,5 @@ public class EntityWitchPet extends EntityPet implements IEntityWitchPet{
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		entityData.define(DATA_USING_ITEM, true);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

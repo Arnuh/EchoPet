@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -86,11 +85,6 @@ public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, Entit
 	
 	@Override
 	public void applySupportingEffects(net.minecraft.world.entity.player.Player entityhuman){}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
-	}
 	
 	@Override
 	public LivingEntity getEntity(){

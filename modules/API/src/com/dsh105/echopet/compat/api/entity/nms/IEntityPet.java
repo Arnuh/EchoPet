@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.entity.nms;
 
 import java.util.Random;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.Location;
@@ -47,8 +46,6 @@ public interface IEntityPet{
 	default boolean usesBrain(){
 		return false;
 	}
-	
-	SizeCategory getSizeCategory();
 	
 	Entity getEntity();
 	

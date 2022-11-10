@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
@@ -64,10 +63,5 @@ public class EntityZombiePet extends EntityAgeablePet implements IEntityZombiePe
 		super.defineSynchedData();
 		entityData.define(DATA_SPECIAL_TYPE_ID, 0);
 		entityData.define(DATA_DROWNED_CONVERSION_ID, false);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

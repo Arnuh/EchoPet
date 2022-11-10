@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityDolphinPet;
 import net.minecraft.core.BlockPos;
@@ -53,10 +52,5 @@ public class EntityDolphinPet extends EntityWaterAnimalPet implements IEntityDol
 		this.entityData.define(TREASURE_POS, BlockPos.ZERO);
 		this.entityData.define(GOT_FISH, false);
 		this.entityData.define(MOISTNESS_LEVEL, 2400);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }

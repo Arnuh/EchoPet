@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVexPet;
 import com.dsh105.echopet.nms.entity.EntityNoClipPet;
@@ -72,10 +71,5 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 	@Override
 	public void setIsCharging(boolean flag){
 		setVexFlag(1, flag);
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.TINY;
 	}
 }

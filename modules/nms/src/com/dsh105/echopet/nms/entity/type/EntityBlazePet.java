@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.nms.entity.EntityPet;
@@ -67,10 +66,5 @@ public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 	@Override
 	protected String getDeathSoundString(){
 		return "entity.blaze.death";
-	}
-	
-	@Override
-	public SizeCategory getSizeCategory(){
-		return SizeCategory.REGULAR;
 	}
 }
