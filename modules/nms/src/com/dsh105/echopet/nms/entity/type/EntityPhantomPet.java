@@ -34,8 +34,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -49,7 +52,7 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	private Vec3 moveTargetPoint = Vec3.ZERO;
 	private BlockPos anchorPoint = BlockPos.ZERO;
 	private AttackPhase attackPhase = AttackPhase.CIRCLE;
-	private MoveControl originalMoveControl, flyMoveControl;
+	private MoveControl originalMoveControl, wanderMoveControl;
 	private LookControl originalLookControl, flyLookControl;
 	
 	public EntityPhantomPet(Level world){
@@ -58,10 +61,21 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	
 	public EntityPhantomPet(Level world, IPet pet){
 		super(EntityType.PHANTOM, world, pet);
+		this.moveControl = new BiMoveControl(this, new FlyingMoveControl(this, 20, true), new MoveControl(this), Entity::isVehicle);
+		this.navigation = createNavigation(world);
 		originalMoveControl = moveControl;
 		originalLookControl = lookControl;
-		flyMoveControl = new BiMoveControl(this, new PhantomMoveControl(this), originalMoveControl, Entity::isVehicle);
+		wanderMoveControl = new BiMoveControl(this, new PhantomMoveControl(this), originalMoveControl, Entity::isVehicle);
 		flyLookControl = new PhantomLookControl(this);
+	}
+	
+	@Override
+	protected PathNavigation createNavigation(Level level){
+		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
+		nav.setCanOpenDoors(false);
+		nav.setCanFloat(true);
+		nav.setCanPassDoors(true);
+		return nav;
 	}
 	
 	@Override
@@ -96,7 +110,7 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 			petGoalSelector.removeAllGoals();
 			petGoalSelector.addGoal(1, new PhantomAttackStrategyGoal());
 			petGoalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
-			moveControl = flyMoveControl;
+			moveControl = wanderMoveControl;
 			lookControl = flyLookControl;
 		}else{
 			setPathfindingGoals();
@@ -326,6 +340,9 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		@Override
 		public void tick(){
+			if(!useFlyTravel){
+				super.tick();
+			}
 		}
 	}
 }

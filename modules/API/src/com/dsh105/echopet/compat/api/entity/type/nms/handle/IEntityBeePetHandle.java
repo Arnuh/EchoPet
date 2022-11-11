@@ -15,24 +15,15 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.nms.entity.base;
+package com.dsh105.echopet.compat.api.entity.type.nms.handle;
 
-import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAgeablePetHandle;
-import net.minecraft.world.entity.AgeableMob;
 
-public class EntityAgeablePetHandle extends LivingEntityPetHandle implements IEntityAgeablePetHandle{
+public interface IEntityBeePetHandle extends IEntityAgeablePetHandle{
 	
-	public EntityAgeablePetHandle(IEntityAgeablePet entityPet){
-		super(entityPet);
-	}
+	void setHasStung(boolean hasStung);
 	
-	public AgeableMob get(){
-		return (AgeableMob) getEntity();
-	}
+	void setHasNectar(boolean hasNectar);
 	
-	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
-	}
+	void setAngry(boolean angry);
 }

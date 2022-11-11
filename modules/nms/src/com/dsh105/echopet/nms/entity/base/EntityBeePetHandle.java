@@ -15,16 +15,35 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.entity.type.nms;
+package com.dsh105.echopet.nms.entity.base;
 
 import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
-import com.dsh105.echopet.compat.api.entity.nms.IEntityBirdPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityBeePetHandle;
+import net.minecraft.world.entity.animal.Bee;
 
-public interface IEntityBeePet extends IEntityAgeablePet, IEntityBirdPet{
+public class EntityBeePetHandle extends EntityAgeablePetHandle implements IEntityBeePetHandle{
 	
-	void setHasStung(boolean hasStung);
+	public EntityBeePetHandle(IEntityAgeablePet entityPet){
+		super(entityPet);
+	}
 	
-	void setHasNectar(boolean hasNectar);
+	@Override
+	public Bee get(){
+		return (Bee) getEntity();
+	}
 	
-	void setAngry(boolean angry);
+	@Override
+	public void setHasStung(boolean hasStung){
+		get().setHasStung(hasStung);
+	}
+	
+	@Override
+	public void setHasNectar(boolean hasNectar){
+		get().setHasNectar(hasNectar);
+	}
+	
+	@Override
+	public void setAngry(boolean angry){
+		get().setRemainingPersistentAngerTime(angry ? 1 : 0);
+	}
 }

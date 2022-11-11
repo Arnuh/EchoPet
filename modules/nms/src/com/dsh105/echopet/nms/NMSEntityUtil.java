@@ -18,10 +18,17 @@
 package com.dsh105.echopet.nms;
 
 import java.lang.reflect.Field;
+import java.util.Map;
+import com.dsh105.echopet.compat.api.entity.IPetType;
+import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
@@ -94,6 +101,31 @@ public class NMSEntityUtil{
 		@Override
 		public HumanoidArm getMainArm(){
 			return null;
+		}
+	}
+	
+	private static Field attributeField;
+	
+	@SuppressWarnings("unchecked")
+	public static void addFlyingSpeedAttribute(IPetType petType, AttributeMap attributeMap){
+		try{
+			if(attributeField == null){
+				for(var field : AttributeMap.class.getDeclaredFields()){
+					if(field.getType() == Map.class){
+						field.setAccessible(true);
+						attributeField = field;
+						break;
+					}
+				}
+			}
+			if(attributeField != null){
+				Map<Attribute, AttributeInstance> attributes = (Map<Attribute, AttributeInstance>) attributeField.get(attributeMap);
+				var instance = new AttributeInstance(Attributes.FLYING_SPEED, d->{});
+				instance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
+				attributes.put(Attributes.FLYING_SPEED, instance);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
 }

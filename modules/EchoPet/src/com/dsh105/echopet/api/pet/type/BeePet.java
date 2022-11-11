@@ -21,7 +21,7 @@ import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBeePet;
+import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityBeePetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class BeePet extends AgeablePet implements IBeePet{
 	@Override
 	public void setHasStung(boolean hasStung){
 		this.hasStung = hasStung;
-		((IEntityBeePet) getEntityPet()).setHasStung(hasStung);
+		((IEntityBeePetHandle) getHandle()).setHasStung(hasStung);
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class BeePet extends AgeablePet implements IBeePet{
 	@Override
 	public void setHasNectar(boolean hasNectar){
 		this.hasNectar = hasNectar;
-		((IEntityBeePet) getEntityPet()).setHasNectar(hasNectar);
+		((IEntityBeePetHandle) getHandle()).setHasNectar(hasNectar);
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class BeePet extends AgeablePet implements IBeePet{
 	@Override
 	public void setAngry(boolean angry){
 		this.angry = angry;
-		((IEntityBeePet) getEntityPet()).setAngry(angry);
+		((IEntityBeePetHandle) getHandle()).setAngry(angry);
 	}
 	
 	@Override

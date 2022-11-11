@@ -96,6 +96,8 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		attributeInstance = getAttribute(Attributes.FLYING_SPEED);
 		if(attributeInstance != null){
 			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
+		}else{
+			NMSEntityUtil.addFlyingSpeedAttribute(petType, getAttributes());
 		}
 		this.setPathfinding();
 		this.maxUpStep = getMaxUpStep();

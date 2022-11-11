@@ -21,6 +21,7 @@ package com.dsh105.echopet.nms.entity.base;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -57,9 +58,11 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 		if(attributeInstance != null){
 			attributeInstance.setBaseValue(IPet.GOAL_WALK_SPEED.getNumber(petType).doubleValue());
 		}
-		attributeInstance = getEntity().getAttribute(Attributes.FLYING_SPEED);
+		attributeInstance = getEntity().getAttributes().getInstance(Attributes.FLYING_SPEED);
 		if(attributeInstance != null){
 			attributeInstance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
+		}else{
+			NMSEntityUtil.addFlyingSpeedAttribute(petType, getEntity().getAttributes());
 		}
 	}
 	

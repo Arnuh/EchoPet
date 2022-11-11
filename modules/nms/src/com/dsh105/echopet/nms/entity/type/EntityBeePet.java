@@ -19,63 +19,114 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBeePet;
-import com.dsh105.echopet.nms.entity.EntityAgeablePet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
+import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
+import com.dsh105.echopet.nms.entity.base.EntityBeePetHandle;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 
 @EntityPetType(petType = PetType.BEE)
-public class EntityBeePet extends EntityAgeablePet implements IEntityBeePet{
+public class EntityBeePet extends Bee implements IEntityAgeablePet, EntityPetGiveMeAccess{
 	
-	private static final int Rolling = 0x2, Stung = 0x4, Nectar = 0x8;
-	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(EntityBeePet.class, EntityDataSerializers.INT);
+	protected IBeePet pet;
+	private final INMSEntityPetHandle petHandle;
 	
-	public EntityBeePet(Level world){
+	public EntityBeePet(Level world, IBeePet pet){
 		super(EntityType.BEE, world);
-	}
-	
-	public EntityBeePet(Level world, IPet pet){
-		super(EntityType.BEE, world, pet);
-	}
-	
-	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
-		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+		this.pet = pet;
+		this.petHandle = new EntityBeePetHandle(this);
+		this.moveControl = new BiMoveControl(this, new FlyingMoveControl(this, 20, true), new MoveControl(this), Entity::isVehicle);
+		this.navigation = createNavigation(world);
 	}
 	
 	@Override
-	public void setHasStung(boolean hasStung){
-		if(hasStung) addFlag(Stung);
-		else removeFlag(Stung);
+	protected PathNavigation createNavigation(Level level){
+		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
+		nav.setCanOpenDoors(false);
+		nav.setCanFloat(true);
+		nav.setCanPassDoors(true);
+		return nav;
 	}
 	
 	@Override
-	public void setHasNectar(boolean hasNectar){
-		if(hasNectar) addFlag(Nectar);
-		else removeFlag(Nectar);
+	public void updatePersistentAnger(ServerLevel worldserver, boolean flag){
+		//
 	}
 	
 	@Override
-	public void setAngry(boolean angry){
-		entityData.set(DATA_REMAINING_ANGER_TIME, angry ? 1 : 0);
+	public IPet getPet(){
+		return pet;
 	}
 	
-	private void addFlag(int flag){
-		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() | flag));
+	@Override
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
-	private void removeFlag(int flag){
-		entityData.set(DATA_FLAGS_ID, (byte) (getFlag() & ~flag));
+	@Override
+	public org.bukkit.entity.Entity getEntity(){
+		return getBukkitEntity();
 	}
 	
-	public int getFlag(){
-		return entityData.get(DATA_FLAGS_ID);
+	@Override
+	public boolean isDead(){
+		return dead;
 	}
+	
+	@Override
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
+	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
+		return true;
+	}
+	
+	@Override
+	public void tick(){
+		super.tick();
+		petHandle.tick();
+	}
+	
+	@Override
+	public void travel(Vec3 vec3d){
+		Vec3 result = petHandle.travel(vec3d);
+		if(result == null){
+			this.flyingSpeed = 0.02F;
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petHandle.getSpeed());
+		super.travel(result);
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }

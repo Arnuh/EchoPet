@@ -22,10 +22,16 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
 import com.dsh105.echopet.nms.entity.EntityPet;
+import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 
 @EntityPetType(petType = PetType.WITHER)
@@ -37,12 +43,19 @@ public class EntityWitherPet extends EntityPet implements IEntityWitherPet{
 	private static final EntityDataAccessor<Integer> c = SynchedEntityData.defineId(EntityWitherPet.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> SHIELDED = SynchedEntityData.defineId(EntityWitherPet.class, EntityDataSerializers.INT);
 	
-	public EntityWitherPet(Level world){
-		super(EntityType.WITHER, world);
-	}
-	
 	public EntityWitherPet(Level world, IPet pet){
 		super(EntityType.WITHER, world, pet);
+		this.moveControl = new BiMoveControl(this, new FlyingMoveControl(this, 10, true), new MoveControl(this), Entity::isVehicle);
+		this.navigation = createNavigation(world);
+	}
+	
+	@Override
+	protected PathNavigation createNavigation(Level level){
+		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
+		nav.setCanOpenDoors(false);
+		nav.setCanFloat(true);
+		nav.setCanPassDoors(true);
+		return nav;
 	}
 	
 	@Override

@@ -17,22 +17,16 @@
 
 package com.dsh105.echopet.nms.entity.base;
 
-import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
-import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAgeablePetHandle;
-import net.minecraft.world.entity.AgeableMob;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import net.minecraft.world.entity.Mob;
 
-public class EntityAgeablePetHandle extends LivingEntityPetHandle implements IEntityAgeablePetHandle{
+public abstract class MobPetHandle extends LivingEntityPetHandle{
 	
-	public EntityAgeablePetHandle(IEntityAgeablePet entityPet){
+	public MobPetHandle(IEntityLivingPet entityPet){
 		super(entityPet);
 	}
 	
-	public AgeableMob get(){
-		return (AgeableMob) getEntity();
-	}
-	
-	@Override
-	public void setBaby(boolean flag){
-		get().setBaby(flag);
+	public Mob get(){
+		return (Mob) getEntity();
 	}
 }
