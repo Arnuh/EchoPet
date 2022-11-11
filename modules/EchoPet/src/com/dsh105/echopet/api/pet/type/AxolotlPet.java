@@ -38,7 +38,7 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
 	@Override
 	public void setVariant(Variant variant){
-		((IEntityAxolotlPetHandle) getEntityPet().getHandle()).setVariant(variant);
+		((IEntityAxolotlPetHandle) getHandle()).setVariant(variant);
 		this.variant = variant;
 	}
 	
@@ -49,7 +49,7 @@ public class AxolotlPet extends AgeablePet implements IAxolotlPet{
 	
 	@Override
 	public void setPlayingDead(boolean flag){
-		((IEntityAxolotlPetHandle) getEntityPet().getHandle()).setPlayingDead(flag);
+		((IEntityAxolotlPetHandle) getHandle()).setPlayingDead(flag);
 		this.playingDead = flag;
 	}
 	

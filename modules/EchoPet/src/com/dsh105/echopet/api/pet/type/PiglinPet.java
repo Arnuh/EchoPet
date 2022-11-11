@@ -38,7 +38,7 @@ public class PiglinPet extends AbstractPiglinPet implements IPiglinPet{
 	
 	@Override
 	public void setBaby(boolean flag){
-		((IEntityAgeablePetHandle) getEntityPet().getHandle()).setBaby(flag);
+		((IEntityAgeablePetHandle) getHandle()).setBaby(flag);
 		this.baby = flag;
 	}
 	

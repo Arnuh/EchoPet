@@ -26,6 +26,7 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityNoClipPet;
 import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
@@ -119,6 +120,14 @@ public abstract class Pet implements IPet{
 	@Override
 	public IEntityPet getEntityPet(){
 		return this.entityPet;
+	}
+	
+	/**
+	 * Shortcut for {@link IEntityPet#getHandle()}
+	 */
+	@Override
+	public IEntityPetHandle getHandle(){
+		return getEntityPet().getHandle();
 	}
 	
 	@Override

@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
@@ -44,7 +43,6 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.FROG)
 public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGiveMeAccess{
@@ -101,11 +99,6 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	public void remove(boolean makeSound){
-		petHandle.remove(makeSound);
-	}
-	
-	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -132,20 +125,10 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	public IPetGoalSelector getPetGoalSelector(){
-		return petHandle.getPetGoalSelector();
-	}
-	
-	@Override
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
 		return usesBrain = IFrogPet.BRAIN_ENABLED.get(PetType.FROG);
-	}
-	
-	@Override
-	public Player getOwner(){
-		return pet.getOwner();
 	}
 	
 	@Override

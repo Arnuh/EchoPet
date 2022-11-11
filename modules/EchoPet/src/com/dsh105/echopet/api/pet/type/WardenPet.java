@@ -37,7 +37,7 @@ public class WardenPet extends LivingPet implements IWardenPet{
 	
 	@Override
 	public void setAngerLevel(AngerLevel angerLevel){
-		((IEntityWardenPetHandle) getEntityPet().getHandle()).setAnger(angerLevel.getMinimumAnger());
+		((IEntityWardenPetHandle) getHandle()).setAnger(angerLevel.getMinimumAnger());
 		this.angerLevel = angerLevel;
 	}
 	

@@ -19,10 +19,9 @@ package com.dsh105.echopet.nms.entity.type;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
@@ -45,10 +44,9 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.AXOLOTL)
-public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, EntityPetGiveMeAccess{
+public class EntityAxolotlPet extends Axolotl implements IEntityAgeablePet, EntityPetGiveMeAccess{
 	
 	private static final List<? extends SensorType<? extends Sensor<? super Axolotl>>> SENSOR_TYPES = ImmutableList.of();
 	
@@ -92,11 +90,6 @@ public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, Entit
 	}
 	
 	@Override
-	public void remove(boolean makeSound){
-		petHandle.remove(makeSound);
-	}
-	
-	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -115,16 +108,6 @@ public class EntityAxolotlPet extends Axolotl implements IEntityLivingPet, Entit
 	@Override
 	public IEntityPetHandle getHandle(){
 		return petHandle;
-	}
-	
-	@Override
-	public IPetGoalSelector getPetGoalSelector(){
-		return petHandle.getPetGoalSelector();
-	}
-	
-	@Override
-	public Player getOwner(){
-		return pet.getOwner();
 	}
 	
 	@Override

@@ -41,7 +41,10 @@ public interface IEntityPet{
 	
 	IEntityPetHandle getHandle();
 	
-	IPetGoalSelector getPetGoalSelector();
+	@Deprecated
+	default IPetGoalSelector getPetGoalSelector(){
+		return getHandle().getPetGoalSelector();
+	}
 	
 	default boolean usesBrain(){
 		return false;
@@ -49,9 +52,14 @@ public interface IEntityPet{
 	
 	Entity getEntity();
 	
-	Player getOwner();
+	default Player getOwner(){
+		return getPet().getOwner();
+	}
 	
-	void remove(boolean makeSound);
+	@Deprecated
+	default void remove(boolean makeSound){
+		getHandle().remove(makeSound);
+	}
 	
 	boolean isDead();
 	

@@ -18,14 +18,14 @@
 package com.dsh105.echopet.nms.entity.base;
 
 
-import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityAxolotlPetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
 
 public class EntityAxolotlPetHandle extends EntityAgeablePetHandle implements IEntityAxolotlPetHandle{
 	
-	public EntityAxolotlPetHandle(IEntityLivingPet entityPet){
+	public EntityAxolotlPetHandle(IEntityAgeablePet entityPet){
 		super(entityPet);
 	}
 	

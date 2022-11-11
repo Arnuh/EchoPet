@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
@@ -56,7 +55,6 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.WARDEN)
 public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityPetGiveMeAccess{
@@ -154,11 +152,6 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	}
 	
 	@Override
-	public void remove(boolean makeSound){
-		petHandle.remove(makeSound);
-	}
-	
-	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -180,20 +173,10 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	}
 	
 	@Override
-	public IPetGoalSelector getPetGoalSelector(){
-		return petHandle.getPetGoalSelector();
-	}
-	
-	@Override
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
 		return usesBrain = IWardenPet.BRAIN_ENABLED.get(PetType.WARDEN);
-	}
-	
-	@Override
-	public Player getOwner(){
-		return pet.getOwner();
 	}
 	
 	@Override

@@ -37,7 +37,7 @@ public class FrogPet extends LivingPet implements IFrogPet{
 	
 	@Override
 	public void setVariant(Variant variant){
-		((IEntityFrogPetHandle) getEntityPet().getHandle()).setVariant(variant);
+		((IEntityFrogPetHandle) getHandle()).setVariant(variant);
 		this.variant = variant;
 	}
 	

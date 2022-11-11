@@ -17,13 +17,13 @@
 
 package com.dsh105.echopet.nms.entity.base;
 
-import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAgeablePetHandle;
 import net.minecraft.world.entity.Mob;
 
 public class EntityAgeablePetHandle extends LivingEntityPetHandle implements IEntityAgeablePetHandle{
 	
-	public EntityAgeablePetHandle(IEntityLivingPet entityPet){
+	public EntityAgeablePetHandle(IEntityAgeablePet entityPet){
 		super(entityPet);
 	}
 	

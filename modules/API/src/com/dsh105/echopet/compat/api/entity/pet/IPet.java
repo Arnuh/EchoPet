@@ -25,6 +25,7 @@ import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -107,6 +108,8 @@ public interface IPet{
 	boolean isSpawned();
 	
 	IEntityPet getEntityPet();
+	
+	IEntityPetHandle getHandle();
 	
 	Entity getCraftPet();
 	
