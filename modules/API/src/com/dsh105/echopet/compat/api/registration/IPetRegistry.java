@@ -34,8 +34,4 @@ public interface IPetRegistry{
 	void shutdown();
 	
 	IPet spawn(IPetType petType, final Player owner);
-	
-	void enablePet(IPetType petType);
-	
-	void disablePet(IPetType petType);
 }

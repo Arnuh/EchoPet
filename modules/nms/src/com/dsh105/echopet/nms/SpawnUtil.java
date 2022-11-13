@@ -71,7 +71,6 @@ public class SpawnUtil implements ISpawnUtil{
 		}
 		l = spawnEvent.getSpawnLocation();
 		Level mcWorld = ((CraftWorld) l.getWorld()).getHandle();
-		EchoPet.getPetRegistry().enablePet(pet.getPetType());
 		IEntityPet entityPet = pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
 		entityPet.setLocation(new Location(mcWorld.getWorld(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch()));
 		if(!l.getChunk().isLoaded()){
@@ -83,7 +82,6 @@ public class SpawnUtil implements ISpawnUtil{
 		}else{
 			owner.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 1);
 		}
-		EchoPet.getPetRegistry().disablePet(pet.getPetType());
 		return entityPet;
 	}
 	

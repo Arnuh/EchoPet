@@ -88,36 +88,4 @@ public class PetRegistry implements IPetRegistry{
 			throw new PetRegistrationException(e);
 		}
 	}
-	
-	@Override
-	public void enablePet(IPetType petType){
-		/*if(petType.isCompatible()){
-			EntityTypes<? extends Entity> entity = EntityTypes.a(petType.getMinecraftName()).orElse(null);
-			if(entity == null){
-				Bukkit.getLogger().warning("Failed to find entity for " + petType.getMinecraftName());
-				return;
-			}
-			EnumCreatureType type = entity.e();
-			a<Entity> entitytypes_a = EntityTypes.a.a(new EntityTypes.b(){
-				
-				@Override
-				public Entity create(EntityTypes type, Level world){
-					return type.a(world);
-				}
-			}, type);
-			IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), entitytypes_a.a(petType.getMinecraftName()));
-		}*/
-	}
-	
-	@Override
-	public void disablePet(IPetType petType){
-		/*try{
-			if(petType.isCompatible()){
-				Object val = EntityTypes.class.getField(petType.getMinecraftName().toUpperCase()).get(null);
-				IRegistry.a((IRegistry) IRegistry.ENTITY_TYPE, petType.getMinecraftName(), val);
-			}
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}*/
-	}
 }
