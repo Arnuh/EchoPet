@@ -53,6 +53,7 @@ import com.dsh105.echopet.listeners.PetOwnerListener;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -82,9 +83,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
 	public String cmdString = "pet";
 	public String adminCmdString = "petadmin";
-	
-	// Update data
 	private IUpdater updater;
+	public NamespacedKey petNamespacedKey;
 	
 	@Override
 	public void onEnable(){
@@ -148,6 +148,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		Metrics metrics = new Metrics(this, 12900);
 		metrics.addCustomChart(new SimplePie("data_storage_type", ()->OPTIONS.getStorageType().name()));
 		this.updater = new JenkinsUpdater(this);
+		
+		this.petNamespacedKey = new NamespacedKey(this, "pet");
 	}
 	
 	@Override
@@ -318,5 +320,10 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	@Override
 	public IUpdater getUpdater(){
 		return updater;
+	}
+	
+	@Override
+	public NamespacedKey getPetNamespacedKey(){
+		return petNamespacedKey;
 	}
 }

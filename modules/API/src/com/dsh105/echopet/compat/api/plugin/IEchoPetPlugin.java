@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.registration.IPetRegistry;
 import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.IUpdater;
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 public interface IEchoPetPlugin extends Plugin{
@@ -59,4 +61,12 @@ public interface IEchoPetPlugin extends Plugin{
 	ConfigOptions getOptions();
 	
 	IUpdater getUpdater();
+	
+	/**
+	 * A {@link NamespacedKey} that can be used to identify a Pet from EchoPet.<br>
+	 * Used by accessing the {@link org.bukkit.persistence.PersistentDataContainer} with type {@link PersistentDataType#BYTE}<br>
+	 * <br>
+	 * @return A {@link NamespacedKey} for EchoPet entity identification.
+	 */
+	NamespacedKey getPetNamespacedKey();
 }

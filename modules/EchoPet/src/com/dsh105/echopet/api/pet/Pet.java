@@ -43,6 +43,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Pet implements IPet{
@@ -99,6 +100,10 @@ public abstract class Pet implements IPet{
 			}
 			this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
 			if(this.entityPet != null){
+				// Does a way exist to add this earlier?
+				Entity entity = entityPet.getEntity();
+				entity.getPersistentDataContainer().set(EchoPet.getPlugin().getPetNamespacedKey(), PersistentDataType.BYTE, (byte) 1);
+				
 				this.applyPetName();
 				// If we got here, a new entity was  spawned on our position anyway.
 				// this.teleportToOwner();
