@@ -19,6 +19,7 @@ package com.dsh105.echopet.nms.entity;
 
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 
@@ -29,4 +30,6 @@ public interface INMSEntityPetHandle extends IEntityPetHandle{
 	ServerPlayer getNMSOwner();
 	
 	Vec3 travel(Vec3 vec3d);
+	
+	void setDefaultGoals(Mob mob);
 }

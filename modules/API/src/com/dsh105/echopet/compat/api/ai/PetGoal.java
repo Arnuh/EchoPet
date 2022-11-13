@@ -23,6 +23,8 @@ public abstract class PetGoal{
 	
 	private final EnumSet<Flag> flags = EnumSet.noneOf(Flag.class);
 	
+	public abstract String getIdentifier();
+	
 	public abstract boolean canUse();
 	
 	public boolean canContinueToUse(){

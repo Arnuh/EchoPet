@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.nms.entity;
 
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
-import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -26,10 +26,6 @@ import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.NMSEntityUtil;
-import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
-import com.dsh105.echopet.nms.entity.ai.PetGoalFloat;
-import com.dsh105.echopet.nms.entity.ai.PetGoalFollowOwner;
-import com.dsh105.echopet.nms.entity.ai.PetGoalLookAtPlayer;
 import com.dsh105.echopet.nms.entity.base.EntityPetHandle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -57,7 +53,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	protected IPet pet;
 	private final INMSEntityPetHandle petHandle;
-	public PetGoalSelector petGoalSelector;
 	protected boolean canFly, canControlGravity;
 	protected float rideSpeed, rideFlySpeed;
 	protected double rideJumpHeight;
@@ -99,7 +94,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		}else{
 			NMSEntityUtil.addFlyingSpeedAttribute(petType, getAttributes());
 		}
-		this.setPathfinding();
 		this.maxUpStep = getMaxUpStep();
 	}
 	
@@ -124,11 +118,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	@Override
-	public PetGoalSelector getPetGoalSelector(){
-		return petGoalSelector;
-	}
-	
-	@Override
 	public boolean isDead(){
 		return dead;
 	}
@@ -143,23 +132,6 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	public float getWalkTargetValue(BlockPos blockposition, LevelReader iworldreader){
 		return 0.0F;
-	}
-	
-	public void setPathfinding(){
-		try{
-			petGoalSelector = new PetGoalSelector();
-			goalSelector = new GoalSelectorWrapper(petGoalSelector);
-			setPathfindingGoals();
-		}catch(Exception e){
-			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
-		}
-	}
-	
-	protected void setPathfindingGoals(){
-		petGoalSelector.removeAllGoals();
-		petGoalSelector.addGoal(0, new PetGoalFloat(this, this));
-		petGoalSelector.addGoal(1, new PetGoalFollowOwner(this, this));
-		petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(this, this, ServerPlayer.class));
 	}
 	
 	@Override
@@ -369,20 +341,21 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	public void tick(){// Search for "entityBaseTick". The method its in.
 		super.tick();
 		onLive();
-		if(this.petGoalSelector == null){
+		if(getHandle().getPetGoalSelector() == null){
 			this.remove(false);
 		}
 	}
 	
 	@Override
 	protected void updateControlFlags(){
-		if(petGoalSelector == null) return;
+		IPetGoalSelector goalSelector = getHandle().getPetGoalSelector();
+		if(goalSelector == null) return;
 		IPet rider = getPet().getRider();
 		boolean canMove = !isPassenger() && !isVehicle() && (rider == null || !rider.isSpawned());
 		boolean canJump = !isPassenger();
-		petGoalSelector.setControlFlag(PetGoal.Flag.MOVE, canMove);
-		petGoalSelector.setControlFlag(PetGoal.Flag.JUMP, canMove && canJump);
-		petGoalSelector.setControlFlag(PetGoal.Flag.LOOK, canMove);
+		goalSelector.setControlFlag(PetGoal.Flag.MOVE, canMove);
+		goalSelector.setControlFlag(PetGoal.Flag.JUMP, canMove && canJump);
+		goalSelector.setControlFlag(PetGoal.Flag.LOOK, canMove);
 	}
 	
 	@Override

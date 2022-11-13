@@ -37,8 +37,12 @@ public class PetGoalFloat extends APetGoalFloat{
 	}
 	
 	@Override
+	public String getIdentifier(){
+		return "Float";
+	}
+	
+	@Override
 	public boolean canUse(){
-		// return this.mob.isInWater() && this.mob.getFluidHeight(FluidTags.WATER) > this.mob.getFluidJumpThreshold() || this.mob.isInLava();
 		return entity.isInWater() || entity.isInLava();
 	}
 	

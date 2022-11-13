@@ -17,20 +17,21 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
-import com.google.common.collect.Sets;
-
-/*
- * From EntityAPI :)
- * Also means I coded it <3
- */
+import java.util.TreeSet;
 
 public class PetGoalSelector implements IPetGoalSelector{
 	
 	private static final PetGoalWrapper NO_GOAL = new PetGoalWrapper(new PetGoal(){
+		@Override
+		public String getIdentifier(){
+			return "NoGoal";
+		}
+		
 		@Override
 		public boolean canUse(){
 			return false;
@@ -42,7 +43,7 @@ public class PetGoalSelector implements IPetGoalSelector{
 		}
 	};
 	
-	private final Set<PetGoalWrapper> availableGoals = Sets.newLinkedHashSet();
+	private final Set<PetGoalWrapper> availableGoals = new TreeSet<>(Comparator.comparingInt(PetGoalWrapper::getPriority));
 	private final Map<PetGoal.Flag, PetGoalWrapper> lockedFlags = new EnumMap(PetGoal.Flag.class);
 	private final EnumSet<PetGoal.Flag> disabledFlags = EnumSet.noneOf(PetGoal.Flag.class);
 	
@@ -60,11 +61,19 @@ public class PetGoalSelector implements IPetGoalSelector{
 	}
 	
 	@Override
-	public void removeGoal(PetGoal goal){
+	public boolean removeGoal(PetGoal goal){
 		this.availableGoals.stream()
 			.filter(var1x->var1x.getGoal() == goal)
 			.filter(PetGoalWrapper::isRunning).forEach(PetGoalWrapper::stop);
-		this.availableGoals.removeIf(var1x->var1x.getGoal() == goal);
+		return this.availableGoals.removeIf(wrapper->wrapper.getGoal() == goal);
+	}
+	
+	@Override
+	public boolean removeGoal(String identifier){
+		this.availableGoals.stream()
+			.filter(wrapper->wrapper.getIdentifier().equals(identifier))
+			.filter(PetGoalWrapper::isRunning).forEach(PetGoalWrapper::stop);
+		return this.availableGoals.removeIf(wrapper->wrapper.getIdentifier().equals(identifier));
 	}
 	
 	private static boolean goalContainsAnyFlags(PetGoalWrapper goal, EnumSet<PetGoal.Flag> flags){
@@ -82,7 +91,6 @@ public class PetGoalSelector implements IPetGoalSelector{
 				return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -138,6 +146,5 @@ public class PetGoalSelector implements IPetGoalSelector{
 		}else{
 			this.disableControlFlag(flag);
 		}
-		
 	}
 }

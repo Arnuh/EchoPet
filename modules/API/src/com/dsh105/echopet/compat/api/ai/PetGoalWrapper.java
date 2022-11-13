@@ -37,6 +37,11 @@ public class PetGoalWrapper extends PetGoal{
 	}
 	
 	@Override
+	public String getIdentifier(){
+		return goal.getIdentifier();
+	}
+	
+	@Override
 	public boolean canUse(){
 		return this.goal.canUse();
 	}

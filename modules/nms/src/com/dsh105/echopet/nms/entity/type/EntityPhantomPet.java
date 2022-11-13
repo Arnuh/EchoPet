@@ -18,6 +18,7 @@
 package com.dsh105.echopet.nms.entity.type;
 
 import java.util.EnumSet;
+import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -79,11 +80,6 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	}
 	
 	@Override
-	public void setPathfinding(){
-		super.setPathfinding();
-	}
-	
-	@Override
 	protected void defineSynchedData(){
 		super.defineSynchedData();
 		this.entityData.define(ID_SIZE, 0);
@@ -107,13 +103,14 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 	public void setWandering(boolean flag){
 		useFlyTravel = flag;
 		if(flag){
+			IPetGoalSelector petGoalSelector = getHandle().getPetGoalSelector();
 			petGoalSelector.removeAllGoals();
 			petGoalSelector.addGoal(1, new PhantomAttackStrategyGoal());
 			petGoalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
 			moveControl = wanderMoveControl;
 			lookControl = flyLookControl;
 		}else{
-			setPathfindingGoals();
+			getHandle().setDefaultGoals(this);
 			moveControl = originalMoveControl;
 			lookControl = originalLookControl;
 		}
@@ -155,6 +152,11 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 			this.sweepTickNextRand = IPhantomPet.SWEEP_NEXT_RAND_DELAY.getNumber(PetType.PHANTOM).intValue();
 			this.minHeightOffset = IPhantomPet.SWEEP_MIN_HEIGHT_OFFSET.getNumber(PetType.PHANTOM).intValue();
 			this.randHeightOffset = IPhantomPet.SWEEP_RAND_HEIGHT_OFFSET.getNumber(PetType.PHANTOM).intValue();
+		}
+		
+		@Override
+		public String getIdentifier(){
+			return "PhantomAttackStrategy";
 		}
 		
 		@Override
@@ -224,6 +226,11 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 			this.maxDistanceReset = IPhantomPet.CIRCLE_MAX_DISTANCE_RESET.getNumber(PetType.PHANTOM).floatValue();
 			this.minHeight = IPhantomPet.CIRCLE_MIN_HEIGHT.getNumber(PetType.PHANTOM).floatValue();
 			this.maxRandHeight = IPhantomPet.CIRCLE_MAX_RAND_HEIGHT.getNumber(PetType.PHANTOM).floatValue();
+		}
+		
+		@Override
+		public String getIdentifier(){
+			return "PhantomCircleAroundAnchor";
 		}
 		
 		@Override

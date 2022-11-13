@@ -99,13 +99,19 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 			petGoalSelector = new PetGoalSelector();
 			if(getEntity() instanceof Mob mob && !getEntityPet().usesBrain()){// We support living entities but only mobs have ai.
 				mob.goalSelector = new GoalSelectorWrapper(petGoalSelector);
-				petGoalSelector.addGoal(0, new PetGoalFloat(getEntityPet(), mob));
-				petGoalSelector.addGoal(1, new PetGoalFollowOwner(getEntityPet(), mob));
-				petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class));
+				setDefaultGoals(mob);
 			}
 		}catch(Exception e){
 			EchoPet.LOG.log(java.util.logging.Level.WARNING, "Could not add PetGoals to Pet AI.", e);
 		}
+	}
+	
+	@Override
+	public void setDefaultGoals(Mob mob){
+		petGoalSelector.removeAllGoals();
+		petGoalSelector.addGoal(0, new PetGoalFloat(getEntityPet(), mob));
+		petGoalSelector.addGoal(1, new PetGoalFollowOwner(getEntityPet(), mob));
+		petGoalSelector.addGoal(2, new PetGoalLookAtPlayer(getEntityPet(), mob, ServerPlayer.class));
 	}
 	
 	@Override

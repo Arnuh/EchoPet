@@ -53,6 +53,11 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 	}
 	
 	@Override
+	public String getIdentifier(){
+		return "LookAtPlayer";
+	}
+	
+	@Override
 	public boolean canUse(){
 		if(pet.random().nextFloat() >= this.probability){
 			return false;

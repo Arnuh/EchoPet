@@ -25,7 +25,9 @@ public interface IPetGoalSelector{
 	
 	void removeAllGoals();
 	
-	void removeGoal(PetGoal goal);
+	boolean removeGoal(PetGoal goal);
+	
+	boolean removeGoal(String identifier);
 	
 	void tick();
 	

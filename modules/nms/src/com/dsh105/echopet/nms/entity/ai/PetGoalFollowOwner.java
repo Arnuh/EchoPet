@@ -59,6 +59,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	}
 	
 	@Override
+	public String getIdentifier(){
+		return "FollowOwner";
+	}
+	
+	@Override
 	public boolean canUse(){
 		if(!this.mob.isAlive()){
 			return false;
