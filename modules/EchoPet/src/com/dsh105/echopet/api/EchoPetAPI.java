@@ -266,7 +266,7 @@ public final class EchoPetAPI{
 	 * @param priority the priority of the goal.
 	 * @param goal the {@link PetGoal} to add
 	 */
-	public void addGoal(IPet pet, PetGoal goal, int priority){
+	public void addGoal(IPet pet, int priority, PetGoal goal){
 		if(pet == null){
 			EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
