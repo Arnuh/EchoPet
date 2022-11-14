@@ -147,8 +147,25 @@ public enum PetDataCategory{
 		return null;
 	}
 	
+	/**
+	 *
+	 * @deprecated Use {@link #getByKey(IPetType, String)} or {@link #getByData(IPetType, PetData)}
+	 */
+	@Deprecated
 	public static @Nullable PetData<?> getByKey(String key){
 		for(PetDataCategory category : PetDataCategory.values){
+			for(CategorizedPetData<?> check : category.getData()){
+				// Could be user input so ignore case.
+				if(check.getConfigKeyName().equalsIgnoreCase(key) || check.getData().getConfigKeyName().equalsIgnoreCase(key)){
+					return check;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static @Nullable PetData<?> getByKey(IPetType petType, String key){
+		for(PetDataCategory category : petType.getAllowedCategories()){
 			for(CategorizedPetData<?> check : category.getData()){
 				// Could be user input so ignore case.
 				if(check.getConfigKeyName().equalsIgnoreCase(key) || check.getData().getConfigKeyName().equalsIgnoreCase(key)){

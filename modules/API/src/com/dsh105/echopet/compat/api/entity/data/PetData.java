@@ -984,6 +984,10 @@ public class PetData<T>{
 		if(!configKeyName.isBlank()) values.add(this);
 	}
 	
+	/**
+	 * @deprecated Use {@link #get(IPetType, String)}
+	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static @Nullable <T> PetData<T> get(String name){
 		PetData<?> result = PetDataCategory.getByKey(name);
@@ -991,6 +995,24 @@ public class PetData<T>{
 			return (PetData<T>) result;
 		}
 		for(PetData<?> data : values){
+			if(data.getConfigKeyName().equalsIgnoreCase(name)){
+				return (PetData<T>) data;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Searches for a {@link PetData} by the specified name for the provided {@link IPetType}<br>
+	 * Checks {@link IPetType#getAllowedCategories()} and {@link IPetType#getAllowedDataTypes()}
+	 */
+	@SuppressWarnings("unchecked")
+	public static @Nullable <T> PetData<T> get(IPetType petType, String name){
+		PetData<?> result = PetDataCategory.getByKey(petType, name);
+		if(result != null){
+			return (PetData<T>) result;
+		}
+		for(PetData<?> data : petType.getAllowedDataTypes()){
 			if(data.getConfigKeyName().equalsIgnoreCase(name)){
 				return (PetData<T>) data;
 			}

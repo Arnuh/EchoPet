@@ -85,7 +85,7 @@ public class PetCommand implements CommandExecutor{
 				Lang.sendTo(sender, Lang.NO_PET.toString());
 				return true;
 			}
-			PetData<?> petData = PetData.get(args[1]);
+			PetData<?> petData = PetData.get(pet.getPetType(), args[1]);
 			if(petData == null){
 				Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(args[1])));
 				return true;

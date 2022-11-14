@@ -149,8 +149,8 @@ public class CommandComplete implements TabCompleter{
 				return list.toArray(new String[0]);
 			case 3:
 				if(petType != null){ // Could cache this like I do with pet data.
-					PetData<?> data = PetData.get(argBefore);
-					if(data != null && petType.isValidData(data)){
+					PetData<?> data = PetData.get(petType, argBefore);
+					if(data != null){
 						Object value = data.getParser().defaultValue(petType);
 						if(value instanceof Boolean){
 							return booleans;

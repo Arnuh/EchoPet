@@ -69,7 +69,7 @@ public interface ISQLStorageManager extends IStorageManager{
 		if(type == null){
 			return null;
 		}
-		Map<PetData<?>, Object> dataList = deserializePetData(rs.getString("data"));
+		Map<PetData<?>, Object> dataList = deserializePetData(type, rs.getString("data"));
 		
 		PetStorage pet = new PetStorage(type, rs.getString("name"), dataList);
 		
@@ -78,7 +78,7 @@ public interface ISQLStorageManager extends IStorageManager{
 			if(mt == null){
 				return null;
 			}
-			Map<PetData<?>, Object> riderDataList = deserializePetData(rs.getString("rider_data"));
+			Map<PetData<?>, Object> riderDataList = deserializePetData(mt, rs.getString("rider_data"));
 			pet.rider = new PetStorage(mt, rs.getString("rider_name"), riderDataList);
 		}
 		return pet;
@@ -95,13 +95,13 @@ public interface ISQLStorageManager extends IStorageManager{
 		return sb.toString();
 	}
 	
-	default Map<PetData<?>, Object> deserializePetData(String data){
+	default Map<PetData<?>, Object> deserializePetData(IPetType petType, String data){
 		Map<PetData<?>, Object> result = new LinkedHashMap<>();
 		if(data == null) return result;
 		for(String s : data.split(";")){
 			String[] split = s.split(":");
 			if(split.length != 2) continue;
-			PetData<?> pd = PetData.get(split[0]);
+			PetData<?> pd = PetData.get(petType, split[0]);
 			if(pd == null) continue;
 			Object value = pd.getParser().parse(split[1]);
 			if(value == null) continue;

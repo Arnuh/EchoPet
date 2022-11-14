@@ -31,11 +31,11 @@ import org.bukkit.entity.Player;
 
 public class PetUtil{
 	
-	private static Map<PetData<?>, Object> parseData(CommandSender sender, String input){
+	private static Map<PetData<?>, Object> parseData(CommandSender sender, IPetType petType, String input){
 		Map<PetData<?>, Object> result = new LinkedHashMap<>();
 		for(String data : input.split(",")){
 			if(!data.contains("=")){
-				PetData<?> petData = PetData.get(data);
+				PetData<?> petData = PetData.get(petType, data);
 				if(petData == null){
 					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(data)));
 					return null;
@@ -47,7 +47,7 @@ public class PetUtil{
 					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", data));
 					return null;
 				}
-				PetData<?> petData = PetData.get(split[0]);
+				PetData<?> petData = PetData.get(petType, split[0]);
 				if(petData == null){
 					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString().replace("%data%", StringUtil.capitalise(split[0])));
 					return null;
@@ -77,22 +77,34 @@ public class PetUtil{
 		if(dataValues.length == 1){
 			petType = PetType.get(input);
 		}else{
+			// Need to attempt to find the pet type first so parseData
+			// can work properly for the pet.
+			for(String value : dataValues){
+				IPetType checkType = PetType.get(value);
+				if(checkType != null){
+					petType = checkType;
+				}
+			}
+			if(petType == null){
+				Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(input)));
+				return null;
+			}
 			for(String value : dataValues){
 				if(input.contains(";" + value)){
 					name = value;
 				}else if(value.contains(",") || value.contains("=")){
-					Map<PetData<?>, Object> result = parseData(sender, value);
+					Map<PetData<?>, Object> result = parseData(sender, petType, value);
 					if(result == null) return null;
 					petDataList.putAll(result);
 				}else{
 					IPetType checkType = PetType.get(value);
-					if(checkType != null){
+					if(checkType != null){ // Meh
 						petType = checkType;
 					}else if(input.contains(value + ";") || input.contains(value + ":")){
 						Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString().replace("%type%", StringUtil.capitalise(value)));
 						return null;
 					}else{
-						Map<PetData<?>, Object> result = parseData(sender, value);
+						Map<PetData<?>, Object> result = parseData(sender, petType, value);
 						if(result == null) return null;
 						petDataList.putAll(result);
 					}

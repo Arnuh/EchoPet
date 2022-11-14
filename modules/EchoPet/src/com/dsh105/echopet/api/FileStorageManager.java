@@ -175,7 +175,7 @@ public class FileStorageManager implements IStorageManager{
 		ConfigurationSection cs = config.getConfigurationSection(path + ".pet.data");
 		if(cs != null){
 			for(String key : cs.getKeys(false)){
-				PetData<?> pd = PetData.get(key);
+				PetData<?> pd = PetData.get(petType, key);
 				if(pd == null){
 					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Save Data for " + player.getName() + ". Unknown enum type: " + key + ".");
 					continue;
@@ -209,7 +209,7 @@ public class FileStorageManager implements IStorageManager{
 		ConfigurationSection mcs = config.getConfigurationSection(path + ".data");
 		if(mcs != null){
 			for(String key : mcs.getKeys(false)){
-				PetData<?> pd = PetData.get(key);
+				PetData<?> pd = PetData.get(riderPetType, key);
 				if(pd == null){
 					plugin.getLogger().log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + player.getName() + ". Unknown enum type: " + key + ".", true);
 					continue;
