@@ -23,9 +23,9 @@ import org.bukkit.DyeColor;
  */
 public interface IShulkerPet{
 	
-	void setOpen(boolean open);
+	void setPeek(byte peek);
 	
-	boolean isOpen();
+	byte getPeek();
 	
 	void setColor(DyeColor color);
 	

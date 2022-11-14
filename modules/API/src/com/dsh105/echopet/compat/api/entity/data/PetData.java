@@ -64,6 +64,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IPolarBearPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPufferFishPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IShulkerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
@@ -89,6 +90,7 @@ import org.bukkit.inventory.ItemStack;
 
 
 import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.booleanParser;
+import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.byteParser;
 import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.doubleParser;
 import static com.dsh105.echopet.compat.api.entity.data.PetDataParser.integerParser;
 
@@ -833,9 +835,14 @@ public class PetData<T>{
 				return value->warden.setAngerLevel(IWardenPet.AngerLevel.Agitated);
 			}
 			return null;
-		}, Material.REDSTONE, "Agitated")
+		}, Material.REDSTONE, "Agitated"),
 		// Angry is elsewhere
-	;
+		NO_COLOR = new Builder<Boolean>().configKey("no_color").action((player, pet, category)->{
+			if(pet instanceof IShulkerPet goat){ // Handled as color 16
+				return (t)->goat.setColor(null);
+			}
+			return null;
+		}).material(Material.SHULKER_BOX).name("No Color").parser(booleanParser()).create();
 	
 	public static final PetData<Integer>
 		SIZE = PetData.create("size", (player, pet, category)->value->{
@@ -857,6 +864,13 @@ public class PetData<T>{
 				living.getCraftPet().setHealth(value);
 			}
 		}, doubleParser(2, "generic.max_health"), (PetDataMaterial) null, "Health");
+	public static final PetData<Byte>
+		PEEK = new Builder<Byte>().configKey("peek").action((player, pet, category)->{
+			if(pet instanceof IShulkerPet goat){
+				return goat::setPeek;
+			}
+			return null;
+		}).name("Peek").parser(byteParser()).create();
 	//@formatter:on
 	
 	public static class Builder<T>{
@@ -1131,6 +1145,8 @@ public class PetData<T>{
 			if(category.equals(PetDataCategory.COLLAR_COLOR)){
 				((ICatPet) pet).setCollarColor(color);
 			}
+		}else if(type.equals(PetType.SHULKER)){
+			((IShulkerPet) pet).setColor(color);
 		}
 		return true;
 	}

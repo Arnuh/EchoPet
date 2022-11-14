@@ -71,6 +71,37 @@ public interface PetDataParser<T>{
 		return BooleanParser::new;
 	}
 	
+	class ByteParser implements PetDataParser<Byte>{
+		
+		private final PetData<Byte> data;
+		
+		public ByteParser(PetData<Byte> data){this.data = data;}
+		
+		@Override
+		public Byte parse(String input){
+			return Byte.parseByte(input);
+		}
+		
+		@Override
+		public Byte defaultValue(IPetType petType){
+			return ((Number) petType.getDataDefaultValue(data, (byte) 0)).byteValue();
+		}
+		
+		@Override
+		public Byte interact(Byte current, ItemStack item){
+			return null;
+		}
+		
+		@Override
+		public PetDataParser<Byte> createNew(PetData<Byte> data){
+			return new ByteParser(data);
+		}
+	}
+	
+	static Function<PetData<Byte>, PetDataParser<Byte>> byteParser(){
+		return ByteParser::new;
+	}
+	
 	class IntegerParser implements PetDataParser<Integer>{
 		
 		private final PetData<Integer> data;

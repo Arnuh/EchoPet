@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 @EntityPetType(petType = PetType.SHULKER)
 public class ShulkerPet extends LivingPet implements IShulkerPet{
 	
-	protected boolean open;
+	protected byte peek;
 	protected DyeColor color;
 	
 	public ShulkerPet(Player owner){
@@ -42,14 +42,14 @@ public class ShulkerPet extends LivingPet implements IShulkerPet{
 	}
 	
 	@Override
-	public void setOpen(boolean open){
-		this.open = open;
-		((IEntityShulkerPet) getEntityPet()).setOpen(open);
+	public void setPeek(byte peek){
+		this.peek = peek;
+		((IEntityShulkerPet) getEntityPet()).setPeek(peek);
 	}
 	
 	@Override
-	public boolean isOpen(){
-		return open;
+	public byte getPeek(){
+		return peek;
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class ShulkerPet extends LivingPet implements IShulkerPet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Open: " + ChatColor.YELLOW + isOpen());
-		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(getColor().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Peek: " + ChatColor.YELLOW + getPeek());
+		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + (color == null ? "No Color" : StringUtil.capitalise(getColor().toString().replace("_", " "))));
 	}
 }

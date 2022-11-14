@@ -37,10 +37,6 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 	protected static final EntityDataAccessor<Byte> DATA_PEEK_ID = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.BYTE);// how many ticks its opened for
 	protected static final EntityDataAccessor<Byte> DATA_COLOR_ID = SynchedEntityData.defineId(EntityShulkerPet.class, EntityDataSerializers.BYTE);
 	
-	public EntityShulkerPet(Level world){
-		super(EntityType.SHULKER, world);
-	}
-	
 	public EntityShulkerPet(Level world, IPet pet){
 		super(EntityType.SHULKER, world, pet);
 	}
@@ -50,20 +46,16 @@ public class EntityShulkerPet extends EntityPet implements IEntityShulkerPet{
 		super.defineSynchedData();
 		this.entityData.define(DATA_ATTACH_FACE_ID, Direction.DOWN);
 		this.entityData.define(DATA_PEEK_ID, (byte) 0);
-		this.entityData.define(DATA_COLOR_ID, (byte) net.minecraft.world.item.DyeColor.PURPLE.getId());
+		this.entityData.define(DATA_COLOR_ID, (byte) 16); // No Color
 	}
 	
 	@Override
-	public void setOpen(boolean open){
-		if(open){
-			entityData.set(DATA_PEEK_ID, Byte.MAX_VALUE);// since we don't have the ai nothing decreases it except us.
-		}else{
-			entityData.set(DATA_PEEK_ID, (byte) 0);
-		}
+	public void setPeek(byte peek){
+		entityData.set(DATA_PEEK_ID, peek); // Default values are 0, 30, 100
 	}
 	
 	@Override
 	public void setColor(DyeColor color){
-		entityData.define(DATA_COLOR_ID, (byte) net.minecraft.world.item.DyeColor.byId(color.ordinal()).getId());
+		entityData.set(DATA_COLOR_ID, (byte) (color == null ? 16 : net.minecraft.world.item.DyeColor.byId(color.ordinal()).getId()));
 	}
 }

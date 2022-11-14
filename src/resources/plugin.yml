@@ -556,6 +556,8 @@ permissions:
         default: op
     echopet.pet.type.donkey.baby:
         default: op
+    echopet.pet.type.donkey.chest:
+        default: op
     echopet.pet.type.donkey.saddle:
         default: op
     echopet.pet.type.drowned.hat:
@@ -716,6 +718,8 @@ permissions:
         default: op
     echopet.pet.type.llama.baby:
         default: op
+    echopet.pet.type.llama.chest:
+        default: op
     echopet.pet.type.llama.creamy:
         default: op
     echopet.pet.type.llama.white:
@@ -771,6 +775,8 @@ permissions:
     echopet.pet.type.mule.ride:
         default: op
     echopet.pet.type.mule.baby:
+        default: op
+    echopet.pet.type.mule.chest:
         default: op
     echopet.pet.type.mule.saddle:
         default: op
@@ -968,6 +974,42 @@ permissions:
         default: op
     echopet.pet.type.shulker.ride:
         default: op
+    echopet.pet.type.shulker.peek:
+        default: op
+    echopet.pet.type.shulker.no_color:
+        default: op
+    echopet.pet.type.shulker.white:
+        default: op
+    echopet.pet.type.shulker.orange:
+        default: op
+    echopet.pet.type.shulker.magenta:
+        default: op
+    echopet.pet.type.shulker.light_blue:
+        default: op
+    echopet.pet.type.shulker.yellow:
+        default: op
+    echopet.pet.type.shulker.lime:
+        default: op
+    echopet.pet.type.shulker.pink:
+        default: op
+    echopet.pet.type.shulker.gray:
+        default: op
+    echopet.pet.type.shulker.light_gray:
+        default: op
+    echopet.pet.type.shulker.cyan:
+        default: op
+    echopet.pet.type.shulker.purple:
+        default: op
+    echopet.pet.type.shulker.blue:
+        default: op
+    echopet.pet.type.shulker.brown:
+        default: op
+    echopet.pet.type.shulker.green:
+        default: op
+    echopet.pet.type.shulker.red:
+        default: op
+    echopet.pet.type.shulker.black:
+        default: op
     echopet.pet.type.silverfish.hat:
         default: op
     echopet.pet.type.silverfish.ride:
@@ -1029,6 +1071,8 @@ permissions:
     echopet.pet.type.traderllama.ride:
         default: op
     echopet.pet.type.traderllama.baby:
+        default: op
+    echopet.pet.type.traderllama.chest:
         default: op
     echopet.pet.type.traderllama.creamy:
         default: op
@@ -2869,6 +2913,7 @@ permissions:
             echopet.pet.type.donkey.hat: true
             echopet.pet.type.donkey.ride: true
             echopet.pet.type.donkey.baby: true
+            echopet.pet.type.donkey.chest: true
             echopet.pet.type.donkey.saddle: true
     echopet.pet.type.drowned.*:
         default: op
@@ -3025,6 +3070,7 @@ permissions:
             echopet.pet.type.llama.hat: true
             echopet.pet.type.llama.ride: true
             echopet.pet.type.llama.baby: true
+            echopet.pet.type.llama.chest: true
             echopet.pet.type.llama.creamy: true
             echopet.pet.type.llama.white: true
             echopet.pet.type.llama.brown: true
@@ -3061,6 +3107,7 @@ permissions:
             echopet.pet.type.mule.hat: true
             echopet.pet.type.mule.ride: true
             echopet.pet.type.mule.baby: true
+            echopet.pet.type.mule.chest: true
             echopet.pet.type.mule.saddle: true
     echopet.pet.type.mushroomcow.*:
         default: op
@@ -3223,6 +3270,24 @@ permissions:
         children:
             echopet.pet.type.shulker.hat: true
             echopet.pet.type.shulker.ride: true
+            echopet.pet.type.shulker.peek: true
+            echopet.pet.type.shulker.no_color: true
+            echopet.pet.type.shulker.white: true
+            echopet.pet.type.shulker.orange: true
+            echopet.pet.type.shulker.magenta: true
+            echopet.pet.type.shulker.light_blue: true
+            echopet.pet.type.shulker.yellow: true
+            echopet.pet.type.shulker.lime: true
+            echopet.pet.type.shulker.pink: true
+            echopet.pet.type.shulker.gray: true
+            echopet.pet.type.shulker.light_gray: true
+            echopet.pet.type.shulker.cyan: true
+            echopet.pet.type.shulker.purple: true
+            echopet.pet.type.shulker.blue: true
+            echopet.pet.type.shulker.brown: true
+            echopet.pet.type.shulker.green: true
+            echopet.pet.type.shulker.red: true
+            echopet.pet.type.shulker.black: true
     echopet.pet.type.silverfish.*:
         default: op
         description: 'All silverfish pet data permissions'
@@ -3298,6 +3363,7 @@ permissions:
             echopet.pet.type.traderllama.hat: true
             echopet.pet.type.traderllama.ride: true
             echopet.pet.type.traderllama.baby: true
+            echopet.pet.type.traderllama.chest: true
             echopet.pet.type.traderllama.creamy: true
             echopet.pet.type.traderllama.white: true
             echopet.pet.type.traderllama.brown: true

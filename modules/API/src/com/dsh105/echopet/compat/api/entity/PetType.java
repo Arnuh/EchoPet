@@ -93,7 +93,7 @@ public enum PetType implements IPetType{
 	RAVAGER("Ravager", "Ravager Pet", "ravager"),
 	SALMON("Salmon", "Salmon Pet", "salmon"),
 	SHEEP("Sheep", "Sheep Pet", "sheep", new PetDataCategory[]{PetDataCategory.WOOL_COLOR}, PetData.SHEARED),
-	SHULKER("Shulker", "Shulker Pet", "shulker"),
+	SHULKER("Shulker", "Shulker Pet", "shulker", new PetDataCategory[]{PetDataCategory.SHULKER_COLOR}, PetData.PEEK),
 	SILVERFISH("Silverfish", "Silverfish Pet", "silverfish"),
 	SKELETON("Skeleton", "Skeleton Pet", "skeleton"),
 	SKELETONHORSE("SkeletonHorse", "Skeleton Horse Pet", "skeleton_horse", PetData.SADDLE),
