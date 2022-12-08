@@ -19,7 +19,7 @@ package com.dsh105.echopet.nms.entity.base;
 
 import com.dsh105.echopet.compat.api.entity.nms.IEntityAgeablePet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAgeablePetHandle;
-import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Mob;
 
 public class EntityAgeablePetHandle extends LivingEntityPetHandle implements IEntityAgeablePetHandle{
 	
@@ -27,8 +27,8 @@ public class EntityAgeablePetHandle extends LivingEntityPetHandle implements IEn
 		super(entityPet);
 	}
 	
-	public AgeableMob get(){
-		return (AgeableMob) getEntity();
+	public Mob get(){ // Need all ageable pets to extend AgeableMob before we can fix this
+		return (Mob) getEntity();
 	}
 	
 	@Override
