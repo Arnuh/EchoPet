@@ -25,7 +25,6 @@ import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
-import com.dsh105.echopet.nms.entity.ai.brain.PetFrogAi;
 import com.dsh105.echopet.nms.entity.ai.brain.sensing.CustomSensorType;
 import com.dsh105.echopet.nms.entity.base.EntityFrogPetHandle;
 import com.google.common.collect.ImmutableList;
@@ -41,7 +40,7 @@ import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 
 @EntityPetType(petType = PetType.FROG)
@@ -69,7 +68,7 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	@Override
 	protected Brain<?> makeBrain(Dynamic<?> dynamic){
 		if(usesBrain()){
-			return PetFrogAi.makeBrain(petBrainProvider().makeBrain(dynamic));
+			return null;// PetFrogAi.makeBrain(petBrainProvider().makeBrain(dynamic));
 		}else{
 			return petBrainProvider().makeBrain(dynamic);
 		}
@@ -87,7 +86,7 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 		this.getBrain().tick((ServerLevel) this.level, this);
 		this.level.getProfiler().pop();
 		this.level.getProfiler().push("frogActivityUpdate");
-		PetFrogAi.updateActivity(this);
+		// PetFrogAi.updateActivity(this);
 		this.level.getProfiler().pop();
 	}
 	

@@ -19,6 +19,8 @@ package com.dsh105.echopet.nms;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,5 +54,13 @@ public class VersionBreaking{
 	
 	public static void entityShake(LivingEntity entity){
 		entity.gameEvent(GameEvent.WOLF_SHAKING);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+		return switch(registryType){
+			case Attribute -> (T) Registry.ATTRIBUTE.get(resourceLocation);
+			case Sound_Event -> (T) Registry.SOUND_EVENT.get(resourceLocation);
+		};
 	}
 }

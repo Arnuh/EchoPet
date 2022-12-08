@@ -15,21 +15,9 @@
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.nms.entity;
+package com.dsh105.echopet.nms;
 
-import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
-
-public interface INMSEntityPetHandle extends IEntityPetHandle{
-	
-	CraftPlayer getCraftOwner();
-	
-	ServerPlayer getNMSOwner();
-	
-	Vec3 travel(Vec3 vec3d);
-	
-	void setDefaultGoals(Mob mob);
+public enum RegistryType{
+	Attribute,
+	Sound_Event
 }

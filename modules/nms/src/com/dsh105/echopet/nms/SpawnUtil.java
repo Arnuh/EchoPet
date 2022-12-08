@@ -33,7 +33,6 @@ import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -45,9 +44,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -103,7 +102,7 @@ public class SpawnUtil implements ISpawnUtil{
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(IPetType petType, String attributeKey){
-		Attribute attribute = Registry.ATTRIBUTE.get(ResourceLocation.tryParse(attributeKey));
+		Attribute attribute = VersionBreaking.getRegistry(RegistryType.Attribute, ResourceLocation.tryParse(attributeKey));
 		if(attribute == null){
 			return null;
 		}

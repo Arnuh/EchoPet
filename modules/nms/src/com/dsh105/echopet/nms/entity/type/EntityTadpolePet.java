@@ -28,7 +28,6 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ITadpolePet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
-import com.dsh105.echopet.nms.entity.ai.brain.PetTadpoleAi;
 import com.dsh105.echopet.nms.entity.ai.brain.sensing.CustomSensorType;
 import com.dsh105.echopet.nms.entity.base.LivingEntityPetHandle;
 import com.google.common.collect.ImmutableList;
@@ -50,7 +49,7 @@ import net.minecraft.world.entity.animal.frog.Tadpole;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -86,7 +85,7 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	@Override
 	protected Brain<?> makeBrain(Dynamic<?> dynamic){
 		if(usesBrain()){
-			return PetTadpoleAi.makeBrain(petBrainProvider().makeBrain(dynamic));
+			return null;// PetTadpoleAi.makeBrain(petBrainProvider().makeBrain(dynamic));
 		}else{
 			return petBrainProvider().makeBrain(dynamic);
 		}
@@ -104,7 +103,7 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 		this.getBrain().tick((ServerLevel) this.level, this);
 		this.level.getProfiler().pop();
 		this.level.getProfiler().push("tadpoleActivityUpdate");
-		PetTadpoleAi.updateActivity(this);
+		// PetTadpoleAi.updateActivity(this);
 		this.level.getProfiler().pop();
 	}
 	

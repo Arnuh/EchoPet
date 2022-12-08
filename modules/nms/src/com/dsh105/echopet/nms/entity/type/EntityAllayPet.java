@@ -53,7 +53,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -111,12 +111,10 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	@Override
 	protected void dropEquipment(){}
 	
-	@Override
 	public boolean shouldListen(ServerLevel var0, GameEventListener var1, BlockPos var2, GameEvent var3, GameEvent.Context var4){
 		return false;
 	}
 	
-	@Override
 	public void onSignalReceive(ServerLevel var0, GameEventListener var1, BlockPos var2, GameEvent var3, @Nullable Entity var4, @Nullable Entity var5, float var6){}
 	
 	@Override
@@ -124,9 +122,8 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 		return false;
 	}
 	
-	@Override
-	public boolean equipItemIfPossible(ItemStack itemstack, ItemEntity entityitem){
-		return false;
+	public ItemStack equipItemIfPossible(ItemStack itemstack, ItemEntity entityitem){
+		return null;
 	}
 	
 	// Pet handling

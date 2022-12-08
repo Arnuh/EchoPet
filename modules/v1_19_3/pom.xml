@@ -25,8 +25,8 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>EchoPet-v1_19_2</artifactId>
-	<name>EchoPet-v1_19_2-${project.version}</name>
+	<artifactId>EchoPet-v1_19_3</artifactId>
+	<name>EchoPet-v1_19_3-${project.version}</name>
 	<version>${echopet.version}</version>
 	<packaging>jar</packaging>
 
@@ -34,9 +34,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
-		<package.version>1_19_2</package.version>
-		<spigot.version>1.19.2-R0.1-SNAPSHOT</spigot.version>
-		<craftbukkit.package.version>1_19_R1</craftbukkit.package.version>
+		<package.version>1_19_3</package.version>
+		<spigot.version>1.19.3-R0.1-SNAPSHOT</spigot.version>
+		<craftbukkit.package.version>1_19_R2</craftbukkit.package.version>
 	</properties>
 
 	<dependencies>

@@ -36,7 +36,7 @@ public class EntityAxolotlPetHandle extends EntityAgeablePetHandle implements IE
 	
 	@Override
 	public void setVariant(IAxolotlPet.Variant variant){
-		get().setVariant(Axolotl.Variant.byId(variant.ordinal()));
+		get().setVariant(Axolotl.Variant.BY_ID[variant.ordinal()]);
 	}
 	
 	@Override

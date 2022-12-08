@@ -37,7 +37,7 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R1.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_19_R2.event.CraftEventFactory;
 
 public class LivingEntityPetHandle extends EntityPetHandle implements INMSLivingEntityPetHandle{
 	

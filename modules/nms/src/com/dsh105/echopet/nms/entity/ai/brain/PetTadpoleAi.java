@@ -19,7 +19,6 @@ package com.dsh105.echopet.nms.entity.ai.brain;
 
 
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.BrainFollowOwner;
-import com.dsh105.echopet.nms.entity.ai.brain.behavior.SetOwnerLookTarget;
 import com.dsh105.echopet.nms.entity.type.EntityTadpolePet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -27,15 +26,15 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.DoNothing;
 import net.minecraft.world.entity.ai.behavior.GateBehavior;
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
 import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
-import net.minecraft.world.entity.ai.behavior.RandomSwim;
-import net.minecraft.world.entity.ai.behavior.RunIf;
-import net.minecraft.world.entity.ai.behavior.RunSometimes;
+import net.minecraft.world.entity.ai.behavior.RandomStroll;
+import net.minecraft.world.entity.ai.behavior.SetEntityLookTargetSometimes;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
+import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
@@ -76,7 +75,7 @@ public class PetTadpoleAi{
 		brain.addActivity(Activity.IDLE,
 			ImmutableList.of(
 				//Pair.of(0, new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60))),
-				Pair.of(0, new RunSometimes<>(new SetOwnerLookTarget(), UniformInt.of(30, 60))),
+				Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
 				/*Pair.of(1, new FollowTemptation(entity->{
 					return SPEED_MULTIPLIER_WHEN_TEMPTED;
 				})),*/
@@ -90,9 +89,9 @@ public class PetTadpoleAi{
 					GateBehavior.RunningPolicy.TRY_ALL,
 					ImmutableList.of(
 						//TODO: RandomSwim
-						Pair.of(new RandomSwim(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER), 2),
-						Pair.of(new SetWalkTargetFromLookTarget(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER, 3), 3),
-						Pair.of(new RunIf<>(Entity::isInWaterOrBubble, new DoNothing(30, 60)), 5)
+						Pair.of(RandomStroll.swim(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER), 2),
+						Pair.of(SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER, 3), 3),
+						Pair.of(BehaviorBuilder.triggerIf(Entity::isInWaterOrBubble), 5)
 					)
 				))
 			)

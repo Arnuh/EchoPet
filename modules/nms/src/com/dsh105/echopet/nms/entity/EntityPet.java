@@ -26,9 +26,10 @@ import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.NMSEntityUtil;
+import com.dsh105.echopet.nms.RegistryType;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.base.EntityPetHandle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,9 +44,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 @Deprecated
@@ -319,7 +320,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	public SoundEvent getSoundFromString(String soundName){
-		return soundName != null ? Registry.SOUND_EVENT.get(new ResourceLocation(soundName)) : null;
+		return soundName != null ? VersionBreaking.getRegistry(RegistryType.Sound_Event, new ResourceLocation(soundName)) : null;
 		// mojang made this method private
 		// return soundName != null ? SoundEffect.a.get(new MinecraftKey(soundName)) : null;
 	}

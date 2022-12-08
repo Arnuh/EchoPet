@@ -44,6 +44,7 @@ import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -345,9 +346,12 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return null;
 	}
 	
-	@Override
 	public boolean canJump(){
 		return isSaddled();
+	}
+	
+	public boolean canJump(Player player){
+		return isSaddled() && getControllingPassenger() == player;
 	}
 	
 	@Override

@@ -40,7 +40,7 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 
 @EntityPetType(petType = PetType.BEE)
 public class EntityBeePet extends Bee implements IEntityAgeablePet, EntityPetGiveMeAccess{

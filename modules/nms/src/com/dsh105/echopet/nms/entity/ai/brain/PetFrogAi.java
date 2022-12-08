@@ -20,36 +20,41 @@ package com.dsh105.echopet.nms.entity.ai.brain;
 
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.BrainFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.RandomStrollAroundOwner;
-import com.dsh105.echopet.nms.entity.ai.brain.behavior.SetOwnerLookTarget;
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.ShootTongueOwner;
 import com.dsh105.echopet.nms.entity.type.EntityFrogPet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.CountDownCooldownTicks;
 import net.minecraft.world.entity.ai.behavior.Croak;
-import net.minecraft.world.entity.ai.behavior.DoNothing;
 import net.minecraft.world.entity.ai.behavior.GateBehavior;
 import net.minecraft.world.entity.ai.behavior.LongJumpMidJump;
 import net.minecraft.world.entity.ai.behavior.LongJumpToPreferredBlock;
+import net.minecraft.world.entity.ai.behavior.LongJumpToRandomPos;
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
 import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
-import net.minecraft.world.entity.ai.behavior.RandomSwim;
-import net.minecraft.world.entity.ai.behavior.RunIf;
+import net.minecraft.world.entity.ai.behavior.RandomStroll;
 import net.minecraft.world.entity.ai.behavior.RunOne;
-import net.minecraft.world.entity.ai.behavior.RunSometimes;
+import net.minecraft.world.entity.ai.behavior.SetEntityLookTargetSometimes;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
 import net.minecraft.world.entity.ai.behavior.TryFindLand;
+import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class PetFrogAi{
 	
@@ -74,6 +79,7 @@ public class PetFrogAi{
 		initCoreActivity(frogBrain);
 		initIdleActivity(frogBrain);
 		initSwimActivity(frogBrain);
+		// initLaySpawnActivity(var0);
 		initTongueActivity(frogBrain);
 		initJumpActivity(frogBrain);
 		frogBrain.setCoreActivities(ImmutableSet.of(Activity.CORE));
@@ -98,7 +104,7 @@ public class PetFrogAi{
 		frogBrain.addActivityWithConditions(Activity.IDLE,
 			ImmutableList.of(
 				//Pair.of(0, new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60))),
-				Pair.of(0, new RunSometimes<>(new SetOwnerLookTarget(), UniformInt.of(30, 60))),
+				Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
 				//Pair.of(0, new AnimalMakeLove(EntityType.FROG, SPEED_MULTIPLIER_WHEN_MAKING_LOVE)),
 				/*Pair.of(1, new FollowTemptation(entity->{
 					return SPEED_MULTIPLIER_WHEN_TEMPTED;
@@ -109,16 +115,16 @@ public class PetFrogAi{
 				/*Pair.of(2, new StartAttacking<>(PetFrogAi::canAttack, frog -> {
 					return frog.getBrain().getMemory(MemoryModuleType.NEAREST_ATTACKABLE);
 				})),*/
-				Pair.of(3, new TryFindLand(6, SPEED_MULTIPLIER_ON_LAND)),
+				Pair.of(3, TryFindLand.create(6, SPEED_MULTIPLIER_ON_LAND)),
 				//Pair.of(1, new TryFindOwner(6, SPEED_MULTIPLIER_WHEN_IDLING)),
 				Pair.of(4, new RunOne<>(
 					ImmutableMap.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
 					ImmutableList.of(
 						//Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING), 1),
 						Pair.of(new RandomStrollAroundOwner(SPEED_MULTIPLIER_ON_LAND), 1),
-						Pair.of(new SetWalkTargetFromLookTarget(SPEED_MULTIPLIER_ON_LAND, 3), 1),
+						Pair.of(SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_ON_LAND, 3), 1),
 						Pair.of(new Croak(), 3),
-						Pair.of(new RunIf<>(Entity::isOnGround, new DoNothing(5, 20)), 2)
+						Pair.of(BehaviorBuilder.triggerIf(Entity::isOnGround), 2)
 					)
 				))
 			), ImmutableSet.of(Pair.of(MemoryModuleType.LONG_JUMP_MID_JUMP, MemoryStatus.VALUE_ABSENT),
@@ -131,7 +137,7 @@ public class PetFrogAi{
 		frogBrain.addActivityWithConditions(Activity.SWIM,
 			ImmutableList.of(
 				//Pair.of(0, new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60))),
-				Pair.of(0, new RunSometimes<>(new SetOwnerLookTarget(), UniformInt.of(30, 60))),
+				Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
 				/*Pair.of(1, new FollowTemptation(target->{
 					return SPEED_MULTIPLIER_WHEN_TEMPTED;
 				})),*/
@@ -141,15 +147,15 @@ public class PetFrogAi{
 				/*Pair.of(2, new StartAttacking<>(PetFrogAi::canAttack, frog -> {
 					return frog.getBrain().getMemory(MemoryModuleType.NEAREST_ATTACKABLE);
 				})),*/
-				Pair.of(3, new TryFindLand(8, MAX_JUMP_VELOCITY)),
+				Pair.of(3, TryFindLand.create(8, MAX_JUMP_VELOCITY)),
 				Pair.of(5, new GateBehavior<>(
 					ImmutableMap.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
 					ImmutableSet.of(),
 					GateBehavior.OrderPolicy.ORDERED, GateBehavior.RunningPolicy.TRY_ALL,
 					ImmutableList.of(
-						Pair.of(new RandomSwim(SPEED_MULTIPLIER_IN_WATER), 1),
-						Pair.of(new SetWalkTargetFromLookTarget(SPEED_MULTIPLIER_IN_WATER, 3), 1),
-						Pair.of(new RunIf<>(Entity::isInWaterOrBubble, new DoNothing(30, 60)), 5)
+						Pair.of(RandomStroll.swim(SPEED_MULTIPLIER_IN_WATER), 1),
+						Pair.of(SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_IN_WATER, 3), 1),
+						Pair.of(BehaviorBuilder.triggerIf(Entity::isInWaterOrBubble), 5)
 					)
 				))
 			),
@@ -166,9 +172,7 @@ public class PetFrogAi{
 				Pair.of(0, new LongJumpMidJump(TIME_BETWEEN_LONG_JUMPS, SoundEvents.FROG_STEP)),
 				Pair.of(1, new LongJumpToPreferredBlock<>(TIME_BETWEEN_LONG_JUMPS, MAX_LONG_JUMP_HEIGHT, MAX_LONG_JUMP_WIDTH, MAX_JUMP_VELOCITY, frog->{
 					return SoundEvents.FROG_LONG_JUMP;
-				}, BlockTags.FROG_PREFER_JUMP_TO, 0.5F, targetBlock->{
-					return targetBlock.is(Blocks.LILY_PAD);
-				}))
+				}, BlockTags.FROG_PREFER_JUMP_TO, 0.5F, PetFrogAi::isAcceptableLandingSpot))
 			),
 			ImmutableSet.of(
 				Pair.of(MemoryModuleType.TEMPTING_PLAYER, MemoryStatus.VALUE_ABSENT),
@@ -193,5 +197,23 @@ public class PetFrogAi{
 	
 	public static void updateActivity(EntityFrogPet frog){
 		frog.getBrain().setActiveActivityToFirstValid(ACTIVITIES);
+	}
+	
+	private static <E extends Mob> boolean isAcceptableLandingSpot(E var0, BlockPos var1) {
+		Level var2 = var0.level;
+		BlockPos var3 = var1.below();
+		if (var2.getFluidState(var1).isEmpty() && var2.getFluidState(var3).isEmpty() && var2.getFluidState(var1.above()).isEmpty()) {
+			BlockState var4 = var2.getBlockState(var1);
+			BlockState var5 = var2.getBlockState(var3);
+			if (!var4.is(BlockTags.FROG_PREFER_JUMP_TO) && !var5.is(BlockTags.FROG_PREFER_JUMP_TO)) {
+				BlockPathTypes var6 = WalkNodeEvaluator.getBlockPathTypeStatic(var2, var1.mutable());
+				BlockPathTypes var7 = WalkNodeEvaluator.getBlockPathTypeStatic(var2, var3.mutable());
+				return var6==BlockPathTypes.TRAPDOOR || (var4.isAir() && var7==BlockPathTypes.TRAPDOOR) || LongJumpToRandomPos.defaultAcceptableLandingSpot(var0, var1);
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
 	}
 }

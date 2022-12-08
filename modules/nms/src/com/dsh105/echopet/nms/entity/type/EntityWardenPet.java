@@ -33,7 +33,6 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWardenPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
-import com.dsh105.echopet.nms.entity.ai.brain.PetWardenAi;
 import com.dsh105.echopet.nms.entity.ai.brain.sensing.CustomSensorType;
 import com.dsh105.echopet.nms.entity.base.EntityWardenPetHandle;
 import com.google.common.collect.ImmutableList;
@@ -53,7 +52,7 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 
 @EntityPetType(petType = PetType.WARDEN)
@@ -105,7 +104,7 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	@Override
 	protected Brain<?> makeBrain(Dynamic<?> dynamic){
 		if(usesBrain()){
-			return PetWardenAi.makeBrain(this, petBrainProvider().makeBrain(dynamic));
+			return null;// PetWardenAi.makeBrain(this, petBrainProvider().makeBrain(dynamic));
 		}else{
 			return petBrainProvider().makeBrain(dynamic);
 		}
@@ -131,7 +130,7 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 			syncClientAngerLevel();
 		}*/
 		this.level.getProfiler().push("wardenActivityUpdate");
-		PetWardenAi.updateActivity(this);
+		// PetWardenAi.updateActivity(this);
 		this.level.getProfiler().pop();
 	}
 	

@@ -104,7 +104,7 @@ public class PetWardenAi{
 		var0.addActivity(Activity.CORE, 0,
 			ImmutableList.of(
 				new Swim(0.8F),
-				new SetWardenLookTarget(),
+				SetWardenLookTarget.create(),
 				new LookAtTargetSink(45, 90),
 				new MoveToTargetSink()
 			)
@@ -134,12 +134,12 @@ public class PetWardenAi{
 	private static void initIdleActivity(Brain<EntityWardenPet> var0){
 		var0.addActivity(Activity.IDLE, 10,
 			ImmutableList.of(
-				new SetRoarTarget<>(Warden::getEntityAngryAt),
-				new TryToSniff(),
+				SetRoarTarget.create(Warden::getEntityAngryAt),
+				TryToSniff.create(),
 				new RunOne<>(
 					ImmutableMap.of(MemoryModuleType.IS_SNIFFING, MemoryStatus.VALUE_ABSENT),
 					ImmutableList.of(
-						Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING), 2),
+						Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING), 2),
 						Pair.of(new DoNothing(30, 60), 1)
 					)
 				)
@@ -150,15 +150,15 @@ public class PetWardenAi{
 	private static void initInvestigateActivity(Brain<EntityWardenPet> var0){
 		var0.addActivityAndRemoveMemoryWhenStopped(Activity.INVESTIGATE, 5,
 			ImmutableList.of(
-				new SetRoarTarget<>(Warden::getEntityAngryAt),
-				new GoToTargetLocation<>(MemoryModuleType.DISTURBANCE_LOCATION, 2, SPEED_MULTIPLIER_WHEN_INVESTIGATING)
+				SetRoarTarget.create(Warden::getEntityAngryAt),
+				GoToTargetLocation.create(MemoryModuleType.DISTURBANCE_LOCATION, 2, SPEED_MULTIPLIER_WHEN_INVESTIGATING)
 			), MemoryModuleType.DISTURBANCE_LOCATION);
 	}
 	
 	private static void initSniffingActivity(Brain<EntityWardenPet> var0){
 		var0.addActivityAndRemoveMemoryWhenStopped(Activity.SNIFF, 5,
 			ImmutableList.of(
-				new SetRoarTarget<>(Warden::getEntityAngryAt),
+				SetRoarTarget.create(Warden::getEntityAngryAt),
 				new Sniffing<>(SNIFFING_DURATION)
 			), MemoryModuleType.IS_SNIFFING);
 	}
@@ -172,14 +172,13 @@ public class PetWardenAi{
 	
 	private static void initFightActivity(EntityWardenPet entity, Brain<EntityWardenPet> brain){
 		brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10,
-			ImmutableList.of(DIG_COOLDOWN_SETTER, new StopAttackingIfTargetInvalid<>(target->{
-				return !entity.getAngerLevel().isAngry() || !entity.canTargetEntity(target);
-			}, PetWardenAi::onTargetInvalid, false), new SetEntityLookTarget(target->{
-				return isTarget(entity, target);
-			}, (float) entity.getAttributeValue(Attributes.FOLLOW_RANGE)),
-				new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING),
+			ImmutableList.of(
+				DIG_COOLDOWN_SETTER,
+				StopAttackingIfTargetInvalid.create(target->!entity.getAngerLevel().isAngry() || !entity.canTargetEntity(target), PetWardenAi::onTargetInvalid, false),
+				SetEntityLookTarget.create(target->isTarget(entity, target), (float) entity.getAttributeValue(Attributes.FOLLOW_RANGE)),
+				SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(SPEED_MULTIPLIER_WHEN_FIGHTING),
 				new SonicBoom(),
-				new MeleeAttack(18)
+				MeleeAttack.create(18)
 			), MemoryModuleType.ATTACK_TARGET);
 	}
 	

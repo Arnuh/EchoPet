@@ -39,7 +39,6 @@ public class GoalSelectorWrapper extends GoalSelector{
 		//
 	}
 	
-	@Override
 	public void removeAllGoals(){
 		wrapped.removeAllGoals();
 	}
