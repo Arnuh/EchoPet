@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/Arnuh/EchoPet/master/src/resources/EchoPet.png)
+![Logo](https://raw.githubusercontent.com/Arnuh/EchoPet/master/main/src/main/resources/EchoPet.png)
 ## [EchoPet](https://dev.bukkit.org/bukkit-plugins/echopet/) adds pets to your Minecraft server! Perfect for donation perks
 ### [Stable Downloads](https://jenkins.arnah.ca/job/EchoPet/)
 ### [Development Downloads](https://jenkins.arnah.ca/job/EchoPet-Dev/)

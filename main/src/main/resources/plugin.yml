@@ -1,0 +1,3608 @@
+name: EchoPet
+version: @VERSION@-b@BUILD_NUMBER@
+description: >
+  EchoPet is an advanced, easy to use plugin, designed to handle custom-tailored pets with more unique behaviours than vanilla Minecraft entities. Perfect for donation perks.
+
+authors: [ DSH105, Borlea ]
+main: com.dsh105.echopet.EchoPetPlugin
+softdepend: [ WorldGuard, VanishNoPacket, PlaceholderAPI ]
+api-version: 1.13
+
+commands:
+  ecupdate:
+    description: Update the EchoPet plugin
+    permission: echopet.update
+  echopet:
+    description: View plugin information and general help
+permissions:
+  echopet.update:
+    default: op
+    description: Update the EchoPet plugin
+  echopet.pet:
+    default: op
+    description: View the EchoPet help menu
+  echopet.pet.remove:
+    default: op
+    description: Remove your current pet
+  echopet.pet.list:
+    default: op
+    description: List the pet types
+  echopet.pet.info:
+    default: op
+    description: Provides info on your current pet
+  echopet.pet.menu:
+    default: op
+    description: Open the Data Menu GUI for your pet
+  echopet.pet.show:
+    default: op
+    description: Show your hidden pet
+  echopet.pet.hide:
+    default: op
+    description: Hide your current pet
+  echopet.pet.toggle:
+    default: op
+    description: Hide your current pet
+  echopet.pet.call:
+    default: op
+    description: Call your pet to your side
+  echopet.pet.name:
+    default: op
+    description: Set the name tag of your current pet
+  echopet.pet.default.set.current:
+    default: op
+    description: Set the default pet to your current pet
+  echopet.pet.default.remove:
+    default: op
+    description: Remove your default pet
+  echopet.pet.select:
+    default: op
+    description: Open the Pet Selector GUI menu
+  echopet.pet.selector:
+    default: op
+    description: Give yourself the Pet Selector
+  echopet.pet.modify:
+    default: op
+    description: Modify the Pet data
+  echopet.petadmin:
+    default: op
+    description: View the PetAdmin Help Menu
+  echopet.petadmin.remove:
+    default: op
+    description: Remove a player's pet
+  echopet.petadmin.reload:
+    default: op
+    description: Reload the Configuration File
+  echopet.petadmin.list:
+    default: op
+    description: List the pet types
+  echopet.petadmin.info:
+    default: op
+    description: Provides info on a player's current pet
+  echopet.petadmin.menu:
+    default: op
+    description: Open the Data Menu GUI for your pet
+  echopet.petadmin.show:
+    default: op
+    description: Show a player's hidden pet
+  echopet.petadmin.hide:
+    default: op
+    description: Hide a player's current pet
+  echopet.petadmin.call:
+    default: op
+    description: Call a player's pet to their side
+  echopet.petadmin.name:
+    default: op
+    description: Set the name tag of a player's pet
+  echopet.petadmin.default.set.current:
+    default: op
+    description: Set the default pet of a player to their current pet
+  echopet.petadmin.default.remove:
+    default: op
+    description: Remove a player's default pet
+  echopet.petadmin.select:
+    default: op
+    description: Open the Pet Selector GUI menu
+  echopet.petadmin.selector:
+    default: op
+    description: Give yourself the Pet Selector
+  echopet.pet.type.allay:
+    default: op
+  echopet.pet.type.axolotl:
+    default: op
+  echopet.pet.type.bat:
+    default: op
+  echopet.pet.type.bee:
+    default: op
+  echopet.pet.type.blaze:
+    default: op
+  echopet.pet.type.cat:
+    default: op
+  echopet.pet.type.cavespider:
+    default: op
+  echopet.pet.type.chicken:
+    default: op
+  echopet.pet.type.cod:
+    default: op
+  echopet.pet.type.cow:
+    default: op
+  echopet.pet.type.creeper:
+    default: op
+  echopet.pet.type.dolphin:
+    default: op
+  echopet.pet.type.donkey:
+    default: op
+  echopet.pet.type.drowned:
+    default: op
+  echopet.pet.type.elderguardian:
+    default: op
+  echopet.pet.type.enderman:
+    default: op
+  echopet.pet.type.endermite:
+    default: op
+  echopet.pet.type.evoker:
+    default: op
+  echopet.pet.type.fox:
+    default: op
+  echopet.pet.type.frog:
+    default: op
+  echopet.pet.type.ghast:
+    default: op
+  echopet.pet.type.giant:
+    default: op
+  echopet.pet.type.glowsquid:
+    default: op
+  echopet.pet.type.goat:
+    default: op
+  echopet.pet.type.guardian:
+    default: op
+  echopet.pet.type.hoglin:
+    default: op
+  echopet.pet.type.horse:
+    default: op
+  echopet.pet.type.human:
+    default: op
+  echopet.pet.type.husk:
+    default: op
+  echopet.pet.type.illusioner:
+    default: op
+  echopet.pet.type.irongolem:
+    default: op
+  echopet.pet.type.llama:
+    default: op
+  echopet.pet.type.magmacube:
+    default: op
+  echopet.pet.type.mule:
+    default: op
+  echopet.pet.type.mushroomcow:
+    default: op
+  echopet.pet.type.ocelot:
+    default: op
+  echopet.pet.type.panda:
+    default: op
+  echopet.pet.type.parrot:
+    default: op
+  echopet.pet.type.phantom:
+    default: op
+  echopet.pet.type.pig:
+    default: op
+  echopet.pet.type.piglin:
+    default: op
+  echopet.pet.type.pigzombie:
+    default: op
+  echopet.pet.type.pillager:
+    default: op
+  echopet.pet.type.polarbear:
+    default: op
+  echopet.pet.type.pufferfish:
+    default: op
+  echopet.pet.type.rabbit:
+    default: op
+  echopet.pet.type.ravager:
+    default: op
+  echopet.pet.type.salmon:
+    default: op
+  echopet.pet.type.sheep:
+    default: op
+  echopet.pet.type.shulker:
+    default: op
+  echopet.pet.type.silverfish:
+    default: op
+  echopet.pet.type.skeleton:
+    default: op
+  echopet.pet.type.skeletonhorse:
+    default: op
+  echopet.pet.type.slime:
+    default: op
+  echopet.pet.type.snowman:
+    default: op
+  echopet.pet.type.spider:
+    default: op
+  echopet.pet.type.squid:
+    default: op
+  echopet.pet.type.stray:
+    default: op
+  echopet.pet.type.strider:
+    default: op
+  echopet.pet.type.tadpole:
+    default: op
+  echopet.pet.type.traderllama:
+    default: op
+  echopet.pet.type.tropicalfish:
+    default: op
+  echopet.pet.type.turtle:
+    default: op
+  echopet.pet.type.vex:
+    default: op
+  echopet.pet.type.villager:
+    default: op
+  echopet.pet.type.vindicator:
+    default: op
+  echopet.pet.type.wanderingtrader:
+    default: op
+  echopet.pet.type.warden:
+    default: op
+  echopet.pet.type.witch:
+    default: op
+  echopet.pet.type.wither:
+    default: op
+  echopet.pet.type.witherskeleton:
+    default: op
+  echopet.pet.type.wolf:
+    default: op
+  echopet.pet.type.zoglin:
+    default: op
+  echopet.pet.type.zombie:
+    default: op
+  echopet.pet.type.zombiehorse:
+    default: op
+  echopet.pet.type.zombievillager:
+    default: op
+  echopet.pet.default.set.type.allay:
+    default: op
+  echopet.pet.default.set.type.axolotl:
+    default: op
+  echopet.pet.default.set.type.bat:
+    default: op
+  echopet.pet.default.set.type.bee:
+    default: op
+  echopet.pet.default.set.type.blaze:
+    default: op
+  echopet.pet.default.set.type.cat:
+    default: op
+  echopet.pet.default.set.type.cavespider:
+    default: op
+  echopet.pet.default.set.type.chicken:
+    default: op
+  echopet.pet.default.set.type.cod:
+    default: op
+  echopet.pet.default.set.type.cow:
+    default: op
+  echopet.pet.default.set.type.creeper:
+    default: op
+  echopet.pet.default.set.type.dolphin:
+    default: op
+  echopet.pet.default.set.type.donkey:
+    default: op
+  echopet.pet.default.set.type.drowned:
+    default: op
+  echopet.pet.default.set.type.elderguardian:
+    default: op
+  echopet.pet.default.set.type.enderman:
+    default: op
+  echopet.pet.default.set.type.endermite:
+    default: op
+  echopet.pet.default.set.type.evoker:
+    default: op
+  echopet.pet.default.set.type.fox:
+    default: op
+  echopet.pet.default.set.type.frog:
+    default: op
+  echopet.pet.default.set.type.ghast:
+    default: op
+  echopet.pet.default.set.type.giant:
+    default: op
+  echopet.pet.default.set.type.glowsquid:
+    default: op
+  echopet.pet.default.set.type.goat:
+    default: op
+  echopet.pet.default.set.type.guardian:
+    default: op
+  echopet.pet.default.set.type.hoglin:
+    default: op
+  echopet.pet.default.set.type.horse:
+    default: op
+  echopet.pet.default.set.type.human:
+    default: op
+  echopet.pet.default.set.type.husk:
+    default: op
+  echopet.pet.default.set.type.illusioner:
+    default: op
+  echopet.pet.default.set.type.irongolem:
+    default: op
+  echopet.pet.default.set.type.llama:
+    default: op
+  echopet.pet.default.set.type.magmacube:
+    default: op
+  echopet.pet.default.set.type.mule:
+    default: op
+  echopet.pet.default.set.type.mushroomcow:
+    default: op
+  echopet.pet.default.set.type.ocelot:
+    default: op
+  echopet.pet.default.set.type.panda:
+    default: op
+  echopet.pet.default.set.type.parrot:
+    default: op
+  echopet.pet.default.set.type.phantom:
+    default: op
+  echopet.pet.default.set.type.pig:
+    default: op
+  echopet.pet.default.set.type.piglin:
+    default: op
+  echopet.pet.default.set.type.pigzombie:
+    default: op
+  echopet.pet.default.set.type.pillager:
+    default: op
+  echopet.pet.default.set.type.polarbear:
+    default: op
+  echopet.pet.default.set.type.pufferfish:
+    default: op
+  echopet.pet.default.set.type.rabbit:
+    default: op
+  echopet.pet.default.set.type.ravager:
+    default: op
+  echopet.pet.default.set.type.salmon:
+    default: op
+  echopet.pet.default.set.type.sheep:
+    default: op
+  echopet.pet.default.set.type.shulker:
+    default: op
+  echopet.pet.default.set.type.silverfish:
+    default: op
+  echopet.pet.default.set.type.skeleton:
+    default: op
+  echopet.pet.default.set.type.skeletonhorse:
+    default: op
+  echopet.pet.default.set.type.slime:
+    default: op
+  echopet.pet.default.set.type.snowman:
+    default: op
+  echopet.pet.default.set.type.spider:
+    default: op
+  echopet.pet.default.set.type.squid:
+    default: op
+  echopet.pet.default.set.type.stray:
+    default: op
+  echopet.pet.default.set.type.strider:
+    default: op
+  echopet.pet.default.set.type.tadpole:
+    default: op
+  echopet.pet.default.set.type.traderllama:
+    default: op
+  echopet.pet.default.set.type.tropicalfish:
+    default: op
+  echopet.pet.default.set.type.turtle:
+    default: op
+  echopet.pet.default.set.type.vex:
+    default: op
+  echopet.pet.default.set.type.villager:
+    default: op
+  echopet.pet.default.set.type.vindicator:
+    default: op
+  echopet.pet.default.set.type.wanderingtrader:
+    default: op
+  echopet.pet.default.set.type.warden:
+    default: op
+  echopet.pet.default.set.type.witch:
+    default: op
+  echopet.pet.default.set.type.wither:
+    default: op
+  echopet.pet.default.set.type.witherskeleton:
+    default: op
+  echopet.pet.default.set.type.wolf:
+    default: op
+  echopet.pet.default.set.type.zoglin:
+    default: op
+  echopet.pet.default.set.type.zombie:
+    default: op
+  echopet.pet.default.set.type.zombiehorse:
+    default: op
+  echopet.pet.default.set.type.zombievillager:
+    default: op
+  echopet.pet.type.allay.hat:
+    default: op
+  echopet.pet.type.allay.ride:
+    default: op
+  echopet.pet.type.axolotl.hat:
+    default: op
+  echopet.pet.type.axolotl.ride:
+    default: op
+  echopet.pet.type.axolotl.baby:
+    default: op
+  echopet.pet.type.axolotl.playing_dead:
+    default: op
+  echopet.pet.type.axolotl.lucy:
+    default: op
+  echopet.pet.type.axolotl.wild:
+    default: op
+  echopet.pet.type.axolotl.gold:
+    default: op
+  echopet.pet.type.axolotl.cyan:
+    default: op
+  echopet.pet.type.axolotl.blue:
+    default: op
+  echopet.pet.type.bat.hat:
+    default: op
+  echopet.pet.type.bat.ride:
+    default: op
+  echopet.pet.type.bat.wander:
+    default: op
+  echopet.pet.type.bee.hat:
+    default: op
+  echopet.pet.type.bee.ride:
+    default: op
+  echopet.pet.type.bee.baby:
+    default: op
+  echopet.pet.type.bee.stinger:
+    default: op
+  echopet.pet.type.bee.nectar:
+    default: op
+  echopet.pet.type.bee.angry:
+    default: op
+  echopet.pet.type.blaze.hat:
+    default: op
+  echopet.pet.type.blaze.ride:
+    default: op
+  echopet.pet.type.blaze.fire:
+    default: op
+  echopet.pet.type.cat.hat:
+    default: op
+  echopet.pet.type.cat.ride:
+    default: op
+  echopet.pet.type.cat.baby:
+    default: op
+  echopet.pet.type.cat.sit:
+    default: op
+  echopet.pet.type.cat.tamed:
+    default: op
+  echopet.pet.type.cat.white:
+    default: op
+  echopet.pet.type.cat.orange:
+    default: op
+  echopet.pet.type.cat.magenta:
+    default: op
+  echopet.pet.type.cat.light_blue:
+    default: op
+  echopet.pet.type.cat.yellow:
+    default: op
+  echopet.pet.type.cat.lime:
+    default: op
+  echopet.pet.type.cat.pink:
+    default: op
+  echopet.pet.type.cat.gray:
+    default: op
+  echopet.pet.type.cat.light_gray:
+    default: op
+  echopet.pet.type.cat.cyan:
+    default: op
+  echopet.pet.type.cat.purple:
+    default: op
+  echopet.pet.type.cat.blue:
+    default: op
+  echopet.pet.type.cat.brown:
+    default: op
+  echopet.pet.type.cat.green:
+    default: op
+  echopet.pet.type.cat.red:
+    default: op
+  echopet.pet.type.cat.black:
+    default: op
+  echopet.pet.type.cat.type_tabby:
+    default: op
+  echopet.pet.type.cat.type_tuxedo:
+    default: op
+  echopet.pet.type.cat.type_red:
+    default: op
+  echopet.pet.type.cat.type_siamese:
+    default: op
+  echopet.pet.type.cat.type_british_shorthair:
+    default: op
+  echopet.pet.type.cat.type_calico:
+    default: op
+  echopet.pet.type.cat.type_persian:
+    default: op
+  echopet.pet.type.cat.type_ragdoll:
+    default: op
+  echopet.pet.type.cat.type_white:
+    default: op
+  echopet.pet.type.cat.type_jellie:
+    default: op
+  echopet.pet.type.cat.type_black:
+    default: op
+  echopet.pet.type.cavespider.hat:
+    default: op
+  echopet.pet.type.cavespider.ride:
+    default: op
+  echopet.pet.type.chicken.hat:
+    default: op
+  echopet.pet.type.chicken.ride:
+    default: op
+  echopet.pet.type.chicken.baby:
+    default: op
+  echopet.pet.type.cod.hat:
+    default: op
+  echopet.pet.type.cod.ride:
+    default: op
+  echopet.pet.type.cow.hat:
+    default: op
+  echopet.pet.type.cow.ride:
+    default: op
+  echopet.pet.type.cow.baby:
+    default: op
+  echopet.pet.type.creeper.hat:
+    default: op
+  echopet.pet.type.creeper.ride:
+    default: op
+  echopet.pet.type.creeper.powered:
+    default: op
+  echopet.pet.type.dolphin.hat:
+    default: op
+  echopet.pet.type.dolphin.ride:
+    default: op
+  echopet.pet.type.donkey.hat:
+    default: op
+  echopet.pet.type.donkey.ride:
+    default: op
+  echopet.pet.type.donkey.baby:
+    default: op
+  echopet.pet.type.donkey.chest:
+    default: op
+  echopet.pet.type.donkey.saddle:
+    default: op
+  echopet.pet.type.drowned.hat:
+    default: op
+  echopet.pet.type.drowned.ride:
+    default: op
+  echopet.pet.type.drowned.baby:
+    default: op
+  echopet.pet.type.elderguardian.hat:
+    default: op
+  echopet.pet.type.elderguardian.ride:
+    default: op
+  echopet.pet.type.enderman.hat:
+    default: op
+  echopet.pet.type.enderman.ride:
+    default: op
+  echopet.pet.type.enderman.screaming:
+    default: op
+  echopet.pet.type.endermite.hat:
+    default: op
+  echopet.pet.type.endermite.ride:
+    default: op
+  echopet.pet.type.evoker.hat:
+    default: op
+  echopet.pet.type.evoker.ride:
+    default: op
+  echopet.pet.type.fox.hat:
+    default: op
+  echopet.pet.type.fox.ride:
+    default: op
+  echopet.pet.type.fox.baby:
+    default: op
+  echopet.pet.type.fox.sit:
+    default: op
+  echopet.pet.type.fox.crouch:
+    default: op
+  echopet.pet.type.fox.head_tilt:
+    default: op
+  echopet.pet.type.fox.pounce:
+    default: op
+  echopet.pet.type.fox.sleep:
+    default: op
+  echopet.pet.type.fox.leg_shake:
+    default: op
+  echopet.pet.type.fox.red:
+    default: op
+  echopet.pet.type.fox.snow:
+    default: op
+  echopet.pet.type.frog.hat:
+    default: op
+  echopet.pet.type.frog.ride:
+    default: op
+  echopet.pet.type.frog.temperate:
+    default: op
+  echopet.pet.type.frog.warm:
+    default: op
+  echopet.pet.type.frog.cold:
+    default: op
+  echopet.pet.type.ghast.hat:
+    default: op
+  echopet.pet.type.ghast.ride:
+    default: op
+  echopet.pet.type.giant.hat:
+    default: op
+  echopet.pet.type.giant.ride:
+    default: op
+  echopet.pet.type.glowsquid.hat:
+    default: op
+  echopet.pet.type.glowsquid.ride:
+    default: op
+  echopet.pet.type.glowsquid.dark:
+    default: op
+  echopet.pet.type.goat.hat:
+    default: op
+  echopet.pet.type.goat.ride:
+    default: op
+  echopet.pet.type.goat.baby:
+    default: op
+  echopet.pet.type.goat.screaming:
+    default: op
+  echopet.pet.type.goat.left_horn:
+    default: op
+  echopet.pet.type.goat.right_horn:
+    default: op
+  echopet.pet.type.guardian.hat:
+    default: op
+  echopet.pet.type.guardian.ride:
+    default: op
+  echopet.pet.type.hoglin.hat:
+    default: op
+  echopet.pet.type.hoglin.ride:
+    default: op
+  echopet.pet.type.hoglin.baby:
+    default: op
+  echopet.pet.type.horse.hat:
+    default: op
+  echopet.pet.type.horse.ride:
+    default: op
+  echopet.pet.type.horse.baby:
+    default: op
+  echopet.pet.type.horse.saddle:
+    default: op
+  echopet.pet.type.horse.no_armor:
+    default: op
+  echopet.pet.type.horse.iron_armor:
+    default: op
+  echopet.pet.type.horse.gold_armor:
+    default: op
+  echopet.pet.type.horse.diamond_armor:
+    default: op
+  echopet.pet.type.horse.white:
+    default: op
+  echopet.pet.type.horse.creamy:
+    default: op
+  echopet.pet.type.horse.chestnut:
+    default: op
+  echopet.pet.type.horse.brown:
+    default: op
+  echopet.pet.type.horse.black:
+    default: op
+  echopet.pet.type.horse.gray:
+    default: op
+  echopet.pet.type.horse.dark_brown:
+    default: op
+  echopet.pet.type.horse.no_marking:
+    default: op
+  echopet.pet.type.horse.white_socks:
+    default: op
+  echopet.pet.type.horse.white_field:
+    default: op
+  echopet.pet.type.horse.white_dots:
+    default: op
+  echopet.pet.type.horse.black_dots:
+    default: op
+  echopet.pet.type.human.hat:
+    default: op
+  echopet.pet.type.human.ride:
+    default: op
+  echopet.pet.type.husk.hat:
+    default: op
+  echopet.pet.type.husk.ride:
+    default: op
+  echopet.pet.type.husk.baby:
+    default: op
+  echopet.pet.type.illusioner.hat:
+    default: op
+  echopet.pet.type.illusioner.ride:
+    default: op
+  echopet.pet.type.irongolem.hat:
+    default: op
+  echopet.pet.type.irongolem.ride:
+    default: op
+  echopet.pet.type.irongolem.health:
+    default: op
+  echopet.pet.type.llama.hat:
+    default: op
+  echopet.pet.type.llama.ride:
+    default: op
+  echopet.pet.type.llama.baby:
+    default: op
+  echopet.pet.type.llama.chest:
+    default: op
+  echopet.pet.type.llama.creamy:
+    default: op
+  echopet.pet.type.llama.white:
+    default: op
+  echopet.pet.type.llama.brown:
+    default: op
+  echopet.pet.type.llama.gray:
+    default: op
+  echopet.pet.type.llama.white_carpet:
+    default: op
+  echopet.pet.type.llama.orange_carpet:
+    default: op
+  echopet.pet.type.llama.magenta_carpet:
+    default: op
+  echopet.pet.type.llama.light_blue_carpet:
+    default: op
+  echopet.pet.type.llama.yellow_carpet:
+    default: op
+  echopet.pet.type.llama.lime_carpet:
+    default: op
+  echopet.pet.type.llama.pink_carpet:
+    default: op
+  echopet.pet.type.llama.gray_carpet:
+    default: op
+  echopet.pet.type.llama.light_gray:
+    default: op
+  echopet.pet.type.llama.cyan_carpet:
+    default: op
+  echopet.pet.type.llama.purple_carpet:
+    default: op
+  echopet.pet.type.llama.blue_carpet:
+    default: op
+  echopet.pet.type.llama.brown_carpet:
+    default: op
+  echopet.pet.type.llama.green_carpet:
+    default: op
+  echopet.pet.type.llama.red_carpet:
+    default: op
+  echopet.pet.type.llama.black_carpet:
+    default: op
+  echopet.pet.type.magmacube.hat:
+    default: op
+  echopet.pet.type.magmacube.ride:
+    default: op
+  echopet.pet.type.magmacube.size_small:
+    default: op
+  echopet.pet.type.magmacube.size_medium:
+    default: op
+  echopet.pet.type.magmacube.size_large:
+    default: op
+  echopet.pet.type.mule.hat:
+    default: op
+  echopet.pet.type.mule.ride:
+    default: op
+  echopet.pet.type.mule.baby:
+    default: op
+  echopet.pet.type.mule.chest:
+    default: op
+  echopet.pet.type.mule.saddle:
+    default: op
+  echopet.pet.type.mushroomcow.hat:
+    default: op
+  echopet.pet.type.mushroomcow.ride:
+    default: op
+  echopet.pet.type.mushroomcow.baby:
+    default: op
+  echopet.pet.type.mushroomcow.red:
+    default: op
+  echopet.pet.type.mushroomcow.brown:
+    default: op
+  echopet.pet.type.ocelot.hat:
+    default: op
+  echopet.pet.type.ocelot.ride:
+    default: op
+  echopet.pet.type.ocelot.baby:
+    default: op
+  echopet.pet.type.panda.hat:
+    default: op
+  echopet.pet.type.panda.ride:
+    default: op
+  echopet.pet.type.panda.baby:
+    default: op
+  echopet.pet.type.panda.roll:
+    default: op
+  echopet.pet.type.panda.sit:
+    default: op
+  echopet.pet.type.panda.lay_down:
+    default: op
+  echopet.pet.type.panda.main_gene_normal:
+    default: op
+  echopet.pet.type.panda.main_gene_lazy:
+    default: op
+  echopet.pet.type.panda.main_gene_worried:
+    default: op
+  echopet.pet.type.panda.main_gene_playful:
+    default: op
+  echopet.pet.type.panda.main_gene_aggressive:
+    default: op
+  echopet.pet.type.panda.main_gene_weak:
+    default: op
+  echopet.pet.type.panda.main_gene_brown:
+    default: op
+  echopet.pet.type.panda.hidden_gene_normal:
+    default: op
+  echopet.pet.type.panda.hidden_gene_lazy:
+    default: op
+  echopet.pet.type.panda.hidden_gene_worried:
+    default: op
+  echopet.pet.type.panda.hidden_gene_playful:
+    default: op
+  echopet.pet.type.panda.hidden_gene_aggressive:
+    default: op
+  echopet.pet.type.panda.hidden_gene_weak:
+    default: op
+  echopet.pet.type.panda.hidden_gene_brown:
+    default: op
+  echopet.pet.type.parrot.hat:
+    default: op
+  echopet.pet.type.parrot.ride:
+    default: op
+  echopet.pet.type.parrot.red:
+    default: op
+  echopet.pet.type.parrot.blue:
+    default: op
+  echopet.pet.type.parrot.green:
+    default: op
+  echopet.pet.type.parrot.cyan:
+    default: op
+  echopet.pet.type.parrot.gray:
+    default: op
+  echopet.pet.type.phantom.hat:
+    default: op
+  echopet.pet.type.phantom.ride:
+    default: op
+  echopet.pet.type.phantom.size:
+    default: op
+  echopet.pet.type.phantom.wander:
+    default: op
+  echopet.pet.type.pig.hat:
+    default: op
+  echopet.pet.type.pig.ride:
+    default: op
+  echopet.pet.type.pig.baby:
+    default: op
+  echopet.pet.type.pig.saddle:
+    default: op
+  echopet.pet.type.piglin.hat:
+    default: op
+  echopet.pet.type.piglin.ride:
+    default: op
+  echopet.pet.type.piglin.baby:
+    default: op
+  echopet.pet.type.piglin.dance:
+    default: op
+  echopet.pet.type.pigzombie.hat:
+    default: op
+  echopet.pet.type.pigzombie.ride:
+    default: op
+  echopet.pet.type.pigzombie.baby:
+    default: op
+  echopet.pet.type.pillager.hat:
+    default: op
+  echopet.pet.type.pillager.ride:
+    default: op
+  echopet.pet.type.polarbear.hat:
+    default: op
+  echopet.pet.type.polarbear.ride:
+    default: op
+  echopet.pet.type.polarbear.baby:
+    default: op
+  echopet.pet.type.polarbear.standing_up:
+    default: op
+  echopet.pet.type.pufferfish.hat:
+    default: op
+  echopet.pet.type.pufferfish.ride:
+    default: op
+  echopet.pet.type.pufferfish.size_small:
+    default: op
+  echopet.pet.type.pufferfish.size_medium:
+    default: op
+  echopet.pet.type.pufferfish.size_large:
+    default: op
+  echopet.pet.type.rabbit.hat:
+    default: op
+  echopet.pet.type.rabbit.ride:
+    default: op
+  echopet.pet.type.rabbit.baby:
+    default: op
+  echopet.pet.type.rabbit.brown:
+    default: op
+  echopet.pet.type.rabbit.white:
+    default: op
+  echopet.pet.type.rabbit.black:
+    default: op
+  echopet.pet.type.rabbit.black_and_white:
+    default: op
+  echopet.pet.type.rabbit.gold:
+    default: op
+  echopet.pet.type.rabbit.salt_and_pepper:
+    default: op
+  echopet.pet.type.rabbit.killer_bunny:
+    default: op
+  echopet.pet.type.ravager.hat:
+    default: op
+  echopet.pet.type.ravager.ride:
+    default: op
+  echopet.pet.type.salmon.hat:
+    default: op
+  echopet.pet.type.salmon.ride:
+    default: op
+  echopet.pet.type.sheep.hat:
+    default: op
+  echopet.pet.type.sheep.ride:
+    default: op
+  echopet.pet.type.sheep.baby:
+    default: op
+  echopet.pet.type.sheep.sheared:
+    default: op
+  echopet.pet.type.sheep.white:
+    default: op
+  echopet.pet.type.sheep.orange:
+    default: op
+  echopet.pet.type.sheep.magenta:
+    default: op
+  echopet.pet.type.sheep.light_blue:
+    default: op
+  echopet.pet.type.sheep.yellow:
+    default: op
+  echopet.pet.type.sheep.lime:
+    default: op
+  echopet.pet.type.sheep.pink:
+    default: op
+  echopet.pet.type.sheep.gray:
+    default: op
+  echopet.pet.type.sheep.light_gray:
+    default: op
+  echopet.pet.type.sheep.cyan:
+    default: op
+  echopet.pet.type.sheep.purple:
+    default: op
+  echopet.pet.type.sheep.blue:
+    default: op
+  echopet.pet.type.sheep.brown:
+    default: op
+  echopet.pet.type.sheep.green:
+    default: op
+  echopet.pet.type.sheep.red:
+    default: op
+  echopet.pet.type.sheep.black:
+    default: op
+  echopet.pet.type.shulker.hat:
+    default: op
+  echopet.pet.type.shulker.ride:
+    default: op
+  echopet.pet.type.shulker.peek:
+    default: op
+  echopet.pet.type.shulker.no_color:
+    default: op
+  echopet.pet.type.shulker.white:
+    default: op
+  echopet.pet.type.shulker.orange:
+    default: op
+  echopet.pet.type.shulker.magenta:
+    default: op
+  echopet.pet.type.shulker.light_blue:
+    default: op
+  echopet.pet.type.shulker.yellow:
+    default: op
+  echopet.pet.type.shulker.lime:
+    default: op
+  echopet.pet.type.shulker.pink:
+    default: op
+  echopet.pet.type.shulker.gray:
+    default: op
+  echopet.pet.type.shulker.light_gray:
+    default: op
+  echopet.pet.type.shulker.cyan:
+    default: op
+  echopet.pet.type.shulker.purple:
+    default: op
+  echopet.pet.type.shulker.blue:
+    default: op
+  echopet.pet.type.shulker.brown:
+    default: op
+  echopet.pet.type.shulker.green:
+    default: op
+  echopet.pet.type.shulker.red:
+    default: op
+  echopet.pet.type.shulker.black:
+    default: op
+  echopet.pet.type.silverfish.hat:
+    default: op
+  echopet.pet.type.silverfish.ride:
+    default: op
+  echopet.pet.type.skeleton.hat:
+    default: op
+  echopet.pet.type.skeleton.ride:
+    default: op
+  echopet.pet.type.skeletonhorse.hat:
+    default: op
+  echopet.pet.type.skeletonhorse.ride:
+    default: op
+  echopet.pet.type.skeletonhorse.baby:
+    default: op
+  echopet.pet.type.skeletonhorse.saddle:
+    default: op
+  echopet.pet.type.slime.hat:
+    default: op
+  echopet.pet.type.slime.ride:
+    default: op
+  echopet.pet.type.slime.size_small:
+    default: op
+  echopet.pet.type.slime.size_medium:
+    default: op
+  echopet.pet.type.slime.size_large:
+    default: op
+  echopet.pet.type.snowman.hat:
+    default: op
+  echopet.pet.type.snowman.ride:
+    default: op
+  echopet.pet.type.snowman.sheared:
+    default: op
+  echopet.pet.type.spider.hat:
+    default: op
+  echopet.pet.type.spider.ride:
+    default: op
+  echopet.pet.type.squid.hat:
+    default: op
+  echopet.pet.type.squid.ride:
+    default: op
+  echopet.pet.type.stray.hat:
+    default: op
+  echopet.pet.type.stray.ride:
+    default: op
+  echopet.pet.type.strider.hat:
+    default: op
+  echopet.pet.type.strider.ride:
+    default: op
+  echopet.pet.type.strider.baby:
+    default: op
+  echopet.pet.type.strider.saddle:
+    default: op
+  echopet.pet.type.tadpole.hat:
+    default: op
+  echopet.pet.type.tadpole.ride:
+    default: op
+  echopet.pet.type.traderllama.hat:
+    default: op
+  echopet.pet.type.traderllama.ride:
+    default: op
+  echopet.pet.type.traderllama.baby:
+    default: op
+  echopet.pet.type.traderllama.chest:
+    default: op
+  echopet.pet.type.traderllama.creamy:
+    default: op
+  echopet.pet.type.traderllama.white:
+    default: op
+  echopet.pet.type.traderllama.brown:
+    default: op
+  echopet.pet.type.traderllama.gray:
+    default: op
+  echopet.pet.type.traderllama.white_carpet:
+    default: op
+  echopet.pet.type.traderllama.orange_carpet:
+    default: op
+  echopet.pet.type.traderllama.magenta_carpet:
+    default: op
+  echopet.pet.type.traderllama.light_blue_carpet:
+    default: op
+  echopet.pet.type.traderllama.yellow_carpet:
+    default: op
+  echopet.pet.type.traderllama.lime_carpet:
+    default: op
+  echopet.pet.type.traderllama.pink_carpet:
+    default: op
+  echopet.pet.type.traderllama.gray_carpet:
+    default: op
+  echopet.pet.type.traderllama.light_gray:
+    default: op
+  echopet.pet.type.traderllama.cyan_carpet:
+    default: op
+  echopet.pet.type.traderllama.purple_carpet:
+    default: op
+  echopet.pet.type.traderllama.blue_carpet:
+    default: op
+  echopet.pet.type.traderllama.brown_carpet:
+    default: op
+  echopet.pet.type.traderllama.green_carpet:
+    default: op
+  echopet.pet.type.traderllama.red_carpet:
+    default: op
+  echopet.pet.type.traderllama.black_carpet:
+    default: op
+  echopet.pet.type.tropicalfish.hat:
+    default: op
+  echopet.pet.type.tropicalfish.ride:
+    default: op
+  echopet.pet.type.tropicalfish.size_large:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_kob:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_sunstreak:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_snooper:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_dasher:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_brinely:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_spotty:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_flopper:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_stripey:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_glitter:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_blockfish:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_betty:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_clayfish:
+    default: op
+  echopet.pet.type.tropicalfish.color_white:
+    default: op
+  echopet.pet.type.tropicalfish.color_orange:
+    default: op
+  echopet.pet.type.tropicalfish.color_magenta:
+    default: op
+  echopet.pet.type.tropicalfish.color_light_blue:
+    default: op
+  echopet.pet.type.tropicalfish.color_yellow:
+    default: op
+  echopet.pet.type.tropicalfish.color_lime:
+    default: op
+  echopet.pet.type.tropicalfish.color_pink:
+    default: op
+  echopet.pet.type.tropicalfish.color_gray:
+    default: op
+  echopet.pet.type.tropicalfish.color_light_gray:
+    default: op
+  echopet.pet.type.tropicalfish.color_cyan:
+    default: op
+  echopet.pet.type.tropicalfish.color_purple:
+    default: op
+  echopet.pet.type.tropicalfish.color_blue:
+    default: op
+  echopet.pet.type.tropicalfish.color_brown:
+    default: op
+  echopet.pet.type.tropicalfish.color_green:
+    default: op
+  echopet.pet.type.tropicalfish.color_red:
+    default: op
+  echopet.pet.type.tropicalfish.color_black:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_white:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_orange:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_magenta:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_light_blue:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_yellow:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_lime:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_pink:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_gray:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_light_gray:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_cyan:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_purple:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_blue:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_brown:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_green:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_red:
+    default: op
+  echopet.pet.type.tropicalfish.pattern_color_black:
+    default: op
+  echopet.pet.type.turtle.hat:
+    default: op
+  echopet.pet.type.turtle.ride:
+    default: op
+  echopet.pet.type.turtle.baby:
+    default: op
+  echopet.pet.type.vex.hat:
+    default: op
+  echopet.pet.type.vex.ride:
+    default: op
+  echopet.pet.type.vex.powered:
+    default: op
+  echopet.pet.type.villager.hat:
+    default: op
+  echopet.pet.type.villager.ride:
+    default: op
+  echopet.pet.type.villager.baby:
+    default: op
+  echopet.pet.type.villager.desert:
+    default: op
+  echopet.pet.type.villager.jungle:
+    default: op
+  echopet.pet.type.villager.plains:
+    default: op
+  echopet.pet.type.villager.savanna:
+    default: op
+  echopet.pet.type.villager.snowy:
+    default: op
+  echopet.pet.type.villager.swamp:
+    default: op
+  echopet.pet.type.villager.taiga:
+    default: op
+  echopet.pet.type.villager.none:
+    default: op
+  echopet.pet.type.villager.armorer:
+    default: op
+  echopet.pet.type.villager.butcher:
+    default: op
+  echopet.pet.type.villager.cartographer:
+    default: op
+  echopet.pet.type.villager.cleric:
+    default: op
+  echopet.pet.type.villager.farmer:
+    default: op
+  echopet.pet.type.villager.fisherman:
+    default: op
+  echopet.pet.type.villager.fletcher:
+    default: op
+  echopet.pet.type.villager.leatherworker:
+    default: op
+  echopet.pet.type.villager.librarian:
+    default: op
+  echopet.pet.type.villager.mason:
+    default: op
+  echopet.pet.type.villager.nitwit:
+    default: op
+  echopet.pet.type.villager.sherpherd:
+    default: op
+  echopet.pet.type.villager.toolsmith:
+    default: op
+  echopet.pet.type.villager.weaponsmith:
+    default: op
+  echopet.pet.type.villager.novice:
+    default: op
+  echopet.pet.type.villager.apprentice:
+    default: op
+  echopet.pet.type.villager.journeymen:
+    default: op
+  echopet.pet.type.villager.expert:
+    default: op
+  echopet.pet.type.villager.master:
+    default: op
+  echopet.pet.type.vindicator.hat:
+    default: op
+  echopet.pet.type.vindicator.ride:
+    default: op
+  echopet.pet.type.wanderingtrader.hat:
+    default: op
+  echopet.pet.type.wanderingtrader.ride:
+    default: op
+  echopet.pet.type.wanderingtrader.baby:
+    default: op
+  echopet.pet.type.warden.hat:
+    default: op
+  echopet.pet.type.warden.ride:
+    default: op
+  echopet.pet.type.warden.calm:
+    default: op
+  echopet.pet.type.warden.agitated:
+    default: op
+  echopet.pet.type.warden.angry:
+    default: op
+  echopet.pet.type.witch.hat:
+    default: op
+  echopet.pet.type.witch.ride:
+    default: op
+  echopet.pet.type.wither.hat:
+    default: op
+  echopet.pet.type.wither.ride:
+    default: op
+  echopet.pet.type.wither.shield:
+    default: op
+  echopet.pet.type.witherskeleton.hat:
+    default: op
+  echopet.pet.type.witherskeleton.ride:
+    default: op
+  echopet.pet.type.wolf.hat:
+    default: op
+  echopet.pet.type.wolf.ride:
+    default: op
+  echopet.pet.type.wolf.baby:
+    default: op
+  echopet.pet.type.wolf.sit:
+    default: op
+  echopet.pet.type.wolf.tamed:
+    default: op
+  echopet.pet.type.wolf.angry:
+    default: op
+  echopet.pet.type.wolf.health:
+    default: op
+  echopet.pet.type.wolf.white:
+    default: op
+  echopet.pet.type.wolf.orange:
+    default: op
+  echopet.pet.type.wolf.magenta:
+    default: op
+  echopet.pet.type.wolf.light_blue:
+    default: op
+  echopet.pet.type.wolf.yellow:
+    default: op
+  echopet.pet.type.wolf.lime:
+    default: op
+  echopet.pet.type.wolf.pink:
+    default: op
+  echopet.pet.type.wolf.gray:
+    default: op
+  echopet.pet.type.wolf.light_gray:
+    default: op
+  echopet.pet.type.wolf.cyan:
+    default: op
+  echopet.pet.type.wolf.purple:
+    default: op
+  echopet.pet.type.wolf.blue:
+    default: op
+  echopet.pet.type.wolf.brown:
+    default: op
+  echopet.pet.type.wolf.green:
+    default: op
+  echopet.pet.type.wolf.red:
+    default: op
+  echopet.pet.type.wolf.black:
+    default: op
+  echopet.pet.type.zoglin.hat:
+    default: op
+  echopet.pet.type.zoglin.ride:
+    default: op
+  echopet.pet.type.zoglin.baby:
+    default: op
+  echopet.pet.type.zombie.hat:
+    default: op
+  echopet.pet.type.zombie.ride:
+    default: op
+  echopet.pet.type.zombie.baby:
+    default: op
+  echopet.pet.type.zombiehorse.hat:
+    default: op
+  echopet.pet.type.zombiehorse.ride:
+    default: op
+  echopet.pet.type.zombiehorse.baby:
+    default: op
+  echopet.pet.type.zombiehorse.saddle:
+    default: op
+  echopet.pet.type.zombievillager.hat:
+    default: op
+  echopet.pet.type.zombievillager.ride:
+    default: op
+  echopet.pet.type.zombievillager.baby:
+    default: op
+  echopet.pet.type.zombievillager.desert:
+    default: op
+  echopet.pet.type.zombievillager.jungle:
+    default: op
+  echopet.pet.type.zombievillager.plains:
+    default: op
+  echopet.pet.type.zombievillager.savanna:
+    default: op
+  echopet.pet.type.zombievillager.snowy:
+    default: op
+  echopet.pet.type.zombievillager.swamp:
+    default: op
+  echopet.pet.type.zombievillager.taiga:
+    default: op
+  echopet.pet.type.zombievillager.none:
+    default: op
+  echopet.pet.type.zombievillager.armorer:
+    default: op
+  echopet.pet.type.zombievillager.butcher:
+    default: op
+  echopet.pet.type.zombievillager.cartographer:
+    default: op
+  echopet.pet.type.zombievillager.cleric:
+    default: op
+  echopet.pet.type.zombievillager.farmer:
+    default: op
+  echopet.pet.type.zombievillager.fisherman:
+    default: op
+  echopet.pet.type.zombievillager.fletcher:
+    default: op
+  echopet.pet.type.zombievillager.leatherworker:
+    default: op
+  echopet.pet.type.zombievillager.librarian:
+    default: op
+  echopet.pet.type.zombievillager.mason:
+    default: op
+  echopet.pet.type.zombievillager.nitwit:
+    default: op
+  echopet.pet.type.zombievillager.sherpherd:
+    default: op
+  echopet.pet.type.zombievillager.toolsmith:
+    default: op
+  echopet.pet.type.zombievillager.weaponsmith:
+    default: op
+  echopet.pet.type.zombievillager.novice:
+    default: op
+  echopet.pet.type.zombievillager.apprentice:
+    default: op
+  echopet.pet.type.zombievillager.journeymen:
+    default: op
+  echopet.pet.type.zombievillager.expert:
+    default: op
+  echopet.pet.type.zombievillager.master:
+    default: op
+  echopet.petadmin.type.allay:
+    default: op
+  echopet.petadmin.type.axolotl:
+    default: op
+  echopet.petadmin.type.bat:
+    default: op
+  echopet.petadmin.type.bee:
+    default: op
+  echopet.petadmin.type.blaze:
+    default: op
+  echopet.petadmin.type.cat:
+    default: op
+  echopet.petadmin.type.cavespider:
+    default: op
+  echopet.petadmin.type.chicken:
+    default: op
+  echopet.petadmin.type.cod:
+    default: op
+  echopet.petadmin.type.cow:
+    default: op
+  echopet.petadmin.type.creeper:
+    default: op
+  echopet.petadmin.type.dolphin:
+    default: op
+  echopet.petadmin.type.donkey:
+    default: op
+  echopet.petadmin.type.drowned:
+    default: op
+  echopet.petadmin.type.elderguardian:
+    default: op
+  echopet.petadmin.type.enderman:
+    default: op
+  echopet.petadmin.type.endermite:
+    default: op
+  echopet.petadmin.type.evoker:
+    default: op
+  echopet.petadmin.type.fox:
+    default: op
+  echopet.petadmin.type.frog:
+    default: op
+  echopet.petadmin.type.ghast:
+    default: op
+  echopet.petadmin.type.giant:
+    default: op
+  echopet.petadmin.type.glowsquid:
+    default: op
+  echopet.petadmin.type.goat:
+    default: op
+  echopet.petadmin.type.guardian:
+    default: op
+  echopet.petadmin.type.hoglin:
+    default: op
+  echopet.petadmin.type.horse:
+    default: op
+  echopet.petadmin.type.human:
+    default: op
+  echopet.petadmin.type.husk:
+    default: op
+  echopet.petadmin.type.illusioner:
+    default: op
+  echopet.petadmin.type.irongolem:
+    default: op
+  echopet.petadmin.type.llama:
+    default: op
+  echopet.petadmin.type.magmacube:
+    default: op
+  echopet.petadmin.type.mule:
+    default: op
+  echopet.petadmin.type.mushroomcow:
+    default: op
+  echopet.petadmin.type.ocelot:
+    default: op
+  echopet.petadmin.type.panda:
+    default: op
+  echopet.petadmin.type.parrot:
+    default: op
+  echopet.petadmin.type.phantom:
+    default: op
+  echopet.petadmin.type.pig:
+    default: op
+  echopet.petadmin.type.piglin:
+    default: op
+  echopet.petadmin.type.pigzombie:
+    default: op
+  echopet.petadmin.type.pillager:
+    default: op
+  echopet.petadmin.type.polarbear:
+    default: op
+  echopet.petadmin.type.pufferfish:
+    default: op
+  echopet.petadmin.type.rabbit:
+    default: op
+  echopet.petadmin.type.ravager:
+    default: op
+  echopet.petadmin.type.salmon:
+    default: op
+  echopet.petadmin.type.sheep:
+    default: op
+  echopet.petadmin.type.shulker:
+    default: op
+  echopet.petadmin.type.silverfish:
+    default: op
+  echopet.petadmin.type.skeleton:
+    default: op
+  echopet.petadmin.type.skeletonhorse:
+    default: op
+  echopet.petadmin.type.slime:
+    default: op
+  echopet.petadmin.type.snowman:
+    default: op
+  echopet.petadmin.type.spider:
+    default: op
+  echopet.petadmin.type.squid:
+    default: op
+  echopet.petadmin.type.stray:
+    default: op
+  echopet.petadmin.type.strider:
+    default: op
+  echopet.petadmin.type.tadpole:
+    default: op
+  echopet.petadmin.type.traderllama:
+    default: op
+  echopet.petadmin.type.tropicalfish:
+    default: op
+  echopet.petadmin.type.turtle:
+    default: op
+  echopet.petadmin.type.vex:
+    default: op
+  echopet.petadmin.type.villager:
+    default: op
+  echopet.petadmin.type.vindicator:
+    default: op
+  echopet.petadmin.type.wanderingtrader:
+    default: op
+  echopet.petadmin.type.warden:
+    default: op
+  echopet.petadmin.type.witch:
+    default: op
+  echopet.petadmin.type.wither:
+    default: op
+  echopet.petadmin.type.witherskeleton:
+    default: op
+  echopet.petadmin.type.wolf:
+    default: op
+  echopet.petadmin.type.zoglin:
+    default: op
+  echopet.petadmin.type.zombie:
+    default: op
+  echopet.petadmin.type.zombiehorse:
+    default: op
+  echopet.petadmin.type.zombievillager:
+    default: op
+  echopet.petadmin.hat.allay:
+    default: op
+  echopet.petadmin.hat.axolotl:
+    default: op
+  echopet.petadmin.hat.bat:
+    default: op
+  echopet.petadmin.hat.bee:
+    default: op
+  echopet.petadmin.hat.blaze:
+    default: op
+  echopet.petadmin.hat.cat:
+    default: op
+  echopet.petadmin.hat.cavespider:
+    default: op
+  echopet.petadmin.hat.chicken:
+    default: op
+  echopet.petadmin.hat.cod:
+    default: op
+  echopet.petadmin.hat.cow:
+    default: op
+  echopet.petadmin.hat.creeper:
+    default: op
+  echopet.petadmin.hat.dolphin:
+    default: op
+  echopet.petadmin.hat.donkey:
+    default: op
+  echopet.petadmin.hat.drowned:
+    default: op
+  echopet.petadmin.hat.elderguardian:
+    default: op
+  echopet.petadmin.hat.enderman:
+    default: op
+  echopet.petadmin.hat.endermite:
+    default: op
+  echopet.petadmin.hat.evoker:
+    default: op
+  echopet.petadmin.hat.fox:
+    default: op
+  echopet.petadmin.hat.frog:
+    default: op
+  echopet.petadmin.hat.ghast:
+    default: op
+  echopet.petadmin.hat.giant:
+    default: op
+  echopet.petadmin.hat.glowsquid:
+    default: op
+  echopet.petadmin.hat.goat:
+    default: op
+  echopet.petadmin.hat.guardian:
+    default: op
+  echopet.petadmin.hat.hoglin:
+    default: op
+  echopet.petadmin.hat.horse:
+    default: op
+  echopet.petadmin.hat.human:
+    default: op
+  echopet.petadmin.hat.husk:
+    default: op
+  echopet.petadmin.hat.illusioner:
+    default: op
+  echopet.petadmin.hat.irongolem:
+    default: op
+  echopet.petadmin.hat.llama:
+    default: op
+  echopet.petadmin.hat.magmacube:
+    default: op
+  echopet.petadmin.hat.mule:
+    default: op
+  echopet.petadmin.hat.mushroomcow:
+    default: op
+  echopet.petadmin.hat.ocelot:
+    default: op
+  echopet.petadmin.hat.panda:
+    default: op
+  echopet.petadmin.hat.parrot:
+    default: op
+  echopet.petadmin.hat.phantom:
+    default: op
+  echopet.petadmin.hat.pig:
+    default: op
+  echopet.petadmin.hat.piglin:
+    default: op
+  echopet.petadmin.hat.pigzombie:
+    default: op
+  echopet.petadmin.hat.pillager:
+    default: op
+  echopet.petadmin.hat.polarbear:
+    default: op
+  echopet.petadmin.hat.pufferfish:
+    default: op
+  echopet.petadmin.hat.rabbit:
+    default: op
+  echopet.petadmin.hat.ravager:
+    default: op
+  echopet.petadmin.hat.salmon:
+    default: op
+  echopet.petadmin.hat.sheep:
+    default: op
+  echopet.petadmin.hat.shulker:
+    default: op
+  echopet.petadmin.hat.silverfish:
+    default: op
+  echopet.petadmin.hat.skeleton:
+    default: op
+  echopet.petadmin.hat.skeletonhorse:
+    default: op
+  echopet.petadmin.hat.slime:
+    default: op
+  echopet.petadmin.hat.snowman:
+    default: op
+  echopet.petadmin.hat.spider:
+    default: op
+  echopet.petadmin.hat.squid:
+    default: op
+  echopet.petadmin.hat.stray:
+    default: op
+  echopet.petadmin.hat.strider:
+    default: op
+  echopet.petadmin.hat.tadpole:
+    default: op
+  echopet.petadmin.hat.traderllama:
+    default: op
+  echopet.petadmin.hat.tropicalfish:
+    default: op
+  echopet.petadmin.hat.turtle:
+    default: op
+  echopet.petadmin.hat.vex:
+    default: op
+  echopet.petadmin.hat.villager:
+    default: op
+  echopet.petadmin.hat.vindicator:
+    default: op
+  echopet.petadmin.hat.wanderingtrader:
+    default: op
+  echopet.petadmin.hat.warden:
+    default: op
+  echopet.petadmin.hat.witch:
+    default: op
+  echopet.petadmin.hat.wither:
+    default: op
+  echopet.petadmin.hat.witherskeleton:
+    default: op
+  echopet.petadmin.hat.wolf:
+    default: op
+  echopet.petadmin.hat.zoglin:
+    default: op
+  echopet.petadmin.hat.zombie:
+    default: op
+  echopet.petadmin.hat.zombiehorse:
+    default: op
+  echopet.petadmin.hat.zombievillager:
+    default: op
+  echopet.petadmin.ride.allay:
+    default: op
+  echopet.petadmin.ride.axolotl:
+    default: op
+  echopet.petadmin.ride.bat:
+    default: op
+  echopet.petadmin.ride.bee:
+    default: op
+  echopet.petadmin.ride.blaze:
+    default: op
+  echopet.petadmin.ride.cat:
+    default: op
+  echopet.petadmin.ride.cavespider:
+    default: op
+  echopet.petadmin.ride.chicken:
+    default: op
+  echopet.petadmin.ride.cod:
+    default: op
+  echopet.petadmin.ride.cow:
+    default: op
+  echopet.petadmin.ride.creeper:
+    default: op
+  echopet.petadmin.ride.dolphin:
+    default: op
+  echopet.petadmin.ride.donkey:
+    default: op
+  echopet.petadmin.ride.drowned:
+    default: op
+  echopet.petadmin.ride.elderguardian:
+    default: op
+  echopet.petadmin.ride.enderman:
+    default: op
+  echopet.petadmin.ride.endermite:
+    default: op
+  echopet.petadmin.ride.evoker:
+    default: op
+  echopet.petadmin.ride.fox:
+    default: op
+  echopet.petadmin.ride.frog:
+    default: op
+  echopet.petadmin.ride.ghast:
+    default: op
+  echopet.petadmin.ride.giant:
+    default: op
+  echopet.petadmin.ride.glowsquid:
+    default: op
+  echopet.petadmin.ride.goat:
+    default: op
+  echopet.petadmin.ride.guardian:
+    default: op
+  echopet.petadmin.ride.hoglin:
+    default: op
+  echopet.petadmin.ride.horse:
+    default: op
+  echopet.petadmin.ride.human:
+    default: op
+  echopet.petadmin.ride.husk:
+    default: op
+  echopet.petadmin.ride.illusioner:
+    default: op
+  echopet.petadmin.ride.irongolem:
+    default: op
+  echopet.petadmin.ride.llama:
+    default: op
+  echopet.petadmin.ride.magmacube:
+    default: op
+  echopet.petadmin.ride.mule:
+    default: op
+  echopet.petadmin.ride.mushroomcow:
+    default: op
+  echopet.petadmin.ride.ocelot:
+    default: op
+  echopet.petadmin.ride.panda:
+    default: op
+  echopet.petadmin.ride.parrot:
+    default: op
+  echopet.petadmin.ride.phantom:
+    default: op
+  echopet.petadmin.ride.pig:
+    default: op
+  echopet.petadmin.ride.piglin:
+    default: op
+  echopet.petadmin.ride.pigzombie:
+    default: op
+  echopet.petadmin.ride.pillager:
+    default: op
+  echopet.petadmin.ride.polarbear:
+    default: op
+  echopet.petadmin.ride.pufferfish:
+    default: op
+  echopet.petadmin.ride.rabbit:
+    default: op
+  echopet.petadmin.ride.ravager:
+    default: op
+  echopet.petadmin.ride.salmon:
+    default: op
+  echopet.petadmin.ride.sheep:
+    default: op
+  echopet.petadmin.ride.shulker:
+    default: op
+  echopet.petadmin.ride.silverfish:
+    default: op
+  echopet.petadmin.ride.skeleton:
+    default: op
+  echopet.petadmin.ride.skeletonhorse:
+    default: op
+  echopet.petadmin.ride.slime:
+    default: op
+  echopet.petadmin.ride.snowman:
+    default: op
+  echopet.petadmin.ride.spider:
+    default: op
+  echopet.petadmin.ride.squid:
+    default: op
+  echopet.petadmin.ride.stray:
+    default: op
+  echopet.petadmin.ride.strider:
+    default: op
+  echopet.petadmin.ride.tadpole:
+    default: op
+  echopet.petadmin.ride.traderllama:
+    default: op
+  echopet.petadmin.ride.tropicalfish:
+    default: op
+  echopet.petadmin.ride.turtle:
+    default: op
+  echopet.petadmin.ride.vex:
+    default: op
+  echopet.petadmin.ride.villager:
+    default: op
+  echopet.petadmin.ride.vindicator:
+    default: op
+  echopet.petadmin.ride.wanderingtrader:
+    default: op
+  echopet.petadmin.ride.warden:
+    default: op
+  echopet.petadmin.ride.witch:
+    default: op
+  echopet.petadmin.ride.wither:
+    default: op
+  echopet.petadmin.ride.witherskeleton:
+    default: op
+  echopet.petadmin.ride.wolf:
+    default: op
+  echopet.petadmin.ride.zoglin:
+    default: op
+  echopet.petadmin.ride.zombie:
+    default: op
+  echopet.petadmin.ride.zombiehorse:
+    default: op
+  echopet.petadmin.ride.zombievillager:
+    default: op
+  echopet.petadmin.default.set.type.allay:
+    default: op
+  echopet.petadmin.default.set.type.axolotl:
+    default: op
+  echopet.petadmin.default.set.type.bat:
+    default: op
+  echopet.petadmin.default.set.type.bee:
+    default: op
+  echopet.petadmin.default.set.type.blaze:
+    default: op
+  echopet.petadmin.default.set.type.cat:
+    default: op
+  echopet.petadmin.default.set.type.cavespider:
+    default: op
+  echopet.petadmin.default.set.type.chicken:
+    default: op
+  echopet.petadmin.default.set.type.cod:
+    default: op
+  echopet.petadmin.default.set.type.cow:
+    default: op
+  echopet.petadmin.default.set.type.creeper:
+    default: op
+  echopet.petadmin.default.set.type.dolphin:
+    default: op
+  echopet.petadmin.default.set.type.donkey:
+    default: op
+  echopet.petadmin.default.set.type.drowned:
+    default: op
+  echopet.petadmin.default.set.type.elderguardian:
+    default: op
+  echopet.petadmin.default.set.type.enderman:
+    default: op
+  echopet.petadmin.default.set.type.endermite:
+    default: op
+  echopet.petadmin.default.set.type.evoker:
+    default: op
+  echopet.petadmin.default.set.type.fox:
+    default: op
+  echopet.petadmin.default.set.type.frog:
+    default: op
+  echopet.petadmin.default.set.type.ghast:
+    default: op
+  echopet.petadmin.default.set.type.giant:
+    default: op
+  echopet.petadmin.default.set.type.glowsquid:
+    default: op
+  echopet.petadmin.default.set.type.goat:
+    default: op
+  echopet.petadmin.default.set.type.guardian:
+    default: op
+  echopet.petadmin.default.set.type.hoglin:
+    default: op
+  echopet.petadmin.default.set.type.horse:
+    default: op
+  echopet.petadmin.default.set.type.human:
+    default: op
+  echopet.petadmin.default.set.type.husk:
+    default: op
+  echopet.petadmin.default.set.type.illusioner:
+    default: op
+  echopet.petadmin.default.set.type.irongolem:
+    default: op
+  echopet.petadmin.default.set.type.llama:
+    default: op
+  echopet.petadmin.default.set.type.magmacube:
+    default: op
+  echopet.petadmin.default.set.type.mule:
+    default: op
+  echopet.petadmin.default.set.type.mushroomcow:
+    default: op
+  echopet.petadmin.default.set.type.ocelot:
+    default: op
+  echopet.petadmin.default.set.type.panda:
+    default: op
+  echopet.petadmin.default.set.type.parrot:
+    default: op
+  echopet.petadmin.default.set.type.phantom:
+    default: op
+  echopet.petadmin.default.set.type.pig:
+    default: op
+  echopet.petadmin.default.set.type.piglin:
+    default: op
+  echopet.petadmin.default.set.type.pigzombie:
+    default: op
+  echopet.petadmin.default.set.type.pillager:
+    default: op
+  echopet.petadmin.default.set.type.polarbear:
+    default: op
+  echopet.petadmin.default.set.type.pufferfish:
+    default: op
+  echopet.petadmin.default.set.type.rabbit:
+    default: op
+  echopet.petadmin.default.set.type.ravager:
+    default: op
+  echopet.petadmin.default.set.type.salmon:
+    default: op
+  echopet.petadmin.default.set.type.sheep:
+    default: op
+  echopet.petadmin.default.set.type.shulker:
+    default: op
+  echopet.petadmin.default.set.type.silverfish:
+    default: op
+  echopet.petadmin.default.set.type.skeleton:
+    default: op
+  echopet.petadmin.default.set.type.skeletonhorse:
+    default: op
+  echopet.petadmin.default.set.type.slime:
+    default: op
+  echopet.petadmin.default.set.type.snowman:
+    default: op
+  echopet.petadmin.default.set.type.spider:
+    default: op
+  echopet.petadmin.default.set.type.squid:
+    default: op
+  echopet.petadmin.default.set.type.stray:
+    default: op
+  echopet.petadmin.default.set.type.strider:
+    default: op
+  echopet.petadmin.default.set.type.tadpole:
+    default: op
+  echopet.petadmin.default.set.type.traderllama:
+    default: op
+  echopet.petadmin.default.set.type.tropicalfish:
+    default: op
+  echopet.petadmin.default.set.type.turtle:
+    default: op
+  echopet.petadmin.default.set.type.vex:
+    default: op
+  echopet.petadmin.default.set.type.villager:
+    default: op
+  echopet.petadmin.default.set.type.vindicator:
+    default: op
+  echopet.petadmin.default.set.type.wanderingtrader:
+    default: op
+  echopet.petadmin.default.set.type.warden:
+    default: op
+  echopet.petadmin.default.set.type.witch:
+    default: op
+  echopet.petadmin.default.set.type.wither:
+    default: op
+  echopet.petadmin.default.set.type.witherskeleton:
+    default: op
+  echopet.petadmin.default.set.type.wolf:
+    default: op
+  echopet.petadmin.default.set.type.zoglin:
+    default: op
+  echopet.petadmin.default.set.type.zombie:
+    default: op
+  echopet.petadmin.default.set.type.zombiehorse:
+    default: op
+  echopet.petadmin.default.set.type.zombievillager:
+    default: op
+  echopet.*:
+    default: op
+    description: 'All EchoPet commands'
+    children:
+      echopet.pet.*: true
+      echopet.petadmin.*: true
+  echopet.pet.*:
+    default: op
+    description: 'All permissions under the /pet command'
+    children:
+      echopet.pet: true
+      echopet.pet.remove: true
+      echopet.pet.list: true
+      echopet.pet.info: true
+      echopet.pet.menu: true
+      echopet.pet.show: true
+      echopet.pet.hide: true
+      echopet.pet.toggle: true
+      echopet.pet.call: true
+      echopet.pet.name: true
+      echopet.pet.name.override: true
+      echopet.pet.select: true
+      echopet.pet.selector: true
+      echopet.pet.modify: true
+      echopet.pet.type.*: true
+      echopet.pet.data.*: true
+      echopet.pet.default.*: true
+  echopet.pet.type.*:
+    default: op
+    description: 'All pet type permissions'
+    children:
+      echopet.pet.type.allay: true
+      echopet.pet.type.axolotl: true
+      echopet.pet.type.bat: true
+      echopet.pet.type.bee: true
+      echopet.pet.type.blaze: true
+      echopet.pet.type.cat: true
+      echopet.pet.type.cavespider: true
+      echopet.pet.type.chicken: true
+      echopet.pet.type.cod: true
+      echopet.pet.type.cow: true
+      echopet.pet.type.creeper: true
+      echopet.pet.type.dolphin: true
+      echopet.pet.type.donkey: true
+      echopet.pet.type.drowned: true
+      echopet.pet.type.elderguardian: true
+      echopet.pet.type.enderman: true
+      echopet.pet.type.endermite: true
+      echopet.pet.type.evoker: true
+      echopet.pet.type.fox: true
+      echopet.pet.type.frog: true
+      echopet.pet.type.ghast: true
+      echopet.pet.type.giant: true
+      echopet.pet.type.glowsquid: true
+      echopet.pet.type.goat: true
+      echopet.pet.type.guardian: true
+      echopet.pet.type.hoglin: true
+      echopet.pet.type.horse: true
+      echopet.pet.type.human: true
+      echopet.pet.type.husk: true
+      echopet.pet.type.illusioner: true
+      echopet.pet.type.irongolem: true
+      echopet.pet.type.llama: true
+      echopet.pet.type.magmacube: true
+      echopet.pet.type.mule: true
+      echopet.pet.type.mushroomcow: true
+      echopet.pet.type.ocelot: true
+      echopet.pet.type.panda: true
+      echopet.pet.type.parrot: true
+      echopet.pet.type.phantom: true
+      echopet.pet.type.pig: true
+      echopet.pet.type.piglin: true
+      echopet.pet.type.pigzombie: true
+      echopet.pet.type.pillager: true
+      echopet.pet.type.polarbear: true
+      echopet.pet.type.pufferfish: true
+      echopet.pet.type.rabbit: true
+      echopet.pet.type.ravager: true
+      echopet.pet.type.salmon: true
+      echopet.pet.type.sheep: true
+      echopet.pet.type.shulker: true
+      echopet.pet.type.silverfish: true
+      echopet.pet.type.skeleton: true
+      echopet.pet.type.skeletonhorse: true
+      echopet.pet.type.slime: true
+      echopet.pet.type.snowman: true
+      echopet.pet.type.spider: true
+      echopet.pet.type.squid: true
+      echopet.pet.type.stray: true
+      echopet.pet.type.strider: true
+      echopet.pet.type.tadpole: true
+      echopet.pet.type.traderllama: true
+      echopet.pet.type.tropicalfish: true
+      echopet.pet.type.turtle: true
+      echopet.pet.type.vex: true
+      echopet.pet.type.villager: true
+      echopet.pet.type.vindicator: true
+      echopet.pet.type.wanderingtrader: true
+      echopet.pet.type.warden: true
+      echopet.pet.type.witch: true
+      echopet.pet.type.wither: true
+      echopet.pet.type.witherskeleton: true
+      echopet.pet.type.wolf: true
+      echopet.pet.type.zoglin: true
+      echopet.pet.type.zombie: true
+      echopet.pet.type.zombiehorse: true
+      echopet.pet.type.zombievillager: true
+  echopet.pet.hat.*:
+    default: op
+    description: 'All hat permissions'
+    children:
+      echopet.pet.type.allay.hat: true
+      echopet.pet.type.axolotl.hat: true
+      echopet.pet.type.bat.hat: true
+      echopet.pet.type.bee.hat: true
+      echopet.pet.type.blaze.hat: true
+      echopet.pet.type.cat.hat: true
+      echopet.pet.type.cavespider.hat: true
+      echopet.pet.type.chicken.hat: true
+      echopet.pet.type.cod.hat: true
+      echopet.pet.type.cow.hat: true
+      echopet.pet.type.creeper.hat: true
+      echopet.pet.type.dolphin.hat: true
+      echopet.pet.type.donkey.hat: true
+      echopet.pet.type.drowned.hat: true
+      echopet.pet.type.elderguardian.hat: true
+      echopet.pet.type.enderman.hat: true
+      echopet.pet.type.endermite.hat: true
+      echopet.pet.type.evoker.hat: true
+      echopet.pet.type.fox.hat: true
+      echopet.pet.type.frog.hat: true
+      echopet.pet.type.ghast.hat: true
+      echopet.pet.type.giant.hat: true
+      echopet.pet.type.glowsquid.hat: true
+      echopet.pet.type.goat.hat: true
+      echopet.pet.type.guardian.hat: true
+      echopet.pet.type.hoglin.hat: true
+      echopet.pet.type.horse.hat: true
+      echopet.pet.type.human.hat: true
+      echopet.pet.type.husk.hat: true
+      echopet.pet.type.illusioner.hat: true
+      echopet.pet.type.irongolem.hat: true
+      echopet.pet.type.llama.hat: true
+      echopet.pet.type.magmacube.hat: true
+      echopet.pet.type.mule.hat: true
+      echopet.pet.type.mushroomcow.hat: true
+      echopet.pet.type.ocelot.hat: true
+      echopet.pet.type.panda.hat: true
+      echopet.pet.type.parrot.hat: true
+      echopet.pet.type.phantom.hat: true
+      echopet.pet.type.pig.hat: true
+      echopet.pet.type.piglin.hat: true
+      echopet.pet.type.pigzombie.hat: true
+      echopet.pet.type.pillager.hat: true
+      echopet.pet.type.polarbear.hat: true
+      echopet.pet.type.pufferfish.hat: true
+      echopet.pet.type.rabbit.hat: true
+      echopet.pet.type.ravager.hat: true
+      echopet.pet.type.salmon.hat: true
+      echopet.pet.type.sheep.hat: true
+      echopet.pet.type.shulker.hat: true
+      echopet.pet.type.silverfish.hat: true
+      echopet.pet.type.skeleton.hat: true
+      echopet.pet.type.skeletonhorse.hat: true
+      echopet.pet.type.slime.hat: true
+      echopet.pet.type.snowman.hat: true
+      echopet.pet.type.spider.hat: true
+      echopet.pet.type.squid.hat: true
+      echopet.pet.type.stray.hat: true
+      echopet.pet.type.strider.hat: true
+      echopet.pet.type.tadpole.hat: true
+      echopet.pet.type.traderllama.hat: true
+      echopet.pet.type.tropicalfish.hat: true
+      echopet.pet.type.turtle.hat: true
+      echopet.pet.type.vex.hat: true
+      echopet.pet.type.villager.hat: true
+      echopet.pet.type.vindicator.hat: true
+      echopet.pet.type.wanderingtrader.hat: true
+      echopet.pet.type.warden.hat: true
+      echopet.pet.type.witch.hat: true
+      echopet.pet.type.wither.hat: true
+      echopet.pet.type.witherskeleton.hat: true
+      echopet.pet.type.wolf.hat: true
+      echopet.pet.type.zoglin.hat: true
+      echopet.pet.type.zombie.hat: true
+      echopet.pet.type.zombiehorse.hat: true
+      echopet.pet.type.zombievillager.hat: true
+  echopet.pet.ride.*:
+    default: op
+    description: 'All ride permissions'
+    children:
+      echopet.pet.type.allay.ride: true
+      echopet.pet.type.axolotl.ride: true
+      echopet.pet.type.bat.ride: true
+      echopet.pet.type.bee.ride: true
+      echopet.pet.type.blaze.ride: true
+      echopet.pet.type.cat.ride: true
+      echopet.pet.type.cavespider.ride: true
+      echopet.pet.type.chicken.ride: true
+      echopet.pet.type.cod.ride: true
+      echopet.pet.type.cow.ride: true
+      echopet.pet.type.creeper.ride: true
+      echopet.pet.type.dolphin.ride: true
+      echopet.pet.type.donkey.ride: true
+      echopet.pet.type.drowned.ride: true
+      echopet.pet.type.elderguardian.ride: true
+      echopet.pet.type.enderman.ride: true
+      echopet.pet.type.endermite.ride: true
+      echopet.pet.type.evoker.ride: true
+      echopet.pet.type.fox.ride: true
+      echopet.pet.type.frog.ride: true
+      echopet.pet.type.ghast.ride: true
+      echopet.pet.type.giant.ride: true
+      echopet.pet.type.glowsquid.ride: true
+      echopet.pet.type.goat.ride: true
+      echopet.pet.type.guardian.ride: true
+      echopet.pet.type.hoglin.ride: true
+      echopet.pet.type.horse.ride: true
+      echopet.pet.type.human.ride: true
+      echopet.pet.type.husk.ride: true
+      echopet.pet.type.illusioner.ride: true
+      echopet.pet.type.irongolem.ride: true
+      echopet.pet.type.llama.ride: true
+      echopet.pet.type.magmacube.ride: true
+      echopet.pet.type.mule.ride: true
+      echopet.pet.type.mushroomcow.ride: true
+      echopet.pet.type.ocelot.ride: true
+      echopet.pet.type.panda.ride: true
+      echopet.pet.type.parrot.ride: true
+      echopet.pet.type.phantom.ride: true
+      echopet.pet.type.pig.ride: true
+      echopet.pet.type.piglin.ride: true
+      echopet.pet.type.pigzombie.ride: true
+      echopet.pet.type.pillager.ride: true
+      echopet.pet.type.polarbear.ride: true
+      echopet.pet.type.pufferfish.ride: true
+      echopet.pet.type.rabbit.ride: true
+      echopet.pet.type.ravager.ride: true
+      echopet.pet.type.salmon.ride: true
+      echopet.pet.type.sheep.ride: true
+      echopet.pet.type.shulker.ride: true
+      echopet.pet.type.silverfish.ride: true
+      echopet.pet.type.skeleton.ride: true
+      echopet.pet.type.skeletonhorse.ride: true
+      echopet.pet.type.slime.ride: true
+      echopet.pet.type.snowman.ride: true
+      echopet.pet.type.spider.ride: true
+      echopet.pet.type.squid.ride: true
+      echopet.pet.type.stray.ride: true
+      echopet.pet.type.strider.ride: true
+      echopet.pet.type.tadpole.ride: true
+      echopet.pet.type.traderllama.ride: true
+      echopet.pet.type.tropicalfish.ride: true
+      echopet.pet.type.turtle.ride: true
+      echopet.pet.type.vex.ride: true
+      echopet.pet.type.villager.ride: true
+      echopet.pet.type.vindicator.ride: true
+      echopet.pet.type.wanderingtrader.ride: true
+      echopet.pet.type.warden.ride: true
+      echopet.pet.type.witch.ride: true
+      echopet.pet.type.wither.ride: true
+      echopet.pet.type.witherskeleton.ride: true
+      echopet.pet.type.wolf.ride: true
+      echopet.pet.type.zoglin.ride: true
+      echopet.pet.type.zombie.ride: true
+      echopet.pet.type.zombiehorse.ride: true
+      echopet.pet.type.zombievillager.ride: true
+  echopet.pet.baby.*:
+    default: op
+    description: 'All baby permissions'
+    children:
+      echopet.pet.type.axolotl.baby: true
+      echopet.pet.type.bee.baby: true
+      echopet.pet.type.cat.baby: true
+      echopet.pet.type.chicken.baby: true
+      echopet.pet.type.cow.baby: true
+      echopet.pet.type.donkey.baby: true
+      echopet.pet.type.drowned.baby: true
+      echopet.pet.type.fox.baby: true
+      echopet.pet.type.goat.baby: true
+      echopet.pet.type.hoglin.baby: true
+      echopet.pet.type.horse.baby: true
+      echopet.pet.type.husk.baby: true
+      echopet.pet.type.llama.baby: true
+      echopet.pet.type.mule.baby: true
+      echopet.pet.type.mushroomcow.baby: true
+      echopet.pet.type.ocelot.baby: true
+      echopet.pet.type.panda.baby: true
+      echopet.pet.type.pig.baby: true
+      echopet.pet.type.piglin.baby: true
+      echopet.pet.type.pigzombie.baby: true
+      echopet.pet.type.polarbear.baby: true
+      echopet.pet.type.rabbit.baby: true
+      echopet.pet.type.sheep.baby: true
+      echopet.pet.type.skeletonhorse.baby: true
+      echopet.pet.type.strider.baby: true
+      echopet.pet.type.traderllama.baby: true
+      echopet.pet.type.turtle.baby: true
+      echopet.pet.type.villager.baby: true
+      echopet.pet.type.wanderingtrader.baby: true
+      echopet.pet.type.wolf.baby: true
+      echopet.pet.type.zoglin.baby: true
+      echopet.pet.type.zombie.baby: true
+      echopet.pet.type.zombiehorse.baby: true
+      echopet.pet.type.zombievillager.baby: true
+  echopet.pet.default.*:
+    default: op
+    description: 'All permissions under /pet default <...>'
+    children:
+      echopet.pet.default.set.current: true
+      echopet.pet.default.remove: true
+      echopet.pet.default.set.type.*: true
+  echopet.pet.default.set.type.*:
+    default: op
+    description: 'All pet types for /pet default set <...>'
+    children:
+      echopet.pet.default.set.type.allay: true
+      echopet.pet.default.set.type.axolotl: true
+      echopet.pet.default.set.type.bat: true
+      echopet.pet.default.set.type.bee: true
+      echopet.pet.default.set.type.blaze: true
+      echopet.pet.default.set.type.cat: true
+      echopet.pet.default.set.type.cavespider: true
+      echopet.pet.default.set.type.chicken: true
+      echopet.pet.default.set.type.cod: true
+      echopet.pet.default.set.type.cow: true
+      echopet.pet.default.set.type.creeper: true
+      echopet.pet.default.set.type.dolphin: true
+      echopet.pet.default.set.type.donkey: true
+      echopet.pet.default.set.type.drowned: true
+      echopet.pet.default.set.type.elderguardian: true
+      echopet.pet.default.set.type.enderman: true
+      echopet.pet.default.set.type.endermite: true
+      echopet.pet.default.set.type.evoker: true
+      echopet.pet.default.set.type.fox: true
+      echopet.pet.default.set.type.frog: true
+      echopet.pet.default.set.type.ghast: true
+      echopet.pet.default.set.type.giant: true
+      echopet.pet.default.set.type.glowsquid: true
+      echopet.pet.default.set.type.goat: true
+      echopet.pet.default.set.type.guardian: true
+      echopet.pet.default.set.type.hoglin: true
+      echopet.pet.default.set.type.horse: true
+      echopet.pet.default.set.type.human: true
+      echopet.pet.default.set.type.husk: true
+      echopet.pet.default.set.type.illusioner: true
+      echopet.pet.default.set.type.irongolem: true
+      echopet.pet.default.set.type.llama: true
+      echopet.pet.default.set.type.magmacube: true
+      echopet.pet.default.set.type.mule: true
+      echopet.pet.default.set.type.mushroomcow: true
+      echopet.pet.default.set.type.ocelot: true
+      echopet.pet.default.set.type.panda: true
+      echopet.pet.default.set.type.parrot: true
+      echopet.pet.default.set.type.phantom: true
+      echopet.pet.default.set.type.pig: true
+      echopet.pet.default.set.type.piglin: true
+      echopet.pet.default.set.type.pigzombie: true
+      echopet.pet.default.set.type.pillager: true
+      echopet.pet.default.set.type.polarbear: true
+      echopet.pet.default.set.type.pufferfish: true
+      echopet.pet.default.set.type.rabbit: true
+      echopet.pet.default.set.type.ravager: true
+      echopet.pet.default.set.type.salmon: true
+      echopet.pet.default.set.type.sheep: true
+      echopet.pet.default.set.type.shulker: true
+      echopet.pet.default.set.type.silverfish: true
+      echopet.pet.default.set.type.skeleton: true
+      echopet.pet.default.set.type.skeletonhorse: true
+      echopet.pet.default.set.type.slime: true
+      echopet.pet.default.set.type.snowman: true
+      echopet.pet.default.set.type.spider: true
+      echopet.pet.default.set.type.squid: true
+      echopet.pet.default.set.type.stray: true
+      echopet.pet.default.set.type.strider: true
+      echopet.pet.default.set.type.tadpole: true
+      echopet.pet.default.set.type.traderllama: true
+      echopet.pet.default.set.type.tropicalfish: true
+      echopet.pet.default.set.type.turtle: true
+      echopet.pet.default.set.type.vex: true
+      echopet.pet.default.set.type.villager: true
+      echopet.pet.default.set.type.vindicator: true
+      echopet.pet.default.set.type.wanderingtrader: true
+      echopet.pet.default.set.type.warden: true
+      echopet.pet.default.set.type.witch: true
+      echopet.pet.default.set.type.wither: true
+      echopet.pet.default.set.type.witherskeleton: true
+      echopet.pet.default.set.type.wolf: true
+      echopet.pet.default.set.type.zoglin: true
+      echopet.pet.default.set.type.zombie: true
+      echopet.pet.default.set.type.zombiehorse: true
+      echopet.pet.default.set.type.zombievillager: true
+  echopet.petadmin.*:
+    default: op
+    description: 'All permissions under the /petadmin command'
+    children:
+      echopet.petadmin: true
+      echopet.petadmin.reload: true
+      echopet.petadmin.remove: true
+      echopet.petadmin.list: true
+      echopet.petadmin.info: true
+      echopet.petadmin.menu: true
+      echopet.petadmin.show: true
+      echopet.petadmin.hide: true
+      echopet.petadmin.call: true
+      echopet.petadmin.name: true
+      echopet.petadmin.select: true
+      echopet.petadmin.selector: true
+      echopet.petadmin.type.*: true
+      echopet.pet.data.*: true
+      echopet.petadmin.ride.*: true
+      echopet.petadmin.hat.*: true
+      echopet.petadmin.default.*: true
+  echopet.petadmin.type.*:
+    default: op
+    description: 'All pet type permissions for PetAdmin commands'
+    children:
+      echopet.petadmin.type.allay: true
+      echopet.petadmin.type.axolotl: true
+      echopet.petadmin.type.bat: true
+      echopet.petadmin.type.bee: true
+      echopet.petadmin.type.blaze: true
+      echopet.petadmin.type.cat: true
+      echopet.petadmin.type.cavespider: true
+      echopet.petadmin.type.chicken: true
+      echopet.petadmin.type.cod: true
+      echopet.petadmin.type.cow: true
+      echopet.petadmin.type.creeper: true
+      echopet.petadmin.type.dolphin: true
+      echopet.petadmin.type.donkey: true
+      echopet.petadmin.type.drowned: true
+      echopet.petadmin.type.elderguardian: true
+      echopet.petadmin.type.enderman: true
+      echopet.petadmin.type.endermite: true
+      echopet.petadmin.type.evoker: true
+      echopet.petadmin.type.fox: true
+      echopet.petadmin.type.frog: true
+      echopet.petadmin.type.ghast: true
+      echopet.petadmin.type.giant: true
+      echopet.petadmin.type.glowsquid: true
+      echopet.petadmin.type.goat: true
+      echopet.petadmin.type.guardian: true
+      echopet.petadmin.type.hoglin: true
+      echopet.petadmin.type.horse: true
+      echopet.petadmin.type.human: true
+      echopet.petadmin.type.husk: true
+      echopet.petadmin.type.illusioner: true
+      echopet.petadmin.type.irongolem: true
+      echopet.petadmin.type.llama: true
+      echopet.petadmin.type.magmacube: true
+      echopet.petadmin.type.mule: true
+      echopet.petadmin.type.mushroomcow: true
+      echopet.petadmin.type.ocelot: true
+      echopet.petadmin.type.panda: true
+      echopet.petadmin.type.parrot: true
+      echopet.petadmin.type.phantom: true
+      echopet.petadmin.type.pig: true
+      echopet.petadmin.type.piglin: true
+      echopet.petadmin.type.pigzombie: true
+      echopet.petadmin.type.pillager: true
+      echopet.petadmin.type.polarbear: true
+      echopet.petadmin.type.pufferfish: true
+      echopet.petadmin.type.rabbit: true
+      echopet.petadmin.type.ravager: true
+      echopet.petadmin.type.salmon: true
+      echopet.petadmin.type.sheep: true
+      echopet.petadmin.type.shulker: true
+      echopet.petadmin.type.silverfish: true
+      echopet.petadmin.type.skeleton: true
+      echopet.petadmin.type.skeletonhorse: true
+      echopet.petadmin.type.slime: true
+      echopet.petadmin.type.snowman: true
+      echopet.petadmin.type.spider: true
+      echopet.petadmin.type.squid: true
+      echopet.petadmin.type.stray: true
+      echopet.petadmin.type.strider: true
+      echopet.petadmin.type.tadpole: true
+      echopet.petadmin.type.traderllama: true
+      echopet.petadmin.type.tropicalfish: true
+      echopet.petadmin.type.turtle: true
+      echopet.petadmin.type.vex: true
+      echopet.petadmin.type.villager: true
+      echopet.petadmin.type.vindicator: true
+      echopet.petadmin.type.wanderingtrader: true
+      echopet.petadmin.type.warden: true
+      echopet.petadmin.type.witch: true
+      echopet.petadmin.type.wither: true
+      echopet.petadmin.type.witherskeleton: true
+      echopet.petadmin.type.wolf: true
+      echopet.petadmin.type.zoglin: true
+      echopet.petadmin.type.zombie: true
+      echopet.petadmin.type.zombiehorse: true
+      echopet.petadmin.type.zombievillager: true
+  echopet.petadmin.hat.*:
+    default: op
+    description: 'All pet hat permissions for PetAdmin commands'
+    children:
+      echopet.petadmin.hat.allay: true
+      echopet.petadmin.hat.axolotl: true
+      echopet.petadmin.hat.bat: true
+      echopet.petadmin.hat.bee: true
+      echopet.petadmin.hat.blaze: true
+      echopet.petadmin.hat.cat: true
+      echopet.petadmin.hat.cavespider: true
+      echopet.petadmin.hat.chicken: true
+      echopet.petadmin.hat.cod: true
+      echopet.petadmin.hat.cow: true
+      echopet.petadmin.hat.creeper: true
+      echopet.petadmin.hat.dolphin: true
+      echopet.petadmin.hat.donkey: true
+      echopet.petadmin.hat.drowned: true
+      echopet.petadmin.hat.elderguardian: true
+      echopet.petadmin.hat.enderman: true
+      echopet.petadmin.hat.endermite: true
+      echopet.petadmin.hat.evoker: true
+      echopet.petadmin.hat.fox: true
+      echopet.petadmin.hat.frog: true
+      echopet.petadmin.hat.ghast: true
+      echopet.petadmin.hat.giant: true
+      echopet.petadmin.hat.glowsquid: true
+      echopet.petadmin.hat.goat: true
+      echopet.petadmin.hat.guardian: true
+      echopet.petadmin.hat.hoglin: true
+      echopet.petadmin.hat.horse: true
+      echopet.petadmin.hat.human: true
+      echopet.petadmin.hat.husk: true
+      echopet.petadmin.hat.illusioner: true
+      echopet.petadmin.hat.irongolem: true
+      echopet.petadmin.hat.llama: true
+      echopet.petadmin.hat.magmacube: true
+      echopet.petadmin.hat.mule: true
+      echopet.petadmin.hat.mushroomcow: true
+      echopet.petadmin.hat.ocelot: true
+      echopet.petadmin.hat.panda: true
+      echopet.petadmin.hat.parrot: true
+      echopet.petadmin.hat.phantom: true
+      echopet.petadmin.hat.pig: true
+      echopet.petadmin.hat.piglin: true
+      echopet.petadmin.hat.pigzombie: true
+      echopet.petadmin.hat.pillager: true
+      echopet.petadmin.hat.polarbear: true
+      echopet.petadmin.hat.pufferfish: true
+      echopet.petadmin.hat.rabbit: true
+      echopet.petadmin.hat.ravager: true
+      echopet.petadmin.hat.salmon: true
+      echopet.petadmin.hat.sheep: true
+      echopet.petadmin.hat.shulker: true
+      echopet.petadmin.hat.silverfish: true
+      echopet.petadmin.hat.skeleton: true
+      echopet.petadmin.hat.skeletonhorse: true
+      echopet.petadmin.hat.slime: true
+      echopet.petadmin.hat.snowman: true
+      echopet.petadmin.hat.spider: true
+      echopet.petadmin.hat.squid: true
+      echopet.petadmin.hat.stray: true
+      echopet.petadmin.hat.strider: true
+      echopet.petadmin.hat.tadpole: true
+      echopet.petadmin.hat.traderllama: true
+      echopet.petadmin.hat.tropicalfish: true
+      echopet.petadmin.hat.turtle: true
+      echopet.petadmin.hat.vex: true
+      echopet.petadmin.hat.villager: true
+      echopet.petadmin.hat.vindicator: true
+      echopet.petadmin.hat.wanderingtrader: true
+      echopet.petadmin.hat.warden: true
+      echopet.petadmin.hat.witch: true
+      echopet.petadmin.hat.wither: true
+      echopet.petadmin.hat.witherskeleton: true
+      echopet.petadmin.hat.wolf: true
+      echopet.petadmin.hat.zoglin: true
+      echopet.petadmin.hat.zombie: true
+      echopet.petadmin.hat.zombiehorse: true
+      echopet.petadmin.hat.zombievillager: true
+  echopet.petadmin.ride.*:
+    default: op
+    description: 'All pet ride permissions for PetAdmin commands'
+    children:
+      echopet.petadmin.ride.allay: true
+      echopet.petadmin.ride.axolotl: true
+      echopet.petadmin.ride.bat: true
+      echopet.petadmin.ride.bee: true
+      echopet.petadmin.ride.blaze: true
+      echopet.petadmin.ride.cat: true
+      echopet.petadmin.ride.cavespider: true
+      echopet.petadmin.ride.chicken: true
+      echopet.petadmin.ride.cod: true
+      echopet.petadmin.ride.cow: true
+      echopet.petadmin.ride.creeper: true
+      echopet.petadmin.ride.dolphin: true
+      echopet.petadmin.ride.donkey: true
+      echopet.petadmin.ride.drowned: true
+      echopet.petadmin.ride.elderguardian: true
+      echopet.petadmin.ride.enderman: true
+      echopet.petadmin.ride.endermite: true
+      echopet.petadmin.ride.evoker: true
+      echopet.petadmin.ride.fox: true
+      echopet.petadmin.ride.frog: true
+      echopet.petadmin.ride.ghast: true
+      echopet.petadmin.ride.giant: true
+      echopet.petadmin.ride.glowsquid: true
+      echopet.petadmin.ride.goat: true
+      echopet.petadmin.ride.guardian: true
+      echopet.petadmin.ride.hoglin: true
+      echopet.petadmin.ride.horse: true
+      echopet.petadmin.ride.human: true
+      echopet.petadmin.ride.husk: true
+      echopet.petadmin.ride.illusioner: true
+      echopet.petadmin.ride.irongolem: true
+      echopet.petadmin.ride.llama: true
+      echopet.petadmin.ride.magmacube: true
+      echopet.petadmin.ride.mule: true
+      echopet.petadmin.ride.mushroomcow: true
+      echopet.petadmin.ride.ocelot: true
+      echopet.petadmin.ride.panda: true
+      echopet.petadmin.ride.parrot: true
+      echopet.petadmin.ride.phantom: true
+      echopet.petadmin.ride.pig: true
+      echopet.petadmin.ride.piglin: true
+      echopet.petadmin.ride.pigzombie: true
+      echopet.petadmin.ride.pillager: true
+      echopet.petadmin.ride.polarbear: true
+      echopet.petadmin.ride.pufferfish: true
+      echopet.petadmin.ride.rabbit: true
+      echopet.petadmin.ride.ravager: true
+      echopet.petadmin.ride.salmon: true
+      echopet.petadmin.ride.sheep: true
+      echopet.petadmin.ride.shulker: true
+      echopet.petadmin.ride.silverfish: true
+      echopet.petadmin.ride.skeleton: true
+      echopet.petadmin.ride.skeletonhorse: true
+      echopet.petadmin.ride.slime: true
+      echopet.petadmin.ride.snowman: true
+      echopet.petadmin.ride.spider: true
+      echopet.petadmin.ride.squid: true
+      echopet.petadmin.ride.stray: true
+      echopet.petadmin.ride.strider: true
+      echopet.petadmin.ride.tadpole: true
+      echopet.petadmin.ride.traderllama: true
+      echopet.petadmin.ride.tropicalfish: true
+      echopet.petadmin.ride.turtle: true
+      echopet.petadmin.ride.vex: true
+      echopet.petadmin.ride.villager: true
+      echopet.petadmin.ride.vindicator: true
+      echopet.petadmin.ride.wanderingtrader: true
+      echopet.petadmin.ride.warden: true
+      echopet.petadmin.ride.witch: true
+      echopet.petadmin.ride.wither: true
+      echopet.petadmin.ride.witherskeleton: true
+      echopet.petadmin.ride.wolf: true
+      echopet.petadmin.ride.zoglin: true
+      echopet.petadmin.ride.zombie: true
+      echopet.petadmin.ride.zombiehorse: true
+      echopet.petadmin.ride.zombievillager: true
+  echopet.petadmin.default.*:
+    default: op
+    description: 'All permissions under /petadmin default <...>'
+    children:
+      echopet.petadmin.default.set.current: true
+      echopet.petadmin.default.remove: true
+      echopet.petadmin.default.set.type.*: true
+  echopet.petadmin.default.set.type.*:
+    default: op
+    description: 'All pet types for /petadmin default set <...>'
+    children:
+      echopet.petadmin.default.set.type.allay: true
+      echopet.petadmin.default.set.type.axolotl: true
+      echopet.petadmin.default.set.type.bat: true
+      echopet.petadmin.default.set.type.bee: true
+      echopet.petadmin.default.set.type.blaze: true
+      echopet.petadmin.default.set.type.cat: true
+      echopet.petadmin.default.set.type.cavespider: true
+      echopet.petadmin.default.set.type.chicken: true
+      echopet.petadmin.default.set.type.cod: true
+      echopet.petadmin.default.set.type.cow: true
+      echopet.petadmin.default.set.type.creeper: true
+      echopet.petadmin.default.set.type.dolphin: true
+      echopet.petadmin.default.set.type.donkey: true
+      echopet.petadmin.default.set.type.drowned: true
+      echopet.petadmin.default.set.type.elderguardian: true
+      echopet.petadmin.default.set.type.enderman: true
+      echopet.petadmin.default.set.type.endermite: true
+      echopet.petadmin.default.set.type.evoker: true
+      echopet.petadmin.default.set.type.fox: true
+      echopet.petadmin.default.set.type.frog: true
+      echopet.petadmin.default.set.type.ghast: true
+      echopet.petadmin.default.set.type.giant: true
+      echopet.petadmin.default.set.type.glowsquid: true
+      echopet.petadmin.default.set.type.goat: true
+      echopet.petadmin.default.set.type.guardian: true
+      echopet.petadmin.default.set.type.hoglin: true
+      echopet.petadmin.default.set.type.horse: true
+      echopet.petadmin.default.set.type.human: true
+      echopet.petadmin.default.set.type.husk: true
+      echopet.petadmin.default.set.type.illusioner: true
+      echopet.petadmin.default.set.type.irongolem: true
+      echopet.petadmin.default.set.type.llama: true
+      echopet.petadmin.default.set.type.magmacube: true
+      echopet.petadmin.default.set.type.mule: true
+      echopet.petadmin.default.set.type.mushroomcow: true
+      echopet.petadmin.default.set.type.ocelot: true
+      echopet.petadmin.default.set.type.panda: true
+      echopet.petadmin.default.set.type.parrot: true
+      echopet.petadmin.default.set.type.phantom: true
+      echopet.petadmin.default.set.type.pig: true
+      echopet.petadmin.default.set.type.piglin: true
+      echopet.petadmin.default.set.type.pigzombie: true
+      echopet.petadmin.default.set.type.pillager: true
+      echopet.petadmin.default.set.type.polarbear: true
+      echopet.petadmin.default.set.type.pufferfish: true
+      echopet.petadmin.default.set.type.rabbit: true
+      echopet.petadmin.default.set.type.ravager: true
+      echopet.petadmin.default.set.type.salmon: true
+      echopet.petadmin.default.set.type.sheep: true
+      echopet.petadmin.default.set.type.shulker: true
+      echopet.petadmin.default.set.type.silverfish: true
+      echopet.petadmin.default.set.type.skeleton: true
+      echopet.petadmin.default.set.type.skeletonhorse: true
+      echopet.petadmin.default.set.type.slime: true
+      echopet.petadmin.default.set.type.snowman: true
+      echopet.petadmin.default.set.type.spider: true
+      echopet.petadmin.default.set.type.squid: true
+      echopet.petadmin.default.set.type.stray: true
+      echopet.petadmin.default.set.type.strider: true
+      echopet.petadmin.default.set.type.tadpole: true
+      echopet.petadmin.default.set.type.traderllama: true
+      echopet.petadmin.default.set.type.tropicalfish: true
+      echopet.petadmin.default.set.type.turtle: true
+      echopet.petadmin.default.set.type.vex: true
+      echopet.petadmin.default.set.type.villager: true
+      echopet.petadmin.default.set.type.vindicator: true
+      echopet.petadmin.default.set.type.wanderingtrader: true
+      echopet.petadmin.default.set.type.warden: true
+      echopet.petadmin.default.set.type.witch: true
+      echopet.petadmin.default.set.type.wither: true
+      echopet.petadmin.default.set.type.witherskeleton: true
+      echopet.petadmin.default.set.type.wolf: true
+      echopet.petadmin.default.set.type.zoglin: true
+      echopet.petadmin.default.set.type.zombie: true
+      echopet.petadmin.default.set.type.zombiehorse: true
+      echopet.petadmin.default.set.type.zombievillager: true
+  echopet.pet.type.allay.*:
+    default: op
+    description: 'All allay pet data permissions'
+    children:
+      echopet.pet.type.allay.hat: true
+      echopet.pet.type.allay.ride: true
+  echopet.pet.type.axolotl.*:
+    default: op
+    description: 'All axolotl pet data permissions'
+    children:
+      echopet.pet.type.axolotl.hat: true
+      echopet.pet.type.axolotl.ride: true
+      echopet.pet.type.axolotl.baby: true
+      echopet.pet.type.axolotl.playing_dead: true
+      echopet.pet.type.axolotl.lucy: true
+      echopet.pet.type.axolotl.wild: true
+      echopet.pet.type.axolotl.gold: true
+      echopet.pet.type.axolotl.cyan: true
+      echopet.pet.type.axolotl.blue: true
+  echopet.pet.type.bat.*:
+    default: op
+    description: 'All bat pet data permissions'
+    children:
+      echopet.pet.type.bat.hat: true
+      echopet.pet.type.bat.ride: true
+      echopet.pet.type.bat.wander: true
+  echopet.pet.type.bee.*:
+    default: op
+    description: 'All bee pet data permissions'
+    children:
+      echopet.pet.type.bee.hat: true
+      echopet.pet.type.bee.ride: true
+      echopet.pet.type.bee.baby: true
+      echopet.pet.type.bee.stinger: true
+      echopet.pet.type.bee.nectar: true
+      echopet.pet.type.bee.angry: true
+  echopet.pet.type.blaze.*:
+    default: op
+    description: 'All blaze pet data permissions'
+    children:
+      echopet.pet.type.blaze.hat: true
+      echopet.pet.type.blaze.ride: true
+      echopet.pet.type.blaze.fire: true
+  echopet.pet.type.cat.*:
+    default: op
+    description: 'All cat pet data permissions'
+    children:
+      echopet.pet.type.cat.hat: true
+      echopet.pet.type.cat.ride: true
+      echopet.pet.type.cat.baby: true
+      echopet.pet.type.cat.sit: true
+      echopet.pet.type.cat.tamed: true
+      echopet.pet.type.cat.white: true
+      echopet.pet.type.cat.orange: true
+      echopet.pet.type.cat.magenta: true
+      echopet.pet.type.cat.light_blue: true
+      echopet.pet.type.cat.yellow: true
+      echopet.pet.type.cat.lime: true
+      echopet.pet.type.cat.pink: true
+      echopet.pet.type.cat.gray: true
+      echopet.pet.type.cat.light_gray: true
+      echopet.pet.type.cat.cyan: true
+      echopet.pet.type.cat.purple: true
+      echopet.pet.type.cat.blue: true
+      echopet.pet.type.cat.brown: true
+      echopet.pet.type.cat.green: true
+      echopet.pet.type.cat.red: true
+      echopet.pet.type.cat.black: true
+      echopet.pet.type.cat.type_tabby: true
+      echopet.pet.type.cat.type_tuxedo: true
+      echopet.pet.type.cat.type_red: true
+      echopet.pet.type.cat.type_siamese: true
+      echopet.pet.type.cat.type_british_shorthair: true
+      echopet.pet.type.cat.type_calico: true
+      echopet.pet.type.cat.type_persian: true
+      echopet.pet.type.cat.type_ragdoll: true
+      echopet.pet.type.cat.type_white: true
+      echopet.pet.type.cat.type_jellie: true
+      echopet.pet.type.cat.type_black: true
+  echopet.pet.type.cavespider.*:
+    default: op
+    description: 'All cavespider pet data permissions'
+    children:
+      echopet.pet.type.cavespider.hat: true
+      echopet.pet.type.cavespider.ride: true
+  echopet.pet.type.chicken.*:
+    default: op
+    description: 'All chicken pet data permissions'
+    children:
+      echopet.pet.type.chicken.hat: true
+      echopet.pet.type.chicken.ride: true
+      echopet.pet.type.chicken.baby: true
+  echopet.pet.type.cod.*:
+    default: op
+    description: 'All cod pet data permissions'
+    children:
+      echopet.pet.type.cod.hat: true
+      echopet.pet.type.cod.ride: true
+  echopet.pet.type.cow.*:
+    default: op
+    description: 'All cow pet data permissions'
+    children:
+      echopet.pet.type.cow.hat: true
+      echopet.pet.type.cow.ride: true
+      echopet.pet.type.cow.baby: true
+  echopet.pet.type.creeper.*:
+    default: op
+    description: 'All creeper pet data permissions'
+    children:
+      echopet.pet.type.creeper.hat: true
+      echopet.pet.type.creeper.ride: true
+      echopet.pet.type.creeper.powered: true
+  echopet.pet.type.dolphin.*:
+    default: op
+    description: 'All dolphin pet data permissions'
+    children:
+      echopet.pet.type.dolphin.hat: true
+      echopet.pet.type.dolphin.ride: true
+  echopet.pet.type.donkey.*:
+    default: op
+    description: 'All donkey pet data permissions'
+    children:
+      echopet.pet.type.donkey.hat: true
+      echopet.pet.type.donkey.ride: true
+      echopet.pet.type.donkey.baby: true
+      echopet.pet.type.donkey.chest: true
+      echopet.pet.type.donkey.saddle: true
+  echopet.pet.type.drowned.*:
+    default: op
+    description: 'All drowned pet data permissions'
+    children:
+      echopet.pet.type.drowned.hat: true
+      echopet.pet.type.drowned.ride: true
+      echopet.pet.type.drowned.baby: true
+  echopet.pet.type.elderguardian.*:
+    default: op
+    description: 'All elderguardian pet data permissions'
+    children:
+      echopet.pet.type.elderguardian.hat: true
+      echopet.pet.type.elderguardian.ride: true
+  echopet.pet.type.enderman.*:
+    default: op
+    description: 'All enderman pet data permissions'
+    children:
+      echopet.pet.type.enderman.hat: true
+      echopet.pet.type.enderman.ride: true
+      echopet.pet.type.enderman.screaming: true
+  echopet.pet.type.endermite.*:
+    default: op
+    description: 'All endermite pet data permissions'
+    children:
+      echopet.pet.type.endermite.hat: true
+      echopet.pet.type.endermite.ride: true
+  echopet.pet.type.evoker.*:
+    default: op
+    description: 'All evoker pet data permissions'
+    children:
+      echopet.pet.type.evoker.hat: true
+      echopet.pet.type.evoker.ride: true
+  echopet.pet.type.fox.*:
+    default: op
+    description: 'All fox pet data permissions'
+    children:
+      echopet.pet.type.fox.hat: true
+      echopet.pet.type.fox.ride: true
+      echopet.pet.type.fox.baby: true
+      echopet.pet.type.fox.sit: true
+      echopet.pet.type.fox.crouch: true
+      echopet.pet.type.fox.head_tilt: true
+      echopet.pet.type.fox.pounce: true
+      echopet.pet.type.fox.sleep: true
+      echopet.pet.type.fox.leg_shake: true
+      echopet.pet.type.fox.red: true
+      echopet.pet.type.fox.snow: true
+  echopet.pet.type.frog.*:
+    default: op
+    description: 'All frog pet data permissions'
+    children:
+      echopet.pet.type.frog.hat: true
+      echopet.pet.type.frog.ride: true
+      echopet.pet.type.frog.temperate: true
+      echopet.pet.type.frog.warm: true
+      echopet.pet.type.frog.cold: true
+  echopet.pet.type.ghast.*:
+    default: op
+    description: 'All ghast pet data permissions'
+    children:
+      echopet.pet.type.ghast.hat: true
+      echopet.pet.type.ghast.ride: true
+  echopet.pet.type.giant.*:
+    default: op
+    description: 'All giant pet data permissions'
+    children:
+      echopet.pet.type.giant.hat: true
+      echopet.pet.type.giant.ride: true
+  echopet.pet.type.glowsquid.*:
+    default: op
+    description: 'All glowsquid pet data permissions'
+    children:
+      echopet.pet.type.glowsquid.hat: true
+      echopet.pet.type.glowsquid.ride: true
+      echopet.pet.type.glowsquid.dark: true
+  echopet.pet.type.goat.*:
+    default: op
+    description: 'All goat pet data permissions'
+    children:
+      echopet.pet.type.goat.hat: true
+      echopet.pet.type.goat.ride: true
+      echopet.pet.type.goat.baby: true
+      echopet.pet.type.goat.screaming: true
+      echopet.pet.type.goat.left_horn: true
+      echopet.pet.type.goat.right_horn: true
+  echopet.pet.type.guardian.*:
+    default: op
+    description: 'All guardian pet data permissions'
+    children:
+      echopet.pet.type.guardian.hat: true
+      echopet.pet.type.guardian.ride: true
+  echopet.pet.type.hoglin.*:
+    default: op
+    description: 'All hoglin pet data permissions'
+    children:
+      echopet.pet.type.hoglin.hat: true
+      echopet.pet.type.hoglin.ride: true
+      echopet.pet.type.hoglin.baby: true
+  echopet.pet.type.horse.*:
+    default: op
+    description: 'All horse pet data permissions'
+    children:
+      echopet.pet.type.horse.hat: true
+      echopet.pet.type.horse.ride: true
+      echopet.pet.type.horse.baby: true
+      echopet.pet.type.horse.saddle: true
+      echopet.pet.type.horse.no_armor: true
+      echopet.pet.type.horse.iron_armor: true
+      echopet.pet.type.horse.gold_armor: true
+      echopet.pet.type.horse.diamond_armor: true
+      echopet.pet.type.horse.white: true
+      echopet.pet.type.horse.creamy: true
+      echopet.pet.type.horse.chestnut: true
+      echopet.pet.type.horse.brown: true
+      echopet.pet.type.horse.black: true
+      echopet.pet.type.horse.gray: true
+      echopet.pet.type.horse.dark_brown: true
+      echopet.pet.type.horse.no_marking: true
+      echopet.pet.type.horse.white_socks: true
+      echopet.pet.type.horse.white_field: true
+      echopet.pet.type.horse.white_dots: true
+      echopet.pet.type.horse.black_dots: true
+  echopet.pet.type.human.*:
+    default: op
+    description: 'All human pet data permissions'
+    children:
+      echopet.pet.type.human.hat: true
+      echopet.pet.type.human.ride: true
+  echopet.pet.type.husk.*:
+    default: op
+    description: 'All husk pet data permissions'
+    children:
+      echopet.pet.type.husk.hat: true
+      echopet.pet.type.husk.ride: true
+      echopet.pet.type.husk.baby: true
+  echopet.pet.type.illusioner.*:
+    default: op
+    description: 'All illusioner pet data permissions'
+    children:
+      echopet.pet.type.illusioner.hat: true
+      echopet.pet.type.illusioner.ride: true
+  echopet.pet.type.irongolem.*:
+    default: op
+    description: 'All irongolem pet data permissions'
+    children:
+      echopet.pet.type.irongolem.hat: true
+      echopet.pet.type.irongolem.ride: true
+      echopet.pet.type.irongolem.health: true
+  echopet.pet.type.llama.*:
+    default: op
+    description: 'All llama pet data permissions'
+    children:
+      echopet.pet.type.llama.hat: true
+      echopet.pet.type.llama.ride: true
+      echopet.pet.type.llama.baby: true
+      echopet.pet.type.llama.chest: true
+      echopet.pet.type.llama.creamy: true
+      echopet.pet.type.llama.white: true
+      echopet.pet.type.llama.brown: true
+      echopet.pet.type.llama.gray: true
+      echopet.pet.type.llama.white_carpet: true
+      echopet.pet.type.llama.orange_carpet: true
+      echopet.pet.type.llama.magenta_carpet: true
+      echopet.pet.type.llama.light_blue_carpet: true
+      echopet.pet.type.llama.yellow_carpet: true
+      echopet.pet.type.llama.lime_carpet: true
+      echopet.pet.type.llama.pink_carpet: true
+      echopet.pet.type.llama.gray_carpet: true
+      echopet.pet.type.llama.light_gray: true
+      echopet.pet.type.llama.cyan_carpet: true
+      echopet.pet.type.llama.purple_carpet: true
+      echopet.pet.type.llama.blue_carpet: true
+      echopet.pet.type.llama.brown_carpet: true
+      echopet.pet.type.llama.green_carpet: true
+      echopet.pet.type.llama.red_carpet: true
+      echopet.pet.type.llama.black_carpet: true
+  echopet.pet.type.magmacube.*:
+    default: op
+    description: 'All magmacube pet data permissions'
+    children:
+      echopet.pet.type.magmacube.hat: true
+      echopet.pet.type.magmacube.ride: true
+      echopet.pet.type.magmacube.size_small: true
+      echopet.pet.type.magmacube.size_medium: true
+      echopet.pet.type.magmacube.size_large: true
+  echopet.pet.type.mule.*:
+    default: op
+    description: 'All mule pet data permissions'
+    children:
+      echopet.pet.type.mule.hat: true
+      echopet.pet.type.mule.ride: true
+      echopet.pet.type.mule.baby: true
+      echopet.pet.type.mule.chest: true
+      echopet.pet.type.mule.saddle: true
+  echopet.pet.type.mushroomcow.*:
+    default: op
+    description: 'All mushroomcow pet data permissions'
+    children:
+      echopet.pet.type.mushroomcow.hat: true
+      echopet.pet.type.mushroomcow.ride: true
+      echopet.pet.type.mushroomcow.baby: true
+      echopet.pet.type.mushroomcow.red: true
+      echopet.pet.type.mushroomcow.brown: true
+  echopet.pet.type.ocelot.*:
+    default: op
+    description: 'All ocelot pet data permissions'
+    children:
+      echopet.pet.type.ocelot.hat: true
+      echopet.pet.type.ocelot.ride: true
+      echopet.pet.type.ocelot.baby: true
+  echopet.pet.type.panda.*:
+    default: op
+    description: 'All panda pet data permissions'
+    children:
+      echopet.pet.type.panda.hat: true
+      echopet.pet.type.panda.ride: true
+      echopet.pet.type.panda.baby: true
+      echopet.pet.type.panda.roll: true
+      echopet.pet.type.panda.sit: true
+      echopet.pet.type.panda.lay_down: true
+      echopet.pet.type.panda.main_gene_normal: true
+      echopet.pet.type.panda.main_gene_lazy: true
+      echopet.pet.type.panda.main_gene_worried: true
+      echopet.pet.type.panda.main_gene_playful: true
+      echopet.pet.type.panda.main_gene_aggressive: true
+      echopet.pet.type.panda.main_gene_weak: true
+      echopet.pet.type.panda.main_gene_brown: true
+      echopet.pet.type.panda.hidden_gene_normal: true
+      echopet.pet.type.panda.hidden_gene_lazy: true
+      echopet.pet.type.panda.hidden_gene_worried: true
+      echopet.pet.type.panda.hidden_gene_playful: true
+      echopet.pet.type.panda.hidden_gene_aggressive: true
+      echopet.pet.type.panda.hidden_gene_weak: true
+      echopet.pet.type.panda.hidden_gene_brown: true
+  echopet.pet.type.parrot.*:
+    default: op
+    description: 'All parrot pet data permissions'
+    children:
+      echopet.pet.type.parrot.hat: true
+      echopet.pet.type.parrot.ride: true
+      echopet.pet.type.parrot.red: true
+      echopet.pet.type.parrot.blue: true
+      echopet.pet.type.parrot.green: true
+      echopet.pet.type.parrot.cyan: true
+      echopet.pet.type.parrot.gray: true
+  echopet.pet.type.phantom.*:
+    default: op
+    description: 'All phantom pet data permissions'
+    children:
+      echopet.pet.type.phantom.hat: true
+      echopet.pet.type.phantom.ride: true
+      echopet.pet.type.phantom.size: true
+      echopet.pet.type.phantom.wander: true
+  echopet.pet.type.pig.*:
+    default: op
+    description: 'All pig pet data permissions'
+    children:
+      echopet.pet.type.pig.hat: true
+      echopet.pet.type.pig.ride: true
+      echopet.pet.type.pig.baby: true
+      echopet.pet.type.pig.saddle: true
+  echopet.pet.type.piglin.*:
+    default: op
+    description: 'All piglin pet data permissions'
+    children:
+      echopet.pet.type.piglin.hat: true
+      echopet.pet.type.piglin.ride: true
+      echopet.pet.type.piglin.baby: true
+      echopet.pet.type.piglin.dance: true
+  echopet.pet.type.pigzombie.*:
+    default: op
+    description: 'All pigzombie pet data permissions'
+    children:
+      echopet.pet.type.pigzombie.hat: true
+      echopet.pet.type.pigzombie.ride: true
+      echopet.pet.type.pigzombie.baby: true
+  echopet.pet.type.pillager.*:
+    default: op
+    description: 'All pillager pet data permissions'
+    children:
+      echopet.pet.type.pillager.hat: true
+      echopet.pet.type.pillager.ride: true
+  echopet.pet.type.polarbear.*:
+    default: op
+    description: 'All polarbear pet data permissions'
+    children:
+      echopet.pet.type.polarbear.hat: true
+      echopet.pet.type.polarbear.ride: true
+      echopet.pet.type.polarbear.baby: true
+      echopet.pet.type.polarbear.standing_up: true
+  echopet.pet.type.pufferfish.*:
+    default: op
+    description: 'All pufferfish pet data permissions'
+    children:
+      echopet.pet.type.pufferfish.hat: true
+      echopet.pet.type.pufferfish.ride: true
+      echopet.pet.type.pufferfish.size_small: true
+      echopet.pet.type.pufferfish.size_medium: true
+      echopet.pet.type.pufferfish.size_large: true
+  echopet.pet.type.rabbit.*:
+    default: op
+    description: 'All rabbit pet data permissions'
+    children:
+      echopet.pet.type.rabbit.hat: true
+      echopet.pet.type.rabbit.ride: true
+      echopet.pet.type.rabbit.baby: true
+      echopet.pet.type.rabbit.brown: true
+      echopet.pet.type.rabbit.white: true
+      echopet.pet.type.rabbit.black: true
+      echopet.pet.type.rabbit.black_and_white: true
+      echopet.pet.type.rabbit.gold: true
+      echopet.pet.type.rabbit.salt_and_pepper: true
+      echopet.pet.type.rabbit.killer_bunny: true
+  echopet.pet.type.ravager.*:
+    default: op
+    description: 'All ravager pet data permissions'
+    children:
+      echopet.pet.type.ravager.hat: true
+      echopet.pet.type.ravager.ride: true
+  echopet.pet.type.salmon.*:
+    default: op
+    description: 'All salmon pet data permissions'
+    children:
+      echopet.pet.type.salmon.hat: true
+      echopet.pet.type.salmon.ride: true
+  echopet.pet.type.sheep.*:
+    default: op
+    description: 'All sheep pet data permissions'
+    children:
+      echopet.pet.type.sheep.hat: true
+      echopet.pet.type.sheep.ride: true
+      echopet.pet.type.sheep.baby: true
+      echopet.pet.type.sheep.sheared: true
+      echopet.pet.type.sheep.white: true
+      echopet.pet.type.sheep.orange: true
+      echopet.pet.type.sheep.magenta: true
+      echopet.pet.type.sheep.light_blue: true
+      echopet.pet.type.sheep.yellow: true
+      echopet.pet.type.sheep.lime: true
+      echopet.pet.type.sheep.pink: true
+      echopet.pet.type.sheep.gray: true
+      echopet.pet.type.sheep.light_gray: true
+      echopet.pet.type.sheep.cyan: true
+      echopet.pet.type.sheep.purple: true
+      echopet.pet.type.sheep.blue: true
+      echopet.pet.type.sheep.brown: true
+      echopet.pet.type.sheep.green: true
+      echopet.pet.type.sheep.red: true
+      echopet.pet.type.sheep.black: true
+  echopet.pet.type.shulker.*:
+    default: op
+    description: 'All shulker pet data permissions'
+    children:
+      echopet.pet.type.shulker.hat: true
+      echopet.pet.type.shulker.ride: true
+      echopet.pet.type.shulker.peek: true
+      echopet.pet.type.shulker.no_color: true
+      echopet.pet.type.shulker.white: true
+      echopet.pet.type.shulker.orange: true
+      echopet.pet.type.shulker.magenta: true
+      echopet.pet.type.shulker.light_blue: true
+      echopet.pet.type.shulker.yellow: true
+      echopet.pet.type.shulker.lime: true
+      echopet.pet.type.shulker.pink: true
+      echopet.pet.type.shulker.gray: true
+      echopet.pet.type.shulker.light_gray: true
+      echopet.pet.type.shulker.cyan: true
+      echopet.pet.type.shulker.purple: true
+      echopet.pet.type.shulker.blue: true
+      echopet.pet.type.shulker.brown: true
+      echopet.pet.type.shulker.green: true
+      echopet.pet.type.shulker.red: true
+      echopet.pet.type.shulker.black: true
+  echopet.pet.type.silverfish.*:
+    default: op
+    description: 'All silverfish pet data permissions'
+    children:
+      echopet.pet.type.silverfish.hat: true
+      echopet.pet.type.silverfish.ride: true
+  echopet.pet.type.skeleton.*:
+    default: op
+    description: 'All skeleton pet data permissions'
+    children:
+      echopet.pet.type.skeleton.hat: true
+      echopet.pet.type.skeleton.ride: true
+  echopet.pet.type.skeletonhorse.*:
+    default: op
+    description: 'All skeletonhorse pet data permissions'
+    children:
+      echopet.pet.type.skeletonhorse.hat: true
+      echopet.pet.type.skeletonhorse.ride: true
+      echopet.pet.type.skeletonhorse.baby: true
+      echopet.pet.type.skeletonhorse.saddle: true
+  echopet.pet.type.slime.*:
+    default: op
+    description: 'All slime pet data permissions'
+    children:
+      echopet.pet.type.slime.hat: true
+      echopet.pet.type.slime.ride: true
+      echopet.pet.type.slime.size_small: true
+      echopet.pet.type.slime.size_medium: true
+      echopet.pet.type.slime.size_large: true
+  echopet.pet.type.snowman.*:
+    default: op
+    description: 'All snowman pet data permissions'
+    children:
+      echopet.pet.type.snowman.hat: true
+      echopet.pet.type.snowman.ride: true
+      echopet.pet.type.snowman.sheared: true
+  echopet.pet.type.spider.*:
+    default: op
+    description: 'All spider pet data permissions'
+    children:
+      echopet.pet.type.spider.hat: true
+      echopet.pet.type.spider.ride: true
+  echopet.pet.type.squid.*:
+    default: op
+    description: 'All squid pet data permissions'
+    children:
+      echopet.pet.type.squid.hat: true
+      echopet.pet.type.squid.ride: true
+  echopet.pet.type.stray.*:
+    default: op
+    description: 'All stray pet data permissions'
+    children:
+      echopet.pet.type.stray.hat: true
+      echopet.pet.type.stray.ride: true
+  echopet.pet.type.strider.*:
+    default: op
+    description: 'All strider pet data permissions'
+    children:
+      echopet.pet.type.strider.hat: true
+      echopet.pet.type.strider.ride: true
+      echopet.pet.type.strider.baby: true
+      echopet.pet.type.strider.saddle: true
+  echopet.pet.type.tadpole.*:
+    default: op
+    description: 'All tadpole pet data permissions'
+    children:
+      echopet.pet.type.tadpole.hat: true
+      echopet.pet.type.tadpole.ride: true
+  echopet.pet.type.traderllama.*:
+    default: op
+    description: 'All traderllama pet data permissions'
+    children:
+      echopet.pet.type.traderllama.hat: true
+      echopet.pet.type.traderllama.ride: true
+      echopet.pet.type.traderllama.baby: true
+      echopet.pet.type.traderllama.chest: true
+      echopet.pet.type.traderllama.creamy: true
+      echopet.pet.type.traderllama.white: true
+      echopet.pet.type.traderllama.brown: true
+      echopet.pet.type.traderllama.gray: true
+      echopet.pet.type.traderllama.white_carpet: true
+      echopet.pet.type.traderllama.orange_carpet: true
+      echopet.pet.type.traderllama.magenta_carpet: true
+      echopet.pet.type.traderllama.light_blue_carpet: true
+      echopet.pet.type.traderllama.yellow_carpet: true
+      echopet.pet.type.traderllama.lime_carpet: true
+      echopet.pet.type.traderllama.pink_carpet: true
+      echopet.pet.type.traderllama.gray_carpet: true
+      echopet.pet.type.traderllama.light_gray: true
+      echopet.pet.type.traderllama.cyan_carpet: true
+      echopet.pet.type.traderllama.purple_carpet: true
+      echopet.pet.type.traderllama.blue_carpet: true
+      echopet.pet.type.traderllama.brown_carpet: true
+      echopet.pet.type.traderllama.green_carpet: true
+      echopet.pet.type.traderllama.red_carpet: true
+      echopet.pet.type.traderllama.black_carpet: true
+  echopet.pet.type.tropicalfish.*:
+    default: op
+    description: 'All tropicalfish pet data permissions'
+    children:
+      echopet.pet.type.tropicalfish.hat: true
+      echopet.pet.type.tropicalfish.ride: true
+      echopet.pet.type.tropicalfish.size_large: true
+      echopet.pet.type.tropicalfish.pattern_kob: true
+      echopet.pet.type.tropicalfish.pattern_sunstreak: true
+      echopet.pet.type.tropicalfish.pattern_snooper: true
+      echopet.pet.type.tropicalfish.pattern_dasher: true
+      echopet.pet.type.tropicalfish.pattern_brinely: true
+      echopet.pet.type.tropicalfish.pattern_spotty: true
+      echopet.pet.type.tropicalfish.pattern_flopper: true
+      echopet.pet.type.tropicalfish.pattern_stripey: true
+      echopet.pet.type.tropicalfish.pattern_glitter: true
+      echopet.pet.type.tropicalfish.pattern_blockfish: true
+      echopet.pet.type.tropicalfish.pattern_betty: true
+      echopet.pet.type.tropicalfish.pattern_clayfish: true
+      echopet.pet.type.tropicalfish.color_white: true
+      echopet.pet.type.tropicalfish.color_orange: true
+      echopet.pet.type.tropicalfish.color_magenta: true
+      echopet.pet.type.tropicalfish.color_light_blue: true
+      echopet.pet.type.tropicalfish.color_yellow: true
+      echopet.pet.type.tropicalfish.color_lime: true
+      echopet.pet.type.tropicalfish.color_pink: true
+      echopet.pet.type.tropicalfish.color_gray: true
+      echopet.pet.type.tropicalfish.color_light_gray: true
+      echopet.pet.type.tropicalfish.color_cyan: true
+      echopet.pet.type.tropicalfish.color_purple: true
+      echopet.pet.type.tropicalfish.color_blue: true
+      echopet.pet.type.tropicalfish.color_brown: true
+      echopet.pet.type.tropicalfish.color_green: true
+      echopet.pet.type.tropicalfish.color_red: true
+      echopet.pet.type.tropicalfish.color_black: true
+      echopet.pet.type.tropicalfish.pattern_color_white: true
+      echopet.pet.type.tropicalfish.pattern_color_orange: true
+      echopet.pet.type.tropicalfish.pattern_color_magenta: true
+      echopet.pet.type.tropicalfish.pattern_color_light_blue: true
+      echopet.pet.type.tropicalfish.pattern_color_yellow: true
+      echopet.pet.type.tropicalfish.pattern_color_lime: true
+      echopet.pet.type.tropicalfish.pattern_color_pink: true
+      echopet.pet.type.tropicalfish.pattern_color_gray: true
+      echopet.pet.type.tropicalfish.pattern_color_light_gray: true
+      echopet.pet.type.tropicalfish.pattern_color_cyan: true
+      echopet.pet.type.tropicalfish.pattern_color_purple: true
+      echopet.pet.type.tropicalfish.pattern_color_blue: true
+      echopet.pet.type.tropicalfish.pattern_color_brown: true
+      echopet.pet.type.tropicalfish.pattern_color_green: true
+      echopet.pet.type.tropicalfish.pattern_color_red: true
+      echopet.pet.type.tropicalfish.pattern_color_black: true
+  echopet.pet.type.turtle.*:
+    default: op
+    description: 'All turtle pet data permissions'
+    children:
+      echopet.pet.type.turtle.hat: true
+      echopet.pet.type.turtle.ride: true
+      echopet.pet.type.turtle.baby: true
+  echopet.pet.type.vex.*:
+    default: op
+    description: 'All vex pet data permissions'
+    children:
+      echopet.pet.type.vex.hat: true
+      echopet.pet.type.vex.ride: true
+      echopet.pet.type.vex.powered: true
+  echopet.pet.type.villager.*:
+    default: op
+    description: 'All villager pet data permissions'
+    children:
+      echopet.pet.type.villager.hat: true
+      echopet.pet.type.villager.ride: true
+      echopet.pet.type.villager.baby: true
+      echopet.pet.type.villager.desert: true
+      echopet.pet.type.villager.jungle: true
+      echopet.pet.type.villager.plains: true
+      echopet.pet.type.villager.savanna: true
+      echopet.pet.type.villager.snowy: true
+      echopet.pet.type.villager.swamp: true
+      echopet.pet.type.villager.taiga: true
+      echopet.pet.type.villager.none: true
+      echopet.pet.type.villager.armorer: true
+      echopet.pet.type.villager.butcher: true
+      echopet.pet.type.villager.cartographer: true
+      echopet.pet.type.villager.cleric: true
+      echopet.pet.type.villager.farmer: true
+      echopet.pet.type.villager.fisherman: true
+      echopet.pet.type.villager.fletcher: true
+      echopet.pet.type.villager.leatherworker: true
+      echopet.pet.type.villager.librarian: true
+      echopet.pet.type.villager.mason: true
+      echopet.pet.type.villager.nitwit: true
+      echopet.pet.type.villager.sherpherd: true
+      echopet.pet.type.villager.toolsmith: true
+      echopet.pet.type.villager.weaponsmith: true
+      echopet.pet.type.villager.novice: true
+      echopet.pet.type.villager.apprentice: true
+      echopet.pet.type.villager.journeymen: true
+      echopet.pet.type.villager.expert: true
+      echopet.pet.type.villager.master: true
+  echopet.pet.type.vindicator.*:
+    default: op
+    description: 'All vindicator pet data permissions'
+    children:
+      echopet.pet.type.vindicator.hat: true
+      echopet.pet.type.vindicator.ride: true
+  echopet.pet.type.wanderingtrader.*:
+    default: op
+    description: 'All wanderingtrader pet data permissions'
+    children:
+      echopet.pet.type.wanderingtrader.hat: true
+      echopet.pet.type.wanderingtrader.ride: true
+      echopet.pet.type.wanderingtrader.baby: true
+  echopet.pet.type.warden.*:
+    default: op
+    description: 'All warden pet data permissions'
+    children:
+      echopet.pet.type.warden.hat: true
+      echopet.pet.type.warden.ride: true
+      echopet.pet.type.warden.calm: true
+      echopet.pet.type.warden.agitated: true
+      echopet.pet.type.warden.angry: true
+  echopet.pet.type.witch.*:
+    default: op
+    description: 'All witch pet data permissions'
+    children:
+      echopet.pet.type.witch.hat: true
+      echopet.pet.type.witch.ride: true
+  echopet.pet.type.wither.*:
+    default: op
+    description: 'All wither pet data permissions'
+    children:
+      echopet.pet.type.wither.hat: true
+      echopet.pet.type.wither.ride: true
+      echopet.pet.type.wither.shield: true
+  echopet.pet.type.witherskeleton.*:
+    default: op
+    description: 'All witherskeleton pet data permissions'
+    children:
+      echopet.pet.type.witherskeleton.hat: true
+      echopet.pet.type.witherskeleton.ride: true
+  echopet.pet.type.wolf.*:
+    default: op
+    description: 'All wolf pet data permissions'
+    children:
+      echopet.pet.type.wolf.hat: true
+      echopet.pet.type.wolf.ride: true
+      echopet.pet.type.wolf.baby: true
+      echopet.pet.type.wolf.sit: true
+      echopet.pet.type.wolf.tamed: true
+      echopet.pet.type.wolf.angry: true
+      echopet.pet.type.wolf.health: true
+      echopet.pet.type.wolf.white: true
+      echopet.pet.type.wolf.orange: true
+      echopet.pet.type.wolf.magenta: true
+      echopet.pet.type.wolf.light_blue: true
+      echopet.pet.type.wolf.yellow: true
+      echopet.pet.type.wolf.lime: true
+      echopet.pet.type.wolf.pink: true
+      echopet.pet.type.wolf.gray: true
+      echopet.pet.type.wolf.light_gray: true
+      echopet.pet.type.wolf.cyan: true
+      echopet.pet.type.wolf.purple: true
+      echopet.pet.type.wolf.blue: true
+      echopet.pet.type.wolf.brown: true
+      echopet.pet.type.wolf.green: true
+      echopet.pet.type.wolf.red: true
+      echopet.pet.type.wolf.black: true
+  echopet.pet.type.zoglin.*:
+    default: op
+    description: 'All zoglin pet data permissions'
+    children:
+      echopet.pet.type.zoglin.hat: true
+      echopet.pet.type.zoglin.ride: true
+      echopet.pet.type.zoglin.baby: true
+  echopet.pet.type.zombie.*:
+    default: op
+    description: 'All zombie pet data permissions'
+    children:
+      echopet.pet.type.zombie.hat: true
+      echopet.pet.type.zombie.ride: true
+      echopet.pet.type.zombie.baby: true
+  echopet.pet.type.zombiehorse.*:
+    default: op
+    description: 'All zombiehorse pet data permissions'
+    children:
+      echopet.pet.type.zombiehorse.hat: true
+      echopet.pet.type.zombiehorse.ride: true
+      echopet.pet.type.zombiehorse.baby: true
+      echopet.pet.type.zombiehorse.saddle: true
+  echopet.pet.type.zombievillager.*:
+    default: op
+    description: 'All zombievillager pet data permissions'
+    children:
+      echopet.pet.type.zombievillager.hat: true
+      echopet.pet.type.zombievillager.ride: true
+      echopet.pet.type.zombievillager.baby: true
+      echopet.pet.type.zombievillager.desert: true
+      echopet.pet.type.zombievillager.jungle: true
+      echopet.pet.type.zombievillager.plains: true
+      echopet.pet.type.zombievillager.savanna: true
+      echopet.pet.type.zombievillager.snowy: true
+      echopet.pet.type.zombievillager.swamp: true
+      echopet.pet.type.zombievillager.taiga: true
+      echopet.pet.type.zombievillager.none: true
+      echopet.pet.type.zombievillager.armorer: true
+      echopet.pet.type.zombievillager.butcher: true
+      echopet.pet.type.zombievillager.cartographer: true
+      echopet.pet.type.zombievillager.cleric: true
+      echopet.pet.type.zombievillager.farmer: true
+      echopet.pet.type.zombievillager.fisherman: true
+      echopet.pet.type.zombievillager.fletcher: true
+      echopet.pet.type.zombievillager.leatherworker: true
+      echopet.pet.type.zombievillager.librarian: true
+      echopet.pet.type.zombievillager.mason: true
+      echopet.pet.type.zombievillager.nitwit: true
+      echopet.pet.type.zombievillager.sherpherd: true
+      echopet.pet.type.zombievillager.toolsmith: true
+      echopet.pet.type.zombievillager.weaponsmith: true
+      echopet.pet.type.zombievillager.novice: true
+      echopet.pet.type.zombievillager.apprentice: true
+      echopet.pet.type.zombievillager.journeymen: true
+      echopet.pet.type.zombievillager.expert: true
+      echopet.pet.type.zombievillager.master: true

@@ -70,3 +70,4 @@ nb-configuration.xml
 *.ipr
 *.iws
 *.sh
+.gradle
