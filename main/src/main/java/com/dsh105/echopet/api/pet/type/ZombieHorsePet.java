@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
  * @since Nov 19, 2016
  */
 @EntityPetType(petType = PetType.ZOMBIEHORSE)
-public class ZombieHorsePet extends HorseAbstractPet implements IZombieHorsePet{
+public class ZombieHorsePet extends AbstractHorsePet implements IZombieHorsePet{
 	
 	public ZombieHorsePet(Player owner){
 		super(owner);

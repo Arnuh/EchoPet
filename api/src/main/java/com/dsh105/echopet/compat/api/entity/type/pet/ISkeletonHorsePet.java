@@ -20,4 +20,4 @@ package com.dsh105.echopet.compat.api.entity.type.pet;
 /**
  * @since Nov 19, 2016
  */
-public interface ISkeletonHorsePet extends IHorseAbstractPet{}
+public interface ISkeletonHorsePet extends IAbstractHorsePet{}

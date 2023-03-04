@@ -16,13 +16,25 @@
  */
 package com.dsh105.echopet.compat.api.entity.type.pet;
 
+import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
+import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
 
 /**
  * @since Nov 19, 2016
  */
-public interface IHorseChestedAbstractPet extends IAbstractHorsePet{
+public interface IAbstractHorsePet extends IAgeablePet{
 	
-	void setChested(boolean flag);
+	@Override
+	boolean isBaby();
 	
-	boolean isChested();
+	boolean isSaddled();
+	
+	HorseVariant getVariant();
+	
+	@Override
+	void setBaby(boolean flag);
+	
+	void setSaddled(boolean flag);
+	
+	void setVariant(HorseVariant variant);
 }

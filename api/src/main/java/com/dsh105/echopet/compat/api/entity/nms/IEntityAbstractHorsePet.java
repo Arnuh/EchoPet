@@ -14,27 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity.type.pet;
 
-import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
-import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
+package com.dsh105.echopet.compat.api.entity.nms;
 
-/**
- * @since Nov 19, 2016
- */
-public interface IHorseAbstractPet extends IAgeablePet{
-	
-	@Override
-	boolean isBaby();
-	
-	boolean isSaddled();
-	
-	HorseVariant getVariant();
-	
-	@Override
-	void setBaby(boolean flag);
-	
-	void setSaddled(boolean flag);
-	
-	void setVariant(HorseVariant variant);
-}
+public interface IEntityAbstractHorsePet extends IEntityAnimalPet{}

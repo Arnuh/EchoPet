@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.entity.nms.handle;
 
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import org.bukkit.entity.Pose;
 
 
 /**
@@ -40,4 +41,6 @@ public interface IEntityPetHandle{
 	void tick();
 	
 	float getSpeed();
+	
+	void setPose(Pose pose);
 }

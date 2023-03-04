@@ -48,6 +48,7 @@ public enum PetType implements IPetType{
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
+	CAMEL("Camel", "Camel Pet", "camel", new Version("1.19-R2"), PetData.SITTING),
 	CAT("Cat", "Cat Pet", "cat", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}),
 	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
 	CHICKEN("Chicken", "Chicken Pet", "chicken"),
@@ -219,7 +220,10 @@ public enum PetType implements IPetType{
 	
 	@Override
 	public String getDefaultName(String name){
-		return EchoPet.getConfig().getString("pets." + getConfigKeyName() + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+		return EchoPet.getConfig()
+			.getString("pets." + getConfigKeyName() + ".defaultName", this.defaultName)
+			.replace("(user)", name)
+			.replace("(userApos)", name + "'s");
 	}
 	
 	@Override

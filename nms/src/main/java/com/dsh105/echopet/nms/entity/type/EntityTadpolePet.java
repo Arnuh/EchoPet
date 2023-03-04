@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityFishPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITadpolePet;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
@@ -167,7 +166,7 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	public boolean usesBrain(){
 		if(thisIsDumb) return usesBrain;
 		thisIsDumb = true;
-		return usesBrain = IFrogPet.BRAIN_ENABLED.get(PetType.TADPOLE);
+		return usesBrain = ITadpolePet.BRAIN_ENABLED.get(PetType.TADPOLE);
 	}
 	
 	@Override

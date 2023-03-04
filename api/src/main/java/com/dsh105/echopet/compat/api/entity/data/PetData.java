@@ -38,10 +38,12 @@ import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ICamelPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
@@ -49,7 +51,6 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IFoxPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IFrogPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGlowSquidPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
@@ -151,7 +152,7 @@ public class PetData<T>{
 		SADDLE = create("saddle", (player, pet, category)->{
 			if(pet instanceof IPigPet pig){
 				return pig::setSaddle;
-			}else if(pet instanceof IHorseAbstractPet horseAbstract){
+			}else if(pet instanceof IAbstractHorsePet horseAbstract){
 				return horseAbstract::setSaddled;
 			}else if(pet instanceof IStriderPet strider){
 				return strider::setHasSaddle;
@@ -375,6 +376,12 @@ public class PetData<T>{
 			}
 			return null;
 		}).material(Material.getMaterial("GOAT_HORN")).version("1.19-R1").name("Right Horn").parser(booleanParser()).create(),
+		SITTING = new Builder<Boolean>().configKey("sitting").action((player, pet, category)->{
+			if(pet instanceof ICamelPet camel){
+				return camel::setSitting;
+			}
+			return null;
+		}).material(Material.SADDLE).name("Sitting").parser(booleanParser()).create(),
 		// Colors. Used for Collars(Wolf, Cat), Cat, Sheep, Llama Color, certain Rabbit Types, Axolotl.
 		WHITE = create("white", (player, pet, category)->{
 			if(pet.getPetType().equals(PetType.CAT) && category != null && category.equals(PetDataCategory.CAT_TYPE)){

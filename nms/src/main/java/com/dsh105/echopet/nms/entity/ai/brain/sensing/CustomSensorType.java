@@ -25,10 +25,6 @@ import net.minecraft.world.entity.ai.sensing.PlayerSensor;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 
-/**
- * @author Arnah
- * @since Jun. 22, 2022
- **/
 public class CustomSensorType{
 	
 	public static final SensorType<NearestLivingEntitySensor<LivingEntity>> NEAREST_LIVING_ENTITIES = register(PetNearestLivingEntitySensor::new);

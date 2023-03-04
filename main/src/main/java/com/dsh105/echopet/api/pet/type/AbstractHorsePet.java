@@ -20,7 +20,7 @@ import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
-import com.dsh105.echopet.compat.api.entity.type.pet.IHorseAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractHorsePet;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,12 +28,12 @@ import org.bukkit.entity.Player;
 /**
  * @since Nov 19, 2016
  */
-public abstract class HorseAbstractPet extends AgeablePet implements IHorseAbstractPet{
+public abstract class AbstractHorsePet extends AgeablePet implements IAbstractHorsePet{
 	
 	protected HorseVariant horseVariant = HorseVariant.HORSE;
 	protected boolean saddle = false;
 	
-	public HorseAbstractPet(Player owner){
+	public AbstractHorsePet(Player owner){
 		super(owner);
 	}
 	

@@ -40,6 +40,7 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Pose;
 import org.bukkit.util.Vector;
 
 public class EntityPetHandle implements INMSEntityPetHandle{
@@ -219,6 +220,11 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 			}
 		}
 		return speed;
+	}
+	
+	@Override
+	public void setPose(Pose pose){
+		getEntity().setPose(net.minecraft.world.entity.Pose.values()[pose.ordinal()]);
 	}
 	
 	protected void adjustFlyingSpeed(){

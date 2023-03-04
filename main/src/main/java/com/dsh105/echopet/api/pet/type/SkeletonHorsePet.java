@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
  * @since Nov 19, 2016
  */
 @EntityPetType(petType = PetType.SKELETONHORSE)
-public class SkeletonHorsePet extends HorseAbstractPet implements ISkeletonHorsePet{
+public class SkeletonHorsePet extends AbstractHorsePet implements ISkeletonHorsePet{
 	
 	public SkeletonHorsePet(Player owner){
 		super(owner);
