@@ -115,6 +115,8 @@ permissions:
     default: op
   echopet.pet.type.blaze:
     default: op
+  echopet.pet.type.camel:
+    default: op
   echopet.pet.type.cat:
     default: op
   echopet.pet.type.cavespider:
@@ -266,6 +268,8 @@ permissions:
   echopet.pet.default.set.type.bee:
     default: op
   echopet.pet.default.set.type.blaze:
+    default: op
+  echopet.pet.default.set.type.camel:
     default: op
   echopet.pet.default.set.type.cat:
     default: op
@@ -454,6 +458,14 @@ permissions:
   echopet.pet.type.blaze.ride:
     default: op
   echopet.pet.type.blaze.fire:
+    default: op
+  echopet.pet.type.camel.hat:
+    default: op
+  echopet.pet.type.camel.ride:
+    default: op
+  echopet.pet.type.camel.baby:
+    default: op
+  echopet.pet.type.camel.sitting:
     default: op
   echopet.pet.type.cat.hat:
     default: op
@@ -1449,6 +1461,8 @@ permissions:
     default: op
   echopet.petadmin.type.blaze:
     default: op
+  echopet.petadmin.type.camel:
+    default: op
   echopet.petadmin.type.cat:
     default: op
   echopet.petadmin.type.cavespider:
@@ -1600,6 +1614,8 @@ permissions:
   echopet.petadmin.hat.bee:
     default: op
   echopet.petadmin.hat.blaze:
+    default: op
+  echopet.petadmin.hat.camel:
     default: op
   echopet.petadmin.hat.cat:
     default: op
@@ -1753,6 +1769,8 @@ permissions:
     default: op
   echopet.petadmin.ride.blaze:
     default: op
+  echopet.petadmin.ride.camel:
+    default: op
   echopet.petadmin.ride.cat:
     default: op
   echopet.petadmin.ride.cavespider:
@@ -1904,6 +1922,8 @@ permissions:
   echopet.petadmin.default.set.type.bee:
     default: op
   echopet.petadmin.default.set.type.blaze:
+    default: op
+  echopet.petadmin.default.set.type.camel:
     default: op
   echopet.petadmin.default.set.type.cat:
     default: op
@@ -2083,6 +2103,7 @@ permissions:
       echopet.pet.type.bat: true
       echopet.pet.type.bee: true
       echopet.pet.type.blaze: true
+      echopet.pet.type.camel: true
       echopet.pet.type.cat: true
       echopet.pet.type.cavespider: true
       echopet.pet.type.chicken: true
@@ -2163,6 +2184,7 @@ permissions:
       echopet.pet.type.bat.hat: true
       echopet.pet.type.bee.hat: true
       echopet.pet.type.blaze.hat: true
+      echopet.pet.type.camel.hat: true
       echopet.pet.type.cat.hat: true
       echopet.pet.type.cavespider.hat: true
       echopet.pet.type.chicken.hat: true
@@ -2243,6 +2265,7 @@ permissions:
       echopet.pet.type.bat.ride: true
       echopet.pet.type.bee.ride: true
       echopet.pet.type.blaze.ride: true
+      echopet.pet.type.camel.ride: true
       echopet.pet.type.cat.ride: true
       echopet.pet.type.cavespider.ride: true
       echopet.pet.type.chicken.ride: true
@@ -2320,6 +2343,7 @@ permissions:
     children:
       echopet.pet.type.axolotl.baby: true
       echopet.pet.type.bee.baby: true
+      echopet.pet.type.camel.baby: true
       echopet.pet.type.cat.baby: true
       echopet.pet.type.chicken.baby: true
       echopet.pet.type.cow.baby: true
@@ -2368,6 +2392,7 @@ permissions:
       echopet.pet.default.set.type.bat: true
       echopet.pet.default.set.type.bee: true
       echopet.pet.default.set.type.blaze: true
+      echopet.pet.default.set.type.camel: true
       echopet.pet.default.set.type.cat: true
       echopet.pet.default.set.type.cavespider: true
       echopet.pet.default.set.type.chicken: true
@@ -2469,6 +2494,7 @@ permissions:
       echopet.petadmin.type.bat: true
       echopet.petadmin.type.bee: true
       echopet.petadmin.type.blaze: true
+      echopet.petadmin.type.camel: true
       echopet.petadmin.type.cat: true
       echopet.petadmin.type.cavespider: true
       echopet.petadmin.type.chicken: true
@@ -2549,6 +2575,7 @@ permissions:
       echopet.petadmin.hat.bat: true
       echopet.petadmin.hat.bee: true
       echopet.petadmin.hat.blaze: true
+      echopet.petadmin.hat.camel: true
       echopet.petadmin.hat.cat: true
       echopet.petadmin.hat.cavespider: true
       echopet.petadmin.hat.chicken: true
@@ -2629,6 +2656,7 @@ permissions:
       echopet.petadmin.ride.bat: true
       echopet.petadmin.ride.bee: true
       echopet.petadmin.ride.blaze: true
+      echopet.petadmin.ride.camel: true
       echopet.petadmin.ride.cat: true
       echopet.petadmin.ride.cavespider: true
       echopet.petadmin.ride.chicken: true
@@ -2716,6 +2744,7 @@ permissions:
       echopet.petadmin.default.set.type.bat: true
       echopet.petadmin.default.set.type.bee: true
       echopet.petadmin.default.set.type.blaze: true
+      echopet.petadmin.default.set.type.camel: true
       echopet.petadmin.default.set.type.cat: true
       echopet.petadmin.default.set.type.cavespider: true
       echopet.petadmin.default.set.type.chicken: true
@@ -2830,6 +2859,14 @@ permissions:
       echopet.pet.type.blaze.hat: true
       echopet.pet.type.blaze.ride: true
       echopet.pet.type.blaze.fire: true
+  echopet.pet.type.camel.*:
+    default: op
+    description: 'All camel pet data permissions'
+    children:
+      echopet.pet.type.camel.hat: true
+      echopet.pet.type.camel.ride: true
+      echopet.pet.type.camel.baby: true
+      echopet.pet.type.camel.sitting: true
   echopet.pet.type.cat.*:
     default: op
     description: 'All cat pet data permissions'
