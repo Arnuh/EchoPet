@@ -76,11 +76,7 @@ public class NMSEntityUtil{
 		protected FakeEntity(){
 			// Paper requires a World in the Entity class
 			// shieldBlockingDelay = this.level.paperConfig.shieldBlockingDelay;
-			super(EntityType.BAT, Bukkit.getWorlds().stream()
-				.findFirst()
-				.map(CraftWorld.class::cast)
-				.map(CraftWorld::getHandle)
-				.orElse(null));
+			super(EntityType.BAT, Bukkit.getWorlds().stream().findFirst().map(CraftWorld.class::cast).map(CraftWorld::getHandle).orElseThrow());
 		}
 		
 		@Override

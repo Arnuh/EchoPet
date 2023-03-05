@@ -176,15 +176,6 @@ public class SpawnUtil implements ISpawnUtil{
 	}
 	
 	private Field profileField = null;
-	private static boolean commonsCodecBase64 = false;
-	
-	static{
-		try{
-			Class.forName("org.apache.commons.codec.binary.Base64");
-			commonsCodecBase64 = true;
-		}catch(Exception ignored){
-		}
-	}
 	
 	@Override
 	public void setSkullTexture(SkullMeta meta, String data){
@@ -209,8 +200,15 @@ public class SpawnUtil implements ISpawnUtil{
 	}
 	
 	public static boolean isBase64(String data){
-		if(!commonsCodecBase64) return false;
-		return false;
-		// return org.apache.commons.codec.binary.Base64.isBase64(data);
+		try{
+			// Relatively... fast way to check if the data is base64'd but with some false positives.
+			// Can regex check it but that is slower
+			// Can use some library that regex checks it or checks if each char is valid.
+			// Or can copypaste from a library that does the above.
+			Base64.getDecoder().decode(data);
+			return true;
+		}catch(IllegalArgumentException ex){
+			return false;
+		}
 	}
 }
