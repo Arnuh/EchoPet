@@ -26,6 +26,7 @@ import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.NMSEntityUtil;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.GoalSelectorWrapper;
@@ -37,8 +38,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.util.Vector;
@@ -56,7 +57,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	
 	public EntityPetHandle(IEntityPet entityPet){
 		this.entityPet = entityPet;
-		this.owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
+		this.owner = ((CraftPlayer) entityPet.getPetOwner()).getHandle();
 		initiateEntityPet();
 	}
 	
@@ -92,7 +93,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		this.jumpHeight = IPet.RIDING_JUMP_HEIGHT.getNumber(petType).doubleValue();
 		this.gravityModifier = IPet.RIDING_GRAVITY_MODIFIER.getNumber(petType).doubleValue();
 		this.setPathfinding();
-		getEntity().maxUpStep = getEntityPet().getMaxUpStep();
+		VersionBreaking.setMaxUpStep(getEntity(), getEntityPet().getMaxUpStep());
 	}
 	
 	public void setPathfinding(){

@@ -33,7 +33,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.player.Player;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 public class BrainFollowOwner extends Behavior<PathfinderMob>{
 	
@@ -63,7 +63,7 @@ public class BrainFollowOwner extends Behavior<PathfinderMob>{
 	
 	private Optional<Player> getTemptingPlayer(PathfinderMob mob){
 		if(owner == null && mob instanceof IEntityPet entityPet){
-			owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
+			owner = ((CraftPlayer) entityPet.getPetOwner()).getHandle();
 		}
 		return Optional.ofNullable(owner);
 	}
@@ -75,7 +75,8 @@ public class BrainFollowOwner extends Behavior<PathfinderMob>{
 	
 	@Override
 	protected boolean canStillUse(ServerLevel var0, PathfinderMob var1, long var2){
-		return this.getTemptingPlayer(var1).isPresent();// && !var1.getBrain().hasMemoryValue(MemoryModuleType.BREED_TARGET) && !var1.getBrain().hasMemoryValue(MemoryModuleType.IS_PANICKING);
+		return this.getTemptingPlayer(var1)
+			.isPresent();// && !var1.getBrain().hasMemoryValue(MemoryModuleType.BREED_TARGET) && !var1.getBrain().hasMemoryValue(MemoryModuleType.IS_PANICKING);
 	}
 	
 	@Override

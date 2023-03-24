@@ -162,7 +162,7 @@ public class PetCamelAi{
 		
 		@Override
 		protected void start(ServerLevel serverLevel, EntityCamelPet camel, long l){
-			if(camel.isPoseSitting()){
+			if(camel.isCamelSitting()){
 				camel.standUp();
 			}else if(!camel.isPanicking()){
 				camel.sitDown();

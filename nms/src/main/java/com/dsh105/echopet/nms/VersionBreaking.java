@@ -17,16 +17,21 @@
 
 package com.dsh105.echopet.nms;
 
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -83,6 +88,49 @@ public class VersionBreaking{
 			// 1.19.3
 			case Attribute -> (T) BuiltInRegistries.ATTRIBUTE.get(resourceLocation);
 			case Sound_Event -> (T) BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
+		};
+	}
+	
+	// 1.19.3 and below
+	// public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.BLOCK_STATE;
+	// 1.19.4
+	public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.OPTIONAL_BLOCK_STATE;
+	
+	public static void setMaxUpStep(Entity entity, float maxStepUp){
+		// 1.19.3 and below
+		// entity.maxUpStep = maxStepUp;
+		// 1.19.4
+		entity.setMaxUpStep(maxStepUp);
+	}
+	
+	public static void setFlyingSpeed(LivingEntity entity, float flyingSpeed){
+		// 1.19.3 and below
+		// entity.flyingSpeed = flyingSpeed;
+		// 1.19.4 does it in LivingEntity and doesn't seem to be required by us anymore?
+	}
+	
+	public static BlockPos blockPos(double x, double y, double z){
+		// 1.19.3 and below
+		// return new BlockPos(x, y, z);
+		// 1.19.4
+		return BlockPos.containing(x, y, z);
+	}
+	
+	public static void calculateEntityAnimation(LivingEntity entity, boolean flutter){
+		// 1.19.3 and below
+		// entity.calculateEntityAnimation(entity, flutter);
+		// 1.19.4
+		entity.calculateEntityAnimation(flutter);
+	}
+	
+	public static DamageSource getDamageSource(Entity entity, DamageSourceType damageSourceType){
+		// 1.19.3 and below
+		/*return switch(damageSourceType){
+			case FLY_INTO_WALL -> DamageSource.FLY_INTO_WALL;
+		};*/
+		// 1.19.4
+		return switch(damageSourceType){
+			case FLY_INTO_WALL -> entity.damageSources().flyIntoWall();
 		};
 	}
 }

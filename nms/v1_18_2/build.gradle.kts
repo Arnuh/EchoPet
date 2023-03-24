@@ -21,6 +21,6 @@ tasks {
 	
 	shadowJar {
 		relocate("com.dsh105.echopet.nms", "com.dsh105.echopet.compat.nms.v1_18_2")
-		relocate("org.bukkit.craftbukkit.v1_19_R2", "org.bukkit.craftbukkit.v1_18_R2")
+		relocate("org.bukkit.craftbukkit.v1_19_R3", "org.bukkit.craftbukkit.v1_18_R2")
 	}
 }

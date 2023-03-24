@@ -1,6 +1,6 @@
 plugins {
 	id("echopet-conventions")
-	id("io.papermc.paperweight.userdev") version "1.5.2"
+	id("io.papermc.paperweight.userdev") version "1.5.3"
 }
 
 subprojects {
@@ -9,5 +9,5 @@ subprojects {
 
 dependencies {
 	api(project(":api"))
-	paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
+	paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }

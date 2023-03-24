@@ -39,9 +39,12 @@ public class EntitySkeletonHorsePet extends EntityHorseAbstractPet implements IE
 		super(EntityType.SKELETON_HORSE, world, pet);
 	}
 	
-	@Override
 	public boolean rideableUnderWater(){
 		return true;
+	}
+	
+	public boolean dismountsUnderwater(){
+		return false;
 	}
 	
 	@Override

@@ -21,12 +21,13 @@ dependencies {
 	implementation(project(path = ":nms:v1_19_1", configuration = "reobf"))
 	implementation(project(path = ":nms:v1_19_2", configuration = "reobf"))
 	implementation(project(path = ":nms:v1_19_3", configuration = "reobf"))
+	implementation(project(path = ":nms:v1_19_4", configuration = "reobf"))
 }
 
 tasks {
 	processResources {
 		filesMatching("plugin.yml") {
-			filter<ReplaceTokens>("tokens" to mapOf("VERSION" to version, "BUILD_NUMBER" to System.getenv("BUILD_NUMBER")))
+			filter<ReplaceTokens>("tokens" to mapOf("VERSION" to version, "BUILD_NUMBER" to (System.getenv("BUILD_NUMBER") ?: "")))
 		}
 	}
 	

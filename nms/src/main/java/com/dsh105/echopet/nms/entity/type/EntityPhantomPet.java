@@ -25,6 +25,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPhantomPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPhantomPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -190,8 +191,8 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		}
 		
 		private void setAnchorAboveTarget(){
-			Location loc = getOwner().getLocation();
-			BlockPos pos = new BlockPos(loc.getX(), loc.getY(), loc.getZ());
+			Location loc = getPetOwner().getLocation();
+			BlockPos pos = VersionBreaking.blockPos(loc.getX(), loc.getY(), loc.getZ());
 			anchorPoint = pos.above(minHeightOffset + random().nextInt(randHeightOffset));
 		}
 	}
@@ -286,7 +287,8 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 			}
 			
 			this.angle += this.clockwise * 15.0F * (float) (Math.PI / 180.0);
-			moveTargetPoint = Vec3.atLowerCornerOf(anchorPoint).add(this.distance * Mth.cos(this.angle), minHeight + this.height, this.distance * Mth.sin(this.angle));
+			moveTargetPoint = Vec3.atLowerCornerOf(anchorPoint)
+				.add(this.distance * Mth.cos(this.angle), minHeight + this.height, this.distance * Mth.sin(this.angle));
 		}
 	}
 	

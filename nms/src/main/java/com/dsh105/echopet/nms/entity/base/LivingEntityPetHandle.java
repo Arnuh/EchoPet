@@ -21,13 +21,14 @@ package com.dsh105.echopet.nms.entity.base;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.nms.DamageSourceType;
 import com.dsh105.echopet.nms.NMSEntityUtil;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -37,7 +38,7 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R2.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_19_R3.event.CraftEventFactory;
 
 public class LivingEntityPetHandle extends EntityPetHandle implements INMSLivingEntityPetHandle{
 	
@@ -69,7 +70,7 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 	@Override
 	protected void adjustFlyingSpeed(){
 		LivingEntity entity = getEntity();
-		entity.flyingSpeed = entity.getSpeed() * 0.1F;
+		VersionBreaking.setFlyingSpeed(entity, entity.getSpeed() * 0.1F);
 	}
 	
 	@Override
@@ -183,11 +184,12 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 						float f3 = (float) (d7 * 10.0 - 3.0);
 						if(f3 > 0.0F){
 							entity.playSound(getFallDamageSound(entity, (int) f3), 1.0F, 1.0F);
-							entity.hurt(DamageSource.FLY_INTO_WALL, f3);
+							entity.hurt(VersionBreaking.getDamageSource(entity, DamageSourceType.FLY_INTO_WALL), f3);
 						}
 					}
 					
-					if(entity.onGround && !entity.level.isClientSide && entity.getSharedFlag(7) && !CraftEventFactory.callToggleGlideEvent(entity, false).isCancelled()){
+					if(entity.onGround && !entity.level.isClientSide && entity.getSharedFlag(7) && !CraftEventFactory.callToggleGlideEvent(entity, false)
+						.isCancelled()){
 						entity.setSharedFlag(7, false);
 					}
 				}else{
@@ -218,11 +220,11 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 			}
 		}
 		
-		entity.calculateEntityAnimation(entity, entity instanceof FlyingAnimal);
+		VersionBreaking.calculateEntityAnimation(entity, entity instanceof FlyingAnimal);
 	}
 	
 	protected BlockPos getBlockPosBelowThatAffectsMyMovement(LivingEntity entity){
-		return new BlockPos(entity.position().x, entity.getBoundingBox().minY - 0.5000001, entity.position().z);
+		return VersionBreaking.blockPos(entity.position().x, entity.getBoundingBox().minY - 0.5000001, entity.position().z);
 	}
 	
 	private SoundEvent getFallDamageSound(LivingEntity entity, int i){

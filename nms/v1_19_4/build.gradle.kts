@@ -10,8 +10,7 @@ dependencies {
 	implementation(project(":nms")) {
 		exclude(module = "api")
 	}
-	api(project(":api"))
-	paperweight.paperDevBundle("1.17.1-R0.1-SNAPSHOT")
+	paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -20,7 +19,6 @@ tasks {
 	}
 	
 	shadowJar {
-		relocate("com.dsh105.echopet.nms", "com.dsh105.echopet.compat.nms.v1_17_1")
-		relocate("org.bukkit.craftbukkit.v1_19_R3", "org.bukkit.craftbukkit.v1_17_R1")
+		relocate("com.dsh105.echopet.nms", "com.dsh105.echopet.compat.nms.v1_19_4")
 	}
 }

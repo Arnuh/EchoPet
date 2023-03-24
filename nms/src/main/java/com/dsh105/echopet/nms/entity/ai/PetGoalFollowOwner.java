@@ -29,7 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
@@ -67,11 +67,11 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	public boolean canUse(){
 		if(!this.mob.isAlive()){
 			return false;
-		}else if(this.pet.getOwner() == null){
+		}else if(this.pet.getPetOwner() == null){
 			return false;
 		}else if(this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()){
 			return false;
-		}else if(mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) < this.startDistanceSqr){
+		}else if(mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) < this.startDistanceSqr){
 			return false;
 		}
 		return true;
@@ -79,7 +79,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public boolean canContinueToUse(){
-		return !getNavigation().isDone() && this.mob.distanceToSqr(((CraftPlayer) this.pet.getOwner()).getHandle()) > stopDistanceSqr;
+		return !getNavigation().isDone() && this.mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) > stopDistanceSqr;
 	}
 	
 	@Override
@@ -96,16 +96,17 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public void tick(){
-		ServerPlayer owner = ((CraftPlayer) this.pet.getOwner()).getHandle();
+		ServerPlayer owner = ((CraftPlayer) this.pet.getPetOwner()).getHandle();
 		
 		mob.getLookControl().setLookAt(owner, 10.0F, (float) mob.getMaxHeadXRot());
 		if(--this.timeToRecalcPath <= 0){
 			this.timeToRecalcPath = 10;
-			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getOwner()).getHandle().isOnGround() || this.pet.getOwner().isInsideVehicle()){
+			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getPetOwner()).getHandle().isOnGround() || this.pet.getPetOwner()
+				.isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;
 			}
-			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getPet().getLocation(), this.pet.getOwner().getLocation());
+			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getPet().getLocation(), this.pet.getPetOwner().getLocation());
 			EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 			if(moveEvent.isCancelled()){
 				return;

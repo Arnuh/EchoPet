@@ -18,7 +18,7 @@
 package com.dsh105.echopet.nms;
 
 import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 
 public class CraftBukkitUtil implements ICraftBukkitUtil{

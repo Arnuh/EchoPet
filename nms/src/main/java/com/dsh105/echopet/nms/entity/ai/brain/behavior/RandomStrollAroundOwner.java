@@ -26,7 +26,7 @@ import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 public class RandomStrollAroundOwner extends Behavior<PathfinderMob>{
 	
@@ -67,7 +67,7 @@ public class RandomStrollAroundOwner extends Behavior<PathfinderMob>{
 	@Override
 	protected void start(ServerLevel level, PathfinderMob mob, long time){
 		if(owner == null && mob instanceof IEntityPet entityPet){
-			owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
+			owner = ((CraftPlayer) entityPet.getPetOwner()).getHandle();
 		}else return;
 		mob.getBrain().setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(new PetEntityTracker(owner, false), this.speedModifier, 0));
 	}

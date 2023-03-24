@@ -36,7 +36,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 @EntityPetType(petType = PetType.BAT)
 public class EntityBatPet extends EntityPet implements IEntityBatPet{
@@ -104,14 +104,14 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 				this.targetPosition = null;
 			}
 			
-			Location ownerLoc = getOwner().getLocation();
+			Location ownerLoc = getPetOwner().getLocation();
 			
 			// closerThan squares it internally
 			// I think it checking if its too close to the player is better.
-			ServerPlayer owner = ((CraftPlayer) getOwner()).getHandle();
+			ServerPlayer owner = ((CraftPlayer) getPetOwner()).getHandle();
 			if(this.targetPosition == null || random().nextInt(30) == 0 || VersionBreaking.closerToCenterThan(targetPosition, owner.position(), 2.0D)){
 				// Use to be off mob x,y,z but he just tries to fly away constantly.
-				this.targetPosition = new BlockPos(ownerLoc.getX() + random().nextInt(flyRange) - random().nextInt(flyRange), ownerLoc.getY() + random().nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + random().nextInt(flyRange) - random().nextInt(flyRange));
+				this.targetPosition = VersionBreaking.blockPos(ownerLoc.getX() + random().nextInt(flyRange) - random().nextInt(flyRange), ownerLoc.getY() + random().nextInt(flyRange - 1) - 2.0D, ownerLoc.getZ() + random().nextInt(flyRange) - random().nextInt(flyRange));
 			}
 			
 			double d0 = (double) this.targetPosition.getX() + 0.5D - this.getX();// Should these values be off the player loc

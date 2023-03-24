@@ -52,7 +52,7 @@ public interface IEntityPet{
 	
 	Entity getEntity();
 	
-	default Player getOwner(){
+	default Player getPetOwner(){
 		return getPet().getOwner();
 	}
 	

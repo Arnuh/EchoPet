@@ -35,7 +35,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -223,10 +222,9 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return getValidRider() != null;
 	}
 	
-	@Override
 	@Nullable
-	public Entity getControllingPassenger(){
-		return this.getFirstPassenger();
+	public LivingEntity getControllingPassenger(){
+		return (LivingEntity) this.getFirstPassenger();
 	}
 	
 	@Override
@@ -237,13 +235,13 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 	@Override
 	public void travel(Vec3 vec3d){
 		if(!hasCustomTravel()){
-			this.flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
 			return;
 		}
 		ServerPlayer passenger = getValidRider();
 		if(passenger == null){
-			flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
 			return;
 		}
@@ -281,7 +279,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			playerJumpPendingScale = 0.0F;
 		}
 		
-		flyingSpeed = getSpeed() * 0.1F;
+		VersionBreaking.setFlyingSpeed(this, getSpeed() * 0.1F);
 		if(isControlledByLocalInstance()){
 			setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
 			super.travel(new Vec3(f, vec3d.y, f1));
@@ -294,7 +292,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			setIsJumping(false);
 		}
 		
-		calculateEntityAnimation(this, false);
+		VersionBreaking.calculateEntityAnimation(this, false);
 		tryCheckInsideBlocks();
 	}
 	

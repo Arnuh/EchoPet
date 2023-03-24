@@ -17,12 +17,9 @@
 
 package com.dsh105.echopet.nms;
 
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
-import net.minecraft.core.Registry;
-import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +28,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -64,32 +60,30 @@ public class VersionBreaking{
 	@SuppressWarnings("unchecked")
 	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
 		return switch(registryType){
-			case Attribute -> (T) Registry.ATTRIBUTE.get(resourceLocation);
-			case Sound_Event -> (T) Registry.SOUND_EVENT.get(resourceLocation);
+			case Attribute -> (T) BuiltInRegistries.ATTRIBUTE.get(resourceLocation);
+			case Sound_Event -> (T) BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
 		};
 	}
 	
-	public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.BLOCK_STATE;
-	
 	public static void setMaxUpStep(Entity entity, float maxStepUp){
-		entity.maxUpStep = maxStepUp;
+		entity.setMaxUpStep(maxStepUp);
 	}
 	
 	public static void setFlyingSpeed(LivingEntity entity, float flyingSpeed){
-		entity.flyingSpeed = flyingSpeed;
+		//
 	}
 	
 	public static BlockPos blockPos(double x, double y, double z){
-		return new BlockPos(x, y, z);
+		return BlockPos.containing(x, y, z);
 	}
 	
 	public static void calculateEntityAnimation(LivingEntity entity, boolean flutter){
-		entity.calculateEntityAnimation(entity, flutter);
+		entity.calculateEntityAnimation(flutter);
 	}
 	
 	public static DamageSource getDamageSource(Entity entity, DamageSourceType damageSourceType){
 		return switch(damageSourceType){
-			case FLY_INTO_WALL -> DamageSource.FLY_INTO_WALL;
+			case FLY_INTO_WALL -> entity.damageSources().flyIntoWall();
 		};
 	}
 }

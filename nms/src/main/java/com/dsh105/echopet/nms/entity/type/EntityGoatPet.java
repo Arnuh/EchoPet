@@ -26,6 +26,7 @@ import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityGoatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
@@ -43,7 +44,7 @@ import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -139,7 +140,7 @@ public class EntityGoatPet extends Goat implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	public Player getOwner(){
+	public Player getPetOwner(){
 		return pet.getOwner();
 	}
 	
@@ -163,7 +164,7 @@ public class EntityGoatPet extends Goat implements IEntityLivingPet, EntityPetGi
 	public void travel(Vec3 vec3d){
 		Vec3 result = petHandle.travel(vec3d);
 		if(result == null){
-			this.flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
 			return;
 		}

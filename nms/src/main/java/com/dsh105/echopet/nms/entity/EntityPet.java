@@ -44,9 +44,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 @Deprecated
@@ -95,7 +95,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		}else{
 			NMSEntityUtil.addFlyingSpeedAttribute(petType, getAttributes());
 		}
-		this.maxUpStep = getMaxUpStep();
+		VersionBreaking.setMaxUpStep(this, getMaxUpStep());
 	}
 	
 	@Override
@@ -114,7 +114,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	@Override
-	public Player getOwner(){
+	public Player getPetOwner(){
 		return pet.getOwner();
 	}
 	
@@ -230,13 +230,13 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	@Override
 	public void travel(Vec3 vec3d){
 		if(hasCustomTravel()){
-			this.flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
 			return;
 		}
 		ServerPlayer passenger = getValidRider();
 		if(passenger == null){
-			this.flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
 			return;
 		}
@@ -253,7 +253,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
-		this.flyingSpeed = getSpeed() * 0.1F;
+		VersionBreaking.setFlyingSpeed(this, getSpeed() * 0.1F);
 		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;

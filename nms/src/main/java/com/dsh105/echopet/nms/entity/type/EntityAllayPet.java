@@ -27,6 +27,7 @@ import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAllayPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
@@ -53,7 +54,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -165,7 +166,7 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	}
 	
 	@Override
-	public Player getOwner(){
+	public Player getPetOwner(){
 		return pet.getOwner();
 	}
 	
@@ -189,14 +190,14 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	public void travel(Vec3 vec3d){
 		Vec3 result = petHandle.travel(vec3d);
 		if(result == null){
-			this.flyingSpeed = 0.02F;
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
 			super.travel(vec3d);
-			calculateEntityAnimation(this, false);
+			VersionBreaking.calculateEntityAnimation(this, false);
 			return;
 		}
 		setSpeed(petHandle.getSpeed());
 		petHandle.originalTravel(this, result);
-		calculateEntityAnimation(this, false);
+		VersionBreaking.calculateEntityAnimation(this, false);
 	}
 	
 	@Override

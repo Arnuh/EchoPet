@@ -33,7 +33,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.level.pathfinder.Path;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 public class ShootTongueOwner extends Behavior<Frog>{
 	
@@ -59,7 +59,7 @@ public class ShootTongueOwner extends Behavior<Frog>{
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, Frog frog){
 		if(owner == null && frog instanceof IEntityPet entityPet){
-			owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
+			owner = ((CraftPlayer) entityPet.getPetOwner()).getHandle();
 		}
 		return canPathfindToTarget(frog, owner) && frog.getPose() != Pose.CROAKING;
 	}

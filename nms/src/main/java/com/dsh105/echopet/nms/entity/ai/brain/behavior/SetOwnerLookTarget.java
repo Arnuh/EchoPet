@@ -25,7 +25,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 public class SetOwnerLookTarget extends Behavior<LivingEntity>{
 	
@@ -38,7 +38,7 @@ public class SetOwnerLookTarget extends Behavior<LivingEntity>{
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, LivingEntity mob){
 		if(owner == null && mob instanceof IEntityPet entityPet){
-			owner = ((CraftPlayer) entityPet.getOwner()).getHandle();
+			owner = ((CraftPlayer) entityPet.getPetOwner()).getHandle();
 		}
 		return owner != null;
 	}

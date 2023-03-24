@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -34,7 +35,7 @@ import net.minecraft.world.level.block.state.BlockState;
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	
-	private static final EntityDataAccessor<Optional<BlockState>> DATA_CARRY_STATE = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BLOCK_STATE);
+	private static final EntityDataAccessor<Optional<BlockState>> DATA_CARRY_STATE = SynchedEntityData.defineId(EntityEndermanPet.class, VersionBreaking.OPTIONAL_BLOCK_STATE);
 	// Changes ambient sound to scream
 	private static final EntityDataAccessor<Boolean> DATA_CREEPY = SynchedEntityData.defineId(EntityEndermanPet.class, EntityDataSerializers.BOOLEAN);
 	// Plays an initial sound when set as true
@@ -71,8 +72,7 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet{
 	}
 	
 	public BlockState getCarried(){
-		return this.entityData.get(DATA_CARRY_STATE)
-			.orElse(null);
+		return this.entityData.get(DATA_CARRY_STATE).orElse(null);
 	}
 	
 	@Override
