@@ -18,6 +18,7 @@ package com.dsh105.echopet.api.pet;
 
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityTameablePetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,13 +33,21 @@ public abstract class TameablePet extends AgeablePet implements ITameablePet{
 	
 	@Override
 	public void setSitting(boolean sitting){
-		((IEntityTameablePet) getEntityPet()).setSitting(sitting);
+		if(getHandle() instanceof IEntityTameablePetHandle handle){
+			handle.setSitting(sitting);
+		}else{
+			((IEntityTameablePet) getEntityPet()).setSitting(sitting);
+		}
 		this.sitting = sitting;
 	}
 	
 	@Override
 	public void setTamed(boolean tamed){
-		((IEntityTameablePet) getEntityPet()).setTamed(tamed);
+		if(getHandle() instanceof IEntityTameablePetHandle handle){
+			handle.setTamed(tamed);
+		}else{
+			((IEntityTameablePet) getEntityPet()).setTamed(tamed);
+		}
 		this.tamed = tamed;
 	}
 	

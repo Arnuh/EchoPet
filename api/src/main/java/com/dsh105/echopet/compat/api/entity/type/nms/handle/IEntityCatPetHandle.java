@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with EchoPet. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dsh105.echopet.compat.api.entity.type.nms;
+
+package com.dsh105.echopet.compat.api.entity.type.nms.handle;
 
 import com.dsh105.echopet.compat.api.entity.data.type.CatType;
-import com.dsh105.echopet.compat.api.entity.nms.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityTameablePetHandle;
 import org.bukkit.DyeColor;
 
-
-public interface IEntityCatPet extends IEntityTameablePet{
+public interface IEntityCatPetHandle extends IEntityTameablePetHandle{
 	
 	void setType(CatType type);
 	

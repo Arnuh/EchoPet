@@ -19,49 +19,102 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.data.type.CatType;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityTameablePet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCatPet;
-import com.dsh105.echopet.nms.entity.EntityTameablePet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
+import com.dsh105.echopet.nms.VersionBreaking;
+import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.base.EntityCatPetHandle;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.level.Level;
-import org.bukkit.DyeColor;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.CAT)
-public class EntityCatPet extends EntityTameablePet implements IEntityCatPet{
+public class EntityCatPet extends Cat implements IEntityTameablePet, EntityPetGiveMeAccess{
 	
-	private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> IS_LYING = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> RELAX_STATE_ONE = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(EntityCatPet.class, EntityDataSerializers.INT);
+	protected ICatPet pet;
+	private final INMSEntityPetHandle petHandle;
 	
-	public EntityCatPet(Level world){
+	public EntityCatPet(Level world, ICatPet pet){
 		super(EntityType.CAT, world);
-	}
-	
-	public EntityCatPet(Level world, IPet pet){
-		super(EntityType.CAT, world, pet);
-	}
-	
-	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(DATA_TYPE_ID, CatType.Black.ordinal());
-		this.entityData.define(IS_LYING, false);
-		this.entityData.define(RELAX_STATE_ONE, false);
-		this.entityData.define(DATA_COLLAR_COLOR, net.minecraft.world.item.DyeColor.RED.getId());
+		this.pet = pet;
+		this.petHandle = new EntityCatPetHandle(this);
 	}
 	
 	@Override
-	public void setType(CatType type){
-		entityData.set(DATA_TYPE_ID, type.ordinal());
+	public IPet getPet(){
+		return pet;
 	}
 	
 	@Override
-	public void setCollarColor(DyeColor color){
-		entityData.set(DATA_COLLAR_COLOR, color.ordinal());
+	public IEntityPetHandle getHandle(){
+		return petHandle;
+	}
+	
+	@Override
+	public org.bukkit.entity.Entity getEntity(){
+		return getBukkitEntity();
+	}
+	
+	@Override
+	public boolean isDead(){
+		return dead;
+	}
+	
+	@Override
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
+	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
+		return true;
+	}
+	
+	@Override
+	public void tick(){
+		super.tick();
+		petHandle.tick();
+	}
+	
+	@Override
+	public void travel(Vec3 vec3d){
+		Vec3 result = petHandle.travel(vec3d);
+		if(result == null){
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petHandle.getSpeed());
+		super.travel(result);
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void setSitting(boolean sitting){
+	
+	}
+	
+	@Override
+	public void setTamed(boolean tamed){
+	
 	}
 }

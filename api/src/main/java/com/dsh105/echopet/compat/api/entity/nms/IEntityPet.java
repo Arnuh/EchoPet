@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  * <br>
  * To prevent NMS remapping conflicts, all NMS pets now implement a {@link IEntityPetHandle} to properly control the NMS entity and its EntityData.<br>
  * <br>
- * Pets are no longer guaranteed to implement an entity type specific version of {@link IEntityPet}, but instead a {@link IEntityPetHandle} where required.<br>
+ * Pets are no longer guaranteed to implement an entity type specific version of {@link IEntityPet}, but instead provide an {@link IEntityPetHandle} when required.<br>
  * @see IEntityPetHandle
  */
 public interface IEntityPet{
