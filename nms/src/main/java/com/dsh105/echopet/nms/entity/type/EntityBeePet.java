@@ -27,7 +27,7 @@ import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
-import com.dsh105.echopet.nms.entity.base.EntityBeePetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityBeePetHandle;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;

@@ -26,7 +26,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ICatPet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
-import com.dsh105.echopet.nms.entity.base.EntityCatPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityCatPetHandle;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;

@@ -21,7 +21,7 @@ import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseArmor;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityHorsePetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
@@ -42,25 +42,25 @@ public class HorsePet extends AbstractHorsePet implements IHorsePet{
 	}
 	
 	@Override
-	public void setColor(Color color){
-		((IEntityHorsePet) getEntityPet()).setColor(color);
+	public void setVariant(Color color){
+		((IEntityHorsePetHandle) getHandle()).setVariant(color);
 		this.color = color;
 	}
 	
 	@Override
-	public void setStyle(Style style){
-		((IEntityHorsePet) getEntityPet()).setStyle(style);
+	public void setMarkings(Style style){
+		((IEntityHorsePetHandle) getHandle()).setMarkings(style);
 		this.style = style;
 	}
 	
 	@Override
 	public void setArmour(HorseArmor armour){
-		((IEntityHorsePet) getEntityPet()).setArmour(armour);
+		((IEntityHorsePetHandle) getHandle()).setArmour(armour);
 		this.armour = armour;
 	}
 	
 	@Override
-	public Color getColor(){
+	public Color getVariant(){
 		return this.color;
 	}
 	
@@ -77,8 +77,8 @@ public class HorsePet extends AbstractHorsePet implements IHorsePet{
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Color: " + ChatColor.YELLOW + StringUtil.capitalise(getColor().toString().replace("_", " ")));
-		info.add(ChatColor.GOLD + " - Style: " + ChatColor.YELLOW + StringUtil.capitalise(getStyle().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(this.getVariant().toString().replace("_", " ")));
+		info.add(ChatColor.GOLD + " - Markings: " + ChatColor.YELLOW + StringUtil.capitalise(getStyle().toString().replace("_", " ")));
 		info.add(ChatColor.GOLD + " - Armour: " + ChatColor.YELLOW + StringUtil.capitalise(getArmour().toString().replace("_", " ")));
 	}
 }

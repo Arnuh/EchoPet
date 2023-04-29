@@ -17,56 +17,94 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAnimalPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMulePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IMulePet;
+import com.dsh105.echopet.nms.VersionBreaking;
+import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityAbstractChestedHorsePetHandle;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.horse.Mule;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.MULE)
-public class EntityMulePet extends EntityHorseChestedAbstractPet implements IEntityMulePet{
+public class EntityMulePet extends Mule implements IEntityAnimalPet, EntityPetGiveMeAccess{
 	
-	public EntityMulePet(Level world){
+	protected IMulePet pet;
+	private final INMSEntityPetHandle petHandle;
+	
+	public EntityMulePet(Level world, IMulePet pet){
 		super(EntityType.MULE, world);
-	}
-	
-	public EntityMulePet(Level world, IPet pet){
-		super(EntityType.MULE, world, pet);
-	}
-	
-	@Override
-	protected SoundEvent getAmbientSound(){
-		return SoundEvents.MULE_AMBIENT;
+		this.pet = pet;
+		this.petHandle = new EntityAbstractChestedHorsePetHandle(this);
 	}
 	
 	@Override
-	protected SoundEvent getAngrySound(){
-		return SoundEvents.MULE_ANGRY;
+	public IPet getPet(){
+		return pet;
 	}
 	
 	@Override
-	public SoundEvent getDeathSound(){
-		return SoundEvents.MULE_DEATH;
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override
-	@Nullable
-	protected SoundEvent getEatingSound(){
-		return SoundEvents.MULE_EAT;
+	public org.bukkit.entity.Entity getEntity(){
+		return getBukkitEntity();
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource var0){
-		return SoundEvents.MULE_HURT;
+	public boolean isDead(){
+		return dead;
 	}
 	
 	@Override
-	protected void playChestEquipsSound(){
-		this.playSound(SoundEvents.MULE_CHEST, 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
 	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
+		return true;
+	}
+	
+	@Override
+	public void tick(){
+		super.tick();
+		petHandle.tick();
+	}
+	
+	@Override
+	public void travel(Vec3 vec3d){
+		Vec3 result = petHandle.travel(vec3d);
+		if(result == null){
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petHandle.getSpeed());
+		super.travel(result);
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }

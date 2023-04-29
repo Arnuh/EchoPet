@@ -22,7 +22,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPiglinPet;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
-import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityAgeablePetHandle;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

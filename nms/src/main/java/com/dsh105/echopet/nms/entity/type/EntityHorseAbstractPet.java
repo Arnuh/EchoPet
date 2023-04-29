@@ -20,9 +20,7 @@ package com.dsh105.echopet.nms.entity.type;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
-import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.core.BlockPos;
@@ -52,7 +50,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements IEntityHorseAbstractPet, PlayerRideableJumping{
+public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements PlayerRideableJumping{
 	
 	// EntityHorseAbstract: Zombie, Skeleton
 	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(EntityHorseAbstractPet.class, EntityDataSerializers.BYTE);// feet kicking, whatev
@@ -154,7 +152,6 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return getVisualFlag(FLAG_SADDLE);
 	}
 	
-	@Override
 	public void setSaddled(boolean flag){
 		setVisualFlag(FLAG_SADDLE, flag);
 		// playSound(SoundEvents.HORSE_SADDLE, 0.5F, 1.0F);
@@ -172,9 +169,6 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 			entityData.set(DATA_ID_FLAGS, (byte) (b0 & ~i));
 		}
 	}
-	
-	@Override
-	public void setVariant(HorseVariant variant){}
 	
 	public boolean isEating(){
 		return getVisualFlag(FLAG_EATING);
@@ -222,6 +216,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return getValidRider() != null;
 	}
 	
+	@Override
 	@Nullable
 	public LivingEntity getControllingPassenger(){
 		return (LivingEntity) this.getFirstPassenger();
@@ -345,6 +340,7 @@ public abstract class EntityHorseAbstractPet extends EntityAgeablePet implements
 		return null;
 	}
 	
+	@Override
 	public boolean canJump(){
 		return isSaddled();
 	}

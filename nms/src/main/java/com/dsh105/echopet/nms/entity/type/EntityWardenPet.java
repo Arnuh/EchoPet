@@ -35,7 +35,7 @@ import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.brain.sensing.CustomSensorType;
-import com.dsh105.echopet.nms.entity.base.EntityWardenPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityWardenPetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;

@@ -29,7 +29,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IGoatPet;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
-import com.dsh105.echopet.nms.entity.base.EntityAgeablePetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityAgeablePetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;

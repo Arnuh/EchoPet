@@ -31,7 +31,7 @@ import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSLivingEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.BiMoveControl;
-import com.dsh105.echopet.nms.entity.base.LivingEntityPetHandle;
+import com.dsh105.echopet.nms.entity.handle.LivingEntityPetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
@@ -123,6 +123,7 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 		return false;
 	}
 	
+	@Override
 	public ItemStack equipItemIfPossible(ItemStack itemstack, ItemEntity entityitem){
 		return null;
 	}

@@ -1214,7 +1214,7 @@ public class PetData<T>{
 	private static boolean setHorseColor(IPet pet, Horse.Color color){
 		IPetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
-			((IHorsePet) pet).setColor(color);
+			((IHorsePet) pet).setVariant(color);
 		}
 		return true;
 	}
@@ -1222,7 +1222,7 @@ public class PetData<T>{
 	private static boolean setHorseStyle(IPet pet, Horse.Style style){
 		IPetType type = pet.getPetType();
 		if(type.equals(PetType.HORSE)){
-			((IHorsePet) pet).setStyle(style);
+			((IHorsePet) pet).setMarkings(style);
 		}
 		return true;
 	}

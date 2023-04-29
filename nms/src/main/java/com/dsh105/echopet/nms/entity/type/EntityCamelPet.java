@@ -2,7 +2,7 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.nms.IEntityAbstractHorsePet;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAnimalPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICamelPet;
@@ -10,7 +10,7 @@ import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.ai.brain.PetCamelAi;
-import com.dsh105.echopet.nms.entity.base.EntityCamelPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityCamelPetHandle;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +25,7 @@ import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 
 @EntityPetType(petType = PetType.CAMEL)
-public class EntityCamelPet extends Camel implements IEntityAbstractHorsePet, EntityPetGiveMeAccess{
+public class EntityCamelPet extends Camel implements IEntityAnimalPet, EntityPetGiveMeAccess{
 	
 	protected ICamelPet pet;
 	private final INMSEntityPetHandle petHandle;
@@ -52,6 +52,7 @@ public class EntityCamelPet extends Camel implements IEntityAbstractHorsePet, En
 		}
 	}
 	
+	@Override
 	public void openCustomInventoryScreen(Player player){
 		// Disable saddle inventory.
 	}
@@ -73,6 +74,7 @@ public class EntityCamelPet extends Camel implements IEntityAbstractHorsePet, En
 		return dead;
 	}
 	
+	@Override
 	public float getMaxUpStep(){
 		return maxUpStep();
 	}

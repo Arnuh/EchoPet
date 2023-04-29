@@ -20,8 +20,7 @@ package com.dsh105.echopet.api.pet.type;
 import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
+import com.dsh105.echopet.compat.api.entity.type.nms.handle.IEntityLlamaPetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
@@ -41,11 +40,6 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	}
 	
 	@Override
-	public HorseVariant getVariant(){
-		return HorseVariant.LLAMA;
-	}
-	
-	@Override
 	public DyeColor getCarpetColor(){
 		return carpetColor;
 	}
@@ -57,13 +51,13 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	
 	@Override
 	public void setCarpetColor(DyeColor color){
-		((IEntityLlamaPet) getEntityPet()).setCarpetColor(color);
+		((IEntityLlamaPetHandle) getHandle()).setCarpetColor(color);
 		carpetColor = color;
 	}
 	
 	@Override
 	public void setSkinColor(Llama.Color skinColor){
-		((IEntityLlamaPet) getEntityPet()).setSkinColor(skinColor);
+		((IEntityLlamaPetHandle) getHandle()).setSkinColor(skinColor);
 		this.skinColor = skinColor;
 	}
 	
@@ -71,7 +65,8 @@ public class LlamaPet extends HorseChestedAbstractPet implements ILlamaPet{
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
 		DyeColor carpetColor = getCarpetColor();
-		info.add(ChatColor.GOLD + " - Carpet Colour: " + ChatColor.YELLOW + (carpetColor == null ? "None" : StringUtil.capitalise(carpetColor.toString().replace("_", " "))));
+		info.add(ChatColor.GOLD + " - Carpet Colour: " + ChatColor.YELLOW + (carpetColor == null ? "None" : StringUtil.capitalise(carpetColor.toString()
+			.replace("_", " "))));
 		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(getSkinColor().toString().replace("_", " ")));
 	}
 }

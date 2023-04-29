@@ -28,7 +28,7 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.RegistryType;
 import com.dsh105.echopet.nms.VersionBreaking;
-import com.dsh105.echopet.nms.entity.base.EntityPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityPetHandle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

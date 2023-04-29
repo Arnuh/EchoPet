@@ -17,7 +17,7 @@
 package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseChestedAbstractPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAbstractChestedHorsePetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public abstract class HorseChestedAbstractPet extends AbstractHorsePet implement
 	
 	@Override
 	public void setChested(boolean flag){
-		((IEntityHorseChestedAbstractPet) getEntityPet()).setChested(flag);
+		((IEntityAbstractChestedHorsePetHandle) getHandle()).setChested(flag);
 		this.chested = flag;
 	}
 	

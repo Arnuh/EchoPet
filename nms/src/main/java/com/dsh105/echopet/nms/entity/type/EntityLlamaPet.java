@@ -17,119 +17,94 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAnimalPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityLlamaPet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.dsh105.echopet.compat.api.entity.type.pet.ILlamaPet;
+import com.dsh105.echopet.nms.VersionBreaking;
+import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityLlamaPetHandle;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import org.bukkit.DyeColor;
-import org.bukkit.entity.Llama;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.LLAMA)
-public class EntityLlamaPet extends EntityHorseChestedAbstractPet implements IEntityLlamaPet{
+public class EntityLlamaPet extends Llama implements IEntityAnimalPet, EntityPetGiveMeAccess{
 	
-	private static final EntityDataAccessor<Integer> DATA_STRENGTH_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// changes storage
-	private static final EntityDataAccessor<Integer> DATA_SWAG_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// carpet color
-	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(EntityLlamaPet.class, EntityDataSerializers.INT);// Like an outfit
+	protected ILlamaPet pet;
+	private final INMSEntityPetHandle petHandle;
 	
-	public EntityLlamaPet(EntityType<? extends Mob> type, Level world){
-		super(type, world);
-	}
-	
-	public EntityLlamaPet(EntityType<? extends Mob> type, Level world, IPet pet){
-		super(type, world, pet);
-	}
-	
-	public EntityLlamaPet(Level world){
-		this(EntityType.LLAMA, world);
-	}
-	
-	public EntityLlamaPet(Level world, IPet pet){
-		this(EntityType.LLAMA, world, pet);
+	public EntityLlamaPet(Level world, ILlamaPet pet){
+		super(EntityType.LLAMA, world);
+		this.pet = pet;
+		this.petHandle = new EntityLlamaPetHandle(this);
 	}
 	
 	@Override
-	protected void defineSynchedData(){
-		super.defineSynchedData();
-		this.entityData.define(DATA_STRENGTH_ID, 0);
-		this.entityData.define(DATA_SWAG_ID, -1);
-		this.entityData.define(DATA_VARIANT_ID, 0);
+	public IPet getPet(){
+		return pet;
 	}
 	
 	@Override
-	public void setCarpetColor(DyeColor color){
-		this.entityData.set(DATA_SWAG_ID, color == null ? -1 : color.ordinal());
+	public IEntityPetHandle getHandle(){
+		return petHandle;
 	}
 	
 	@Override
-	public void setSkinColor(Llama.Color skinColor){
-		this.entityData.set(DATA_VARIANT_ID, skinColor.ordinal());
+	public org.bukkit.entity.Entity getEntity(){
+		return getBukkitEntity();
 	}
 	
 	@Override
-	protected boolean isImmobile(){
-		return this.isDeadOrDying() || this.isEating();
+	public boolean isDead(){
+		return dead;
 	}
 	
 	@Override
-	public boolean canBeControlledByRider(){
-		return false;
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
 	}
 	
 	@Override
-	public boolean hasCustomTravel(){
-		return false;
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
 	}
 	
 	@Override
-	public boolean canEatGrass(){
-		return false;
+	public boolean isPersistenceRequired(){
+		return true;
 	}
 	
 	@Override
-	protected SoundEvent getAngrySound(){
-		return SoundEvents.LLAMA_ANGRY;
+	public void tick(){
+		super.tick();
+		petHandle.tick();
 	}
 	
 	@Override
-	protected SoundEvent getAmbientSound(){
-		return SoundEvents.LLAMA_AMBIENT;
+	public void travel(Vec3 vec3d){
+		Vec3 result = petHandle.travel(vec3d);
+		if(result == null){
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
+			super.travel(vec3d);
+			return;
+		}
+		setSpeed(petHandle.getSpeed());
+		super.travel(result);
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource var0){
-		return SoundEvents.LLAMA_HURT;
-	}
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
 	
 	@Override
-	public SoundEvent getDeathSound(){
-		return SoundEvents.LLAMA_DEATH;
-	}
-	
-	@Override
-	@Nullable
-	protected SoundEvent getEatingSound(){
-		return SoundEvents.LLAMA_EAT;
-	}
-	
-	@Override
-	protected void playStepSound(BlockPos var0, BlockState var1){
-		this.playSound(SoundEvents.LLAMA_STEP, 0.15F, 1.0F);
-	}
-	
-	@Override
-	protected void playChestEquipsSound(){
-		this.playSound(SoundEvents.LLAMA_CHEST, 1.0F, (random().nextFloat() - random().nextFloat()) * 0.2F + 1.0F);
-	}
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }

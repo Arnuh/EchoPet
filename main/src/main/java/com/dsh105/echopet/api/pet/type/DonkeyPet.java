@@ -18,7 +18,6 @@ package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
 import com.dsh105.echopet.compat.api.entity.type.pet.IDonkeyPet;
 import org.bukkit.entity.Player;
 
@@ -30,10 +29,5 @@ public class DonkeyPet extends HorseChestedAbstractPet implements IDonkeyPet{
 	
 	public DonkeyPet(Player owner){
 		super(owner);
-	}
-	
-	@Override
-	public HorseVariant getVariant(){
-		return HorseVariant.DONKEY;
 	}
 }

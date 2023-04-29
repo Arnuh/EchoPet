@@ -19,89 +19,93 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.nms.IEntityAnimalPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonHorsePet;
+import com.dsh105.echopet.nms.VersionBreaking;
+import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
+import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
+import com.dsh105.echopet.nms.entity.handle.EntityAbstractHorsePetHandle;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.SKELETONHORSE)
-public class EntitySkeletonHorsePet extends EntityHorseAbstractPet implements IEntitySkeletonHorsePet{
+public class EntitySkeletonHorsePet extends SkeletonHorse implements IEntityAnimalPet, EntityPetGiveMeAccess{
 	
-	public EntitySkeletonHorsePet(Level world){
+	protected ISkeletonHorsePet pet;
+	private final INMSEntityPetHandle petHandle;
+	
+	public EntitySkeletonHorsePet(Level world, ISkeletonHorsePet pet){
 		super(EntityType.SKELETON_HORSE, world);
+		this.pet = pet;
+		this.petHandle = new EntityAbstractHorsePetHandle(this);
 	}
 	
-	public EntitySkeletonHorsePet(Level world, IPet pet){
-		super(EntityType.SKELETON_HORSE, world, pet);
+	@Override
+	public IPet getPet(){
+		return pet;
 	}
 	
-	public boolean rideableUnderWater(){
+	@Override
+	public IEntityPetHandle getHandle(){
+		return petHandle;
+	}
+	
+	@Override
+	public org.bukkit.entity.Entity getEntity(){
+		return getBukkitEntity();
+	}
+	
+	@Override
+	public boolean isDead(){
+		return dead;
+	}
+	
+	@Override
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		this.level = ((CraftWorld) location.getWorld()).getHandle();
+	}
+	
+	@Override
+	public SoundEvent publicDeathSound(){
+		return getDeathSound();
+	}
+	
+	@Override
+	public boolean isPersistenceRequired(){
 		return true;
 	}
 	
-	public boolean dismountsUnderwater(){
-		return false;
+	@Override
+	public void tick(){
+		super.tick();
+		petHandle.tick();
 	}
 	
 	@Override
-	protected float getWaterSlowDown(){
-		return 0.96F;
-	}
-	
-	@Override
-	protected SoundEvent getAmbientSound(){
-		return isEyeInFluid(FluidTags.WATER) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
-	}
-	
-	@Override
-	public SoundEvent getDeathSound(){
-		return SoundEvents.SKELETON_HORSE_DEATH;
-	}
-	
-	@Override
-	protected SoundEvent getHurtSound(DamageSource var0){
-		return SoundEvents.SKELETON_HORSE_HURT;
-	}
-	
-	@Override
-	protected SoundEvent getSwimSound(){
-		if(onGround){
-			if(!isVehicle()){
-				return SoundEvents.SKELETON_HORSE_STEP_WATER;
-			}
-			
-			++gallopSoundCounter;
-			if(gallopSoundCounter > 5 && gallopSoundCounter % 3 == 0){
-				return SoundEvents.SKELETON_HORSE_GALLOP_WATER;
-			}
-			
-			if(gallopSoundCounter <= 5){
-				return SoundEvents.SKELETON_HORSE_STEP_WATER;
-			}
+	public void travel(Vec3 vec3d){
+		Vec3 result = petHandle.travel(vec3d);
+		if(result == null){
+			VersionBreaking.setFlyingSpeed(this, 0.02F);
+			super.travel(vec3d);
+			return;
 		}
-		
-		return SoundEvents.SKELETON_HORSE_SWIM;
+		setSpeed(petHandle.getSpeed());
+		super.travel(result);
 	}
 	
 	@Override
-	protected void playSwimSound(float var0){
-		if(onGround){
-			super.playSwimSound(0.3F);
-		}else{
-			super.playSwimSound(Math.min(0.1F, var0 * 25.0F));
-		}
-	}
+	public void addAdditionalSaveData(CompoundTag nbttagcompound){}
 	
 	@Override
-	protected void playJumpSound(){
-		if(isInWater()){
-			playSound(SoundEvents.SKELETON_HORSE_JUMP_WATER, 0.4F, 1.0F);
-		}else{
-			super.playJumpSound();
-		}
-	}
+	public void readAdditionalSaveData(CompoundTag nbttagcompound){}
 }
+

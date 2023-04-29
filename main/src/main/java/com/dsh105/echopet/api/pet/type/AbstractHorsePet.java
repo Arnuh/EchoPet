@@ -18,19 +18,13 @@ package com.dsh105.echopet.api.pet.type;
 
 import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
-import com.dsh105.echopet.compat.api.entity.data.type.HorseVariant;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorseAbstractPet;
+import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityAbstractHorsePetHandle;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractHorsePet;
-import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-/**
- * @since Nov 19, 2016
- */
 public abstract class AbstractHorsePet extends AgeablePet implements IAbstractHorsePet{
 	
-	protected HorseVariant horseVariant = HorseVariant.HORSE;
 	protected boolean saddle = false;
 	
 	public AbstractHorsePet(Player owner){
@@ -43,26 +37,14 @@ public abstract class AbstractHorsePet extends AgeablePet implements IAbstractHo
 	}
 	
 	@Override
-	public HorseVariant getVariant(){
-		return this.horseVariant;
-	}
-	
-	@Override
 	public void setSaddled(boolean flag){
-		((IEntityHorseAbstractPet) getEntityPet()).setSaddled(flag);
+		((IEntityAbstractHorsePetHandle) getHandle()).setSaddled(flag);
 		this.saddle = flag;
-	}
-	
-	@Override
-	public void setVariant(HorseVariant variant){
-		((IEntityHorseAbstractPet) getEntityPet()).setVariant(variant);
-		this.horseVariant = variant;
 	}
 	
 	@Override
 	public void generatePetInfo(List<String> info){
 		super.generatePetInfo(info);
-		info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(getVariant().toString().replace("_", " ")));
 		info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + isSaddled());
 	}
 }

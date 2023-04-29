@@ -21,6 +21,9 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -32,6 +35,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.jetbrains.annotations.Nullable;
 
 /*
  * From EntityAPI :)
@@ -123,5 +127,24 @@ public class NMSEntityUtil{
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	// Not fully usable, wip for later.
+	@SuppressWarnings("unchecked")
+	public static <T> @Nullable EntityDataAccessor<T> getAccessor(Class<? extends Entity> entityClass, EntityDataSerializer<T> dataHandler, int offset){
+		try{
+			int pos = 0;
+			for(Field f : entityClass.getDeclaredFields()){
+				f.setAccessible(true);
+				Object obj = f.get(null);
+				if(obj instanceof EntityDataAccessor<?> accessor && pos++ == offset){
+					// accessor.getSerializer() == dataHandler
+					return (EntityDataAccessor<T>) accessor;
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }
