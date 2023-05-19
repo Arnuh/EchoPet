@@ -1,0 +1,15 @@
+name: EchoPet
+version: '@VERSION@-b@BUILD_NUMBER@'
+main: com.dsh105.echopet.EchoPetPlugin
+description: EchoPet is an advanced, easy to use plugin, designed to handle custom-tailored pets with more unique behaviours than vanilla Minecraft entities. Perfect for donation perks.
+api-version: '1.19'
+dependencies:
+  - name: WorldGuard
+    required: false
+    bootstrap: false
+  - name: VanishNoPacket
+    required: false
+    bootstrap: false
+  - name: PlaceholderAPI
+    required: false
+    bootstrap: false

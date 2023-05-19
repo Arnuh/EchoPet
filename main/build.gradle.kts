@@ -26,7 +26,7 @@ dependencies {
 
 tasks {
 	processResources {
-		filesMatching("plugin.yml") {
+		filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
 			filter<ReplaceTokens>("tokens" to mapOf("VERSION" to version, "BUILD_NUMBER" to (System.getenv("BUILD_NUMBER") ?: "")))
 		}
 	}
