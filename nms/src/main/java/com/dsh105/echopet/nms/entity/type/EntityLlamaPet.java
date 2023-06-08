@@ -34,7 +34,7 @@ import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 
 @EntityPetType(petType = PetType.LLAMA)
 public class EntityLlamaPet extends Llama implements IEntityAnimalPet, EntityPetGiveMeAccess{

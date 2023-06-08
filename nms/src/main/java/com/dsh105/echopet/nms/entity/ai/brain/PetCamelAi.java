@@ -19,6 +19,7 @@ package com.dsh105.echopet.nms.entity.ai.brain;
 
 
 import java.util.function.Predicate;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.type.EntityCamelPet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -139,7 +140,7 @@ public class PetCamelAi{
 		@Override
 		protected void start(ServerLevel serverLevel, PathfinderMob pathfinderMob, long l){
 			if(pathfinderMob instanceof EntityCamelPet camel){
-				camel.standUpPanic();
+				camel.standUpInstantly();
 			}
 			
 			super.start(serverLevel, pathfinderMob, l);
@@ -157,7 +158,7 @@ public class PetCamelAi{
 		
 		@Override
 		protected boolean checkExtraStartConditions(ServerLevel world, EntityCamelPet entity){
-			return !entity.isInWater() && entity.getPoseTime() >= (long) this.minimalPoseTicks && !entity.isLeashed() && entity.isOnGround() && !entity.hasControllingPassenger();
+			return !entity.isInWater() && entity.getPoseTime() >= (long) this.minimalPoseTicks && !entity.isLeashed() && VersionBreaking.onGround(entity) && !entity.hasControllingPassenger();
 		}
 		
 		@Override

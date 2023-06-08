@@ -38,8 +38,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.util.Vector;
@@ -215,7 +215,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		float speed = rideSpeed;
 		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
 			if(canFly){
-				if(!entity.isOnGround()){
+				if(!VersionBreaking.onGround(entity)){
 					speed = rideFlySpeed;
 				}
 			}
@@ -275,7 +275,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
 					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e);
 				}
-			}else if(entity.isOnGround()){
+			}else if(VersionBreaking.onGround(entity)){
 				try{
 					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
 						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);

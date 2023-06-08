@@ -92,4 +92,8 @@ public class VersionBreaking{
 			case FLY_INTO_WALL -> DamageSource.FLY_INTO_WALL;
 		};
 	}
+	
+	public static boolean onGround(Entity entity){
+		return entity.isOnGround();
+	}
 }

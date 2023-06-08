@@ -25,11 +25,12 @@ import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
@@ -101,7 +102,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 		mob.getLookControl().setLookAt(owner, 10.0F, (float) mob.getMaxHeadXRot());
 		if(--this.timeToRecalcPath <= 0){
 			this.timeToRecalcPath = 10;
-			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && ((CraftPlayer) this.pet.getPetOwner()).getHandle().isOnGround() || this.pet.getPetOwner()
+			if(mob.distanceToSqr(owner) > this.teleportDistanceSqr && VersionBreaking.onGround(((CraftPlayer) this.pet.getPetOwner()).getHandle()) || this.pet.getPetOwner()
 				.isInsideVehicle()){
 				this.pet.getPet().teleportToOwner();
 				return;

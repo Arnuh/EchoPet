@@ -18,6 +18,7 @@
 package com.dsh105.echopet.nms.entity.ai.brain;
 
 
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.BrainFollowOwner;
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.RandomStrollAroundOwner;
 import com.dsh105.echopet.nms.entity.ai.brain.behavior.ShootTongueOwner;
@@ -124,7 +125,7 @@ public class PetFrogAi{
 						Pair.of(new RandomStrollAroundOwner(SPEED_MULTIPLIER_ON_LAND), 1),
 						Pair.of(SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_ON_LAND, 3), 1),
 						Pair.of(new Croak(), 3),
-						Pair.of(BehaviorBuilder.triggerIf(Entity::isOnGround), 2)
+						Pair.of(BehaviorBuilder.triggerIf(VersionBreaking::onGround), 2)
 					)
 				))
 			), ImmutableSet.of(Pair.of(MemoryModuleType.LONG_JUMP_MID_JUMP, MemoryStatus.VALUE_ABSENT),
