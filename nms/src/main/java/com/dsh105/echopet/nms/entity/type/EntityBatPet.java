@@ -87,20 +87,21 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 		}
 		BlockPos blockposition = this.blockPosition();
 		BlockPos blockposition1 = VersionBreaking.getBlockPosAbove(blockposition);
+		var level = VersionBreaking.level(this);
 		if(isResting()){
 			boolean flag = this.isSilent();
-			if(this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition)){
+			if(level.getBlockState(blockposition1).isRedstoneConductor(level, blockposition)){
 				if(random().nextInt(200) == 0){
 					this.yHeadRot = (float) random().nextInt(360);
 				}
 			}else{
 				this.setResting(false);
 				if(!flag){
-					this.level.levelEvent(null, 1025, blockposition, 0);
+					level.levelEvent(null, 1025, blockposition, 0);
 				}
 			}
 		}else{
-			if(this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level.getMinBuildHeight())){
+			if(this.targetPosition != null && (!level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= level.getMinBuildHeight())){
 				this.targetPosition = null;
 			}
 			
@@ -124,7 +125,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 			float f1 = Mth.wrapDegrees(f - this.getYRot());
 			this.zza = 0.5F;
 			this.setYRot(this.getYRot() + f1);
-			if(random().nextInt(100) == 0 && this.level.getBlockState(blockposition1).isRedstoneConductor(this.level, blockposition1)){
+			if(random().nextInt(100) == 0 && level.getBlockState(blockposition1).isRedstoneConductor(level, blockposition1)){
 				this.setResting(true);
 			}
 		}

@@ -54,15 +54,16 @@ public abstract class EntityFlyingPet extends EntityPet implements IEntityFishPe
 			this.move(MoverType.SELF, this.getDeltaMovement());
 			this.setDeltaMovement(this.getDeltaMovement().scale(0.5));
 		}else{
+			var level = VersionBreaking.level(this);
 			float var1 = 0.91F;
 			if(this.onGround){
-				var1 = this.level.getBlockState(VersionBreaking.blockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
+				var1 = level.getBlockState(VersionBreaking.blockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
 			}
 			
 			float var2 = 0.16277137F / (var1 * var1 * var1);
 			var1 = 0.91F;
 			if(this.onGround){
-				var1 = this.level.getBlockState(VersionBreaking.blockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
+				var1 = level.getBlockState(VersionBreaking.blockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getFriction() * 0.91F;
 			}
 			
 			this.moveRelative(this.onGround ? 0.1F * var2 : 0.02F, var0);

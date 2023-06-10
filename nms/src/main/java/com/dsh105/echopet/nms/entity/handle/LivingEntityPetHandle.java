@@ -75,6 +75,7 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 	
 	@Override
 	public void originalTravel(LivingEntity entity, Vec3 vec3d){
+		var level = VersionBreaking.level(entity);
 		if(entity.isEffectiveAi() || entity.isControlledByLocalInstance()){
 			double d0 = 0.08;
 			boolean flag = entity.getDeltaMovement().y <= 0.0;
@@ -83,7 +84,7 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 				entity.resetFallDistance();
 			}
 			
-			FluidState fluid = entity.level.getFluidState(entity.blockPosition());
+			FluidState fluid = level.getFluidState(entity.blockPosition());
 			double d1;
 			float f;
 			float f2;
@@ -178,7 +179,7 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 					
 					entity.setDeltaMovement(vec3d4.multiply(0.9900000095367432, 0.9800000190734863, 0.9900000095367432));
 					entity.move(MoverType.SELF, entity.getDeltaMovement());
-					if(entity.horizontalCollision && !entity.level.isClientSide){
+					if(entity.horizontalCollision && !level.isClientSide){
 						d6 = entity.getDeltaMovement().horizontalDistance();
 						double d7 = d3 - d6;
 						float f3 = (float) (d7 * 10.0 - 3.0);
@@ -188,21 +189,21 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 						}
 					}
 					
-					if(entity.onGround && !entity.level.isClientSide && entity.getSharedFlag(7) && !CraftEventFactory.callToggleGlideEvent(entity, false)
+					if(entity.onGround && !level.isClientSide && entity.getSharedFlag(7) && !CraftEventFactory.callToggleGlideEvent(entity, false)
 						.isCancelled()){
 						entity.setSharedFlag(7, false);
 					}
 				}else{
 					BlockPos blockposition = getBlockPosBelowThatAffectsMyMovement(entity);
-					f2 = entity.level.getBlockState(blockposition).getBlock().getFriction();
+					f2 = level.getBlockState(blockposition).getBlock().getFriction();
 					f = entity.onGround ? f2 * 0.91F : 0.91F;
 					vec3d1 = entity.handleRelativeFrictionAndCalculateMovement(vec3d, f2);
 					double d8 = vec3d1.y;
 					if(entity.hasEffect(MobEffects.LEVITATION)){
 						d8 += (0.05 * (double) (entity.getEffect(MobEffects.LEVITATION).getAmplifier() + 1) - vec3d1.y) * 0.2;
 						entity.resetFallDistance();
-					}else if(entity.level.isClientSide && !entity.level.hasChunkAt(blockposition)){
-						if(entity.getY() > (double) entity.level.getMinBuildHeight()){
+					}else if(level.isClientSide && !level.hasChunkAt(blockposition)){
+						if(entity.getY() > (double) level.getMinBuildHeight()){
 							d8 = -0.1;
 						}else{
 							d8 = 0.0;

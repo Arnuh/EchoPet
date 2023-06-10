@@ -96,4 +96,12 @@ public class VersionBreaking{
 	public static boolean onGround(Entity entity){
 		return entity.onGround;
 	}
+	
+	public static Level level(Entity entity){
+		return entity.level();
+	}
+	
+	public static void setLevel(Entity entity, Level level){
+		entity.setLevel(level);
+	}
 }

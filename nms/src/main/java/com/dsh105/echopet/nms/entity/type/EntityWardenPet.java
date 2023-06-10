@@ -119,10 +119,10 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 		if(isVehicle()){
 			return;
 		}
-		ServerLevel serverLevel = (ServerLevel) this.level;
-		this.level.getProfiler().push("wardenBrain");
+		ServerLevel serverLevel = (ServerLevel) VersionBreaking.level(this);
+		serverLevel.getProfiler().push("wardenBrain");
 		this.getBrain().tick(serverLevel, this);
-		this.level.getProfiler().pop();
+		serverLevel.getProfiler().pop();
 		/*if ((tickCount + getId()) % 120 == 0) {
 			applyDarknessAround(serverLevel, position(), this, 20);
 		}*/
@@ -130,9 +130,9 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 			getAngerManagement().tick(serverLevel, this::canTargetEntity);
 			syncClientAngerLevel();
 		}*/
-		this.level.getProfiler().push("wardenActivityUpdate");
+		serverLevel.getProfiler().push("wardenActivityUpdate");
 		// PetWardenAi.updateActivity(this);
-		this.level.getProfiler().pop();
+		serverLevel.getProfiler().pop();
 	}
 	
 	public void setAnger(int anger){
@@ -159,7 +159,7 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	@Override
 	public void setLocation(Location location){
 		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		this.level = ((CraftWorld) location.getWorld()).getHandle();
+		VersionBreaking.setLevel(this, ((CraftWorld) location.getWorld()).getHandle());
 	}
 	
 	@Override

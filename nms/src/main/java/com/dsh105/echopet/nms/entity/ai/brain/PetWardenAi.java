@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.nms.entity.ai.brain;
 
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.type.EntityWardenPet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -205,7 +206,7 @@ public class PetWardenAi{
 	}
 	
 	public static void setDisturbanceLocation(EntityWardenPet warden, BlockPos pos){
-		if(warden.level.getWorldBorder().isWithinBounds(pos) && warden.getEntityAngryAt().isEmpty() && warden.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).isEmpty()){
+		if(VersionBreaking.level(warden).getWorldBorder().isWithinBounds(pos) && warden.getEntityAngryAt().isEmpty() && warden.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).isEmpty()){
 			setDigCooldown(warden);
 			warden.getBrain().setMemoryWithExpiry(MemoryModuleType.SNIFF_COOLDOWN, Unit.INSTANCE, DISTURBANCE_LOCATION_EXPIRY_TIME);
 			warden.getBrain().setMemoryWithExpiry(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(pos), DISTURBANCE_LOCATION_EXPIRY_TIME);

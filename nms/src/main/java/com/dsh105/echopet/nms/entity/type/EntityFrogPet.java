@@ -83,12 +83,13 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 		if(isVehicle()){
 			return;
 		}
-		this.level.getProfiler().push("frogBrain");
-		this.getBrain().tick((ServerLevel) this.level, this);
-		this.level.getProfiler().pop();
-		this.level.getProfiler().push("frogActivityUpdate");
+		var level = VersionBreaking.level(this);
+		level.getProfiler().push("frogBrain");
+		this.getBrain().tick((ServerLevel) level, this);
+		level.getProfiler().pop();
+		level.getProfiler().push("frogActivityUpdate");
 		// PetFrogAi.updateActivity(this);
-		this.level.getProfiler().pop();
+		level.getProfiler().pop();
 	}
 	
 	// Pet handling
@@ -111,7 +112,7 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	@Override
 	public void setLocation(Location location){
 		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		this.level = ((CraftWorld) location.getWorld()).getHandle();
+		VersionBreaking.setLevel(this, ((CraftWorld) location.getWorld()).getHandle());
 	}
 	
 	@Override

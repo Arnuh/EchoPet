@@ -128,7 +128,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	public float getWalkTargetValue(BlockPos blockposition){
-		return this.getWalkTargetValue(blockposition, this.level);
+		return this.getWalkTargetValue(blockposition, VersionBreaking.level(this));
 	}
 	
 	public float getWalkTargetValue(BlockPos blockposition, LevelReader iworldreader){
@@ -141,9 +141,9 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	@Override
-	public void setLocation(Location l){
-		this.absMoveTo(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
-		this.level = ((CraftWorld) l.getWorld()).getHandle();
+	public void setLocation(Location location){
+		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		VersionBreaking.setLevel(this, ((CraftWorld) location.getWorld()).getHandle());
 	}
 	
 	@Override

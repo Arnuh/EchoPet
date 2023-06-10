@@ -112,20 +112,22 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 	@Override
 	public void aiStep(){
 		super.aiStep();
-		if(!this.level.isClientSide && this.isWet && !this.isShaking && !this.isPathFinding() && this.onGround){
+		var level = VersionBreaking.level(this);
+		if(!level.isClientSide && this.isWet && !this.isShaking && !this.isPathFinding() && this.onGround){
 			this.isShaking = true;
 			this.shakeAnim = 0.0F;
-			this.level.broadcastEntityEvent(this, (byte) 8);
+			level.broadcastEntityEvent(this, (byte) 8);
 		}
 	}
 	
 	@Override
 	public void onLive(){
 		super.onLive();
+		var level = VersionBreaking.level(this);
 		if(isInWaterRainOrBubble()){
 			isWet = true;
 			if(isShaking && !level.isClientSide){
-				this.level.broadcastEntityEvent(this, (byte) 56);
+				level.broadcastEntityEvent(this, (byte) 56);
 				cancelShake();
 			}
 		}else if((isWet || isShaking) && isShaking){
@@ -147,7 +149,7 @@ public class EntityWolfPet extends EntityTameablePet implements IEntityWolfPet{
 				for(int j = 0; j < i; ++j){
 					float f1 = (random().nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
 					float f2 = (random().nextFloat() * 2.0F - 1.0F) * getBbWidth() * 0.5F;
-					this.level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, getZ() + (double) f2, vec3d.x, vec3d.y, vec3d.z);
+					level.addParticle(ParticleTypes.SPLASH, getX() + (double) f1, f + 0.8F, getZ() + (double) f2, vec3d.x, vec3d.y, vec3d.z);
 				}
 			}
 		}

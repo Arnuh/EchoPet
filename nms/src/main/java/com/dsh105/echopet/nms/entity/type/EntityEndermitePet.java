@@ -21,6 +21,7 @@ import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermitePet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
@@ -42,7 +43,8 @@ public class EntityEndermitePet extends EntityPet implements IEntityEndermitePet
 		super.onLive();
 		// Is this clientside?
 		for(int i = 0; i < 2; i++){
-			this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (random().nextDouble() - 0.5D) * 2.0D, -random().nextDouble(), (random().nextDouble() - 0.5D) * 2.0D);
+			VersionBreaking.level(this)
+				.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (random().nextDouble() - 0.5D) * 2.0D, -random().nextDouble(), (random().nextDouble() - 0.5D) * 2.0D);
 		}
 	}
 }

@@ -200,8 +200,8 @@ public class PetFrogAi{
 		frog.getBrain().setActiveActivityToFirstValid(ACTIVITIES);
 	}
 	
-	private static <E extends Mob> boolean isAcceptableLandingSpot(E var0, BlockPos var1) {
-		Level var2 = var0.level;
+	private static <E extends Mob> boolean isAcceptableLandingSpot(E entity, BlockPos var1) {
+		Level var2 = VersionBreaking.level(entity);
 		BlockPos var3 = var1.below();
 		if (var2.getFluidState(var1).isEmpty() && var2.getFluidState(var3).isEmpty() && var2.getFluidState(var1.above()).isEmpty()) {
 			BlockState var4 = var2.getBlockState(var1);
@@ -209,7 +209,7 @@ public class PetFrogAi{
 			if (!var4.is(BlockTags.FROG_PREFER_JUMP_TO) && !var5.is(BlockTags.FROG_PREFER_JUMP_TO)) {
 				BlockPathTypes var6 = WalkNodeEvaluator.getBlockPathTypeStatic(var2, var1.mutable());
 				BlockPathTypes var7 = WalkNodeEvaluator.getBlockPathTypeStatic(var2, var3.mutable());
-				return var6==BlockPathTypes.TRAPDOOR || (var4.isAir() && var7==BlockPathTypes.TRAPDOOR) || LongJumpToRandomPos.defaultAcceptableLandingSpot(var0, var1);
+				return var6==BlockPathTypes.TRAPDOOR || (var4.isAir() && var7==BlockPathTypes.TRAPDOOR) || LongJumpToRandomPos.defaultAcceptableLandingSpot(entity, var1);
 			} else {
 				return true;
 			}

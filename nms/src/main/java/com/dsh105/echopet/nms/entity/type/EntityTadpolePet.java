@@ -99,12 +99,13 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 		if(isVehicle()){
 			return;
 		}
-		this.level.getProfiler().push("tadpoleBrain");
-		this.getBrain().tick((ServerLevel) this.level, this);
-		this.level.getProfiler().pop();
-		this.level.getProfiler().push("tadpoleActivityUpdate");
+		var level = VersionBreaking.level(this);
+		level.getProfiler().push("tadpoleBrain");
+		this.getBrain().tick((ServerLevel) level, this);
+		level.getProfiler().pop();
+		level.getProfiler().push("tadpoleActivityUpdate");
 		// PetTadpoleAi.updateActivity(this);
-		this.level.getProfiler().pop();
+		level.getProfiler().pop();
 	}
 	
 	@Override
@@ -145,7 +146,7 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	@Override
 	public void setLocation(Location location){
 		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		this.level = ((CraftWorld) location.getWorld()).getHandle();
+		VersionBreaking.setLevel(this, ((CraftWorld) location.getWorld()).getHandle());
 	}
 	
 	@Override

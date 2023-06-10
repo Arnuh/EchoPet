@@ -174,7 +174,9 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		
 		@Override
 		public void stop(){
-			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(minHeightOffset + random().nextInt(randHeightOffset));
+			anchorPoint = VersionBreaking.level(EntityPhantomPet.this)
+				.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint)
+				.above(minHeightOffset + random().nextInt(randHeightOffset));
 		}
 		
 		@Override
@@ -270,6 +272,7 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 				this.selectNext();
 			}
 			
+			var level = VersionBreaking.level(EntityPhantomPet.this);
 			if(moveTargetPoint.y < getY() && !level.isEmptyBlock(blockPosition().below(1))){
 				this.height = Math.max(1.0F, this.height);
 				this.selectNext();

@@ -70,7 +70,7 @@ public class EntityHorsePet extends net.minecraft.world.entity.animal.horse.Hors
 	@Override
 	public void setLocation(Location location){
 		this.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		this.level = ((CraftWorld) location.getWorld()).getHandle();
+		VersionBreaking.setLevel(this, ((CraftWorld) location.getWorld()).getHandle());
 	}
 	
 	@Override

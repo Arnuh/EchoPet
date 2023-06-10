@@ -140,4 +140,18 @@ public class VersionBreaking{
 		// 1.20
 		return entity.onGround;
 	}
+	
+	public static Level level(Entity entity){
+		// 1.19.4 and below
+		// return entity.level;
+		// 1.20
+		return entity.level();
+	}
+	
+	public static void setLevel(Entity entity, Level level){
+		// 1.19.4 and below
+		// entity.level = level;
+		// 1.20
+		entity.setLevel(level);
+	}
 }

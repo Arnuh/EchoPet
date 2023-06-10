@@ -21,6 +21,7 @@ import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalLookAtPlayer;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
+import com.dsh105.echopet.nms.VersionBreaking;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -64,12 +65,12 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer{
 		}else if(mob.passengers.size() > 0){
 			return false;
 		}else{
+			var level = VersionBreaking.level(mob);
 			if(this.clazz == ServerPlayer.class){
-				this.player = mob.level.getNearestPlayer(mob, lookDistance);
+				this.player = level.getNearestPlayer(mob, lookDistance);
 			}else{
-				this.player = mob.level.getEntitiesOfClass(this.clazz, mob.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), EntitySelector.notRiding(mob)).stream()
-					.findAny()
-					.orElse(null);
+				this.player = level.getEntitiesOfClass(this.clazz, mob.getBoundingBox()
+					.inflate(this.lookDistance, 3.0D, this.lookDistance), EntitySelector.notRiding(mob)).stream().findAny().orElse(null);
 			}
 			return this.player != null;
 		}
