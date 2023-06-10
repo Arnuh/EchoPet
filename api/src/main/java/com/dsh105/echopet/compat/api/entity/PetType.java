@@ -99,6 +99,7 @@ public enum PetType implements IPetType{
 	SKELETON("Skeleton", "Skeleton Pet", "skeleton"),
 	SKELETONHORSE("SkeletonHorse", "Skeleton Horse Pet", "skeleton_horse", PetData.SADDLE),
 	SLIME("Slime", "Slime Pet", "slime", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),
+	SNIFFER("Sniffer", "Sniffer Pet", "sniffer", new Version("1.20-R1"), new PetDataCategory[]{PetDataCategory.SNIFFER_STATE}),
 	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", Material.PUMPKIN, PetData.SHEARED),
 	SPIDER("Spider", "Spider Pet", "spider"),
 	SQUID("Squid", "Squid Pet", "squid"),

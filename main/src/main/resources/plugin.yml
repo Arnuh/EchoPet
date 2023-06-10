@@ -215,6 +215,8 @@ permissions:
     default: op
   echopet.pet.type.slime:
     default: op
+  echopet.pet.type.sniffer:
+    default: op
   echopet.pet.type.snowman:
     default: op
   echopet.pet.type.spider:
@@ -368,6 +370,8 @@ permissions:
   echopet.pet.default.set.type.skeletonhorse:
     default: op
   echopet.pet.default.set.type.slime:
+    default: op
+  echopet.pet.default.set.type.sniffer:
     default: op
   echopet.pet.default.set.type.snowman:
     default: op
@@ -1047,6 +1051,26 @@ permissions:
     default: op
   echopet.pet.type.slime.size_large:
     default: op
+  echopet.pet.type.sniffer.hat:
+    default: op
+  echopet.pet.type.sniffer.ride:
+    default: op
+  echopet.pet.type.sniffer.baby:
+    default: op
+  echopet.pet.type.sniffer.idling:
+    default: op
+  echopet.pet.type.sniffer.feeling_happy:
+    default: op
+  echopet.pet.type.sniffer.scenting:
+    default: op
+  echopet.pet.type.sniffer.sniffing:
+    default: op
+  echopet.pet.type.sniffer.searching:
+    default: op
+  echopet.pet.type.sniffer.digging:
+    default: op
+  echopet.pet.type.sniffer.rising:
+    default: op
   echopet.pet.type.snowman.hat:
     default: op
   echopet.pet.type.snowman.ride:
@@ -1561,6 +1585,8 @@ permissions:
     default: op
   echopet.petadmin.type.slime:
     default: op
+  echopet.petadmin.type.sniffer:
+    default: op
   echopet.petadmin.type.snowman:
     default: op
   echopet.petadmin.type.spider:
@@ -1714,6 +1740,8 @@ permissions:
   echopet.petadmin.hat.skeletonhorse:
     default: op
   echopet.petadmin.hat.slime:
+    default: op
+  echopet.petadmin.hat.sniffer:
     default: op
   echopet.petadmin.hat.snowman:
     default: op
@@ -1869,6 +1897,8 @@ permissions:
     default: op
   echopet.petadmin.ride.slime:
     default: op
+  echopet.petadmin.ride.sniffer:
+    default: op
   echopet.petadmin.ride.snowman:
     default: op
   echopet.petadmin.ride.spider:
@@ -2023,6 +2053,8 @@ permissions:
     default: op
   echopet.petadmin.default.set.type.slime:
     default: op
+  echopet.petadmin.default.set.type.sniffer:
+    default: op
   echopet.petadmin.default.set.type.snowman:
     default: op
   echopet.petadmin.default.set.type.spider:
@@ -2153,6 +2185,7 @@ permissions:
       echopet.pet.type.skeleton: true
       echopet.pet.type.skeletonhorse: true
       echopet.pet.type.slime: true
+      echopet.pet.type.sniffer: true
       echopet.pet.type.snowman: true
       echopet.pet.type.spider: true
       echopet.pet.type.squid: true
@@ -2234,6 +2267,7 @@ permissions:
       echopet.pet.type.skeleton.hat: true
       echopet.pet.type.skeletonhorse.hat: true
       echopet.pet.type.slime.hat: true
+      echopet.pet.type.sniffer.hat: true
       echopet.pet.type.snowman.hat: true
       echopet.pet.type.spider.hat: true
       echopet.pet.type.squid.hat: true
@@ -2315,6 +2349,7 @@ permissions:
       echopet.pet.type.skeleton.ride: true
       echopet.pet.type.skeletonhorse.ride: true
       echopet.pet.type.slime.ride: true
+      echopet.pet.type.sniffer.ride: true
       echopet.pet.type.snowman.ride: true
       echopet.pet.type.spider.ride: true
       echopet.pet.type.squid.ride: true
@@ -2366,6 +2401,7 @@ permissions:
       echopet.pet.type.rabbit.baby: true
       echopet.pet.type.sheep.baby: true
       echopet.pet.type.skeletonhorse.baby: true
+      echopet.pet.type.sniffer.baby: true
       echopet.pet.type.strider.baby: true
       echopet.pet.type.traderllama.baby: true
       echopet.pet.type.turtle.baby: true
@@ -2442,6 +2478,7 @@ permissions:
       echopet.pet.default.set.type.skeleton: true
       echopet.pet.default.set.type.skeletonhorse: true
       echopet.pet.default.set.type.slime: true
+      echopet.pet.default.set.type.sniffer: true
       echopet.pet.default.set.type.snowman: true
       echopet.pet.default.set.type.spider: true
       echopet.pet.default.set.type.squid: true
@@ -2544,6 +2581,7 @@ permissions:
       echopet.petadmin.type.skeleton: true
       echopet.petadmin.type.skeletonhorse: true
       echopet.petadmin.type.slime: true
+      echopet.petadmin.type.sniffer: true
       echopet.petadmin.type.snowman: true
       echopet.petadmin.type.spider: true
       echopet.petadmin.type.squid: true
@@ -2625,6 +2663,7 @@ permissions:
       echopet.petadmin.hat.skeleton: true
       echopet.petadmin.hat.skeletonhorse: true
       echopet.petadmin.hat.slime: true
+      echopet.petadmin.hat.sniffer: true
       echopet.petadmin.hat.snowman: true
       echopet.petadmin.hat.spider: true
       echopet.petadmin.hat.squid: true
@@ -2706,6 +2745,7 @@ permissions:
       echopet.petadmin.ride.skeleton: true
       echopet.petadmin.ride.skeletonhorse: true
       echopet.petadmin.ride.slime: true
+      echopet.petadmin.ride.sniffer: true
       echopet.petadmin.ride.snowman: true
       echopet.petadmin.ride.spider: true
       echopet.petadmin.ride.squid: true
@@ -2794,6 +2834,7 @@ permissions:
       echopet.petadmin.default.set.type.skeleton: true
       echopet.petadmin.default.set.type.skeletonhorse: true
       echopet.petadmin.default.set.type.slime: true
+      echopet.petadmin.default.set.type.sniffer: true
       echopet.petadmin.default.set.type.snowman: true
       echopet.petadmin.default.set.type.spider: true
       echopet.petadmin.default.set.type.squid: true
@@ -3353,6 +3394,20 @@ permissions:
       echopet.pet.type.slime.size_small: true
       echopet.pet.type.slime.size_medium: true
       echopet.pet.type.slime.size_large: true
+  echopet.pet.type.sniffer.*:
+    default: op
+    description: 'All sniffer pet data permissions'
+    children:
+      echopet.pet.type.sniffer.hat: true
+      echopet.pet.type.sniffer.ride: true
+      echopet.pet.type.sniffer.baby: true
+      echopet.pet.type.sniffer.idling: true
+      echopet.pet.type.sniffer.feeling_happy: true
+      echopet.pet.type.sniffer.scenting: true
+      echopet.pet.type.sniffer.sniffing: true
+      echopet.pet.type.sniffer.searching: true
+      echopet.pet.type.sniffer.digging: true
+      echopet.pet.type.sniffer.rising: true
   echopet.pet.type.snowman.*:
     default: op
     description: 'All snowman pet data permissions'

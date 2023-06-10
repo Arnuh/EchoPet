@@ -101,10 +101,12 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			petRegistry = ReflectionUtil.getVersionedClass(IPetRegistry.class, "PetRegistry").getConstructor().newInstance();
 			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();
 		}catch(Exception ex){
-			getLogger().warning("EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
+			getLogger().warning("EchoPet " + ChatColor.GOLD + this.getDescription()
+				.getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
 			getLogger().warning("Initialisation failed. Please update the plugin.");
 			
-			DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "", new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW + "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
+			DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "", new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW + "EchoPet " + ChatColor.GOLD + this.getDescription()
+				.getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
 			COMMAND_MANAGER.register(cmd);
 			return;
 		}
@@ -166,7 +168,12 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	}
 	
 	private void loadConfiguration(){
-		String[] header = {"EchoPet By DSH105", "Updated by Borlea", "& NobleProductions <3", "---------------------", "Configuration for EchoPet 2", "See the EchoPet Wiki before editing this file"};
+		String[] header = {"EchoPet By DSH105",
+			"Updated by Borlea",
+			"& NobleProductions <3",
+			"---------------------",
+			"Configuration for EchoPet 2",
+			"See the EchoPet Wiki before editing this file"};
 		// Load categories first because PetData default config is dependent on category petdata being loaded.
 		try{
 			petCategoryConfig = configManager.getNewConfig("pet-categories.yml");

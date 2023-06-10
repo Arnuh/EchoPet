@@ -67,6 +67,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IShulkerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.ISnifferPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IStriderPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ITropicalFishPet;
@@ -849,7 +850,50 @@ public class PetData<T>{
 				return (t)->goat.setColor(null);
 			}
 			return null;
-		}).material(Material.SHULKER_BOX).name("No Color").parser(booleanParser()).create();
+		}).material(Material.SHULKER_BOX).name("No Color").parser(booleanParser()).create(),
+		// Sniffer States
+		IDLING = new Builder<Boolean>().configKey("idling").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.IDLING);
+			}
+			return null;
+		}).material(Material.BONE).name("Idling").parser(booleanParser()).create(),
+		FEELING_HAPPY = new Builder<Boolean>().configKey("feeling_happy").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.FEELING_HAPPY);
+			}
+			return null;
+		}).material(Material.GLOW_BERRIES).name("Feeling Happy").parser(booleanParser()).create(),
+		SCENTING = new Builder<Boolean>().configKey("scenting").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.SCENTING);
+			}
+			return null;
+		}).material(Material.valueOf("PITCHER_POD")).name("Scenting").parser(booleanParser()).create(),
+		SNIFFING = new Builder<Boolean>().configKey("sniffing").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.SNIFFING);
+			}
+			return null;
+		}).material(Material.WHEAT_SEEDS).name("Sniffing").parser(booleanParser()).create(),
+		SEARCHING = new Builder<Boolean>().configKey("searching").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.SEARCHING);
+			}
+			return null;
+		}).material(Material.valueOf("TORCHFLOWER_SEEDS")).name("Searching").parser(booleanParser()).create(),
+		DIGGING = new Builder<Boolean>().configKey("digging").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.DIGGING);
+			}
+			return null;
+		}).material(Material.DIRT).name("Digging").parser(booleanParser()).create(),
+		RISING = new Builder<Boolean>().configKey("rising").action((player, pet, category)->{
+			if(pet instanceof ISnifferPet sniffer){
+				return (t)->sniffer.transitionTo(ISnifferPet.State.RISING);
+			}
+			return null;
+		}).material(Material.BONE).name("Rising").parser(booleanParser()).create();
 	
 	public static final PetData<Integer>
 		SIZE = PetData.create("size", (player, pet, category)->value->{
