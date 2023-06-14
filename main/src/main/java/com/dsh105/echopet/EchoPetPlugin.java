@@ -102,11 +102,11 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();
 		}catch(Exception ex){
 			getLogger().warning("EchoPet " + ChatColor.GOLD + this.getDescription()
-				.getVersion() + ChatColor.RED + " is not compatible with this version of Spigot");
+				.getVersion() + ChatColor.RED + " is not compatible with this version of Minecraft");
 			getLogger().warning("Initialisation failed. Please update the plugin.");
 			
 			DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "", new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW + "EchoPet " + ChatColor.GOLD + this.getDescription()
-				.getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
+				.getVersion() + ChatColor.YELLOW + " is not compatible with this version of Paper. Please update the plugin.", "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."), null, this);
 			COMMAND_MANAGER.register(cmd);
 			return;
 		}
