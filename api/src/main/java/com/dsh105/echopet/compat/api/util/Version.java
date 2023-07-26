@@ -76,7 +76,6 @@ public class Version{
 			serverVersion = serverVersion.substring(0, serverVersion.indexOf("R") - 1) + "-" + serverVersion.substring(serverVersion.indexOf("R"));
 			serverVersion = serverVersion.replace("_", ".");
 		}
-		int size = serverVersion.split("\\.").length;
 		Integer rev = null;
 		if(serverVersion.contains("-")){// Removes stuff like SNAPSHOT and R
 			String in = serverVersion.split("-")[1];
@@ -85,9 +84,14 @@ public class Version{
 			if(in.length() > 0) rev = ObjectParser.isInt(in);
 			serverVersion = serverVersion.split("-")[0];
 		}
-		int[] numericVersionParts = new int[size + (rev != null ? 1 : 0)];
-		serverVersion = serverVersion.replaceAll("\\D", "");
+		// Removes any non-numeric characters and replaces it with a period
+		// "+" is to turn groups of non-numeric characters into a single period
+		serverVersion = serverVersion.replaceAll("\\D+", ".");
+		// Split by period for numeric version comparison
 		String[] parts = serverVersion.split("\\.");
+		
+		int size = serverVersion.split("\\.").length;
+		int[] numericVersionParts = new int[size + (rev != null ? 1 : 0)];
 		for(int i = 0; i < parts.length; i++){
 			try{
 				numericVersionParts[i] = ObjectParser.isInt(parts[i]);
@@ -95,7 +99,7 @@ public class Version{
 			}
 		}
 		if(rev != null) numericVersionParts[numericVersionParts.length - 1] = rev;
-		if(numericVersionParts.length <= 0) throw new IllegalArgumentException("Invalid version: " + serverVersion);
+		if(numericVersionParts.length == 0) throw new IllegalArgumentException("Invalid version: " + serverVersion);
 		return numericVersionParts;
 	}
 	
@@ -137,10 +141,10 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not the given version is compatible with this version
+	 * Returns whether the given version is compatible with this version
 	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
-	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
+	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3, 1.8-R1, 2.0-R1 will be considered
 	 * compatible, whereas 1.7-R1 will not
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R2
@@ -151,11 +155,11 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not the given version is compatible with this version
+	 * Returns whether this version supports the given version
 	 * <p>
-	 * Makes a comparison to see if the given version is more recent (compatible) or identical
-	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
-	 * compatible, whereas 1.7-R1 will not
+	 * Makes a comparison to see if the version given is earlier (supported) or identical
+	 * to than this version. For example, if this version is 1.7-R3, a version of 1.7-R2 or 1.7-R1 will be considered
+	 * supported, whereas 1.7-R4 will not
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R2
 	 * @return true if {@code latestAllowedVersion} is supported by this version
@@ -165,7 +169,7 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not this version is identical to the given version
+	 * Returns whether this version is identical to the given version
 	 * <p>
 	 * For example: 1.7-R1 matches 1.7-R1, but not 1.7-R2 or 1.7-R3
 	 *
@@ -177,7 +181,7 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not the given version is compatible with this version
+	 * Returns whether the given version is compatible with this version
 	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
 	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
@@ -191,7 +195,7 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not this version supports the given version
+	 * Returns whether this version supports the given version
 	 * <p>
 	 * Makes a comparison to see if the version given is earlier (supported) or identical
 	 * to than this version. For example, if this version is 1.7-R3, a version of 1.7-R2 or 1.7-R1 will be considered
@@ -205,7 +209,7 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not this version is identical to the given version
+	 * Returns whether this version is identical to the given version
 	 * <p>
 	 * For example: 1.7-R1 matches 1.7-R1, but not 1.7-R2 or 1.7-R3
 	 *
@@ -222,10 +226,10 @@ public class Version{
 	}
 	
 	/**
-	 * Returns whether or not the given version is compatible with this version
+	 * Returns whether the given version is compatible with this version
 	 * <p>
 	 * Makes a comparison to see if the given version is more recent (compatible) or identical
-	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3 or 1.7-R4 will be considered
+	 * to than this version. For example, if this version is 1.7-R2, a version of 1.7-R3, 1.8-R1, 2.0-R1 will be considered
 	 * compatible, whereas 1.7-R1 will not
 	 *
 	 * @param version server version to make a comparison against e.g. 1.7-R2
@@ -233,16 +237,19 @@ public class Version{
 	 */
 	public boolean isCompatible(Version version){
 		if(isIdentical(version)) return true;
-		boolean compatible = false;
 		for(int in = 0; in < numericVersion.length; in++){
-			if(version.getNumericVersion()[in] > numericVersion[in]) compatible = true;
-			else if(version.getNumericVersion()[in] < numericVersion[in]) return false;
+			// Prioritize the first number we see.
+			if(version.getNumericVersion()[in] > numericVersion[in]){
+				return true;
+			}else if(version.getNumericVersion()[in] < numericVersion[in]){
+				return false;
+			}
 		}
-		return compatible;
+		return false;
 	}
 	
 	/**
-	 * Returns whether or not this version supports the given version
+	 * Returns whether this version supports the given version
 	 * <p>
 	 * Makes a comparison to see if the version given is earlier (supported) or identical
 	 * to than this version. For example, if this version is 1.7-R3, a version of 1.7-R2 or 1.7-R1 will be considered
@@ -253,10 +260,13 @@ public class Version{
 	 */
 	public boolean isSupported(Version version){
 		if(isIdentical(version)) return true;
-		boolean supported = false;
 		for(int in = 0; in < numericVersion.length; in++){
-			if(version.getNumericVersion()[in] < numericVersion[in]) supported = true;
+			if(version.getNumericVersion()[in] < numericVersion[in]){
+				return true;
+			}else if(version.getNumericVersion()[in] > numericVersion[in]){
+				return false;
+			}
 		}
-		return supported;
+		return false;
 	}
 }

@@ -42,13 +42,14 @@ public class PetRegistry implements IPetRegistry{
 	
 	public PetRegistry(){
 		for(PetType petType : PetType.values){
-			if(petType.isCompatible()){
-				try{
-					PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
-					register(petType, registrationEntry);
-				}catch(PetRegistrationException e){
-					// not found = not compatible with this server version
-				}
+			if(!petType.isCompatible()){
+				continue;
+			}
+			try{
+				PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
+				register(petType, registrationEntry);
+			}catch(PetRegistrationException e){
+				// not found = not compatible with this server version
 			}
 		}
 	}
