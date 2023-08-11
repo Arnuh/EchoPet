@@ -597,7 +597,7 @@ public class PetData<T>{
 		}, Material.getMaterial("LOOM"), "Sherpherd"),
 		TOOLSMITH = create("toolsmith", (player, pet, category)->{
 			return value->setProfession(pet, Profession.TOOLSMITH);
-		}, Material.getMaterial("SMITHING_TABLE"), "None"),
+		}, Material.getMaterial("SMITHING_TABLE"), "Toolsmith"),
 		WEAPONSMITH = create("weaponsmith", (player, pet, category)->{
 			return value->setProfession(pet, Profession.WEAPONSMITH);
 		}, Material.getMaterial("GRINDSTONE"), "Weaponsmith"),
