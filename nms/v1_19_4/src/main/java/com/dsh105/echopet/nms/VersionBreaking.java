@@ -20,6 +20,7 @@ package com.dsh105.echopet.nms;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -62,11 +63,18 @@ public class VersionBreaking{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+	public static <T> Registry<T> getRegistry(RegistryType registryType){
 		return switch(registryType){
-			case Attribute -> (T) BuiltInRegistries.ATTRIBUTE.get(resourceLocation);
-			case Sound_Event -> (T) BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
+			case Attribute -> (Registry<T>) BuiltInRegistries.ATTRIBUTE;
+			case Sound_Event -> (Registry<T>) BuiltInRegistries.SOUND_EVENT;
+			case Villager_Profession -> (Registry<T>) BuiltInRegistries.VILLAGER_PROFESSION;
+			case Villager_Type -> (Registry<T>) BuiltInRegistries.VILLAGER_TYPE;
 		};
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+		return (T) getRegistry(registryType).get(resourceLocation);
 	}
 	
 	public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.OPTIONAL_BLOCK_STATE;

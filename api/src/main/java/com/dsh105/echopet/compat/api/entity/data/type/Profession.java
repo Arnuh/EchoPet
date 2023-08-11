@@ -31,5 +31,16 @@ public enum Profession{
 	NITWIT,
 	SHEPHERD,
 	TOOLSMITH,
-	WEAPONSMITH,
+	WEAPONSMITH;
+	
+	public static final Profession[] VALUES = values();
+	
+	public static Profession getByName(String name){
+		for(Profession profession : VALUES){
+			if(profession.name().equalsIgnoreCase(name)){
+				return profession;
+			}
+		}
+		return NONE;
+	}
 }

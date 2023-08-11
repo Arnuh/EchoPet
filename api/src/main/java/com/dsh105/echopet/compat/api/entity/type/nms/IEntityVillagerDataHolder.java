@@ -17,11 +17,15 @@
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
 
+import com.dsh105.echopet.compat.api.entity.data.type.Profession;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerLevel;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerType;
+
 public interface IEntityVillagerDataHolder{
 	
-	void setProfession(int profession);
+	void setProfession(Profession profession);
 	
-	void setType(int type);
+	void setType(VillagerType type);
 	
-	void setLevel(int level);
+	void setLevel(VillagerLevel level);
 }

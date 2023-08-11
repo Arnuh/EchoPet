@@ -23,5 +23,16 @@ public enum VillagerType{
 	SAVANNA,
 	SNOWY,
 	SWAMP,
-	TAIGA
+	TAIGA;
+	
+	public static final VillagerType[] VALUES = values();
+	
+	public static VillagerType getByName(String name){
+		for(VillagerType type : VALUES){
+			if(type.name().equalsIgnoreCase(name)){
+				return type;
+			}
+		}
+		return DESERT;
+	}
 }

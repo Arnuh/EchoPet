@@ -20,6 +20,7 @@ package com.dsh105.echopet.nms;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -80,15 +81,24 @@ public class VersionBreaking{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+	public static <T> Registry<T> getRegistry(RegistryType registryType){
 		return switch(registryType){
 			// 1.19.2 and below
-			// case Attribute -> (T) Registry.ATTRIBUTE.get(resourceLocation);
-			// case Sound_Event -> (T) Registry.SOUND_EVENT.get(resourceLocation);
+			// case Attribute -> (Registry<T>)  Registry.ATTRIBUTE;
+			// case Sound_Event -> (Registry<T>)  Registry.SOUND_EVENT;
+			// case Villager_Profession -> (Registry<T>)  Registry.VILLAGER_PROFESSION;
+			// case Villager_Type -> (Registry<T>) Registry.VILLAGER_TYPE;
 			// 1.19.3
-			case Attribute -> (T) BuiltInRegistries.ATTRIBUTE.get(resourceLocation);
-			case Sound_Event -> (T) BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
+			case Attribute -> (Registry<T>) BuiltInRegistries.ATTRIBUTE;
+			case Sound_Event -> (Registry<T>) BuiltInRegistries.SOUND_EVENT;
+			case Villager_Profession -> (Registry<T>) BuiltInRegistries.VILLAGER_PROFESSION;
+			case Villager_Type -> (Registry<T>) BuiltInRegistries.VILLAGER_TYPE;
 		};
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+		return (T) getRegistry(registryType).get(resourceLocation);
 	}
 	
 	// 1.19.3 and below

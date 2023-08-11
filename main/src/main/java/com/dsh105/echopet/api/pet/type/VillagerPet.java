@@ -47,9 +47,9 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet, IV
 	}
 	
 	@Override
-	public void setProfession(Profession prof){
-		((IEntityVillagerDataHolder) getEntityPet()).setProfession(prof.ordinal());
-		this.profession = prof;
+	public void setProfession(Profession profession){
+		((IEntityVillagerDataHolder) getEntityPet()).setProfession(profession);
+		this.profession = profession;
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet, IV
 	
 	@Override
 	public void setType(VillagerType type){
-		((IEntityVillagerDataHolder) getEntityPet()).setType(type.ordinal());
+		((IEntityVillagerDataHolder) getEntityPet()).setType(type);
 		this.type = type;
 	}
 	
@@ -70,7 +70,7 @@ public class VillagerPet extends VillagerAbstractPet implements IVillagerPet, IV
 	
 	@Override
 	public void setLevel(VillagerLevel level){
-		((IEntityVillagerDataHolder) getEntityPet()).setLevel(level.ordinal());
+		((IEntityVillagerDataHolder) getEntityPet()).setLevel(level);
 		this.level = level;
 	}
 	

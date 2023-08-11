@@ -19,5 +19,7 @@ package com.dsh105.echopet.nms;
 
 public enum RegistryType{
 	Attribute,
-	Sound_Event
+	Sound_Event,
+	Villager_Profession,
+	Villager_Type,
 }

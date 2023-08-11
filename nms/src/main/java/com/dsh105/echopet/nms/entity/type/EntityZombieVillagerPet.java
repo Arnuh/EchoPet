@@ -19,6 +19,8 @@ package com.dsh105.echopet.nms.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.Profession;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerLevel;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombieVillagerPet;
@@ -53,27 +55,18 @@ public class EntityZombieVillagerPet extends EntityZombiePet implements IEntityZ
 	}
 	
 	@Override
-	public void setProfession(int i){
-		try{
-			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
-		}catch(Exception ignored){
-		}
+	public void setProfession(Profession profession){
+		this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setProfession(EntityVillagerPet.PROFESSION_LOOKUP.get(profession)));
 	}
 	
 	@Override
-	public void setType(int type){
-		try{
-			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
-		}catch(Exception ignored){
-		}
+	public void setType(com.dsh105.echopet.compat.api.entity.data.type.VillagerType type){
+		this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setType(EntityVillagerPet.TYPE_LOOKUP.get(type)));
 	}
 	
 	@Override
-	public void setLevel(int level){
-		try{
-			this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setLevel(level));
-		}catch(Exception ignored){
-		}
+	public void setLevel(VillagerLevel level){
+		this.entityData.set(DATA_VILLAGER_DATA, getVillagerData().setLevel(level.ordinal()));
 	}
 	
 	public VillagerData getVillagerData(){

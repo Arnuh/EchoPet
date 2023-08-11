@@ -17,10 +17,14 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.data.type.Profession;
+import com.dsh105.echopet.compat.api.entity.data.type.VillagerLevel;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -28,12 +32,14 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerAbstractPet;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerDataHolder;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
+import com.dsh105.echopet.nms.RegistryType;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.handle.EntityAgeablePetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -76,6 +82,19 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 		MemoryModuleType.LAST_WOKEN,
 		MemoryModuleType.LAST_WORKED_AT_POI,
 		MemoryModuleType.GOLEM_DETECTED_RECENTLY});
+	public static final Map<Profession, VillagerProfession> PROFESSION_LOOKUP = new HashMap<>();
+	public static final Map<com.dsh105.echopet.compat.api.entity.data.type.VillagerType, VillagerType> TYPE_LOOKUP = new HashMap<>();
+	
+	static{
+		Registry<VillagerProfession> profRegistry = VersionBreaking.getRegistry(RegistryType.Villager_Profession);
+		for(var resource : profRegistry.keySet()){
+			PROFESSION_LOOKUP.put(Profession.getByName(resource.getPath()), profRegistry.get(resource));
+		}
+		Registry<VillagerType> typeRegistry = VersionBreaking.getRegistry(RegistryType.Villager_Type);
+		for(var resource : typeRegistry.keySet()){
+			TYPE_LOOKUP.put(com.dsh105.echopet.compat.api.entity.data.type.VillagerType.getByName(resource.getPath()), typeRegistry.get(resource));
+		}
+	}
 	
 	public EntityVillagerPet(Level world, IVillagerPet pet){
 		super(EntityType.VILLAGER, world);
@@ -84,24 +103,18 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 	}
 	
 	@Override
-	public void setProfession(int i){
-		try{
-			setVillagerData(getVillagerData().setProfession((VillagerProfession) VillagerProfession.class.getFields()[i].get(null)));
-		}catch(Exception ignored){
-		}
+	public void setProfession(Profession profession){
+		setVillagerData(getVillagerData().setProfession(PROFESSION_LOOKUP.get(profession)));
 	}
 	
 	@Override
-	public void setType(int type){
-		try{
-			setVillagerData(getVillagerData().setType((VillagerType) VillagerType.class.getFields()[type].get(null)));
-		}catch(Exception ignored){
-		}
+	public void setType(com.dsh105.echopet.compat.api.entity.data.type.VillagerType type){
+		setVillagerData(getVillagerData().setType(TYPE_LOOKUP.get(type)));
 	}
 	
 	@Override
-	public void setLevel(int level){
-		setVillagerData(getVillagerData().setLevel(level));
+	public void setLevel(VillagerLevel level){
+		setVillagerData(getVillagerData().setLevel(level.ordinal()));
 	}
 	
 	@Override

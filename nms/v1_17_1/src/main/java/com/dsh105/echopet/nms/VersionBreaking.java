@@ -62,11 +62,18 @@ public class VersionBreaking{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+	public static <T> Registry<T> getRegistry(RegistryType registryType){
 		return switch(registryType){
-			case Attribute -> (T) Registry.ATTRIBUTE.get(resourceLocation);
-			case Sound_Event -> (T) Registry.SOUND_EVENT.get(resourceLocation);
+			case Attribute -> (Registry<T>) Registry.ATTRIBUTE;
+			case Sound_Event -> (Registry<T>) Registry.SOUND_EVENT;
+			case Villager_Profession -> (Registry<T>) Registry.VILLAGER_PROFESSION;
+			case Villager_Type -> (Registry<T>) Registry.VILLAGER_TYPE;
 		};
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getRegistry(RegistryType registryType, ResourceLocation resourceLocation){
+		return (T) getRegistry(registryType).get(resourceLocation);
 	}
 	
 	public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.BLOCK_STATE;
