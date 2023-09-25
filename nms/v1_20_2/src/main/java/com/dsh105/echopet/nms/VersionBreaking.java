@@ -39,58 +39,32 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 public class VersionBreaking{
 	
 	public static boolean closerToCenterThan(BlockPos targetPosition, Position position, double range){
-		// 1.18.2
 		return targetPosition.closerToCenterThan(position, range);
-		// 1.18.1 and below
-		// return targetPosition.closerThan(position, range);
 	}
 	
 	public static BlockPos getBlockPosBelow(BlockPos pos){
-		// 1.18.x
 		return pos.below();
-		// 1.17.1
-		// return pos.down();
 	}
 	
 	public static BlockPos getBlockPosAbove(BlockPos pos){
-		// 1.18.x
 		return pos.above();
-		// 1.17.1
-		// return pos.up();
 	}
 	
 	public static void setItemSlot(Mob mob, EquipmentSlot slot, ItemStack itemStack, boolean silent){
-		// 1.18.x
 		mob.setItemSlot(slot, itemStack, silent);
-		// 1.17.1 / 1.18.x
-		// mob.setItemSlot(slot, itemStack);
 	}
 	
 	public static boolean addEntity(Level level, Entity entity, CreatureSpawnEvent.SpawnReason spawnReason){
-		// 1.18.x
 		return level.addFreshEntity(entity, spawnReason);
-		// 1.17.1
-		// return level.addEntity(entity, spawnReason);
 	}
 	
 	public static void entityShake(LivingEntity entity){
-		// pre 1.19
-		// entity.gameEvent(GameEvent.WOLF_SHAKING);
-		// pre 1.19.2
-		// entity.gameEvent(GameEvent.ENTITY_SHAKE);
-		// 1.19.2
 		entity.gameEvent(GameEvent.ENTITY_ACTION);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static <T> Registry<T> getRegistry(RegistryType registryType){
 		return switch(registryType){
-			// 1.19.2 and below
-			// case Attribute -> (Registry<T>)  Registry.ATTRIBUTE;
-			// case Sound_Event -> (Registry<T>)  Registry.SOUND_EVENT;
-			// case Villager_Profession -> (Registry<T>)  Registry.VILLAGER_PROFESSION;
-			// case Villager_Type -> (Registry<T>) Registry.VILLAGER_TYPE;
-			// 1.19.3
 			case Attribute -> (Registry<T>) BuiltInRegistries.ATTRIBUTE;
 			case Sound_Event -> (Registry<T>) BuiltInRegistries.SOUND_EVENT;
 			case Villager_Profession -> (Registry<T>) BuiltInRegistries.VILLAGER_PROFESSION;
@@ -103,67 +77,39 @@ public class VersionBreaking{
 		return (T) getRegistry(registryType).get(resourceLocation);
 	}
 	
-	// 1.19.3 and below
-	// public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.BLOCK_STATE;
-	// 1.19.4
 	public static final EntityDataSerializer<Optional<BlockState>> OPTIONAL_BLOCK_STATE = EntityDataSerializers.OPTIONAL_BLOCK_STATE;
 	
 	public static void setMaxUpStep(Entity entity, float maxStepUp){
-		// 1.19.3 and below
-		// entity.maxUpStep = maxStepUp;
-		// 1.19.4
 		entity.setMaxUpStep(maxStepUp);
 	}
 	
 	public static void setFlyingSpeed(LivingEntity entity, float flyingSpeed){
-		// 1.19.3 and below
-		// entity.flyingSpeed = flyingSpeed;
-		// 1.19.4 does it in LivingEntity and doesn't seem to be required by us anymore?
+		//
 	}
 	
 	public static BlockPos blockPos(double x, double y, double z){
-		// 1.19.3 and below
-		// return new BlockPos(x, y, z);
-		// 1.19.4
 		return BlockPos.containing(x, y, z);
 	}
 	
 	public static void calculateEntityAnimation(LivingEntity entity, boolean flutter){
-		// 1.19.3 and below
-		// entity.calculateEntityAnimation(entity, flutter);
-		// 1.19.4
 		entity.calculateEntityAnimation(flutter);
 	}
 	
 	public static DamageSource getDamageSource(Entity entity, DamageSourceType damageSourceType){
-		// 1.19.3 and below
-		/*return switch(damageSourceType){
-			case FLY_INTO_WALL -> DamageSource.FLY_INTO_WALL;
-		};*/
-		// 1.19.4
 		return switch(damageSourceType){
 			case FLY_INTO_WALL -> entity.damageSources().flyIntoWall();
 		};
 	}
 	
 	public static boolean onGround(Entity entity){
-		// 1.19.4 and below
-		// return entity.isOnGround();
-		// 1.20
 		return entity.onGround;
 	}
 	
 	public static Level level(Entity entity){
-		// 1.19.4 and below
-		// return entity.level;
-		// 1.20
 		return entity.level();
 	}
 	
 	public static void setLevel(Entity entity, Level level){
-		// 1.19.4 and below
-		// entity.level = level;
-		// 1.20
 		entity.setLevel(level);
 	}
 }

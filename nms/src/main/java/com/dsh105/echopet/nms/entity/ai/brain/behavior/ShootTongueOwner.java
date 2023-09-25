@@ -33,7 +33,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.level.pathfinder.Path;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
 
 public class ShootTongueOwner extends Behavior<Frog>{
 	
