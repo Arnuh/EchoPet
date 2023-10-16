@@ -244,6 +244,11 @@ public abstract class Pet implements IPet{
 	}
 	
 	@Override
+	public int getMaxPassengers(){
+		return 1;
+	}
+	
+	@Override
 	public IPet createRider(final IPetType pt, boolean sendFailMessage){
 		Player owner = getOwner();
 		if(pt == PetType.HUMAN){
@@ -258,7 +263,7 @@ public abstract class Pet implements IPet{
 			}
 			return null;
 		}
-		if(this.isOwnerRiding()){
+		if(getMaxPassengers() == 1 && this.isOwnerRiding()){
 			this.ownerRidePet(false);
 		}
 		if(this.rider != null){
@@ -289,7 +294,7 @@ public abstract class Pet implements IPet{
 			Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
 			return;
 		}
-		if(this.isOwnerRiding()){
+		if(getMaxPassengers() == 1 && this.isOwnerRiding()){
 			this.ownerRidePet(false);
 		}
 		if(rider != null){
@@ -319,11 +324,6 @@ public abstract class Pet implements IPet{
 			return;
 		}
 		rider.removePet(makeSound, makeParticles);
-		// It's possible for a rider to be set before the pet being ridden is spawned
-		// Due to how rider spawning currently works.
-		if(getEntityPet() != null && getCraftPet() != null){
-			getCraftPet().eject();
-		}
 	}
 	
 	@Override

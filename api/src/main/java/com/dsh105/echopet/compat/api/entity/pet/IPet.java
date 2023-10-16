@@ -143,6 +143,8 @@ public interface IPet{
 	
 	Map<PetData<?>, Object> getData();
 	
+	int getMaxPassengers();
+	
 	IPet createRider(final IPetType pt, boolean sendFailMessage);
 	
 	void setRider(IPet rider);

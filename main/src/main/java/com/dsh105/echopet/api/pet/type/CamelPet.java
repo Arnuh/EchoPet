@@ -35,6 +35,11 @@ public class CamelPet extends AbstractHorsePet implements ICamelPet{
 	}
 	
 	@Override
+	public int getMaxPassengers(){
+		return 2;
+	}
+	
+	@Override
 	public void setSitting(boolean flag){
 		if(flag){
 			getHandle().setPose(Pose.SITTING);
