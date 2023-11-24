@@ -178,13 +178,11 @@ public class PetOwnerListener implements Listener{
 					pi.ownerRidePet(false);
 					pi.removePet(false, false);
 					new BukkitRunnable(){
-						
 						@Override
 						public void run(){
-							if(pi != null){
-								if(WorldUtil.allowPets(event.getTo())){
-									pi.spawnPet(p, false);
-								}
+							// TODO this will be fired multiple times if another plugin is canceling PetPreSpawnEvent or dismounting player
+							if(WorldUtil.allowPets(event.getTo())){
+								pi.spawnPet(p, false);
 							}
 						}
 					}.runTaskLater(EchoPet.getPlugin(), 20L);// could be reduced
