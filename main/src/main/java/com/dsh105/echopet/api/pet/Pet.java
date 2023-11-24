@@ -448,7 +448,8 @@ public abstract class Pet implements IPet{
 		}
 		this.teleportToOwner();
 		this.ownerRiding = flag;
-		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		if(getEntityPet() != null)
+			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
@@ -469,10 +470,12 @@ public abstract class Pet implements IPet{
 			getOwner().addPassenger(getCraftPet());
 		}
 		this.isHat = flag;
-		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		if(getEntityPet() != null)
+			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		Location l = this.getLocation().clone();
 		l.setY(l.getY() - 1D);
-		getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		if(getEntityPet() != null)
+			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
 		// Lots of ways call setAsHat, might as well properly sync the petdata in here.
 		EchoPet.getManager().setData(this, PetData.HAT, isHat);
 	}
