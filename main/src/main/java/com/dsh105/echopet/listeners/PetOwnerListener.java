@@ -181,7 +181,7 @@ public class PetOwnerListener implements Listener{
 						@Override
 						public void run(){
 							// TODO this will be fired multiple times if another plugin is canceling PetPreSpawnEvent or dismounting player
-							if(WorldUtil.allowPets(event.getTo())){
+							if(pi.getOwner() != null && pi.getOwner().isOnline() && WorldUtil.allowPets(event.getTo())){
 								pi.spawnPet(p, false);
 							}
 						}
