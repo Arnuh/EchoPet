@@ -48,7 +48,7 @@ public interface PetDataParser<T>{
 		
 		@Override
 		public Boolean parse(String input){
-			return input.equalsIgnoreCase("true") || input.equalsIgnoreCase("1");
+			return input != null && input.equalsIgnoreCase("true") || input.equalsIgnoreCase("1");
 		}
 		
 		@Override
