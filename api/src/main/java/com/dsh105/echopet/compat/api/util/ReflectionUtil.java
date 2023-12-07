@@ -37,7 +37,7 @@ public class ReflectionUtil{
 	private static String CRAFTBUKKIT_PACKAGE_VERSION = null;
 	
 	/**
-	 * @return Version formatted like "1.19.1"
+	 * @return Version formatted like "1.19.1", "1.20"
 	 */
 	public static String getMinecraftVersion(){
 		// Bukkit.getVersion returns a string like "git-Paper-86 (MC: 1.19.1)"
@@ -64,6 +64,7 @@ public class ReflectionUtil{
 	 *
 	 * @return Version formatted like "1_19_R1"
 	 */
+	@Deprecated
 	public static String getCraftBukkitPackageVersion(){
 		if(CRAFTBUKKIT_PACKAGE_VERSION != null){
 			return CRAFTBUKKIT_PACKAGE_VERSION;
