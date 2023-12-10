@@ -34,7 +34,7 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.CAT)
 public class EntityCatPet extends Cat implements IEntityTameablePet, EntityPetGiveMeAccess{
