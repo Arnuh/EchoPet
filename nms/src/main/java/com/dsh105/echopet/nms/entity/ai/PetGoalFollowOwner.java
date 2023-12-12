@@ -80,7 +80,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public boolean canContinueToUse(){
-		return !getNavigation().isDone() && this.mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) > stopDistanceSqr;
+		return !getNavigation().isDone() && this.pet.getPetOwner() != null && this.mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) > stopDistanceSqr;
 	}
 	
 	@Override
