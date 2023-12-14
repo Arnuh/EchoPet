@@ -25,6 +25,7 @@ dependencies {
 	implementation(project(path = ":nms:v1_20", configuration = "reobf"))
 	implementation(project(path = ":nms:v1_20_1", configuration = "reobf"))
 	implementation(project(path = ":nms:v1_20_2", configuration = "reobf"))
+	implementation(project(path = ":nms:v1_20_4", configuration = "reobf"))
 }
 
 tasks {

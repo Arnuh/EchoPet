@@ -43,12 +43,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public enum PetType implements IPetType{
-	ALLAY("Allay", "Allay Pet", "allay", new Version("1.19-R1")),
-	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17-R1"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
+	ALLAY("Allay", "Allay Pet", "allay", new Version("1.19")),
+	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),
 	BLAZE("Blaze", "Blaze Pet", "blaze", PetData.FIRE),
-	CAMEL("Camel", "Camel Pet", "camel", new Version("1.19-R2"), PetData.SITTING),
+	CAMEL("Camel", "Camel Pet", "camel", new Version("1.19.3"), PetData.SITTING),
 	CAT("Cat", "Cat Pet", "cat", new PetDataCategory[]{PetDataCategory.COLLAR_COLOR, PetDataCategory.CAT_TYPE}),
 	CAVESPIDER("CaveSpider", "Cave Spider Pet", "cave_spider"),
 	CHICKEN("Chicken", "Chicken Pet", "chicken"),
@@ -64,14 +64,16 @@ public enum PetType implements IPetType{
 	ENDERMITE("Endermite", "Endermite Pet", "endermite"),
 	EVOKER("Evoker", "Evoker Pet", "evoker"),
 	FOX("Fox", "Fox Pet", "fox", new PetDataCategory[]{PetDataCategory.FOX_TYPE}, PetData.SIT, PetData.CROUCH, PetData.HEAD_TILT, PetData.POUNCE, PetData.SLEEP, PetData.LEG_SHAKE),
-	FROG("Frog", "Frog Pet", "frog", new Version("1.19-R1"), new PetDataCategory[]{PetDataCategory.FROG_VARIANT}),
+	FROG("Frog", "Frog Pet", "frog", new Version("1.19"), new PetDataCategory[]{PetDataCategory.FROG_VARIANT}),
 	GHAST("Ghast", "Ghast Pet", "ghast"),
 	GIANT("Giant", "Giant Pet", "giant", Material.ZOMBIE_SPAWN_EGG),
-	GLOWSQUID("GlowSquid", "Glow Squid Pet", "glow_squid", new Version("1.17-R1"), PetData.DARK),
-	GOAT("Goat", "Goat Pet", "goat", new Version("1.17-R1"), PetData.SCREAMING, PetData.LEFT_HORN, PetData.RIGHT_HORN),
+	GLOWSQUID("GlowSquid", "Glow Squid Pet", "glow_squid", new Version("1.17"), PetData.DARK),
+	GOAT("Goat", "Goat Pet", "goat", new Version("1.17"), PetData.SCREAMING, PetData.LEFT_HORN, PetData.RIGHT_HORN),
 	GUARDIAN("Guardian", "Guardian Pet", "guardian"),
 	HOGLIN("Hoglin", "Hoglin Pet", "hoglin"),
-	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR, PetDataCategory.HORSE_COLOR, PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
+	HORSE("Horse", "Horse Pet", "horse", new PetDataCategory[]{PetDataCategory.HORSE_ARMOR,
+		PetDataCategory.HORSE_COLOR,
+		PetDataCategory.HORSE_MARKING}, PetData.SADDLE),
 	HUMAN("Human", "Human Pet", "UNKNOWN"),
 	HUSK("Husk", "Husk Pet", "husk"),
 	ILLUSIONER("Illusioner", "Illusioner Pet", "illusioner", Material.VILLAGER_SPAWN_EGG),
@@ -81,7 +83,8 @@ public enum PetType implements IPetType{
 	MULE("Mule", "Mule Pet", "mule", PetData.SADDLE),
 	MUSHROOMCOW("MushroomCow", "Mushroom Cow Pet", "mooshroom", new PetDataCategory[]{PetDataCategory.MUSHROOMCOW_TYPE}),
 	OCELOT("Ocelot", "Ocelot Pet", "ocelot"),
-	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE, PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
+	PANDA("Panda", "Panda Pet", "panda", new PetDataCategory[]{PetDataCategory.PANDA_MAIN_GENE,
+		PetDataCategory.PANDA_HIDDEN_GENE}, PetData.ROLL, PetData.SIT, PetData.LAY_DOWN),
 	PARROT("Parrot", "Parrot Pet", "parrot", new PetDataCategory[]{PetDataCategory.PARROT_VARIANT}/*, PetData.LEFT_SHOULDER, PetData.RIGHT_SHOULDER*/),
 	PHANTOM("Phantom", "Phantom Pet", "phantom", PetData.SIZE, PetData.WANDER),
 	PIG("Pig", "Pig Pet", "pig", PetData.SADDLE),
@@ -99,21 +102,25 @@ public enum PetType implements IPetType{
 	SKELETON("Skeleton", "Skeleton Pet", "skeleton"),
 	SKELETONHORSE("SkeletonHorse", "Skeleton Horse Pet", "skeleton_horse", PetData.SADDLE),
 	SLIME("Slime", "Slime Pet", "slime", new PetDataCategory[]{PetDataCategory.SLIME_SIZE}),
-	SNIFFER("Sniffer", "Sniffer Pet", "sniffer", new Version("1.20-R1"), new PetDataCategory[]{PetDataCategory.SNIFFER_STATE}),
+	SNIFFER("Sniffer", "Sniffer Pet", "sniffer", new Version("1.20"), new PetDataCategory[]{PetDataCategory.SNIFFER_STATE}),
 	SNOWMAN("Snowman", "Snowman Pet", "snow_golem", Material.PUMPKIN, PetData.SHEARED),
 	SPIDER("Spider", "Spider Pet", "spider"),
 	SQUID("Squid", "Squid Pet", "squid"),
 	STRAY("Stray", "Stray Pet", "stray"),
 	STRIDER("Strider", "Strider Pet", "strider", PetData.SADDLE),
-	TADPOLE("Tadpole", "Tadpole Pet", "tadpole", new Version("1.19-R1")),
+	TADPOLE("Tadpole", "Tadpole Pet", "tadpole", new Version("1.19")),
 	TRADERLLAMA("TraderLlama", "Trader Llama Pet", "trader_llama", new PetDataCategory[]{PetDataCategory.LLAMA_COLOR, PetDataCategory.LLAMA_CARPET_COLOR}),
-	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish", new PetDataCategory[]{PetDataCategory.TROPICAL_FISH_PATTERN, PetDataCategory.TROPICAL_FISH_COLOR, PetDataCategory.TROPICAL_FISH_PATTERN_COLOR}, PetData.SIZE_LARGE),
+	TROPICALFISH("TropicalFish", "Tropical Fish Pet", "tropical_fish", new PetDataCategory[]{PetDataCategory.TROPICAL_FISH_PATTERN,
+		PetDataCategory.TROPICAL_FISH_COLOR,
+		PetDataCategory.TROPICAL_FISH_PATTERN_COLOR}, PetData.SIZE_LARGE),
 	TURTLE("Turtle", "Turtle Pet", "turtle"),
 	VEX("Vex", "Vex Pet", "vex", PetData.POWERED),
-	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
+	VILLAGER("Villager", "Villager Pet", "villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE,
+		PetDataCategory.VILLAGER_PROFESSION,
+		PetDataCategory.VILLAGER_LEVEL}),
 	VINDICATOR("Vindicator", "Vindicator Pet", "vindicator"),
 	WANDERINGTRADER("WanderingTrader", "Wandering Trader Pet", "wandering_trader"),
-	WARDEN("Warden", "Warden Pet", "warden", new Version("1.19-R1"), new PetDataCategory[]{PetDataCategory.WARDEN_ANGER_LEVEL}),
+	WARDEN("Warden", "Warden Pet", "warden", new Version("1.19"), new PetDataCategory[]{PetDataCategory.WARDEN_ANGER_LEVEL}),
 	WITCH("Witch", "Witch Pet", "witch"),
 	WITHER("Wither", "Wither Pet", "wither", PetData.SHIELD),
 	WITHERSKELETON("WitherSkeleton", "Wither Skeleton Pet", "wither_skeleton"),
@@ -121,7 +128,9 @@ public enum PetType implements IPetType{
 	ZOGLIN("Zoglin", "Zoglin Pet", "zoglin"),
 	ZOMBIE("Zombie", "Zombie Pet", "zombie"),
 	ZOMBIEHORSE("ZombieHorse", "Zombie Horse Pet", "zombie_horse", PetData.SADDLE),
-	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE, PetDataCategory.VILLAGER_PROFESSION, PetDataCategory.VILLAGER_LEVEL}),
+	ZOMBIEVILLAGER("ZombieVillager", "Zombie Villager Pet", "zombie_villager", new PetDataCategory[]{PetDataCategory.VILLAGER_TYPE,
+		PetDataCategory.VILLAGER_PROFESSION,
+		PetDataCategory.VILLAGER_LEVEL}),
 	;
 	
 	public static final PetType[] values = values();
@@ -174,7 +183,7 @@ public enum PetType implements IPetType{
 			EchoPet.LOG.log(Level.SEVERE, "", ex);
 		}
 		if(name().equals("PIGZOMBIE")){// hacky fix for now
-			if(new Version("1.16-R1").isCompatible(new Version())){
+			if(new Version("1.16").isCompatible(new Version())){
 				defaultName = "Zombified Piglin Pet";
 				minecraftEntityName = "zombified_piglin";
 			}
@@ -431,7 +440,23 @@ public enum PetType implements IPetType{
 			bw.write("        children:\n");
 			
 			// Grab from HelpEntry?
-			String[] options = new String[]{"echopet.pet", "echopet.pet.remove", "echopet.pet.list", "echopet.pet.info", "echopet.pet.menu", "echopet.pet.show", "echopet.pet.hide", "echopet.pet.toggle", "echopet.pet.call", "echopet.pet.name", "echopet.pet.name.override", "echopet.pet.select", "echopet.pet.selector", "echopet.pet.modify", "echopet.pet.type.*", "echopet.pet.data.*", "echopet.pet.default.*"};
+			String[] options = new String[]{"echopet.pet",
+				"echopet.pet.remove",
+				"echopet.pet.list",
+				"echopet.pet.info",
+				"echopet.pet.menu",
+				"echopet.pet.show",
+				"echopet.pet.hide",
+				"echopet.pet.toggle",
+				"echopet.pet.call",
+				"echopet.pet.name",
+				"echopet.pet.name.override",
+				"echopet.pet.select",
+				"echopet.pet.selector",
+				"echopet.pet.modify",
+				"echopet.pet.type.*",
+				"echopet.pet.data.*",
+				"echopet.pet.default.*"};
 			for(String s : options){
 				bw.write("            " + s + ": true\n");
 			}

@@ -33,7 +33,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 
 @EntityPetType(petType = PetType.HORSE)
 public class EntityHorsePet extends net.minecraft.world.entity.animal.horse.Horse implements IEntityAnimalPet, EntityPetGiveMeAccess{
