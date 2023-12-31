@@ -45,6 +45,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -137,7 +138,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	
 	@Override
 	public CraftLivingEntity getEntity(){
-		return (CraftLivingEntity) super.getBukkitEntity();
+		return (CraftLivingEntity) getBukkitEntity();
 	}
 	
 	@Override
@@ -378,5 +379,39 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	@Override
 	public void readAdditionalSaveData(CompoundTag nbttagcompound){// Loading
 		//
+	}
+	
+	/*private static java.lang.reflect.Field bukkitEntityField;
+	
+	static{
+		try{
+			bukkitEntityField = Entity.class.getDeclaredField("bukkitEntity");
+			bukkitEntityField.setAccessible(true);
+			
+		}catch(NoSuchFieldException e){
+			throw new RuntimeException(e);
+		}
+	}*/
+	private CraftEntity craftEntity;
+	
+	@Override
+	public CraftEntity getBukkitEntity(){
+		if(getBukkitEntityRaw() != null){
+			return getBukkitEntityRaw();
+		}
+		if(craftEntity == null){
+			this.craftEntity = new CraftLivingEntity(level().getCraftServer(), this);
+			/*try{
+				bukkitEntityField.set(this, craftEntity);
+			}catch(IllegalAccessException e){
+				throw new RuntimeException(e);
+			}*/
+		}
+		return craftEntity;
+	}
+	
+	@Override
+	public CraftLivingEntity getBukkitLivingEntity(){
+		return (CraftLivingEntity) getBukkitEntity();
 	}
 }
