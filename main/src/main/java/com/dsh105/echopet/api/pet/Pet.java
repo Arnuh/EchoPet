@@ -428,6 +428,7 @@ public abstract class Pet implements IPet{
 				if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
 					noClipPet.noClip(true);
 				}
+				Lang.sendTo(getOwner(), Lang.RIDE_PET_OFF.toString());
 			}
 			ownerIsMounting = false;
 		}else{
@@ -442,9 +443,14 @@ public abstract class Pet implements IPet{
 					{
 						if(getCraftPet() != null)
 						{
-							getCraftPet().addPassenger(getOwner());
-							if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
-								noClipPet.noClip(false);
+							if(getCraftPet().addPassenger(getOwner())) {
+								if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
+									noClipPet.noClip(false);
+								}
+								Lang.sendTo(getOwner(), Lang.RIDE_PET_ON.toString());
+							} else {
+								getEntityPet().getPet().ownerRidePet(false);
+								EchoPet.getManager().setData(getEntityPet().getPet(), PetData.RIDE, false);
 							}
 						}
 						ownerIsMounting = false;
@@ -456,9 +462,9 @@ public abstract class Pet implements IPet{
 		}
 		this.teleportToOwner();
 		this.ownerRiding = flag;
+		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 		if(getEntityPet() != null)
 			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
 	@Override
