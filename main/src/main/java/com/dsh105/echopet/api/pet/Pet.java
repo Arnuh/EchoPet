@@ -424,11 +424,12 @@ public abstract class Pet implements IPet{
 		
 		if(!flag){
 			if(getCraftPet() != null){
-				getCraftPet().eject();
-				if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
-					noClipPet.noClip(true);
+				if(getCraftPet().eject())
+				{
+					if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
+						noClipPet.noClip(true);
+					}
 				}
-				Lang.sendTo(getOwner(), Lang.RIDE_PET_OFF.toString());
 			}
 			ownerIsMounting = false;
 		}else{

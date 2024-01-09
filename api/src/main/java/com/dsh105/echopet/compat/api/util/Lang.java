@@ -60,6 +60,7 @@ public enum Lang{
 	CREATE_PET("create_pet", "&eA &6%type% &enow follows close behind you."),
 	CREATE_PET_WITH_RIDER("create_pet_with_rider", "&eA &6%type% &enow follows close behind you with a &6%mtype% &erider."),
 	CHANGE_RIDER("change_rider", "&eYour pet's rider has been changed to a &6%type%&e."),
+	RIDE_PET_START("ride_pet_start", "&eAttempting to mount your pet..."),
 	RIDE_PET_ON("ride_pet_on", "&eYou are now riding your pet. Use &6WASD &eand the &6Space Bar &eto control it."),
 	RIDE_PET_OFF("ride_pet_off", "&eYou are no longer riding your pet."),
 	HAT_PET_ON("hat_pet_on", "&eYour pet now rides on your head."),

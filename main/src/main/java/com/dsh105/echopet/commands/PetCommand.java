@@ -326,6 +326,8 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					if(Perm.hasDataPerm(sender, true, pi.getPetType(), PetData.RIDE, false)){
+						if(!pi.isOwnerRiding())
+							Lang.sendTo(sender, Lang.RIDE_PET_START.toString());
 						pi.ownerRidePet(!pi.isOwnerRiding());
 						return true;
 					}else{
