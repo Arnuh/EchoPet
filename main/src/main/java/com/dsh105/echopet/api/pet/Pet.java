@@ -435,15 +435,19 @@ public abstract class Pet implements IPet{
 				if(getRider() != null && getRider().isSpawned()){
 					getRider().removePet(false, true);
 				}
-				new BukkitRunnable(){
-					
+				new BukkitRunnable()
+				{
 					@Override
-					public void run(){
-						getCraftPet().addPassenger(getOwner());
-						ownerIsMounting = false;
-						if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
-							noClipPet.noClip(false);
+					public void run()
+					{
+						if(getCraftPet() != null)
+						{
+							getCraftPet().addPassenger(getOwner());
+							if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
+								noClipPet.noClip(false);
+							}
 						}
+						ownerIsMounting = false;
 					}
 				}.runTaskLater(EchoPet.getPlugin(), 5L);
 			}else{
