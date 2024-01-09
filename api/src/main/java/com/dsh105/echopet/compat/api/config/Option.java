@@ -63,7 +63,7 @@ public class Option<T>{
 	}
 	
 	public String getPath(String... replacements){
-		String path = String.format(getPath(), replacements);
+		String path = String.format(getPath(), (Object) replacements);
 		while(path.endsWith(".")){
 			path = path.substring(0, path.length() - 2);
 		}
