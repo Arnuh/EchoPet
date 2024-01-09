@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import java.util.List;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.data.CategorizedPetData;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
@@ -28,6 +27,8 @@ import com.dsh105.echopet.compat.api.util.Version;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public interface IPetType{
 	

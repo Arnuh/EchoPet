@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.nms.entity.ai.brain.sensing;
 
-import java.lang.reflect.Constructor;
-import java.util.function.Supplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
 import net.minecraft.world.entity.ai.sensing.PlayerSensor;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
+
+import java.lang.reflect.Constructor;
+import java.util.function.Supplier;
 
 public class CustomSensorType{
 	

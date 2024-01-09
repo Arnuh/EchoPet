@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.api.entity.data;
 
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 @FunctionalInterface
 public interface PetDataAction<T>{

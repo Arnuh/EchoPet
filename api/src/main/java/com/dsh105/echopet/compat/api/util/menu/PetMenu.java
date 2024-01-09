@@ -16,7 +16,6 @@
  */
 package com.dsh105.echopet.compat.api.util.menu;
 
-import java.util.List;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -30,6 +29,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class PetMenu{
 	

@@ -17,9 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -58,6 +55,10 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 @EntityPetType(petType = PetType.VILLAGER)
 public class EntityVillagerPet extends Villager implements IEntityLivingPet, EntityPetGiveMeAccess, IEntityVillagerAbstractPet, IEntityVillagerPet, IEntityVillagerDataHolder{

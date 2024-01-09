@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import java.util.List;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.type.HorseArmor;
@@ -29,6 +28,8 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends AbstractHorsePet implements IHorsePet{

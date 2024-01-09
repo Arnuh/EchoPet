@@ -17,11 +17,12 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unchecked")
 public class ReflectionUtil{

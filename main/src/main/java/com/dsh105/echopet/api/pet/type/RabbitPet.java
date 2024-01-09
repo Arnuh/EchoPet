@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -27,6 +26,8 @@ import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
+
+import java.util.List;
 
 @EntityPetType(petType = PetType.RABBIT)
 public class RabbitPet extends AgeablePet implements IRabbitPet{

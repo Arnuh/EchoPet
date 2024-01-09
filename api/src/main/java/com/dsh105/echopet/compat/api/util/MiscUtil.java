@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import com.google.common.collect.BiMap;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.google.common.collect.BiMap;
 
 public class MiscUtil{
 	

@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
-import java.util.Set;
-import java.util.stream.Stream;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
+
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class GoalSelectorWrapper extends GoalSelector{
 	

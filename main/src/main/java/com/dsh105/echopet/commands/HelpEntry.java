@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.commands;
 
-import java.util.ArrayList;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.StringUtil;
@@ -28,6 +27,8 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
+
+import java.util.ArrayList;
 
 public enum HelpEntry{
 	

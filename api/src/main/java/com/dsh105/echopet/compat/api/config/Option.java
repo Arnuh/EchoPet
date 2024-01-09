@@ -17,11 +17,12 @@
 
 package com.dsh105.echopet.compat.api.config;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Option<T>{
 	

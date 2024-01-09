@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import java.util.List;
 import com.dsh105.echopet.api.pet.AgeablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -26,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPandaPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPandaPet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @EntityPetType(petType = PetType.PANDA)
 public class PandaPet extends AgeablePet implements IPandaPet{

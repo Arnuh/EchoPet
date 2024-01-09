@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import java.util.Set;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -29,6 +28,8 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+
+import java.util.Set;
 
 public class WorldUtil{
 	

@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.listeners;
 
-import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -38,6 +37,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.logging.Level;
 
 public class MenuListener implements Listener{
 	

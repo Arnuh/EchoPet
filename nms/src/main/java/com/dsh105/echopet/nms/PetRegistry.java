@@ -17,9 +17,6 @@
 
 package com.dsh105.echopet.nms;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
@@ -28,6 +25,10 @@ import com.dsh105.echopet.compat.api.registration.PetRegistrationEntry;
 import com.dsh105.echopet.compat.api.registration.PetRegistrationException;
 import com.google.common.base.Preconditions;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings

@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.pet.type;
 
-import java.util.List;
 import com.dsh105.echopet.api.pet.TameablePet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -28,6 +27,8 @@ import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @EntityPetType(petType = PetType.CAT)
 public class CatPet extends TameablePet implements ICatPet{

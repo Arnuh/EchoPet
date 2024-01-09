@@ -17,12 +17,7 @@
 
 package com.dsh105.echopet.compat.api.ai;
 
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class PetGoalSelector implements IPetGoalSelector{
 	

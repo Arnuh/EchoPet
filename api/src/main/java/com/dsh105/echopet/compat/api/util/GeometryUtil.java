@@ -17,12 +17,13 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Collection of maths-based geometry calculating methods

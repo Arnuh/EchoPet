@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import java.util.Map;
 import com.codingforcookies.robert.core.GUI;
 import com.codingforcookies.robert.slot.ISlotAction;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
@@ -28,6 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Map;
 
 public class SelectorMenu extends GUI{
 	

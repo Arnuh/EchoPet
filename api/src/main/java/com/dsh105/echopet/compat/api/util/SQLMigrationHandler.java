@@ -17,6 +17,9 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import org.bukkit.plugin.Plugin;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +27,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import org.bukkit.plugin.Plugin;
 
 /**
  * Coordinates migration between table schemas.

@@ -17,9 +17,10 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
-import java.util.function.Predicate;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.MoveControl;
+
+import java.util.function.Predicate;
 
 
 public class BiMoveControl extends MoveControl{

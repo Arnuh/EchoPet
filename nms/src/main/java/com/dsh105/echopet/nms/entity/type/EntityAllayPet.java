@@ -18,8 +18,6 @@
 package com.dsh105.echopet.nms.entity.type;
 
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -57,6 +55,9 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 @EntityPetType(petType = PetType.ALLAY)
 public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPetGiveMeAccess{

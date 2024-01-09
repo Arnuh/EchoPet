@@ -17,9 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity.pet;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import com.dsh105.echopet.compat.api.config.PetConfigEntry;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -31,6 +28,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public interface IPet{
 	
