@@ -67,17 +67,18 @@ public class FileStorageManager implements IStorageManager{
 			YAMLConfig config = EchoPet.getConfig(ConfigType.DATA);
 			
 			String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
+			String petPath = path + ".pet";
+			
 			IPetType petType = pet.getPetType();
-			config.set(path + ".pet.type", petType.toString());
-			config.set(path + ".pet.name", pet.serialisePetName());
-			config.removeKey(path + ".pet.data");
+			config.set(petPath + ".type", petType.toString());
+			config.set(petPath + ".name", pet.serialisePetName());
+			config.removeKey(petPath + ".data");
 			for(Map.Entry<PetData<?>, Object> entry : pet.getData().entrySet()){
 				if(entry.getKey().ignoreSaving()) continue;
-				config.set(path + ".pet.data." + entry.getKey().getConfigKeyName(), entry.getValue());
+				config.set(petPath + ".data." + entry.getKey().getConfigKeyName(), entry.getValue());
 			}
 			
 			String riderPath = path + ".rider";
-			// IPet rider = pet.getRider();
 			if(rider != null){
 				IPetType riderType = rider.getPetType();
 				
@@ -107,13 +108,14 @@ public class FileStorageManager implements IStorageManager{
 			}
 			
 			String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
-			config.set(path + ".pet.type", pt.toString());
-			config.set(path + ".pet.name", petName);
+			String petPath = path + ".pet";
+			config.set(petPath + ".type", pt.toString());
+			config.set(petPath + ".name", petName);
 			
 			for(Map.Entry<PetData<?>, Object> entry : pet.petDataList.entrySet()){
 				PetData<?> data = entry.getKey();
 				if(data.ignoreSaving()) continue;
-				config.set(path + ".pet.data." + data.getConfigKeyName(), entry.getValue());
+				config.set(petPath + ".data." + data.getConfigKeyName(), entry.getValue());
 			}
 			
 			String riderPath = path + ".rider";
@@ -155,15 +157,15 @@ public class FileStorageManager implements IStorageManager{
 	private PetStorage create(Player player, SavedType savedType){
 		YAMLConfig config = EchoPet.getConfig(ConfigType.DATA);
 		
-		String path = savedType.getOldFileStuff() + "." + player.getUniqueId();
+		String path = savedType.getOldFileStuff() + "." + player.getUniqueId() + ".pet";
 		if(config.get(path) == null){
 			return null;
 		}
-		IPetType petType = PetType.get(config.getString(path + ".pet.type"));
+		IPetType petType = PetType.get(config.getString(path + ".type"));
 		if(petType == null){
 			return null;
 		}
-		String name = config.getString(path + ".pet.name");
+		String name = config.getString(path + ".name");
 		if(name == null || name.equalsIgnoreCase("")){
 			name = petType.getDefaultName(player.getName());
 		}
@@ -172,7 +174,7 @@ public class FileStorageManager implements IStorageManager{
 		}
 		PetStorage pet = new PetStorage(petType, name, new HashMap<>());
 		
-		ConfigurationSection cs = config.getConfigurationSection(path + ".pet.data");
+		ConfigurationSection cs = config.getConfigurationSection(path + ".data");
 		if(cs != null){
 			for(String key : cs.getKeys(false)){
 				PetData<?> pd = PetData.get(petType, key);
@@ -181,7 +183,7 @@ public class FileStorageManager implements IStorageManager{
 						.log(Level.WARNING, "Error whilst loading data Pet Save Data for " + player.getName() + ". Unknown enum type: " + key + ".");
 					continue;
 				}
-				Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
+				Object value = pd.getParser().parse(config.getString(path + ".data." + key));
 				pet.petDataList.put(pd, value);
 			}
 		}
@@ -216,7 +218,7 @@ public class FileStorageManager implements IStorageManager{
 						.log(Level.WARNING, "Error whilst loading data Pet Rider Save Data for " + player.getName() + ". Unknown enum type: " + key + ".", true);
 					continue;
 				}
-				Object value = pd.getParser().parse(config.getString(path + ".pet.data." + key));
+				Object value = pd.getParser().parse(config.getString(path + ".data." + key));
 				pet.petDataList.put(pd, value);
 			}
 		}
