@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms;
 
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.Registry;
@@ -35,6 +34,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import java.util.Optional;
 
 public class VersionBreaking{
 	

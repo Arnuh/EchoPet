@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet;
 
-import java.util.logging.Level;
-import javax.annotation.Nonnull;
 import com.codingforcookies.robert.core.Robert;
 import com.dsh105.echopet.api.FileStorageManager;
 import com.dsh105.echopet.api.MySQLStorageManager;
@@ -39,12 +37,7 @@ import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.IStorageManager;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
-import com.dsh105.echopet.compat.api.util.ICraftBukkitUtil;
-import com.dsh105.echopet.compat.api.util.ISpawnUtil;
-import com.dsh105.echopet.compat.api.util.IUpdater;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.VersionIncompatibleCommand;
+import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.hook.PlaceHolderAPIProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.MenuListener;
@@ -60,6 +53,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.DumperOptions;
+
+import javax.annotation.Nonnull;
+import java.util.logging.Level;
 
 public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 	
@@ -96,7 +92,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		getLogger().info("Found MC Version %s".formatted(ReflectionUtil.getMinecraftVersion()));
 		try{
-			COMMAND_MANAGER.initialize();
 			SPAWN_UTIL = ReflectionUtil.getVersionedClass(ISpawnUtil.class, "SpawnUtil").getConstructor().newInstance();
 			petRegistry = ReflectionUtil.getVersionedClass(IPetRegistry.class, "PetRegistry").getConstructor().newInstance();
 			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();

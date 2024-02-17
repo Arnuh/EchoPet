@@ -17,14 +17,15 @@
 package com.dsh105.echopet.compat.api.util;
 
 
+import org.apache.commons.lang3.Validate;
+import org.bukkit.ChatColor;
+
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.Validate;
-import org.bukkit.ChatColor;
 
 /**
  * @since Jun 24, 2016

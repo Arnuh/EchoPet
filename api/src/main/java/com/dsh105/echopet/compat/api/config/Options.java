@@ -17,9 +17,10 @@
 
 package com.dsh105.echopet.compat.api.config;
 
+import org.apache.commons.lang.Validate;
+
 import java.util.Arrays;
 import java.util.HashMap;
-import org.apache.commons.lang.Validate;
 
 public abstract class Options{
 	

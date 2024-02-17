@@ -17,11 +17,12 @@
 
 package com.dsh105.echopet.compat.api.config;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Option<T>{
 	
@@ -63,7 +64,7 @@ public class Option<T>{
 	}
 	
 	public String getPath(String... replacements){
-		String path = String.format(getPath(), replacements);
+		String path = String.format(getPath(), (Object) replacements);
 		while(path.endsWith(".")){
 			path = path.substring(0, path.length() - 2);
 		}

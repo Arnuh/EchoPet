@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.ai.brain.behavior;
 
-import java.util.Optional;
-import java.util.function.Function;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.Util;
@@ -34,6 +32,9 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 public class BrainFollowOwner extends Behavior<PathfinderMob>{
 	

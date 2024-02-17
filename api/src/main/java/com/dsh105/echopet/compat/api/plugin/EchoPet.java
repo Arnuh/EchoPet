@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import java.util.logging.Logger;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.registration.IPetRegistry;
+
+import java.util.logging.Logger;
 
 public final class EchoPet{
 	

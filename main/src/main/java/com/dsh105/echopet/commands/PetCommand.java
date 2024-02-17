@@ -17,10 +17,6 @@
 
 package com.dsh105.echopet.commands;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
@@ -28,13 +24,7 @@ import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.SavedType;
-import com.dsh105.echopet.compat.api.util.GeneralUtil;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.MiscUtil;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.PetUtil;
-import com.dsh105.echopet.compat.api.util.StringUtil;
-import com.dsh105.echopet.compat.api.util.WorldUtil;
+import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
@@ -49,6 +39,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class PetCommand implements CommandExecutor{
 	
@@ -331,12 +326,9 @@ public class PetCommand implements CommandExecutor{
 						return true;
 					}
 					if(Perm.hasDataPerm(sender, true, pi.getPetType(), PetData.RIDE, false)){
+						if(!pi.isOwnerRiding())
+							Lang.sendTo(sender, Lang.RIDE_PET_START.toString());
 						pi.ownerRidePet(!pi.isOwnerRiding());
-						if(pi.isOwnerRiding()){
-							Lang.sendTo(sender, Lang.RIDE_PET_ON.toString());
-						}else{
-							Lang.sendTo(sender, Lang.RIDE_PET_OFF.toString());
-						}
 						return true;
 					}else{
 						return true;

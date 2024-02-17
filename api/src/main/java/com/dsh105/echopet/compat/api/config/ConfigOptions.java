@@ -17,11 +17,6 @@
 
 package com.dsh105.echopet.compat.api.config;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
@@ -32,6 +27,12 @@ import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ConfigOptions extends Options{

@@ -17,11 +17,12 @@
 
 package com.dsh105.echopet.compat.api.entity.data;
 
-import java.util.function.Function;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 public interface PetDataParser<T>{
 	

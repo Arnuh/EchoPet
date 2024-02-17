@@ -18,8 +18,6 @@
 package com.dsh105.echopet.nms.entity.ai.brain.sensing;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +26,9 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities;
 import net.minecraft.world.entity.ai.sensing.NearestLivingEntitySensor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PetNearestLivingEntitySensor<T extends LivingEntity> extends NearestLivingEntitySensor<T>{
 	

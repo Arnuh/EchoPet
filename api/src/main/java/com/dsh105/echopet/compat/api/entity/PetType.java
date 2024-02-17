@@ -17,15 +17,6 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.data.PetData;
 import com.dsh105.echopet.compat.api.entity.data.PetDataCategory;
@@ -41,6 +32,12 @@ import com.google.common.collect.ImmutableList;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.*;
+import java.util.logging.Level;
 
 public enum PetType implements IPetType{
 	ALLAY("Allay", "Allay Pet", "allay", new Version("1.19")),

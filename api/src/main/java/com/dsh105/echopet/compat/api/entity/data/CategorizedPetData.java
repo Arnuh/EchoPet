@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.api.entity.data;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CategorizedPetData<T> extends PetData<T>{
 	

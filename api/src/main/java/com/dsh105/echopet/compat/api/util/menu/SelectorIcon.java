@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import java.util.List;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.inventory.MenuIcon;
@@ -27,6 +26,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.List;
 
 public class SelectorIcon extends MenuIcon{
 	

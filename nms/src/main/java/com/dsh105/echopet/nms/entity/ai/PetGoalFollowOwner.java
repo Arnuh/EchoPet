@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.ai;
 
-import java.util.EnumSet;
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoal;
 import com.dsh105.echopet.compat.api.entity.IPetType;
@@ -31,6 +30,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+
+import java.util.EnumSet;
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
@@ -80,7 +81,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner{
 	
 	@Override
 	public boolean canContinueToUse(){
-		return !getNavigation().isDone() && this.mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) > stopDistanceSqr;
+		return !getNavigation().isDone() && this.pet.getPetOwner() != null && this.mob.distanceToSqr(((CraftPlayer) this.pet.getPetOwner()).getHandle()) > stopDistanceSqr;
 	}
 	
 	@Override

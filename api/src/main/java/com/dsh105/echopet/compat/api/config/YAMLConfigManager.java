@@ -17,16 +17,9 @@
 
 package com.dsh105.echopet.compat.api.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.*;
 
 public class YAMLConfigManager{
 	

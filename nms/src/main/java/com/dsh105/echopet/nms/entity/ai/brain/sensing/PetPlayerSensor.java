@@ -18,9 +18,6 @@
 package com.dsh105.echopet.nms.entity.ai.brain.sensing;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityPet;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +26,10 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.PlayerSensor;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class PetPlayerSensor extends PlayerSensor{
 	

@@ -31,13 +31,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.EntityBlockFormEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.event.entity.EntityPortalEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.spigotmc.event.entity.EntityDismountEvent;
 
 public class PetEntityListener implements Listener{
 	

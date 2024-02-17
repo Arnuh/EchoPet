@@ -17,10 +17,7 @@
 
 package com.dsh105.echopet.api.pet;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import com.dsh105.echopet.api.Utils;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -45,6 +42,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public abstract class Pet implements IPet{
 	
@@ -351,14 +353,15 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public boolean teleportToOwner(){
-		if(this.getOwner() == null || this.getOwner().getLocation() == null){
+		if(this.getOwner() == null){
 			EchoPet.getManager().removePet(this, true);
 			return false;
 		}
-		if(!isSpawned()) return false;
+		if(!isSpawned())
+			return false;
 		IPet rider = getRider();
 		removeRider(false, false);
-		boolean tele = teleport(this.getOwner().getLocation());
+		boolean tele = teleport(Utils.centerLocation(this.getOwner().getLocation()));
 		if(tele && rider != null){
 			this.rider = rider;
 			if(rider.spawnPet(getOwner(), true) != null){
@@ -370,7 +373,7 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public boolean teleport(Location to){
-		if(this.getOwner() == null || this.getOwner().getLocation() == null){
+		if(this.getOwner() == null){
 			EchoPet.getManager().removePet(this, false);
 			return false;
 		}
@@ -405,7 +408,8 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public void ownerRidePet(boolean flag){
-		if(this.ownerRiding == flag) return;
+		if(this.ownerRiding == flag)
+			return;
 		
 		this.ownerIsMounting = true;
 		
@@ -420,9 +424,11 @@ public abstract class Pet implements IPet{
 		
 		if(!flag){
 			if(getCraftPet() != null){
-				getCraftPet().eject();
-				if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
-					noClipPet.noClip(true);
+				if(getCraftPet().eject())
+				{
+					if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
+						noClipPet.noClip(true);
+					}
 				}
 			}
 			ownerIsMounting = false;
@@ -431,15 +437,24 @@ public abstract class Pet implements IPet{
 				if(getRider() != null && getRider().isSpawned()){
 					getRider().removePet(false, true);
 				}
-				new BukkitRunnable(){
-					
+				new BukkitRunnable()
+				{
 					@Override
-					public void run(){
-						getCraftPet().addPassenger(getOwner());
-						ownerIsMounting = false;
-						if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
-							noClipPet.noClip(false);
+					public void run()
+					{
+						if(getCraftPet() != null)
+						{
+							if(getCraftPet().addPassenger(getOwner())) {
+								if (getEntityPet() instanceof IEntityNoClipPet noClipPet) {
+									noClipPet.noClip(false);
+								}
+								Lang.sendTo(getOwner(), Lang.RIDE_PET_ON.toString());
+							} else {
+								getEntityPet().getPet().ownerRidePet(false);
+								EchoPet.getManager().setData(getEntityPet().getPet(), PetData.RIDE, false);
+							}
 						}
+						ownerIsMounting = false;
 					}
 				}.runTaskLater(EchoPet.getPlugin(), 5L);
 			}else{
@@ -448,9 +463,9 @@ public abstract class Pet implements IPet{
 		}
 		this.teleportToOwner();
 		this.ownerRiding = flag;
+		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 		if(getEntityPet() != null)
 			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
 	@Override

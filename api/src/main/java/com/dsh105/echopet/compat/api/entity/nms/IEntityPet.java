@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.compat.api.entity.nms;
 
-import java.util.Random;
 import com.dsh105.echopet.compat.api.ai.IPetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.nms.handle.IEntityPetHandle;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.Random;
 
 /**
  * Base interface for all NMS entity pet objects.<br>

@@ -17,14 +17,6 @@
 
 package com.dsh105.echopet.api;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISQLStorageManager;
@@ -35,6 +27,11 @@ import com.dsh105.echopet.compat.api.plugin.action.AsyncBukkitAction;
 import com.dsh105.echopet.compat.api.plugin.action.SyncBukkitAction;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;
+import java.util.logging.Level;
 
 
 public class SQLiteStorageManager implements ISQLStorageManager{

@@ -17,14 +17,6 @@
 
 package com.dsh105.echopet.compat.api.config;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -33,6 +25,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.DumperOptions;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.stream.Stream;
 
 public class YAMLConfig{
 	

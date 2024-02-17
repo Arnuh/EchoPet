@@ -17,16 +17,6 @@
 
 package com.dsh105.echopet.api;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Properties;
-import java.util.logging.Level;
-import javax.sql.DataSource;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -41,6 +31,17 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import javax.sql.DataSource;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
 
 public class MySQLStorageManager implements ISQLStorageManager{
 	

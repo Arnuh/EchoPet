@@ -18,8 +18,8 @@
 package com.dsh105.echopet.compat.api.ai;
 
 
-import java.util.EnumSet;
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 
 public class PetGoalWrapper extends PetGoal{
 	

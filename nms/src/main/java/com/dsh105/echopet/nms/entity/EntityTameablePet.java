@@ -17,8 +17,6 @@
 
 package com.dsh105.echopet.nms.entity;
 
-import java.util.Optional;
-import java.util.UUID;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityTameablePet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -27,6 +25,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @since Mar 6, 2016

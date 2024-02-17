@@ -17,13 +17,6 @@
 
 package com.dsh105.echopet.nms.entity.type;
 
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Predicate;
-import javax.annotation.Nullable;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.nms.IEntityLivingPet;
@@ -55,6 +48,14 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
+
+import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Predicate;
 
 @EntityPetType(petType = PetType.WARDEN)
 public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityPetGiveMeAccess{

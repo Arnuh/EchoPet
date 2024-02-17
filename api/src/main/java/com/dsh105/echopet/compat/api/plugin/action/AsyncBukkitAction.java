@@ -17,12 +17,13 @@
 
 package com.dsh105.echopet.compat.api.plugin.action;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class AsyncBukkitAction<T> extends SyncBukkitAction<T>{
 	
