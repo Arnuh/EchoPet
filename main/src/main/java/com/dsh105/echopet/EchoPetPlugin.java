@@ -96,7 +96,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		
 		getLogger().info("Found MC Version %s".formatted(ReflectionUtil.getMinecraftVersion()));
 		try{
-			COMMAND_MANAGER.initialize();
 			SPAWN_UTIL = ReflectionUtil.getVersionedClass(ISpawnUtil.class, "SpawnUtil").getConstructor().newInstance();
 			petRegistry = ReflectionUtil.getVersionedClass(IPetRegistry.class, "PetRegistry").getConstructor().newInstance();
 			craftBukkitUtil = ReflectionUtil.getVersionedClass(ICraftBukkitUtil.class, "CraftBukkitUtil").getConstructor().newInstance();

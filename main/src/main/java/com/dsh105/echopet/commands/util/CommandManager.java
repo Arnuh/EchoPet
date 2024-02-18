@@ -21,44 +21,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.SimplePluginManager;
 
 public class CommandManager{
 	
 	private final Plugin plugin;
-	private CommandMap commandMap;
-	private Map<String, Command> knownCommands;
+	private final CommandMap commandMap;
+	private final Map<String, Command> knownCommands;
 	
 	public CommandManager(Plugin plugin){
 		this.plugin = plugin;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void initialize() throws NoSuchFieldException, IllegalAccessException{
-		if(!(Bukkit.getPluginManager() instanceof SimplePluginManager)){
-			this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");
-		}
-		var field = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
-		field.setAccessible(true);
-		commandMap = (CommandMap) field.get(Bukkit.getPluginManager());
-		if(commandMap == null){
-			plugin.getLogger().warning("Failed to get the PluginManager CommandMap! Let's give it a last shot...");
-			commandMap = new SimpleCommandMap(EchoPet.getPlugin().getServer());
-			Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(commandMap), this.plugin);
-		}
-		field = SimpleCommandMap.class.getDeclaredField("knownCommands");
-		field.setAccessible(true);
-		knownCommands = (Map<String, Command>) field.get(commandMap);
+		commandMap = plugin.getServer().getCommandMap();
+		knownCommands = commandMap.getKnownCommands();
 	}
 	
 	public void register(DynamicPluginCommand command){
-		commandMap.register(this.plugin.getName(), command);
+		commandMap.register(plugin.getName(), command);
 	}
 	
 	public void unregister(){
