@@ -168,27 +168,32 @@ public class PetOwnerListener implements Listener{
 				}
 			}
 		}
-		if(pi != null && pi.isSpawned()){
-			if(!WorldUtil.allowPets(event.getTo())){
-				Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
-				pi.removePet(false, false);
-			}else{
-				pi.setAsHat(false);
-				if(event.getCause() != TeleportCause.UNKNOWN){// This will probably cause issues.. I don't know why more causes don't exist.
-					pi.ownerRidePet(false);
-					pi.removePet(false, false);
-					new BukkitRunnable(){
-						@Override
-						public void run(){
-							// TODO this will be fired multiple times if another plugin is canceling PetPreSpawnEvent or dismounting player
-							if(pi.getOwner() != null && pi.getOwner().isOnline() && WorldUtil.allowPets(event.getTo())){
-								pi.spawnPet(p, false);
-							}
-						}
-					}.runTaskLater(EchoPet.getPlugin(), 20L);// could be reduced
+		if(pi == null || !pi.isSpawned()){
+			return;
+		}
+		if(!WorldUtil.allowPets(event.getTo())){
+			Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
+			pi.removePet(false, false);
+			return;
+		}
+		pi.setAsHat(false);
+		if(event.getCause() == TeleportCause.UNKNOWN){
+			// This will probably cause issues.. I don't know why more causes don't exist.
+			return;
+		}
+		pi.ownerRidePet(false);
+		pi.removePet(false, false);
+		// TODO: Why is this delayed 20 ticks
+		new BukkitRunnable(){
+			@Override
+			public void run(){
+				var owner = pi.getOwner();
+				// TODO this will be fired multiple times if another plugin is canceling PetPreSpawnEvent or dismounting player
+				if(owner != null && WorldUtil.allowPets(event.getTo())){
+					pi.spawnPet(p, false);
 				}
 			}
-		}
+		}.runTaskLater(EchoPet.getPlugin(), 20L);// could be reduced
 	}
 	
 	@EventHandler
