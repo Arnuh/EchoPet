@@ -132,22 +132,34 @@ public abstract class Pet implements IPet{
 	 */
 	@Override
 	public IEntityPetHandle getHandle(){
-		return getEntityPet().getHandle();
+		var entity = getEntityPet();
+		if(entity == null){
+			return null;
+		}
+		return entity.getHandle();
 	}
 	
 	@Override
 	public Entity getCraftPet(){
-		return this.getEntityPet().getEntity();
+		var entity = getEntityPet();
+		if(entity == null){
+			return null;
+		}
+		return entity.getEntity();
 	}
 	
 	@Override
 	public Location getLocation(){
-		return this.getCraftPet().getLocation();
+		var pet = getCraftPet();
+		if(pet == null){
+			return null;
+		}
+		return pet.getLocation();
 	}
 	
 	@Override
 	public Player getOwner(){
-		if(this.ownerUUID == null){
+		if(ownerUUID == null){
 			return null;
 		}
 		return Bukkit.getPlayer(ownerUUID);
@@ -343,25 +355,29 @@ public abstract class Pet implements IPet{
 		}
 		setAsHat(false);
 		removeRider(makeSound, makeParticles);
-		if(getEntityPet() != null){
-			getEntityPet().remove(makeSound);
+		var handle = getHandle();
+		if(handle != null){
+			handle.remove(makeSound);
 			entityPet = null;
 		}
 	}
 	
 	@Override
 	public boolean teleportToOwner(){
-		if(this.getOwner() == null || this.getOwner().getLocation() == null){
+		var owner = getOwner();
+		if(owner == null){
 			EchoPet.getManager().removePet(this, true);
 			return false;
 		}
-		if(!isSpawned()) return false;
+		if(!isSpawned()){
+			return false;
+		}
 		IPet rider = getRider();
 		removeRider(false, false);
-		boolean tele = teleport(LocationUtil.centerLocation(getOwner().getLocation()));
+		boolean tele = teleport(LocationUtil.centerLocation(owner.getLocation()));
 		if(tele && rider != null){
 			this.rider = rider;
-			if(rider.spawnPet(getOwner(), true) != null){
+			if(rider.spawnPet(owner, true) != null){
 				getCraftPet().addPassenger(rider.getCraftPet());
 			}
 		}
@@ -370,27 +386,33 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public boolean teleport(Location to){
-		if(this.getOwner() == null || this.getOwner().getLocation() == null){
+		var owner = getOwner();
+		if(owner == null){
 			EchoPet.getManager().removePet(this, false);
 			return false;
 		}
-		if(!isSpawned()) return false;
+		if(!isSpawned()){
+			return false;
+		}
 		PetTeleportEvent teleportEvent = new PetTeleportEvent(this, this.getLocation(), to);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(teleportEvent);
-		if(teleportEvent.isCancelled()) return false;
-		Location l = teleportEvent.getTo();
-		if(l.getWorld() == this.getLocation().getWorld()){
-			if(getRider() != null && getRider().isSpawned()){
-				this.getRider().getCraftPet().eject();
-				this.getRider().getCraftPet().teleport(l);
-			}
-			this.getCraftPet().teleport(l);
-			if(getRider() != null && getRider().isSpawned()){
-				this.getCraftPet().addPassenger(this.getRider().getCraftPet());
-			}
-			return true;
+		if(teleportEvent.isCancelled()){
+			return false;
 		}
-		return false;
+		Location l = teleportEvent.getTo();
+		if(l.getWorld() != this.getLocation().getWorld()){
+			return false;
+		}
+		var rider = getRider();
+		if(rider != null && rider.isSpawned()){
+			rider.getCraftPet().eject();
+			rider.getCraftPet().teleport(l);
+		}
+		getCraftPet().teleport(l);
+		if(rider != null && rider.isSpawned()){
+			getCraftPet().addPassenger(rider.getCraftPet());
+		}
+		return true;
 	}
 	
 	@Override
@@ -405,7 +427,9 @@ public abstract class Pet implements IPet{
 	
 	@Override
 	public void ownerRidePet(boolean flag){
-		if(this.ownerRiding == flag) return;
+		if(this.ownerRiding == flag){
+			return;
+		}
 		
 		this.ownerIsMounting = true;
 		
@@ -427,40 +451,50 @@ public abstract class Pet implements IPet{
 			}
 			ownerIsMounting = false;
 		}else{
-			if(getCraftPet() != null){
-				if(getRider() != null && getRider().isSpawned()){
-					getRider().removePet(false, true);
-				}
-				new BukkitRunnable(){
-					
-					@Override
-					public void run(){
-						getCraftPet().addPassenger(getOwner());
-						ownerIsMounting = false;
-						if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
-							noClipPet.noClip(false);
-						}
-					}
-				}.runTaskLater(EchoPet.getPlugin(), 5L);
-			}else{
+			if(getCraftPet() == null){
 				ownerIsMounting = false;
+				return;
 			}
+			var rider = getRider();
+			if(rider != null && rider.isSpawned()){
+				rider.removePet(false, true);
+			}
+			// TODO: Why is this delayed 5 ticks
+			new BukkitRunnable(){
+				
+				@Override
+				public void run(){
+					var craftPet = getCraftPet();
+					if(craftPet != null){
+						craftPet.addPassenger(getOwner());
+					}
+					ownerIsMounting = false;
+					if(getEntityPet() instanceof IEntityNoClipPet noClipPet){
+						noClipPet.noClip(false);
+					}
+				}
+			}.runTaskLater(EchoPet.getPlugin(), 5L);
 		}
-		this.teleportToOwner();
-		this.ownerRiding = flag;
-		if(getEntityPet() != null)
+		teleportToOwner();
+		ownerRiding = flag;
+		if(getEntityPet() != null){
 			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
+		}
 		EchoPet.getManager().setData(this, PetData.RIDE, ownerRiding);
 	}
 	
 	@Override
 	public void setAsHat(boolean flag){
-		if(isHat == flag) return;
+		if(isHat == flag){
+			return;
+		}
 		if(ownerRiding){
 			ownerRidePet(false);
 		}
 		
-		if(!isSpawned()) return;
+		if(!isSpawned()){
+			return;
+		}
 		
 		this.teleportToOwner();
 		
@@ -470,13 +504,11 @@ public abstract class Pet implements IPet{
 			getOwner().addPassenger(getCraftPet());
 		}
 		this.isHat = flag;
-		if(getEntityPet() != null)
+		var entity = getEntityPet();
+		if(entity != null){
 			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		Location l = this.getLocation().clone();
-		l.setY(l.getY() - 1D);
-		if(getEntityPet() != null)
-			getLocation().getWorld().spawnParticle(Particle.PORTAL, getLocation(), 1);
-		// Lots of ways call setAsHat, might as well properly sync the petdata in here.
+		}
+		// Lots of place call setAsHat, might as well properly sync the petdata in here.
 		EchoPet.getManager().setData(this, PetData.HAT, isHat);
 	}
 	
