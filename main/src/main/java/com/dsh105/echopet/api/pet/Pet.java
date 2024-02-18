@@ -34,7 +34,6 @@ import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetNames;
-import com.dsh105.echopet.compat.api.util.StringSimplifier;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -214,7 +213,7 @@ public abstract class Pet implements IPet{
 		if(PetNames.allow(name, this)){
 			this.name = ChatColor.translateAlternateColorCodes('&', name);
 			if(EchoPet.getPlugin().getMainConfig().getBoolean("stripDiacriticsFromNames", true)){
-				this.name = StringSimplifier.stripDiacritics(this.name);
+				this.name = StringUtil.stripDiacritics(this.name);
 			}
 			if(this.name == null || this.name.equalsIgnoreCase("")){
 				this.name = this.petType.getDefaultName(this.getNameOfOwner());
