@@ -33,6 +33,7 @@ import com.dsh105.echopet.compat.api.event.PetSpawnEvent;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.LocationUtil;
 import com.dsh105.echopet.compat.api.util.PetNames;
 import com.dsh105.echopet.compat.api.util.StringUtil;
 import org.bukkit.Bukkit;
@@ -357,7 +358,7 @@ public abstract class Pet implements IPet{
 		if(!isSpawned()) return false;
 		IPet rider = getRider();
 		removeRider(false, false);
-		boolean tele = teleport(this.getOwner().getLocation());
+		boolean tele = teleport(LocationUtil.centerLocation(getOwner().getLocation()));
 		if(tele && rider != null){
 			this.rider = rider;
 			if(rider.spawnPet(getOwner(), true) != null){
