@@ -17,6 +17,7 @@ dependencies {
 	implementation(project(":api"))
 	implementation(project(path = ":nms:v1_20_6", configuration = "shadow"))
 	implementation(project(path = ":nms:v1_21", configuration = "shadow"))
+	implementation(project(path = ":nms:v1_21_1", configuration = "shadow"))
 }
 
 tasks {
