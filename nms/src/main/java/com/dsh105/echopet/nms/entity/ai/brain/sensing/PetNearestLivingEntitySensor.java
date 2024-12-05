@@ -40,6 +40,6 @@ public class PetNearestLivingEntitySensor<T extends LivingEntity> extends Neares
 		Brain<?> brain = entity.getBrain();
 		brain.setMemory(MemoryModuleType.NEAREST_LIVING_ENTITIES, entities);
 		// TODO: Custom NearestVisibleLivingEntities?
-		brain.setMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, new NearestVisibleLivingEntities(entity, entities));
+		brain.setMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, new NearestVisibleLivingEntities(level, entity, entities));
 	}
 }

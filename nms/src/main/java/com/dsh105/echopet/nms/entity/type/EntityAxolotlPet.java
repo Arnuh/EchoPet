@@ -70,7 +70,7 @@ public class EntityAxolotlPet extends Axolotl implements IEntityAgeablePet, Enti
 	}
 	
 	@Override
-	protected void customServerAiStep(){}
+	protected void customServerAiStep(ServerLevel world){}
 	
 	@Override
 	protected Brain.Provider<Axolotl> brainProvider(){

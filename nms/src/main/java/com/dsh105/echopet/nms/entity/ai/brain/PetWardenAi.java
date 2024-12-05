@@ -103,7 +103,7 @@ public class PetWardenAi{
 	private static void initCoreActivity(Brain<EntityWardenPet> var0){
 		var0.addActivity(Activity.CORE, 0,
 			ImmutableList.of(
-				new Swim(0.8F),
+				new Swim<>(0.8F),
 				SetWardenLookTarget.create(),
 				new LookAtTargetSink(45, 90),
 				new MoveToTargetSink()
@@ -174,7 +174,7 @@ public class PetWardenAi{
 		brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10,
 			ImmutableList.of(
 				DIG_COOLDOWN_SETTER,
-				StopAttackingIfTargetInvalid.create(target->!entity.getAngerLevel().isAngry() || !entity.canTargetEntity(target), PetWardenAi::onTargetInvalid, false),
+				StopAttackingIfTargetInvalid.create((world, target)->!entity.getAngerLevel().isAngry() || !entity.canTargetEntity(target), PetWardenAi::onTargetInvalid, false),
 				SetEntityLookTarget.create(target->isTarget(entity, target), (float) entity.getAttributeValue(Attributes.FOLLOW_RANGE)),
 				SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(SPEED_MULTIPLIER_WHEN_FIGHTING),
 				new SonicBoom(),
@@ -189,9 +189,9 @@ public class PetWardenAi{
 			}).isPresent();
 	}
 	
-	private static void onTargetInvalid(EntityWardenPet warden, LivingEntity entity){
-		if(!warden.canTargetEntity(entity)){
-			warden.clearAnger(entity);
+	private static void onTargetInvalid(ServerLevel world, EntityWardenPet warden, LivingEntity target) {
+		if(!warden.canTargetEntity(target)){
+			warden.clearAnger(target);
 		}
 		
 		setDigCooldown(warden);

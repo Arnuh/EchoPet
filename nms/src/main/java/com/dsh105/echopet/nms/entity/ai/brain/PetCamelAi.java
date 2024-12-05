@@ -88,7 +88,7 @@ public class PetCamelAi{
 		//@formatter:off
 		brain.addActivity(Activity.CORE, 0,
 			ImmutableList.of(
-				new Swim(0.8F),
+				new Swim<>(0.8F),
 				new CamelAi.CamelPanic(SPEED_MULTIPLIER_WHEN_PANICKING),
 				new LookAtTargetSink(45, 90),
 				new MoveToTargetSink(),

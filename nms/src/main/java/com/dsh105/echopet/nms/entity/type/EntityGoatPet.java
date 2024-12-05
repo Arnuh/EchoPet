@@ -94,7 +94,7 @@ public class EntityGoatPet extends Goat implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	protected void customServerAiStep(){
+	protected void customServerAiStep(ServerLevel world){
 		// disable brain / goat specific ai
 	}
 	

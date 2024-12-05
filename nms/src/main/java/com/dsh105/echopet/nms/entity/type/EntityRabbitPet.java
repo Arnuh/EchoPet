@@ -25,6 +25,7 @@ import com.dsh105.echopet.nms.entity.EntityAgeablePet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -85,8 +86,8 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
 	}
 	
 	@Override
-	public void customServerAiStep(){
-		super.customServerAiStep();
+	protected void customServerAiStep(ServerLevel world){
+		super.customServerAiStep(world);
 		if(this.jumpDelayTicks > 0){
 			this.jumpDelayTicks -= 1;
 		}

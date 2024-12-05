@@ -29,7 +29,7 @@ public class GoalSelectorWrapper extends GoalSelector{
 	private final PetGoalSelector wrapped;
 	
 	public GoalSelectorWrapper(PetGoalSelector wrapped){
-		super(null);
+		super();
 		this.wrapped = wrapped;
 	}
 	

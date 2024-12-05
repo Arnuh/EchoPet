@@ -10,7 +10,7 @@ dependencies {
 	implementation(project(":nms")) {
 		exclude(module = "api")
 	}
-	paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+	paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
 }
 
 // For >= 1.20.5 when you don't care about supporting spigot
@@ -18,6 +18,6 @@ paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArt
 
 tasks {
 	shadowJar {
-		relocate("com.dsh105.echopet.nms", "com.dsh105.echopet.compat.nms.v1_21")
+		relocate("com.dsh105.echopet.nms", "com.dsh105.echopet.compat.nms.v1_21_3")
 	}
 }

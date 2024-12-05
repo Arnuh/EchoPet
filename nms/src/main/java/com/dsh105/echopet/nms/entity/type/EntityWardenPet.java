@@ -42,6 +42,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
@@ -112,17 +114,18 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 	}
 	
 	@Override
-	protected void customServerAiStep(){
+	protected void customServerAiStep(ServerLevel world){
 		if(!usesBrain()){
 			return;
 		}
 		if(isVehicle()){
 			return;
 		}
+		ProfilerFiller profilerFiller = Profiler.get();
 		ServerLevel serverLevel = (ServerLevel) level();
-		serverLevel.getProfiler().push("wardenBrain");
+		profilerFiller.push("wardenBrain");
 		this.getBrain().tick(serverLevel, this);
-		serverLevel.getProfiler().pop();
+		profilerFiller.pop();
 		/*if ((tickCount + getId()) % 120 == 0) {
 			applyDarknessAround(serverLevel, position(), this, 20);
 		}*/
@@ -130,9 +133,9 @@ public class EntityWardenPet extends Warden implements IEntityLivingPet, EntityP
 			getAngerManagement().tick(serverLevel, this::canTargetEntity);
 			syncClientAngerLevel();
 		}*/
-		serverLevel.getProfiler().push("wardenActivityUpdate");
+		profilerFiller.push("wardenActivityUpdate");
 		// PetWardenAi.updateActivity(this);
-		serverLevel.getProfiler().pop();
+		profilerFiller.pop();
 	}
 	
 	public void setAnger(int anger){

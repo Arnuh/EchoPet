@@ -21,88 +21,20 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import com.dsh105.echopet.compat.api.entity.IPetType;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftWorld;
 import org.jetbrains.annotations.Nullable;
 
 /*
  * From EntityAPI :)
  */
 public class NMSEntityUtil{
-	
-	private static Field jumpField;
-	
-	public static Field getJumpingField(){
-		if(jumpField == null){
-			// How should this be handled if it fails?
-			try{
-				FakeEntity fakeEntity = new FakeEntity();
-				for(Field field : LivingEntity.class.getDeclaredFields()){
-					// Paper makes it public in 1.17
-					/*if(!Modifier.isProtected(field.getModifiers())){
-						continue;
-					}*/
-					if(boolean.class.isAssignableFrom(field.getType())){
-						field.setAccessible(true);
-						fakeEntity.setJumping(true);
-						boolean ret = field.getBoolean(fakeEntity);
-						fakeEntity.setJumping(false);
-						boolean ret2 = field.getBoolean(fakeEntity);
-						if(ret != ret2){
-							jumpField = field;
-							break;
-						}else{ // Leave it accessible if its the proper field
-							field.setAccessible(false);
-						}
-					}
-				}
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
-		}
-		return jumpField;
-	}
-	
-	private static class FakeEntity extends LivingEntity{
-		
-		protected FakeEntity(){
-			// Paper requires a World in the Entity class
-			// shieldBlockingDelay = this.level.paperConfig.shieldBlockingDelay;
-			super(EntityType.BAT, Bukkit.getWorlds().stream().findFirst().map(CraftWorld.class::cast).map(CraftWorld::getHandle).orElseThrow());
-		}
-		
-		@Override
-		public Iterable<ItemStack> getArmorSlots(){
-			return null;
-		}
-		
-		@Override
-		public ItemStack getItemBySlot(EquipmentSlot equipmentSlot){
-			return null;
-		}
-		
-		@Override
-		public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack){
-		
-		}
-		
-		@Override
-		public HumanoidArm getMainArm(){
-			return null;
-		}
-	}
 	
 	private static Field attributeField;
 	
@@ -123,6 +55,8 @@ public class NMSEntityUtil{
 				var instance = new AttributeInstance(Attributes.FLYING_SPEED, d->{});
 				instance.setBaseValue(IPet.GOAL_FLY_SPEED.getNumber(petType).doubleValue());
 				attributes.put(Attributes.FLYING_SPEED.value(), instance);
+			}else{
+				EchoPet.getPlugin().getLogger().warning("Failed to add flying speed attribute for" + petType);
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

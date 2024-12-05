@@ -38,6 +38,7 @@ import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
 import com.dsh105.echopet.nms.entity.handle.EntityAgeablePetHandle;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +52,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerType;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
@@ -88,11 +88,19 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 	static{
 		Registry<VillagerProfession> profRegistry = BuiltInRegistries.VILLAGER_PROFESSION;
 		for(var resource : profRegistry.keySet()){
-			PROFESSION_LOOKUP.put(Profession.getByName(resource.getPath()), profRegistry.get(resource));
+			var value = profRegistry.get(resource).map(Holder.Reference::value).orElse(null);
+			if(value == null){
+				continue;
+			}
+			PROFESSION_LOOKUP.put(Profession.getByName(resource.getPath()), value);
 		}
 		Registry<VillagerType> typeRegistry = BuiltInRegistries.VILLAGER_TYPE;
 		for(var resource : typeRegistry.keySet()){
-			TYPE_LOOKUP.put(com.dsh105.echopet.compat.api.entity.data.type.VillagerType.getByName(resource.getPath()), typeRegistry.get(resource));
+			var value = typeRegistry.get(resource).map(Holder.Reference::value).orElse(null);
+			if(value == null){
+				continue;
+			}
+			TYPE_LOOKUP.put(com.dsh105.echopet.compat.api.entity.data.type.VillagerType.getByName(resource.getPath()), value);
 		}
 	}
 	
@@ -100,6 +108,7 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 		super(EntityType.VILLAGER, world);
 		this.pet = pet;
 		this.petHandle = new EntityAgeablePetHandle(this);
+		this.setCanPickUpLoot(false);
 	}
 	
 	@Override
@@ -123,11 +132,11 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 	}
 	
 	@Override
-	protected void customServerAiStep(){}
+	protected void customServerAiStep(ServerLevel world){}
 	
 	@Override
 	protected Brain.Provider<Villager> brainProvider(){
-		// Other Villagers depend on our villager having memories and don't properly null check.
+		// Other Villagers depend on our villager having memories and don't null check an unexpected scenario.
 		return Brain.provider(MEMORY_TYPES, ImmutableList.of());
 	}
 	
@@ -147,11 +156,6 @@ public class EntityVillagerPet extends Villager implements IEntityLivingPet, Ent
 	}
 	
 	// Below I'm not sure are needed but just incase.
-	@Override
-	public boolean wantsToPickUp(ItemStack itemstack){
-		return false;
-	}
-	
 	@Override
 	public boolean wantsToSpawnGolem(long i){
 		return false;

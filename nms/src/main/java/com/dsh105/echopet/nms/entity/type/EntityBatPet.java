@@ -27,6 +27,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -79,8 +80,8 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 	}
 	
 	@Override
-	protected void customServerAiStep(){
-		super.customServerAiStep();
+	protected void customServerAiStep(ServerLevel world){
+		super.customServerAiStep(world);
 		if(!wandering){
 			return;
 		}
@@ -100,7 +101,7 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet{
 				}
 			}
 		}else{
-			if(this.targetPosition != null && (!level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= level.getMinBuildHeight())){
+			if(this.targetPosition != null && (!level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= level.getMinY())){
 				this.targetPosition = null;
 			}
 			

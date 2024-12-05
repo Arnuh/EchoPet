@@ -92,7 +92,7 @@ public class PetSnifferAi{
 	}
 	
 	private static void initCoreActivity(Brain<Sniffer> brain){
-		brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(0.8F), new AnimalPanic<Sniffer>(2.0F){
+		brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim<>(0.8F), new AnimalPanic<Sniffer>(2.0F){
 			@Override
 			protected void start(ServerLevel serverLevel, Sniffer pathfinderMob, long l){
 				PetSnifferAi.resetSniffing(pathfinderMob);

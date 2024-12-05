@@ -35,6 +35,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -92,20 +94,21 @@ public class EntityTadpolePet extends Tadpole implements IEntityFishPet, EntityP
 	}
 	
 	@Override
-	protected void customServerAiStep(){
+	protected void customServerAiStep(ServerLevel world){
 		if(!usesBrain()){
 			return;
 		}
 		if(isVehicle()){
 			return;
 		}
+		ProfilerFiller profilerFiller = Profiler.get();
 		var level = level();
-		level.getProfiler().push("tadpoleBrain");
+		profilerFiller.push("tadpoleBrain");
 		this.getBrain().tick((ServerLevel) level, this);
-		level.getProfiler().pop();
-		level.getProfiler().push("tadpoleActivityUpdate");
+		profilerFiller.pop();
+		profilerFiller.push("tadpoleActivityUpdate");
 		// PetTadpoleAi.updateActivity(this);
-		level.getProfiler().pop();
+		profilerFiller.pop();
 	}
 	
 	@Override

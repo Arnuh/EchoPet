@@ -34,6 +34,8 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -195,13 +197,13 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 					BlockPos blockposition = getBlockPosBelowThatAffectsMyMovement(entity);
 					f2 = level.getBlockState(blockposition).getBlock().getFriction();
 					f = entity.onGround ? f2 * 0.91F : 0.91F;
-					vec3d1 = entity.handleRelativeFrictionAndCalculateMovement(vec3d, f2);
+					vec3d1 = handleRelativeFrictionAndCalculateMovement(entity, vec3d, f2);
 					double d8 = vec3d1.y;
 					if(entity.hasEffect(MobEffects.LEVITATION)){
 						d8 += (0.05 * (double) (entity.getEffect(MobEffects.LEVITATION).getAmplifier() + 1) - vec3d1.y) * 0.2;
 						entity.resetFallDistance();
 					}else if(level.isClientSide && !level.hasChunkAt(blockposition)){
-						if(entity.getY() > (double) level.getMinBuildHeight()){
+						if(entity.getY() > (double) level.getMinY()){
 							d8 = -0.1;
 						}else{
 							d8 = 0.0;
@@ -232,5 +234,46 @@ public class LivingEntityPetHandle extends EntityPetHandle implements INMSLiving
 	
 	protected float getWaterSlowDown(){ // Not proper
 		return 0.8F;
+	}
+	
+	private Vec3 handleRelativeFrictionAndCalculateMovement(LivingEntity entity, Vec3 movementInput, float slipperiness){
+		entity.moveRelative(getFrictionInfluencedSpeed(entity, slipperiness), movementInput);
+		entity.setDeltaMovement(handleOnClimbable(entity, entity.getDeltaMovement()));
+		entity.move(MoverType.SELF, entity.getDeltaMovement());
+		Vec3 vec3d1 = entity.getDeltaMovement();
+		
+		if((entity.horizontalCollision || entity.jumping) && (entity.onClimbable() || entity.getInBlockState()
+			.is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(entity))){
+			vec3d1 = new Vec3(vec3d1.x, 0.2D, vec3d1.z);
+		}
+		
+		return vec3d1;
+	}
+	
+	protected float getFlyingSpeed(LivingEntity entity){
+		return entity.getControllingPassenger() instanceof net.minecraft.world.entity.player.Player ? entity.getSpeed() * 0.1F : 0.02F;
+	}
+	
+	private float getFrictionInfluencedSpeed(LivingEntity entity, float slipperiness){
+		return entity.onGround() ? this.getSpeed() * (0.21600002F / (slipperiness * slipperiness * slipperiness)) : getFlyingSpeed(entity);
+	}
+	
+	private Vec3 handleOnClimbable(LivingEntity entity, Vec3 motion){
+		if(entity.onClimbable()){
+			entity.resetFallDistance();
+			float f = 0.15F;
+			double d0 = Mth.clamp(motion.x, -0.15000000596046448D, 0.15000000596046448D);
+			double d1 = Mth.clamp(motion.z, -0.15000000596046448D, 0.15000000596046448D);
+			double d2 = Math.max(motion.y, -0.15000000596046448D);
+			
+			if(d2 < 0.0D && !entity.getInBlockState()
+				.is(Blocks.SCAFFOLDING) && entity.isSuppressingSlidingDownLadder() && entity instanceof net.minecraft.world.entity.player.Player){
+				d2 = 0.0D;
+			}
+			
+			motion = new Vec3(d0, d2, d1);
+		}
+		
+		return motion;
 	}
 }

@@ -33,6 +33,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -76,20 +78,21 @@ public class EntityFrogPet extends Frog implements IEntityLivingPet, EntityPetGi
 	}
 	
 	@Override
-	protected void customServerAiStep(){
+	protected void customServerAiStep(ServerLevel world){
 		if(!usesBrain()){
 			return;
 		}
 		if(isVehicle()){
 			return;
 		}
+		ProfilerFiller profilerFiller = Profiler.get();
 		var level = level();
-		level.getProfiler().push("frogBrain");
+		profilerFiller.push("frogBrain");
 		this.getBrain().tick((ServerLevel) level, this);
-		level.getProfiler().pop();
-		level.getProfiler().push("frogActivityUpdate");
+		profilerFiller.pop();
+		profilerFiller.push("frogActivityUpdate");
 		// PetFrogAi.updateActivity(this);
-		level.getProfiler().pop();
+		profilerFiller.pop();
 	}
 	
 	// Pet handling

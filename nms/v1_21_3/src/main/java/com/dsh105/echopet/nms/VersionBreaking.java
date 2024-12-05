@@ -19,7 +19,7 @@ package com.dsh105.echopet.nms;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class VersionBreaking{
 	
@@ -32,6 +32,6 @@ public class VersionBreaking{
 	}
 	
 	public static double getWaterEfficiency(LivingEntity entity){
-		return EnchantmentHelper.getDepthStrider(entity);
+		return entity.getAttributeValue(Attributes.WATER_MOVEMENT_EFFICIENCY);
 	}
 }

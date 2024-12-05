@@ -25,7 +25,6 @@ import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.EntityPetGiveMeAccess;
 import com.dsh105.echopet.nms.entity.INMSEntityPetHandle;
@@ -213,7 +212,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 	public float getSpeed(){
 		Entity entity = getEntity();
 		float speed = rideSpeed;
-		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
+		if(!entity.getPassengers().isEmpty()){
 			if(canFly){
 				if(!entity.onGround()){
 					speed = rideFlySpeed;
@@ -238,6 +237,7 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		if(passenger == null){
 			return null;
 		}
+		var input = passenger.getLastClientInput();
 		CraftPlayer player = passenger.getBukkitEntity();
 		Entity entity = getEntity();
 		entity.setYRot(passenger.getYRot());
@@ -247,9 +247,11 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		entity.setYBodyRot(entity.getYRot());
 		entity.setYHeadRot(entity.getYRot());
 		
-		double motX = passenger.xxa * 0.5;
+		float f = input.left() == input.right() ? 0.0F : (input.left() ? 1.0F : -1.0F);
+		float f1 = input.forward() == input.backward() ? 0.0F : (input.forward() ? 1.0F : -1.0F);
+		double motX = f * 0.5;
 		double motY = vec3d.y;
-		double motZ = passenger.zza;
+		double motZ = f1;
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
@@ -259,33 +261,25 @@ public class EntityPetHandle implements INMSEntityPetHandle{
 		if(moveEvent.isCancelled()){
 			return null;
 		}
-		if(NMSEntityUtil.getJumpingField() != null && !entity.getPassengers().isEmpty()){
+		if(!entity.getPassengers().isEmpty()){
 			if(canFly){
-				try{
-					if(player.isFlying()){
-						player.setFlying(false);
+				if(player.isFlying()){
+					player.setFlying(false);
+				}
+				if(input.jump()){
+					PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+					EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
+					if(!rideEvent.isCancelled()){
+						entity.setDeltaMovement(entity.getDeltaMovement().x, 0.5F, entity.getDeltaMovement().z);
 					}
-					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
-						if(!rideEvent.isCancelled()){
-							entity.setDeltaMovement(entity.getDeltaMovement().x, 0.5F, entity.getDeltaMovement().z);
-						}
-					}
-				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}else if(entity.onGround()){
-				try{
-					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
-						if(!rideEvent.isCancelled()){
-							entity.setDeltaMovement(entity.getDeltaMovement().x, rideEvent.getJumpHeight(), entity.getDeltaMovement().z);
-						}
+				if(input.jump()){
+					PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+					EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
+					if(!rideEvent.isCancelled()){
+						entity.setDeltaMovement(entity.getDeltaMovement().x, rideEvent.getJumpHeight(), entity.getDeltaMovement().z);
 					}
-				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}
 		}

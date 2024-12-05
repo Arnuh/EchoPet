@@ -47,7 +47,6 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.animal.allay.Allay;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -87,7 +86,7 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	}
 	
 	@Override
-	protected void customServerAiStep(){}
+	protected void customServerAiStep(ServerLevel world){}
 	
 	@Override
 	public boolean canPickUpLoot(){
@@ -95,22 +94,9 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	}
 	
 	@Override
-	public boolean canTakeItem(ItemStack var0){
-		return false;
-	}
-	
-	@Override
 	protected InteractionResult mobInteract(net.minecraft.world.entity.player.Player var0, InteractionHand var1){
 		return InteractionResult.PASS;
 	}
-	
-	@Override
-	public boolean wantsToPickUp(ItemStack var0){
-		return false;
-	}
-	
-	@Override
-	protected void dropEquipment(){}
 	
 	public boolean shouldListen(ServerLevel var0, GameEventListener var1, BlockPos var2, GameEvent var3, GameEvent.Context var4){
 		return false;
@@ -121,11 +107,6 @@ public class EntityAllayPet extends Allay implements IEntityLivingPet, EntityPet
 	@Override
 	public boolean canHoldItem(ItemStack itemstack){
 		return false;
-	}
-	
-	@Override
-	public ItemStack equipItemIfPossible(ItemStack itemstack, ItemEntity entityitem){
-		return null;
 	}
 	
 	// Pet handling

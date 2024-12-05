@@ -29,6 +29,7 @@ import com.dsh105.echopet.nms.NMSEntityUtil;
 import com.dsh105.echopet.nms.VersionBreaking;
 import com.dsh105.echopet.nms.entity.handle.EntityPetHandle;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -242,6 +243,7 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 			super.travel(vec3d);
 			return;
 		}
+		var input = passenger.getLastClientInput();
 		CraftPlayer player = passenger.getBukkitEntity();
 		this.setYRot(passenger.getYRot());
 		this.yRotO = this.getYRot();
@@ -249,47 +251,44 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 		this.setRot(this.getYRot(), this.getXRot());
 		this.yHeadRot = this.yBodyRot = this.getYRot();
 		
-		double motX = passenger.xxa * 0.5;
+		// Taken from getLastClientMoveIntent
+		// I assume getInputVector makes it so getLastClientMoveIntent is not a useful method
+		// because of the input of getYRot. Needs further review?
+		float f = input.left() == input.right() ? 0.0F : (input.left() ? 1.0F : -1.0F);
+		float f1 = input.forward() == input.backward() ? 0.0F : (input.forward() ? 1.0F : -1.0F);
+		double motX = f * 0.5;
 		double motY = vec3d.y;
-		double motZ = passenger.zza;
+		double motZ = f1;
 		if(motZ <= 0){
 			motZ *= 0.25F;
 		}
 		VersionBreaking.setFlyingSpeed(this, getSpeed() * 0.1F);
-		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);// side, forward
+		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), (float) motX, (float) motZ);
 		EchoPet.getPlugin().getServer().getPluginManager().callEvent(moveEvent);
 		if(moveEvent.isCancelled()) return;
 		float speed = rideSpeed;
-		if(NMSEntityUtil.getJumpingField() != null && !passengers.isEmpty()){
+		if(!passengers.isEmpty()){
 			if(canFly){
 				if(!onGround){
 					speed = rideFlySpeed;
 				}
-				try{
-					if(player.isFlying()){
-						player.setFlying(false);
+				if(player.isFlying()){
+					player.setFlying(false);
+				}
+				if(input.jump()){
+					PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
+					EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
+					if(!rideEvent.isCancelled()){
+						setDeltaMovement(getDeltaMovement().x, 0.5F, getDeltaMovement().z);
 					}
-					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
-						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
-						if(!rideEvent.isCancelled()){
-							setDeltaMovement(getDeltaMovement().x, 0.5F, getDeltaMovement().z);
-						}
-					}
-				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Flying Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}else if(this.onGround){
-				try{
-					if(NMSEntityUtil.getJumpingField().getBoolean(passenger)){
-						PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
-						EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
-						if(!rideEvent.isCancelled()){
-							setDeltaMovement(getDeltaMovement().x, rideEvent.getJumpHeight(), getDeltaMovement().z);
-						}
+				if(input.jump()){
+					PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.rideJumpHeight);
+					EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
+					if(!rideEvent.isCancelled()){
+						setDeltaMovement(getDeltaMovement().x, rideEvent.getJumpHeight(), getDeltaMovement().z);
 					}
-				}catch(IllegalArgumentException | IllegalStateException | IllegalAccessException e){
-					EchoPet.LOG.log(java.util.logging.Level.WARNING, "Failed to initiate Pet Jumping Motion for " + player.getName() + "'s Pet.", e);
 				}
 			}
 		}
@@ -322,9 +321,11 @@ public abstract class EntityPet extends Mob implements IEntityLivingPet{
 	}
 	
 	public SoundEvent getSoundFromString(String soundName){
-		return soundName != null ? BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(soundName)) : null;
-		// mojang made this method private
-		// return soundName != null ? SoundEffect.a.get(new MinecraftKey(soundName)) : null;
+		if(soundName == null){
+			return null;
+		}
+		var soundEvent = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(soundName));
+		return soundEvent.map(Holder.Reference::value).orElse(null);
 	}
 	
 	protected String getAmbientSoundString(){

@@ -32,6 +32,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.animal.sniffer.Sniffer;
@@ -69,19 +71,20 @@ public class EntitySnifferPet extends Sniffer implements IEntityAnimalPet, Entit
 	}
 	
 	@Override
-	protected void customServerAiStep(){
+	protected void customServerAiStep(ServerLevel world){
 		if(!usesBrain()){
 			return;
 		}
 		if(isVehicle()){
 			return;
 		}
+		ProfilerFiller profilerFiller = Profiler.get();
 		ServerLevel serverLevel = (ServerLevel) level();
-		serverLevel.getProfiler().push("snifferBrain");
+		profilerFiller.push("snifferBrain");
 		getBrain().tick(serverLevel, this);
-		serverLevel.getProfiler().popPush("snifferActivityUpdate");
+		profilerFiller.popPush("snifferActivityUpdate");
 		PetSnifferAi.updateActivity(this);
-		serverLevel.getProfiler().pop();
+		profilerFiller.pop();
 	}
 	
 	@Override

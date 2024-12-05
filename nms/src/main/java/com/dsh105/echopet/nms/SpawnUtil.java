@@ -90,7 +90,7 @@ public class SpawnUtil implements ISpawnUtil{
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(IPetType petType, String attributeKey){
-		Holder<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(ResourceLocation.tryParse(attributeKey)).orElse(null);
+		Holder<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.get(ResourceLocation.tryParse(attributeKey)).orElse(null);
 		if(attribute == null){
 			return null;
 		}

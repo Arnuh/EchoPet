@@ -3,7 +3,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 plugins {
 	id("echopet-conventions")
 	// https://github.com/Goooler/shadow/releases
-	id("io.github.goooler.shadow") version "8.1.7"
+	id("io.github.goooler.shadow") version "8.1.8"
 }
 
 group = "com.dsh105.echopet"
@@ -15,9 +15,7 @@ dependencies {
 	compileOnly("me.clip:placeholderapi:2.10.10")
 	compileOnly("com.sk89q.worldguard:worldguard-legacy:7.0.0-SNAPSHOT")
 	implementation(project(":api"))
-	implementation(project(path = ":nms:v1_20_6", configuration = "shadow"))
-	implementation(project(path = ":nms:v1_21", configuration = "shadow"))
-	implementation(project(path = ":nms:v1_21_1", configuration = "shadow"))
+	implementation(project(path = ":nms:v1_21_3", configuration = "shadow"))
 }
 
 tasks {
