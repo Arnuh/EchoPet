@@ -55,7 +55,6 @@ public class EntityGhastPet extends EntityFlyingPet implements IEntityGhastPet{
 		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
 		nav.setCanOpenDoors(false);
 		nav.setCanFloat(true);
-		nav.setCanPassDoors(true);
 		return nav;
 	}
 }

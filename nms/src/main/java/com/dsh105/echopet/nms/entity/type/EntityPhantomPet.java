@@ -75,7 +75,6 @@ public class EntityPhantomPet extends EntityFlyingPet implements IEntityPhantomP
 		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
 		nav.setCanOpenDoors(false);
 		nav.setCanFloat(true);
-		nav.setCanPassDoors(true);
 		return nav;
 	}
 	

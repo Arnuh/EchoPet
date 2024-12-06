@@ -62,7 +62,7 @@ public class EntityBeePet extends Bee implements IEntityAgeablePet, EntityPetGiv
 		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
 		nav.setCanOpenDoors(false);
 		nav.setCanFloat(true);
-		nav.setCanPassDoors(true);
+		nav.setRequiredPathLength(48.0F);
 		return nav;
 	}
 	

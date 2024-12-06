@@ -51,7 +51,6 @@ public class EntityVexPet extends EntityNoClipPet implements IEntityVexPet{
 		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
 		nav.setCanOpenDoors(false);
 		nav.setCanFloat(true);
-		nav.setCanPassDoors(true);
 		return nav;
 	}
 	

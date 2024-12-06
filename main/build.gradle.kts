@@ -15,7 +15,7 @@ dependencies {
 	compileOnly("me.clip:placeholderapi:2.10.10")
 	compileOnly("com.sk89q.worldguard:worldguard-legacy:7.0.0-SNAPSHOT")
 	implementation(project(":api"))
-	implementation(project(path = ":nms:v1_21_3", configuration = "shadow"))
+	implementation(project(path = ":nms:v1_21_4", configuration = "shadow"))
 }
 
 tasks {

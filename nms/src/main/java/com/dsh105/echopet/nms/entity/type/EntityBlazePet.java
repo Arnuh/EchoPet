@@ -50,7 +50,6 @@ public class EntityBlazePet extends EntityPet implements IEntityBlazePet{
 		FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
 		nav.setCanOpenDoors(false);
 		nav.setCanFloat(true);
-		nav.setCanPassDoors(true);
 		return nav;
 	}
 	
