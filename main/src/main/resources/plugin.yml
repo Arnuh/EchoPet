@@ -1341,8 +1341,6 @@ permissions:
     default: op
   echopet.pet.type.wanderingtrader.ride:
     default: op
-  echopet.pet.type.wanderingtrader.baby:
-    default: op
   echopet.pet.type.warden.hat:
     default: op
   echopet.pet.type.warden.ride:
@@ -2436,7 +2434,6 @@ permissions:
       echopet.pet.type.traderllama.baby: true
       echopet.pet.type.turtle.baby: true
       echopet.pet.type.villager.baby: true
-      echopet.pet.type.wanderingtrader.baby: true
       echopet.pet.type.wolf.baby: true
       echopet.pet.type.zoglin.baby: true
       echopet.pet.type.zombie.baby: true
@@ -3632,7 +3629,6 @@ permissions:
     children:
       echopet.pet.type.wanderingtrader.hat: true
       echopet.pet.type.wanderingtrader.ride: true
-      echopet.pet.type.wanderingtrader.baby: true
   echopet.pet.type.warden.*:
     default: op
     description: 'All warden pet data permissions'

@@ -34,6 +34,7 @@ import com.dsh105.echopet.compat.api.entity.pet.IAgeablePet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorseChestedAbstractPet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IWanderingTraderPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;
@@ -211,7 +212,8 @@ public enum PetType implements IPetType{
 		this.allowedData.add(PetData.HAT);
 		this.allowedData.add(PetData.RIDE);
 		
-		if(IAgeablePet.class.isAssignableFrom(petClass)){
+		// Does a way exist to determine Ageable mobs that have a parent that isn't ageable?
+		if(IAgeablePet.class.isAssignableFrom(petClass) && !IWanderingTraderPet.class.isAssignableFrom(petClass)){
 			this.allowedData.add(PetData.BABY);
 		}
 		if(IHorseChestedAbstractPet.class.isAssignableFrom(petClass)){
