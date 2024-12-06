@@ -27,6 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public enum PetDataCategory{
+	ARMADILLO_STATE("armadillo_", Material.ARMADILLO_SCUTE, "Armadillo State", false, PetData.IDLING, PetData.ROLL, PetData.SCARED, PetData.UNROLLING),
 	AXOLOTL_VARIANT("axolotl_", Material.AXOLOTL_BUCKET, "Axolotl Variant", false, PetData.LUCY, PetData.WILD, PetData.GOLD, PetData.CYAN, PetData.BLUE),
 	CAT_TYPE("cat_", Material.SALMON, "Cat Type", true, PetData.TABBY, PetData.TUXEDO, PetData.RED, PetData.SIAMESE, PetData.BRITISH_SHORTHAIR, PetData.CALICO, PetData.PERSIAN, PetData.RAGDOLL, PetData.WHITE, PetData.JELLIE, PetData.BLACK),
 	WOOL_COLOR("wool_", Material.WHITE_WOOL, "Wool Color", false, PetData.WHITE, PetData.ORANGE, PetData.MAGENTA, PetData.LIGHT_BLUE, PetData.YELLOW, PetData.LIME, PetData.PINK, PetData.GRAY, PetData.LIGHT_GRAY, PetData.CYAN, PetData.PURPLE, PetData.BLUE, PetData.BROWN, PetData.GREEN, PetData.RED, PetData.BLACK),

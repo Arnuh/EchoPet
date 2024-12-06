@@ -39,6 +39,7 @@ import com.dsh105.echopet.compat.api.entity.pet.ILivingPet;
 import com.dsh105.echopet.compat.api.entity.pet.IPet;
 import com.dsh105.echopet.compat.api.entity.pet.ITameablePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAbstractHorsePet;
+import com.dsh105.echopet.compat.api.entity.type.pet.IArmadilloPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IAxolotlPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBeePet;
@@ -238,6 +239,8 @@ public class PetData<T>{
 		ROLL = create("roll", (player, pet, category)->{
 			if(pet instanceof IPandaPet pandaPet){
 				return pandaPet::setRolling;
+			}else if(pet instanceof IArmadilloPet armadillo){
+				return (t)->armadillo.switchToState(IArmadilloPet.ArmadilloState.IDLE);
 			}
 			return null;
 		}, Material.COOKED_SALMON, "Roll"),
@@ -855,6 +858,8 @@ public class PetData<T>{
 		IDLING = new Builder<Boolean>().configKey("idling").action((player, pet, category)->{
 			if(pet instanceof ISnifferPet sniffer){
 				return (t)->sniffer.transitionTo(ISnifferPet.State.IDLING);
+			}else if(pet instanceof IArmadilloPet armadillo){
+				return (t)->armadillo.switchToState(IArmadilloPet.ArmadilloState.IDLE);
 			}
 			return null;
 		}).material(Material.BONE).name("Idling").parser(booleanParser()).create(),
@@ -893,7 +898,20 @@ public class PetData<T>{
 				return (t)->sniffer.transitionTo(ISnifferPet.State.RISING);
 			}
 			return null;
-		}).material(Material.BONE).name("Rising").parser(booleanParser()).create();
+		}).material(Material.BONE).name("Rising").parser(booleanParser()).create(),
+		// Armadillo States
+		SCARED = new Builder<Boolean>().configKey("scared").action((player, pet, category)->{
+			if(pet instanceof IArmadilloPet armadillo){
+				return (t)->armadillo.switchToState(IArmadilloPet.ArmadilloState.SCARED);
+			}
+			return null;
+		}).material(Material.ARMADILLO_SCUTE).name("Scared").parser(booleanParser()).create(),
+		UNROLLING = new Builder<Boolean>().configKey("unrolling").action((player, pet, category)->{
+			if(pet instanceof IArmadilloPet armadillo){
+				return (t)->armadillo.switchToState(IArmadilloPet.ArmadilloState.UNROLLING);
+			}
+			return null;
+		}).material(Material.SPIDER_EYE).name("Unrolling").parser(booleanParser()).create();
 	
 	public static final PetData<Integer>
 		SIZE = PetData.create("size", (player, pet, category)->value->{

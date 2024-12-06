@@ -44,6 +44,7 @@ import org.bukkit.entity.Player;
 
 public enum PetType implements IPetType{
 	ALLAY("Allay", "Allay Pet", "allay", new Version("1.19")),
+	ARMADILLO("Armadillo", "Armadillo Pet", "armadillo", new Version("1.20.5"), new PetDataCategory[]{PetDataCategory.ARMADILLO_STATE}),
 	AXOLOTL("Axolotl", "Axolotl Pet", "axolotl", new Version("1.17"), new PetDataCategory[]{PetDataCategory.AXOLOTL_VARIANT}, PetData.PLAYING_DEAD),
 	BAT("Bat", "Bat Pet", "bat", PetData.WANDER),
 	BEE("Bee", "Bee Pet", "bee", PetData.STINGER, PetData.NECTAR, PetData.ANGRY),

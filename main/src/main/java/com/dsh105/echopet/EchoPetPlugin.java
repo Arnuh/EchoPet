@@ -34,6 +34,7 @@ import com.dsh105.echopet.compat.api.config.CategoryConfigOptions;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.YAMLConfigManager;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IEchoPetPlugin;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
@@ -151,6 +152,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin{
 		this.updater = new JenkinsUpdater(this);
 		
 		this.petNamespacedKey = new NamespacedKey(this, "pet");
+		PetType.main(new String[]{});
 	}
 	
 	@Override
